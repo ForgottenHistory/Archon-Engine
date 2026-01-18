@@ -1,0 +1,515 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVParser.CSVParseResult
+  commentId: T:Core.Loaders.CSVParser.CSVParseResult
+  id: CSVParser.CSVParseResult
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVParser.CSVParseResult.ColumnCount
+  - Core.Loaders.CSVParser.CSVParseResult.Dispose
+  - Core.Loaders.CSVParser.CSVParseResult.ErrorContext
+  - Core.Loaders.CSVParser.CSVParseResult.Failure(Unity.Collections.NativeSlice{System.Byte})
+  - Core.Loaders.CSVParser.CSVParseResult.HeaderHashes
+  - Core.Loaders.CSVParser.CSVParseResult.IsSuccess
+  - Core.Loaders.CSVParser.CSVParseResult.RowCount
+  - Core.Loaders.CSVParser.CSVParseResult.Rows
+  langs:
+  - csharp
+  - vb
+  name: CSVParser.CSVParseResult
+  nameWithType: CSVParser.CSVParseResult
+  fullName: Core.Loaders.CSVParser.CSVParseResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVParseResult
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: CSV parsing result
+  example: []
+  syntax:
+    content: public struct CSVParser.CSVParseResult
+    content.vb: Public Structure CSVParser.CSVParseResult
+- uid: Core.Loaders.CSVParser.CSVParseResult.IsSuccess
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: CSVParser.CSVParseResult.IsSuccess
+  fullName: Core.Loaders.CSVParser.CSVParseResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Loaders.CSVParser.CSVParseResult.HeaderHashes
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.HeaderHashes
+  id: HeaderHashes
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: HeaderHashes
+  nameWithType: CSVParser.CSVParseResult.HeaderHashes
+  fullName: Core.Loaders.CSVParser.CSVParseResult.HeaderHashes
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeaderHashes
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeArray<uint> HeaderHashes
+    return:
+      type: Unity.Collections.NativeArray{System.UInt32}
+    content.vb: Public HeaderHashes As NativeArray(Of UInteger)
+- uid: Core.Loaders.CSVParser.CSVParseResult.Rows
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.Rows
+  id: Rows
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: Rows
+  nameWithType: CSVParser.CSVParseResult.Rows
+  fullName: Core.Loaders.CSVParser.CSVParseResult.Rows
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Rows
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeArray<CSVParser.CSVRow> Rows
+    return:
+      type: Unity.Collections.NativeArray{Core.Loaders.CSVParser.CSVRow}
+    content.vb: Public Rows As NativeArray(Of CSVParser.CSVRow)
+- uid: Core.Loaders.CSVParser.CSVParseResult.RowCount
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.RowCount
+  id: RowCount
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: RowCount
+  nameWithType: CSVParser.CSVParseResult.RowCount
+  fullName: Core.Loaders.CSVParser.CSVParseResult.RowCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RowCount
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int RowCount
+    return:
+      type: System.Int32
+    content.vb: Public RowCount As Integer
+- uid: Core.Loaders.CSVParser.CSVParseResult.ColumnCount
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.ColumnCount
+  id: ColumnCount
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: ColumnCount
+  nameWithType: CSVParser.CSVParseResult.ColumnCount
+  fullName: Core.Loaders.CSVParser.CSVParseResult.ColumnCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColumnCount
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int ColumnCount
+    return:
+      type: System.Int32
+    content.vb: Public ColumnCount As Integer
+- uid: Core.Loaders.CSVParser.CSVParseResult.ErrorContext
+  commentId: F:Core.Loaders.CSVParser.CSVParseResult.ErrorContext
+  id: ErrorContext
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorContext
+  nameWithType: CSVParser.CSVParseResult.ErrorContext
+  fullName: Core.Loaders.CSVParser.CSVParseResult.ErrorContext
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorContext
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeSlice<byte> ErrorContext
+    return:
+      type: Unity.Collections.NativeSlice{System.Byte}
+    content.vb: Public ErrorContext As NativeSlice(Of Byte)
+- uid: Core.Loaders.CSVParser.CSVParseResult.Dispose
+  commentId: M:Core.Loaders.CSVParser.CSVParseResult.Dispose
+  id: Dispose
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CSVParser.CSVParseResult.Dispose()
+  fullName: Core.Loaders.CSVParser.CSVParseResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Loaders.CSVParser.CSVParseResult.Dispose*
+- uid: Core.Loaders.CSVParser.CSVParseResult.Failure(Unity.Collections.NativeSlice{System.Byte})
+  commentId: M:Core.Loaders.CSVParser.CSVParseResult.Failure(Unity.Collections.NativeSlice{System.Byte})
+  id: Failure(Unity.Collections.NativeSlice{System.Byte})
+  parent: Core.Loaders.CSVParser.CSVParseResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(NativeSlice<byte>)
+  nameWithType: CSVParser.CSVParseResult.Failure(NativeSlice<byte>)
+  fullName: Core.Loaders.CSVParser.CSVParseResult.Failure(Unity.Collections.NativeSlice<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static CSVParser.CSVParseResult Failure(NativeSlice<byte> errorContext)
+    parameters:
+    - id: errorContext
+      type: Unity.Collections.NativeSlice{System.Byte}
+    return:
+      type: Core.Loaders.CSVParser.CSVParseResult
+    content.vb: Public Shared Function Failure(errorContext As NativeSlice(Of Byte)) As CSVParser.CSVParseResult
+  overload: Core.Loaders.CSVParser.CSVParseResult.Failure*
+  nameWithType.vb: CSVParser.CSVParseResult.Failure(NativeSlice(Of Byte))
+  fullName.vb: Core.Loaders.CSVParser.CSVParseResult.Failure(Unity.Collections.NativeSlice(Of Byte))
+  name.vb: Failure(NativeSlice(Of Byte))
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{System.UInt32}
+  commentId: T:Unity.Collections.NativeArray{System.UInt32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<uint>
+  nameWithType: NativeArray<uint>
+  fullName: Unity.Collections.NativeArray<uint>
+  nameWithType.vb: NativeArray(Of UInteger)
+  fullName.vb: Unity.Collections.NativeArray(Of UInteger)
+  name.vb: NativeArray(Of UInteger)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray{Core.Loaders.CSVParser.CSVRow}
+  commentId: T:Unity.Collections.NativeArray{Core.Loaders.CSVParser.CSVRow}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Loaders.CSVParser.html
+  name: NativeArray<CSVParser.CSVRow>
+  nameWithType: NativeArray<CSVParser.CSVRow>
+  fullName: Unity.Collections.NativeArray<Core.Loaders.CSVParser.CSVRow>
+  nameWithType.vb: NativeArray(Of CSVParser.CSVRow)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Loaders.CSVParser.CSVRow)
+  name.vb: NativeArray(Of CSVParser.CSVRow)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeSlice{System.Byte}
+  commentId: T:Unity.Collections.NativeSlice{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  name: NativeSlice<byte>
+  nameWithType: NativeSlice<byte>
+  fullName: Unity.Collections.NativeSlice<byte>
+  nameWithType.vb: NativeSlice(Of Byte)
+  fullName.vb: Unity.Collections.NativeSlice(Of Byte)
+  name.vb: NativeSlice(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Loaders.CSVParser.CSVParseResult.Dispose*
+  commentId: Overload:Core.Loaders.CSVParser.CSVParseResult.Dispose
+  href: Core.Loaders.CSVParser.CSVParseResult.html#Core_Loaders_CSVParser_CSVParseResult_Dispose
+  name: Dispose
+  nameWithType: CSVParser.CSVParseResult.Dispose
+  fullName: Core.Loaders.CSVParser.CSVParseResult.Dispose
+- uid: Core.Loaders.CSVParser.CSVParseResult.Failure*
+  commentId: Overload:Core.Loaders.CSVParser.CSVParseResult.Failure
+  href: Core.Loaders.CSVParser.CSVParseResult.html#Core_Loaders_CSVParser_CSVParseResult_Failure_Unity_Collections_NativeSlice_System_Byte__
+  name: Failure
+  nameWithType: CSVParser.CSVParseResult.Failure
+  fullName: Core.Loaders.CSVParser.CSVParseResult.Failure
+- uid: Core.Loaders.CSVParser.CSVParseResult
+  commentId: T:Core.Loaders.CSVParser.CSVParseResult
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVParseResult
+  nameWithType: CSVParser.CSVParseResult
+  fullName: Core.Loaders.CSVParser.CSVParseResult
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html

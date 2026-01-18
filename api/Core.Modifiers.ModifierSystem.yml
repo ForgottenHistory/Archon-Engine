@@ -1,0 +1,1643 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierSystem
+  commentId: T:Core.Modifiers.ModifierSystem
+  id: ModifierSystem
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierSystem.#ctor(System.Int32,System.Int32)
+  - Core.Modifiers.ModifierSystem.AddCountryModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  - Core.Modifiers.ModifierSystem.AddGlobalModifier(Core.Modifiers.ModifierSource)
+  - Core.Modifiers.ModifierSystem.AddProvinceModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  - Core.Modifiers.ModifierSystem.ClearCountryModifiers(System.UInt16)
+  - Core.Modifiers.ModifierSystem.ClearGlobalModifiers
+  - Core.Modifiers.ModifierSystem.ClearProvinceModifiers(System.UInt16)
+  - Core.Modifiers.ModifierSystem.CountCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.Dispose
+  - Core.Modifiers.ModifierSystem.ExpireModifiers(System.Int32)
+  - Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance(System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  - Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType(System.UInt16,System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  - Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance(System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  - Core.Modifiers.ModifierSystem.GetCountryModifier(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Modifiers.ModifierSystem.GetGlobalModifier(System.UInt16,Core.Data.FixedPoint64)
+  - Core.Modifiers.ModifierSystem.GetProvinceModifier(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.LoadState(System.IO.BinaryReader)
+  - Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  - Core.Modifiers.ModifierSystem.SaveState(System.IO.BinaryWriter)
+  langs:
+  - csharp
+  - vb
+  name: ModifierSystem
+  nameWithType: ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierSystem
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Central manager for all modifier scopes (global, country, province)
+
+    Pattern used by: EU4 (modifier system), CK3 (effect manager), Stellaris (empire modifiers)
+
+
+    Architecture:
+
+    - Global scope (inherited by all)
+
+    - Country scopes (inherited by country provinces)
+
+    - Province scopes (local only)
+
+
+    Scope Inheritance:
+
+    Province Final = Province Local + Country + Global
+
+
+    Performance:
+
+    - O(1) scope lookup
+
+    - O(n) rebuild where n = active modifiers in scope chain
+
+    - Dirty flag optimization (only rebuild when changed)
+
+
+    Multiplayer Safe:
+
+    - Deterministic operations only
+
+    - Fixed-size allocations
+
+    - Command-based modifications
+  example: []
+  syntax:
+    content: public class ModifierSystem
+    content.vb: Public Class ModifierSystem
+  inheritance:
+  - System.Object
+- uid: Core.Modifiers.ModifierSystem.#ctor(System.Int32,System.Int32)
+  commentId: M:Core.Modifiers.ModifierSystem.#ctor(System.Int32,System.Int32)
+  id: '#ctor(System.Int32,System.Int32)'
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ModifierSystem(int, int)
+  nameWithType: ModifierSystem.ModifierSystem(int, int)
+  fullName: Core.Modifiers.ModifierSystem.ModifierSystem(int, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Initialize the modifier system
+  example: []
+  syntax:
+    content: public ModifierSystem(int maxCountries = 256, int maxProvinces = 8192)
+    parameters:
+    - id: maxCountries
+      type: System.Int32
+    - id: maxProvinces
+      type: System.Int32
+    content.vb: Public Sub New(maxCountries As Integer = 256, maxProvinces As Integer = 8192)
+  overload: Core.Modifiers.ModifierSystem.#ctor*
+  nameWithType.vb: ModifierSystem.New(Integer, Integer)
+  fullName.vb: Core.Modifiers.ModifierSystem.New(Integer, Integer)
+  name.vb: New(Integer, Integer)
+- uid: Core.Modifiers.ModifierSystem.AddGlobalModifier(Core.Modifiers.ModifierSource)
+  commentId: M:Core.Modifiers.ModifierSystem.AddGlobalModifier(Core.Modifiers.ModifierSource)
+  id: AddGlobalModifier(Core.Modifiers.ModifierSource)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: AddGlobalModifier(ModifierSource)
+  nameWithType: ModifierSystem.AddGlobalModifier(ModifierSource)
+  fullName: Core.Modifiers.ModifierSystem.AddGlobalModifier(Core.Modifiers.ModifierSource)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddGlobalModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Add a global modifier (inherited by all)
+  example: []
+  syntax:
+    content: public bool AddGlobalModifier(ModifierSource source)
+    parameters:
+    - id: source
+      type: Core.Modifiers.ModifierSource
+    return:
+      type: System.Boolean
+    content.vb: Public Function AddGlobalModifier(source As ModifierSource) As Boolean
+  overload: Core.Modifiers.ModifierSystem.AddGlobalModifier*
+- uid: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveGlobalModifiersBySource(SourceType, uint)
+  nameWithType: ModifierSystem.RemoveGlobalModifiersBySource(ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveGlobalModifiersBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove global modifiers by source
+  example: []
+  syntax:
+    content: public int RemoveGlobalModifiersBySource(ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveGlobalModifiersBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource*
+  nameWithType.vb: ModifierSystem.RemoveGlobalModifiersBySource(ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource(Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: RemoveGlobalModifiersBySource(SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.AddCountryModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  commentId: M:Core.Modifiers.ModifierSystem.AddCountryModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  id: AddCountryModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: AddCountryModifier(ushort, ModifierSource)
+  nameWithType: ModifierSystem.AddCountryModifier(ushort, ModifierSource)
+  fullName: Core.Modifiers.ModifierSystem.AddCountryModifier(ushort, Core.Modifiers.ModifierSource)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddCountryModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Add a country modifier (inherited by country provinces)
+  example: []
+  syntax:
+    content: public bool AddCountryModifier(ushort countryId, ModifierSource source)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: source
+      type: Core.Modifiers.ModifierSource
+    return:
+      type: System.Boolean
+    content.vb: Public Function AddCountryModifier(countryId As UShort, source As ModifierSource) As Boolean
+  overload: Core.Modifiers.ModifierSystem.AddCountryModifier*
+  nameWithType.vb: ModifierSystem.AddCountryModifier(UShort, ModifierSource)
+  fullName.vb: Core.Modifiers.ModifierSystem.AddCountryModifier(UShort, Core.Modifiers.ModifierSource)
+  name.vb: AddCountryModifier(UShort, ModifierSource)
+- uid: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: RemoveCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveCountryModifiersBySource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.RemoveCountryModifiersBySource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveCountryModifiersBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 144
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove country modifiers by source
+  example: []
+  syntax:
+    content: public int RemoveCountryModifiersBySource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveCountryModifiersBySource(countryId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource*
+  nameWithType.vb: ModifierSystem.RemoveCountryModifiersBySource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: RemoveCountryModifiersBySource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.AddProvinceModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  commentId: M:Core.Modifiers.ModifierSystem.AddProvinceModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  id: AddProvinceModifier(System.UInt16,Core.Modifiers.ModifierSource)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: AddProvinceModifier(ushort, ModifierSource)
+  nameWithType: ModifierSystem.AddProvinceModifier(ushort, ModifierSource)
+  fullName: Core.Modifiers.ModifierSystem.AddProvinceModifier(ushort, Core.Modifiers.ModifierSource)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvinceModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Add a province modifier (local only)
+  example: []
+  syntax:
+    content: public bool AddProvinceModifier(ushort provinceId, ModifierSource source)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: source
+      type: Core.Modifiers.ModifierSource
+    return:
+      type: System.Boolean
+    content.vb: Public Function AddProvinceModifier(provinceId As UShort, source As ModifierSource) As Boolean
+  overload: Core.Modifiers.ModifierSystem.AddProvinceModifier*
+  nameWithType.vb: ModifierSystem.AddProvinceModifier(UShort, ModifierSource)
+  fullName.vb: Core.Modifiers.ModifierSystem.AddProvinceModifier(UShort, Core.Modifiers.ModifierSource)
+  name.vb: AddProvinceModifier(UShort, ModifierSource)
+- uid: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: RemoveProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveProvinceModifiersBySource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.RemoveProvinceModifiersBySource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveProvinceModifiersBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 186
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove province modifiers by source
+  example: []
+  syntax:
+    content: public int RemoveProvinceModifiersBySource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveProvinceModifiersBySource(provinceId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource*
+  nameWithType.vb: ModifierSystem.RemoveProvinceModifiersBySource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: RemoveProvinceModifiersBySource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  commentId: M:Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  id: RemoveProvinceModifiersBySourceAndType(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveProvinceModifiersBySourceAndType(ushort, SourceType, uint, ushort)
+  nameWithType: ModifierSystem.RemoveProvinceModifiersBySourceAndType(ushort, ModifierSource.SourceType, uint, ushort)
+  fullName: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType(ushort, Core.Modifiers.ModifierSource.SourceType, uint, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveProvinceModifiersBySourceAndType
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 201
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove province modifiers by source and type
+  example: []
+  syntax:
+    content: public int RemoveProvinceModifiersBySourceAndType(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId, ushort modifierTypeId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: modifierTypeId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveProvinceModifiersBySourceAndType(provinceId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger, modifierTypeId As UShort) As Integer
+  overload: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType*
+  nameWithType.vb: ModifierSystem.RemoveProvinceModifiersBySourceAndType(UShort, ModifierSource.SourceType, UInteger, UShort)
+  fullName.vb: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger, UShort)
+  name.vb: RemoveProvinceModifiersBySourceAndType(UShort, SourceType, UInteger, UShort)
+- uid: Core.Modifiers.ModifierSystem.GetProvinceModifier(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ModifierSystem.GetProvinceModifier(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: GetProvinceModifier(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceModifier(ushort, ushort, ushort, FixedPoint64)
+  nameWithType: ModifierSystem.GetProvinceModifier(ushort, ushort, ushort, FixedPoint64)
+  fullName: Core.Modifiers.ModifierSystem.GetProvinceModifier(ushort, ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 221
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Get province modifier value with full scope inheritance
+
+    Province Final = Province Local + Country + Global
+  example: []
+  syntax:
+    content: public FixedPoint64 GetProvinceModifier(ushort provinceId, ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: countryId
+      type: System.UInt16
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetProvinceModifier(provinceId As UShort, countryId As UShort, modifierTypeId As UShort, baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ModifierSystem.GetProvinceModifier*
+  nameWithType.vb: ModifierSystem.GetProvinceModifier(UShort, UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Modifiers.ModifierSystem.GetProvinceModifier(UShort, UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: GetProvinceModifier(UShort, UShort, UShort, FixedPoint64)
+- uid: Core.Modifiers.ModifierSystem.GetCountryModifier(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ModifierSystem.GetCountryModifier(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: GetCountryModifier(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryModifier(ushort, ushort, FixedPoint64)
+  nameWithType: ModifierSystem.GetCountryModifier(ushort, ushort, FixedPoint64)
+  fullName: Core.Modifiers.ModifierSystem.GetCountryModifier(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 246
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Get country modifier value with global inheritance
+
+    Country Final = Country Local + Global
+  example: []
+  syntax:
+    content: public FixedPoint64 GetCountryModifier(ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetCountryModifier(countryId As UShort, modifierTypeId As UShort, baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ModifierSystem.GetCountryModifier*
+  nameWithType.vb: ModifierSystem.GetCountryModifier(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Modifiers.ModifierSystem.GetCountryModifier(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: GetCountryModifier(UShort, UShort, FixedPoint64)
+- uid: Core.Modifiers.ModifierSystem.GetGlobalModifier(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ModifierSystem.GetGlobalModifier(System.UInt16,Core.Data.FixedPoint64)
+  id: GetGlobalModifier(System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: GetGlobalModifier(ushort, FixedPoint64)
+  nameWithType: ModifierSystem.GetGlobalModifier(ushort, FixedPoint64)
+  fullName: Core.Modifiers.ModifierSystem.GetGlobalModifier(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGlobalModifier
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 258
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Get global modifier value
+  example: []
+  syntax:
+    content: public FixedPoint64 GetGlobalModifier(ushort modifierTypeId, FixedPoint64 baseValue)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetGlobalModifier(modifierTypeId As UShort, baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ModifierSystem.GetGlobalModifier*
+  nameWithType.vb: ModifierSystem.GetGlobalModifier(UShort, FixedPoint64)
+  fullName.vb: Core.Modifiers.ModifierSystem.GetGlobalModifier(UShort, Core.Data.FixedPoint64)
+  name.vb: GetGlobalModifier(UShort, FixedPoint64)
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance(System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance(System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  id: ForEachProvinceModifierWithInheritance(System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachProvinceModifierWithInheritance(ushort, ushort, Action<ModifierSource, ModifierScopeLevel>)
+  nameWithType: ModifierSystem.ForEachProvinceModifierWithInheritance(ushort, ushort, Action<ModifierSource, ModifierScopeLevel>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance(ushort, ushort, System.Action<Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachProvinceModifierWithInheritance
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 271
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Iterate over all province modifiers with full inheritance (Province + Country + Global)
+
+    Useful for tooltips showing all modifier sources affecting a province
+  example: []
+  syntax:
+    content: public void ForEachProvinceModifierWithInheritance(ushort provinceId, ushort countryId, Action<ModifierSource, ModifierScopeLevel> action)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: countryId
+      type: System.UInt16
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel}
+    content.vb: Public Sub ForEachProvinceModifierWithInheritance(provinceId As UShort, countryId As UShort, action As Action(Of ModifierSource, ModifierScopeLevel))
+  overload: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance*
+  nameWithType.vb: ModifierSystem.ForEachProvinceModifierWithInheritance(UShort, UShort, Action(Of ModifierSource, ModifierScopeLevel))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance(UShort, UShort, System.Action(Of Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel))
+  name.vb: ForEachProvinceModifierWithInheritance(UShort, UShort, Action(Of ModifierSource, ModifierScopeLevel))
+- uid: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance(System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance(System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  id: ForEachCountryModifierWithInheritance(System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachCountryModifierWithInheritance(ushort, Action<ModifierSource, ModifierScopeLevel>)
+  nameWithType: ModifierSystem.ForEachCountryModifierWithInheritance(ushort, Action<ModifierSource, ModifierScopeLevel>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance(ushort, System.Action<Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachCountryModifierWithInheritance
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 292
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over all country modifiers with global inheritance (Country + Global)
+  example: []
+  syntax:
+    content: public void ForEachCountryModifierWithInheritance(ushort countryId, Action<ModifierSource, ModifierScopeLevel> action)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel}
+    content.vb: Public Sub ForEachCountryModifierWithInheritance(countryId As UShort, action As Action(Of ModifierSource, ModifierScopeLevel))
+  overload: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance*
+  nameWithType.vb: ModifierSystem.ForEachCountryModifierWithInheritance(UShort, Action(Of ModifierSource, ModifierScopeLevel))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance(UShort, System.Action(Of Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel))
+  name.vb: ForEachCountryModifierWithInheritance(UShort, Action(Of ModifierSource, ModifierScopeLevel))
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType(System.UInt16,System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType(System.UInt16,System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  id: ForEachProvinceModifierByType(System.UInt16,System.UInt16,System.UInt16,System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachProvinceModifierByType(ushort, ushort, ushort, Action<ModifierSource, ModifierScopeLevel>)
+  nameWithType: ModifierSystem.ForEachProvinceModifierByType(ushort, ushort, ushort, Action<ModifierSource, ModifierScopeLevel>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType(ushort, ushort, ushort, System.Action<Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachProvinceModifierByType
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 308
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Iterate over province modifiers of a specific modifier type (with inheritance)
+
+    Useful for tooltips showing all sources affecting a specific stat
+  example: []
+  syntax:
+    content: public void ForEachProvinceModifierByType(ushort provinceId, ushort countryId, ushort modifierTypeId, Action<ModifierSource, ModifierScopeLevel> action)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: countryId
+      type: System.UInt16
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel}
+    content.vb: Public Sub ForEachProvinceModifierByType(provinceId As UShort, countryId As UShort, modifierTypeId As UShort, action As Action(Of ModifierSource, ModifierScopeLevel))
+  overload: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType*
+  nameWithType.vb: ModifierSystem.ForEachProvinceModifierByType(UShort, UShort, UShort, Action(Of ModifierSource, ModifierScopeLevel))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType(UShort, UShort, UShort, System.Action(Of Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel))
+  name.vb: ForEachProvinceModifierByType(UShort, UShort, UShort, Action(Of ModifierSource, ModifierScopeLevel))
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachProvinceModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachProvinceModifierBySource(ushort, SourceType, uint, Action<ModifierSource>)
+  nameWithType: ModifierSystem.ForEachProvinceModifierBySource(ushort, ModifierSource.SourceType, uint, Action<ModifierSource>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachProvinceModifierBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 330
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Iterate over province modifiers from a specific source (local only - not inherited)
+
+    Useful for UI showing what modifiers a specific building/tech adds
+  example: []
+  syntax:
+    content: public void ForEachProvinceModifierBySource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachProvinceModifierBySource(provinceId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource*
+  nameWithType.vb: ModifierSystem.ForEachProvinceModifierBySource(UShort, ModifierSource.SourceType, UInteger, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachProvinceModifierBySource(UShort, SourceType, UInteger, Action(Of ModifierSource))
+- uid: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachCountryModifierBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachCountryModifierBySource(ushort, SourceType, uint, Action<ModifierSource>)
+  nameWithType: ModifierSystem.ForEachCountryModifierBySource(ushort, ModifierSource.SourceType, uint, Action<ModifierSource>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachCountryModifierBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 341
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over country modifiers from a specific source
+  example: []
+  syntax:
+    content: public void ForEachCountryModifierBySource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachCountryModifierBySource(countryId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource*
+  nameWithType.vb: ModifierSystem.ForEachCountryModifierBySource(UShort, ModifierSource.SourceType, UInteger, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachCountryModifierBySource(UShort, SourceType, UInteger, Action(Of ModifierSource))
+- uid: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ForEachGlobalModifierBySource(SourceType, uint, Action<ModifierSource>)
+  nameWithType: ModifierSystem.ForEachGlobalModifierBySource(ModifierSource.SourceType, uint, Action<ModifierSource>)
+  fullName: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType, uint, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachGlobalModifierBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 352
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over global modifiers from a specific source
+  example: []
+  syntax:
+    content: public void ForEachGlobalModifierBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachGlobalModifierBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource*
+  nameWithType.vb: ModifierSystem.ForEachGlobalModifierBySource(ModifierSource.SourceType, UInteger, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource(Core.Modifiers.ModifierSource.SourceType, UInteger, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachGlobalModifierBySource(SourceType, UInteger, Action(Of ModifierSource))
+- uid: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: CountProvinceModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: CountProvinceModifiersBySource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.CountProvinceModifiersBySource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountProvinceModifiersBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 360
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Count province modifiers from a specific source
+  example: []
+  syntax:
+    content: public int CountProvinceModifiersBySource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function CountProvinceModifiersBySource(provinceId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource*
+  nameWithType.vb: ModifierSystem.CountProvinceModifiersBySource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: CountProvinceModifiersBySource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.CountCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: CountCountryModifiersBySource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: CountCountryModifiersBySource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.CountCountryModifiersBySource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountCountryModifiersBySource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 371
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Count country modifiers from a specific source
+  example: []
+  syntax:
+    content: public int CountCountryModifiersBySource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function CountCountryModifiersBySource(countryId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource*
+  nameWithType.vb: ModifierSystem.CountCountryModifiersBySource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: CountCountryModifiersBySource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: HasProvinceModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: HasProvinceModifiersFromSource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.HasProvinceModifiersFromSource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasProvinceModifiersFromSource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 382
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if a source has any modifiers on a province
+  example: []
+  syntax:
+    content: public bool HasProvinceModifiersFromSource(ushort provinceId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasProvinceModifiersFromSource(provinceId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Boolean
+  overload: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource*
+  nameWithType.vb: ModifierSystem.HasProvinceModifiersFromSource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: HasProvinceModifiersFromSource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: HasCountryModifiersFromSource(System.UInt16,Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: HasCountryModifiersFromSource(ushort, SourceType, uint)
+  nameWithType: ModifierSystem.HasCountryModifiersFromSource(ushort, ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource(ushort, Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasCountryModifiersFromSource
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 390
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if a source has any modifiers on a country
+  example: []
+  syntax:
+    content: public bool HasCountryModifiersFromSource(ushort countryId, ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasCountryModifiersFromSource(countryId As UShort, sourceType As ModifierSource.SourceType, sourceId As UInteger) As Boolean
+  overload: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource*
+  nameWithType.vb: ModifierSystem.HasCountryModifiersFromSource(UShort, ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource(UShort, Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: HasCountryModifiersFromSource(UShort, SourceType, UInteger)
+- uid: Core.Modifiers.ModifierSystem.ClearProvinceModifiers(System.UInt16)
+  commentId: M:Core.Modifiers.ModifierSystem.ClearProvinceModifiers(System.UInt16)
+  id: ClearProvinceModifiers(System.UInt16)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ClearProvinceModifiers(ushort)
+  nameWithType: ModifierSystem.ClearProvinceModifiers(ushort)
+  fullName: Core.Modifiers.ModifierSystem.ClearProvinceModifiers(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearProvinceModifiers
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 403
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Remove all modifiers from a province scope
+
+    Returns count of modifiers removed
+  example: []
+  syntax:
+    content: public int ClearProvinceModifiers(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function ClearProvinceModifiers(provinceId As UShort) As Integer
+  overload: Core.Modifiers.ModifierSystem.ClearProvinceModifiers*
+  nameWithType.vb: ModifierSystem.ClearProvinceModifiers(UShort)
+  fullName.vb: Core.Modifiers.ModifierSystem.ClearProvinceModifiers(UShort)
+  name.vb: ClearProvinceModifiers(UShort)
+- uid: Core.Modifiers.ModifierSystem.ClearCountryModifiers(System.UInt16)
+  commentId: M:Core.Modifiers.ModifierSystem.ClearCountryModifiers(System.UInt16)
+  id: ClearCountryModifiers(System.UInt16)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ClearCountryModifiers(ushort)
+  nameWithType: ModifierSystem.ClearCountryModifiers(ushort)
+  fullName: Core.Modifiers.ModifierSystem.ClearCountryModifiers(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearCountryModifiers
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 420
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Remove all modifiers from a country scope
+
+    Returns count of modifiers removed
+  example: []
+  syntax:
+    content: public int ClearCountryModifiers(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function ClearCountryModifiers(countryId As UShort) As Integer
+  overload: Core.Modifiers.ModifierSystem.ClearCountryModifiers*
+  nameWithType.vb: ModifierSystem.ClearCountryModifiers(UShort)
+  fullName.vb: Core.Modifiers.ModifierSystem.ClearCountryModifiers(UShort)
+  name.vb: ClearCountryModifiers(UShort)
+- uid: Core.Modifiers.ModifierSystem.ClearGlobalModifiers
+  commentId: M:Core.Modifiers.ModifierSystem.ClearGlobalModifiers
+  id: ClearGlobalModifiers
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ClearGlobalModifiers()
+  nameWithType: ModifierSystem.ClearGlobalModifiers()
+  fullName: Core.Modifiers.ModifierSystem.ClearGlobalModifiers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearGlobalModifiers
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 440
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Remove all global modifiers
+
+    Returns count of modifiers removed
+  example: []
+  syntax:
+    content: public int ClearGlobalModifiers()
+    return:
+      type: System.Int32
+    content.vb: Public Function ClearGlobalModifiers() As Integer
+  overload: Core.Modifiers.ModifierSystem.ClearGlobalModifiers*
+- uid: Core.Modifiers.ModifierSystem.ExpireModifiers(System.Int32)
+  commentId: M:Core.Modifiers.ModifierSystem.ExpireModifiers(System.Int32)
+  id: ExpireModifiers(System.Int32)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: ExpireModifiers(int)
+  nameWithType: ModifierSystem.ExpireModifiers(int)
+  fullName: Core.Modifiers.ModifierSystem.ExpireModifiers(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExpireModifiers
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 456
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Expire temporary modifiers (call every game tick)
+  example: []
+  syntax:
+    content: public void ExpireModifiers(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    content.vb: Public Sub ExpireModifiers(currentTick As Integer)
+  overload: Core.Modifiers.ModifierSystem.ExpireModifiers*
+  nameWithType.vb: ModifierSystem.ExpireModifiers(Integer)
+  fullName.vb: Core.Modifiers.ModifierSystem.ExpireModifiers(Integer)
+  name.vb: ExpireModifiers(Integer)
+- uid: Core.Modifiers.ModifierSystem.SaveState(System.IO.BinaryWriter)
+  commentId: M:Core.Modifiers.ModifierSystem.SaveState(System.IO.BinaryWriter)
+  id: SaveState(System.IO.BinaryWriter)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: SaveState(BinaryWriter)
+  nameWithType: ModifierSystem.SaveState(BinaryWriter)
+  fullName: Core.Modifiers.ModifierSystem.SaveState(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveState
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 539
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Save ModifierSystem state to binary writer
+
+    Serializes: capacities, global scope, country scopes, province scopes
+  example: []
+  syntax:
+    content: public void SaveState(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    content.vb: Public Sub SaveState(writer As BinaryWriter)
+  overload: Core.Modifiers.ModifierSystem.SaveState*
+- uid: Core.Modifiers.ModifierSystem.LoadState(System.IO.BinaryReader)
+  commentId: M:Core.Modifiers.ModifierSystem.LoadState(System.IO.BinaryReader)
+  id: LoadState(System.IO.BinaryReader)
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: LoadState(BinaryReader)
+  nameWithType: ModifierSystem.LoadState(BinaryReader)
+  fullName: Core.Modifiers.ModifierSystem.LoadState(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadState
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 568
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Load ModifierSystem state from binary reader
+
+    Restores: capacities, global scope, country scopes, province scopes
+
+    Note: Must be called AFTER Initialize() with matching capacities
+  example: []
+  syntax:
+    content: public void LoadState(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    content.vb: Public Sub LoadState(reader As BinaryReader)
+  overload: Core.Modifiers.ModifierSystem.LoadState*
+- uid: Core.Modifiers.ModifierSystem.Dispose
+  commentId: M:Core.Modifiers.ModifierSystem.Dispose
+  id: Dispose
+  parent: Core.Modifiers.ModifierSystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ModifierSystem.Dispose()
+  fullName: Core.Modifiers.ModifierSystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 687
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Dispose native collections
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Modifiers.ModifierSystem.Dispose*
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Modifiers.ModifierSystem.#ctor*
+  commentId: Overload:Core.Modifiers.ModifierSystem.#ctor
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem__ctor_System_Int32_System_Int32_
+  name: ModifierSystem
+  nameWithType: ModifierSystem.ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem.ModifierSystem
+  nameWithType.vb: ModifierSystem.New
+  fullName.vb: Core.Modifiers.ModifierSystem.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Modifiers.ModifierSystem.AddGlobalModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.AddGlobalModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_AddGlobalModifier_Core_Modifiers_ModifierSource_
+  name: AddGlobalModifier
+  nameWithType: ModifierSystem.AddGlobalModifier
+  fullName: Core.Modifiers.ModifierSystem.AddGlobalModifier
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_RemoveGlobalModifiersBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: RemoveGlobalModifiersBySource
+  nameWithType: ModifierSystem.RemoveGlobalModifiersBySource
+  fullName: Core.Modifiers.ModifierSystem.RemoveGlobalModifiersBySource
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Modifiers.ModifierSystem.AddCountryModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.AddCountryModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_AddCountryModifier_System_UInt16_Core_Modifiers_ModifierSource_
+  name: AddCountryModifier
+  nameWithType: ModifierSystem.AddCountryModifier
+  fullName: Core.Modifiers.ModifierSystem.AddCountryModifier
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_RemoveCountryModifiersBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: RemoveCountryModifiersBySource
+  nameWithType: ModifierSystem.RemoveCountryModifiersBySource
+  fullName: Core.Modifiers.ModifierSystem.RemoveCountryModifiersBySource
+- uid: Core.Modifiers.ModifierSystem.AddProvinceModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.AddProvinceModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_AddProvinceModifier_System_UInt16_Core_Modifiers_ModifierSource_
+  name: AddProvinceModifier
+  nameWithType: ModifierSystem.AddProvinceModifier
+  fullName: Core.Modifiers.ModifierSystem.AddProvinceModifier
+- uid: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_RemoveProvinceModifiersBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: RemoveProvinceModifiersBySource
+  nameWithType: ModifierSystem.RemoveProvinceModifiersBySource
+  fullName: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySource
+- uid: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType*
+  commentId: Overload:Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_RemoveProvinceModifiersBySourceAndType_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_UInt16_
+  name: RemoveProvinceModifiersBySourceAndType
+  nameWithType: ModifierSystem.RemoveProvinceModifiersBySourceAndType
+  fullName: Core.Modifiers.ModifierSystem.RemoveProvinceModifiersBySourceAndType
+- uid: Core.Modifiers.ModifierSystem.GetProvinceModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.GetProvinceModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_GetProvinceModifier_System_UInt16_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: GetProvinceModifier
+  nameWithType: ModifierSystem.GetProvinceModifier
+  fullName: Core.Modifiers.ModifierSystem.GetProvinceModifier
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Modifiers.ModifierSystem.GetCountryModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.GetCountryModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_GetCountryModifier_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: GetCountryModifier
+  nameWithType: ModifierSystem.GetCountryModifier
+  fullName: Core.Modifiers.ModifierSystem.GetCountryModifier
+- uid: Core.Modifiers.ModifierSystem.GetGlobalModifier*
+  commentId: Overload:Core.Modifiers.ModifierSystem.GetGlobalModifier
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_GetGlobalModifier_System_UInt16_Core_Data_FixedPoint64_
+  name: GetGlobalModifier
+  nameWithType: ModifierSystem.GetGlobalModifier
+  fullName: Core.Modifiers.ModifierSystem.GetGlobalModifier
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachProvinceModifierWithInheritance_System_UInt16_System_UInt16_System_Action_Core_Modifiers_ModifierSource_Core_Modifiers_ModifierScopeLevel__
+  name: ForEachProvinceModifierWithInheritance
+  nameWithType: ModifierSystem.ForEachProvinceModifierWithInheritance
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierWithInheritance
+- uid: System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel}
+  commentId: T:System.Action{Core.Modifiers.ModifierSource,Core.Modifiers.ModifierScopeLevel}
+  parent: System
+  definition: System.Action`2
+  href: Core.Modifiers.ModifierSource.html
+  name: Action<ModifierSource, ModifierScopeLevel>
+  nameWithType: Action<ModifierSource, ModifierScopeLevel>
+  fullName: System.Action<Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel>
+  nameWithType.vb: Action(Of ModifierSource, ModifierScopeLevel)
+  fullName.vb: System.Action(Of Core.Modifiers.ModifierSource, Core.Modifiers.ModifierScopeLevel)
+  name.vb: Action(Of ModifierSource, ModifierScopeLevel)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: ','
+  - name: " "
+  - uid: Core.Modifiers.ModifierScopeLevel
+    name: ModifierScopeLevel
+    href: Core.Modifiers.ModifierScopeLevel.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: ','
+  - name: " "
+  - uid: Core.Modifiers.ModifierScopeLevel
+    name: ModifierScopeLevel
+    href: Core.Modifiers.ModifierScopeLevel.html
+  - name: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachCountryModifierWithInheritance_System_UInt16_System_Action_Core_Modifiers_ModifierSource_Core_Modifiers_ModifierScopeLevel__
+  name: ForEachCountryModifierWithInheritance
+  nameWithType: ModifierSystem.ForEachCountryModifierWithInheritance
+  fullName: Core.Modifiers.ModifierSystem.ForEachCountryModifierWithInheritance
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachProvinceModifierByType_System_UInt16_System_UInt16_System_UInt16_System_Action_Core_Modifiers_ModifierSource_Core_Modifiers_ModifierScopeLevel__
+  name: ForEachProvinceModifierByType
+  nameWithType: ModifierSystem.ForEachProvinceModifierByType
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierByType
+- uid: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachProvinceModifierBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachProvinceModifierBySource
+  nameWithType: ModifierSystem.ForEachProvinceModifierBySource
+  fullName: Core.Modifiers.ModifierSystem.ForEachProvinceModifierBySource
+- uid: System.Action{Core.Modifiers.ModifierSource}
+  commentId: T:System.Action{Core.Modifiers.ModifierSource}
+  parent: System
+  definition: System.Action`1
+  href: Core.Modifiers.ModifierSource.html
+  name: Action<ModifierSource>
+  nameWithType: Action<ModifierSource>
+  fullName: System.Action<Core.Modifiers.ModifierSource>
+  nameWithType.vb: Action(Of ModifierSource)
+  fullName.vb: System.Action(Of Core.Modifiers.ModifierSource)
+  name.vb: Action(Of ModifierSource)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachCountryModifierBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachCountryModifierBySource
+  nameWithType: ModifierSystem.ForEachCountryModifierBySource
+  fullName: Core.Modifiers.ModifierSystem.ForEachCountryModifierBySource
+- uid: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ForEachGlobalModifierBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachGlobalModifierBySource
+  nameWithType: ModifierSystem.ForEachGlobalModifierBySource
+  fullName: Core.Modifiers.ModifierSystem.ForEachGlobalModifierBySource
+- uid: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_CountProvinceModifiersBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: CountProvinceModifiersBySource
+  nameWithType: ModifierSystem.CountProvinceModifiersBySource
+  fullName: Core.Modifiers.ModifierSystem.CountProvinceModifiersBySource
+- uid: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.CountCountryModifiersBySource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_CountCountryModifiersBySource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: CountCountryModifiersBySource
+  nameWithType: ModifierSystem.CountCountryModifiersBySource
+  fullName: Core.Modifiers.ModifierSystem.CountCountryModifiersBySource
+- uid: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_HasProvinceModifiersFromSource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: HasProvinceModifiersFromSource
+  nameWithType: ModifierSystem.HasProvinceModifiersFromSource
+  fullName: Core.Modifiers.ModifierSystem.HasProvinceModifiersFromSource
+- uid: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource*
+  commentId: Overload:Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_HasCountryModifiersFromSource_System_UInt16_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: HasCountryModifiersFromSource
+  nameWithType: ModifierSystem.HasCountryModifiersFromSource
+  fullName: Core.Modifiers.ModifierSystem.HasCountryModifiersFromSource
+- uid: Core.Modifiers.ModifierSystem.ClearProvinceModifiers*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ClearProvinceModifiers
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ClearProvinceModifiers_System_UInt16_
+  name: ClearProvinceModifiers
+  nameWithType: ModifierSystem.ClearProvinceModifiers
+  fullName: Core.Modifiers.ModifierSystem.ClearProvinceModifiers
+- uid: Core.Modifiers.ModifierSystem.ClearCountryModifiers*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ClearCountryModifiers
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ClearCountryModifiers_System_UInt16_
+  name: ClearCountryModifiers
+  nameWithType: ModifierSystem.ClearCountryModifiers
+  fullName: Core.Modifiers.ModifierSystem.ClearCountryModifiers
+- uid: Core.Modifiers.ModifierSystem.ClearGlobalModifiers*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ClearGlobalModifiers
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ClearGlobalModifiers
+  name: ClearGlobalModifiers
+  nameWithType: ModifierSystem.ClearGlobalModifiers
+  fullName: Core.Modifiers.ModifierSystem.ClearGlobalModifiers
+- uid: Core.Modifiers.ModifierSystem.ExpireModifiers*
+  commentId: Overload:Core.Modifiers.ModifierSystem.ExpireModifiers
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_ExpireModifiers_System_Int32_
+  name: ExpireModifiers
+  nameWithType: ModifierSystem.ExpireModifiers
+  fullName: Core.Modifiers.ModifierSystem.ExpireModifiers
+- uid: Core.Modifiers.ModifierSystem.SaveState*
+  commentId: Overload:Core.Modifiers.ModifierSystem.SaveState
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_SaveState_System_IO_BinaryWriter_
+  name: SaveState
+  nameWithType: ModifierSystem.SaveState
+  fullName: Core.Modifiers.ModifierSystem.SaveState
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Modifiers.ModifierSystem.LoadState*
+  commentId: Overload:Core.Modifiers.ModifierSystem.LoadState
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_LoadState_System_IO_BinaryReader_
+  name: LoadState
+  nameWithType: ModifierSystem.LoadState
+  fullName: Core.Modifiers.ModifierSystem.LoadState
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.Modifiers.ModifierSystem.Dispose*
+  commentId: Overload:Core.Modifiers.ModifierSystem.Dispose
+  href: Core.Modifiers.ModifierSystem.html#Core_Modifiers_ModifierSystem_Dispose
+  name: Dispose
+  nameWithType: ModifierSystem.Dispose
+  fullName: Core.Modifiers.ModifierSystem.Dispose

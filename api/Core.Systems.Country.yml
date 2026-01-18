@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.Country
+  commentId: N:Core.Systems.Country
+  id: Core.Systems.Country
+  children:
+  - Core.Systems.Country.CountryDataManager
+  - Core.Systems.Country.CountryStateLoader
+  langs:
+  - csharp
+  - vb
+  name: Core.Systems.Country
+  nameWithType: Core.Systems.Country
+  fullName: Core.Systems.Country
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Systems.Country.CountryDataManager
+  commentId: T:Core.Systems.Country.CountryDataManager
+  parent: Core.Systems.Country
+  href: Core.Systems.Country.CountryDataManager.html
+  name: CountryDataManager
+  nameWithType: CountryDataManager
+  fullName: Core.Systems.Country.CountryDataManager
+- uid: Core.Systems.Country.CountryStateLoader
+  commentId: T:Core.Systems.Country.CountryStateLoader
+  href: Core.Systems.Country.CountryStateLoader.html
+  name: CountryStateLoader
+  nameWithType: CountryStateLoader
+  fullName: Core.Systems.Country.CountryStateLoader
+- uid: Core.Systems.Country
+  commentId: N:Core.Systems.Country
+  href: Core.html
+  name: Core.Systems.Country
+  nameWithType: Core.Systems.Country
+  fullName: Core.Systems.Country
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Country
+    name: Country
+    href: Core.Systems.Country.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Country
+    name: Country
+    href: Core.Systems.Country.html

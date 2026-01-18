@@ -1,0 +1,1149 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.ChangeOwnerCommand
+  commentId: T:Core.Commands.ChangeOwnerCommand
+  id: ChangeOwnerCommand
+  parent: Core.Commands
+  children:
+  - Core.Commands.ChangeOwnerCommand.#ctor(System.UInt32,System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Commands.ChangeOwnerCommand.CommandType
+  - Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.ChangeOwnerCommand.Dispose
+  - Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.ChangeOwnerCommand.ExecutionTick
+  - Core.Commands.ChangeOwnerCommand.GetChecksum
+  - Core.Commands.ChangeOwnerCommand.GetSerializedSize
+  - Core.Commands.ChangeOwnerCommand.PlayerID
+  - Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.ChangeOwnerCommand.ToString
+  - Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  - Core.Commands.ChangeOwnerCommand.executionTick
+  - Core.Commands.ChangeOwnerCommand.newControllerID
+  - Core.Commands.ChangeOwnerCommand.newOwnerID
+  - Core.Commands.ChangeOwnerCommand.playerID
+  - Core.Commands.ChangeOwnerCommand.provinceID
+  langs:
+  - csharp
+  - vb
+  name: ChangeOwnerCommand
+  nameWithType: ChangeOwnerCommand
+  fullName: Core.Commands.ChangeOwnerCommand
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeOwnerCommand
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Command to change province ownership
+
+    Fixed 12-byte serialization format for network efficiency
+  example: []
+  syntax:
+    content: 'public struct ChangeOwnerCommand : IProvinceCommand'
+    content.vb: Public Structure ChangeOwnerCommand Implements IProvinceCommand
+  implements:
+  - Core.Commands.IProvinceCommand
+- uid: Core.Commands.ChangeOwnerCommand.executionTick
+  commentId: F:Core.Commands.ChangeOwnerCommand.executionTick
+  id: executionTick
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: executionTick
+  nameWithType: ChangeOwnerCommand.executionTick
+  fullName: Core.Commands.ChangeOwnerCommand.executionTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: executionTick
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint executionTick
+    return:
+      type: System.UInt32
+    content.vb: Public executionTick As UInteger
+- uid: Core.Commands.ChangeOwnerCommand.playerID
+  commentId: F:Core.Commands.ChangeOwnerCommand.playerID
+  id: playerID
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: playerID
+  nameWithType: ChangeOwnerCommand.playerID
+  fullName: Core.Commands.ChangeOwnerCommand.playerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: playerID
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort playerID
+    return:
+      type: System.UInt16
+    content.vb: Public playerID As UShort
+- uid: Core.Commands.ChangeOwnerCommand.provinceID
+  commentId: F:Core.Commands.ChangeOwnerCommand.provinceID
+  id: provinceID
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: provinceID
+  nameWithType: ChangeOwnerCommand.provinceID
+  fullName: Core.Commands.ChangeOwnerCommand.provinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceID
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort provinceID
+    return:
+      type: System.UInt16
+    content.vb: Public provinceID As UShort
+- uid: Core.Commands.ChangeOwnerCommand.newOwnerID
+  commentId: F:Core.Commands.ChangeOwnerCommand.newOwnerID
+  id: newOwnerID
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: newOwnerID
+  nameWithType: ChangeOwnerCommand.newOwnerID
+  fullName: Core.Commands.ChangeOwnerCommand.newOwnerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: newOwnerID
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort newOwnerID
+    return:
+      type: System.UInt16
+    content.vb: Public newOwnerID As UShort
+- uid: Core.Commands.ChangeOwnerCommand.newControllerID
+  commentId: F:Core.Commands.ChangeOwnerCommand.newControllerID
+  id: newControllerID
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: newControllerID
+  nameWithType: ChangeOwnerCommand.newControllerID
+  fullName: Core.Commands.ChangeOwnerCommand.newControllerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: newControllerID
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort newControllerID
+    return:
+      type: System.UInt16
+    content.vb: Public newControllerID As UShort
+- uid: Core.Commands.ChangeOwnerCommand.CommandType
+  commentId: P:Core.Commands.ChangeOwnerCommand.CommandType
+  id: CommandType
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: CommandType
+  nameWithType: ChangeOwnerCommand.CommandType
+  fullName: Core.Commands.ChangeOwnerCommand.CommandType
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandType
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Unique command type identifier for serialization
+
+    Must be consistent across all clients and versions
+  example: []
+  syntax:
+    content: public byte CommandType { get; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public ReadOnly Property CommandType As Byte
+  overload: Core.Commands.ChangeOwnerCommand.CommandType*
+  implements:
+  - Core.Commands.IProvinceCommand.CommandType
+- uid: Core.Commands.ChangeOwnerCommand.ExecutionTick
+  commentId: P:Core.Commands.ChangeOwnerCommand.ExecutionTick
+  id: ExecutionTick
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: ExecutionTick
+  nameWithType: ChangeOwnerCommand.ExecutionTick
+  fullName: Core.Commands.ChangeOwnerCommand.ExecutionTick
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExecutionTick
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Game tick when this command should be executed
+
+    Used for command scheduling and rollback
+  example: []
+  syntax:
+    content: public uint ExecutionTick { get; set; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public Property ExecutionTick As UInteger
+  overload: Core.Commands.ChangeOwnerCommand.ExecutionTick*
+  implements:
+  - Core.Commands.IProvinceCommand.ExecutionTick
+- uid: Core.Commands.ChangeOwnerCommand.PlayerID
+  commentId: P:Core.Commands.ChangeOwnerCommand.PlayerID
+  id: PlayerID
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: PlayerID
+  nameWithType: ChangeOwnerCommand.PlayerID
+  fullName: Core.Commands.ChangeOwnerCommand.PlayerID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerID
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Player who issued this command (for validation)
+  example: []
+  syntax:
+    content: public ushort PlayerID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property PlayerID As UShort
+  overload: Core.Commands.ChangeOwnerCommand.PlayerID*
+  implements:
+  - Core.Commands.IProvinceCommand.PlayerID
+- uid: Core.Commands.ChangeOwnerCommand.#ctor(System.UInt32,System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Commands.ChangeOwnerCommand.#ctor(System.UInt32,System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: '#ctor(System.UInt32,System.UInt16,System.UInt16,System.UInt16,System.UInt16)'
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: ChangeOwnerCommand(uint, ushort, ushort, ushort, ushort)
+  nameWithType: ChangeOwnerCommand.ChangeOwnerCommand(uint, ushort, ushort, ushort, ushort)
+  fullName: Core.Commands.ChangeOwnerCommand.ChangeOwnerCommand(uint, ushort, ushort, ushort, ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ChangeOwnerCommand(uint tick, ushort player, ushort province, ushort newOwner, ushort newController = 0)
+    parameters:
+    - id: tick
+      type: System.UInt32
+    - id: player
+      type: System.UInt16
+    - id: province
+      type: System.UInt16
+    - id: newOwner
+      type: System.UInt16
+    - id: newController
+      type: System.UInt16
+    content.vb: Public Sub New(tick As UInteger, player As UShort, province As UShort, newOwner As UShort, newController As UShort = 0)
+  overload: Core.Commands.ChangeOwnerCommand.#ctor*
+  nameWithType.vb: ChangeOwnerCommand.New(UInteger, UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Commands.ChangeOwnerCommand.New(UInteger, UShort, UShort, UShort, UShort)
+  name.vb: New(UInteger, UShort, UShort, UShort, UShort)
+- uid: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  id: Validate(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: Validate(ProvinceSimulation)
+  nameWithType: ChangeOwnerCommand.Validate(ProvinceSimulation)
+  fullName: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Validate if this command can be executed in the current game state
+
+    Must be deterministic - same result across all clients
+  example: []
+  syntax:
+    content: public CommandValidationResult Validate(ProvinceSimulation simulation)
+    parameters:
+    - id: simulation
+      type: Core.Systems.ProvinceSimulation
+      description: Current simulation state
+    return:
+      type: Core.Commands.CommandValidationResult
+      description: True if command can be executed
+    content.vb: Public Function Validate(simulation As ProvinceSimulation) As CommandValidationResult
+  overload: Core.Commands.ChangeOwnerCommand.Validate*
+  implements:
+  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  id: Execute(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute(ProvinceSimulation)
+  nameWithType: ChangeOwnerCommand.Execute(ProvinceSimulation)
+  fullName: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Execute this command, modifying the simulation state
+
+    Must be deterministic - same result across all clients
+  example: []
+  syntax:
+    content: public CommandExecutionResult Execute(ProvinceSimulation simulation)
+    parameters:
+    - id: simulation
+      type: Core.Systems.ProvinceSimulation
+      description: Simulation to modify
+    return:
+      type: Core.Commands.CommandExecutionResult
+      description: Execution result with affected provinces
+    content.vb: Public Function Execute(simulation As ProvinceSimulation) As CommandExecutionResult
+  overload: Core.Commands.ChangeOwnerCommand.Execute*
+  implements:
+  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: Serialize(NativeArray<byte>, int)
+  nameWithType: ChangeOwnerCommand.Serialize(NativeArray<byte>, int)
+  fullName: Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Serialize command to binary format for network transmission
+
+    Must be deterministic and compact (target: 8-16 bytes)
+  example: []
+  syntax:
+    content: public int Serialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+      description: Buffer to write to
+    - id: offset
+      type: System.Int32
+      description: Starting offset in buffer
+    return:
+      type: System.Int32
+      description: Number of bytes written
+    content.vb: Public Function Serialize(buffer As NativeArray(Of Byte), offset As Integer) As Integer
+  overload: Core.Commands.ChangeOwnerCommand.Serialize*
+  implements:
+  - Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  nameWithType.vb: ChangeOwnerCommand.Serialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Serialize(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(NativeArray<byte>, int)
+  nameWithType: ChangeOwnerCommand.Deserialize(NativeArray<byte>, int)
+  fullName: Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 147
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Deserialize command from binary format
+
+    Must exactly reverse the Serialize operation
+  example: []
+  syntax:
+    content: public int Deserialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+      description: Buffer to read from
+    - id: offset
+      type: System.Int32
+      description: Starting offset in buffer
+    return:
+      type: System.Int32
+      description: Number of bytes read
+    content.vb: Public Function Deserialize(buffer As NativeArray(Of Byte), offset As Integer) As Integer
+  overload: Core.Commands.ChangeOwnerCommand.Deserialize*
+  implements:
+  - Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  nameWithType.vb: ChangeOwnerCommand.Deserialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Deserialize(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.ChangeOwnerCommand.GetSerializedSize
+  commentId: M:Core.Commands.ChangeOwnerCommand.GetSerializedSize
+  id: GetSerializedSize
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: GetSerializedSize()
+  nameWithType: ChangeOwnerCommand.GetSerializedSize()
+  fullName: Core.Commands.ChangeOwnerCommand.GetSerializedSize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSerializedSize
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Get the serialized size of this command in bytes
+
+    Used for buffer allocation and validation
+  example: []
+  syntax:
+    content: public int GetSerializedSize()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetSerializedSize() As Integer
+  overload: Core.Commands.ChangeOwnerCommand.GetSerializedSize*
+  implements:
+  - Core.Commands.IProvinceCommand.GetSerializedSize
+- uid: Core.Commands.ChangeOwnerCommand.GetChecksum
+  commentId: M:Core.Commands.ChangeOwnerCommand.GetChecksum
+  id: GetChecksum
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: GetChecksum()
+  nameWithType: ChangeOwnerCommand.GetChecksum()
+  fullName: Core.Commands.ChangeOwnerCommand.GetChecksum()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetChecksum
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 190
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Calculate checksum of command data for validation
+
+    Used to detect network corruption and ensure determinism
+  example: []
+  syntax:
+    content: public uint GetChecksum()
+    return:
+      type: System.UInt32
+    content.vb: Public Function GetChecksum() As UInteger
+  overload: Core.Commands.ChangeOwnerCommand.GetChecksum*
+  implements:
+  - Core.Commands.IProvinceCommand.GetChecksum
+- uid: Core.Commands.ChangeOwnerCommand.Dispose
+  commentId: M:Core.Commands.ChangeOwnerCommand.Dispose
+  id: Dispose
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ChangeOwnerCommand.Dispose()
+  fullName: Core.Commands.ChangeOwnerCommand.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Commands.ChangeOwnerCommand.Dispose*
+- uid: Core.Commands.ChangeOwnerCommand.ToString
+  commentId: M:Core.Commands.ChangeOwnerCommand.ToString
+  id: ToString
+  parent: Core.Commands.ChangeOwnerCommand
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ChangeOwnerCommand.ToString()
+  fullName: Core.Commands.ChangeOwnerCommand.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Commands/ChangeOwnerCommand.cs
+    startLine: 208
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Commands.ChangeOwnerCommand.ToString*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Commands.IProvinceCommand
+  commentId: T:Core.Commands.IProvinceCommand
+  parent: Core.Commands
+  href: Core.Commands.IProvinceCommand.html
+  name: IProvinceCommand
+  nameWithType: IProvinceCommand
+  fullName: Core.Commands.IProvinceCommand
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Commands.ChangeOwnerCommand.CommandType*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.CommandType
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_CommandType
+  name: CommandType
+  nameWithType: ChangeOwnerCommand.CommandType
+  fullName: Core.Commands.ChangeOwnerCommand.CommandType
+- uid: Core.Commands.IProvinceCommand.CommandType
+  commentId: P:Core.Commands.IProvinceCommand.CommandType
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_CommandType
+  name: CommandType
+  nameWithType: IProvinceCommand.CommandType
+  fullName: Core.Commands.IProvinceCommand.CommandType
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Commands.ChangeOwnerCommand.ExecutionTick*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.ExecutionTick
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_ExecutionTick
+  name: ExecutionTick
+  nameWithType: ChangeOwnerCommand.ExecutionTick
+  fullName: Core.Commands.ChangeOwnerCommand.ExecutionTick
+- uid: Core.Commands.IProvinceCommand.ExecutionTick
+  commentId: P:Core.Commands.IProvinceCommand.ExecutionTick
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_ExecutionTick
+  name: ExecutionTick
+  nameWithType: IProvinceCommand.ExecutionTick
+  fullName: Core.Commands.IProvinceCommand.ExecutionTick
+- uid: Core.Commands.ChangeOwnerCommand.PlayerID*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.PlayerID
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_PlayerID
+  name: PlayerID
+  nameWithType: ChangeOwnerCommand.PlayerID
+  fullName: Core.Commands.ChangeOwnerCommand.PlayerID
+- uid: Core.Commands.IProvinceCommand.PlayerID
+  commentId: P:Core.Commands.IProvinceCommand.PlayerID
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_PlayerID
+  name: PlayerID
+  nameWithType: IProvinceCommand.PlayerID
+  fullName: Core.Commands.IProvinceCommand.PlayerID
+- uid: Core.Commands.ChangeOwnerCommand.#ctor*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.#ctor
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand__ctor_System_UInt32_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: ChangeOwnerCommand
+  nameWithType: ChangeOwnerCommand.ChangeOwnerCommand
+  fullName: Core.Commands.ChangeOwnerCommand.ChangeOwnerCommand
+  nameWithType.vb: ChangeOwnerCommand.New
+  fullName.vb: Core.Commands.ChangeOwnerCommand.New
+  name.vb: New
+- uid: Core.Commands.ChangeOwnerCommand.Validate*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.Validate
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Validate_Core_Systems_ProvinceSimulation_
+  name: Validate
+  nameWithType: ChangeOwnerCommand.Validate
+  fullName: Core.Commands.ChangeOwnerCommand.Validate
+- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+  name: Validate(ProvinceSimulation)
+  nameWithType: IProvinceCommand.Validate(ProvinceSimulation)
+  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+    name: Validate
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+  - name: (
+  - uid: Core.Systems.ProvinceSimulation
+    name: ProvinceSimulation
+    href: Core.Systems.ProvinceSimulation.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+    name: Validate
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+  - name: (
+  - uid: Core.Systems.ProvinceSimulation
+    name: ProvinceSimulation
+    href: Core.Systems.ProvinceSimulation.html
+  - name: )
+- uid: Core.Systems.ProvinceSimulation
+  commentId: T:Core.Systems.ProvinceSimulation
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSimulation.html
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation
+- uid: Core.Commands.CommandValidationResult
+  commentId: T:Core.Commands.CommandValidationResult
+  parent: Core.Commands
+  href: Core.Commands.CommandValidationResult.html
+  name: CommandValidationResult
+  nameWithType: CommandValidationResult
+  fullName: Core.Commands.CommandValidationResult
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Commands.ChangeOwnerCommand.Execute*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.Execute
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Execute_Core_Systems_ProvinceSimulation_
+  name: Execute
+  nameWithType: ChangeOwnerCommand.Execute
+  fullName: Core.Commands.ChangeOwnerCommand.Execute
+- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+  name: Execute(ProvinceSimulation)
+  nameWithType: IProvinceCommand.Execute(ProvinceSimulation)
+  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+    name: Execute
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+  - name: (
+  - uid: Core.Systems.ProvinceSimulation
+    name: ProvinceSimulation
+    href: Core.Systems.ProvinceSimulation.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+    name: Execute
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+  - name: (
+  - uid: Core.Systems.ProvinceSimulation
+    name: ProvinceSimulation
+    href: Core.Systems.ProvinceSimulation.html
+  - name: )
+- uid: Core.Commands.CommandExecutionResult
+  commentId: T:Core.Commands.CommandExecutionResult
+  parent: Core.Commands
+  href: Core.Commands.CommandExecutionResult.html
+  name: CommandExecutionResult
+  nameWithType: CommandExecutionResult
+  fullName: Core.Commands.CommandExecutionResult
+- uid: Core.Commands.ChangeOwnerCommand.Serialize*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.Serialize
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Serialize
+  nameWithType: ChangeOwnerCommand.Serialize
+  fullName: Core.Commands.ChangeOwnerCommand.Serialize
+- uid: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.IProvinceCommand
+  isExternal: true
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Serialize(NativeArray<byte>, int)
+  nameWithType: IProvinceCommand.Serialize(NativeArray<byte>, int)
+  fullName: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray<byte>, int)
+  nameWithType.vb: IProvinceCommand.Serialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Serialize(NativeArray(Of Byte), Integer)
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+    name: Serialize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  - name: (
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+    name: Serialize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  - name: (
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Commands.ChangeOwnerCommand.Deserialize*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.Deserialize
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Deserialize
+  nameWithType: ChangeOwnerCommand.Deserialize
+  fullName: Core.Commands.ChangeOwnerCommand.Deserialize
+- uid: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.IProvinceCommand
+  isExternal: true
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Deserialize(NativeArray<byte>, int)
+  nameWithType: IProvinceCommand.Deserialize(NativeArray<byte>, int)
+  fullName: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray<byte>, int)
+  nameWithType.vb: IProvinceCommand.Deserialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Deserialize(NativeArray(Of Byte), Integer)
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+    name: Deserialize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  - name: (
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+    name: Deserialize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  - name: (
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Commands.ChangeOwnerCommand.GetSerializedSize*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.GetSerializedSize
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_GetSerializedSize
+  name: GetSerializedSize
+  nameWithType: ChangeOwnerCommand.GetSerializedSize
+  fullName: Core.Commands.ChangeOwnerCommand.GetSerializedSize
+- uid: Core.Commands.IProvinceCommand.GetSerializedSize
+  commentId: M:Core.Commands.IProvinceCommand.GetSerializedSize
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetSerializedSize
+  name: GetSerializedSize()
+  nameWithType: IProvinceCommand.GetSerializedSize()
+  fullName: Core.Commands.IProvinceCommand.GetSerializedSize()
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.GetSerializedSize
+    name: GetSerializedSize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetSerializedSize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.GetSerializedSize
+    name: GetSerializedSize
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetSerializedSize
+  - name: (
+  - name: )
+- uid: Core.Commands.ChangeOwnerCommand.GetChecksum*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.GetChecksum
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_GetChecksum
+  name: GetChecksum
+  nameWithType: ChangeOwnerCommand.GetChecksum
+  fullName: Core.Commands.ChangeOwnerCommand.GetChecksum
+- uid: Core.Commands.IProvinceCommand.GetChecksum
+  commentId: M:Core.Commands.IProvinceCommand.GetChecksum
+  parent: Core.Commands.IProvinceCommand
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetChecksum
+  name: GetChecksum()
+  nameWithType: IProvinceCommand.GetChecksum()
+  fullName: Core.Commands.IProvinceCommand.GetChecksum()
+  spec.csharp:
+  - uid: Core.Commands.IProvinceCommand.GetChecksum
+    name: GetChecksum
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetChecksum
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.IProvinceCommand.GetChecksum
+    name: GetChecksum
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetChecksum
+  - name: (
+  - name: )
+- uid: Core.Commands.ChangeOwnerCommand.Dispose*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.Dispose
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Dispose
+  name: Dispose
+  nameWithType: ChangeOwnerCommand.Dispose
+  fullName: Core.Commands.ChangeOwnerCommand.Dispose
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.ChangeOwnerCommand.ToString*
+  commentId: Overload:Core.Commands.ChangeOwnerCommand.ToString
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_ToString
+  name: ToString
+  nameWithType: ChangeOwnerCommand.ToString
+  fullName: Core.Commands.ChangeOwnerCommand.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

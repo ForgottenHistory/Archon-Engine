@@ -1,0 +1,552 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.GameStateSnapshot
+  commentId: T:Core.GameStateSnapshot
+  id: GameStateSnapshot
+  parent: Core
+  children:
+  - Core.GameStateSnapshot.Capacity
+  - Core.GameStateSnapshot.CurrentWriteBufferIndex
+  - Core.GameStateSnapshot.Dispose
+  - Core.GameStateSnapshot.GetProvinceReadBuffer
+  - Core.GameStateSnapshot.GetProvinceWriteBuffer
+  - Core.GameStateSnapshot.Initialize(System.Int32)
+  - Core.GameStateSnapshot.IsInitialized
+  - Core.GameStateSnapshot.SwapBuffers
+  - Core.GameStateSnapshot.SyncBuffersAfterLoad
+  langs:
+  - csharp
+  - vb
+  name: GameStateSnapshot
+  nameWithType: GameStateSnapshot
+  fullName: Core.GameStateSnapshot
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameStateSnapshot
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    ENGINE - Double-buffer pattern for zero-blocking UI reads
+
+
+    Problem: UI needs province data without blocking simulation
+
+    Victoria 3 uses locks → "waiting" bars in profiler
+
+
+    Solution: Double-buffer (two NativeArrays)
+
+    - Simulation writes to buffer A
+
+    - UI reads from buffer B
+
+    - After tick: swap pointers (O(1), not memcpy!)
+
+
+    Memory: 2x hot data (~160KB for 10k provinces at 8 bytes)
+
+    Performance: O(1) pointer swap (no copying!)
+
+    Staleness: Zero (UI reads completed tick)
+
+
+    Pattern from Paradox analysis:
+
+    - Victoria 3 locks = bad (waiting bars)
+
+    - Snapshots = good (zero blocking)
+
+    - Double-buffer = optimal (no memcpy overhead)
+  example: []
+  syntax:
+    content: public class GameStateSnapshot
+    content.vb: Public Class GameStateSnapshot
+  inheritance:
+  - System.Object
+- uid: Core.GameStateSnapshot.Initialize(System.Int32)
+  commentId: M:Core.GameStateSnapshot.Initialize(System.Int32)
+  id: Initialize(System.Int32)
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: Initialize(int)
+  nameWithType: GameStateSnapshot.Initialize(int)
+  fullName: Core.GameStateSnapshot.Initialize(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Initialize double buffers
+  example: []
+  syntax:
+    content: public void Initialize(int provinceCapacity)
+    parameters:
+    - id: provinceCapacity
+      type: System.Int32
+    content.vb: Public Sub Initialize(provinceCapacity As Integer)
+  overload: Core.GameStateSnapshot.Initialize*
+  nameWithType.vb: GameStateSnapshot.Initialize(Integer)
+  fullName.vb: Core.GameStateSnapshot.Initialize(Integer)
+  name.vb: Initialize(Integer)
+- uid: Core.GameStateSnapshot.GetProvinceWriteBuffer
+  commentId: M:Core.GameStateSnapshot.GetProvinceWriteBuffer
+  id: GetProvinceWriteBuffer
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceWriteBuffer()
+  nameWithType: GameStateSnapshot.GetProvinceWriteBuffer()
+  fullName: Core.GameStateSnapshot.GetProvinceWriteBuffer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceWriteBuffer
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Get write buffer (simulation writes here)
+  example: []
+  syntax:
+    content: public NativeArray<ProvinceState> GetProvinceWriteBuffer()
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceState}
+    content.vb: Public Function GetProvinceWriteBuffer() As NativeArray(Of ProvinceState)
+  overload: Core.GameStateSnapshot.GetProvinceWriteBuffer*
+- uid: Core.GameStateSnapshot.GetProvinceReadBuffer
+  commentId: M:Core.GameStateSnapshot.GetProvinceReadBuffer
+  id: GetProvinceReadBuffer
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceReadBuffer()
+  nameWithType: GameStateSnapshot.GetProvinceReadBuffer()
+  fullName: Core.GameStateSnapshot.GetProvinceReadBuffer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceReadBuffer
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Get read buffer (UI reads here)
+
+    Thread-safe: UI can read while simulation writes to other buffer
+  example: []
+  syntax:
+    content: public NativeArray<ProvinceState> GetProvinceReadBuffer()
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceState}
+    content.vb: Public Function GetProvinceReadBuffer() As NativeArray(Of ProvinceState)
+  overload: Core.GameStateSnapshot.GetProvinceReadBuffer*
+- uid: Core.GameStateSnapshot.SwapBuffers
+  commentId: M:Core.GameStateSnapshot.SwapBuffers
+  id: SwapBuffers
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: SwapBuffers()
+  nameWithType: GameStateSnapshot.SwapBuffers()
+  fullName: Core.GameStateSnapshot.SwapBuffers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SwapBuffers
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 101
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Swap buffers after simulation tick (O(1) pointer flip)
+
+
+    Call from TimeManager after tick completes:
+
+    - Simulation just finished writing to write buffer
+
+    - Flip pointers so UI sees new data
+
+    - Simulation starts writing to old read buffer next tick
+
+
+    Performance: O(1) pointer flip only
+
+
+    NOTE: This just flips the buffer pointers. The caller (ProvinceSystem.SwapBuffers)
+
+    is responsible for copying dirty entries to preserve persistent state.
+
+    This separation allows ProvinceSystem to use dirty tracking for O(dirty) copies
+
+    instead of O(all) full buffer copies.
+  example: []
+  syntax:
+    content: public void SwapBuffers()
+    content.vb: Public Sub SwapBuffers()
+  overload: Core.GameStateSnapshot.SwapBuffers*
+- uid: Core.GameStateSnapshot.SyncBuffersAfterLoad
+  commentId: M:Core.GameStateSnapshot.SyncBuffersAfterLoad
+  id: SyncBuffersAfterLoad
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: SyncBuffersAfterLoad()
+  nameWithType: GameStateSnapshot.SyncBuffersAfterLoad()
+  fullName: Core.GameStateSnapshot.SyncBuffersAfterLoad()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SyncBuffersAfterLoad
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 115
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Synchronize read buffer with write buffer (copy write → read)
+
+
+    Used after scenario loading to ensure both buffers have the same initial data.
+
+    This prevents the first tick from reading from an empty buffer after the first swap.
+
+
+    Performance: O(n) memcpy - only call during initialization, not during gameplay
+  example: []
+  syntax:
+    content: public void SyncBuffersAfterLoad()
+    content.vb: Public Sub SyncBuffersAfterLoad()
+  overload: Core.GameStateSnapshot.SyncBuffersAfterLoad*
+- uid: Core.GameStateSnapshot.IsInitialized
+  commentId: P:Core.GameStateSnapshot.IsInitialized
+  id: IsInitialized
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: GameStateSnapshot.IsInitialized
+  fullName: Core.GameStateSnapshot.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Check if initialized
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.GameStateSnapshot.IsInitialized*
+- uid: Core.GameStateSnapshot.Capacity
+  commentId: P:Core.GameStateSnapshot.Capacity
+  id: Capacity
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: GameStateSnapshot.Capacity
+  fullName: Core.GameStateSnapshot.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 136
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Get buffer capacity
+  example: []
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Core.GameStateSnapshot.Capacity*
+- uid: Core.GameStateSnapshot.CurrentWriteBufferIndex
+  commentId: P:Core.GameStateSnapshot.CurrentWriteBufferIndex
+  id: CurrentWriteBufferIndex
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: CurrentWriteBufferIndex
+  nameWithType: GameStateSnapshot.CurrentWriteBufferIndex
+  fullName: Core.GameStateSnapshot.CurrentWriteBufferIndex
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentWriteBufferIndex
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 141
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Get current write buffer index (0 or 1) - for debugging
+  example: []
+  syntax:
+    content: public int CurrentWriteBufferIndex { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CurrentWriteBufferIndex As Integer
+  overload: Core.GameStateSnapshot.CurrentWriteBufferIndex*
+- uid: Core.GameStateSnapshot.Dispose
+  commentId: M:Core.GameStateSnapshot.Dispose
+  id: Dispose
+  parent: Core.GameStateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: GameStateSnapshot.Dispose()
+  fullName: Core.GameStateSnapshot.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameStateSnapshot.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/GameStateSnapshot.cs
+    startLine: 146
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Dispose both buffers
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.GameStateSnapshot.Dispose*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.GameStateSnapshot.Initialize*
+  commentId: Overload:Core.GameStateSnapshot.Initialize
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_Initialize_System_Int32_
+  name: Initialize
+  nameWithType: GameStateSnapshot.Initialize
+  fullName: Core.GameStateSnapshot.Initialize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.GameStateSnapshot.GetProvinceWriteBuffer*
+  commentId: Overload:Core.GameStateSnapshot.GetProvinceWriteBuffer
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_GetProvinceWriteBuffer
+  name: GetProvinceWriteBuffer
+  nameWithType: GameStateSnapshot.GetProvinceWriteBuffer
+  fullName: Core.GameStateSnapshot.GetProvinceWriteBuffer
+- uid: Unity.Collections.NativeArray{Core.Data.ProvinceState}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.ProvinceState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.ProvinceState.html
+  name: NativeArray<ProvinceState>
+  nameWithType: NativeArray<ProvinceState>
+  fullName: Unity.Collections.NativeArray<Core.Data.ProvinceState>
+  nameWithType.vb: NativeArray(Of ProvinceState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.ProvinceState)
+  name.vb: NativeArray(Of ProvinceState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.ProvinceState
+    name: ProvinceState
+    href: Core.Data.ProvinceState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.ProvinceState
+    name: ProvinceState
+    href: Core.Data.ProvinceState.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.GameStateSnapshot.GetProvinceReadBuffer*
+  commentId: Overload:Core.GameStateSnapshot.GetProvinceReadBuffer
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_GetProvinceReadBuffer
+  name: GetProvinceReadBuffer
+  nameWithType: GameStateSnapshot.GetProvinceReadBuffer
+  fullName: Core.GameStateSnapshot.GetProvinceReadBuffer
+- uid: Core.GameStateSnapshot.SwapBuffers*
+  commentId: Overload:Core.GameStateSnapshot.SwapBuffers
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_SwapBuffers
+  name: SwapBuffers
+  nameWithType: GameStateSnapshot.SwapBuffers
+  fullName: Core.GameStateSnapshot.SwapBuffers
+- uid: Core.GameStateSnapshot.SyncBuffersAfterLoad*
+  commentId: Overload:Core.GameStateSnapshot.SyncBuffersAfterLoad
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_SyncBuffersAfterLoad
+  name: SyncBuffersAfterLoad
+  nameWithType: GameStateSnapshot.SyncBuffersAfterLoad
+  fullName: Core.GameStateSnapshot.SyncBuffersAfterLoad
+- uid: Core.GameStateSnapshot.IsInitialized*
+  commentId: Overload:Core.GameStateSnapshot.IsInitialized
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_IsInitialized
+  name: IsInitialized
+  nameWithType: GameStateSnapshot.IsInitialized
+  fullName: Core.GameStateSnapshot.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.GameStateSnapshot.Capacity*
+  commentId: Overload:Core.GameStateSnapshot.Capacity
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_Capacity
+  name: Capacity
+  nameWithType: GameStateSnapshot.Capacity
+  fullName: Core.GameStateSnapshot.Capacity
+- uid: Core.GameStateSnapshot.CurrentWriteBufferIndex*
+  commentId: Overload:Core.GameStateSnapshot.CurrentWriteBufferIndex
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_CurrentWriteBufferIndex
+  name: CurrentWriteBufferIndex
+  nameWithType: GameStateSnapshot.CurrentWriteBufferIndex
+  fullName: Core.GameStateSnapshot.CurrentWriteBufferIndex
+- uid: Core.GameStateSnapshot.Dispose*
+  commentId: Overload:Core.GameStateSnapshot.Dispose
+  href: Core.GameStateSnapshot.html#Core_GameStateSnapshot_Dispose
+  name: Dispose
+  nameWithType: GameStateSnapshot.Dispose
+  fullName: Core.GameStateSnapshot.Dispose

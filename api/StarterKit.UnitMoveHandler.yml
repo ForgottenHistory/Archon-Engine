@@ -1,0 +1,419 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.UnitMoveHandler
+  commentId: T:StarterKit.UnitMoveHandler
+  id: UnitMoveHandler
+  parent: StarterKit
+  children:
+  - StarterKit.UnitMoveHandler.#ctor(Core.GameState,StarterKit.UnitSystem)
+  - StarterKit.UnitMoveHandler.ExitMoveMode
+  - StarterKit.UnitMoveHandler.HandleProvinceClick(System.UInt16)
+  - StarterKit.UnitMoveHandler.IsInMoveMode
+  - StarterKit.UnitMoveHandler.OnMoveComplete
+  - StarterKit.UnitMoveHandler.SetUIElements(UnityEngine.UIElements.Label,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Label)
+  - StarterKit.UnitMoveHandler.TryEnterMoveMode(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: UnitMoveHandler
+  nameWithType: UnitMoveHandler
+  fullName: StarterKit.UnitMoveHandler
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitMoveHandler
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 12
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Handles unit movement mode for UnitInfoUI.
+
+    Extracted to keep UnitInfoUI focused on display concerns.
+  example: []
+  syntax:
+    content: public class UnitMoveHandler
+    content.vb: Public Class UnitMoveHandler
+  inheritance:
+  - System.Object
+- uid: StarterKit.UnitMoveHandler.OnMoveComplete
+  commentId: F:StarterKit.UnitMoveHandler.OnMoveComplete
+  id: OnMoveComplete
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: OnMoveComplete
+  nameWithType: UnitMoveHandler.OnMoveComplete
+  fullName: StarterKit.UnitMoveHandler.OnMoveComplete
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnMoveComplete
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 31
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public Action OnMoveComplete
+    return:
+      type: System.Action
+    content.vb: Public OnMoveComplete As Action
+- uid: StarterKit.UnitMoveHandler.IsInMoveMode
+  commentId: P:StarterKit.UnitMoveHandler.IsInMoveMode
+  id: IsInMoveMode
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: IsInMoveMode
+  nameWithType: UnitMoveHandler.IsInMoveMode
+  fullName: StarterKit.UnitMoveHandler.IsInMoveMode
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInMoveMode
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 33
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public bool IsInMoveMode { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInMoveMode As Boolean
+  overload: StarterKit.UnitMoveHandler.IsInMoveMode*
+- uid: StarterKit.UnitMoveHandler.#ctor(Core.GameState,StarterKit.UnitSystem)
+  commentId: M:StarterKit.UnitMoveHandler.#ctor(Core.GameState,StarterKit.UnitSystem)
+  id: '#ctor(Core.GameState,StarterKit.UnitSystem)'
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: UnitMoveHandler(GameState, UnitSystem)
+  nameWithType: UnitMoveHandler.UnitMoveHandler(GameState, UnitSystem)
+  fullName: StarterKit.UnitMoveHandler.UnitMoveHandler(Core.GameState, StarterKit.UnitSystem)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 35
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public UnitMoveHandler(GameState gameState, UnitSystem unitSystem)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    - id: unitSystem
+      type: StarterKit.UnitSystem
+    content.vb: Public Sub New(gameState As GameState, unitSystem As UnitSystem)
+  overload: StarterKit.UnitMoveHandler.#ctor*
+  nameWithType.vb: UnitMoveHandler.New(GameState, UnitSystem)
+  fullName.vb: StarterKit.UnitMoveHandler.New(Core.GameState, StarterKit.UnitSystem)
+  name.vb: New(GameState, UnitSystem)
+- uid: StarterKit.UnitMoveHandler.SetUIElements(UnityEngine.UIElements.Label,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Label)
+  commentId: M:StarterKit.UnitMoveHandler.SetUIElements(UnityEngine.UIElements.Label,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Label)
+  id: SetUIElements(UnityEngine.UIElements.Label,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Button,UnityEngine.UIElements.Label)
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: SetUIElements(Label, Button, Button, Button, Label)
+  nameWithType: UnitMoveHandler.SetUIElements(Label, Button, Button, Button, Label)
+  fullName: StarterKit.UnitMoveHandler.SetUIElements(UnityEngine.UIElements.Label, UnityEngine.UIElements.Button, UnityEngine.UIElements.Button, UnityEngine.UIElements.Button, UnityEngine.UIElements.Label)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetUIElements
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 44
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Set UI element references for move mode display updates.
+  example: []
+  syntax:
+    content: public void SetUIElements(Label header, Button createBtn, Button moveBtn, Button cancelBtn, Label moveLabel)
+    parameters:
+    - id: header
+      type: UnityEngine.UIElements.Label
+    - id: createBtn
+      type: UnityEngine.UIElements.Button
+    - id: moveBtn
+      type: UnityEngine.UIElements.Button
+    - id: cancelBtn
+      type: UnityEngine.UIElements.Button
+    - id: moveLabel
+      type: UnityEngine.UIElements.Label
+    content.vb: Public Sub SetUIElements(header As Label, createBtn As Button, moveBtn As Button, cancelBtn As Button, moveLabel As Label)
+  overload: StarterKit.UnitMoveHandler.SetUIElements*
+- uid: StarterKit.UnitMoveHandler.TryEnterMoveMode(System.UInt16)
+  commentId: M:StarterKit.UnitMoveHandler.TryEnterMoveMode(System.UInt16)
+  id: TryEnterMoveMode(System.UInt16)
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: TryEnterMoveMode(ushort)
+  nameWithType: UnitMoveHandler.TryEnterMoveMode(ushort)
+  fullName: StarterKit.UnitMoveHandler.TryEnterMoveMode(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryEnterMoveMode
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 56
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Enter move mode for units in the specified province.
+  example: []
+  syntax:
+    content: public bool TryEnterMoveMode(ushort sourceProvinceID)
+    parameters:
+    - id: sourceProvinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryEnterMoveMode(sourceProvinceID As UShort) As Boolean
+  overload: StarterKit.UnitMoveHandler.TryEnterMoveMode*
+  nameWithType.vb: UnitMoveHandler.TryEnterMoveMode(UShort)
+  fullName.vb: StarterKit.UnitMoveHandler.TryEnterMoveMode(UShort)
+  name.vb: TryEnterMoveMode(UShort)
+- uid: StarterKit.UnitMoveHandler.ExitMoveMode
+  commentId: M:StarterKit.UnitMoveHandler.ExitMoveMode
+  id: ExitMoveMode
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: ExitMoveMode()
+  nameWithType: UnitMoveHandler.ExitMoveMode()
+  fullName: StarterKit.UnitMoveHandler.ExitMoveMode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExitMoveMode
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 95
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Exit move mode without executing a move.
+  example: []
+  syntax:
+    content: public void ExitMoveMode()
+    content.vb: Public Sub ExitMoveMode()
+  overload: StarterKit.UnitMoveHandler.ExitMoveMode*
+- uid: StarterKit.UnitMoveHandler.HandleProvinceClick(System.UInt16)
+  commentId: M:StarterKit.UnitMoveHandler.HandleProvinceClick(System.UInt16)
+  id: HandleProvinceClick(System.UInt16)
+  parent: StarterKit.UnitMoveHandler
+  langs:
+  - csharp
+  - vb
+  name: HandleProvinceClick(ushort)
+  nameWithType: UnitMoveHandler.HandleProvinceClick(ushort)
+  fullName: StarterKit.UnitMoveHandler.HandleProvinceClick(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HandleProvinceClick
+    path: Scripts/StarterKit/UI/UnitMoveHandler.cs
+    startLine: 111
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Handle a province click while in move mode.
+
+    Returns true if the click was handled (move executed or cancelled).
+  example: []
+  syntax:
+    content: public bool HandleProvinceClick(ushort targetProvinceID)
+    parameters:
+    - id: targetProvinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HandleProvinceClick(targetProvinceID As UShort) As Boolean
+  overload: StarterKit.UnitMoveHandler.HandleProvinceClick*
+  nameWithType.vb: UnitMoveHandler.HandleProvinceClick(UShort)
+  fullName.vb: StarterKit.UnitMoveHandler.HandleProvinceClick(UShort)
+  name.vb: HandleProvinceClick(UShort)
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: StarterKit.UnitMoveHandler.IsInMoveMode*
+  commentId: Overload:StarterKit.UnitMoveHandler.IsInMoveMode
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler_IsInMoveMode
+  name: IsInMoveMode
+  nameWithType: UnitMoveHandler.IsInMoveMode
+  fullName: StarterKit.UnitMoveHandler.IsInMoveMode
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.UnitMoveHandler.#ctor*
+  commentId: Overload:StarterKit.UnitMoveHandler.#ctor
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler__ctor_Core_GameState_StarterKit_UnitSystem_
+  name: UnitMoveHandler
+  nameWithType: UnitMoveHandler.UnitMoveHandler
+  fullName: StarterKit.UnitMoveHandler.UnitMoveHandler
+  nameWithType.vb: UnitMoveHandler.New
+  fullName.vb: StarterKit.UnitMoveHandler.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.UnitSystem
+  commentId: T:StarterKit.UnitSystem
+  parent: StarterKit
+  href: StarterKit.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: StarterKit.UnitSystem
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: StarterKit.UnitMoveHandler.SetUIElements*
+  commentId: Overload:StarterKit.UnitMoveHandler.SetUIElements
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler_SetUIElements_UnityEngine_UIElements_Label_UnityEngine_UIElements_Button_UnityEngine_UIElements_Button_UnityEngine_UIElements_Button_UnityEngine_UIElements_Label_
+  name: SetUIElements
+  nameWithType: UnitMoveHandler.SetUIElements
+  fullName: StarterKit.UnitMoveHandler.SetUIElements
+- uid: UnityEngine.UIElements.Label
+  commentId: T:UnityEngine.UIElements.Label
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Label
+  nameWithType: Label
+  fullName: UnityEngine.UIElements.Label
+- uid: UnityEngine.UIElements.Button
+  commentId: T:UnityEngine.UIElements.Button
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Button
+  nameWithType: Button
+  fullName: UnityEngine.UIElements.Button
+- uid: UnityEngine.UIElements
+  commentId: N:UnityEngine.UIElements
+  isExternal: true
+  name: UnityEngine.UIElements
+  nameWithType: UnityEngine.UIElements
+  fullName: UnityEngine.UIElements
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+- uid: StarterKit.UnitMoveHandler.TryEnterMoveMode*
+  commentId: Overload:StarterKit.UnitMoveHandler.TryEnterMoveMode
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler_TryEnterMoveMode_System_UInt16_
+  name: TryEnterMoveMode
+  nameWithType: UnitMoveHandler.TryEnterMoveMode
+  fullName: StarterKit.UnitMoveHandler.TryEnterMoveMode
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.UnitMoveHandler.ExitMoveMode*
+  commentId: Overload:StarterKit.UnitMoveHandler.ExitMoveMode
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler_ExitMoveMode
+  name: ExitMoveMode
+  nameWithType: UnitMoveHandler.ExitMoveMode
+  fullName: StarterKit.UnitMoveHandler.ExitMoveMode
+- uid: StarterKit.UnitMoveHandler.HandleProvinceClick*
+  commentId: Overload:StarterKit.UnitMoveHandler.HandleProvinceClick
+  href: StarterKit.UnitMoveHandler.html#StarterKit_UnitMoveHandler_HandleProvinceClick_System_UInt16_
+  name: HandleProvinceClick
+  nameWithType: UnitMoveHandler.HandleProvinceClick
+  fullName: StarterKit.UnitMoveHandler.HandleProvinceClick

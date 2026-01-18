@@ -1,0 +1,161 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.BuildingData
+  commentId: T:Core.Registries.BuildingData
+  id: BuildingData
+  parent: Core.Registries
+  children:
+  - Core.Registries.BuildingData.Cost
+  - Core.Registries.BuildingData.Name
+  langs:
+  - csharp
+  - vb
+  name: BuildingData
+  nameWithType: BuildingData
+  fullName: Core.Registries.BuildingData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingData
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 101
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public class BuildingData
+    content.vb: Public Class BuildingData
+  inheritance:
+  - System.Object
+- uid: Core.Registries.BuildingData.Name
+  commentId: P:Core.Registries.BuildingData.Name
+  id: Name
+  parent: Core.Registries.BuildingData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: BuildingData.Name
+  fullName: Core.Registries.BuildingData.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Core.Registries.BuildingData.Name*
+- uid: Core.Registries.BuildingData.Cost
+  commentId: P:Core.Registries.BuildingData.Cost
+  id: Cost
+  parent: Core.Registries.BuildingData
+  langs:
+  - csharp
+  - vb
+  name: Cost
+  nameWithType: BuildingData.Cost
+  fullName: Core.Registries.BuildingData.Cost
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Cost
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public int Cost { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Cost As Integer
+  overload: Core.Registries.BuildingData.Cost*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.BuildingData.Name*
+  commentId: Overload:Core.Registries.BuildingData.Name
+  href: Core.Registries.BuildingData.html#Core_Registries_BuildingData_Name
+  name: Name
+  nameWithType: BuildingData.Name
+  fullName: Core.Registries.BuildingData.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.BuildingData.Cost*
+  commentId: Overload:Core.Registries.BuildingData.Cost
+  href: Core.Registries.BuildingData.html#Core_Registries_BuildingData_Cost
+  name: Cost
+  nameWithType: BuildingData.Cost
+  fullName: Core.Registries.BuildingData.Cost
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

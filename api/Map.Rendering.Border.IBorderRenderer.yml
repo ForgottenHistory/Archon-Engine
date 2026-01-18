@@ -1,0 +1,466 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.IBorderRenderer
+  commentId: T:Map.Rendering.Border.IBorderRenderer
+  id: IBorderRenderer
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.IBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  - Map.Rendering.Border.IBorderRenderer.DisplayName
+  - Map.Rendering.Border.IBorderRenderer.Dispose
+  - Map.Rendering.Border.IBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  - Map.Rendering.Border.IBorderRenderer.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  - Map.Rendering.Border.IBorderRenderer.OnRenderFrame
+  - Map.Rendering.Border.IBorderRenderer.RendererId
+  - Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+  langs:
+  - csharp
+  - vb
+  name: IBorderRenderer
+  nameWithType: IBorderRenderer
+  fullName: Map.Rendering.Border.IBorderRenderer
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IBorderRenderer
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    ENGINE: Interface for pluggable border rendering implementations.
+
+    ENGINE provides defaults (DistanceField, PixelPerfect, MeshGeometry).
+
+    GAME can register custom implementations via MapRendererRegistry.
+  example: []
+  syntax:
+    content: public interface IBorderRenderer
+    content.vb: Public Interface IBorderRenderer
+- uid: Map.Rendering.Border.IBorderRenderer.RendererId
+  commentId: P:Map.Rendering.Border.IBorderRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: IBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.IBorderRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Unique identifier for this renderer (e.g., "DistanceField", "PixelPerfect", "MyCustom")
+  example: []
+  syntax:
+    content: string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property RendererId As String
+  overload: Map.Rendering.Border.IBorderRenderer.RendererId*
+- uid: Map.Rendering.Border.IBorderRenderer.DisplayName
+  commentId: P:Map.Rendering.Border.IBorderRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: IBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.IBorderRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Display name for UI/debugging
+  example: []
+  syntax:
+    content: string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property DisplayName As String
+  overload: Map.Rendering.Border.IBorderRenderer.DisplayName*
+- uid: Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+  id: RequiresPerFrameUpdate
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RequiresPerFrameUpdate
+  nameWithType: IBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresPerFrameUpdate
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Whether this renderer requires per-frame updates (e.g., MeshGeometry needs OnRenderFrame)
+  example: []
+  syntax:
+    content: bool RequiresPerFrameUpdate { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property RequiresPerFrameUpdate As Boolean
+  overload: Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate*
+- uid: Map.Rendering.Border.IBorderRenderer.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  commentId: M:Map.Rendering.Border.IBorderRenderer.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  id: Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager, BorderRendererContext)
+  nameWithType: IBorderRenderer.Initialize(MapTextureManager, BorderRendererContext)
+  fullName: Map.Rendering.Border.IBorderRenderer.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.Border.BorderRendererContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Initialize the renderer with required resources.
+
+    Called once when renderer is first activated.
+  example: []
+  syntax:
+    content: void Initialize(MapTextureManager textureManager, BorderRendererContext context)
+    parameters:
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    - id: context
+      type: Map.Rendering.Border.BorderRendererContext
+    content.vb: Sub Initialize(textureManager As MapTextureManager, context As BorderRendererContext)
+  overload: Map.Rendering.Border.IBorderRenderer.Initialize*
+- uid: Map.Rendering.Border.IBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  commentId: M:Map.Rendering.Border.IBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  id: GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: GenerateBorders(BorderGenerationParams)
+  nameWithType: IBorderRenderer.GenerateBorders(BorderGenerationParams)
+  fullName: Map.Rendering.Border.IBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateBorders
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Generate/update borders. Called when borders are dirty or ownership changes.
+  example: []
+  syntax:
+    content: void GenerateBorders(BorderGenerationParams parameters)
+    parameters:
+    - id: parameters
+      type: Map.Rendering.Border.BorderGenerationParams
+    content.vb: Sub GenerateBorders(parameters As BorderGenerationParams)
+  overload: Map.Rendering.Border.IBorderRenderer.GenerateBorders*
+- uid: Map.Rendering.Border.IBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.IBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  id: ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: ApplyToMaterial(Material, BorderStyleParams)
+  nameWithType: IBorderRenderer.ApplyToMaterial(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.IBorderRenderer.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyToMaterial
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Apply visual parameters to the material (colors, widths, etc.)
+
+    Called when visual style parameters change.
+  example: []
+  syntax:
+    content: void ApplyToMaterial(Material material, BorderStyleParams styleParams)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: styleParams
+      type: Map.Rendering.Border.BorderStyleParams
+    content.vb: Sub ApplyToMaterial(material As Material, styleParams As BorderStyleParams)
+  overload: Map.Rendering.Border.IBorderRenderer.ApplyToMaterial*
+- uid: Map.Rendering.Border.IBorderRenderer.OnRenderFrame
+  commentId: M:Map.Rendering.Border.IBorderRenderer.OnRenderFrame
+  id: OnRenderFrame
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnRenderFrame()
+  nameWithType: IBorderRenderer.OnRenderFrame()
+  fullName: Map.Rendering.Border.IBorderRenderer.OnRenderFrame()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnRenderFrame
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Called per-frame for renderers that need continuous updates.
+
+    Only called if RequiresPerFrameUpdate is true.
+  example: []
+  syntax:
+    content: void OnRenderFrame()
+    content.vb: Sub OnRenderFrame()
+  overload: Map.Rendering.Border.IBorderRenderer.OnRenderFrame*
+- uid: Map.Rendering.Border.IBorderRenderer.Dispose
+  commentId: M:Map.Rendering.Border.IBorderRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.Border.IBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: IBorderRenderer.Dispose()
+  fullName: Map.Rendering.Border.IBorderRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 54
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Cleanup resources when renderer is deactivated or destroyed.
+  example: []
+  syntax:
+    content: void Dispose()
+    content.vb: Sub Dispose()
+  overload: Map.Rendering.Border.IBorderRenderer.Dispose*
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: Map.Rendering.Border.IBorderRenderer.RendererId*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.RendererId
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_RendererId
+  name: RendererId
+  nameWithType: IBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.IBorderRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.IBorderRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.DisplayName
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_DisplayName
+  name: DisplayName
+  nameWithType: IBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.IBorderRenderer.DisplayName
+- uid: Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: IBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.IBorderRenderer.RequiresPerFrameUpdate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.IBorderRenderer.Initialize*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.Initialize
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  name: Initialize
+  nameWithType: IBorderRenderer.Initialize
+  fullName: Map.Rendering.Border.IBorderRenderer.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.Border.BorderRendererContext
+  commentId: T:Map.Rendering.Border.BorderRendererContext
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderRendererContext.html
+  name: BorderRendererContext
+  nameWithType: BorderRendererContext
+  fullName: Map.Rendering.Border.BorderRendererContext
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.Border.IBorderRenderer.GenerateBorders*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.GenerateBorders
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  name: GenerateBorders
+  nameWithType: IBorderRenderer.GenerateBorders
+  fullName: Map.Rendering.Border.IBorderRenderer.GenerateBorders
+- uid: Map.Rendering.Border.BorderGenerationParams
+  commentId: T:Map.Rendering.Border.BorderGenerationParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderGenerationParams.html
+  name: BorderGenerationParams
+  nameWithType: BorderGenerationParams
+  fullName: Map.Rendering.Border.BorderGenerationParams
+- uid: Map.Rendering.Border.IBorderRenderer.ApplyToMaterial*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.ApplyToMaterial
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyToMaterial
+  nameWithType: IBorderRenderer.ApplyToMaterial
+  fullName: Map.Rendering.Border.IBorderRenderer.ApplyToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.Border.BorderStyleParams
+  commentId: T:Map.Rendering.Border.BorderStyleParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderStyleParams.html
+  name: BorderStyleParams
+  nameWithType: BorderStyleParams
+  fullName: Map.Rendering.Border.BorderStyleParams
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.IBorderRenderer.OnRenderFrame*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.OnRenderFrame
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_OnRenderFrame
+  name: OnRenderFrame
+  nameWithType: IBorderRenderer.OnRenderFrame
+  fullName: Map.Rendering.Border.IBorderRenderer.OnRenderFrame
+- uid: Map.Rendering.Border.IBorderRenderer.Dispose*
+  commentId: Overload:Map.Rendering.Border.IBorderRenderer.Dispose
+  href: Map.Rendering.Border.IBorderRenderer.html#Map_Rendering_Border_IBorderRenderer_Dispose
+  name: Dispose
+  nameWithType: IBorderRenderer.Dispose
+  fullName: Map.Rendering.Border.IBorderRenderer.Dispose

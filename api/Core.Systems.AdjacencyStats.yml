@@ -1,0 +1,304 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.AdjacencyStats
+  commentId: T:Core.Systems.AdjacencyStats
+  id: AdjacencyStats
+  parent: Core.Systems
+  children:
+  - Core.Systems.AdjacencyStats.AverageNeighbors
+  - Core.Systems.AdjacencyStats.GetSummary
+  - Core.Systems.AdjacencyStats.MaxNeighbors
+  - Core.Systems.AdjacencyStats.MinNeighbors
+  - Core.Systems.AdjacencyStats.ProvinceCount
+  - Core.Systems.AdjacencyStats.TotalAdjacencyPairs
+  - Core.Systems.AdjacencyStats.TotalNeighborEntries
+  langs:
+  - csharp
+  - vb
+  name: AdjacencyStats
+  nameWithType: AdjacencyStats
+  fullName: Core.Systems.AdjacencyStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdjacencyStats
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Queryable adjacency statistics struct.
+  example: []
+  syntax:
+    content: public struct AdjacencyStats
+    content.vb: Public Structure AdjacencyStats
+- uid: Core.Systems.AdjacencyStats.ProvinceCount
+  commentId: F:Core.Systems.AdjacencyStats.ProvinceCount
+  id: ProvinceCount
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: AdjacencyStats.ProvinceCount
+  fullName: Core.Systems.AdjacencyStats.ProvinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int ProvinceCount
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceCount As Integer
+- uid: Core.Systems.AdjacencyStats.TotalAdjacencyPairs
+  commentId: F:Core.Systems.AdjacencyStats.TotalAdjacencyPairs
+  id: TotalAdjacencyPairs
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: TotalAdjacencyPairs
+  nameWithType: AdjacencyStats.TotalAdjacencyPairs
+  fullName: Core.Systems.AdjacencyStats.TotalAdjacencyPairs
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalAdjacencyPairs
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int TotalAdjacencyPairs
+    return:
+      type: System.Int32
+    content.vb: Public TotalAdjacencyPairs As Integer
+- uid: Core.Systems.AdjacencyStats.MinNeighbors
+  commentId: F:Core.Systems.AdjacencyStats.MinNeighbors
+  id: MinNeighbors
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: MinNeighbors
+  nameWithType: AdjacencyStats.MinNeighbors
+  fullName: Core.Systems.AdjacencyStats.MinNeighbors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int MinNeighbors
+    return:
+      type: System.Int32
+    content.vb: Public MinNeighbors As Integer
+- uid: Core.Systems.AdjacencyStats.MaxNeighbors
+  commentId: F:Core.Systems.AdjacencyStats.MaxNeighbors
+  id: MaxNeighbors
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: MaxNeighbors
+  nameWithType: AdjacencyStats.MaxNeighbors
+  fullName: Core.Systems.AdjacencyStats.MaxNeighbors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int MaxNeighbors
+    return:
+      type: System.Int32
+    content.vb: Public MaxNeighbors As Integer
+- uid: Core.Systems.AdjacencyStats.TotalNeighborEntries
+  commentId: F:Core.Systems.AdjacencyStats.TotalNeighborEntries
+  id: TotalNeighborEntries
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: TotalNeighborEntries
+  nameWithType: AdjacencyStats.TotalNeighborEntries
+  fullName: Core.Systems.AdjacencyStats.TotalNeighborEntries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalNeighborEntries
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int TotalNeighborEntries
+    return:
+      type: System.Int32
+    content.vb: Public TotalNeighborEntries As Integer
+- uid: Core.Systems.AdjacencyStats.AverageNeighbors
+  commentId: P:Core.Systems.AdjacencyStats.AverageNeighbors
+  id: AverageNeighbors
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: AverageNeighbors
+  nameWithType: AdjacencyStats.AverageNeighbors
+  fullName: Core.Systems.AdjacencyStats.AverageNeighbors
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Average neighbors per province.
+  example: []
+  syntax:
+    content: public float AverageNeighbors { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property AverageNeighbors As Single
+  overload: Core.Systems.AdjacencyStats.AverageNeighbors*
+- uid: Core.Systems.AdjacencyStats.GetSummary
+  commentId: M:Core.Systems.AdjacencyStats.GetSummary
+  id: GetSummary
+  parent: Core.Systems.AdjacencyStats
+  langs:
+  - csharp
+  - vb
+  name: GetSummary()
+  nameWithType: AdjacencyStats.GetSummary()
+  fullName: Core.Systems.AdjacencyStats.GetSummary()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSummary
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get formatted summary string.
+  example: []
+  syntax:
+    content: public string GetSummary()
+    return:
+      type: System.String
+    content.vb: Public Function GetSummary() As String
+  overload: Core.Systems.AdjacencyStats.GetSummary*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.AdjacencyStats.AverageNeighbors*
+  commentId: Overload:Core.Systems.AdjacencyStats.AverageNeighbors
+  href: Core.Systems.AdjacencyStats.html#Core_Systems_AdjacencyStats_AverageNeighbors
+  name: AverageNeighbors
+  nameWithType: AdjacencyStats.AverageNeighbors
+  fullName: Core.Systems.AdjacencyStats.AverageNeighbors
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Systems.AdjacencyStats.GetSummary*
+  commentId: Overload:Core.Systems.AdjacencyStats.GetSummary
+  href: Core.Systems.AdjacencyStats.html#Core_Systems_AdjacencyStats_GetSummary
+  name: GetSummary
+  nameWithType: AdjacencyStats.GetSummary
+  fullName: Core.Systems.AdjacencyStats.GetSummary
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

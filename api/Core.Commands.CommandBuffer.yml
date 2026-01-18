@@ -1,0 +1,518 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandBuffer
+  commentId: T:Core.Commands.CommandBuffer
+  id: CommandBuffer
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
+  - Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand,System.UInt32)
+  - Core.Commands.CommandBuffer.AddPredictedCommand(Core.Commands.IProvinceCommand)
+  - Core.Commands.CommandBuffer.ConfirmedTick
+  - Core.Commands.CommandBuffer.Dispose
+  - Core.Commands.CommandBuffer.GetStatistics
+  - Core.Commands.CommandBuffer.PredictedTick
+  - Core.Commands.CommandBuffer.ProcessTick
+  - Core.Commands.CommandBuffer.RollbackFramesAvailable
+  langs:
+  - csharp
+  - vb
+  name: CommandBuffer
+  nameWithType: CommandBuffer
+  fullName: Core.Commands.CommandBuffer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandBuffer
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Manages command buffering with rollback support for multiplayer synchronization
+
+    Handles client prediction, lag compensation, and state reconciliation
+  example: []
+  syntax:
+    content: public class CommandBuffer
+    content.vb: Public Class CommandBuffer
+  inheritance:
+  - System.Object
+- uid: Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
+  commentId: M:Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
+  id: '#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)'
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: CommandBuffer(ProvinceSimulation, CommandProcessor)
+  nameWithType: CommandBuffer.CommandBuffer(ProvinceSimulation, CommandProcessor)
+  fullName: Core.Commands.CommandBuffer.CommandBuffer(Core.Systems.ProvinceSimulation, Core.Commands.CommandProcessor)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandBuffer(ProvinceSimulation simulation, CommandProcessor processor)
+    parameters:
+    - id: simulation
+      type: Core.Systems.ProvinceSimulation
+    - id: processor
+      type: Core.Commands.CommandProcessor
+    content.vb: Public Sub New(simulation As ProvinceSimulation, processor As CommandProcessor)
+  overload: Core.Commands.CommandBuffer.#ctor*
+  nameWithType.vb: CommandBuffer.New(ProvinceSimulation, CommandProcessor)
+  fullName.vb: Core.Commands.CommandBuffer.New(Core.Systems.ProvinceSimulation, Core.Commands.CommandProcessor)
+  name.vb: New(ProvinceSimulation, CommandProcessor)
+- uid: Core.Commands.CommandBuffer.ConfirmedTick
+  commentId: P:Core.Commands.CommandBuffer.ConfirmedTick
+  id: ConfirmedTick
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: ConfirmedTick
+  nameWithType: CommandBuffer.ConfirmedTick
+  fullName: Core.Commands.CommandBuffer.ConfirmedTick
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConfirmedTick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Current confirmed tick (acknowledged by server)
+  example: []
+  syntax:
+    content: public uint ConfirmedTick { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property ConfirmedTick As UInteger
+  overload: Core.Commands.CommandBuffer.ConfirmedTick*
+- uid: Core.Commands.CommandBuffer.PredictedTick
+  commentId: P:Core.Commands.CommandBuffer.PredictedTick
+  id: PredictedTick
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: PredictedTick
+  nameWithType: CommandBuffer.PredictedTick
+  fullName: Core.Commands.CommandBuffer.PredictedTick
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PredictedTick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Current predicted tick (including client predictions)
+  example: []
+  syntax:
+    content: public uint PredictedTick { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property PredictedTick As UInteger
+  overload: Core.Commands.CommandBuffer.PredictedTick*
+- uid: Core.Commands.CommandBuffer.RollbackFramesAvailable
+  commentId: P:Core.Commands.CommandBuffer.RollbackFramesAvailable
+  id: RollbackFramesAvailable
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: RollbackFramesAvailable
+  nameWithType: CommandBuffer.RollbackFramesAvailable
+  fullName: Core.Commands.CommandBuffer.RollbackFramesAvailable
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RollbackFramesAvailable
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Number of frames available for rollback
+  example: []
+  syntax:
+    content: public int RollbackFramesAvailable { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property RollbackFramesAvailable As Integer
+  overload: Core.Commands.CommandBuffer.RollbackFramesAvailable*
+- uid: Core.Commands.CommandBuffer.AddPredictedCommand(Core.Commands.IProvinceCommand)
+  commentId: M:Core.Commands.CommandBuffer.AddPredictedCommand(Core.Commands.IProvinceCommand)
+  id: AddPredictedCommand(Core.Commands.IProvinceCommand)
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: AddPredictedCommand(IProvinceCommand)
+  nameWithType: CommandBuffer.AddPredictedCommand(IProvinceCommand)
+  fullName: Core.Commands.CommandBuffer.AddPredictedCommand(Core.Commands.IProvinceCommand)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddPredictedCommand
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Add a command for immediate local prediction
+
+    Command will be executed locally and sent to server for confirmation
+  example: []
+  syntax:
+    content: public CommandBufferResult AddPredictedCommand(IProvinceCommand command)
+    parameters:
+    - id: command
+      type: Core.Commands.IProvinceCommand
+    return:
+      type: Core.Commands.CommandBufferResult
+    content.vb: Public Function AddPredictedCommand(command As IProvinceCommand) As CommandBufferResult
+  overload: Core.Commands.CommandBuffer.AddPredictedCommand*
+- uid: Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand,System.UInt32)
+  commentId: M:Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand,System.UInt32)
+  id: AddConfirmedCommand(Core.Commands.IProvinceCommand,System.UInt32)
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: AddConfirmedCommand(IProvinceCommand, uint)
+  nameWithType: CommandBuffer.AddConfirmedCommand(IProvinceCommand, uint)
+  fullName: Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddConfirmedCommand
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Add a confirmed command from the server
+
+    This will trigger rollback if it conflicts with local predictions
+  example: []
+  syntax:
+    content: public CommandBufferResult AddConfirmedCommand(IProvinceCommand command, uint serverTick)
+    parameters:
+    - id: command
+      type: Core.Commands.IProvinceCommand
+    - id: serverTick
+      type: System.UInt32
+    return:
+      type: Core.Commands.CommandBufferResult
+    content.vb: Public Function AddConfirmedCommand(command As IProvinceCommand, serverTick As UInteger) As CommandBufferResult
+  overload: Core.Commands.CommandBuffer.AddConfirmedCommand*
+  nameWithType.vb: CommandBuffer.AddConfirmedCommand(IProvinceCommand, UInteger)
+  fullName.vb: Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand, UInteger)
+  name.vb: AddConfirmedCommand(IProvinceCommand, UInteger)
+- uid: Core.Commands.CommandBuffer.ProcessTick
+  commentId: M:Core.Commands.CommandBuffer.ProcessTick
+  id: ProcessTick
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: ProcessTick()
+  nameWithType: CommandBuffer.ProcessTick()
+  fullName: Core.Commands.CommandBuffer.ProcessTick()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProcessTick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Process a game tick with rollback support
+
+    Should be called once per frame
+  example: []
+  syntax:
+    content: public TickProcessResult ProcessTick()
+    return:
+      type: Core.Commands.TickProcessResult
+    content.vb: Public Function ProcessTick() As TickProcessResult
+  overload: Core.Commands.CommandBuffer.ProcessTick*
+- uid: Core.Commands.CommandBuffer.GetStatistics
+  commentId: M:Core.Commands.CommandBuffer.GetStatistics
+  id: GetStatistics
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: GetStatistics()
+  nameWithType: CommandBuffer.GetStatistics()
+  fullName: Core.Commands.CommandBuffer.GetStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStatistics
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 356
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get buffer statistics
+  example: []
+  syntax:
+    content: public CommandBufferStatistics GetStatistics()
+    return:
+      type: Core.Commands.CommandBufferStatistics
+    content.vb: Public Function GetStatistics() As CommandBufferStatistics
+  overload: Core.Commands.CommandBuffer.GetStatistics*
+- uid: Core.Commands.CommandBuffer.Dispose
+  commentId: M:Core.Commands.CommandBuffer.Dispose
+  id: Dispose
+  parent: Core.Commands.CommandBuffer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CommandBuffer.Dispose()
+  fullName: Core.Commands.CommandBuffer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 368
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Commands.CommandBuffer.Dispose*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandBuffer.#ctor*
+  commentId: Overload:Core.Commands.CommandBuffer.#ctor
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer__ctor_Core_Systems_ProvinceSimulation_Core_Commands_CommandProcessor_
+  name: CommandBuffer
+  nameWithType: CommandBuffer.CommandBuffer
+  fullName: Core.Commands.CommandBuffer.CommandBuffer
+  nameWithType.vb: CommandBuffer.New
+  fullName.vb: Core.Commands.CommandBuffer.New
+  name.vb: New
+- uid: Core.Systems.ProvinceSimulation
+  commentId: T:Core.Systems.ProvinceSimulation
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSimulation.html
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation
+- uid: Core.Commands.CommandProcessor
+  commentId: T:Core.Commands.CommandProcessor
+  parent: Core.Commands
+  href: Core.Commands.CommandProcessor.html
+  name: CommandProcessor
+  nameWithType: CommandProcessor
+  fullName: Core.Commands.CommandProcessor
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Commands.CommandBuffer.ConfirmedTick*
+  commentId: Overload:Core.Commands.CommandBuffer.ConfirmedTick
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_ConfirmedTick
+  name: ConfirmedTick
+  nameWithType: CommandBuffer.ConfirmedTick
+  fullName: Core.Commands.CommandBuffer.ConfirmedTick
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Commands.CommandBuffer.PredictedTick*
+  commentId: Overload:Core.Commands.CommandBuffer.PredictedTick
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_PredictedTick
+  name: PredictedTick
+  nameWithType: CommandBuffer.PredictedTick
+  fullName: Core.Commands.CommandBuffer.PredictedTick
+- uid: Core.Commands.CommandBuffer.RollbackFramesAvailable*
+  commentId: Overload:Core.Commands.CommandBuffer.RollbackFramesAvailable
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_RollbackFramesAvailable
+  name: RollbackFramesAvailable
+  nameWithType: CommandBuffer.RollbackFramesAvailable
+  fullName: Core.Commands.CommandBuffer.RollbackFramesAvailable
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.CommandBuffer.AddPredictedCommand*
+  commentId: Overload:Core.Commands.CommandBuffer.AddPredictedCommand
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_AddPredictedCommand_Core_Commands_IProvinceCommand_
+  name: AddPredictedCommand
+  nameWithType: CommandBuffer.AddPredictedCommand
+  fullName: Core.Commands.CommandBuffer.AddPredictedCommand
+- uid: Core.Commands.IProvinceCommand
+  commentId: T:Core.Commands.IProvinceCommand
+  parent: Core.Commands
+  href: Core.Commands.IProvinceCommand.html
+  name: IProvinceCommand
+  nameWithType: IProvinceCommand
+  fullName: Core.Commands.IProvinceCommand
+- uid: Core.Commands.CommandBufferResult
+  commentId: T:Core.Commands.CommandBufferResult
+  parent: Core.Commands
+  href: Core.Commands.CommandBufferResult.html
+  name: CommandBufferResult
+  nameWithType: CommandBufferResult
+  fullName: Core.Commands.CommandBufferResult
+- uid: Core.Commands.CommandBuffer.AddConfirmedCommand*
+  commentId: Overload:Core.Commands.CommandBuffer.AddConfirmedCommand
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_AddConfirmedCommand_Core_Commands_IProvinceCommand_System_UInt32_
+  name: AddConfirmedCommand
+  nameWithType: CommandBuffer.AddConfirmedCommand
+  fullName: Core.Commands.CommandBuffer.AddConfirmedCommand
+- uid: Core.Commands.CommandBuffer.ProcessTick*
+  commentId: Overload:Core.Commands.CommandBuffer.ProcessTick
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_ProcessTick
+  name: ProcessTick
+  nameWithType: CommandBuffer.ProcessTick
+  fullName: Core.Commands.CommandBuffer.ProcessTick
+- uid: Core.Commands.TickProcessResult
+  commentId: T:Core.Commands.TickProcessResult
+  parent: Core.Commands
+  href: Core.Commands.TickProcessResult.html
+  name: TickProcessResult
+  nameWithType: TickProcessResult
+  fullName: Core.Commands.TickProcessResult
+- uid: Core.Commands.CommandBuffer.GetStatistics*
+  commentId: Overload:Core.Commands.CommandBuffer.GetStatistics
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_GetStatistics
+  name: GetStatistics
+  nameWithType: CommandBuffer.GetStatistics
+  fullName: Core.Commands.CommandBuffer.GetStatistics
+- uid: Core.Commands.CommandBufferStatistics
+  commentId: T:Core.Commands.CommandBufferStatistics
+  parent: Core.Commands
+  href: Core.Commands.CommandBufferStatistics.html
+  name: CommandBufferStatistics
+  nameWithType: CommandBufferStatistics
+  fullName: Core.Commands.CommandBufferStatistics
+- uid: Core.Commands.CommandBuffer.Dispose*
+  commentId: Overload:Core.Commands.CommandBuffer.Dispose
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer_Dispose
+  name: Dispose
+  nameWithType: CommandBuffer.Dispose
+  fullName: Core.Commands.CommandBuffer.Dispose

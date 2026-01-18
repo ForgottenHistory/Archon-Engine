@@ -1,0 +1,221 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.ColoredTextMarkup.TextStyle
+  commentId: T:Core.Localization.ColoredTextMarkup.TextStyle
+  id: ColoredTextMarkup.TextStyle
+  parent: Core.Localization
+  children:
+  - Core.Localization.ColoredTextMarkup.TextStyle.Bold
+  - Core.Localization.ColoredTextMarkup.TextStyle.Italic
+  - Core.Localization.ColoredTextMarkup.TextStyle.None
+  - Core.Localization.ColoredTextMarkup.TextStyle.Strikethrough
+  - Core.Localization.ColoredTextMarkup.TextStyle.Underline
+  langs:
+  - csharp
+  - vb
+  name: ColoredTextMarkup.TextStyle
+  nameWithType: ColoredTextMarkup.TextStyle
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextStyle
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Text styling options
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum ColoredTextMarkup.TextStyle : byte
+    content.vb: >-
+      <Flags>
+
+      Public Enum ColoredTextMarkup.TextStyle As Byte
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Core.Localization.ColoredTextMarkup.TextStyle.None
+  commentId: F:Core.Localization.ColoredTextMarkup.TextStyle.None
+  id: None
+  parent: Core.Localization.ColoredTextMarkup.TextStyle
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: ColoredTextMarkup.TextStyle.None
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: None = 0
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+- uid: Core.Localization.ColoredTextMarkup.TextStyle.Bold
+  commentId: F:Core.Localization.ColoredTextMarkup.TextStyle.Bold
+  id: Bold
+  parent: Core.Localization.ColoredTextMarkup.TextStyle
+  langs:
+  - csharp
+  - vb
+  name: Bold
+  nameWithType: ColoredTextMarkup.TextStyle.Bold
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle.Bold
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Bold
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Bold = 1
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+- uid: Core.Localization.ColoredTextMarkup.TextStyle.Italic
+  commentId: F:Core.Localization.ColoredTextMarkup.TextStyle.Italic
+  id: Italic
+  parent: Core.Localization.ColoredTextMarkup.TextStyle
+  langs:
+  - csharp
+  - vb
+  name: Italic
+  nameWithType: ColoredTextMarkup.TextStyle.Italic
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle.Italic
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Italic
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Italic = 2
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+- uid: Core.Localization.ColoredTextMarkup.TextStyle.Underline
+  commentId: F:Core.Localization.ColoredTextMarkup.TextStyle.Underline
+  id: Underline
+  parent: Core.Localization.ColoredTextMarkup.TextStyle
+  langs:
+  - csharp
+  - vb
+  name: Underline
+  nameWithType: ColoredTextMarkup.TextStyle.Underline
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle.Underline
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Underline
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Underline = 4
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+- uid: Core.Localization.ColoredTextMarkup.TextStyle.Strikethrough
+  commentId: F:Core.Localization.ColoredTextMarkup.TextStyle.Strikethrough
+  id: Strikethrough
+  parent: Core.Localization.ColoredTextMarkup.TextStyle
+  langs:
+  - csharp
+  - vb
+  name: Strikethrough
+  nameWithType: ColoredTextMarkup.TextStyle.Strikethrough
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle.Strikethrough
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Strikethrough
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Strikethrough = 8
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Core.Localization.ColoredTextMarkup.TextStyle
+  commentId: T:Core.Localization.ColoredTextMarkup.TextStyle
+  parent: Core.Localization
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.TextStyle
+  nameWithType: ColoredTextMarkup.TextStyle
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html

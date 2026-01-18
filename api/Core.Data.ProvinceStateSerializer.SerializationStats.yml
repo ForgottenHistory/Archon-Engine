@@ -1,0 +1,356 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats
+  commentId: T:Core.Data.ProvinceStateSerializer.SerializationStats
+  id: ProvinceStateSerializer.SerializationStats
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
+  - Core.Data.ProvinceStateSerializer.SerializationStats.Count
+  - Core.Data.ProvinceStateSerializer.SerializationStats.IsValid
+  - Core.Data.ProvinceStateSerializer.SerializationStats.Magic
+  - Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  - Core.Data.ProvinceStateSerializer.SerializationStats.ToString
+  - Core.Data.ProvinceStateSerializer.SerializationStats.TotalSize
+  - Core.Data.ProvinceStateSerializer.SerializationStats.Version
+  langs:
+  - csharp
+  - vb
+  name: ProvinceStateSerializer.SerializationStats
+  nameWithType: ProvinceStateSerializer.SerializationStats
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SerializationStats
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public struct ProvinceStateSerializer.SerializationStats
+    content.vb: Public Structure ProvinceStateSerializer.SerializationStats
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.Magic
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Magic
+  id: Magic
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: Magic
+  nameWithType: ProvinceStateSerializer.SerializationStats.Magic
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.Magic
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Magic
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 315
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public uint Magic
+    return:
+      type: System.UInt32
+    content.vb: Public Magic As UInteger
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.Version
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Version
+  id: Version
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: ProvinceStateSerializer.SerializationStats.Version
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.Version
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Version
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 316
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public uint Version
+    return:
+      type: System.UInt32
+    content.vb: Public Version As UInteger
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  id: StateVersion
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: StateVersion
+  nameWithType: ProvinceStateSerializer.SerializationStats.StateVersion
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateVersion
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 317
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public uint StateVersion
+    return:
+      type: System.UInt32
+    content.vb: Public StateVersion As UInteger
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
+  id: Checksum
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: Checksum
+  nameWithType: ProvinceStateSerializer.SerializationStats.Checksum
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Checksum
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 318
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public uint Checksum
+    return:
+      type: System.UInt32
+    content.vb: Public Checksum As UInteger
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.Count
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Count
+  id: Count
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: ProvinceStateSerializer.SerializationStats.Count
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.Count
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 319
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int Count
+    return:
+      type: System.Int32
+    content.vb: Public Count As Integer
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.TotalSize
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.TotalSize
+  id: TotalSize
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: TotalSize
+  nameWithType: ProvinceStateSerializer.SerializationStats.TotalSize
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.TotalSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalSize
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 320
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int TotalSize
+    return:
+      type: System.Int32
+    content.vb: Public TotalSize As Integer
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.IsValid
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.IsValid
+  id: IsValid
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: ProvinceStateSerializer.SerializationStats.IsValid
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.IsValid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool IsValid
+    return:
+      type: System.Boolean
+    content.vb: Public IsValid As Boolean
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.ToString
+  commentId: M:Core.Data.ProvinceStateSerializer.SerializationStats.ToString
+  id: ToString
+  parent: Core.Data.ProvinceStateSerializer.SerializationStats
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ProvinceStateSerializer.SerializationStats.ToString()
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceStateSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/ProvinceStateSerializer.cs
+    startLine: 323
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.ProvinceStateSerializer.SerializationStats.ToString*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.ToString*
+  commentId: Overload:Core.Data.ProvinceStateSerializer.SerializationStats.ToString
+  href: Core.Data.ProvinceStateSerializer.SerializationStats.html#Core_Data_ProvinceStateSerializer_SerializationStats_ToString
+  name: ToString
+  nameWithType: ProvinceStateSerializer.SerializationStats.ToString
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

@@ -1,0 +1,211 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceRegisteredEvent
+  commentId: T:Core.Resources.ResourceRegisteredEvent
+  id: ResourceRegisteredEvent
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceRegisteredEvent.ResourceId
+  - Core.Resources.ResourceRegisteredEvent.ResourceStringId
+  - Core.Resources.ResourceRegisteredEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: ResourceRegisteredEvent
+  nameWithType: ResourceRegisteredEvent
+  fullName: Core.Resources.ResourceRegisteredEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceRegisteredEvent
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: 'ENGINE: Event fired when a new resource type is registered.'
+  example: []
+  syntax:
+    content: 'public struct ResourceRegisteredEvent : IGameEvent'
+    content.vb: Public Structure ResourceRegisteredEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Resources.ResourceRegisteredEvent.ResourceId
+  commentId: F:Core.Resources.ResourceRegisteredEvent.ResourceId
+  id: ResourceId
+  parent: Core.Resources.ResourceRegisteredEvent
+  langs:
+  - csharp
+  - vb
+  name: ResourceId
+  nameWithType: ResourceRegisteredEvent.ResourceId
+  fullName: Core.Resources.ResourceRegisteredEvent.ResourceId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 88
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The resource ID that was registered
+  example: []
+  syntax:
+    content: public ushort ResourceId
+    return:
+      type: System.UInt16
+    content.vb: Public ResourceId As UShort
+- uid: Core.Resources.ResourceRegisteredEvent.ResourceStringId
+  commentId: F:Core.Resources.ResourceRegisteredEvent.ResourceStringId
+  id: ResourceStringId
+  parent: Core.Resources.ResourceRegisteredEvent
+  langs:
+  - csharp
+  - vb
+  name: ResourceStringId
+  nameWithType: ResourceRegisteredEvent.ResourceStringId
+  fullName: Core.Resources.ResourceRegisteredEvent.ResourceStringId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceStringId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The resource string identifier
+  example: []
+  syntax:
+    content: public string ResourceStringId
+    return:
+      type: System.String
+    content.vb: Public ResourceStringId As String
+- uid: Core.Resources.ResourceRegisteredEvent.TimeStamp
+  commentId: P:Core.Resources.ResourceRegisteredEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Resources.ResourceRegisteredEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ResourceRegisteredEvent.TimeStamp
+  fullName: Core.Resources.ResourceRegisteredEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Event timestamp (auto-set by EventBus)
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Resources.ResourceRegisteredEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Resources.ResourceRegisteredEvent.TimeStamp*
+  commentId: Overload:Core.Resources.ResourceRegisteredEvent.TimeStamp
+  href: Core.Resources.ResourceRegisteredEvent.html#Core_Resources_ResourceRegisteredEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ResourceRegisteredEvent.TimeStamp
+  fullName: Core.Resources.ResourceRegisteredEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

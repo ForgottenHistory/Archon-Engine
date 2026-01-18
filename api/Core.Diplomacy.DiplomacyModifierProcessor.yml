@@ -1,0 +1,361 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyModifierProcessor
+  commentId: T:Core.Diplomacy.DiplomacyModifierProcessor
+  id: DiplomacyModifierProcessor
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers(System.Int32,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache(Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyModifierProcessor
+  nameWithType: DiplomacyModifierProcessor
+  fullName: Core.Diplomacy.DiplomacyModifierProcessor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyModifierProcessor
+    path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Processes opinion modifier decay with Burst compilation
+
+
+    RESPONSIBILITY:
+
+    - Decay opinion modifiers (DecayOpinionModifiers with Burst job)
+
+    - Rebuild modifier cache after compaction
+
+
+    PATTERN: Stateless processor (receives data references from DiplomacySystem)
+
+    - Does NOT own NativeCollections (passed as parameters)
+
+    - Uses Burst-compiled parallel job for performance
+
+    - Sequential compaction for determinism
+
+
+    PERFORMANCE:
+
+    - 610,750 modifiers processed in 3ms (87% improvement from Burst)
+
+    - Parallel marking (IJobParallelFor) + sequential compaction (deterministic)
+
+    - O(1) cache rebuild for GetOpinion performance
+
+
+    ARCHITECTURE:
+
+    - Step 1: Burst job marks decayed modifiers (parallel, read-only)
+
+    - Step 2: Sequential compaction (deterministic ordering)
+
+    - Step 3: Rebuild modifierCache for O(1) GetOpinion lookups
+  example: []
+  syntax:
+    content: public static class DiplomacyModifierProcessor
+    content.vb: Public Module DiplomacyModifierProcessor
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers(System.Int32,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers(System.Int32,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: DecayOpinionModifiers(System.Int32,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyModifierProcessor
+  langs:
+  - csharp
+  - vb
+  name: DecayOpinionModifiers(int, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyModifierProcessor.DecayOpinionModifiers(int, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers(int, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DecayOpinionModifiers
+    path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Decay all opinion modifiers and remove fully decayed ones
+
+    Called monthly by DiplomacyMonthlyTickHandler
+
+    Target: &lt;5ms for 610k modifiers (with Burst compilation)
+  example: []
+  syntax:
+    content: public static void DecayOpinionModifiers(int currentTick, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    content.vb: Public Shared Sub DecayOpinionModifiers(currentTick As Integer, allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer))
+  overload: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers*
+  nameWithType.vb: DiplomacyModifierProcessor.DecayOpinionModifiers(Integer, NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers(Integer, Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: DecayOpinionModifiers(Integer, NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+- uid: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache(Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache(Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: RebuildModifierCache(Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyModifierProcessor
+  langs:
+  - csharp
+  - vb
+  name: RebuildModifierCache(NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyModifierProcessor.RebuildModifierCache(NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache(Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebuildModifierCache
+    path: Scripts/Core/Diplomacy/DiplomacyModifierProcessor.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Rebuild modifier cache after compaction
+
+    Maps relationshipKey → first modifier index for O(1) GetOpinion lookups
+  example: []
+  syntax:
+    content: public static void RebuildModifierCache(NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    content.vb: Public Shared Sub RebuildModifierCache(allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer))
+  overload: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache*
+  nameWithType.vb: DiplomacyModifierProcessor.RebuildModifierCache(NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache(Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: RebuildModifierCache(NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers*
+  commentId: Overload:Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers
+  href: Core.Diplomacy.DiplomacyModifierProcessor.html#Core_Diplomacy_DiplomacyModifierProcessor_DecayOpinionModifiers_System_Int32_Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: DecayOpinionModifiers
+  nameWithType: DiplomacyModifierProcessor.DecayOpinionModifiers
+  fullName: Core.Diplomacy.DiplomacyModifierProcessor.DecayOpinionModifiers
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  commentId: T:Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Core.Diplomacy.ModifierWithKey.html
+  name: NativeList<ModifierWithKey>
+  nameWithType: NativeList<ModifierWithKey>
+  fullName: Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>
+  nameWithType.vb: NativeList(Of ModifierWithKey)
+  fullName.vb: Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey)
+  name.vb: NativeList(Of ModifierWithKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: )
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  name: NativeParallelHashMap<ulong, int>
+  nameWithType: NativeParallelHashMap<ulong, int>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, int>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, Integer)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Integer)
+  name.vb: NativeParallelHashMap(Of ULong, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeParallelHashMap`2
+  commentId: T:Unity.Collections.NativeParallelHashMap`2
+  isExternal: true
+  name: NativeParallelHashMap<TKey, TValue>
+  nameWithType: NativeParallelHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of TKey, TValue)
+  name.vb: NativeParallelHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache*
+  commentId: Overload:Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache
+  href: Core.Diplomacy.DiplomacyModifierProcessor.html#Core_Diplomacy_DiplomacyModifierProcessor_RebuildModifierCache_Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: RebuildModifierCache
+  nameWithType: DiplomacyModifierProcessor.RebuildModifierCache
+  fullName: Core.Diplomacy.DiplomacyModifierProcessor.RebuildModifierCache

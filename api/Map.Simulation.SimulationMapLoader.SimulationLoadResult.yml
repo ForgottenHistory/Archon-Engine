@@ -1,0 +1,276 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  commentId: T:Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  id: SimulationMapLoader.SimulationLoadResult
+  parent: Map.Simulation
+  children:
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult.ErrorMessage
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult.IsSuccess
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult.MapData
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult.Simulation
+  langs:
+  - csharp
+  - vb
+  name: SimulationMapLoader.SimulationLoadResult
+  nameWithType: SimulationMapLoader.SimulationLoadResult
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SimulationLoadResult
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  summary: Result of loading and converting bitmap to simulation
+  example: []
+  syntax:
+    content: public struct SimulationMapLoader.SimulationLoadResult
+    content.vb: Public Structure SimulationMapLoader.SimulationLoadResult
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.IsSuccess
+  commentId: F:Map.Simulation.SimulationMapLoader.SimulationLoadResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: SimulationMapLoader.SimulationLoadResult.IsSuccess
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.ErrorMessage
+  commentId: F:Map.Simulation.SimulationMapLoader.SimulationLoadResult.ErrorMessage
+  id: ErrorMessage
+  parent: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: SimulationMapLoader.SimulationLoadResult.ErrorMessage
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Simulation
+  commentId: F:Map.Simulation.SimulationMapLoader.SimulationLoadResult.Simulation
+  id: Simulation
+  parent: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Simulation
+  nameWithType: SimulationMapLoader.SimulationLoadResult.Simulation
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Simulation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Simulation
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public ProvinceSimulation Simulation
+    return:
+      type: Core.Systems.ProvinceSimulation
+    content.vb: Public Simulation As ProvinceSimulation
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.MapData
+  commentId: F:Map.Simulation.SimulationMapLoader.SimulationLoadResult.MapData
+  id: MapData
+  parent: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  langs:
+  - csharp
+  - vb
+  name: MapData
+  nameWithType: SimulationMapLoader.SimulationLoadResult.MapData
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.MapData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapData
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public SimulationMapLoader.SimulationMapData MapData
+    return:
+      type: Map.Simulation.SimulationMapLoader.SimulationMapData
+    content.vb: Public MapData As SimulationMapLoader.SimulationMapData
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose
+  commentId: M:Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose
+  id: Dispose
+  parent: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SimulationMapLoader.SimulationLoadResult.Dispose()
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose*
+references:
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  href: Map.html
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.ProvinceSimulation
+  commentId: T:Core.Systems.ProvinceSimulation
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSimulation.html
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+  commentId: T:Map.Simulation.SimulationMapLoader.SimulationMapData
+  parent: Map.Simulation
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader.SimulationMapData
+  nameWithType: SimulationMapLoader.SimulationMapData
+  fullName: Map.Simulation.SimulationMapLoader.SimulationMapData
+  spec.csharp:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+    name: SimulationMapData
+    href: Map.Simulation.SimulationMapLoader.SimulationMapData.html
+  spec.vb:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+    name: SimulationMapData
+    href: Map.Simulation.SimulationMapLoader.SimulationMapData.html
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose*
+  commentId: Overload:Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose
+  href: Map.Simulation.SimulationMapLoader.SimulationLoadResult.html#Map_Simulation_SimulationMapLoader_SimulationLoadResult_Dispose
+  name: Dispose
+  nameWithType: SimulationMapLoader.SimulationLoadResult.Dispose
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult.Dispose

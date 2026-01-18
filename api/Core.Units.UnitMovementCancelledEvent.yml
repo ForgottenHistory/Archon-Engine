@@ -1,0 +1,223 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitMovementCancelledEvent
+  commentId: T:Core.Units.UnitMovementCancelledEvent
+  id: UnitMovementCancelledEvent
+  parent: Core.Units
+  children:
+  - Core.Units.UnitMovementCancelledEvent.DestinationProvinceID
+  - Core.Units.UnitMovementCancelledEvent.OriginProvinceID
+  - Core.Units.UnitMovementCancelledEvent.TimeStamp
+  - Core.Units.UnitMovementCancelledEvent.UnitID
+  langs:
+  - csharp
+  - vb
+  name: UnitMovementCancelledEvent
+  nameWithType: UnitMovementCancelledEvent
+  fullName: Core.Units.UnitMovementCancelledEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitMovementCancelledEvent
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 433
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: 'public struct UnitMovementCancelledEvent : IGameEvent'
+    content.vb: Public Structure UnitMovementCancelledEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Units.UnitMovementCancelledEvent.TimeStamp
+  commentId: P:Core.Units.UnitMovementCancelledEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Units.UnitMovementCancelledEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: UnitMovementCancelledEvent.TimeStamp
+  fullName: Core.Units.UnitMovementCancelledEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 435
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Units.UnitMovementCancelledEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Units.UnitMovementCancelledEvent.UnitID
+  commentId: F:Core.Units.UnitMovementCancelledEvent.UnitID
+  id: UnitID
+  parent: Core.Units.UnitMovementCancelledEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitID
+  nameWithType: UnitMovementCancelledEvent.UnitID
+  fullName: Core.Units.UnitMovementCancelledEvent.UnitID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitID
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 436
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitID As UShort
+- uid: Core.Units.UnitMovementCancelledEvent.OriginProvinceID
+  commentId: F:Core.Units.UnitMovementCancelledEvent.OriginProvinceID
+  id: OriginProvinceID
+  parent: Core.Units.UnitMovementCancelledEvent
+  langs:
+  - csharp
+  - vb
+  name: OriginProvinceID
+  nameWithType: UnitMovementCancelledEvent.OriginProvinceID
+  fullName: Core.Units.UnitMovementCancelledEvent.OriginProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OriginProvinceID
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 437
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort OriginProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public OriginProvinceID As UShort
+- uid: Core.Units.UnitMovementCancelledEvent.DestinationProvinceID
+  commentId: F:Core.Units.UnitMovementCancelledEvent.DestinationProvinceID
+  id: DestinationProvinceID
+  parent: Core.Units.UnitMovementCancelledEvent
+  langs:
+  - csharp
+  - vb
+  name: DestinationProvinceID
+  nameWithType: UnitMovementCancelledEvent.DestinationProvinceID
+  fullName: Core.Units.UnitMovementCancelledEvent.DestinationProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DestinationProvinceID
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 438
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort DestinationProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public DestinationProvinceID As UShort
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Units.UnitMovementCancelledEvent.TimeStamp*
+  commentId: Overload:Core.Units.UnitMovementCancelledEvent.TimeStamp
+  href: Core.Units.UnitMovementCancelledEvent.html#Core_Units_UnitMovementCancelledEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: UnitMovementCancelledEvent.TimeStamp
+  fullName: Core.Units.UnitMovementCancelledEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort

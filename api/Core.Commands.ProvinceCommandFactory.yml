@@ -1,0 +1,263 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.ProvinceCommandFactory
+  commentId: T:Core.Commands.ProvinceCommandFactory
+  id: ProvinceCommandFactory
+  parent: Core.Commands
+  children:
+  - Core.Commands.ProvinceCommandFactory.ConquerProvince(System.UInt16,System.Byte)
+  - Core.Commands.ProvinceCommandFactory.TransferProvince(System.UInt16,System.UInt16)
+  - Core.Commands.ProvinceCommandFactory.TransferProvinces(System.UInt16[],System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCommandFactory
+  nameWithType: ProvinceCommandFactory
+  fullName: Core.Commands.ProvinceCommandFactory
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/ProvinceCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCommandFactory
+    path: Scripts/Core/Commands/ProvinceCommands.cs
+    startLine: 215
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Command factory for creating common province commands
+
+    Provides convenient methods for typical operations
+  example: []
+  syntax:
+    content: public static class ProvinceCommandFactory
+    content.vb: Public Module ProvinceCommandFactory
+  inheritance:
+  - System.Object
+- uid: Core.Commands.ProvinceCommandFactory.ConquerProvince(System.UInt16,System.Byte)
+  commentId: M:Core.Commands.ProvinceCommandFactory.ConquerProvince(System.UInt16,System.Byte)
+  id: ConquerProvince(System.UInt16,System.Byte)
+  parent: Core.Commands.ProvinceCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: ConquerProvince(ushort, byte)
+  nameWithType: ProvinceCommandFactory.ConquerProvince(ushort, byte)
+  fullName: Core.Commands.ProvinceCommandFactory.ConquerProvince(ushort, byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ProvinceCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConquerProvince
+    path: Scripts/Core/Commands/ProvinceCommands.cs
+    startLine: 220
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Create command to conquer a province
+  example: []
+  syntax:
+    content: public static ChangeProvinceOwnerCommand ConquerProvince(ushort provinceId, byte conqueror)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: conqueror
+      type: System.Byte
+    return:
+      type: Core.Commands.ChangeProvinceOwnerCommand
+    content.vb: Public Shared Function ConquerProvince(provinceId As UShort, conqueror As Byte) As ChangeProvinceOwnerCommand
+  overload: Core.Commands.ProvinceCommandFactory.ConquerProvince*
+  nameWithType.vb: ProvinceCommandFactory.ConquerProvince(UShort, Byte)
+  fullName.vb: Core.Commands.ProvinceCommandFactory.ConquerProvince(UShort, Byte)
+  name.vb: ConquerProvince(UShort, Byte)
+- uid: Core.Commands.ProvinceCommandFactory.TransferProvince(System.UInt16,System.UInt16)
+  commentId: M:Core.Commands.ProvinceCommandFactory.TransferProvince(System.UInt16,System.UInt16)
+  id: TransferProvince(System.UInt16,System.UInt16)
+  parent: Core.Commands.ProvinceCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: TransferProvince(ushort, ushort)
+  nameWithType: ProvinceCommandFactory.TransferProvince(ushort, ushort)
+  fullName: Core.Commands.ProvinceCommandFactory.TransferProvince(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ProvinceCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TransferProvince
+    path: Scripts/Core/Commands/ProvinceCommands.cs
+    startLine: 232
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Create command to transfer province peacefully
+  example: []
+  syntax:
+    content: public static ChangeProvinceOwnerCommand TransferProvince(ushort provinceId, ushort newOwner)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: newOwner
+      type: System.UInt16
+    return:
+      type: Core.Commands.ChangeProvinceOwnerCommand
+    content.vb: Public Shared Function TransferProvince(provinceId As UShort, newOwner As UShort) As ChangeProvinceOwnerCommand
+  overload: Core.Commands.ProvinceCommandFactory.TransferProvince*
+  nameWithType.vb: ProvinceCommandFactory.TransferProvince(UShort, UShort)
+  fullName.vb: Core.Commands.ProvinceCommandFactory.TransferProvince(UShort, UShort)
+  name.vb: TransferProvince(UShort, UShort)
+- uid: Core.Commands.ProvinceCommandFactory.TransferProvinces(System.UInt16[],System.UInt16)
+  commentId: M:Core.Commands.ProvinceCommandFactory.TransferProvinces(System.UInt16[],System.UInt16)
+  id: TransferProvinces(System.UInt16[],System.UInt16)
+  parent: Core.Commands.ProvinceCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: TransferProvinces(ushort[], ushort)
+  nameWithType: ProvinceCommandFactory.TransferProvinces(ushort[], ushort)
+  fullName: Core.Commands.ProvinceCommandFactory.TransferProvinces(ushort[], ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ProvinceCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TransferProvinces
+    path: Scripts/Core/Commands/ProvinceCommands.cs
+    startLine: 247
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Create command to transfer multiple provinces (peace deal, vassal integration)
+  example: []
+  syntax:
+    content: public static TransferProvincesCommand TransferProvinces(ushort[] provinceIds, ushort newOwner)
+    parameters:
+    - id: provinceIds
+      type: System.UInt16[]
+    - id: newOwner
+      type: System.UInt16
+    return:
+      type: Core.Commands.TransferProvincesCommand
+    content.vb: Public Shared Function TransferProvinces(provinceIds As UShort(), newOwner As UShort) As TransferProvincesCommand
+  overload: Core.Commands.ProvinceCommandFactory.TransferProvinces*
+  nameWithType.vb: ProvinceCommandFactory.TransferProvinces(UShort(), UShort)
+  fullName.vb: Core.Commands.ProvinceCommandFactory.TransferProvinces(UShort(), UShort)
+  name.vb: TransferProvinces(UShort(), UShort)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.ProvinceCommandFactory.ConquerProvince*
+  commentId: Overload:Core.Commands.ProvinceCommandFactory.ConquerProvince
+  href: Core.Commands.ProvinceCommandFactory.html#Core_Commands_ProvinceCommandFactory_ConquerProvince_System_UInt16_System_Byte_
+  name: ConquerProvince
+  nameWithType: ProvinceCommandFactory.ConquerProvince
+  fullName: Core.Commands.ProvinceCommandFactory.ConquerProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Commands.ChangeProvinceOwnerCommand
+  commentId: T:Core.Commands.ChangeProvinceOwnerCommand
+  parent: Core.Commands
+  href: Core.Commands.ChangeProvinceOwnerCommand.html
+  name: ChangeProvinceOwnerCommand
+  nameWithType: ChangeProvinceOwnerCommand
+  fullName: Core.Commands.ChangeProvinceOwnerCommand
+- uid: Core.Commands.ProvinceCommandFactory.TransferProvince*
+  commentId: Overload:Core.Commands.ProvinceCommandFactory.TransferProvince
+  href: Core.Commands.ProvinceCommandFactory.html#Core_Commands_ProvinceCommandFactory_TransferProvince_System_UInt16_System_UInt16_
+  name: TransferProvince
+  nameWithType: ProvinceCommandFactory.TransferProvince
+  fullName: Core.Commands.ProvinceCommandFactory.TransferProvince
+- uid: Core.Commands.ProvinceCommandFactory.TransferProvinces*
+  commentId: Overload:Core.Commands.ProvinceCommandFactory.TransferProvinces
+  href: Core.Commands.ProvinceCommandFactory.html#Core_Commands_ProvinceCommandFactory_TransferProvinces_System_UInt16___System_UInt16_
+  name: TransferProvinces
+  nameWithType: ProvinceCommandFactory.TransferProvinces
+  fullName: Core.Commands.ProvinceCommandFactory.TransferProvinces
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.TransferProvincesCommand
+  commentId: T:Core.Commands.TransferProvincesCommand
+  parent: Core.Commands
+  href: Core.Commands.TransferProvincesCommand.html
+  name: TransferProvincesCommand
+  nameWithType: TransferProvincesCommand
+  fullName: Core.Commands.TransferProvincesCommand

@@ -1,0 +1,394 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.BMPData
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPData
+  id: ProvinceMapProcessor.BMPData
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.BMPData.Dispose
+  - Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData(Map.Loading.Images.BMPParser.BMPPixelData)
+  - Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData(Map.Loading.Images.ImageParser.ImagePixelData)
+  - Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData
+  - Map.Loading.ProvinceMapProcessor.BMPData.Height
+  - Map.Loading.ProvinceMapProcessor.BMPData.Width
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.BMPData
+  nameWithType: ProvinceMapProcessor.BMPData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPData
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 63
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Image data wrapper (supports both BMP and PNG)
+
+    Named BMPData for backward compatibility
+  example: []
+  syntax:
+    content: public struct ProvinceMapProcessor.BMPData
+    content.vb: Public Structure ProvinceMapProcessor.BMPData
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.Width
+  commentId: F:Map.Loading.ProvinceMapProcessor.BMPData.Width
+  id: Width
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: ProvinceMapProcessor.BMPData.Width
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 65
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int Width
+    return:
+      type: System.Int32
+    content.vb: Public Width As Integer
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.Height
+  commentId: F:Map.Loading.ProvinceMapProcessor.BMPData.Height
+  id: Height
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: ProvinceMapProcessor.BMPData.Height
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 66
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int Height
+    return:
+      type: System.Int32
+    content.vb: Public Height As Integer
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData
+  commentId: M:Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData
+  id: GetPixelData
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: GetPixelData()
+  nameWithType: ProvinceMapProcessor.BMPData.GetPixelData()
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPixelData
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public ProvinceMapProcessor.BMPPixelDataWrapper GetPixelData()
+    return:
+      type: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    content.vb: Public Function GetPixelData() As ProvinceMapProcessor.BMPPixelDataWrapper
+  overload: Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData*
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.Dispose
+  commentId: M:Map.Loading.ProvinceMapProcessor.BMPData.Dispose
+  id: Dispose
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMapProcessor.BMPData.Dispose()
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.ProvinceMapProcessor.BMPData.Dispose*
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData(Map.Loading.Images.BMPParser.BMPPixelData)
+  commentId: M:Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData(Map.Loading.Images.BMPParser.BMPPixelData)
+  id: FromPixelData(Map.Loading.Images.BMPParser.BMPPixelData)
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: FromPixelData(BMPPixelData)
+  nameWithType: ProvinceMapProcessor.BMPData.FromPixelData(BMPParser.BMPPixelData)
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData(Map.Loading.Images.BMPParser.BMPPixelData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromPixelData
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 92
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public static ProvinceMapProcessor.BMPData FromPixelData(BMPParser.BMPPixelData data)
+    parameters:
+    - id: data
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    return:
+      type: Map.Loading.ProvinceMapProcessor.BMPData
+    content.vb: Public Shared Function FromPixelData(data As BMPParser.BMPPixelData) As ProvinceMapProcessor.BMPData
+  overload: Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData*
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData(Map.Loading.Images.ImageParser.ImagePixelData)
+  commentId: M:Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData(Map.Loading.Images.ImageParser.ImagePixelData)
+  id: FromUnifiedPixelData(Map.Loading.Images.ImageParser.ImagePixelData)
+  parent: Map.Loading.ProvinceMapProcessor.BMPData
+  langs:
+  - csharp
+  - vb
+  name: FromUnifiedPixelData(ImagePixelData)
+  nameWithType: ProvinceMapProcessor.BMPData.FromUnifiedPixelData(ImageParser.ImagePixelData)
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData(Map.Loading.Images.ImageParser.ImagePixelData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromUnifiedPixelData
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public static ProvinceMapProcessor.BMPData FromUnifiedPixelData(ImageParser.ImagePixelData data)
+    parameters:
+    - id: data
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    return:
+      type: Map.Loading.ProvinceMapProcessor.BMPData
+    content.vb: Public Shared Function FromUnifiedPixelData(data As ImageParser.ImagePixelData) As ProvinceMapProcessor.BMPData
+  overload: Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData*
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData
+  href: Map.Loading.ProvinceMapProcessor.BMPData.html#Map_Loading_ProvinceMapProcessor_BMPData_GetPixelData
+  name: GetPixelData
+  nameWithType: ProvinceMapProcessor.BMPData.GetPixelData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.GetPixelData
+- uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.BMPPixelDataWrapper
+  nameWithType: ProvinceMapProcessor.BMPPixelDataWrapper
+  fullName: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    name: BMPPixelDataWrapper
+    href: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    name: BMPPixelDataWrapper
+    href: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.Dispose*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.BMPData.Dispose
+  href: Map.Loading.ProvinceMapProcessor.BMPData.html#Map_Loading_ProvinceMapProcessor_BMPData_Dispose
+  name: Dispose
+  nameWithType: ProvinceMapProcessor.BMPData.Dispose
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.Dispose
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData
+  href: Map.Loading.ProvinceMapProcessor.BMPData.html#Map_Loading_ProvinceMapProcessor_BMPData_FromPixelData_Map_Loading_Images_BMPParser_BMPPixelData_
+  name: FromPixelData
+  nameWithType: ProvinceMapProcessor.BMPData.FromPixelData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.FromPixelData
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPData
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPData
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.BMPData
+  nameWithType: ProvinceMapProcessor.BMPData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData
+  href: Map.Loading.ProvinceMapProcessor.BMPData.html#Map_Loading_ProvinceMapProcessor_BMPData_FromUnifiedPixelData_Map_Loading_Images_ImageParser_ImagePixelData_
+  name: FromUnifiedPixelData
+  nameWithType: ProvinceMapProcessor.BMPData.FromUnifiedPixelData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData.FromUnifiedPixelData
+- uid: Map.Loading.Images.ImageParser.ImagePixelData
+  commentId: T:Map.Loading.Images.ImageParser.ImagePixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImagePixelData
+  nameWithType: ImageParser.ImagePixelData
+  fullName: Map.Loading.Images.ImageParser.ImagePixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html

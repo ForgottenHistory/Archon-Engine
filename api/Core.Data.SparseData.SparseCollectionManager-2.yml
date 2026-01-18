@@ -1,0 +1,1506 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.SparseData.SparseCollectionManager`2
+  commentId: T:Core.Data.SparseData.SparseCollectionManager`2
+  id: SparseCollectionManager`2
+  parent: Core.Data.SparseData
+  children:
+  - Core.Data.SparseData.SparseCollectionManager`2.Add(`0,`1)
+  - Core.Data.SparseData.SparseCollectionManager`2.Capacity
+  - Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage
+  - Core.Data.SparseData.SparseCollectionManager`2.Clear
+  - Core.Data.SparseData.SparseCollectionManager`2.Count
+  - Core.Data.SparseData.SparseCollectionManager`2.Dispose
+  - Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.Allocator)
+  - Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.NativeList{`1})
+  - Core.Data.SparseData.SparseCollectionManager`2.GetCount(`0)
+  - Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.Allocator)
+  - Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.NativeList{`0})
+  - Core.Data.SparseData.SparseCollectionManager`2.GetStats
+  - Core.Data.SparseData.SparseCollectionManager`2.Has(`0,`1)
+  - Core.Data.SparseData.SparseCollectionManager`2.HasAny(`0)
+  - Core.Data.SparseData.SparseCollectionManager`2.Initialize(System.String,System.Int32)
+  - Core.Data.SparseData.SparseCollectionManager`2.IsInitialized
+  - Core.Data.SparseData.SparseCollectionManager`2.Name
+  - Core.Data.SparseData.SparseCollectionManager`2.ProcessValues(`0,System.Action{`1})
+  - Core.Data.SparseData.SparseCollectionManager`2.Remove(`0,`1)
+  - Core.Data.SparseData.SparseCollectionManager`2.RemoveAll(`0)
+  langs:
+  - csharp
+  - vb
+  name: SparseCollectionManager<TKey, TValue>
+  nameWithType: SparseCollectionManager<TKey, TValue>
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SparseCollectionManager
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Generic sparse collection for optional/rare data that scales with mods
+
+
+    Problem: Dense arrays scale with POSSIBLE items (HOI4's 30→500 equipment disaster)
+
+    Solution: Sparse storage scales with ACTUAL items (only what exists)
+
+
+    Pattern: NativeParallelMultiHashMap for one-to-many relationships
+
+    - One key (provinceID) → multiple values (buildingIDs)
+
+    - Iteration only over actual items (not all possible)
+
+    - Pre-allocated capacity (Principle 4: zero allocations during gameplay)
+
+
+    Performance:
+
+    - Has: O(m) where m = items per key (typically 3-5)
+
+    - Get: O(m) where m = items per key
+
+    - Add/Remove: O(1) average case
+
+    - Iterate: O(actual items), not O(possible items)
+
+
+    Memory: Scales with usage, not type count
+
+    - Dense approach: 10k entities × 500 types = 5 MB
+
+    - Sparse approach: 10k entities × 5 actual = 200 KB
+
+    - Savings: 96% reduction at mod scale
+
+
+    Example use cases:
+
+    - Buildings: Province → BuildingIDs (most have 0-5 out of 100+)
+
+    - Modifiers: Province → ModifierIDs (most have 0-3 out of 200+)
+
+    - Trade Goods: Province → TradeGoodIDs (most produce 1-2 out of 50)
+
+
+    Architecture:
+
+    - TKey: Entity ID (ushort provinceId, ushort countryId)
+
+    - TValue: Item ID (ushort buildingId, ushort modifierId)
+
+    - Both must be unmanaged (value types, no references)
+  example: []
+  syntax:
+    content: 'public class SparseCollectionManager<TKey, TValue> : ISparseCollection where TKey : unmanaged, IEquatable<TKey> where TValue : unmanaged, IEquatable<TValue>'
+    typeParameters:
+    - id: TKey
+    - id: TValue
+    content.vb: Public Class SparseCollectionManager(Of TKey As {Structure, IEquatable(Of TKey)}, TValue As {Structure, IEquatable(Of TValue)}) Implements ISparseCollection
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Data.SparseData.ISparseCollection
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue)
+  name.vb: SparseCollectionManager(Of TKey, TValue)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Name
+  commentId: P:Core.Data.SparseData.SparseCollectionManager`2.Name
+  id: Name
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: SparseCollectionManager<TKey, TValue>.Name
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Name for debugging and logging
+
+    Example: "ProvinceBuildings", "CountryModifiers"
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Name*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.Name
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Name
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Name
+- uid: Core.Data.SparseData.SparseCollectionManager`2.IsInitialized
+  commentId: P:Core.Data.SparseData.SparseCollectionManager`2.IsInitialized
+  id: IsInitialized
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: SparseCollectionManager<TKey, TValue>.IsInitialized
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: Is the collection initialized and ready for use?
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Data.SparseData.SparseCollectionManager`2.IsInitialized*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.IsInitialized
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).IsInitialized
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).IsInitialized
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Capacity
+  commentId: P:Core.Data.SparseData.SparseCollectionManager`2.Capacity
+  id: Capacity
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: SparseCollectionManager<TKey, TValue>.Capacity
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Pre-allocated capacity (from Principle 4)
+
+    - Set at initialization
+
+    - Fixed during gameplay (zero allocations)
+  example: []
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Capacity*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.Capacity
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Capacity
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Capacity
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Count
+  commentId: P:Core.Data.SparseData.SparseCollectionManager`2.Count
+  id: Count
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: SparseCollectionManager<TKey, TValue>.Count
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Current number of entries in collection
+
+    - Actual items stored (not capacity)
+
+    - Used for memory monitoring
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Count*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.Count
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Count
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Count
+- uid: Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage
+  commentId: P:Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage
+  id: CapacityUsage
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: CapacityUsage
+  nameWithType: SparseCollectionManager<TKey, TValue>.CapacityUsage
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.CapacityUsage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CapacityUsage
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Percentage of capacity used (0.0 to 1.0)
+
+    - Warns when approaching capacity
+
+    - Triggers logging at thresholds (80%, 90%, 95%)
+  example: []
+  syntax:
+    content: public float CapacityUsage { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property CapacityUsage As Single
+  overload: Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.CapacityUsage
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).CapacityUsage
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).CapacityUsage
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Initialize(System.String,System.Int32)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Initialize(System.String,System.Int32)
+  id: Initialize(System.String,System.Int32)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Initialize(string, int)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Initialize(string, int)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Initialize(string, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Initialize sparse collection with pre-allocated capacity (Principle 4)
+
+
+    Capacity estimation guidelines:
+
+    - Entities × Average items per entity × Safety margin (2x)
+
+    - Example: 10k provinces × 5 buildings × 2 = 100k capacity
+
+
+    Safety margin accounts for:
+
+    - Player builds more than average
+
+    - Mods add more item types
+
+    - Late-game province growth
+  example: []
+  syntax:
+    content: public void Initialize(string collectionName, int estimatedCapacity)
+    parameters:
+    - id: collectionName
+      type: System.String
+    - id: estimatedCapacity
+      type: System.Int32
+    content.vb: Public Sub Initialize(collectionName As String, estimatedCapacity As Integer)
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Initialize*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Initialize(String, Integer)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Initialize(String, Integer)
+  name.vb: Initialize(String, Integer)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Has(`0,`1)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Has(`0,`1)
+  id: Has(`0,`1)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Has(TKey, TValue)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Has(TKey, TValue)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Has(TKey, TValue)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Has
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Check if key has specific value (existence check)
+
+
+    Performance: O(m) where m = values per key (typically 3-5)
+
+    Use case: "Does province 42 have Farm building?"
+  example: []
+  syntax:
+    content: public bool Has(TKey key, TValue value)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: value
+      type: '{TValue}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function Has(key As TKey, value As TValue) As Boolean
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Has*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Has(TKey, TValue)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Has(TKey, TValue)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.HasAny(`0)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.HasAny(`0)
+  id: HasAny(`0)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: HasAny(TKey)
+  nameWithType: SparseCollectionManager<TKey, TValue>.HasAny(TKey)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.HasAny(TKey)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasAny
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Check if key has any values
+
+
+    Performance: O(1)
+
+    Use case: "Does province have any buildings?"
+  example: []
+  syntax:
+    content: public bool HasAny(TKey key)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasAny(key As TKey) As Boolean
+  overload: Core.Data.SparseData.SparseCollectionManager`2.HasAny*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).HasAny(TKey)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).HasAny(TKey)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.Allocator)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.Allocator)
+  id: Get(`0,Unity.Collections.Allocator)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Get(TKey, Allocator)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Get(TKey, Allocator)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Get(TKey, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 148
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Get all values for a key
+
+
+    Performance: O(m) where m = values per key
+
+    Use case: "What buildings does province 42 have?"
+
+
+    IMPORTANT: Caller must dispose returned NativeArray!
+  example: []
+  syntax:
+    content: public NativeArray<TValue> Get(TKey key, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{{TValue}}
+    content.vb: Public Function [Get](key As TKey, allocator As Allocator = Allocator.TempJob) As NativeArray(Of TValue)
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Get*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Get(TKey, Allocator)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Get(TKey, Unity.Collections.Allocator)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.NativeList{`1})
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Get(`0,Unity.Collections.NativeList{`1})
+  id: Get(`0,Unity.Collections.NativeList{`1})
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Get(TKey, NativeList<TValue>)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Get(TKey, NativeList<TValue>)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Get(TKey, Unity.Collections.NativeList<TValue>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 180
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Get all values for a key (fills existing NativeList, zero-allocation)
+
+
+    Performance: O(n) where n = values for this key
+
+    Use case: Hot paths that need to avoid allocations (monthly tick, etc.)
+  example: []
+  syntax:
+    content: public void Get(TKey key, NativeList<TValue> resultBuffer)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{{TValue}}
+    content.vb: Public Sub [Get](key As TKey, resultBuffer As NativeList(Of TValue))
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Get*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Get(TKey, NativeList(Of TValue))
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Get(TKey, Unity.Collections.NativeList(Of TValue))
+  name.vb: Get(TKey, NativeList(Of TValue))
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetCount(`0)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.GetCount(`0)
+  id: GetCount(`0)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: GetCount(TKey)
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetCount(TKey)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetCount(TKey)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCount
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 202
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Get count of values for a key
+
+
+    Performance: O(1)
+
+    Use case: "How many buildings does province have?"
+  example: []
+  syntax:
+    content: public int GetCount(TKey key)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCount(key As TKey) As Integer
+  overload: Core.Data.SparseData.SparseCollectionManager`2.GetCount*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetCount(TKey)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetCount(TKey)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Add(`0,`1)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Add(`0,`1)
+  id: Add(`0,`1)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Add(TKey, TValue)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Add(TKey, TValue)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Add(TKey, TValue)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 221
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Add value to key (allows duplicates!)
+
+
+    Performance: O(1) average case
+
+    Use case: "Province 42 builds Farm"
+
+
+    Note: NativeMultiHashMap allows duplicate (key, value) pairs
+
+    Call Has() first if you need to prevent duplicates
+  example: []
+  syntax:
+    content: public void Add(TKey key, TValue value)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: value
+      type: '{TValue}'
+    content.vb: Public Sub Add(key As TKey, value As TValue)
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Add*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Add(TKey, TValue)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Add(TKey, TValue)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Remove(`0,`1)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Remove(`0,`1)
+  id: Remove(`0,`1)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Remove(TKey, TValue)
+  nameWithType: SparseCollectionManager<TKey, TValue>.Remove(TKey, TValue)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Remove(TKey, TValue)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Remove
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 236
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Remove specific value from key
+
+
+    Performance: O(m) where m = values per key
+
+    Use case: "Province 42 destroys Farm"
+
+
+    Returns: True if value was removed, false if not found
+  example: []
+  syntax:
+    content: public bool Remove(TKey key, TValue value)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: value
+      type: '{TValue}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function Remove(key As TKey, value As TValue) As Boolean
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Remove*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Remove(TKey, TValue)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Remove(TKey, TValue)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.RemoveAll(`0)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.RemoveAll(`0)
+  id: RemoveAll(`0)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: RemoveAll(TKey)
+  nameWithType: SparseCollectionManager<TKey, TValue>.RemoveAll(TKey)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.RemoveAll(TKey)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveAll
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 269
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Remove all values for a key
+
+
+    Performance: O(m) where m = values per key
+
+    Use case: "Clear all buildings from province 42"
+  example: []
+  syntax:
+    content: public void RemoveAll(TKey key)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    content.vb: Public Sub RemoveAll(key As TKey)
+  overload: Core.Data.SparseData.SparseCollectionManager`2.RemoveAll*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).RemoveAll(TKey)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).RemoveAll(TKey)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.ProcessValues(`0,System.Action{`1})
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.ProcessValues(`0,System.Action{`1})
+  id: ProcessValues(`0,System.Action{`1})
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: ProcessValues(TKey, Action<TValue>)
+  nameWithType: SparseCollectionManager<TKey, TValue>.ProcessValues(TKey, Action<TValue>)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.ProcessValues(TKey, System.Action<TValue>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProcessValues
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Process all values for a key with callback
+
+
+    Performance: O(m) where m = values per key
+
+    Use case: "Apply effects from all buildings in province"
+
+
+    Pattern: Callback-based iteration (zero allocation)
+  example: []
+  syntax:
+    content: public void ProcessValues(TKey key, Action<TValue> processor)
+    parameters:
+    - id: key
+      type: '{TKey}'
+    - id: processor
+      type: System.Action{{TValue}}
+    content.vb: Public Sub ProcessValues(key As TKey, processor As Action(Of TValue))
+  overload: Core.Data.SparseData.SparseCollectionManager`2.ProcessValues*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).ProcessValues(TKey, Action(Of TValue))
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).ProcessValues(TKey, System.Action(Of TValue))
+  name.vb: ProcessValues(TKey, Action(Of TValue))
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.Allocator)
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.Allocator)
+  id: GetKeys(Unity.Collections.Allocator)
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: GetKeys(Allocator)
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetKeys(Allocator)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetKeys(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetKeys
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 309
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Get all unique keys in collection
+
+
+    Performance: O(n) where n = entry count
+
+    Use case: "Which provinces have any buildings?"
+
+
+    IMPORTANT: Caller must dispose returned NativeArray!
+  example: []
+  syntax:
+    content: public NativeArray<TKey> GetKeys(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{{TKey}}
+    content.vb: Public Function GetKeys(allocator As Allocator = Allocator.TempJob) As NativeArray(Of TKey)
+  overload: Core.Data.SparseData.SparseCollectionManager`2.GetKeys*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetKeys(Allocator)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetKeys(Unity.Collections.Allocator)
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.NativeList{`0})
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.GetKeys(Unity.Collections.NativeList{`0})
+  id: GetKeys(Unity.Collections.NativeList{`0})
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: GetKeys(NativeList<TKey>)
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetKeys(NativeList<TKey>)
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetKeys(Unity.Collections.NativeList<TKey>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetKeys
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Get all unique keys (fills existing NativeList, zero-allocation)
+
+
+    Performance: O(n) where n = number of unique keys
+
+    Use case: Hot paths that need to avoid allocations (monthly tick, etc.)
+  example: []
+  syntax:
+    content: public void GetKeys(NativeList<TKey> resultBuffer)
+    parameters:
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{{TKey}}
+    content.vb: Public Sub GetKeys(resultBuffer As NativeList(Of TKey))
+  overload: Core.Data.SparseData.SparseCollectionManager`2.GetKeys*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetKeys(NativeList(Of TKey))
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetKeys(Unity.Collections.NativeList(Of TKey))
+  name.vb: GetKeys(NativeList(Of TKey))
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Clear
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Clear
+  id: Clear
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: SparseCollectionManager<TKey, TValue>.Clear()
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 344
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Clear all entries without deallocating (Principle 4)
+
+
+    Use case: Scenario reload, game reset
+
+    Performance: O(1) - just resets internal count
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Clear*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.Clear
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Clear()
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Clear()
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetStats
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.GetStats
+  id: GetStats
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: GetStats()
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetStats()
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStats
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 357
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: Get memory statistics for profiling
+  example: []
+  syntax:
+    content: public SparseCollectionStats GetStats()
+    return:
+      type: Core.Data.SparseData.SparseCollectionStats
+    content.vb: Public Function GetStats() As SparseCollectionStats
+  overload: Core.Data.SparseData.SparseCollectionManager`2.GetStats*
+  implements:
+  - Core.Data.SparseData.ISparseCollection.GetStats
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetStats()
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetStats()
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Dispose
+  commentId: M:Core.Data.SparseData.SparseCollectionManager`2.Dispose
+  id: Dispose
+  parent: Core.Data.SparseData.SparseCollectionManager`2
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SparseCollectionManager<TKey, TValue>.Dispose()
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Data/SparseData/SparseCollectionManager.cs
+    startLine: 376
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: Dispose native collection (call at shutdown)
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Data.SparseData.SparseCollectionManager`2.Dispose*
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Dispose()
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Dispose()
+references:
+- uid: Core.Data.SparseData
+  commentId: N:Core.Data.SparseData
+  href: Core.html
+  name: Core.Data.SparseData
+  nameWithType: Core.Data.SparseData
+  fullName: Core.Data.SparseData
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Data.SparseData.ISparseCollection
+  commentId: T:Core.Data.SparseData.ISparseCollection
+  parent: Core.Data.SparseData
+  href: Core.Data.SparseData.ISparseCollection.html
+  name: ISparseCollection
+  nameWithType: ISparseCollection
+  fullName: Core.Data.SparseData.ISparseCollection
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Name*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Name
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Name
+  name: Name
+  nameWithType: SparseCollectionManager<TKey, TValue>.Name
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Name
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Name
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Name
+- uid: Core.Data.SparseData.ISparseCollection.Name
+  commentId: P:Core.Data.SparseData.ISparseCollection.Name
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Name
+  name: Name
+  nameWithType: ISparseCollection.Name
+  fullName: Core.Data.SparseData.ISparseCollection.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.SparseData.SparseCollectionManager`2.IsInitialized*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.IsInitialized
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_IsInitialized
+  name: IsInitialized
+  nameWithType: SparseCollectionManager<TKey, TValue>.IsInitialized
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.IsInitialized
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).IsInitialized
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).IsInitialized
+- uid: Core.Data.SparseData.ISparseCollection.IsInitialized
+  commentId: P:Core.Data.SparseData.ISparseCollection.IsInitialized
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_IsInitialized
+  name: IsInitialized
+  nameWithType: ISparseCollection.IsInitialized
+  fullName: Core.Data.SparseData.ISparseCollection.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Capacity*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Capacity
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Capacity
+  name: Capacity
+  nameWithType: SparseCollectionManager<TKey, TValue>.Capacity
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Capacity
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Capacity
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Capacity
+- uid: Core.Data.SparseData.ISparseCollection.Capacity
+  commentId: P:Core.Data.SparseData.ISparseCollection.Capacity
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Capacity
+  name: Capacity
+  nameWithType: ISparseCollection.Capacity
+  fullName: Core.Data.SparseData.ISparseCollection.Capacity
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Count*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Count
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Count
+  name: Count
+  nameWithType: SparseCollectionManager<TKey, TValue>.Count
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Count
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Count
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Count
+- uid: Core.Data.SparseData.ISparseCollection.Count
+  commentId: P:Core.Data.SparseData.ISparseCollection.Count
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Count
+  name: Count
+  nameWithType: ISparseCollection.Count
+  fullName: Core.Data.SparseData.ISparseCollection.Count
+- uid: Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.CapacityUsage
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_CapacityUsage
+  name: CapacityUsage
+  nameWithType: SparseCollectionManager<TKey, TValue>.CapacityUsage
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.CapacityUsage
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).CapacityUsage
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).CapacityUsage
+- uid: Core.Data.SparseData.ISparseCollection.CapacityUsage
+  commentId: P:Core.Data.SparseData.ISparseCollection.CapacityUsage
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_CapacityUsage
+  name: CapacityUsage
+  nameWithType: ISparseCollection.CapacityUsage
+  fullName: Core.Data.SparseData.ISparseCollection.CapacityUsage
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Initialize*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Initialize
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Initialize_System_String_System_Int32_
+  name: Initialize
+  nameWithType: SparseCollectionManager<TKey, TValue>.Initialize
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Initialize
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Initialize
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Initialize
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Has*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Has
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Has__0__1_
+  name: Has
+  nameWithType: SparseCollectionManager<TKey, TValue>.Has
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Has
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Has
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Has
+- uid: '{TKey}'
+  commentId: '!:TKey'
+  definition: TKey
+  name: TKey
+  nameWithType: TKey
+  fullName: TKey
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: TKey
+  name: TKey
+  nameWithType: TKey
+  fullName: TKey
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: Core.Data.SparseData.SparseCollectionManager`2.HasAny*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.HasAny
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_HasAny__0_
+  name: HasAny
+  nameWithType: SparseCollectionManager<TKey, TValue>.HasAny
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.HasAny
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).HasAny
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).HasAny
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Get*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Get
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Get__0_Unity_Collections_Allocator_
+  name: Get
+  nameWithType: SparseCollectionManager<TKey, TValue>.Get
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Get
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Get
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Get
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{{TValue}}
+  commentId: T:Unity.Collections.NativeArray{`1}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<TValue>
+  nameWithType: NativeArray<TValue>
+  fullName: Unity.Collections.NativeArray<TValue>
+  nameWithType.vb: NativeArray(Of TValue)
+  fullName.vb: Unity.Collections.NativeArray(Of TValue)
+  name.vb: NativeArray(Of TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeList{{TValue}}
+  commentId: T:Unity.Collections.NativeList{`1}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<TValue>
+  nameWithType: NativeList<TValue>
+  fullName: Unity.Collections.NativeList<TValue>
+  nameWithType.vb: NativeList(Of TValue)
+  fullName.vb: Unity.Collections.NativeList(Of TValue)
+  name.vb: NativeList(Of TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetCount*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.GetCount
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_GetCount__0_
+  name: GetCount
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetCount
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetCount
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetCount
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetCount
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Add*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Add
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Add__0__1_
+  name: Add
+  nameWithType: SparseCollectionManager<TKey, TValue>.Add
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Add
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Add
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Add
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Remove*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Remove
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Remove__0__1_
+  name: Remove
+  nameWithType: SparseCollectionManager<TKey, TValue>.Remove
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Remove
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Remove
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Remove
+- uid: Core.Data.SparseData.SparseCollectionManager`2.RemoveAll*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.RemoveAll
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_RemoveAll__0_
+  name: RemoveAll
+  nameWithType: SparseCollectionManager<TKey, TValue>.RemoveAll
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.RemoveAll
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).RemoveAll
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).RemoveAll
+- uid: Core.Data.SparseData.SparseCollectionManager`2.ProcessValues*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.ProcessValues
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_ProcessValues__0_System_Action__1__
+  name: ProcessValues
+  nameWithType: SparseCollectionManager<TKey, TValue>.ProcessValues
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.ProcessValues
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).ProcessValues
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).ProcessValues
+- uid: System.Action{{TValue}}
+  commentId: T:System.Action{`1}
+  parent: System
+  definition: System.Action`1
+  name: Action<TValue>
+  nameWithType: Action<TValue>
+  fullName: System.Action<TValue>
+  nameWithType.vb: Action(Of TValue)
+  fullName.vb: System.Action(Of TValue)
+  name.vb: Action(Of TValue)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetKeys*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.GetKeys
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_GetKeys_Unity_Collections_Allocator_
+  name: GetKeys
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetKeys
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetKeys
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetKeys
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetKeys
+- uid: Unity.Collections.NativeArray{{TKey}}
+  commentId: T:Unity.Collections.NativeArray{`0}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<TKey>
+  nameWithType: NativeArray<TKey>
+  fullName: Unity.Collections.NativeArray<TKey>
+  nameWithType.vb: NativeArray(Of TKey)
+  fullName.vb: Unity.Collections.NativeArray(Of TKey)
+  name.vb: NativeArray(Of TKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: )
+- uid: Unity.Collections.NativeList{{TKey}}
+  commentId: T:Unity.Collections.NativeList{`0}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<TKey>
+  nameWithType: NativeList<TKey>
+  fullName: Unity.Collections.NativeList<TKey>
+  nameWithType.vb: NativeList(Of TKey)
+  fullName.vb: Unity.Collections.NativeList(Of TKey)
+  name.vb: NativeList(Of TKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: )
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Clear*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Clear
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Clear
+  name: Clear
+  nameWithType: SparseCollectionManager<TKey, TValue>.Clear
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Clear
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Clear
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Clear
+- uid: Core.Data.SparseData.ISparseCollection.Clear
+  commentId: M:Core.Data.SparseData.ISparseCollection.Clear
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Clear
+  name: Clear()
+  nameWithType: ISparseCollection.Clear()
+  fullName: Core.Data.SparseData.ISparseCollection.Clear()
+  spec.csharp:
+  - uid: Core.Data.SparseData.ISparseCollection.Clear
+    name: Clear
+    href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Clear
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Data.SparseData.ISparseCollection.Clear
+    name: Clear
+    href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Clear
+  - name: (
+  - name: )
+- uid: Core.Data.SparseData.SparseCollectionManager`2.GetStats*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.GetStats
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_GetStats
+  name: GetStats
+  nameWithType: SparseCollectionManager<TKey, TValue>.GetStats
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.GetStats
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).GetStats
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).GetStats
+- uid: Core.Data.SparseData.ISparseCollection.GetStats
+  commentId: M:Core.Data.SparseData.ISparseCollection.GetStats
+  parent: Core.Data.SparseData.ISparseCollection
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_GetStats
+  name: GetStats()
+  nameWithType: ISparseCollection.GetStats()
+  fullName: Core.Data.SparseData.ISparseCollection.GetStats()
+  spec.csharp:
+  - uid: Core.Data.SparseData.ISparseCollection.GetStats
+    name: GetStats
+    href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_GetStats
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Data.SparseData.ISparseCollection.GetStats
+    name: GetStats
+    href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_GetStats
+  - name: (
+  - name: )
+- uid: Core.Data.SparseData.SparseCollectionStats
+  commentId: T:Core.Data.SparseData.SparseCollectionStats
+  parent: Core.Data.SparseData
+  href: Core.Data.SparseData.SparseCollectionStats.html
+  name: SparseCollectionStats
+  nameWithType: SparseCollectionStats
+  fullName: Core.Data.SparseData.SparseCollectionStats
+- uid: Core.Data.SparseData.SparseCollectionManager`2.Dispose*
+  commentId: Overload:Core.Data.SparseData.SparseCollectionManager`2.Dispose
+  href: Core.Data.SparseData.SparseCollectionManager-2.html#Core_Data_SparseData_SparseCollectionManager_2_Dispose
+  name: Dispose
+  nameWithType: SparseCollectionManager<TKey, TValue>.Dispose
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>.Dispose
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue).Dispose
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue).Dispose

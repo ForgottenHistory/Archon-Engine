@@ -1,0 +1,258 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.ColoredTextMarkup
+  commentId: T:Core.Localization.ColoredTextMarkup
+  id: ColoredTextMarkup
+  parent: Core.Localization
+  children:
+  - Core.Localization.ColoredTextMarkup.ParseMarkup(Unity.Collections.FixedString512Bytes,Unity.Collections.Allocator)
+  - Core.Localization.ColoredTextMarkup.ToPlainText(Unity.Collections.FixedString512Bytes)
+  - Core.Localization.ColoredTextMarkup.ToUnityRichText(Unity.Collections.FixedString512Bytes)
+  langs:
+  - csharp
+  - vb
+  name: ColoredTextMarkup
+  nameWithType: ColoredTextMarkup
+  fullName: Core.Localization.ColoredTextMarkup
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColoredTextMarkup
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    Colored text markup system for rich text localization
+
+    Supports Paradox-style color codes and Unity rich text conversion
+  example: []
+  syntax:
+    content: public static class ColoredTextMarkup
+    content.vb: Public Module ColoredTextMarkup
+  inheritance:
+  - System.Object
+- uid: Core.Localization.ColoredTextMarkup.ParseMarkup(Unity.Collections.FixedString512Bytes,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.ColoredTextMarkup.ParseMarkup(Unity.Collections.FixedString512Bytes,Unity.Collections.Allocator)
+  id: ParseMarkup(Unity.Collections.FixedString512Bytes,Unity.Collections.Allocator)
+  parent: Core.Localization.ColoredTextMarkup
+  langs:
+  - csharp
+  - vb
+  name: ParseMarkup(FixedString512Bytes, Allocator)
+  nameWithType: ColoredTextMarkup.ParseMarkup(FixedString512Bytes, Allocator)
+  fullName: Core.Localization.ColoredTextMarkup.ParseMarkup(Unity.Collections.FixedString512Bytes, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ParseMarkup
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 82
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    Parse colored text markup from localization string
+
+    Supports formats: §c, §rgb, §[colorname], §!, etc.
+  example: []
+  syntax:
+    content: public static ColoredTextMarkup.MarkupResult ParseMarkup(FixedString512Bytes input, Allocator allocator)
+    parameters:
+    - id: input
+      type: Unity.Collections.FixedString512Bytes
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.ColoredTextMarkup.MarkupResult
+    content.vb: Public Shared Function ParseMarkup(input As FixedString512Bytes, allocator As Allocator) As ColoredTextMarkup.MarkupResult
+  overload: Core.Localization.ColoredTextMarkup.ParseMarkup*
+- uid: Core.Localization.ColoredTextMarkup.ToUnityRichText(Unity.Collections.FixedString512Bytes)
+  commentId: M:Core.Localization.ColoredTextMarkup.ToUnityRichText(Unity.Collections.FixedString512Bytes)
+  id: ToUnityRichText(Unity.Collections.FixedString512Bytes)
+  parent: Core.Localization.ColoredTextMarkup
+  langs:
+  - csharp
+  - vb
+  name: ToUnityRichText(FixedString512Bytes)
+  nameWithType: ColoredTextMarkup.ToUnityRichText(FixedString512Bytes)
+  fullName: Core.Localization.ColoredTextMarkup.ToUnityRichText(Unity.Collections.FixedString512Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToUnityRichText
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Convert markup to Unity Rich Text format
+  example: []
+  syntax:
+    content: public static FixedString512Bytes ToUnityRichText(FixedString512Bytes input)
+    parameters:
+    - id: input
+      type: Unity.Collections.FixedString512Bytes
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public Shared Function ToUnityRichText(input As FixedString512Bytes) As FixedString512Bytes
+  overload: Core.Localization.ColoredTextMarkup.ToUnityRichText*
+- uid: Core.Localization.ColoredTextMarkup.ToPlainText(Unity.Collections.FixedString512Bytes)
+  commentId: M:Core.Localization.ColoredTextMarkup.ToPlainText(Unity.Collections.FixedString512Bytes)
+  id: ToPlainText(Unity.Collections.FixedString512Bytes)
+  parent: Core.Localization.ColoredTextMarkup
+  langs:
+  - csharp
+  - vb
+  name: ToPlainText(FixedString512Bytes)
+  nameWithType: ColoredTextMarkup.ToPlainText(FixedString512Bytes)
+  fullName: Core.Localization.ColoredTextMarkup.ToPlainText(Unity.Collections.FixedString512Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToPlainText
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 150
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Strip all markup and return plain text
+  example: []
+  syntax:
+    content: public static FixedString512Bytes ToPlainText(FixedString512Bytes input)
+    parameters:
+    - id: input
+      type: Unity.Collections.FixedString512Bytes
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public Shared Function ToPlainText(input As FixedString512Bytes) As FixedString512Bytes
+  overload: Core.Localization.ColoredTextMarkup.ToPlainText*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.ColoredTextMarkup.ParseMarkup*
+  commentId: Overload:Core.Localization.ColoredTextMarkup.ParseMarkup
+  href: Core.Localization.ColoredTextMarkup.html#Core_Localization_ColoredTextMarkup_ParseMarkup_Unity_Collections_FixedString512Bytes_Unity_Collections_Allocator_
+  name: ParseMarkup
+  nameWithType: ColoredTextMarkup.ParseMarkup
+  fullName: Core.Localization.ColoredTextMarkup.ParseMarkup
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Localization.ColoredTextMarkup.MarkupResult
+  commentId: T:Core.Localization.ColoredTextMarkup.MarkupResult
+  parent: Core.Localization
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.MarkupResult
+  nameWithType: ColoredTextMarkup.MarkupResult
+  fullName: Core.Localization.ColoredTextMarkup.MarkupResult
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.MarkupResult
+    name: MarkupResult
+    href: Core.Localization.ColoredTextMarkup.MarkupResult.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.MarkupResult
+    name: MarkupResult
+    href: Core.Localization.ColoredTextMarkup.MarkupResult.html
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Localization.ColoredTextMarkup.ToUnityRichText*
+  commentId: Overload:Core.Localization.ColoredTextMarkup.ToUnityRichText
+  href: Core.Localization.ColoredTextMarkup.html#Core_Localization_ColoredTextMarkup_ToUnityRichText_Unity_Collections_FixedString512Bytes_
+  name: ToUnityRichText
+  nameWithType: ColoredTextMarkup.ToUnityRichText
+  fullName: Core.Localization.ColoredTextMarkup.ToUnityRichText
+- uid: Core.Localization.ColoredTextMarkup.ToPlainText*
+  commentId: Overload:Core.Localization.ColoredTextMarkup.ToPlainText
+  href: Core.Localization.ColoredTextMarkup.html#Core_Localization_ColoredTextMarkup_ToPlainText_Unity_Collections_FixedString512Bytes_
+  name: ToPlainText
+  nameWithType: ColoredTextMarkup.ToPlainText
+  fullName: Core.Localization.ColoredTextMarkup.ToPlainText

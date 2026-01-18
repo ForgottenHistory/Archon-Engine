@@ -1,0 +1,349 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  id: ProvinceMapProcessor.ProvinceMapResult
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.BMPData
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Definitions
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ErrorMessage
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.HasDefinitions
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.IsSuccess
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ProvinceMappings
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.ProvinceMapResult
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapResult
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Province map processing result for Map layer
+  example: []
+  syntax:
+    content: public struct ProvinceMapProcessor.ProvinceMapResult
+    content.vb: Public Structure ProvinceMapProcessor.ProvinceMapResult
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.BMPData
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.BMPData
+  id: BMPData
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: BMPData
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.BMPData
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.BMPData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPData
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public ProvinceMapProcessor.BMPData BMPData
+    return:
+      type: Map.Loading.ProvinceMapProcessor.BMPData
+    content.vb: Public BMPData As ProvinceMapProcessor.BMPData
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ProvinceMappings
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ProvinceMappings
+  id: ProvinceMappings
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMappings
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.ProvinceMappings
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ProvinceMappings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMappings
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public ProvinceMapProcessor.ProvinceMappings ProvinceMappings
+    return:
+      type: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    content.vb: Public ProvinceMappings As ProvinceMapProcessor.ProvinceMappings
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Definitions
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Definitions
+  id: Definitions
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Definitions
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.Definitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Definitions
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Definitions
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public ProvinceMapProcessor.ProvinceDefinitions Definitions
+    return:
+      type: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    content.vb: Public Definitions As ProvinceMapProcessor.ProvinceDefinitions
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.HasDefinitions
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.HasDefinitions
+  id: HasDefinitions
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: HasDefinitions
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.HasDefinitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.HasDefinitions
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasDefinitions
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public bool HasDefinitions
+    return:
+      type: System.Boolean
+    content.vb: Public HasDefinitions As Boolean
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.IsSuccess
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.IsSuccess
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ErrorMessage
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ErrorMessage
+  id: ErrorMessage
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.ErrorMessage
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose
+  commentId: M:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose
+  id: Dispose
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.Dispose()
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose*
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPData
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPData
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.BMPData
+  nameWithType: ProvinceMapProcessor.BMPData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceMappings
+  nameWithType: ProvinceMapProcessor.ProvinceMappings
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    name: ProvinceMappings
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMappings.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    name: ProvinceMappings
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMappings.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceDefinitions
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    name: ProvinceDefinitions
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    name: ProvinceDefinitions
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose
+  href: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.html#Map_Loading_ProvinceMapProcessor_ProvinceMapResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult.Dispose
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.Dispose

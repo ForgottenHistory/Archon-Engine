@@ -1,0 +1,359 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.YAMLParser.YAMLParseResult
+  commentId: T:Core.Localization.YAMLParser.YAMLParseResult
+  id: YAMLParser.YAMLParseResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.YAMLParser.YAMLParseResult.Dispose
+  - Core.Localization.YAMLParser.YAMLParseResult.EntriesFound
+  - Core.Localization.YAMLParser.YAMLParseResult.HighestError
+  - Core.Localization.YAMLParser.YAMLParseResult.IsSuccess
+  - Core.Localization.YAMLParser.YAMLParseResult.LanguageCode
+  - Core.Localization.YAMLParser.YAMLParseResult.LocalizationEntries
+  langs:
+  - csharp
+  - vb
+  name: YAMLParser.YAMLParseResult
+  nameWithType: YAMLParser.YAMLParseResult
+  fullName: Core.Localization.YAMLParser.YAMLParseResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YAMLParseResult
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: YAML parsing result
+  example: []
+  syntax:
+    content: public struct YAMLParser.YAMLParseResult
+    content.vb: Public Structure YAMLParser.YAMLParseResult
+- uid: Core.Localization.YAMLParser.YAMLParseResult.IsSuccess
+  commentId: F:Core.Localization.YAMLParser.YAMLParseResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: YAMLParser.YAMLParseResult.IsSuccess
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Localization.YAMLParser.YAMLParseResult.LocalizationEntries
+  commentId: F:Core.Localization.YAMLParser.YAMLParseResult.LocalizationEntries
+  id: LocalizationEntries
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: LocalizationEntries
+  nameWithType: YAMLParser.YAMLParseResult.LocalizationEntries
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.LocalizationEntries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalizationEntries
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeHashMap<uint, FixedString512Bytes> LocalizationEntries
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+    content.vb: Public LocalizationEntries As NativeHashMap(Of UInteger, FixedString512Bytes)
+- uid: Core.Localization.YAMLParser.YAMLParseResult.LanguageCode
+  commentId: F:Core.Localization.YAMLParser.YAMLParseResult.LanguageCode
+  id: LanguageCode
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: LanguageCode
+  nameWithType: YAMLParser.YAMLParseResult.LanguageCode
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.LanguageCode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LanguageCode
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString64Bytes LanguageCode
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public LanguageCode As FixedString64Bytes
+- uid: Core.Localization.YAMLParser.YAMLParseResult.EntriesFound
+  commentId: F:Core.Localization.YAMLParser.YAMLParseResult.EntriesFound
+  id: EntriesFound
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: EntriesFound
+  nameWithType: YAMLParser.YAMLParseResult.EntriesFound
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.EntriesFound
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EntriesFound
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int EntriesFound
+    return:
+      type: System.Int32
+    content.vb: Public EntriesFound As Integer
+- uid: Core.Localization.YAMLParser.YAMLParseResult.HighestError
+  commentId: F:Core.Localization.YAMLParser.YAMLParseResult.HighestError
+  id: HighestError
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: HighestError
+  nameWithType: YAMLParser.YAMLParseResult.HighestError
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.HighestError
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighestError
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public ErrorSeverity HighestError
+    return:
+      type: Core.Localization.ErrorSeverity
+    content.vb: Public HighestError As ErrorSeverity
+- uid: Core.Localization.YAMLParser.YAMLParseResult.Dispose
+  commentId: M:Core.Localization.YAMLParser.YAMLParseResult.Dispose
+  id: Dispose
+  parent: Core.Localization.YAMLParser.YAMLParseResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: YAMLParser.YAMLParseResult.Dispose()
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Localization/YAMLParser.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Localization.YAMLParser.YAMLParseResult.Dispose*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<uint, FixedString512Bytes>
+  nameWithType: NativeHashMap<uint, FixedString512Bytes>
+  fullName: Unity.Collections.NativeHashMap<uint, Unity.Collections.FixedString512Bytes>
+  nameWithType.vb: NativeHashMap(Of UInteger, FixedString512Bytes)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UInteger, Unity.Collections.FixedString512Bytes)
+  name.vb: NativeHashMap(Of UInteger, FixedString512Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Localization.ErrorSeverity
+  commentId: T:Core.Localization.ErrorSeverity
+  parent: Core.Localization
+  href: Core.Localization.ErrorSeverity.html
+  name: ErrorSeverity
+  nameWithType: ErrorSeverity
+  fullName: Core.Localization.ErrorSeverity
+- uid: Core.Localization.YAMLParser.YAMLParseResult.Dispose*
+  commentId: Overload:Core.Localization.YAMLParser.YAMLParseResult.Dispose
+  href: Core.Localization.YAMLParser.YAMLParseResult.html#Core_Localization_YAMLParser_YAMLParseResult_Dispose
+  name: Dispose
+  nameWithType: YAMLParser.YAMLParseResult.Dispose
+  fullName: Core.Localization.YAMLParser.YAMLParseResult.Dispose

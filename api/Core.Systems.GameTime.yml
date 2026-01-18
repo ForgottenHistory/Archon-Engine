@@ -1,0 +1,1288 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  id: GameTime
+  parent: Core.Systems
+  children:
+  - Core.Systems.GameTime.AddDays(System.Int32)
+  - Core.Systems.GameTime.AddHours(System.Int32)
+  - Core.Systems.GameTime.AddMonths(System.Int32)
+  - Core.Systems.GameTime.AddYears(System.Int32)
+  - Core.Systems.GameTime.CompareTo(Core.Systems.GameTime)
+  - Core.Systems.GameTime.Create(System.Int32,System.Int32,System.Int32,System.Int32)
+  - Core.Systems.GameTime.Day
+  - Core.Systems.GameTime.DaysBetween(Core.Systems.GameTime)
+  - Core.Systems.GameTime.Equals(Core.Systems.GameTime)
+  - Core.Systems.GameTime.Equals(System.Object)
+  - Core.Systems.GameTime.FromTotalHours(System.Int64)
+  - Core.Systems.GameTime.GetHashCode
+  - Core.Systems.GameTime.Hour
+  - Core.Systems.GameTime.HoursBetween(Core.Systems.GameTime)
+  - Core.Systems.GameTime.Month
+  - Core.Systems.GameTime.ToCompactString(Core.Systems.ICalendar)
+  - Core.Systems.GameTime.ToString
+  - Core.Systems.GameTime.ToString(Core.Systems.ICalendar)
+  - Core.Systems.GameTime.ToTotalHours
+  - Core.Systems.GameTime.Year
+  - Core.Systems.GameTime.op_Equality(Core.Systems.GameTime,Core.Systems.GameTime)
+  - Core.Systems.GameTime.op_GreaterThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  - Core.Systems.GameTime.op_GreaterThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  - Core.Systems.GameTime.op_Inequality(Core.Systems.GameTime,Core.Systems.GameTime)
+  - Core.Systems.GameTime.op_LessThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  - Core.Systems.GameTime.op_LessThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  langs:
+  - csharp
+  - vb
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameTime
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 455
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Represents a point in game time (deterministic calendar).
+
+    Supports real Earth calendar (365 days, variable month lengths).
+
+    All operations are deterministic for multiplayer compatibility.
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct GameTime
+    content.vb: >-
+      <Serializable>
+
+      Public Structure GameTime
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Systems.GameTime.Year
+  commentId: F:Core.Systems.GameTime.Year
+  id: Year
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Year
+  nameWithType: GameTime.Year
+  fullName: Core.Systems.GameTime.Year
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Year
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 458
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int Year
+    return:
+      type: System.Int32
+    content.vb: Public Year As Integer
+- uid: Core.Systems.GameTime.Month
+  commentId: F:Core.Systems.GameTime.Month
+  id: Month
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Month
+  nameWithType: GameTime.Month
+  fullName: Core.Systems.GameTime.Month
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Month
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 459
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int Month
+    return:
+      type: System.Int32
+    content.vb: Public Month As Integer
+- uid: Core.Systems.GameTime.Day
+  commentId: F:Core.Systems.GameTime.Day
+  id: Day
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Day
+  nameWithType: GameTime.Day
+  fullName: Core.Systems.GameTime.Day
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Day
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 460
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int Day
+    return:
+      type: System.Int32
+    content.vb: Public Day As Integer
+- uid: Core.Systems.GameTime.Hour
+  commentId: F:Core.Systems.GameTime.Hour
+  id: Hour
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Hour
+  nameWithType: GameTime.Hour
+  fullName: Core.Systems.GameTime.Hour
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hour
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 461
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int Hour
+    return:
+      type: System.Int32
+    content.vb: Public Hour As Integer
+- uid: Core.Systems.GameTime.Create(System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.GameTime.Create(System.Int32,System.Int32,System.Int32,System.Int32)
+  id: Create(System.Int32,System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Create(int, int, int, int)
+  nameWithType: GameTime.Create(int, int, int, int)
+  fullName: Core.Systems.GameTime.Create(int, int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 468
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Create a GameTime with specified components.
+  example: []
+  syntax:
+    content: public static GameTime Create(int year, int month, int day, int hour = 0)
+    parameters:
+    - id: year
+      type: System.Int32
+    - id: month
+      type: System.Int32
+    - id: day
+      type: System.Int32
+    - id: hour
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Shared Function Create(year As Integer, month As Integer, day As Integer, hour As Integer = 0) As GameTime
+  overload: Core.Systems.GameTime.Create*
+  nameWithType.vb: GameTime.Create(Integer, Integer, Integer, Integer)
+  fullName.vb: Core.Systems.GameTime.Create(Integer, Integer, Integer, Integer)
+  name.vb: Create(Integer, Integer, Integer, Integer)
+- uid: Core.Systems.GameTime.FromTotalHours(System.Int64)
+  commentId: M:Core.Systems.GameTime.FromTotalHours(System.Int64)
+  id: FromTotalHours(System.Int64)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: FromTotalHours(long)
+  nameWithType: GameTime.FromTotalHours(long)
+  fullName: Core.Systems.GameTime.FromTotalHours(long)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromTotalHours
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 477
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Create GameTime from total hours since year 0.
+
+    Inverse of ToTotalHours().
+  example: []
+  syntax:
+    content: public static GameTime FromTotalHours(long totalHours)
+    parameters:
+    - id: totalHours
+      type: System.Int64
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Shared Function FromTotalHours(totalHours As Long) As GameTime
+  overload: Core.Systems.GameTime.FromTotalHours*
+  nameWithType.vb: GameTime.FromTotalHours(Long)
+  fullName.vb: Core.Systems.GameTime.FromTotalHours(Long)
+  name.vb: FromTotalHours(Long)
+- uid: Core.Systems.GameTime.ToTotalHours
+  commentId: M:Core.Systems.GameTime.ToTotalHours
+  id: ToTotalHours
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: ToTotalHours()
+  nameWithType: GameTime.ToTotalHours()
+  fullName: Core.Systems.GameTime.ToTotalHours()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToTotalHours
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 520
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Convert to total hours since year 0.
+
+    Uses real month lengths (365-day year).
+  example: []
+  syntax:
+    content: public long ToTotalHours()
+    return:
+      type: System.Int64
+    content.vb: Public Function ToTotalHours() As Long
+  overload: Core.Systems.GameTime.ToTotalHours*
+- uid: Core.Systems.GameTime.op_Equality(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_Equality(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_Equality(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator ==(GameTime, GameTime)
+  nameWithType: GameTime.operator ==(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator ==(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 544
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator ==(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_Equality*
+  nameWithType.vb: GameTime.=(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.=(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: =(GameTime, GameTime)
+- uid: Core.Systems.GameTime.op_Inequality(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_Inequality(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_Inequality(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator !=(GameTime, GameTime)
+  nameWithType: GameTime.operator !=(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator !=(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 549
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator !=(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_Inequality*
+  nameWithType.vb: GameTime.<>(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.<>(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: <>(GameTime, GameTime)
+- uid: Core.Systems.GameTime.op_LessThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_LessThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_LessThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator <(GameTime, GameTime)
+  nameWithType: GameTime.operator <(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator <(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_LessThan
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 554
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator <(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_LessThan*
+  nameWithType.vb: GameTime.<(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.<(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: <(GameTime, GameTime)
+- uid: Core.Systems.GameTime.op_GreaterThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_GreaterThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_GreaterThan(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator >(GameTime, GameTime)
+  nameWithType: GameTime.operator >(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator >(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_GreaterThan
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 559
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator >(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator >(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_GreaterThan*
+  nameWithType.vb: GameTime.>(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.>(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: '>(GameTime, GameTime)'
+- uid: Core.Systems.GameTime.op_LessThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_LessThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_LessThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator <=(GameTime, GameTime)
+  nameWithType: GameTime.operator <=(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator <=(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_LessThanOrEqual
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 564
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator <=(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <=(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_LessThanOrEqual*
+  nameWithType.vb: GameTime.<=(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.<=(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: <=(GameTime, GameTime)
+- uid: Core.Systems.GameTime.op_GreaterThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.op_GreaterThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  id: op_GreaterThanOrEqual(Core.Systems.GameTime,Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: operator >=(GameTime, GameTime)
+  nameWithType: GameTime.operator >=(GameTime, GameTime)
+  fullName: Core.Systems.GameTime.operator >=(Core.Systems.GameTime, Core.Systems.GameTime)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_GreaterThanOrEqual
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 569
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static bool operator >=(GameTime a, GameTime b)
+    parameters:
+    - id: a
+      type: Core.Systems.GameTime
+    - id: b
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator >=(a As GameTime, b As GameTime) As Boolean
+  overload: Core.Systems.GameTime.op_GreaterThanOrEqual*
+  nameWithType.vb: GameTime.>=(GameTime, GameTime)
+  fullName.vb: Core.Systems.GameTime.>=(Core.Systems.GameTime, Core.Systems.GameTime)
+  name.vb: '>=(GameTime, GameTime)'
+- uid: Core.Systems.GameTime.CompareTo(Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.CompareTo(Core.Systems.GameTime)
+  id: CompareTo(Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(GameTime)
+  nameWithType: GameTime.CompareTo(GameTime)
+  fullName: Core.Systems.GameTime.CompareTo(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompareTo
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 574
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public int CompareTo(GameTime other)
+    parameters:
+    - id: other
+      type: Core.Systems.GameTime
+    return:
+      type: System.Int32
+    content.vb: Public Function CompareTo(other As GameTime) As Integer
+  overload: Core.Systems.GameTime.CompareTo*
+- uid: Core.Systems.GameTime.AddHours(System.Int32)
+  commentId: M:Core.Systems.GameTime.AddHours(System.Int32)
+  id: AddHours(System.Int32)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: AddHours(int)
+  nameWithType: GameTime.AddHours(int)
+  fullName: Core.Systems.GameTime.AddHours(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddHours
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 588
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Add hours (negative to subtract). Returns normalized GameTime.
+  example: []
+  syntax:
+    content: public GameTime AddHours(int hours)
+    parameters:
+    - id: hours
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function AddHours(hours As Integer) As GameTime
+  overload: Core.Systems.GameTime.AddHours*
+  nameWithType.vb: GameTime.AddHours(Integer)
+  fullName.vb: Core.Systems.GameTime.AddHours(Integer)
+  name.vb: AddHours(Integer)
+- uid: Core.Systems.GameTime.AddDays(System.Int32)
+  commentId: M:Core.Systems.GameTime.AddDays(System.Int32)
+  id: AddDays(System.Int32)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: AddDays(int)
+  nameWithType: GameTime.AddDays(int)
+  fullName: Core.Systems.GameTime.AddDays(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddDays
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 596
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Add days (negative to subtract). Returns normalized GameTime.
+  example: []
+  syntax:
+    content: public GameTime AddDays(int days)
+    parameters:
+    - id: days
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function AddDays(days As Integer) As GameTime
+  overload: Core.Systems.GameTime.AddDays*
+  nameWithType.vb: GameTime.AddDays(Integer)
+  fullName.vb: Core.Systems.GameTime.AddDays(Integer)
+  name.vb: AddDays(Integer)
+- uid: Core.Systems.GameTime.AddMonths(System.Int32)
+  commentId: M:Core.Systems.GameTime.AddMonths(System.Int32)
+  id: AddMonths(System.Int32)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: AddMonths(int)
+  nameWithType: GameTime.AddMonths(int)
+  fullName: Core.Systems.GameTime.AddMonths(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddMonths
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 604
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Add months (negative to subtract). Day is clamped if necessary.
+  example: []
+  syntax:
+    content: public GameTime AddMonths(int months)
+    parameters:
+    - id: months
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function AddMonths(months As Integer) As GameTime
+  overload: Core.Systems.GameTime.AddMonths*
+  nameWithType.vb: GameTime.AddMonths(Integer)
+  fullName.vb: Core.Systems.GameTime.AddMonths(Integer)
+  name.vb: AddMonths(Integer)
+- uid: Core.Systems.GameTime.AddYears(System.Int32)
+  commentId: M:Core.Systems.GameTime.AddYears(System.Int32)
+  id: AddYears(System.Int32)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: AddYears(int)
+  nameWithType: GameTime.AddYears(int)
+  fullName: Core.Systems.GameTime.AddYears(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddYears
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 631
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Add years (negative to subtract).
+  example: []
+  syntax:
+    content: public GameTime AddYears(int years)
+    parameters:
+    - id: years
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function AddYears(years As Integer) As GameTime
+  overload: Core.Systems.GameTime.AddYears*
+  nameWithType.vb: GameTime.AddYears(Integer)
+  fullName.vb: Core.Systems.GameTime.AddYears(Integer)
+  name.vb: AddYears(Integer)
+- uid: Core.Systems.GameTime.HoursBetween(Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.HoursBetween(Core.Systems.GameTime)
+  id: HoursBetween(Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: HoursBetween(GameTime)
+  nameWithType: GameTime.HoursBetween(GameTime)
+  fullName: Core.Systems.GameTime.HoursBetween(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HoursBetween
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 642
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Calculate hours between this and another GameTime (signed).
+
+    Positive if other is later, negative if other is earlier.
+  example: []
+  syntax:
+    content: public long HoursBetween(GameTime other)
+    parameters:
+    - id: other
+      type: Core.Systems.GameTime
+    return:
+      type: System.Int64
+    content.vb: Public Function HoursBetween(other As GameTime) As Long
+  overload: Core.Systems.GameTime.HoursBetween*
+- uid: Core.Systems.GameTime.DaysBetween(Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.DaysBetween(Core.Systems.GameTime)
+  id: DaysBetween(Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: DaysBetween(GameTime)
+  nameWithType: GameTime.DaysBetween(GameTime)
+  fullName: Core.Systems.GameTime.DaysBetween(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DaysBetween
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 650
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Calculate days between this and another GameTime (signed, rounded down).
+  example: []
+  syntax:
+    content: public int DaysBetween(GameTime other)
+    parameters:
+    - id: other
+      type: Core.Systems.GameTime
+    return:
+      type: System.Int32
+    content.vb: Public Function DaysBetween(other As GameTime) As Integer
+  overload: Core.Systems.GameTime.DaysBetween*
+- uid: Core.Systems.GameTime.Equals(System.Object)
+  commentId: M:Core.Systems.GameTime.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: GameTime.Equals(object)
+  fullName: Core.Systems.GameTime.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 657
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Systems.GameTime.Equals*
+  nameWithType.vb: GameTime.Equals(Object)
+  fullName.vb: Core.Systems.GameTime.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Systems.GameTime.Equals(Core.Systems.GameTime)
+  commentId: M:Core.Systems.GameTime.Equals(Core.Systems.GameTime)
+  id: Equals(Core.Systems.GameTime)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: Equals(GameTime)
+  nameWithType: GameTime.Equals(GameTime)
+  fullName: Core.Systems.GameTime.Equals(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 662
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public bool Equals(GameTime other)
+    parameters:
+    - id: other
+      type: Core.Systems.GameTime
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As GameTime) As Boolean
+  overload: Core.Systems.GameTime.Equals*
+- uid: Core.Systems.GameTime.GetHashCode
+  commentId: M:Core.Systems.GameTime.GetHashCode
+  id: GetHashCode
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: GameTime.GetHashCode()
+  fullName: Core.Systems.GameTime.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 667
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Systems.GameTime.GetHashCode*
+- uid: Core.Systems.GameTime.ToString
+  commentId: M:Core.Systems.GameTime.ToString
+  id: ToString
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: GameTime.ToString()
+  fullName: Core.Systems.GameTime.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 674
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Systems.GameTime.ToString*
+- uid: Core.Systems.GameTime.ToString(Core.Systems.ICalendar)
+  commentId: M:Core.Systems.GameTime.ToString(Core.Systems.ICalendar)
+  id: ToString(Core.Systems.ICalendar)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: ToString(ICalendar)
+  nameWithType: GameTime.ToString(ICalendar)
+  fullName: Core.Systems.GameTime.ToString(Core.Systems.ICalendar)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 682
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Format using specified calendar.
+  example: []
+  syntax:
+    content: public string ToString(ICalendar calendar)
+    parameters:
+    - id: calendar
+      type: Core.Systems.ICalendar
+    return:
+      type: System.String
+    content.vb: Public Function ToString(calendar As ICalendar) As String
+  overload: Core.Systems.GameTime.ToString*
+- uid: Core.Systems.GameTime.ToCompactString(Core.Systems.ICalendar)
+  commentId: M:Core.Systems.GameTime.ToCompactString(Core.Systems.ICalendar)
+  id: ToCompactString(Core.Systems.ICalendar)
+  parent: Core.Systems.GameTime
+  langs:
+  - csharp
+  - vb
+  name: ToCompactString(ICalendar)
+  nameWithType: GameTime.ToCompactString(ICalendar)
+  fullName: Core.Systems.GameTime.ToCompactString(Core.Systems.ICalendar)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToCompactString
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 690
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Format compact using specified calendar.
+  example: []
+  syntax:
+    content: public string ToCompactString(ICalendar calendar)
+    parameters:
+    - id: calendar
+      type: Core.Systems.ICalendar
+    return:
+      type: System.String
+    content.vb: Public Function ToCompactString(calendar As ICalendar) As String
+  overload: Core.Systems.GameTime.ToCompactString*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.GameTime.Create*
+  commentId: Overload:Core.Systems.GameTime.Create
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_Create_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: Create
+  nameWithType: GameTime.Create
+  fullName: Core.Systems.GameTime.Create
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  parent: Core.Systems
+  href: Core.Systems.GameTime.html
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+- uid: Core.Systems.GameTime.FromTotalHours*
+  commentId: Overload:Core.Systems.GameTime.FromTotalHours
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_FromTotalHours_System_Int64_
+  name: FromTotalHours
+  nameWithType: GameTime.FromTotalHours
+  fullName: Core.Systems.GameTime.FromTotalHours
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Core.Systems.GameTime.ToTotalHours*
+  commentId: Overload:Core.Systems.GameTime.ToTotalHours
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_ToTotalHours
+  name: ToTotalHours
+  nameWithType: GameTime.ToTotalHours
+  fullName: Core.Systems.GameTime.ToTotalHours
+- uid: Core.Systems.GameTime.op_Equality*
+  commentId: Overload:Core.Systems.GameTime.op_Equality
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_Equality_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator ==
+  nameWithType: GameTime.operator ==
+  fullName: Core.Systems.GameTime.operator ==
+  nameWithType.vb: GameTime.=
+  fullName.vb: Core.Systems.GameTime.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_Equality*
+    name: ==
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_Equality_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.GameTime.op_Inequality*
+  commentId: Overload:Core.Systems.GameTime.op_Inequality
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_Inequality_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator !=
+  nameWithType: GameTime.operator !=
+  fullName: Core.Systems.GameTime.operator !=
+  nameWithType.vb: GameTime.<>
+  fullName.vb: Core.Systems.GameTime.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_Inequality*
+    name: '!='
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_Inequality_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: Core.Systems.GameTime.op_LessThan*
+  commentId: Overload:Core.Systems.GameTime.op_LessThan
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_LessThan_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator <
+  nameWithType: GameTime.operator <
+  fullName: Core.Systems.GameTime.operator <
+  nameWithType.vb: GameTime.<
+  fullName.vb: Core.Systems.GameTime.<
+  name.vb: <
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_LessThan*
+    name: <
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_LessThan_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: Core.Systems.GameTime.op_GreaterThan*
+  commentId: Overload:Core.Systems.GameTime.op_GreaterThan
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_GreaterThan_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator >
+  nameWithType: GameTime.operator >
+  fullName: Core.Systems.GameTime.operator >
+  nameWithType.vb: GameTime.>
+  fullName.vb: Core.Systems.GameTime.>
+  name.vb: '>'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_GreaterThan*
+    name: '>'
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_GreaterThan_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: Core.Systems.GameTime.op_LessThanOrEqual*
+  commentId: Overload:Core.Systems.GameTime.op_LessThanOrEqual
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_LessThanOrEqual_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator <=
+  nameWithType: GameTime.operator <=
+  fullName: Core.Systems.GameTime.operator <=
+  nameWithType.vb: GameTime.<=
+  fullName.vb: Core.Systems.GameTime.<=
+  name.vb: <=
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_LessThanOrEqual*
+    name: <=
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_LessThanOrEqual_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: Core.Systems.GameTime.op_GreaterThanOrEqual*
+  commentId: Overload:Core.Systems.GameTime.op_GreaterThanOrEqual
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_GreaterThanOrEqual_Core_Systems_GameTime_Core_Systems_GameTime_
+  name: operator >=
+  nameWithType: GameTime.operator >=
+  fullName: Core.Systems.GameTime.operator >=
+  nameWithType.vb: GameTime.>=
+  fullName.vb: Core.Systems.GameTime.>=
+  name.vb: '>='
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Systems.GameTime.op_GreaterThanOrEqual*
+    name: '>='
+    href: Core.Systems.GameTime.html#Core_Systems_GameTime_op_GreaterThanOrEqual_Core_Systems_GameTime_Core_Systems_GameTime_
+- uid: Core.Systems.GameTime.CompareTo*
+  commentId: Overload:Core.Systems.GameTime.CompareTo
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_CompareTo_Core_Systems_GameTime_
+  name: CompareTo
+  nameWithType: GameTime.CompareTo
+  fullName: Core.Systems.GameTime.CompareTo
+- uid: Core.Systems.GameTime.AddHours*
+  commentId: Overload:Core.Systems.GameTime.AddHours
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_AddHours_System_Int32_
+  name: AddHours
+  nameWithType: GameTime.AddHours
+  fullName: Core.Systems.GameTime.AddHours
+- uid: Core.Systems.GameTime.AddDays*
+  commentId: Overload:Core.Systems.GameTime.AddDays
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_AddDays_System_Int32_
+  name: AddDays
+  nameWithType: GameTime.AddDays
+  fullName: Core.Systems.GameTime.AddDays
+- uid: Core.Systems.GameTime.AddMonths*
+  commentId: Overload:Core.Systems.GameTime.AddMonths
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_AddMonths_System_Int32_
+  name: AddMonths
+  nameWithType: GameTime.AddMonths
+  fullName: Core.Systems.GameTime.AddMonths
+- uid: Core.Systems.GameTime.AddYears*
+  commentId: Overload:Core.Systems.GameTime.AddYears
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_AddYears_System_Int32_
+  name: AddYears
+  nameWithType: GameTime.AddYears
+  fullName: Core.Systems.GameTime.AddYears
+- uid: Core.Systems.GameTime.HoursBetween*
+  commentId: Overload:Core.Systems.GameTime.HoursBetween
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_HoursBetween_Core_Systems_GameTime_
+  name: HoursBetween
+  nameWithType: GameTime.HoursBetween
+  fullName: Core.Systems.GameTime.HoursBetween
+- uid: Core.Systems.GameTime.DaysBetween*
+  commentId: Overload:Core.Systems.GameTime.DaysBetween
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_DaysBetween_Core_Systems_GameTime_
+  name: DaysBetween
+  nameWithType: GameTime.DaysBetween
+  fullName: Core.Systems.GameTime.DaysBetween
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Core.Systems.GameTime.Equals*
+  commentId: Overload:Core.Systems.GameTime.Equals
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_Equals_System_Object_
+  name: Equals
+  nameWithType: GameTime.Equals
+  fullName: Core.Systems.GameTime.Equals
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Systems.GameTime.GetHashCode*
+  commentId: Overload:Core.Systems.GameTime.GetHashCode
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_GetHashCode
+  name: GetHashCode
+  nameWithType: GameTime.GetHashCode
+  fullName: Core.Systems.GameTime.GetHashCode
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Systems.GameTime.ToString*
+  commentId: Overload:Core.Systems.GameTime.ToString
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_ToString
+  name: ToString
+  nameWithType: GameTime.ToString
+  fullName: Core.Systems.GameTime.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.ICalendar
+  commentId: T:Core.Systems.ICalendar
+  parent: Core.Systems
+  href: Core.Systems.ICalendar.html
+  name: ICalendar
+  nameWithType: ICalendar
+  fullName: Core.Systems.ICalendar
+- uid: Core.Systems.GameTime.ToCompactString*
+  commentId: Overload:Core.Systems.GameTime.ToCompactString
+  href: Core.Systems.GameTime.html#Core_Systems_GameTime_ToCompactString_Core_Systems_ICalendar_
+  name: ToCompactString
+  nameWithType: GameTime.ToCompactString
+  fullName: Core.Systems.GameTime.ToCompactString

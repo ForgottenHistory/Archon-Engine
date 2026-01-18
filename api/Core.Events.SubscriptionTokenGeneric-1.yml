@@ -1,0 +1,123 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Events.SubscriptionTokenGeneric`1
+  commentId: T:Core.Events.SubscriptionTokenGeneric`1
+  id: SubscriptionTokenGeneric`1
+  parent: Core.Events
+  children:
+  - Core.Events.SubscriptionTokenGeneric`1.Dispose
+  langs:
+  - csharp
+  - vb
+  name: SubscriptionTokenGeneric<T>
+  nameWithType: SubscriptionTokenGeneric<T>
+  fullName: Core.Events.SubscriptionTokenGeneric<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Events/SubscriptionToken.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SubscriptionTokenGeneric
+    path: Scripts/Core/Events/SubscriptionToken.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Generic subscription token implementing non-generic interface.
+  example: []
+  syntax:
+    content: 'public sealed class SubscriptionTokenGeneric<T> : ISubscriptionToken where T : struct, IGameEvent'
+    typeParameters:
+    - id: T
+    content.vb: Public NotInheritable Class SubscriptionTokenGeneric(Of T As {Structure, IGameEvent}) Implements ISubscriptionToken
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Events.ISubscriptionToken
+  nameWithType.vb: SubscriptionTokenGeneric(Of T)
+  fullName.vb: Core.Events.SubscriptionTokenGeneric(Of T)
+  name.vb: SubscriptionTokenGeneric(Of T)
+- uid: Core.Events.SubscriptionTokenGeneric`1.Dispose
+  commentId: M:Core.Events.SubscriptionTokenGeneric`1.Dispose
+  id: Dispose
+  parent: Core.Events.SubscriptionTokenGeneric`1
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SubscriptionTokenGeneric<T>.Dispose()
+  fullName: Core.Events.SubscriptionTokenGeneric<T>.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/SubscriptionToken.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Events/SubscriptionToken.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Events
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Events.SubscriptionTokenGeneric`1.Dispose*
+  nameWithType.vb: SubscriptionTokenGeneric(Of T).Dispose()
+  fullName.vb: Core.Events.SubscriptionTokenGeneric(Of T).Dispose()
+references:
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Events.ISubscriptionToken
+  commentId: T:Core.Events.ISubscriptionToken
+  parent: Core.Events
+  href: Core.Events.ISubscriptionToken.html
+  name: ISubscriptionToken
+  nameWithType: ISubscriptionToken
+  fullName: Core.Events.ISubscriptionToken
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Events.SubscriptionTokenGeneric`1.Dispose*
+  commentId: Overload:Core.Events.SubscriptionTokenGeneric`1.Dispose
+  href: Core.Events.SubscriptionTokenGeneric-1.html#Core_Events_SubscriptionTokenGeneric_1_Dispose
+  name: Dispose
+  nameWithType: SubscriptionTokenGeneric<T>.Dispose
+  fullName: Core.Events.SubscriptionTokenGeneric<T>.Dispose
+  nameWithType.vb: SubscriptionTokenGeneric(Of T).Dispose
+  fullName.vb: Core.Events.SubscriptionTokenGeneric(Of T).Dispose

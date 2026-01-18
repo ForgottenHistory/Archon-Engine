@@ -1,0 +1,291 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderStyleUpdater
+  commentId: T:Map.Rendering.Border.BorderStyleUpdater
+  id: BorderStyleUpdater
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderStyleUpdater.#ctor(Map.Rendering.BorderCurveCache,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem)
+  - Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles
+  - Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: BorderStyleUpdater
+  nameWithType: BorderStyleUpdater
+  fullName: Map.Rendering.Border.BorderStyleUpdater
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderStyleUpdater
+    path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Updates border styles based on province ownership changes
+
+    Extracted from BorderComputeDispatcher for single responsibility
+
+
+    Responsibilities:
+
+    - Classify borders as country or province borders
+
+    - Update border colors based on owner changes
+
+    - Coordinate with BorderCurveCache for style updates
+  example: []
+  syntax:
+    content: public class BorderStyleUpdater
+    content.vb: Public Class BorderStyleUpdater
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderStyleUpdater.#ctor(Map.Rendering.BorderCurveCache,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem)
+  commentId: M:Map.Rendering.Border.BorderStyleUpdater.#ctor(Map.Rendering.BorderCurveCache,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem)
+  id: '#ctor(Map.Rendering.BorderCurveCache,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem)'
+  parent: Map.Rendering.Border.BorderStyleUpdater
+  langs:
+  - csharp
+  - vb
+  name: BorderStyleUpdater(BorderCurveCache, ProvinceSystem, CountrySystem)
+  nameWithType: BorderStyleUpdater.BorderStyleUpdater(BorderCurveCache, ProvinceSystem, CountrySystem)
+  fullName: Map.Rendering.Border.BorderStyleUpdater.BorderStyleUpdater(Map.Rendering.BorderCurveCache, Core.Systems.ProvinceSystem, Core.Systems.CountrySystem)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderStyleUpdater(BorderCurveCache cache, ProvinceSystem provinces, CountrySystem countries)
+    parameters:
+    - id: cache
+      type: Map.Rendering.BorderCurveCache
+    - id: provinces
+      type: Core.Systems.ProvinceSystem
+    - id: countries
+      type: Core.Systems.CountrySystem
+    content.vb: Public Sub New(cache As BorderCurveCache, provinces As ProvinceSystem, countries As CountrySystem)
+  overload: Map.Rendering.Border.BorderStyleUpdater.#ctor*
+  nameWithType.vb: BorderStyleUpdater.New(BorderCurveCache, ProvinceSystem, CountrySystem)
+  fullName.vb: Map.Rendering.Border.BorderStyleUpdater.New(Map.Rendering.BorderCurveCache, Core.Systems.ProvinceSystem, Core.Systems.CountrySystem)
+  name.vb: New(BorderCurveCache, ProvinceSystem, CountrySystem)
+- uid: Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles
+  commentId: M:Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles
+  id: UpdateAllBorderStyles
+  parent: Map.Rendering.Border.BorderStyleUpdater
+  langs:
+  - csharp
+  - vb
+  name: UpdateAllBorderStyles()
+  nameWithType: BorderStyleUpdater.UpdateAllBorderStyles()
+  fullName: Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateAllBorderStyles
+    path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Update all border styles based on current province ownership
+
+    Classifies borders as country or province borders and assigns colors
+  example: []
+  syntax:
+    content: public void UpdateAllBorderStyles()
+    content.vb: Public Sub UpdateAllBorderStyles()
+  overload: Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles*
+- uid: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle(System.UInt16)
+  commentId: M:Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle(System.UInt16)
+  id: UpdateProvinceBorderStyle(System.UInt16)
+  parent: Map.Rendering.Border.BorderStyleUpdater
+  langs:
+  - csharp
+  - vb
+  name: UpdateProvinceBorderStyle(ushort)
+  nameWithType: BorderStyleUpdater.UpdateProvinceBorderStyle(ushort)
+  fullName: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateProvinceBorderStyle
+    path: Scripts/Map/Rendering/Border/BorderStyleUpdater.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Update border style for a single province (when ownership changes)
+  example: []
+  syntax:
+    content: public void UpdateProvinceBorderStyle(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    content.vb: Public Sub UpdateProvinceBorderStyle(provinceID As UShort)
+  overload: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle*
+  nameWithType.vb: BorderStyleUpdater.UpdateProvinceBorderStyle(UShort)
+  fullName.vb: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle(UShort)
+  name.vb: UpdateProvinceBorderStyle(UShort)
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderStyleUpdater.#ctor*
+  commentId: Overload:Map.Rendering.Border.BorderStyleUpdater.#ctor
+  href: Map.Rendering.Border.BorderStyleUpdater.html#Map_Rendering_Border_BorderStyleUpdater__ctor_Map_Rendering_BorderCurveCache_Core_Systems_ProvinceSystem_Core_Systems_CountrySystem_
+  name: BorderStyleUpdater
+  nameWithType: BorderStyleUpdater.BorderStyleUpdater
+  fullName: Map.Rendering.Border.BorderStyleUpdater.BorderStyleUpdater
+  nameWithType.vb: BorderStyleUpdater.New
+  fullName.vb: Map.Rendering.Border.BorderStyleUpdater.New
+  name.vb: New
+- uid: Map.Rendering.BorderCurveCache
+  commentId: T:Map.Rendering.BorderCurveCache
+  parent: Map.Rendering
+  href: Map.Rendering.BorderCurveCache.html
+  name: BorderCurveCache
+  nameWithType: BorderCurveCache
+  fullName: Map.Rendering.BorderCurveCache
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles*
+  commentId: Overload:Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles
+  href: Map.Rendering.Border.BorderStyleUpdater.html#Map_Rendering_Border_BorderStyleUpdater_UpdateAllBorderStyles
+  name: UpdateAllBorderStyles
+  nameWithType: BorderStyleUpdater.UpdateAllBorderStyles
+  fullName: Map.Rendering.Border.BorderStyleUpdater.UpdateAllBorderStyles
+- uid: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle*
+  commentId: Overload:Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle
+  href: Map.Rendering.Border.BorderStyleUpdater.html#Map_Rendering_Border_BorderStyleUpdater_UpdateProvinceBorderStyle_System_UInt16_
+  name: UpdateProvinceBorderStyle
+  nameWithType: BorderStyleUpdater.UpdateProvinceBorderStyle
+  fullName: Map.Rendering.Border.BorderStyleUpdater.UpdateProvinceBorderStyle
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort

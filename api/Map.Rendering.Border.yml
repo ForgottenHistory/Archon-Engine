@@ -1,0 +1,177 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  id: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderChainMerger
+  - Map.Rendering.Border.BorderDebugUtility
+  - Map.Rendering.Border.BorderGenerationParams
+  - Map.Rendering.Border.BorderGeometryUtils
+  - Map.Rendering.Border.BorderParameterBinder
+  - Map.Rendering.Border.BorderPolylineSimplifier
+  - Map.Rendering.Border.BorderRendererBase
+  - Map.Rendering.Border.BorderRendererContext
+  - Map.Rendering.Border.BorderShaderManager
+  - Map.Rendering.Border.BorderStyleParams
+  - Map.Rendering.Border.BorderStyleUpdater
+  - Map.Rendering.Border.DistanceFieldBorderRenderer
+  - Map.Rendering.Border.IBorderRenderer
+  - Map.Rendering.Border.JunctionDetector
+  - Map.Rendering.Border.MedianFilterProcessor
+  - Map.Rendering.Border.MeshGeometryBorderRenderer
+  - Map.Rendering.Border.NoneBorderRenderer
+  - Map.Rendering.Border.PixelPerfectBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Rendering.Border.BorderDebugUtility
+  commentId: T:Map.Rendering.Border.BorderDebugUtility
+  href: Map.Rendering.Border.BorderDebugUtility.html
+  name: BorderDebugUtility
+  nameWithType: BorderDebugUtility
+  fullName: Map.Rendering.Border.BorderDebugUtility
+- uid: Map.Rendering.Border.BorderStyleUpdater
+  commentId: T:Map.Rendering.Border.BorderStyleUpdater
+  href: Map.Rendering.Border.BorderStyleUpdater.html
+  name: BorderStyleUpdater
+  nameWithType: BorderStyleUpdater
+  fullName: Map.Rendering.Border.BorderStyleUpdater
+- uid: Map.Rendering.Border.BorderGeometryUtils
+  commentId: T:Map.Rendering.Border.BorderGeometryUtils
+  href: Map.Rendering.Border.BorderGeometryUtils.html
+  name: BorderGeometryUtils
+  nameWithType: BorderGeometryUtils
+  fullName: Map.Rendering.Border.BorderGeometryUtils
+- uid: Map.Rendering.Border.BorderShaderManager
+  commentId: T:Map.Rendering.Border.BorderShaderManager
+  href: Map.Rendering.Border.BorderShaderManager.html
+  name: BorderShaderManager
+  nameWithType: BorderShaderManager
+  fullName: Map.Rendering.Border.BorderShaderManager
+- uid: Map.Rendering.Border.MedianFilterProcessor
+  commentId: T:Map.Rendering.Border.MedianFilterProcessor
+  href: Map.Rendering.Border.MedianFilterProcessor.html
+  name: MedianFilterProcessor
+  nameWithType: MedianFilterProcessor
+  fullName: Map.Rendering.Border.MedianFilterProcessor
+- uid: Map.Rendering.Border.BorderChainMerger
+  commentId: T:Map.Rendering.Border.BorderChainMerger
+  href: Map.Rendering.Border.BorderChainMerger.html
+  name: BorderChainMerger
+  nameWithType: BorderChainMerger
+  fullName: Map.Rendering.Border.BorderChainMerger
+- uid: Map.Rendering.Border.BorderPolylineSimplifier
+  commentId: T:Map.Rendering.Border.BorderPolylineSimplifier
+  href: Map.Rendering.Border.BorderPolylineSimplifier.html
+  name: BorderPolylineSimplifier
+  nameWithType: BorderPolylineSimplifier
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer
+  commentId: T:Map.Rendering.Border.MeshGeometryBorderRenderer
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html
+  name: MeshGeometryBorderRenderer
+  nameWithType: MeshGeometryBorderRenderer
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer
+- uid: Map.Rendering.Border.IBorderRenderer
+  commentId: T:Map.Rendering.Border.IBorderRenderer
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.IBorderRenderer.html
+  name: IBorderRenderer
+  nameWithType: IBorderRenderer
+  fullName: Map.Rendering.Border.IBorderRenderer
+- uid: Map.Rendering.Border.BorderRendererContext
+  commentId: T:Map.Rendering.Border.BorderRendererContext
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderRendererContext.html
+  name: BorderRendererContext
+  nameWithType: BorderRendererContext
+  fullName: Map.Rendering.Border.BorderRendererContext
+- uid: Map.Rendering.Border.BorderGenerationParams
+  commentId: T:Map.Rendering.Border.BorderGenerationParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderGenerationParams.html
+  name: BorderGenerationParams
+  nameWithType: BorderGenerationParams
+  fullName: Map.Rendering.Border.BorderGenerationParams
+- uid: Map.Rendering.Border.BorderStyleParams
+  commentId: T:Map.Rendering.Border.BorderStyleParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderStyleParams.html
+  name: BorderStyleParams
+  nameWithType: BorderStyleParams
+  fullName: Map.Rendering.Border.BorderStyleParams
+- uid: Map.Rendering.Border.BorderRendererBase
+  commentId: T:Map.Rendering.Border.BorderRendererBase
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderRendererBase.html
+  name: BorderRendererBase
+  nameWithType: BorderRendererBase
+  fullName: Map.Rendering.Border.BorderRendererBase
+- uid: Map.Rendering.Border.PixelPerfectBorderRenderer
+  commentId: T:Map.Rendering.Border.PixelPerfectBorderRenderer
+  href: Map.Rendering.Border.PixelPerfectBorderRenderer.html
+  name: PixelPerfectBorderRenderer
+  nameWithType: PixelPerfectBorderRenderer
+  fullName: Map.Rendering.Border.PixelPerfectBorderRenderer
+- uid: Map.Rendering.Border.DistanceFieldBorderRenderer
+  commentId: T:Map.Rendering.Border.DistanceFieldBorderRenderer
+  href: Map.Rendering.Border.DistanceFieldBorderRenderer.html
+  name: DistanceFieldBorderRenderer
+  nameWithType: DistanceFieldBorderRenderer
+  fullName: Map.Rendering.Border.DistanceFieldBorderRenderer
+- uid: Map.Rendering.Border.BorderParameterBinder
+  commentId: T:Map.Rendering.Border.BorderParameterBinder
+  href: Map.Rendering.Border.BorderParameterBinder.html
+  name: BorderParameterBinder
+  nameWithType: BorderParameterBinder
+  fullName: Map.Rendering.Border.BorderParameterBinder
+- uid: Map.Rendering.Border.JunctionDetector
+  commentId: T:Map.Rendering.Border.JunctionDetector
+  href: Map.Rendering.Border.JunctionDetector.html
+  name: JunctionDetector
+  nameWithType: JunctionDetector
+  fullName: Map.Rendering.Border.JunctionDetector
+- uid: Map.Rendering.Border.NoneBorderRenderer
+  commentId: T:Map.Rendering.Border.NoneBorderRenderer
+  href: Map.Rendering.Border.NoneBorderRenderer.html
+  name: NoneBorderRenderer
+  nameWithType: NoneBorderRenderer
+  fullName: Map.Rendering.Border.NoneBorderRenderer
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html

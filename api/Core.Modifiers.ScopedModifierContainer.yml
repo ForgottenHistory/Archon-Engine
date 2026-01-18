@@ -1,0 +1,1031 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ScopedModifierContainer
+  commentId: T:Core.Modifiers.ScopedModifierContainer
+  id: ScopedModifierContainer
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ScopedModifierContainer.Add(Core.Modifiers.ModifierSource)
+  - Core.Modifiers.ScopedModifierContainer.ApplyModifier(System.UInt16,Core.Data.FixedPoint64,System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  - Core.Modifiers.ScopedModifierContainer.Clear
+  - Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ScopedModifierContainer.Create(System.Int32,Unity.Collections.Allocator)
+  - Core.Modifiers.ScopedModifierContainer.Dispose
+  - Core.Modifiers.ScopedModifierContainer.ExpireModifiers(System.Int32)
+  - Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier(System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  - Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  - Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+  - Core.Modifiers.ScopedModifierContainer.MarkDirty
+  - Core.Modifiers.ScopedModifierContainer.RebuildIfDirty(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  - Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ScopedModifierContainer
+  nameWithType: ScopedModifierContainer
+  fullName: Core.Modifiers.ScopedModifierContainer
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScopedModifierContainer
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Container for modifiers with scope inheritance
+
+    Pattern used by: EU4 (province ← country ← global), CK3 (character ← dynasty ← culture)
+
+
+    Scope Hierarchy:
+
+    - Province modifiers (local only)
+
+    - Country modifiers (inherited by all provinces)
+
+    - Global modifiers (inherited by everyone)
+
+
+    Design:
+
+    - ActiveModifierList for local modifiers
+
+    - Reference to parent scope (optional)
+
+    - Cached ModifierSet (dirty flag optimization)
+
+    - Rebuild only when modifiers change
+
+
+    Performance: O(n) rebuild where n = local + inherited modifiers
+
+    Cached lookups: O(1) after rebuild
+  example: []
+  syntax:
+    content: public struct ScopedModifierContainer
+    content.vb: Public Structure ScopedModifierContainer
+- uid: Core.Modifiers.ScopedModifierContainer.Create(System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.Create(System.Int32,Unity.Collections.Allocator)
+  id: Create(System.Int32,Unity.Collections.Allocator)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: Create(int, Allocator)
+  nameWithType: ScopedModifierContainer.Create(int, Allocator)
+  fullName: Core.Modifiers.ScopedModifierContainer.Create(int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Create a new scoped modifier container
+  example: []
+  syntax:
+    content: public static ScopedModifierContainer Create(int capacity = 64, Allocator allocator = Allocator.Persistent)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Modifiers.ScopedModifierContainer
+    content.vb: Public Shared Function Create(capacity As Integer = 64, allocator As Allocator = Allocator.Persistent) As ScopedModifierContainer
+  overload: Core.Modifiers.ScopedModifierContainer.Create*
+  nameWithType.vb: ScopedModifierContainer.Create(Integer, Allocator)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.Create(Integer, Unity.Collections.Allocator)
+  name.vb: Create(Integer, Allocator)
+- uid: Core.Modifiers.ScopedModifierContainer.Add(Core.Modifiers.ModifierSource)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.Add(Core.Modifiers.ModifierSource)
+  id: Add(Core.Modifiers.ModifierSource)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: Add(ModifierSource)
+  nameWithType: ScopedModifierContainer.Add(ModifierSource)
+  fullName: Core.Modifiers.ScopedModifierContainer.Add(Core.Modifiers.ModifierSource)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Add a modifier to this scope
+  example: []
+  syntax:
+    content: public bool Add(ModifierSource source)
+    parameters:
+    - id: source
+      type: Core.Modifiers.ModifierSource
+    return:
+      type: System.Boolean
+    content.vb: Public Function Add(source As ModifierSource) As Boolean
+  overload: Core.Modifiers.ScopedModifierContainer.Add*
+- uid: Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: RemoveBySource(SourceType, uint)
+  nameWithType: ScopedModifierContainer.RemoveBySource(ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveBySource
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove modifiers from a specific source
+  example: []
+  syntax:
+    content: public int RemoveBySource(ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ScopedModifierContainer.RemoveBySource*
+  nameWithType.vb: ScopedModifierContainer.RemoveBySource(ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: RemoveBySource(SourceType, UInteger)
+- uid: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  id: RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: RemoveBySourceAndType(SourceType, uint, ushort)
+  nameWithType: ScopedModifierContainer.RemoveBySourceAndType(ModifierSource.SourceType, uint, ushort)
+  fullName: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType, uint, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveBySourceAndType
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove modifiers of a specific type from a specific source
+  example: []
+  syntax:
+    content: public int RemoveBySourceAndType(ModifierSource.SourceType sourceType, uint sourceId, ushort modifierTypeId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: modifierTypeId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveBySourceAndType(sourceType As ModifierSource.SourceType, sourceId As UInteger, modifierTypeId As UShort) As Integer
+  overload: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType*
+  nameWithType.vb: ScopedModifierContainer.RemoveBySourceAndType(ModifierSource.SourceType, UInteger, UShort)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType, UInteger, UShort)
+  name.vb: RemoveBySourceAndType(SourceType, UInteger, UShort)
+- uid: Core.Modifiers.ScopedModifierContainer.ExpireModifiers(System.Int32)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ExpireModifiers(System.Int32)
+  id: ExpireModifiers(System.Int32)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ExpireModifiers(int)
+  nameWithType: ScopedModifierContainer.ExpireModifiers(int)
+  fullName: Core.Modifiers.ScopedModifierContainer.ExpireModifiers(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExpireModifiers
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Expire temporary modifiers
+  example: []
+  syntax:
+    content: public int ExpireModifiers(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function ExpireModifiers(currentTick As Integer) As Integer
+  overload: Core.Modifiers.ScopedModifierContainer.ExpireModifiers*
+  nameWithType.vb: ScopedModifierContainer.ExpireModifiers(Integer)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ExpireModifiers(Integer)
+  name.vb: ExpireModifiers(Integer)
+- uid: Core.Modifiers.ScopedModifierContainer.Clear
+  commentId: M:Core.Modifiers.ScopedModifierContainer.Clear
+  id: Clear
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ScopedModifierContainer.Clear()
+  fullName: Core.Modifiers.ScopedModifierContainer.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Clear all local modifiers
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Modifiers.ScopedModifierContainer.Clear*
+- uid: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.RebuildIfDirty(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  id: RebuildIfDirty(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: RebuildIfDirty(ScopedModifierContainer?)
+  nameWithType: ScopedModifierContainer.RebuildIfDirty(ScopedModifierContainer?)
+  fullName: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty(Core.Modifiers.ScopedModifierContainer?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebuildIfDirty
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 99
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Rebuild modifier set from local + inherited modifiers
+  example: []
+  syntax:
+    content: public void RebuildIfDirty(ScopedModifierContainer? parentScope = null)
+    parameters:
+    - id: parentScope
+      type: System.Nullable{Core.Modifiers.ScopedModifierContainer}
+    content.vb: Public Sub RebuildIfDirty(parentScope As ScopedModifierContainer? = Nothing)
+  overload: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty*
+- uid: Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  id: GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: GetModifierSet(ScopedModifierContainer?)
+  nameWithType: ScopedModifierContainer.GetModifierSet(ScopedModifierContainer?)
+  fullName: Core.Modifiers.ScopedModifierContainer.GetModifierSet(Core.Modifiers.ScopedModifierContainer?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetModifierSet
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Get the final modifier set (rebuilds if dirty)
+  example: []
+  syntax:
+    content: public ModifierSet GetModifierSet(ScopedModifierContainer? parentScope = null)
+    parameters:
+    - id: parentScope
+      type: System.Nullable{Core.Modifiers.ScopedModifierContainer}
+    return:
+      type: Core.Modifiers.ModifierSet
+    content.vb: Public Function GetModifierSet(parentScope As ScopedModifierContainer? = Nothing) As ModifierSet
+  overload: Core.Modifiers.ScopedModifierContainer.GetModifierSet*
+- uid: Core.Modifiers.ScopedModifierContainer.ApplyModifier(System.UInt16,Core.Data.FixedPoint64,System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ApplyModifier(System.UInt16,Core.Data.FixedPoint64,System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  id: ApplyModifier(System.UInt16,Core.Data.FixedPoint64,System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ApplyModifier(ushort, FixedPoint64, ScopedModifierContainer?)
+  nameWithType: ScopedModifierContainer.ApplyModifier(ushort, FixedPoint64, ScopedModifierContainer?)
+  fullName: Core.Modifiers.ScopedModifierContainer.ApplyModifier(ushort, Core.Data.FixedPoint64, Core.Modifiers.ScopedModifierContainer?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyModifier
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 143
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Apply modifier to a base value (rebuilds if dirty)
+  example: []
+  syntax:
+    content: public FixedPoint64 ApplyModifier(ushort modifierTypeId, FixedPoint64 baseValue, ScopedModifierContainer? parentScope = null)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    - id: parentScope
+      type: System.Nullable{Core.Modifiers.ScopedModifierContainer}
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function ApplyModifier(modifierTypeId As UShort, baseValue As FixedPoint64, parentScope As ScopedModifierContainer? = Nothing) As FixedPoint64
+  overload: Core.Modifiers.ScopedModifierContainer.ApplyModifier*
+  nameWithType.vb: ScopedModifierContainer.ApplyModifier(UShort, FixedPoint64, ScopedModifierContainer?)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ApplyModifier(UShort, Core.Data.FixedPoint64, Core.Modifiers.ScopedModifierContainer?)
+  name.vb: ApplyModifier(UShort, FixedPoint64, ScopedModifierContainer?)
+- uid: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  commentId: P:Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  id: HasLocalModifiers
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: HasLocalModifiers
+  nameWithType: ScopedModifierContainer.HasLocalModifiers
+  fullName: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasLocalModifiers
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 152
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if this container has any local modifiers
+  example: []
+  syntax:
+    content: public bool HasLocalModifiers { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasLocalModifiers As Boolean
+  overload: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers*
+- uid: Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+  commentId: P:Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+  id: LocalModifierCount
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: LocalModifierCount
+  nameWithType: ScopedModifierContainer.LocalModifierCount
+  fullName: Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalModifierCount
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 157
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Get count of local modifiers
+  example: []
+  syntax:
+    content: public int LocalModifierCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property LocalModifierCount As Integer
+  overload: Core.Modifiers.ScopedModifierContainer.LocalModifierCount*
+- uid: Core.Modifiers.ScopedModifierContainer.MarkDirty
+  commentId: M:Core.Modifiers.ScopedModifierContainer.MarkDirty
+  id: MarkDirty
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty()
+  nameWithType: ScopedModifierContainer.MarkDirty()
+  fullName: Core.Modifiers.ScopedModifierContainer.MarkDirty()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MarkDirty
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 163
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Mark this container as dirty (forces rebuild on next access)
+
+    Use this when parent scope changes
+  example: []
+  syntax:
+    content: public void MarkDirty()
+    content.vb: Public Sub MarkDirty()
+  overload: Core.Modifiers.ScopedModifierContainer.MarkDirty*
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier(System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier(System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachLocalModifier(System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ForEachLocalModifier(Action<ModifierSource>)
+  nameWithType: ScopedModifierContainer.ForEachLocalModifier(Action<ModifierSource>)
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier(System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachLocalModifier
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over local modifiers (for debugging/tooltips)
+  example: []
+  syntax:
+    content: public void ForEachLocalModifier(Action<ModifierSource> action)
+    parameters:
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachLocalModifier(action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier*
+  nameWithType.vb: ScopedModifierContainer.ForEachLocalModifier(Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier(System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachLocalModifier(Action(Of ModifierSource))
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ForEachLocalModifierBySource(SourceType, uint, Action<ModifierSource>)
+  nameWithType: ScopedModifierContainer.ForEachLocalModifierBySource(ModifierSource.SourceType, uint, Action<ModifierSource>)
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType, uint, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachLocalModifierBySource
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 179
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over local modifiers from a specific source
+  example: []
+  syntax:
+    content: public void ForEachLocalModifierBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachLocalModifierBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource*
+  nameWithType.vb: ScopedModifierContainer.ForEachLocalModifierBySource(ModifierSource.SourceType, UInteger, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource(Core.Modifiers.ModifierSource.SourceType, UInteger, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachLocalModifierBySource(SourceType, UInteger, Action(Of ModifierSource))
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachLocalModifierByType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ForEachLocalModifierByType(ushort, Action<ModifierSource>)
+  nameWithType: ScopedModifierContainer.ForEachLocalModifierByType(ushort, Action<ModifierSource>)
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(ushort, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachLocalModifierByType
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 187
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over local modifiers of a specific modifier type
+  example: []
+  syntax:
+    content: public void ForEachLocalModifierByType(ushort modifierTypeId, Action<ModifierSource> action)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachLocalModifierByType(modifierTypeId As UShort, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType*
+  nameWithType.vb: ScopedModifierContainer.ForEachLocalModifierByType(UShort, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(UShort, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachLocalModifierByType(UShort, Action(Of ModifierSource))
+- uid: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: CountLocalModifiersBySource(SourceType, uint)
+  nameWithType: ScopedModifierContainer.CountLocalModifiersBySource(ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountLocalModifiersBySource
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 195
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Count local modifiers from a specific source
+  example: []
+  syntax:
+    content: public int CountLocalModifiersBySource(ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function CountLocalModifiersBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource*
+  nameWithType.vb: ScopedModifierContainer.CountLocalModifiersBySource(ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: CountLocalModifiersBySource(SourceType, UInteger)
+- uid: Core.Modifiers.ScopedModifierContainer.Dispose
+  commentId: M:Core.Modifiers.ScopedModifierContainer.Dispose
+  id: Dispose
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ScopedModifierContainer.Dispose()
+  fullName: Core.Modifiers.ScopedModifierContainer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Dispose native collections
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Modifiers.ScopedModifierContainer.Dispose*
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.Modifiers.ScopedModifierContainer.Create*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.Create
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_Create_System_Int32_Unity_Collections_Allocator_
+  name: Create
+  nameWithType: ScopedModifierContainer.Create
+  fullName: Core.Modifiers.ScopedModifierContainer.Create
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Modifiers.ScopedModifierContainer
+  commentId: T:Core.Modifiers.ScopedModifierContainer
+  parent: Core.Modifiers
+  href: Core.Modifiers.ScopedModifierContainer.html
+  name: ScopedModifierContainer
+  nameWithType: ScopedModifierContainer
+  fullName: Core.Modifiers.ScopedModifierContainer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Modifiers.ScopedModifierContainer.Add*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.Add
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_Add_Core_Modifiers_ModifierSource_
+  name: Add
+  nameWithType: ScopedModifierContainer.Add
+  fullName: Core.Modifiers.ScopedModifierContainer.Add
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Modifiers.ScopedModifierContainer.RemoveBySource*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.RemoveBySource
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_RemoveBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: RemoveBySource
+  nameWithType: ScopedModifierContainer.RemoveBySource
+  fullName: Core.Modifiers.ScopedModifierContainer.RemoveBySource
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_RemoveBySourceAndType_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_UInt16_
+  name: RemoveBySourceAndType
+  nameWithType: ScopedModifierContainer.RemoveBySourceAndType
+  fullName: Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Modifiers.ScopedModifierContainer.ExpireModifiers*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ExpireModifiers
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ExpireModifiers_System_Int32_
+  name: ExpireModifiers
+  nameWithType: ScopedModifierContainer.ExpireModifiers
+  fullName: Core.Modifiers.ScopedModifierContainer.ExpireModifiers
+- uid: Core.Modifiers.ScopedModifierContainer.Clear*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.Clear
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_Clear
+  name: Clear
+  nameWithType: ScopedModifierContainer.Clear
+  fullName: Core.Modifiers.ScopedModifierContainer.Clear
+- uid: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.RebuildIfDirty
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_RebuildIfDirty_System_Nullable_Core_Modifiers_ScopedModifierContainer__
+  name: RebuildIfDirty
+  nameWithType: ScopedModifierContainer.RebuildIfDirty
+  fullName: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty
+- uid: System.Nullable{Core.Modifiers.ScopedModifierContainer}
+  commentId: T:System.Nullable{Core.Modifiers.ScopedModifierContainer}
+  parent: System
+  definition: System.Nullable`1
+  href: Core.Modifiers.ScopedModifierContainer.html
+  name: ScopedModifierContainer?
+  nameWithType: ScopedModifierContainer?
+  fullName: Core.Modifiers.ScopedModifierContainer?
+  spec.csharp:
+  - uid: Core.Modifiers.ScopedModifierContainer
+    name: ScopedModifierContainer
+    href: Core.Modifiers.ScopedModifierContainer.html
+  - name: '?'
+  spec.vb:
+  - uid: Core.Modifiers.ScopedModifierContainer
+    name: ScopedModifierContainer
+    href: Core.Modifiers.ScopedModifierContainer.html
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Modifiers.ScopedModifierContainer.GetModifierSet*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.GetModifierSet
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_GetModifierSet_System_Nullable_Core_Modifiers_ScopedModifierContainer__
+  name: GetModifierSet
+  nameWithType: ScopedModifierContainer.GetModifierSet
+  fullName: Core.Modifiers.ScopedModifierContainer.GetModifierSet
+- uid: Core.Modifiers.ModifierSet
+  commentId: T:Core.Modifiers.ModifierSet
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSet.html
+  name: ModifierSet
+  nameWithType: ModifierSet
+  fullName: Core.Modifiers.ModifierSet
+- uid: Core.Modifiers.ScopedModifierContainer.ApplyModifier*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ApplyModifier
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ApplyModifier_System_UInt16_Core_Data_FixedPoint64_System_Nullable_Core_Modifiers_ScopedModifierContainer__
+  name: ApplyModifier
+  nameWithType: ScopedModifierContainer.ApplyModifier
+  fullName: Core.Modifiers.ScopedModifierContainer.ApplyModifier
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_HasLocalModifiers
+  name: HasLocalModifiers
+  nameWithType: ScopedModifierContainer.HasLocalModifiers
+  fullName: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+- uid: Core.Modifiers.ScopedModifierContainer.LocalModifierCount*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_LocalModifierCount
+  name: LocalModifierCount
+  nameWithType: ScopedModifierContainer.LocalModifierCount
+  fullName: Core.Modifiers.ScopedModifierContainer.LocalModifierCount
+- uid: Core.Modifiers.ScopedModifierContainer.MarkDirty*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.MarkDirty
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_MarkDirty
+  name: MarkDirty
+  nameWithType: ScopedModifierContainer.MarkDirty
+  fullName: Core.Modifiers.ScopedModifierContainer.MarkDirty
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ForEachLocalModifier_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachLocalModifier
+  nameWithType: ScopedModifierContainer.ForEachLocalModifier
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifier
+- uid: System.Action{Core.Modifiers.ModifierSource}
+  commentId: T:System.Action{Core.Modifiers.ModifierSource}
+  parent: System
+  definition: System.Action`1
+  href: Core.Modifiers.ModifierSource.html
+  name: Action<ModifierSource>
+  nameWithType: Action<ModifierSource>
+  fullName: System.Action<Core.Modifiers.ModifierSource>
+  nameWithType.vb: Action(Of ModifierSource)
+  fullName.vb: System.Action(Of Core.Modifiers.ModifierSource)
+  name.vb: Action(Of ModifierSource)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ForEachLocalModifierBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachLocalModifierBySource
+  nameWithType: ScopedModifierContainer.ForEachLocalModifierBySource
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierBySource
+- uid: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ForEachLocalModifierByType_System_UInt16_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachLocalModifierByType
+  nameWithType: ScopedModifierContainer.ForEachLocalModifierByType
+  fullName: Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType
+- uid: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_CountLocalModifiersBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: CountLocalModifiersBySource
+  nameWithType: ScopedModifierContainer.CountLocalModifiersBySource
+  fullName: Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource
+- uid: Core.Modifiers.ScopedModifierContainer.Dispose*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.Dispose
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_Dispose
+  name: Dispose
+  nameWithType: ScopedModifierContainer.Dispose
+  fullName: Core.Modifiers.ScopedModifierContainer.Dispose

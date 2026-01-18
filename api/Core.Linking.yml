@@ -1,0 +1,69 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  id: Core.Linking
+  children:
+  - Core.Linking.CrossReferenceBuilder
+  - Core.Linking.DataValidator
+  - Core.Linking.ReferenceResolver
+  - Core.Linking.ValidationError
+  langs:
+  - csharp
+  - vb
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Linking.CrossReferenceBuilder
+  commentId: T:Core.Linking.CrossReferenceBuilder
+  parent: Core.Linking
+  href: Core.Linking.CrossReferenceBuilder.html
+  name: CrossReferenceBuilder
+  nameWithType: CrossReferenceBuilder
+  fullName: Core.Linking.CrossReferenceBuilder
+- uid: Core.Linking.DataValidator
+  commentId: T:Core.Linking.DataValidator
+  parent: Core.Linking
+  href: Core.Linking.DataValidator.html
+  name: DataValidator
+  nameWithType: DataValidator
+  fullName: Core.Linking.DataValidator
+- uid: Core.Linking.ValidationError
+  commentId: T:Core.Linking.ValidationError
+  href: Core.Linking.ValidationError.html
+  name: ValidationError
+  nameWithType: ValidationError
+  fullName: Core.Linking.ValidationError
+- uid: Core.Linking.ReferenceResolver
+  commentId: T:Core.Linking.ReferenceResolver
+  parent: Core.Linking
+  href: Core.Linking.ReferenceResolver.html
+  name: ReferenceResolver
+  nameWithType: ReferenceResolver
+  fullName: Core.Linking.ReferenceResolver
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  href: Core.html
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html

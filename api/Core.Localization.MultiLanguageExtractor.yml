@@ -1,0 +1,655 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.MultiLanguageExtractor
+  commentId: T:Core.Localization.MultiLanguageExtractor
+  id: MultiLanguageExtractor
+  parent: Core.Localization
+  children:
+  - Core.Localization.MultiLanguageExtractor.FindMissingTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  - Core.Localization.MultiLanguageExtractor.GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.UInt32,Unity.Collections.Allocator)
+  - Core.Localization.MultiLanguageExtractor.GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.Int32@,System.Int32@,System.Single@)
+  - Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages(System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}},Unity.Collections.Allocator)
+  - Core.Localization.MultiLanguageExtractor.TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,System.UInt32,Unity.Collections.FixedString512Bytes@,Unity.Collections.FixedString64Bytes@)
+  langs:
+  - csharp
+  - vb
+  name: MultiLanguageExtractor
+  nameWithType: MultiLanguageExtractor
+  fullName: Core.Localization.MultiLanguageExtractor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MultiLanguageExtractor
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    Multi-language extraction utilities for localization management
+
+    Handles multiple language files and provides unified access
+  example: []
+  syntax:
+    content: public static class MultiLanguageExtractor
+    content.vb: Public Module MultiLanguageExtractor
+  inheritance:
+  - System.Object
+- uid: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages(System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}},Unity.Collections.Allocator)
+  commentId: M:Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages(System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}},Unity.Collections.Allocator)
+  id: LoadMultipleLanguages(System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}},Unity.Collections.Allocator)
+  parent: Core.Localization.MultiLanguageExtractor
+  langs:
+  - csharp
+  - vb
+  name: LoadMultipleLanguages(Dictionary<string, NativeArray<byte>>, Allocator)
+  nameWithType: MultiLanguageExtractor.LoadMultipleLanguages(Dictionary<string, NativeArray<byte>>, Allocator)
+  fullName: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages(System.Collections.Generic.Dictionary<string, Unity.Collections.NativeArray<byte>>, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadMultipleLanguages
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Load multiple language files and create unified language data
+  example: []
+  syntax:
+    content: public static MultiLanguageExtractor.MultiLanguageResult LoadMultipleLanguages(Dictionary<string, NativeArray<byte>> languageFiles, Allocator allocator)
+    parameters:
+    - id: languageFiles
+      type: System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    content.vb: Public Shared Function LoadMultipleLanguages(languageFiles As Dictionary(Of String, NativeArray(Of Byte)), allocator As Allocator) As MultiLanguageExtractor.MultiLanguageResult
+  overload: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages*
+  nameWithType.vb: MultiLanguageExtractor.LoadMultipleLanguages(Dictionary(Of String, NativeArray(Of Byte)), Allocator)
+  fullName.vb: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages(System.Collections.Generic.Dictionary(Of String, Unity.Collections.NativeArray(Of Byte)), Unity.Collections.Allocator)
+  name.vb: LoadMultipleLanguages(Dictionary(Of String, NativeArray(Of Byte)), Allocator)
+- uid: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,System.UInt32,Unity.Collections.FixedString512Bytes@,Unity.Collections.FixedString64Bytes@)
+  commentId: M:Core.Localization.MultiLanguageExtractor.TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,System.UInt32,Unity.Collections.FixedString512Bytes@,Unity.Collections.FixedString64Bytes@)
+  id: TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,System.UInt32,Unity.Collections.FixedString512Bytes@,Unity.Collections.FixedString64Bytes@)
+  parent: Core.Localization.MultiLanguageExtractor
+  langs:
+  - csharp
+  - vb
+  name: TryGetLocalizedString(MultiLanguageResult, FixedString64Bytes, uint, out FixedString512Bytes, out FixedString64Bytes)
+  nameWithType: MultiLanguageExtractor.TryGetLocalizedString(MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes, uint, out FixedString512Bytes, out FixedString64Bytes)
+  fullName: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes, uint, out Unity.Collections.FixedString512Bytes, out Unity.Collections.FixedString64Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetLocalizedString
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get localized string with fallback support
+  example: []
+  syntax:
+    content: public static bool TryGetLocalizedString(MultiLanguageExtractor.MultiLanguageResult multiLangResult, FixedString64Bytes preferredLanguage, uint keyHash, out FixedString512Bytes value, out FixedString64Bytes actualLanguage)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: preferredLanguage
+      type: Unity.Collections.FixedString64Bytes
+    - id: keyHash
+      type: System.UInt32
+    - id: value
+      type: Unity.Collections.FixedString512Bytes
+    - id: actualLanguage
+      type: Unity.Collections.FixedString64Bytes
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetLocalizedString(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, preferredLanguage As FixedString64Bytes, keyHash As UInteger, value As FixedString512Bytes, actualLanguage As FixedString64Bytes) As Boolean
+  overload: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString*
+  nameWithType.vb: MultiLanguageExtractor.TryGetLocalizedString(MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes, UInteger, FixedString512Bytes, FixedString64Bytes)
+  fullName.vb: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes, UInteger, Unity.Collections.FixedString512Bytes, Unity.Collections.FixedString64Bytes)
+  name.vb: TryGetLocalizedString(MultiLanguageResult, FixedString64Bytes, UInteger, FixedString512Bytes, FixedString64Bytes)
+- uid: Core.Localization.MultiLanguageExtractor.GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.UInt32,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.MultiLanguageExtractor.GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.UInt32,Unity.Collections.Allocator)
+  id: GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.UInt32,Unity.Collections.Allocator)
+  parent: Core.Localization.MultiLanguageExtractor
+  langs:
+  - csharp
+  - vb
+  name: GetAllTranslations(MultiLanguageResult, uint, Allocator)
+  nameWithType: MultiLanguageExtractor.GetAllTranslations(MultiLanguageExtractor.MultiLanguageResult, uint, Allocator)
+  fullName: Core.Localization.MultiLanguageExtractor.GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, uint, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllTranslations
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get all available translations for a key
+  example: []
+  syntax:
+    content: public static NativeHashMap<FixedString64Bytes, FixedString512Bytes> GetAllTranslations(MultiLanguageExtractor.MultiLanguageResult multiLangResult, uint keyHash, Allocator allocator)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: keyHash
+      type: System.UInt32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes}
+    content.vb: Public Shared Function GetAllTranslations(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, keyHash As UInteger, allocator As Allocator) As NativeHashMap(Of FixedString64Bytes, FixedString512Bytes)
+  overload: Core.Localization.MultiLanguageExtractor.GetAllTranslations*
+  nameWithType.vb: MultiLanguageExtractor.GetAllTranslations(MultiLanguageExtractor.MultiLanguageResult, UInteger, Allocator)
+  fullName.vb: Core.Localization.MultiLanguageExtractor.GetAllTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, UInteger, Unity.Collections.Allocator)
+  name.vb: GetAllTranslations(MultiLanguageResult, UInteger, Allocator)
+- uid: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.Int32@,System.Int32@,System.Single@)
+  commentId: M:Core.Localization.MultiLanguageExtractor.GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.Int32@,System.Int32@,System.Single@)
+  id: GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,System.Int32@,System.Int32@,System.Single@)
+  parent: Core.Localization.MultiLanguageExtractor
+  langs:
+  - csharp
+  - vb
+  name: GetLanguageStatistics(MultiLanguageResult, out int, out int, out float)
+  nameWithType: MultiLanguageExtractor.GetLanguageStatistics(MultiLanguageExtractor.MultiLanguageResult, out int, out int, out float)
+  fullName: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, out int, out int, out float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLanguageStatistics
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get language statistics
+  example: []
+  syntax:
+    content: public static void GetLanguageStatistics(MultiLanguageExtractor.MultiLanguageResult multiLangResult, out int totalLanguages, out int totalUniqueKeys, out float averageCompleteness)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: totalLanguages
+      type: System.Int32
+    - id: totalUniqueKeys
+      type: System.Int32
+    - id: averageCompleteness
+      type: System.Single
+    content.vb: Public Shared Sub GetLanguageStatistics(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, totalLanguages As Integer, totalUniqueKeys As Integer, averageCompleteness As Single)
+  overload: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics*
+  nameWithType.vb: MultiLanguageExtractor.GetLanguageStatistics(MultiLanguageExtractor.MultiLanguageResult, Integer, Integer, Single)
+  fullName.vb: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Integer, Integer, Single)
+  name.vb: GetLanguageStatistics(MultiLanguageResult, Integer, Integer, Single)
+- uid: Core.Localization.MultiLanguageExtractor.FindMissingTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.MultiLanguageExtractor.FindMissingTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  id: FindMissingTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  parent: Core.Localization.MultiLanguageExtractor
+  langs:
+  - csharp
+  - vb
+  name: FindMissingTranslations(MultiLanguageResult, FixedString64Bytes, FixedString64Bytes, Allocator)
+  nameWithType: MultiLanguageExtractor.FindMissingTranslations(MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes, FixedString64Bytes, Allocator)
+  fullName: Core.Localization.MultiLanguageExtractor.FindMissingTranslations(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString64Bytes, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindMissingTranslations
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 244
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Find missing translations for a specific language
+  example: []
+  syntax:
+    content: public static NativeList<uint> FindMissingTranslations(MultiLanguageExtractor.MultiLanguageResult multiLangResult, FixedString64Bytes targetLanguage, FixedString64Bytes referenceLanguage, Allocator allocator)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: targetLanguage
+      type: Unity.Collections.FixedString64Bytes
+    - id: referenceLanguage
+      type: Unity.Collections.FixedString64Bytes
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt32}
+    content.vb: Public Shared Function FindMissingTranslations(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, targetLanguage As FixedString64Bytes, referenceLanguage As FixedString64Bytes, allocator As Allocator) As NativeList(Of UInteger)
+  overload: Core.Localization.MultiLanguageExtractor.FindMissingTranslations*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages
+  href: Core.Localization.MultiLanguageExtractor.html#Core_Localization_MultiLanguageExtractor_LoadMultipleLanguages_System_Collections_Generic_Dictionary_System_String_Unity_Collections_NativeArray_System_Byte___Unity_Collections_Allocator_
+  name: LoadMultipleLanguages
+  nameWithType: MultiLanguageExtractor.LoadMultipleLanguages
+  fullName: Core.Localization.MultiLanguageExtractor.LoadMultipleLanguages
+- uid: System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Unity.Collections.NativeArray{System.Byte}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<string, NativeArray<byte>>
+  nameWithType: Dictionary<string, NativeArray<byte>>
+  fullName: System.Collections.Generic.Dictionary<string, Unity.Collections.NativeArray<byte>>
+  nameWithType.vb: Dictionary(Of String, NativeArray(Of Byte))
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Unity.Collections.NativeArray(Of Byte))
+  name.vb: Dictionary(Of String, NativeArray(Of Byte))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  commentId: T:Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  parent: Core.Localization
+  href: Core.Localization.MultiLanguageExtractor.html
+  name: MultiLanguageExtractor.MultiLanguageResult
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  spec.csharp:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+  spec.vb:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.TryGetLocalizedString
+  href: Core.Localization.MultiLanguageExtractor.html#Core_Localization_MultiLanguageExtractor_TryGetLocalizedString_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Unity_Collections_FixedString64Bytes_System_UInt32_Unity_Collections_FixedString512Bytes__Unity_Collections_FixedString64Bytes__
+  name: TryGetLocalizedString
+  nameWithType: MultiLanguageExtractor.TryGetLocalizedString
+  fullName: Core.Localization.MultiLanguageExtractor.TryGetLocalizedString
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Localization.MultiLanguageExtractor.GetAllTranslations*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.GetAllTranslations
+  href: Core.Localization.MultiLanguageExtractor.html#Core_Localization_MultiLanguageExtractor_GetAllTranslations_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_System_UInt32_Unity_Collections_Allocator_
+  name: GetAllTranslations
+  nameWithType: MultiLanguageExtractor.GetAllTranslations
+  fullName: Core.Localization.MultiLanguageExtractor.GetAllTranslations
+- uid: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes}
+  commentId: T:Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<FixedString64Bytes, FixedString512Bytes>
+  nameWithType: NativeHashMap<FixedString64Bytes, FixedString512Bytes>
+  fullName: Unity.Collections.NativeHashMap<Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString512Bytes>
+  nameWithType.vb: NativeHashMap(Of FixedString64Bytes, FixedString512Bytes)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString512Bytes)
+  name.vb: NativeHashMap(Of FixedString64Bytes, FixedString512Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.GetLanguageStatistics
+  href: Core.Localization.MultiLanguageExtractor.html#Core_Localization_MultiLanguageExtractor_GetLanguageStatistics_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_System_Int32__System_Int32__System_Single__
+  name: GetLanguageStatistics
+  nameWithType: MultiLanguageExtractor.GetLanguageStatistics
+  fullName: Core.Localization.MultiLanguageExtractor.GetLanguageStatistics
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Localization.MultiLanguageExtractor.FindMissingTranslations*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.FindMissingTranslations
+  href: Core.Localization.MultiLanguageExtractor.html#Core_Localization_MultiLanguageExtractor_FindMissingTranslations_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Unity_Collections_FixedString64Bytes_Unity_Collections_FixedString64Bytes_Unity_Collections_Allocator_
+  name: FindMissingTranslations
+  nameWithType: MultiLanguageExtractor.FindMissingTranslations
+  fullName: Core.Localization.MultiLanguageExtractor.FindMissingTranslations
+- uid: Unity.Collections.NativeList{System.UInt32}
+  commentId: T:Unity.Collections.NativeList{System.UInt32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<uint>
+  nameWithType: NativeList<uint>
+  fullName: Unity.Collections.NativeList<uint>
+  nameWithType.vb: NativeList(Of UInteger)
+  fullName.vb: Unity.Collections.NativeList(Of UInteger)
+  name.vb: NativeList(Of UInteger)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

@@ -1,0 +1,276 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Setup.MapRendererSetup
+  commentId: T:Map.Setup.MapRendererSetup
+  id: MapRendererSetup
+  parent: Map.Setup
+  children:
+  - Map.Setup.MapRendererSetup.CreateMapRenderer(UnityEngine.Vector2,UnityEngine.Material,UnityEngine.Transform)
+  - Map.Setup.MapRendererSetup.GetRecommendedMapSize(System.Int32,System.Int32,System.Single)
+  - Map.Setup.MapRendererSetup.ValidateMapRenderer(UnityEngine.GameObject)
+  langs:
+  - csharp
+  - vb
+  name: MapRendererSetup
+  nameWithType: MapRendererSetup
+  fullName: Map.Setup.MapRendererSetup
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapRendererSetup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapRendererSetup
+    path: Scripts/Map/MapRendererSetup.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.Setup
+  summary: Utility class for setting up the MapRenderer GameObject with all required components
+  example: []
+  syntax:
+    content: public static class MapRendererSetup
+    content.vb: Public Module MapRendererSetup
+  inheritance:
+  - System.Object
+- uid: Map.Setup.MapRendererSetup.CreateMapRenderer(UnityEngine.Vector2,UnityEngine.Material,UnityEngine.Transform)
+  commentId: M:Map.Setup.MapRendererSetup.CreateMapRenderer(UnityEngine.Vector2,UnityEngine.Material,UnityEngine.Transform)
+  id: CreateMapRenderer(UnityEngine.Vector2,UnityEngine.Material,UnityEngine.Transform)
+  parent: Map.Setup.MapRendererSetup
+  langs:
+  - csharp
+  - vb
+  name: CreateMapRenderer(Vector2, Material, Transform)
+  nameWithType: MapRendererSetup.CreateMapRenderer(Vector2, Material, Transform)
+  fullName: Map.Setup.MapRendererSetup.CreateMapRenderer(UnityEngine.Vector2, UnityEngine.Material, UnityEngine.Transform)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRendererSetup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateMapRenderer
+    path: Scripts/Map/MapRendererSetup.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Setup
+  summary: Creates a complete MapRenderer GameObject with proper configuration
+  example: []
+  syntax:
+    content: public static GameObject CreateMapRenderer(Vector2 mapSize, Material material = null, Transform parent = null)
+    parameters:
+    - id: mapSize
+      type: UnityEngine.Vector2
+      description: Size of the map quad in world units
+    - id: material
+      type: UnityEngine.Material
+      description: Material to use for rendering (optional)
+    - id: parent
+      type: UnityEngine.Transform
+      description: Parent transform (optional)
+    return:
+      type: UnityEngine.GameObject
+      description: Configured MapRenderer GameObject
+    content.vb: Public Shared Function CreateMapRenderer(mapSize As Vector2, material As Material = Nothing, parent As Transform = Nothing) As GameObject
+  overload: Map.Setup.MapRendererSetup.CreateMapRenderer*
+- uid: Map.Setup.MapRendererSetup.ValidateMapRenderer(UnityEngine.GameObject)
+  commentId: M:Map.Setup.MapRendererSetup.ValidateMapRenderer(UnityEngine.GameObject)
+  id: ValidateMapRenderer(UnityEngine.GameObject)
+  parent: Map.Setup.MapRendererSetup
+  langs:
+  - csharp
+  - vb
+  name: ValidateMapRenderer(GameObject)
+  nameWithType: MapRendererSetup.ValidateMapRenderer(GameObject)
+  fullName: Map.Setup.MapRendererSetup.ValidateMapRenderer(UnityEngine.GameObject)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRendererSetup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateMapRenderer
+    path: Scripts/Map/MapRendererSetup.cs
+    startLine: 51
+  assemblies:
+  - MapAssembly
+  namespace: Map.Setup
+  summary: Validate that a GameObject has the correct MapRenderer setup
+  example: []
+  syntax:
+    content: public static bool ValidateMapRenderer(GameObject gameObject)
+    parameters:
+    - id: gameObject
+      type: UnityEngine.GameObject
+      description: GameObject to validate
+    return:
+      type: System.Boolean
+      description: True if properly configured
+    content.vb: Public Shared Function ValidateMapRenderer(gameObject As GameObject) As Boolean
+  overload: Map.Setup.MapRendererSetup.ValidateMapRenderer*
+- uid: Map.Setup.MapRendererSetup.GetRecommendedMapSize(System.Int32,System.Int32,System.Single)
+  commentId: M:Map.Setup.MapRendererSetup.GetRecommendedMapSize(System.Int32,System.Int32,System.Single)
+  id: GetRecommendedMapSize(System.Int32,System.Int32,System.Single)
+  parent: Map.Setup.MapRendererSetup
+  langs:
+  - csharp
+  - vb
+  name: GetRecommendedMapSize(int, int, float)
+  nameWithType: MapRendererSetup.GetRecommendedMapSize(int, int, float)
+  fullName: Map.Setup.MapRendererSetup.GetRecommendedMapSize(int, int, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRendererSetup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRecommendedMapSize
+    path: Scripts/Map/MapRendererSetup.cs
+    startLine: 102
+  assemblies:
+  - MapAssembly
+  namespace: Map.Setup
+  summary: Get recommended map size based on province texture dimensions
+  example: []
+  syntax:
+    content: public static Vector2 GetRecommendedMapSize(int textureWidth, int textureHeight, float worldScale = 0.01)
+    parameters:
+    - id: textureWidth
+      type: System.Int32
+      description: Province texture width
+    - id: textureHeight
+      type: System.Int32
+      description: Province texture height
+    - id: worldScale
+      type: System.Single
+      description: Scale factor for world size
+    return:
+      type: UnityEngine.Vector2
+      description: Recommended map size
+    content.vb: Public Shared Function GetRecommendedMapSize(textureWidth As Integer, textureHeight As Integer, worldScale As Single = 0.01) As Vector2
+  overload: Map.Setup.MapRendererSetup.GetRecommendedMapSize*
+  nameWithType.vb: MapRendererSetup.GetRecommendedMapSize(Integer, Integer, Single)
+  fullName.vb: Map.Setup.MapRendererSetup.GetRecommendedMapSize(Integer, Integer, Single)
+  name.vb: GetRecommendedMapSize(Integer, Integer, Single)
+references:
+- uid: Map.Setup
+  commentId: N:Map.Setup
+  href: Map.html
+  name: Map.Setup
+  nameWithType: Map.Setup
+  fullName: Map.Setup
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Setup
+    name: Setup
+    href: Map.Setup.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Setup
+    name: Setup
+    href: Map.Setup.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Setup.MapRendererSetup.CreateMapRenderer*
+  commentId: Overload:Map.Setup.MapRendererSetup.CreateMapRenderer
+  href: Map.Setup.MapRendererSetup.html#Map_Setup_MapRendererSetup_CreateMapRenderer_UnityEngine_Vector2_UnityEngine_Material_UnityEngine_Transform_
+  name: CreateMapRenderer
+  nameWithType: MapRendererSetup.CreateMapRenderer
+  fullName: Map.Setup.MapRendererSetup.CreateMapRenderer
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: UnityEngine.GameObject
+  commentId: T:UnityEngine.GameObject
+  parent: UnityEngine
+  isExternal: true
+  name: GameObject
+  nameWithType: GameObject
+  fullName: UnityEngine.GameObject
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Setup.MapRendererSetup.ValidateMapRenderer*
+  commentId: Overload:Map.Setup.MapRendererSetup.ValidateMapRenderer
+  href: Map.Setup.MapRendererSetup.html#Map_Setup_MapRendererSetup_ValidateMapRenderer_UnityEngine_GameObject_
+  name: ValidateMapRenderer
+  nameWithType: MapRendererSetup.ValidateMapRenderer
+  fullName: Map.Setup.MapRendererSetup.ValidateMapRenderer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Setup.MapRendererSetup.GetRecommendedMapSize*
+  commentId: Overload:Map.Setup.MapRendererSetup.GetRecommendedMapSize
+  href: Map.Setup.MapRendererSetup.html#Map_Setup_MapRendererSetup_GetRecommendedMapSize_System_Int32_System_Int32_System_Single_
+  name: GetRecommendedMapSize
+  nameWithType: MapRendererSetup.GetRecommendedMapSize
+  fullName: Map.Setup.MapRendererSetup.GetRecommendedMapSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

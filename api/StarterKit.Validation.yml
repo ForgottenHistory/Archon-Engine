@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Validation
+  commentId: N:StarterKit.Validation
+  id: StarterKit.Validation
+  children:
+  - StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: StarterKit.Validation
+  nameWithType: StarterKit.Validation
+  fullName: StarterKit.Validation
+  type: Namespace
+  assemblies:
+  - StarterKit
+references:
+- uid: StarterKit.Validation.StarterKitValidationExtensions
+  commentId: T:StarterKit.Validation.StarterKitValidationExtensions
+  href: StarterKit.Validation.StarterKitValidationExtensions.html
+  name: StarterKitValidationExtensions
+  nameWithType: StarterKitValidationExtensions
+  fullName: StarterKit.Validation.StarterKitValidationExtensions

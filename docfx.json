@@ -3,24 +3,8 @@
     {
       "src": [
         {
-          "files": ["Scripts/Core/**/*.cs"],
-          "src": "."
-        },
-        {
-          "files": ["Scripts/Map/**/*.cs"],
-          "src": "."
-        },
-        {
-          "files": ["Scripts/StarterKit/**/*.cs"],
-          "src": "."
-        },
-        {
-          "files": ["Scripts/Engine/**/*.cs"],
-          "src": "."
-        },
-        {
-          "files": ["Scripts/Utils/**/*.cs"],
-          "src": "."
+          "src": "../..",
+          "files": ["Core.csproj", "MapAssembly.csproj", "StarterKit.csproj", "Utils.csproj", "Engine.csproj"]
         }
       ],
       "dest": "api",
@@ -43,12 +27,8 @@
         "dest": "wiki"
       },
       {
-        "files": ["Docs/Engine/*.md"],
+        "files": ["Docs/Engine/*.md", "Docs/Engine/toc.yml"],
         "dest": "architecture"
-      },
-      {
-        "files": ["Scripts/Core/FILE_REGISTRY.md", "Scripts/Map/FILE_REGISTRY.md", "Scripts/StarterKit/README.md"],
-        "dest": "guides"
       }
     ],
     "resource": [
@@ -62,7 +42,7 @@
     "dest": "_site",
     "template": ["default", "modern"],
     "globalMetadata": {
-      "_appTitle": "Archon Engine API",
+      "_appTitle": "Archon Engine",
       "_appName": "Archon Engine",
       "_appFooter": "Archon Engine - Grand Strategy Game Framework",
       "_enableSearch": true,

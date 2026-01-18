@@ -1,0 +1,328 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  id: BorderRenderingMode
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderRenderingMode.DistanceField
+  - Map.Rendering.BorderRenderingMode.Mesh
+  - Map.Rendering.BorderRenderingMode.MeshGeometry
+  - Map.Rendering.BorderRenderingMode.None
+  - Map.Rendering.BorderRenderingMode.Rasterization
+  - Map.Rendering.BorderRenderingMode.SDF
+  - Map.Rendering.BorderRenderingMode.ShaderDistanceField
+  - Map.Rendering.BorderRenderingMode.ShaderPixelPerfect
+  langs:
+  - csharp
+  - vb
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderRenderingMode
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Border rendering mode - how to render borders
+  example: []
+  syntax:
+    content: public enum BorderRenderingMode
+    content.vb: Public Enum BorderRenderingMode
+- uid: Map.Rendering.BorderRenderingMode.None
+  commentId: F:Map.Rendering.BorderRenderingMode.None
+  id: None
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: BorderRenderingMode.None
+  fullName: Map.Rendering.BorderRenderingMode.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: None = 0
+    return:
+      type: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.BorderRenderingMode.ShaderDistanceField
+  commentId: F:Map.Rendering.BorderRenderingMode.ShaderDistanceField
+  id: ShaderDistanceField
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: ShaderDistanceField
+  nameWithType: BorderRenderingMode.ShaderDistanceField
+  fullName: Map.Rendering.BorderRenderingMode.ShaderDistanceField
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShaderDistanceField
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: ShaderDistanceField = 1
+    return:
+      type: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.BorderRenderingMode.MeshGeometry
+  commentId: F:Map.Rendering.BorderRenderingMode.MeshGeometry
+  id: MeshGeometry
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: MeshGeometry
+  nameWithType: BorderRenderingMode.MeshGeometry
+  fullName: Map.Rendering.BorderRenderingMode.MeshGeometry
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MeshGeometry
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: MeshGeometry = 2
+    return:
+      type: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.BorderRenderingMode.ShaderPixelPerfect
+  commentId: F:Map.Rendering.BorderRenderingMode.ShaderPixelPerfect
+  id: ShaderPixelPerfect
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: ShaderPixelPerfect
+  nameWithType: BorderRenderingMode.ShaderPixelPerfect
+  fullName: Map.Rendering.BorderRenderingMode.ShaderPixelPerfect
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShaderPixelPerfect
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: ShaderPixelPerfect = 3
+    return:
+      type: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.BorderRenderingMode.SDF
+  commentId: F:Map.Rendering.BorderRenderingMode.SDF
+  id: SDF
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: SDF
+  nameWithType: BorderRenderingMode.SDF
+  fullName: Map.Rendering.BorderRenderingMode.SDF
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SDF
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use ShaderDistanceField instead")]
+
+      SDF = 1
+    return:
+      type: Map.Rendering.BorderRenderingMode
+    content.vb: >-
+      <Obsolete("Use ShaderDistanceField instead")>
+
+      SDF = 1
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use ShaderDistanceField instead
+- uid: Map.Rendering.BorderRenderingMode.DistanceField
+  commentId: F:Map.Rendering.BorderRenderingMode.DistanceField
+  id: DistanceField
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: DistanceField
+  nameWithType: BorderRenderingMode.DistanceField
+  fullName: Map.Rendering.BorderRenderingMode.DistanceField
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DistanceField
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use ShaderDistanceField instead")]
+
+      DistanceField = 1
+    return:
+      type: Map.Rendering.BorderRenderingMode
+    content.vb: >-
+      <Obsolete("Use ShaderDistanceField instead")>
+
+      DistanceField = 1
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use ShaderDistanceField instead
+- uid: Map.Rendering.BorderRenderingMode.Rasterization
+  commentId: F:Map.Rendering.BorderRenderingMode.Rasterization
+  id: Rasterization
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: Rasterization
+  nameWithType: BorderRenderingMode.Rasterization
+  fullName: Map.Rendering.BorderRenderingMode.Rasterization
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Rasterization
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use ShaderPixelPerfect instead")]
+
+      Rasterization = 3
+    return:
+      type: Map.Rendering.BorderRenderingMode
+    content.vb: >-
+      <Obsolete("Use ShaderPixelPerfect instead")>
+
+      Rasterization = 3
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use ShaderPixelPerfect instead
+- uid: Map.Rendering.BorderRenderingMode.Mesh
+  commentId: F:Map.Rendering.BorderRenderingMode.Mesh
+  id: Mesh
+  parent: Map.Rendering.BorderRenderingMode
+  langs:
+  - csharp
+  - vb
+  name: Mesh
+  nameWithType: BorderRenderingMode.Mesh
+  fullName: Map.Rendering.BorderRenderingMode.Mesh
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mesh
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use MeshGeometry instead")]
+
+      Mesh = 2
+    return:
+      type: Map.Rendering.BorderRenderingMode
+    content.vb: >-
+      <Obsolete("Use MeshGeometry instead")>
+
+      Mesh = 2
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use MeshGeometry instead
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderRenderingMode.html
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode

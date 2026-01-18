@@ -1,0 +1,500 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIDistanceCalculator
+  commentId: T:Core.AI.AIDistanceCalculator
+  id: AIDistanceCalculator
+  parent: Core.AI
+  children:
+  - Core.AI.AIDistanceCalculator.#ctor
+  - Core.AI.AIDistanceCalculator.AssignTiers(Unity.Collections.NativeArray{Core.AI.AIState},Core.AI.AISchedulingConfig)
+  - Core.AI.AIDistanceCalculator.CalculateDistances(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.AI.AIDistanceCalculator.Dispose
+  - Core.AI.AIDistanceCalculator.GetCountryDistance(System.UInt16)
+  - Core.AI.AIDistanceCalculator.Initialize(System.Int32,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: AIDistanceCalculator
+  nameWithType: AIDistanceCalculator
+  fullName: Core.AI.AIDistanceCalculator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIDistanceCalculator
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    ENGINE LAYER - Calculates distance from player for AI priority tiers.
+
+
+    Algorithm: BFS from player's provinces through adjacency graph.
+
+    Distance = minimum province hops from any player province to any country province.
+
+
+    Performance:
+
+    - O(P) where P = total provinces (single BFS traversal)
+
+    - Burst-compiled for SIMD and native code optimization
+
+    - Called infrequently (game start, monthly, on major border changes)
+
+    - Pre-allocated buffers for zero gameplay allocations
+
+
+    Usage:
+
+    1. Call CalculateDistances() with player country ID
+
+    2. Call AssignTiers() to update AIState array based on distances
+  example: []
+  syntax:
+    content: public class AIDistanceCalculator
+    content.vb: Public Class AIDistanceCalculator
+  inheritance:
+  - System.Object
+- uid: Core.AI.AIDistanceCalculator.#ctor
+  commentId: M:Core.AI.AIDistanceCalculator.#ctor
+  id: '#ctor'
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: AIDistanceCalculator()
+  nameWithType: AIDistanceCalculator.AIDistanceCalculator()
+  fullName: Core.AI.AIDistanceCalculator.AIDistanceCalculator()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AIDistanceCalculator()
+    content.vb: Public Sub New()
+  overload: Core.AI.AIDistanceCalculator.#ctor*
+  nameWithType.vb: AIDistanceCalculator.New()
+  fullName.vb: Core.AI.AIDistanceCalculator.New()
+  name.vb: New()
+- uid: Core.AI.AIDistanceCalculator.Initialize(System.Int32,System.Int32)
+  commentId: M:Core.AI.AIDistanceCalculator.Initialize(System.Int32,System.Int32)
+  id: Initialize(System.Int32,System.Int32)
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Initialize(int, int)
+  nameWithType: AIDistanceCalculator.Initialize(int, int)
+  fullName: Core.AI.AIDistanceCalculator.Initialize(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Initialize buffers for distance calculation.
+
+    Call once after province/country counts are known.
+  example: []
+  syntax:
+    content: public void Initialize(int provinceCount, int countryCount)
+    parameters:
+    - id: provinceCount
+      type: System.Int32
+    - id: countryCount
+      type: System.Int32
+    content.vb: Public Sub Initialize(provinceCount As Integer, countryCount As Integer)
+  overload: Core.AI.AIDistanceCalculator.Initialize*
+  nameWithType.vb: AIDistanceCalculator.Initialize(Integer, Integer)
+  fullName.vb: Core.AI.AIDistanceCalculator.Initialize(Integer, Integer)
+  name.vb: Initialize(Integer, Integer)
+- uid: Core.AI.AIDistanceCalculator.CalculateDistances(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.AI.AIDistanceCalculator.CalculateDistances(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: CalculateDistances(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: CalculateDistances(ushort, ProvinceSystem, AdjacencySystem)
+  nameWithType: AIDistanceCalculator.CalculateDistances(ushort, ProvinceSystem, AdjacencySystem)
+  fullName: Core.AI.AIDistanceCalculator.CalculateDistances(ushort, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDistances
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Calculate distances from player country using Burst-compiled BFS.
+
+    Updates internal distance arrays.
+  example: []
+  syntax:
+    content: public void CalculateDistances(ushort playerCountryID, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
+    parameters:
+    - id: playerCountryID
+      type: System.UInt16
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Sub CalculateDistances(playerCountryID As UShort, provinceSystem As ProvinceSystem, adjacencySystem As AdjacencySystem)
+  overload: Core.AI.AIDistanceCalculator.CalculateDistances*
+  nameWithType.vb: AIDistanceCalculator.CalculateDistances(UShort, ProvinceSystem, AdjacencySystem)
+  fullName.vb: Core.AI.AIDistanceCalculator.CalculateDistances(UShort, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  name.vb: CalculateDistances(UShort, ProvinceSystem, AdjacencySystem)
+- uid: Core.AI.AIDistanceCalculator.GetCountryDistance(System.UInt16)
+  commentId: M:Core.AI.AIDistanceCalculator.GetCountryDistance(System.UInt16)
+  id: GetCountryDistance(System.UInt16)
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetCountryDistance(ushort)
+  nameWithType: AIDistanceCalculator.GetCountryDistance(ushort)
+  fullName: Core.AI.AIDistanceCalculator.GetCountryDistance(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryDistance
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 119
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get distance for a specific country.
+  example: []
+  syntax:
+    content: public byte GetCountryDistance(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetCountryDistance(countryID As UShort) As Byte
+  overload: Core.AI.AIDistanceCalculator.GetCountryDistance*
+  nameWithType.vb: AIDistanceCalculator.GetCountryDistance(UShort)
+  fullName.vb: Core.AI.AIDistanceCalculator.GetCountryDistance(UShort)
+  name.vb: GetCountryDistance(UShort)
+- uid: Core.AI.AIDistanceCalculator.AssignTiers(Unity.Collections.NativeArray{Core.AI.AIState},Core.AI.AISchedulingConfig)
+  commentId: M:Core.AI.AIDistanceCalculator.AssignTiers(Unity.Collections.NativeArray{Core.AI.AIState},Core.AI.AISchedulingConfig)
+  id: AssignTiers(Unity.Collections.NativeArray{Core.AI.AIState},Core.AI.AISchedulingConfig)
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: AssignTiers(NativeArray<AIState>, AISchedulingConfig)
+  nameWithType: AIDistanceCalculator.AssignTiers(NativeArray<AIState>, AISchedulingConfig)
+  fullName: Core.AI.AIDistanceCalculator.AssignTiers(Unity.Collections.NativeArray<Core.AI.AIState>, Core.AI.AISchedulingConfig)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AssignTiers
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Assign tiers to all AI states based on calculated distances.
+  example: []
+  syntax:
+    content: public void AssignTiers(NativeArray<AIState> aiStates, AISchedulingConfig config)
+    parameters:
+    - id: aiStates
+      type: Unity.Collections.NativeArray{Core.AI.AIState}
+    - id: config
+      type: Core.AI.AISchedulingConfig
+    content.vb: Public Sub AssignTiers(aiStates As NativeArray(Of AIState), config As AISchedulingConfig)
+  overload: Core.AI.AIDistanceCalculator.AssignTiers*
+  nameWithType.vb: AIDistanceCalculator.AssignTiers(NativeArray(Of AIState), AISchedulingConfig)
+  fullName.vb: Core.AI.AIDistanceCalculator.AssignTiers(Unity.Collections.NativeArray(Of Core.AI.AIState), Core.AI.AISchedulingConfig)
+  name.vb: AssignTiers(NativeArray(Of AIState), AISchedulingConfig)
+- uid: Core.AI.AIDistanceCalculator.Dispose
+  commentId: M:Core.AI.AIDistanceCalculator.Dispose
+  id: Dispose
+  parent: Core.AI.AIDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: AIDistanceCalculator.Dispose()
+  fullName: Core.AI.AIDistanceCalculator.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 156
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Cleanup native allocations.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.AI.AIDistanceCalculator.Dispose*
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.AIDistanceCalculator.#ctor*
+  commentId: Overload:Core.AI.AIDistanceCalculator.#ctor
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator__ctor
+  name: AIDistanceCalculator
+  nameWithType: AIDistanceCalculator.AIDistanceCalculator
+  fullName: Core.AI.AIDistanceCalculator.AIDistanceCalculator
+  nameWithType.vb: AIDistanceCalculator.New
+  fullName.vb: Core.AI.AIDistanceCalculator.New
+  name.vb: New
+- uid: Core.AI.AIDistanceCalculator.Initialize*
+  commentId: Overload:Core.AI.AIDistanceCalculator.Initialize
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator_Initialize_System_Int32_System_Int32_
+  name: Initialize
+  nameWithType: AIDistanceCalculator.Initialize
+  fullName: Core.AI.AIDistanceCalculator.Initialize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.AI.AIDistanceCalculator.CalculateDistances*
+  commentId: Overload:Core.AI.AIDistanceCalculator.CalculateDistances
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator_CalculateDistances_System_UInt16_Core_Systems_ProvinceSystem_Core_Systems_AdjacencySystem_
+  name: CalculateDistances
+  nameWithType: AIDistanceCalculator.CalculateDistances
+  fullName: Core.AI.AIDistanceCalculator.CalculateDistances
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.AI.AIDistanceCalculator.GetCountryDistance*
+  commentId: Overload:Core.AI.AIDistanceCalculator.GetCountryDistance
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator_GetCountryDistance_System_UInt16_
+  name: GetCountryDistance
+  nameWithType: AIDistanceCalculator.GetCountryDistance
+  fullName: Core.AI.AIDistanceCalculator.GetCountryDistance
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.AI.AIDistanceCalculator.AssignTiers*
+  commentId: Overload:Core.AI.AIDistanceCalculator.AssignTiers
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator_AssignTiers_Unity_Collections_NativeArray_Core_AI_AIState__Core_AI_AISchedulingConfig_
+  name: AssignTiers
+  nameWithType: AIDistanceCalculator.AssignTiers
+  fullName: Core.AI.AIDistanceCalculator.AssignTiers
+- uid: Unity.Collections.NativeArray{Core.AI.AIState}
+  commentId: T:Unity.Collections.NativeArray{Core.AI.AIState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.AI.AIState.html
+  name: NativeArray<AIState>
+  nameWithType: NativeArray<AIState>
+  fullName: Unity.Collections.NativeArray<Core.AI.AIState>
+  nameWithType.vb: NativeArray(Of AIState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.AI.AIState)
+  name.vb: NativeArray(Of AIState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.AI.AIState
+    name: AIState
+    href: Core.AI.AIState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.AI.AIState
+    name: AIState
+    href: Core.AI.AIState.html
+  - name: )
+- uid: Core.AI.AISchedulingConfig
+  commentId: T:Core.AI.AISchedulingConfig
+  parent: Core.AI
+  href: Core.AI.AISchedulingConfig.html
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.AI.AIDistanceCalculator.Dispose*
+  commentId: Overload:Core.AI.AIDistanceCalculator.Dispose
+  href: Core.AI.AIDistanceCalculator.html#Core_AI_AIDistanceCalculator_Dispose
+  name: Dispose
+  nameWithType: AIDistanceCalculator.Dispose
+  fullName: Core.AI.AIDistanceCalculator.Dispose

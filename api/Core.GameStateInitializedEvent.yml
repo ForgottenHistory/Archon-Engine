@@ -1,0 +1,109 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.GameStateInitializedEvent
+  commentId: T:Core.GameStateInitializedEvent
+  id: GameStateInitializedEvent
+  parent: Core
+  children:
+  - Core.GameStateInitializedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: GameStateInitializedEvent
+  nameWithType: GameStateInitializedEvent
+  fullName: Core.GameStateInitializedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameStateInitializedEvent
+    path: Scripts/Core/GameState.cs
+    startLine: 384
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Core events for GameState lifecycle
+  example: []
+  syntax:
+    content: 'public struct GameStateInitializedEvent : IGameEvent'
+    content.vb: Public Structure GameStateInitializedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.GameStateInitializedEvent.TimeStamp
+  commentId: P:Core.GameStateInitializedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.GameStateInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: GameStateInitializedEvent.TimeStamp
+  fullName: Core.GameStateInitializedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/GameState.cs
+    startLine: 386
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.GameStateInitializedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core.GameStateInitializedEvent.TimeStamp*
+  commentId: Overload:Core.GameStateInitializedEvent.TimeStamp
+  href: Core.GameStateInitializedEvent.html#Core_GameStateInitializedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: GameStateInitializedEvent.TimeStamp
+  fullName: Core.GameStateInitializedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

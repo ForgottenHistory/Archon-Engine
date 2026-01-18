@@ -1,0 +1,433 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.Json5ProvinceLoadResult
+  commentId: T:Core.Data.Json5ProvinceLoadResult
+  id: Json5ProvinceLoadResult
+  parent: Core.Data
+  children:
+  - Core.Data.Json5ProvinceLoadResult.Dispose
+  - Core.Data.Json5ProvinceLoadResult.Failure(System.String)
+  - Core.Data.Json5ProvinceLoadResult.Success(Unity.Collections.NativeArray{Core.Data.RawProvinceData},System.Int32,System.Int32)
+  - Core.Data.Json5ProvinceLoadResult.errorMessage
+  - Core.Data.Json5ProvinceLoadResult.failedCount
+  - Core.Data.Json5ProvinceLoadResult.loadedCount
+  - Core.Data.Json5ProvinceLoadResult.rawData
+  - Core.Data.Json5ProvinceLoadResult.success
+  langs:
+  - csharp
+  - vb
+  name: Json5ProvinceLoadResult
+  nameWithType: Json5ProvinceLoadResult
+  fullName: Core.Data.Json5ProvinceLoadResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Json5ProvinceLoadResult
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Result of JSON5 province loading phase
+  example: []
+  syntax:
+    content: public struct Json5ProvinceLoadResult
+    content.vb: Public Structure Json5ProvinceLoadResult
+- uid: Core.Data.Json5ProvinceLoadResult.success
+  commentId: F:Core.Data.Json5ProvinceLoadResult.success
+  id: success
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: success
+  nameWithType: Json5ProvinceLoadResult.success
+  fullName: Core.Data.Json5ProvinceLoadResult.success
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: success
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool success
+    return:
+      type: System.Boolean
+    content.vb: Public success As Boolean
+- uid: Core.Data.Json5ProvinceLoadResult.rawData
+  commentId: F:Core.Data.Json5ProvinceLoadResult.rawData
+  id: rawData
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: rawData
+  nameWithType: Json5ProvinceLoadResult.rawData
+  fullName: Core.Data.Json5ProvinceLoadResult.rawData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: rawData
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public NativeArray<RawProvinceData> rawData
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.RawProvinceData}
+    content.vb: Public rawData As NativeArray(Of RawProvinceData)
+- uid: Core.Data.Json5ProvinceLoadResult.loadedCount
+  commentId: F:Core.Data.Json5ProvinceLoadResult.loadedCount
+  id: loadedCount
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: loadedCount
+  nameWithType: Json5ProvinceLoadResult.loadedCount
+  fullName: Core.Data.Json5ProvinceLoadResult.loadedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: loadedCount
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int loadedCount
+    return:
+      type: System.Int32
+    content.vb: Public loadedCount As Integer
+- uid: Core.Data.Json5ProvinceLoadResult.failedCount
+  commentId: F:Core.Data.Json5ProvinceLoadResult.failedCount
+  id: failedCount
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: failedCount
+  nameWithType: Json5ProvinceLoadResult.failedCount
+  fullName: Core.Data.Json5ProvinceLoadResult.failedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: failedCount
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int failedCount
+    return:
+      type: System.Int32
+    content.vb: Public failedCount As Integer
+- uid: Core.Data.Json5ProvinceLoadResult.errorMessage
+  commentId: F:Core.Data.Json5ProvinceLoadResult.errorMessage
+  id: errorMessage
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: errorMessage
+  nameWithType: Json5ProvinceLoadResult.errorMessage
+  fullName: Core.Data.Json5ProvinceLoadResult.errorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: errorMessage
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string errorMessage
+    return:
+      type: System.String
+    content.vb: Public errorMessage As String
+- uid: Core.Data.Json5ProvinceLoadResult.Success(Unity.Collections.NativeArray{Core.Data.RawProvinceData},System.Int32,System.Int32)
+  commentId: M:Core.Data.Json5ProvinceLoadResult.Success(Unity.Collections.NativeArray{Core.Data.RawProvinceData},System.Int32,System.Int32)
+  id: Success(Unity.Collections.NativeArray{Core.Data.RawProvinceData},System.Int32,System.Int32)
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Success(NativeArray<RawProvinceData>, int, int)
+  nameWithType: Json5ProvinceLoadResult.Success(NativeArray<RawProvinceData>, int, int)
+  fullName: Core.Data.Json5ProvinceLoadResult.Success(Unity.Collections.NativeArray<Core.Data.RawProvinceData>, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static Json5ProvinceLoadResult Success(NativeArray<RawProvinceData> data, int loaded, int failed)
+    parameters:
+    - id: data
+      type: Unity.Collections.NativeArray{Core.Data.RawProvinceData}
+    - id: loaded
+      type: System.Int32
+    - id: failed
+      type: System.Int32
+    return:
+      type: Core.Data.Json5ProvinceLoadResult
+    content.vb: Public Shared Function Success(data As NativeArray(Of RawProvinceData), loaded As Integer, failed As Integer) As Json5ProvinceLoadResult
+  overload: Core.Data.Json5ProvinceLoadResult.Success*
+  nameWithType.vb: Json5ProvinceLoadResult.Success(NativeArray(Of RawProvinceData), Integer, Integer)
+  fullName.vb: Core.Data.Json5ProvinceLoadResult.Success(Unity.Collections.NativeArray(Of Core.Data.RawProvinceData), Integer, Integer)
+  name.vb: Success(NativeArray(Of RawProvinceData), Integer, Integer)
+- uid: Core.Data.Json5ProvinceLoadResult.Failure(System.String)
+  commentId: M:Core.Data.Json5ProvinceLoadResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: Json5ProvinceLoadResult.Failure(string)
+  fullName: Core.Data.Json5ProvinceLoadResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static Json5ProvinceLoadResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Data.Json5ProvinceLoadResult
+    content.vb: Public Shared Function Failure([error] As String) As Json5ProvinceLoadResult
+  overload: Core.Data.Json5ProvinceLoadResult.Failure*
+  nameWithType.vb: Json5ProvinceLoadResult.Failure(String)
+  fullName.vb: Core.Data.Json5ProvinceLoadResult.Failure(String)
+  name.vb: Failure(String)
+- uid: Core.Data.Json5ProvinceLoadResult.Dispose
+  commentId: M:Core.Data.Json5ProvinceLoadResult.Dispose
+  id: Dispose
+  parent: Core.Data.Json5ProvinceLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: Json5ProvinceLoadResult.Dispose()
+  fullName: Core.Data.Json5ProvinceLoadResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Data.Json5ProvinceLoadResult.Dispose*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{Core.Data.RawProvinceData}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.RawProvinceData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.RawProvinceData.html
+  name: NativeArray<RawProvinceData>
+  nameWithType: NativeArray<RawProvinceData>
+  fullName: Unity.Collections.NativeArray<Core.Data.RawProvinceData>
+  nameWithType.vb: NativeArray(Of RawProvinceData)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.RawProvinceData)
+  name.vb: NativeArray(Of RawProvinceData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.RawProvinceData
+    name: RawProvinceData
+    href: Core.Data.RawProvinceData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.RawProvinceData
+    name: RawProvinceData
+    href: Core.Data.RawProvinceData.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.Json5ProvinceLoadResult.Success*
+  commentId: Overload:Core.Data.Json5ProvinceLoadResult.Success
+  href: Core.Data.Json5ProvinceLoadResult.html#Core_Data_Json5ProvinceLoadResult_Success_Unity_Collections_NativeArray_Core_Data_RawProvinceData__System_Int32_System_Int32_
+  name: Success
+  nameWithType: Json5ProvinceLoadResult.Success
+  fullName: Core.Data.Json5ProvinceLoadResult.Success
+- uid: Core.Data.Json5ProvinceLoadResult
+  commentId: T:Core.Data.Json5ProvinceLoadResult
+  parent: Core.Data
+  href: Core.Data.Json5ProvinceLoadResult.html
+  name: Json5ProvinceLoadResult
+  nameWithType: Json5ProvinceLoadResult
+  fullName: Core.Data.Json5ProvinceLoadResult
+- uid: Core.Data.Json5ProvinceLoadResult.Failure*
+  commentId: Overload:Core.Data.Json5ProvinceLoadResult.Failure
+  href: Core.Data.Json5ProvinceLoadResult.html#Core_Data_Json5ProvinceLoadResult_Failure_System_String_
+  name: Failure
+  nameWithType: Json5ProvinceLoadResult.Failure
+  fullName: Core.Data.Json5ProvinceLoadResult.Failure
+- uid: Core.Data.Json5ProvinceLoadResult.Dispose*
+  commentId: Overload:Core.Data.Json5ProvinceLoadResult.Dispose
+  href: Core.Data.Json5ProvinceLoadResult.html#Core_Data_Json5ProvinceLoadResult_Dispose
+  name: Dispose
+  nameWithType: Json5ProvinceLoadResult.Dispose
+  fullName: Core.Data.Json5ProvinceLoadResult.Dispose

@@ -1,0 +1,158 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.NormalMapBitmapLoader
+  commentId: T:Map.Loading.Images.NormalMapBitmapLoader
+  id: NormalMapBitmapLoader
+  parent: Map.Loading.Images
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: NormalMapBitmapLoader
+  nameWithType: NormalMapBitmapLoader
+  fullName: Map.Loading.Images.NormalMapBitmapLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/NormalMapBitmapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapBitmapLoader
+    path: Scripts/Map/Loading/Images/NormalMapBitmapLoader.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Legacy alias for NormalMapImageLoader for backward compatibility.
+  example: []
+  syntax:
+    content: 'public class NormalMapBitmapLoader : NormalMapImageLoader'
+    content.vb: Public Class NormalMapBitmapLoader Inherits NormalMapImageLoader
+  inheritance:
+  - System.Object
+  - Map.Loading.Images.NormalMapImageLoader
+  inheritedMembers:
+  - Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  - Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(System.String)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Loading.Images.NormalMapImageLoader
+  commentId: T:Map.Loading.Images.NormalMapImageLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.NormalMapImageLoader.html
+  name: NormalMapImageLoader
+  nameWithType: NormalMapImageLoader
+  fullName: Map.Loading.Images.NormalMapImageLoader
+- uid: Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  commentId: M:Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  parent: Map.Loading.Images.NormalMapImageLoader
+  isExternal: true
+  href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  name: Initialize(MapTextureManager, bool)
+  nameWithType: NormalMapImageLoader.Initialize(MapTextureManager, bool)
+  fullName: Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager, bool)
+  nameWithType.vb: NormalMapImageLoader.Initialize(MapTextureManager, Boolean)
+  fullName.vb: Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager, Boolean)
+  name.vb: Initialize(MapTextureManager, Boolean)
+  spec.csharp:
+  - uid: Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+    name: Initialize
+    href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Loading.Images.NormalMapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+    name: Initialize
+    href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(System.String)
+  commentId: M:Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(System.String)
+  parent: Map.Loading.Images.NormalMapImageLoader
+  isExternal: true
+  href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_LoadAndPopulate_System_String_
+  name: LoadAndPopulate(string)
+  nameWithType: NormalMapImageLoader.LoadAndPopulate(string)
+  fullName: Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(string)
+  nameWithType.vb: NormalMapImageLoader.LoadAndPopulate(String)
+  fullName.vb: Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(String)
+  name.vb: LoadAndPopulate(String)
+  spec.csharp:
+  - uid: Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(System.String)
+    name: LoadAndPopulate
+    href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_LoadAndPopulate_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Loading.Images.NormalMapImageLoader.LoadAndPopulate(System.String)
+    name: LoadAndPopulate
+    href: Map.Loading.Images.NormalMapImageLoader.html#Map_Loading_Images_NormalMapImageLoader_LoadAndPopulate_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

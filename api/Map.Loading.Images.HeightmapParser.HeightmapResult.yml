@@ -1,0 +1,470 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult
+  commentId: T:Map.Loading.Images.HeightmapParser.HeightmapResult
+  id: HeightmapParser.HeightmapResult
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.HeightData
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.HeightRange
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.IsSuccess
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.MaxHeight
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.MinHeight
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.PixelData
+  - Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+  langs:
+  - csharp
+  - vb
+  name: HeightmapParser.HeightmapResult
+  nameWithType: HeightmapParser.HeightmapResult
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightmapResult
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Heightmap parsing result
+  example: []
+  syntax:
+    content: public struct HeightmapParser.HeightmapResult
+    content.vb: Public Structure HeightmapParser.HeightmapResult
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.PixelData
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.PixelData
+  id: PixelData
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: PixelData
+  nameWithType: HeightmapParser.HeightmapResult.PixelData
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.PixelData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelData
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public BMPParser.BMPPixelData PixelData
+    return:
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    content.vb: Public PixelData As BMPParser.BMPPixelData
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.HeightData
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.HeightData
+  id: HeightData
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: HeightData
+  nameWithType: HeightmapParser.HeightmapResult.HeightData
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.HeightData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightData
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<float> HeightData
+    return:
+      type: Unity.Collections.NativeArray{System.Single}
+    content.vb: Public HeightData As NativeArray(Of Single)
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.MinHeight
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.MinHeight
+  id: MinHeight
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: MinHeight
+  nameWithType: HeightmapParser.HeightmapResult.MinHeight
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.MinHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinHeight
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float MinHeight
+    return:
+      type: System.Single
+    content.vb: Public MinHeight As Single
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.MaxHeight
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.MaxHeight
+  id: MaxHeight
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: MaxHeight
+  nameWithType: HeightmapParser.HeightmapResult.MaxHeight
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.MaxHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxHeight
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float MaxHeight
+    return:
+      type: System.Single
+    content.vb: Public MaxHeight As Single
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.HeightRange
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.HeightRange
+  id: HeightRange
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: HeightRange
+  nameWithType: HeightmapParser.HeightmapResult.HeightRange
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.HeightRange
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightRange
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float HeightRange
+    return:
+      type: System.Single
+    content.vb: Public HeightRange As Single
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.IsSuccess
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: HeightmapParser.HeightmapResult.IsSuccess
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+  commentId: P:Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+  id: Width
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: HeightmapParser.HeightmapResult.Width
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Width As Integer
+  overload: Map.Loading.Images.HeightmapParser.HeightmapResult.Width*
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+  commentId: P:Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+  id: Height
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: HeightmapParser.HeightmapResult.Height
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Height As Integer
+  overload: Map.Loading.Images.HeightmapParser.HeightmapResult.Height*
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose
+  commentId: M:Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.HeightmapParser.HeightmapResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: HeightmapParser.HeightmapResult.Dispose()
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: Unity.Collections.NativeArray{System.Single}
+  commentId: T:Unity.Collections.NativeArray{System.Single}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<float>
+  nameWithType: NativeArray<float>
+  fullName: Unity.Collections.NativeArray<float>
+  nameWithType.vb: NativeArray(Of Single)
+  fullName.vb: Unity.Collections.NativeArray(Of Single)
+  name.vb: NativeArray(Of Single)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Width*
+  commentId: Overload:Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+  href: Map.Loading.Images.HeightmapParser.HeightmapResult.html#Map_Loading_Images_HeightmapParser_HeightmapResult_Width
+  name: Width
+  nameWithType: HeightmapParser.HeightmapResult.Width
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Width
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Height*
+  commentId: Overload:Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+  href: Map.Loading.Images.HeightmapParser.HeightmapResult.html#Map_Loading_Images_HeightmapParser_HeightmapResult_Height
+  name: Height
+  nameWithType: HeightmapParser.HeightmapResult.Height
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Height
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose*
+  commentId: Overload:Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose
+  href: Map.Loading.Images.HeightmapParser.HeightmapResult.html#Map_Loading_Images_HeightmapParser_HeightmapResult_Dispose
+  name: Dispose
+  nameWithType: HeightmapParser.HeightmapResult.Dispose
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult.Dispose

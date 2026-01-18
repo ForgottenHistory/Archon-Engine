@@ -1,0 +1,943 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.StandardCalendar
+  commentId: T:Core.Systems.StandardCalendar
+  id: StandardCalendar
+  parent: Core.Systems
+  children:
+  - Core.Systems.StandardCalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  - Core.Systems.StandardCalendar.DaysPerYear
+  - Core.Systems.StandardCalendar.FormatDate(Core.Systems.GameTime)
+  - Core.Systems.StandardCalendar.FormatDateCompact(Core.Systems.GameTime)
+  - Core.Systems.StandardCalendar.FormatYear(System.Int32)
+  - Core.Systems.StandardCalendar.GetDaysInMonth(System.Int32)
+  - Core.Systems.StandardCalendar.GetMonthAbbreviation(System.Int32)
+  - Core.Systems.StandardCalendar.GetMonthName(System.Int32)
+  - Core.Systems.StandardCalendar.HoursPerDay
+  - Core.Systems.StandardCalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  - Core.Systems.StandardCalendar.MonthsPerYear
+  langs:
+  - csharp
+  - vb
+  name: StandardCalendar
+  nameWithType: StandardCalendar
+  fullName: Core.Systems.StandardCalendar
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StandardCalendar
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE: Default Earth calendar with real month lengths.
+
+
+    Features:
+
+    - Real month lengths (31/30/28 days)
+
+    - 365 days per year (no leap years for determinism)
+
+    - Standard AD/BC era formatting
+
+    - English month names (GAME layer can override with localized names)
+
+
+    For simplified 360-day calendar, use SimplifiedCalendar instead.
+  example: []
+  syntax:
+    content: 'public class StandardCalendar : ICalendar'
+    content.vb: Public Class StandardCalendar Implements ICalendar
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Systems.ICalendar
+- uid: Core.Systems.StandardCalendar.HoursPerDay
+  commentId: P:Core.Systems.StandardCalendar.HoursPerDay
+  id: HoursPerDay
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: HoursPerDay
+  nameWithType: StandardCalendar.HoursPerDay
+  fullName: Core.Systems.StandardCalendar.HoursPerDay
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HoursPerDay
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Hours per day (typically 24)
+  example: []
+  syntax:
+    content: public int HoursPerDay { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property HoursPerDay As Integer
+  overload: Core.Systems.StandardCalendar.HoursPerDay*
+  implements:
+  - Core.Systems.ICalendar.HoursPerDay
+- uid: Core.Systems.StandardCalendar.MonthsPerYear
+  commentId: P:Core.Systems.StandardCalendar.MonthsPerYear
+  id: MonthsPerYear
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: MonthsPerYear
+  nameWithType: StandardCalendar.MonthsPerYear
+  fullName: Core.Systems.StandardCalendar.MonthsPerYear
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MonthsPerYear
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Number of months in a year
+  example: []
+  syntax:
+    content: public int MonthsPerYear { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property MonthsPerYear As Integer
+  overload: Core.Systems.StandardCalendar.MonthsPerYear*
+  implements:
+  - Core.Systems.ICalendar.MonthsPerYear
+- uid: Core.Systems.StandardCalendar.DaysPerYear
+  commentId: P:Core.Systems.StandardCalendar.DaysPerYear
+  id: DaysPerYear
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: DaysPerYear
+  nameWithType: StandardCalendar.DaysPerYear
+  fullName: Core.Systems.StandardCalendar.DaysPerYear
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DaysPerYear
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Total days in a year (for year-based calculations)
+  example: []
+  syntax:
+    content: public int DaysPerYear { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property DaysPerYear As Integer
+  overload: Core.Systems.StandardCalendar.DaysPerYear*
+  implements:
+  - Core.Systems.ICalendar.DaysPerYear
+- uid: Core.Systems.StandardCalendar.GetDaysInMonth(System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.GetDaysInMonth(System.Int32)
+  id: GetDaysInMonth(System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: GetDaysInMonth(int)
+  nameWithType: StandardCalendar.GetDaysInMonth(int)
+  fullName: Core.Systems.StandardCalendar.GetDaysInMonth(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDaysInMonth
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get days in specified month (1-indexed).
+
+    Standard calendar returns 30 for all months.
+
+    Custom calendars can vary (28-31 for realistic, any for fantasy).
+  example: []
+  syntax:
+    content: public int GetDaysInMonth(int month)
+    parameters:
+    - id: month
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function GetDaysInMonth(month As Integer) As Integer
+  overload: Core.Systems.StandardCalendar.GetDaysInMonth*
+  implements:
+  - Core.Systems.ICalendar.GetDaysInMonth(System.Int32)
+  nameWithType.vb: StandardCalendar.GetDaysInMonth(Integer)
+  fullName.vb: Core.Systems.StandardCalendar.GetDaysInMonth(Integer)
+  name.vb: GetDaysInMonth(Integer)
+- uid: Core.Systems.StandardCalendar.GetMonthName(System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.GetMonthName(System.Int32)
+  id: GetMonthName(System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: GetMonthName(int)
+  nameWithType: StandardCalendar.GetMonthName(int)
+  fullName: Core.Systems.StandardCalendar.GetMonthName(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMonthName
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get localized month name.
+
+    Standard calendar returns "Month 1", "Month 2", etc.
+
+    GAME layer provides real names ("January", "Ianuarius", etc.)
+  example: []
+  syntax:
+    content: public string GetMonthName(int month)
+    parameters:
+    - id: month
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Function GetMonthName(month As Integer) As String
+  overload: Core.Systems.StandardCalendar.GetMonthName*
+  implements:
+  - Core.Systems.ICalendar.GetMonthName(System.Int32)
+  nameWithType.vb: StandardCalendar.GetMonthName(Integer)
+  fullName.vb: Core.Systems.StandardCalendar.GetMonthName(Integer)
+  name.vb: GetMonthName(Integer)
+- uid: Core.Systems.StandardCalendar.GetMonthAbbreviation(System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.GetMonthAbbreviation(System.Int32)
+  id: GetMonthAbbreviation(System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: GetMonthAbbreviation(int)
+  nameWithType: StandardCalendar.GetMonthAbbreviation(int)
+  fullName: Core.Systems.StandardCalendar.GetMonthAbbreviation(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMonthAbbreviation
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get abbreviated month name for compact UI.
+
+    Standard calendar returns "M1", "M2", etc.
+
+    GAME layer provides real abbreviations ("Jan", "Feb", etc.)
+  example: []
+  syntax:
+    content: public string GetMonthAbbreviation(int month)
+    parameters:
+    - id: month
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Function GetMonthAbbreviation(month As Integer) As String
+  overload: Core.Systems.StandardCalendar.GetMonthAbbreviation*
+  implements:
+  - Core.Systems.ICalendar.GetMonthAbbreviation(System.Int32)
+  nameWithType.vb: StandardCalendar.GetMonthAbbreviation(Integer)
+  fullName.vb: Core.Systems.StandardCalendar.GetMonthAbbreviation(Integer)
+  name.vb: GetMonthAbbreviation(Integer)
+- uid: Core.Systems.StandardCalendar.FormatYear(System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.FormatYear(System.Int32)
+  id: FormatYear(System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: FormatYear(int)
+  nameWithType: StandardCalendar.FormatYear(int)
+  fullName: Core.Systems.StandardCalendar.FormatYear(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormatYear
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Format year with era designation.
+
+    Examples: "1444 AD", "753 BC", "AUC 507"
+
+    Year 0 = 1 BC in standard AD/BC system.
+  example: []
+  syntax:
+    content: public string FormatYear(int year)
+    parameters:
+    - id: year
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Function FormatYear(year As Integer) As String
+  overload: Core.Systems.StandardCalendar.FormatYear*
+  implements:
+  - Core.Systems.ICalendar.FormatYear(System.Int32)
+  nameWithType.vb: StandardCalendar.FormatYear(Integer)
+  fullName.vb: Core.Systems.StandardCalendar.FormatYear(Integer)
+  name.vb: FormatYear(Integer)
+- uid: Core.Systems.StandardCalendar.FormatDate(Core.Systems.GameTime)
+  commentId: M:Core.Systems.StandardCalendar.FormatDate(Core.Systems.GameTime)
+  id: FormatDate(Core.Systems.GameTime)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: FormatDate(GameTime)
+  nameWithType: StandardCalendar.FormatDate(GameTime)
+  fullName: Core.Systems.StandardCalendar.FormatDate(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormatDate
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Format full date for display.
+
+    Example: "11 November 1444 AD"
+  example: []
+  syntax:
+    content: public string FormatDate(GameTime time)
+    parameters:
+    - id: time
+      type: Core.Systems.GameTime
+    return:
+      type: System.String
+    content.vb: Public Function FormatDate(time As GameTime) As String
+  overload: Core.Systems.StandardCalendar.FormatDate*
+  implements:
+  - Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+- uid: Core.Systems.StandardCalendar.FormatDateCompact(Core.Systems.GameTime)
+  commentId: M:Core.Systems.StandardCalendar.FormatDateCompact(Core.Systems.GameTime)
+  id: FormatDateCompact(Core.Systems.GameTime)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: FormatDateCompact(GameTime)
+  nameWithType: StandardCalendar.FormatDateCompact(GameTime)
+  fullName: Core.Systems.StandardCalendar.FormatDateCompact(Core.Systems.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormatDateCompact
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Format compact date for limited UI space.
+
+    Example: "1444.11.11" or "11 Nov 1444"
+  example: []
+  syntax:
+    content: public string FormatDateCompact(GameTime time)
+    parameters:
+    - id: time
+      type: Core.Systems.GameTime
+    return:
+      type: System.String
+    content.vb: Public Function FormatDateCompact(time As GameTime) As String
+  overload: Core.Systems.StandardCalendar.FormatDateCompact*
+  implements:
+  - Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+- uid: Core.Systems.StandardCalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  id: IsValidDate(System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: IsValidDate(int, int, int)
+  nameWithType: StandardCalendar.IsValidDate(int, int, int)
+  fullName: Core.Systems.StandardCalendar.IsValidDate(int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValidDate
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Validate that date components are within calendar bounds.
+
+    Returns true if month is 1-MonthsPerYear and day is 1-GetDaysInMonth(month).
+  example: []
+  syntax:
+    content: public bool IsValidDate(int year, int month, int day)
+    parameters:
+    - id: year
+      type: System.Int32
+    - id: month
+      type: System.Int32
+    - id: day
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsValidDate(year As Integer, month As Integer, day As Integer) As Boolean
+  overload: Core.Systems.StandardCalendar.IsValidDate*
+  implements:
+  - Core.Systems.ICalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  nameWithType.vb: StandardCalendar.IsValidDate(Integer, Integer, Integer)
+  fullName.vb: Core.Systems.StandardCalendar.IsValidDate(Integer, Integer, Integer)
+  name.vb: IsValidDate(Integer, Integer, Integer)
+- uid: Core.Systems.StandardCalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.StandardCalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  id: ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.StandardCalendar
+  langs:
+  - csharp
+  - vb
+  name: ClampToValidDate(int, int, int, int)
+  nameWithType: StandardCalendar.ClampToValidDate(int, int, int, int)
+  fullName: Core.Systems.StandardCalendar.ClampToValidDate(int, int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/StandardCalendar.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClampToValidDate
+    path: Scripts/Core/Systems/StandardCalendar.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Clamp date to valid range for this calendar.
+
+    Useful when loading saves or setting dates programmatically.
+  example: []
+  syntax:
+    content: public GameTime ClampToValidDate(int year, int month, int day, int hour)
+    parameters:
+    - id: year
+      type: System.Int32
+    - id: month
+      type: System.Int32
+    - id: day
+      type: System.Int32
+    - id: hour
+      type: System.Int32
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function ClampToValidDate(year As Integer, month As Integer, day As Integer, hour As Integer) As GameTime
+  overload: Core.Systems.StandardCalendar.ClampToValidDate*
+  implements:
+  - Core.Systems.ICalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  nameWithType.vb: StandardCalendar.ClampToValidDate(Integer, Integer, Integer, Integer)
+  fullName.vb: Core.Systems.StandardCalendar.ClampToValidDate(Integer, Integer, Integer, Integer)
+  name.vb: ClampToValidDate(Integer, Integer, Integer, Integer)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Systems.ICalendar
+  commentId: T:Core.Systems.ICalendar
+  parent: Core.Systems
+  href: Core.Systems.ICalendar.html
+  name: ICalendar
+  nameWithType: ICalendar
+  fullName: Core.Systems.ICalendar
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.StandardCalendar.HoursPerDay*
+  commentId: Overload:Core.Systems.StandardCalendar.HoursPerDay
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_HoursPerDay
+  name: HoursPerDay
+  nameWithType: StandardCalendar.HoursPerDay
+  fullName: Core.Systems.StandardCalendar.HoursPerDay
+- uid: Core.Systems.ICalendar.HoursPerDay
+  commentId: P:Core.Systems.ICalendar.HoursPerDay
+  parent: Core.Systems.ICalendar
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_HoursPerDay
+  name: HoursPerDay
+  nameWithType: ICalendar.HoursPerDay
+  fullName: Core.Systems.ICalendar.HoursPerDay
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.StandardCalendar.MonthsPerYear*
+  commentId: Overload:Core.Systems.StandardCalendar.MonthsPerYear
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_MonthsPerYear
+  name: MonthsPerYear
+  nameWithType: StandardCalendar.MonthsPerYear
+  fullName: Core.Systems.StandardCalendar.MonthsPerYear
+- uid: Core.Systems.ICalendar.MonthsPerYear
+  commentId: P:Core.Systems.ICalendar.MonthsPerYear
+  parent: Core.Systems.ICalendar
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_MonthsPerYear
+  name: MonthsPerYear
+  nameWithType: ICalendar.MonthsPerYear
+  fullName: Core.Systems.ICalendar.MonthsPerYear
+- uid: Core.Systems.StandardCalendar.DaysPerYear*
+  commentId: Overload:Core.Systems.StandardCalendar.DaysPerYear
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_DaysPerYear
+  name: DaysPerYear
+  nameWithType: StandardCalendar.DaysPerYear
+  fullName: Core.Systems.StandardCalendar.DaysPerYear
+- uid: Core.Systems.ICalendar.DaysPerYear
+  commentId: P:Core.Systems.ICalendar.DaysPerYear
+  parent: Core.Systems.ICalendar
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_DaysPerYear
+  name: DaysPerYear
+  nameWithType: ICalendar.DaysPerYear
+  fullName: Core.Systems.ICalendar.DaysPerYear
+- uid: Core.Systems.StandardCalendar.GetDaysInMonth*
+  commentId: Overload:Core.Systems.StandardCalendar.GetDaysInMonth
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_GetDaysInMonth_System_Int32_
+  name: GetDaysInMonth
+  nameWithType: StandardCalendar.GetDaysInMonth
+  fullName: Core.Systems.StandardCalendar.GetDaysInMonth
+- uid: Core.Systems.ICalendar.GetDaysInMonth(System.Int32)
+  commentId: M:Core.Systems.ICalendar.GetDaysInMonth(System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetDaysInMonth_System_Int32_
+  name: GetDaysInMonth(int)
+  nameWithType: ICalendar.GetDaysInMonth(int)
+  fullName: Core.Systems.ICalendar.GetDaysInMonth(int)
+  nameWithType.vb: ICalendar.GetDaysInMonth(Integer)
+  fullName.vb: Core.Systems.ICalendar.GetDaysInMonth(Integer)
+  name.vb: GetDaysInMonth(Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.GetDaysInMonth(System.Int32)
+    name: GetDaysInMonth
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetDaysInMonth_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.GetDaysInMonth(System.Int32)
+    name: GetDaysInMonth
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetDaysInMonth_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Systems.StandardCalendar.GetMonthName*
+  commentId: Overload:Core.Systems.StandardCalendar.GetMonthName
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_GetMonthName_System_Int32_
+  name: GetMonthName
+  nameWithType: StandardCalendar.GetMonthName
+  fullName: Core.Systems.StandardCalendar.GetMonthName
+- uid: Core.Systems.ICalendar.GetMonthName(System.Int32)
+  commentId: M:Core.Systems.ICalendar.GetMonthName(System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthName_System_Int32_
+  name: GetMonthName(int)
+  nameWithType: ICalendar.GetMonthName(int)
+  fullName: Core.Systems.ICalendar.GetMonthName(int)
+  nameWithType.vb: ICalendar.GetMonthName(Integer)
+  fullName.vb: Core.Systems.ICalendar.GetMonthName(Integer)
+  name.vb: GetMonthName(Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.GetMonthName(System.Int32)
+    name: GetMonthName
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthName_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.GetMonthName(System.Int32)
+    name: GetMonthName
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthName_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.StandardCalendar.GetMonthAbbreviation*
+  commentId: Overload:Core.Systems.StandardCalendar.GetMonthAbbreviation
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_GetMonthAbbreviation_System_Int32_
+  name: GetMonthAbbreviation
+  nameWithType: StandardCalendar.GetMonthAbbreviation
+  fullName: Core.Systems.StandardCalendar.GetMonthAbbreviation
+- uid: Core.Systems.ICalendar.GetMonthAbbreviation(System.Int32)
+  commentId: M:Core.Systems.ICalendar.GetMonthAbbreviation(System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthAbbreviation_System_Int32_
+  name: GetMonthAbbreviation(int)
+  nameWithType: ICalendar.GetMonthAbbreviation(int)
+  fullName: Core.Systems.ICalendar.GetMonthAbbreviation(int)
+  nameWithType.vb: ICalendar.GetMonthAbbreviation(Integer)
+  fullName.vb: Core.Systems.ICalendar.GetMonthAbbreviation(Integer)
+  name.vb: GetMonthAbbreviation(Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.GetMonthAbbreviation(System.Int32)
+    name: GetMonthAbbreviation
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthAbbreviation_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.GetMonthAbbreviation(System.Int32)
+    name: GetMonthAbbreviation
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_GetMonthAbbreviation_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Systems.StandardCalendar.FormatYear*
+  commentId: Overload:Core.Systems.StandardCalendar.FormatYear
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_FormatYear_System_Int32_
+  name: FormatYear
+  nameWithType: StandardCalendar.FormatYear
+  fullName: Core.Systems.StandardCalendar.FormatYear
+- uid: Core.Systems.ICalendar.FormatYear(System.Int32)
+  commentId: M:Core.Systems.ICalendar.FormatYear(System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatYear_System_Int32_
+  name: FormatYear(int)
+  nameWithType: ICalendar.FormatYear(int)
+  fullName: Core.Systems.ICalendar.FormatYear(int)
+  nameWithType.vb: ICalendar.FormatYear(Integer)
+  fullName.vb: Core.Systems.ICalendar.FormatYear(Integer)
+  name.vb: FormatYear(Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.FormatYear(System.Int32)
+    name: FormatYear
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatYear_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.FormatYear(System.Int32)
+    name: FormatYear
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatYear_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Systems.StandardCalendar.FormatDate*
+  commentId: Overload:Core.Systems.StandardCalendar.FormatDate
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_FormatDate_Core_Systems_GameTime_
+  name: FormatDate
+  nameWithType: StandardCalendar.FormatDate
+  fullName: Core.Systems.StandardCalendar.FormatDate
+- uid: Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+  commentId: M:Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+  parent: Core.Systems.ICalendar
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDate_Core_Systems_GameTime_
+  name: FormatDate(GameTime)
+  nameWithType: ICalendar.FormatDate(GameTime)
+  fullName: Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+    name: FormatDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDate_Core_Systems_GameTime_
+  - name: (
+  - uid: Core.Systems.GameTime
+    name: GameTime
+    href: Core.Systems.GameTime.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.FormatDate(Core.Systems.GameTime)
+    name: FormatDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDate_Core_Systems_GameTime_
+  - name: (
+  - uid: Core.Systems.GameTime
+    name: GameTime
+    href: Core.Systems.GameTime.html
+  - name: )
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  parent: Core.Systems
+  href: Core.Systems.GameTime.html
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+- uid: Core.Systems.StandardCalendar.FormatDateCompact*
+  commentId: Overload:Core.Systems.StandardCalendar.FormatDateCompact
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_FormatDateCompact_Core_Systems_GameTime_
+  name: FormatDateCompact
+  nameWithType: StandardCalendar.FormatDateCompact
+  fullName: Core.Systems.StandardCalendar.FormatDateCompact
+- uid: Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+  commentId: M:Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+  parent: Core.Systems.ICalendar
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDateCompact_Core_Systems_GameTime_
+  name: FormatDateCompact(GameTime)
+  nameWithType: ICalendar.FormatDateCompact(GameTime)
+  fullName: Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+    name: FormatDateCompact
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDateCompact_Core_Systems_GameTime_
+  - name: (
+  - uid: Core.Systems.GameTime
+    name: GameTime
+    href: Core.Systems.GameTime.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.FormatDateCompact(Core.Systems.GameTime)
+    name: FormatDateCompact
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_FormatDateCompact_Core_Systems_GameTime_
+  - name: (
+  - uid: Core.Systems.GameTime
+    name: GameTime
+    href: Core.Systems.GameTime.html
+  - name: )
+- uid: Core.Systems.StandardCalendar.IsValidDate*
+  commentId: Overload:Core.Systems.StandardCalendar.IsValidDate
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_IsValidDate_System_Int32_System_Int32_System_Int32_
+  name: IsValidDate
+  nameWithType: StandardCalendar.IsValidDate
+  fullName: Core.Systems.StandardCalendar.IsValidDate
+- uid: Core.Systems.ICalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.ICalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_IsValidDate_System_Int32_System_Int32_System_Int32_
+  name: IsValidDate(int, int, int)
+  nameWithType: ICalendar.IsValidDate(int, int, int)
+  fullName: Core.Systems.ICalendar.IsValidDate(int, int, int)
+  nameWithType.vb: ICalendar.IsValidDate(Integer, Integer, Integer)
+  fullName.vb: Core.Systems.ICalendar.IsValidDate(Integer, Integer, Integer)
+  name.vb: IsValidDate(Integer, Integer, Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+    name: IsValidDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_IsValidDate_System_Int32_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.IsValidDate(System.Int32,System.Int32,System.Int32)
+    name: IsValidDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_IsValidDate_System_Int32_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.StandardCalendar.ClampToValidDate*
+  commentId: Overload:Core.Systems.StandardCalendar.ClampToValidDate
+  href: Core.Systems.StandardCalendar.html#Core_Systems_StandardCalendar_ClampToValidDate_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: ClampToValidDate
+  nameWithType: StandardCalendar.ClampToValidDate
+  fullName: Core.Systems.StandardCalendar.ClampToValidDate
+- uid: Core.Systems.ICalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.ICalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.ICalendar
+  isExternal: true
+  href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_ClampToValidDate_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: ClampToValidDate(int, int, int, int)
+  nameWithType: ICalendar.ClampToValidDate(int, int, int, int)
+  fullName: Core.Systems.ICalendar.ClampToValidDate(int, int, int, int)
+  nameWithType.vb: ICalendar.ClampToValidDate(Integer, Integer, Integer, Integer)
+  fullName.vb: Core.Systems.ICalendar.ClampToValidDate(Integer, Integer, Integer, Integer)
+  name.vb: ClampToValidDate(Integer, Integer, Integer, Integer)
+  spec.csharp:
+  - uid: Core.Systems.ICalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+    name: ClampToValidDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_ClampToValidDate_System_Int32_System_Int32_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.ICalendar.ClampToValidDate(System.Int32,System.Int32,System.Int32,System.Int32)
+    name: ClampToValidDate
+    href: Core.Systems.ICalendar.html#Core_Systems_ICalendar_ClampToValidDate_System_Int32_System_Int32_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )

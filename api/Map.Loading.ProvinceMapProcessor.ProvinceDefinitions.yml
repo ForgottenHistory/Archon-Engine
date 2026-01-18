@@ -1,0 +1,200 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  id: ProvinceMapProcessor.ProvinceDefinitions
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.AllDefinitions
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.ProvinceDefinitions
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDefinitions
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 157
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Province definitions from CSV
+  example: []
+  syntax:
+    content: public struct ProvinceMapProcessor.ProvinceDefinitions
+    content.vb: Public Structure ProvinceMapProcessor.ProvinceDefinitions
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.AllDefinitions
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.AllDefinitions
+  id: AllDefinitions
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  langs:
+  - csharp
+  - vb
+  name: AllDefinitions
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions.AllDefinitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.AllDefinitions
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AllDefinitions
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 159
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public NativeArray<ProvinceMapProcessor.ProvinceDefinition> AllDefinitions
+    return:
+      type: Unity.Collections.NativeArray{Map.Loading.ProvinceMapProcessor.ProvinceDefinition}
+    content.vb: Public AllDefinitions As NativeArray(Of ProvinceMapProcessor.ProvinceDefinition)
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose
+  commentId: M:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose
+  id: Dispose
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions.Dispose()
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 161
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose*
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Unity.Collections.NativeArray{Map.Loading.ProvinceMapProcessor.ProvinceDefinition}
+  commentId: T:Unity.Collections.NativeArray{Map.Loading.ProvinceMapProcessor.ProvinceDefinition}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: NativeArray<ProvinceMapProcessor.ProvinceDefinition>
+  nameWithType: NativeArray<ProvinceMapProcessor.ProvinceDefinition>
+  fullName: Unity.Collections.NativeArray<Map.Loading.ProvinceMapProcessor.ProvinceDefinition>
+  nameWithType.vb: NativeArray(Of ProvinceMapProcessor.ProvinceDefinition)
+  fullName.vb: Unity.Collections.NativeArray(Of Map.Loading.ProvinceMapProcessor.ProvinceDefinition)
+  name.vb: NativeArray(Of ProvinceMapProcessor.ProvinceDefinition)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+    name: ProvinceDefinition
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+    name: ProvinceDefinition
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose
+  href: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.html#Map_Loading_ProvinceMapProcessor_ProvinceDefinitions_Dispose
+  name: Dispose
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions.Dispose
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.Dispose

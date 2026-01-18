@@ -1,0 +1,847 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitMovementQueue
+  commentId: T:Core.Units.UnitMovementQueue
+  id: UnitMovementQueue
+  parent: Core.Units
+  children:
+  - Core.Units.UnitMovementQueue.#ctor(Core.Units.UnitSystem,Core.EventBus)
+  - Core.Units.UnitMovementQueue.CancelMovement(System.UInt16)
+  - Core.Units.UnitMovementQueue.GetFullPath(System.UInt16)
+  - Core.Units.UnitMovementQueue.GetMovingUnitCount
+  - Core.Units.UnitMovementQueue.GetMovingUnits
+  - Core.Units.UnitMovementQueue.GetRemainingPath(System.UInt16)
+  - Core.Units.UnitMovementQueue.IsUnitMoving(System.UInt16)
+  - Core.Units.UnitMovementQueue.LoadState(System.IO.BinaryReader)
+  - Core.Units.UnitMovementQueue.ProcessDailyTick
+  - Core.Units.UnitMovementQueue.SaveState(System.IO.BinaryWriter)
+  - Core.Units.UnitMovementQueue.StartMovement(System.UInt16,System.UInt16,System.Int32,System.Collections.Generic.List{System.UInt16})
+  - Core.Units.UnitMovementQueue.TryGetMovementState(System.UInt16,Core.Units.UnitMovementQueue.MovementState@)
+  langs:
+  - csharp
+  - vb
+  name: UnitMovementQueue
+  nameWithType: UnitMovementQueue
+  fullName: Core.Units.UnitMovementQueue
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitMovementQueue
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Tracks units that are currently in transit between provinces.
+
+    Implements EU4-style time-based movement: units take X days to move.
+
+
+    DESIGN:
+
+    - Dictionary tracks moving units: unitID → MovementState
+
+    - Each day, decrement daysRemaining for all moving units
+
+    - When daysRemaining reaches 0, move unit to destination
+
+    - Units can cancel movement mid-transit (return to origin)
+
+
+    PERFORMANCE:
+
+    - Sparse storage: Only tracks moving units (not all units)
+
+    - Daily tick processes O(n) where n = units currently moving
+
+    - Typically 10-100 units moving at once (not 10k)
+
+    - ZERO ALLOCATIONS: Pre-allocated buffers for daily tick processing
+  example: []
+  syntax:
+    content: public class UnitMovementQueue
+    content.vb: Public Class UnitMovementQueue
+  inheritance:
+  - System.Object
+- uid: Core.Units.UnitMovementQueue.#ctor(Core.Units.UnitSystem,Core.EventBus)
+  commentId: M:Core.Units.UnitMovementQueue.#ctor(Core.Units.UnitSystem,Core.EventBus)
+  id: '#ctor(Core.Units.UnitSystem,Core.EventBus)'
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: UnitMovementQueue(UnitSystem, EventBus)
+  nameWithType: UnitMovementQueue.UnitMovementQueue(UnitSystem, EventBus)
+  fullName: Core.Units.UnitMovementQueue.UnitMovementQueue(Core.Units.UnitSystem, Core.EventBus)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public UnitMovementQueue(UnitSystem unitSystem, EventBus eventBus = null)
+    parameters:
+    - id: unitSystem
+      type: Core.Units.UnitSystem
+    - id: eventBus
+      type: Core.EventBus
+    content.vb: Public Sub New(unitSystem As UnitSystem, eventBus As EventBus = Nothing)
+  overload: Core.Units.UnitMovementQueue.#ctor*
+  nameWithType.vb: UnitMovementQueue.New(UnitSystem, EventBus)
+  fullName.vb: Core.Units.UnitMovementQueue.New(Core.Units.UnitSystem, Core.EventBus)
+  name.vb: New(UnitSystem, EventBus)
+- uid: Core.Units.UnitMovementQueue.StartMovement(System.UInt16,System.UInt16,System.Int32,System.Collections.Generic.List{System.UInt16})
+  commentId: M:Core.Units.UnitMovementQueue.StartMovement(System.UInt16,System.UInt16,System.Int32,System.Collections.Generic.List{System.UInt16})
+  id: StartMovement(System.UInt16,System.UInt16,System.Int32,System.Collections.Generic.List{System.UInt16})
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: StartMovement(ushort, ushort, int, List<ushort>)
+  nameWithType: UnitMovementQueue.StartMovement(ushort, ushort, int, List<ushort>)
+  fullName: Core.Units.UnitMovementQueue.StartMovement(ushort, ushort, int, System.Collections.Generic.List<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartMovement
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Start a unit moving toward a destination
+
+    Supports multi-hop paths for pathfinding
+  example: []
+  syntax:
+    content: public void StartMovement(ushort unitID, ushort destinationProvinceID, int movementDays, List<ushort> fullPath = null)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+      description: Unit to move
+    - id: destinationProvinceID
+      type: System.UInt16
+      description: Next waypoint
+    - id: movementDays
+      type: System.Int32
+      description: Days to reach next waypoint
+    - id: fullPath
+      type: System.Collections.Generic.List{System.UInt16}
+      description: 'Optional: Full path including all waypoints (for multi-hop movement)'
+    content.vb: Public Sub StartMovement(unitID As UShort, destinationProvinceID As UShort, movementDays As Integer, fullPath As List(Of UShort) = Nothing)
+  overload: Core.Units.UnitMovementQueue.StartMovement*
+  nameWithType.vb: UnitMovementQueue.StartMovement(UShort, UShort, Integer, List(Of UShort))
+  fullName.vb: Core.Units.UnitMovementQueue.StartMovement(UShort, UShort, Integer, System.Collections.Generic.List(Of UShort))
+  name.vb: StartMovement(UShort, UShort, Integer, List(Of UShort))
+- uid: Core.Units.UnitMovementQueue.CancelMovement(System.UInt16)
+  commentId: M:Core.Units.UnitMovementQueue.CancelMovement(System.UInt16)
+  id: CancelMovement(System.UInt16)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: CancelMovement(ushort)
+  nameWithType: UnitMovementQueue.CancelMovement(ushort)
+  fullName: Core.Units.UnitMovementQueue.CancelMovement(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CancelMovement
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 147
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Cancel a unit's movement (unit stays at origin)
+  example: []
+  syntax:
+    content: public void CancelMovement(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    content.vb: Public Sub CancelMovement(unitID As UShort)
+  overload: Core.Units.UnitMovementQueue.CancelMovement*
+  nameWithType.vb: UnitMovementQueue.CancelMovement(UShort)
+  fullName.vb: Core.Units.UnitMovementQueue.CancelMovement(UShort)
+  name.vb: CancelMovement(UShort)
+- uid: Core.Units.UnitMovementQueue.ProcessDailyTick
+  commentId: M:Core.Units.UnitMovementQueue.ProcessDailyTick
+  id: ProcessDailyTick
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: ProcessDailyTick()
+  nameWithType: UnitMovementQueue.ProcessDailyTick()
+  fullName: Core.Units.UnitMovementQueue.ProcessDailyTick()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProcessDailyTick
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Process daily tick - advance all movements
+
+    Called by TimeManager on daily tick
+
+    ZERO ALLOCATIONS: Uses pre-allocated buffers
+  example: []
+  syntax:
+    content: public void ProcessDailyTick()
+    content.vb: Public Sub ProcessDailyTick()
+  overload: Core.Units.UnitMovementQueue.ProcessDailyTick*
+- uid: Core.Units.UnitMovementQueue.IsUnitMoving(System.UInt16)
+  commentId: M:Core.Units.UnitMovementQueue.IsUnitMoving(System.UInt16)
+  id: IsUnitMoving(System.UInt16)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: IsUnitMoving(ushort)
+  nameWithType: UnitMovementQueue.IsUnitMoving(ushort)
+  fullName: Core.Units.UnitMovementQueue.IsUnitMoving(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsUnitMoving
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 275
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Check if a unit is currently moving
+  example: []
+  syntax:
+    content: public bool IsUnitMoving(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsUnitMoving(unitID As UShort) As Boolean
+  overload: Core.Units.UnitMovementQueue.IsUnitMoving*
+  nameWithType.vb: UnitMovementQueue.IsUnitMoving(UShort)
+  fullName.vb: Core.Units.UnitMovementQueue.IsUnitMoving(UShort)
+  name.vb: IsUnitMoving(UShort)
+- uid: Core.Units.UnitMovementQueue.TryGetMovementState(System.UInt16,Core.Units.UnitMovementQueue.MovementState@)
+  commentId: M:Core.Units.UnitMovementQueue.TryGetMovementState(System.UInt16,Core.Units.UnitMovementQueue.MovementState@)
+  id: TryGetMovementState(System.UInt16,Core.Units.UnitMovementQueue.MovementState@)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: TryGetMovementState(ushort, out MovementState)
+  nameWithType: UnitMovementQueue.TryGetMovementState(ushort, out UnitMovementQueue.MovementState)
+  fullName: Core.Units.UnitMovementQueue.TryGetMovementState(ushort, out Core.Units.UnitMovementQueue.MovementState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetMovementState
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 281
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get movement state for a unit (returns false if not moving)
+  example: []
+  syntax:
+    content: public bool TryGetMovementState(ushort unitID, out UnitMovementQueue.MovementState state)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: state
+      type: Core.Units.UnitMovementQueue.MovementState
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetMovementState(unitID As UShort, state As UnitMovementQueue.MovementState) As Boolean
+  overload: Core.Units.UnitMovementQueue.TryGetMovementState*
+  nameWithType.vb: UnitMovementQueue.TryGetMovementState(UShort, UnitMovementQueue.MovementState)
+  fullName.vb: Core.Units.UnitMovementQueue.TryGetMovementState(UShort, Core.Units.UnitMovementQueue.MovementState)
+  name.vb: TryGetMovementState(UShort, MovementState)
+- uid: Core.Units.UnitMovementQueue.GetMovingUnitCount
+  commentId: M:Core.Units.UnitMovementQueue.GetMovingUnitCount
+  id: GetMovingUnitCount
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: GetMovingUnitCount()
+  nameWithType: UnitMovementQueue.GetMovingUnitCount()
+  fullName: Core.Units.UnitMovementQueue.GetMovingUnitCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMovingUnitCount
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get count of units currently moving
+  example: []
+  syntax:
+    content: public int GetMovingUnitCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetMovingUnitCount() As Integer
+  overload: Core.Units.UnitMovementQueue.GetMovingUnitCount*
+- uid: Core.Units.UnitMovementQueue.GetMovingUnits
+  commentId: M:Core.Units.UnitMovementQueue.GetMovingUnits
+  id: GetMovingUnits
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: GetMovingUnits()
+  nameWithType: UnitMovementQueue.GetMovingUnits()
+  fullName: Core.Units.UnitMovementQueue.GetMovingUnits()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMovingUnits
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 290
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get all moving unit IDs
+  example: []
+  syntax:
+    content: public IEnumerable<ushort> GetMovingUnits()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    content.vb: Public Function GetMovingUnits() As IEnumerable(Of UShort)
+  overload: Core.Units.UnitMovementQueue.GetMovingUnits*
+- uid: Core.Units.UnitMovementQueue.GetFullPath(System.UInt16)
+  commentId: M:Core.Units.UnitMovementQueue.GetFullPath(System.UInt16)
+  id: GetFullPath(System.UInt16)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: GetFullPath(ushort)
+  nameWithType: UnitMovementQueue.GetFullPath(ushort)
+  fullName: Core.Units.UnitMovementQueue.GetFullPath(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFullPath
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 296
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Get full movement path for visualization (current position + all waypoints)
+
+    Returns empty list if unit is not moving
+  example: []
+  syntax:
+    content: public List<ushort> GetFullPath(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetFullPath(unitID As UShort) As List(Of UShort)
+  overload: Core.Units.UnitMovementQueue.GetFullPath*
+  nameWithType.vb: UnitMovementQueue.GetFullPath(UShort)
+  fullName.vb: Core.Units.UnitMovementQueue.GetFullPath(UShort)
+  name.vb: GetFullPath(UShort)
+- uid: Core.Units.UnitMovementQueue.GetRemainingPath(System.UInt16)
+  commentId: M:Core.Units.UnitMovementQueue.GetRemainingPath(System.UInt16)
+  id: GetRemainingPath(System.UInt16)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: GetRemainingPath(ushort)
+  nameWithType: UnitMovementQueue.GetRemainingPath(ushort)
+  fullName: Core.Units.UnitMovementQueue.GetRemainingPath(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRemainingPath
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 324
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get remaining path for a unit (for UI visualization)
+  example: []
+  syntax:
+    content: public List<ushort> GetRemainingPath(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetRemainingPath(unitID As UShort) As List(Of UShort)
+  overload: Core.Units.UnitMovementQueue.GetRemainingPath*
+  nameWithType.vb: UnitMovementQueue.GetRemainingPath(UShort)
+  fullName.vb: Core.Units.UnitMovementQueue.GetRemainingPath(UShort)
+  name.vb: GetRemainingPath(UShort)
+- uid: Core.Units.UnitMovementQueue.SaveState(System.IO.BinaryWriter)
+  commentId: M:Core.Units.UnitMovementQueue.SaveState(System.IO.BinaryWriter)
+  id: SaveState(System.IO.BinaryWriter)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: SaveState(BinaryWriter)
+  nameWithType: UnitMovementQueue.SaveState(BinaryWriter)
+  fullName: Core.Units.UnitMovementQueue.SaveState(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveState
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 345
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public void SaveState(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    content.vb: Public Sub SaveState(writer As BinaryWriter)
+  overload: Core.Units.UnitMovementQueue.SaveState*
+- uid: Core.Units.UnitMovementQueue.LoadState(System.IO.BinaryReader)
+  commentId: M:Core.Units.UnitMovementQueue.LoadState(System.IO.BinaryReader)
+  id: LoadState(System.IO.BinaryReader)
+  parent: Core.Units.UnitMovementQueue
+  langs:
+  - csharp
+  - vb
+  name: LoadState(BinaryReader)
+  nameWithType: UnitMovementQueue.LoadState(BinaryReader)
+  fullName: Core.Units.UnitMovementQueue.LoadState(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadState
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 373
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public void LoadState(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    content.vb: Public Sub LoadState(reader As BinaryReader)
+  overload: Core.Units.UnitMovementQueue.LoadState*
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitMovementQueue.#ctor*
+  commentId: Overload:Core.Units.UnitMovementQueue.#ctor
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue__ctor_Core_Units_UnitSystem_Core_EventBus_
+  name: UnitMovementQueue
+  nameWithType: UnitMovementQueue.UnitMovementQueue
+  fullName: Core.Units.UnitMovementQueue.UnitMovementQueue
+  nameWithType.vb: UnitMovementQueue.New
+  fullName.vb: Core.Units.UnitMovementQueue.New
+  name.vb: New
+- uid: Core.Units.UnitSystem
+  commentId: T:Core.Units.UnitSystem
+  parent: Core.Units
+  href: Core.Units.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: Core.Units.UnitSystem
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Units.UnitMovementQueue.StartMovement*
+  commentId: Overload:Core.Units.UnitMovementQueue.StartMovement
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_StartMovement_System_UInt16_System_UInt16_System_Int32_System_Collections_Generic_List_System_UInt16__
+  name: StartMovement
+  nameWithType: UnitMovementQueue.StartMovement
+  fullName: Core.Units.UnitMovementQueue.StartMovement
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Units.UnitMovementQueue.CancelMovement*
+  commentId: Overload:Core.Units.UnitMovementQueue.CancelMovement
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_CancelMovement_System_UInt16_
+  name: CancelMovement
+  nameWithType: UnitMovementQueue.CancelMovement
+  fullName: Core.Units.UnitMovementQueue.CancelMovement
+- uid: Core.Units.UnitMovementQueue.ProcessDailyTick*
+  commentId: Overload:Core.Units.UnitMovementQueue.ProcessDailyTick
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_ProcessDailyTick
+  name: ProcessDailyTick
+  nameWithType: UnitMovementQueue.ProcessDailyTick
+  fullName: Core.Units.UnitMovementQueue.ProcessDailyTick
+- uid: Core.Units.UnitMovementQueue.IsUnitMoving*
+  commentId: Overload:Core.Units.UnitMovementQueue.IsUnitMoving
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_IsUnitMoving_System_UInt16_
+  name: IsUnitMoving
+  nameWithType: UnitMovementQueue.IsUnitMoving
+  fullName: Core.Units.UnitMovementQueue.IsUnitMoving
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Units.UnitMovementQueue.TryGetMovementState*
+  commentId: Overload:Core.Units.UnitMovementQueue.TryGetMovementState
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_TryGetMovementState_System_UInt16_Core_Units_UnitMovementQueue_MovementState__
+  name: TryGetMovementState
+  nameWithType: UnitMovementQueue.TryGetMovementState
+  fullName: Core.Units.UnitMovementQueue.TryGetMovementState
+- uid: Core.Units.UnitMovementQueue.MovementState
+  commentId: T:Core.Units.UnitMovementQueue.MovementState
+  parent: Core.Units
+  href: Core.Units.UnitMovementQueue.html
+  name: UnitMovementQueue.MovementState
+  nameWithType: UnitMovementQueue.MovementState
+  fullName: Core.Units.UnitMovementQueue.MovementState
+  spec.csharp:
+  - uid: Core.Units.UnitMovementQueue
+    name: UnitMovementQueue
+    href: Core.Units.UnitMovementQueue.html
+  - name: .
+  - uid: Core.Units.UnitMovementQueue.MovementState
+    name: MovementState
+    href: Core.Units.UnitMovementQueue.MovementState.html
+  spec.vb:
+  - uid: Core.Units.UnitMovementQueue
+    name: UnitMovementQueue
+    href: Core.Units.UnitMovementQueue.html
+  - name: .
+  - uid: Core.Units.UnitMovementQueue.MovementState
+    name: MovementState
+    href: Core.Units.UnitMovementQueue.MovementState.html
+- uid: Core.Units.UnitMovementQueue.GetMovingUnitCount*
+  commentId: Overload:Core.Units.UnitMovementQueue.GetMovingUnitCount
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_GetMovingUnitCount
+  name: GetMovingUnitCount
+  nameWithType: UnitMovementQueue.GetMovingUnitCount
+  fullName: Core.Units.UnitMovementQueue.GetMovingUnitCount
+- uid: Core.Units.UnitMovementQueue.GetMovingUnits*
+  commentId: Overload:Core.Units.UnitMovementQueue.GetMovingUnits
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_GetMovingUnits
+  name: GetMovingUnits
+  nameWithType: UnitMovementQueue.GetMovingUnits
+  fullName: Core.Units.UnitMovementQueue.GetMovingUnits
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Units.UnitMovementQueue.GetFullPath*
+  commentId: Overload:Core.Units.UnitMovementQueue.GetFullPath
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_GetFullPath_System_UInt16_
+  name: GetFullPath
+  nameWithType: UnitMovementQueue.GetFullPath
+  fullName: Core.Units.UnitMovementQueue.GetFullPath
+- uid: Core.Units.UnitMovementQueue.GetRemainingPath*
+  commentId: Overload:Core.Units.UnitMovementQueue.GetRemainingPath
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_GetRemainingPath_System_UInt16_
+  name: GetRemainingPath
+  nameWithType: UnitMovementQueue.GetRemainingPath
+  fullName: Core.Units.UnitMovementQueue.GetRemainingPath
+- uid: Core.Units.UnitMovementQueue.SaveState*
+  commentId: Overload:Core.Units.UnitMovementQueue.SaveState
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_SaveState_System_IO_BinaryWriter_
+  name: SaveState
+  nameWithType: UnitMovementQueue.SaveState
+  fullName: Core.Units.UnitMovementQueue.SaveState
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Units.UnitMovementQueue.LoadState*
+  commentId: Overload:Core.Units.UnitMovementQueue.LoadState
+  href: Core.Units.UnitMovementQueue.html#Core_Units_UnitMovementQueue_LoadState_System_IO_BinaryReader_
+  name: LoadState
+  nameWithType: UnitMovementQueue.LoadState
+  fullName: Core.Units.UnitMovementQueue.LoadState
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader

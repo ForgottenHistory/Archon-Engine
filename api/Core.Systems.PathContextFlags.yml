@@ -1,0 +1,213 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.PathContextFlags
+  commentId: T:Core.Systems.PathContextFlags
+  id: PathContextFlags
+  parent: Core.Systems
+  children:
+  - Core.Systems.PathContextFlags.AvoidCombat
+  - Core.Systems.PathContextFlags.IgnoreEnemyTerritory
+  - Core.Systems.PathContextFlags.IgnoreImpassable
+  - Core.Systems.PathContextFlags.None
+  - Core.Systems.PathContextFlags.PreferRoads
+  langs:
+  - csharp
+  - vb
+  name: PathContextFlags
+  nameWithType: PathContextFlags
+  fullName: Core.Systems.PathContextFlags
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathContextFlags
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Flags for special pathfinding behavior.
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum PathContextFlags
+    content.vb: >-
+      <Flags>
+
+      Public Enum PathContextFlags
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Core.Systems.PathContextFlags.None
+  commentId: F:Core.Systems.PathContextFlags.None
+  id: None
+  parent: Core.Systems.PathContextFlags
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: PathContextFlags.None
+  fullName: Core.Systems.PathContextFlags.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: None = 0
+    return:
+      type: Core.Systems.PathContextFlags
+- uid: Core.Systems.PathContextFlags.IgnoreEnemyTerritory
+  commentId: F:Core.Systems.PathContextFlags.IgnoreEnemyTerritory
+  id: IgnoreEnemyTerritory
+  parent: Core.Systems.PathContextFlags
+  langs:
+  - csharp
+  - vb
+  name: IgnoreEnemyTerritory
+  nameWithType: PathContextFlags.IgnoreEnemyTerritory
+  fullName: Core.Systems.PathContextFlags.IgnoreEnemyTerritory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IgnoreEnemyTerritory
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Ignore enemy territory penalties
+  example: []
+  syntax:
+    content: IgnoreEnemyTerritory = 1
+    return:
+      type: Core.Systems.PathContextFlags
+- uid: Core.Systems.PathContextFlags.IgnoreImpassable
+  commentId: F:Core.Systems.PathContextFlags.IgnoreImpassable
+  id: IgnoreImpassable
+  parent: Core.Systems.PathContextFlags
+  langs:
+  - csharp
+  - vb
+  name: IgnoreImpassable
+  nameWithType: PathContextFlags.IgnoreImpassable
+  fullName: Core.Systems.PathContextFlags.IgnoreImpassable
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IgnoreImpassable
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Allow paths through impassable terrain (for debugging)
+  example: []
+  syntax:
+    content: IgnoreImpassable = 2
+    return:
+      type: Core.Systems.PathContextFlags
+- uid: Core.Systems.PathContextFlags.PreferRoads
+  commentId: F:Core.Systems.PathContextFlags.PreferRoads
+  id: PreferRoads
+  parent: Core.Systems.PathContextFlags
+  langs:
+  - csharp
+  - vb
+  name: PreferRoads
+  nameWithType: PathContextFlags.PreferRoads
+  fullName: Core.Systems.PathContextFlags.PreferRoads
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PreferRoads
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Prefer roads/infrastructure
+  example: []
+  syntax:
+    content: PreferRoads = 4
+    return:
+      type: Core.Systems.PathContextFlags
+- uid: Core.Systems.PathContextFlags.AvoidCombat
+  commentId: F:Core.Systems.PathContextFlags.AvoidCombat
+  id: AvoidCombat
+  parent: Core.Systems.PathContextFlags
+  langs:
+  - csharp
+  - vb
+  name: AvoidCombat
+  nameWithType: PathContextFlags.AvoidCombat
+  fullName: Core.Systems.PathContextFlags.AvoidCombat
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AvoidCombat
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Avoid combat (higher cost for provinces with enemy units)
+  example: []
+  syntax:
+    content: AvoidCombat = 8
+    return:
+      type: Core.Systems.PathContextFlags
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Systems.PathContextFlags
+  commentId: T:Core.Systems.PathContextFlags
+  parent: Core.Systems
+  href: Core.Systems.PathContextFlags.html
+  name: PathContextFlags
+  nameWithType: PathContextFlags
+  fullName: Core.Systems.PathContextFlags

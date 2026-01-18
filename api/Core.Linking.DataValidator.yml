@@ -1,0 +1,442 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Linking.DataValidator
+  commentId: T:Core.Linking.DataValidator
+  id: DataValidator
+  parent: Core.Linking
+  children:
+  - Core.Linking.DataValidator.#ctor(Core.Registries.GameRegistries)
+  - Core.Linking.DataValidator.GetErrors
+  - Core.Linking.DataValidator.GetValidationSummary
+  - Core.Linking.DataValidator.GetWarnings
+  - Core.Linking.DataValidator.SetMapOnlyMode(System.Boolean)
+  - Core.Linking.DataValidator.ValidateGameData
+  langs:
+  - csharp
+  - vb
+  name: DataValidator
+  nameWithType: DataValidator
+  fullName: Core.Linking.DataValidator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DataValidator
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: >-
+    Validates data integrity after all references are resolved
+
+    Ensures the game data is consistent and playable
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: public class DataValidator
+    content.vb: Public Class DataValidator
+  inheritance:
+  - System.Object
+- uid: Core.Linking.DataValidator.#ctor(Core.Registries.GameRegistries)
+  commentId: M:Core.Linking.DataValidator.#ctor(Core.Registries.GameRegistries)
+  id: '#ctor(Core.Registries.GameRegistries)'
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: DataValidator(GameRegistries)
+  nameWithType: DataValidator.DataValidator(GameRegistries)
+  fullName: Core.Linking.DataValidator.DataValidator(Core.Registries.GameRegistries)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  syntax:
+    content: public DataValidator(GameRegistries registries)
+    parameters:
+    - id: registries
+      type: Core.Registries.GameRegistries
+    content.vb: Public Sub New(registries As GameRegistries)
+  overload: Core.Linking.DataValidator.#ctor*
+  nameWithType.vb: DataValidator.New(GameRegistries)
+  fullName.vb: Core.Linking.DataValidator.New(Core.Registries.GameRegistries)
+  name.vb: New(GameRegistries)
+- uid: Core.Linking.DataValidator.SetMapOnlyMode(System.Boolean)
+  commentId: M:Core.Linking.DataValidator.SetMapOnlyMode(System.Boolean)
+  id: SetMapOnlyMode(System.Boolean)
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: SetMapOnlyMode(bool)
+  nameWithType: DataValidator.SetMapOnlyMode(bool)
+  fullName: Core.Linking.DataValidator.SetMapOnlyMode(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMapOnlyMode
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Enable map-only mode - treats missing data as warnings instead of errors
+  example: []
+  syntax:
+    content: public void SetMapOnlyMode(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: Public Sub SetMapOnlyMode(enabled As Boolean)
+  overload: Core.Linking.DataValidator.SetMapOnlyMode*
+  nameWithType.vb: DataValidator.SetMapOnlyMode(Boolean)
+  fullName.vb: Core.Linking.DataValidator.SetMapOnlyMode(Boolean)
+  name.vb: SetMapOnlyMode(Boolean)
+- uid: Core.Linking.DataValidator.ValidateGameData
+  commentId: M:Core.Linking.DataValidator.ValidateGameData
+  id: ValidateGameData
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: ValidateGameData()
+  nameWithType: DataValidator.ValidateGameData()
+  fullName: Core.Linking.DataValidator.ValidateGameData()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateGameData
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Validate all game data for consistency and playability
+  example: []
+  syntax:
+    content: public bool ValidateGameData()
+    return:
+      type: System.Boolean
+    content.vb: Public Function ValidateGameData() As Boolean
+  overload: Core.Linking.DataValidator.ValidateGameData*
+- uid: Core.Linking.DataValidator.GetErrors
+  commentId: M:Core.Linking.DataValidator.GetErrors
+  id: GetErrors
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: GetErrors()
+  nameWithType: DataValidator.GetErrors()
+  fullName: Core.Linking.DataValidator.GetErrors()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetErrors
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 303
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Get all validation errors
+  example: []
+  syntax:
+    content: public IReadOnlyList<ValidationError> GetErrors()
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Core.Linking.ValidationError}
+    content.vb: Public Function GetErrors() As IReadOnlyList(Of ValidationError)
+  overload: Core.Linking.DataValidator.GetErrors*
+- uid: Core.Linking.DataValidator.GetWarnings
+  commentId: M:Core.Linking.DataValidator.GetWarnings
+  id: GetWarnings
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: GetWarnings()
+  nameWithType: DataValidator.GetWarnings()
+  fullName: Core.Linking.DataValidator.GetWarnings()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetWarnings
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 308
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Get all validation warnings
+  example: []
+  syntax:
+    content: public IReadOnlyList<ValidationError> GetWarnings()
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Core.Linking.ValidationError}
+    content.vb: Public Function GetWarnings() As IReadOnlyList(Of ValidationError)
+  overload: Core.Linking.DataValidator.GetWarnings*
+- uid: Core.Linking.DataValidator.GetValidationSummary
+  commentId: M:Core.Linking.DataValidator.GetValidationSummary
+  id: GetValidationSummary
+  parent: Core.Linking.DataValidator
+  langs:
+  - csharp
+  - vb
+  name: GetValidationSummary()
+  nameWithType: DataValidator.GetValidationSummary()
+  fullName: Core.Linking.DataValidator.GetValidationSummary()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValidationSummary
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Get validation summary
+  example: []
+  syntax:
+    content: public string GetValidationSummary()
+    return:
+      type: System.String
+    content.vb: Public Function GetValidationSummary() As String
+  overload: Core.Linking.DataValidator.GetValidationSummary*
+references:
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  href: Core.html
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Linking.DataValidator.#ctor*
+  commentId: Overload:Core.Linking.DataValidator.#ctor
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator__ctor_Core_Registries_GameRegistries_
+  name: DataValidator
+  nameWithType: DataValidator.DataValidator
+  fullName: Core.Linking.DataValidator.DataValidator
+  nameWithType.vb: DataValidator.New
+  fullName.vb: Core.Linking.DataValidator.New
+  name.vb: New
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: Core.Linking.DataValidator.SetMapOnlyMode*
+  commentId: Overload:Core.Linking.DataValidator.SetMapOnlyMode
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator_SetMapOnlyMode_System_Boolean_
+  name: SetMapOnlyMode
+  nameWithType: DataValidator.SetMapOnlyMode
+  fullName: Core.Linking.DataValidator.SetMapOnlyMode
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Linking.DataValidator.ValidateGameData*
+  commentId: Overload:Core.Linking.DataValidator.ValidateGameData
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator_ValidateGameData
+  name: ValidateGameData
+  nameWithType: DataValidator.ValidateGameData
+  fullName: Core.Linking.DataValidator.ValidateGameData
+- uid: Core.Linking.DataValidator.GetErrors*
+  commentId: Overload:Core.Linking.DataValidator.GetErrors
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator_GetErrors
+  name: GetErrors
+  nameWithType: DataValidator.GetErrors
+  fullName: Core.Linking.DataValidator.GetErrors
+- uid: System.Collections.Generic.IReadOnlyList{Core.Linking.ValidationError}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Core.Linking.ValidationError}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: Core.Linking.ValidationError.html
+  name: IReadOnlyList<ValidationError>
+  nameWithType: IReadOnlyList<ValidationError>
+  fullName: System.Collections.Generic.IReadOnlyList<Core.Linking.ValidationError>
+  nameWithType.vb: IReadOnlyList(Of ValidationError)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Core.Linking.ValidationError)
+  name.vb: IReadOnlyList(Of ValidationError)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: Core.Linking.ValidationError
+    name: ValidationError
+    href: Core.Linking.ValidationError.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Linking.ValidationError
+    name: ValidationError
+    href: Core.Linking.ValidationError.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Linking.DataValidator.GetWarnings*
+  commentId: Overload:Core.Linking.DataValidator.GetWarnings
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator_GetWarnings
+  name: GetWarnings
+  nameWithType: DataValidator.GetWarnings
+  fullName: Core.Linking.DataValidator.GetWarnings
+- uid: Core.Linking.DataValidator.GetValidationSummary*
+  commentId: Overload:Core.Linking.DataValidator.GetValidationSummary
+  href: Core.Linking.DataValidator.html#Core_Linking_DataValidator_GetValidationSummary
+  name: GetValidationSummary
+  nameWithType: DataValidator.GetValidationSummary
+  fullName: Core.Linking.DataValidator.GetValidationSummary
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

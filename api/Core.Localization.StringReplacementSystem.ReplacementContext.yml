@@ -1,0 +1,392 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext
+  commentId: T:Core.Localization.StringReplacementSystem.ReplacementContext
+  id: StringReplacementSystem.ReplacementContext
+  parent: Core.Localization
+  children:
+  - Core.Localization.StringReplacementSystem.ReplacementContext.AllowNestedReplacements
+  - Core.Localization.StringReplacementSystem.ReplacementContext.Conditions
+  - Core.Localization.StringReplacementSystem.ReplacementContext.CurrentLanguage
+  - Core.Localization.StringReplacementSystem.ReplacementContext.Dispose
+  - Core.Localization.StringReplacementSystem.ReplacementContext.MaxReplacementDepth
+  - Core.Localization.StringReplacementSystem.ReplacementContext.Parameters
+  langs:
+  - csharp
+  - vb
+  name: StringReplacementSystem.ReplacementContext
+  nameWithType: StringReplacementSystem.ReplacementContext
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReplacementContext
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Replacement context for complex operations
+  example: []
+  syntax:
+    content: public struct StringReplacementSystem.ReplacementContext
+    content.vb: Public Structure StringReplacementSystem.ReplacementContext
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.Parameters
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementContext.Parameters
+  id: Parameters
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: Parameters
+  nameWithType: StringReplacementSystem.ReplacementContext.Parameters
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.Parameters
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Parameters
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeHashMap<uint, FixedString512Bytes> Parameters
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+    content.vb: Public Parameters As NativeHashMap(Of UInteger, FixedString512Bytes)
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.Conditions
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementContext.Conditions
+  id: Conditions
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: Conditions
+  nameWithType: StringReplacementSystem.ReplacementContext.Conditions
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.Conditions
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Conditions
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeHashMap<uint, bool> Conditions
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt32,System.Boolean}
+    content.vb: Public Conditions As NativeHashMap(Of UInteger, Boolean)
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.CurrentLanguage
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementContext.CurrentLanguage
+  id: CurrentLanguage
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: CurrentLanguage
+  nameWithType: StringReplacementSystem.ReplacementContext.CurrentLanguage
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.CurrentLanguage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentLanguage
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString64Bytes CurrentLanguage
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public CurrentLanguage As FixedString64Bytes
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.AllowNestedReplacements
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementContext.AllowNestedReplacements
+  id: AllowNestedReplacements
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: AllowNestedReplacements
+  nameWithType: StringReplacementSystem.ReplacementContext.AllowNestedReplacements
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.AllowNestedReplacements
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AllowNestedReplacements
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool AllowNestedReplacements
+    return:
+      type: System.Boolean
+    content.vb: Public AllowNestedReplacements As Boolean
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.MaxReplacementDepth
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementContext.MaxReplacementDepth
+  id: MaxReplacementDepth
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: MaxReplacementDepth
+  nameWithType: StringReplacementSystem.ReplacementContext.MaxReplacementDepth
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.MaxReplacementDepth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxReplacementDepth
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int MaxReplacementDepth
+    return:
+      type: System.Int32
+    content.vb: Public MaxReplacementDepth As Integer
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.Dispose
+  commentId: M:Core.Localization.StringReplacementSystem.ReplacementContext.Dispose
+  id: Dispose
+  parent: Core.Localization.StringReplacementSystem.ReplacementContext
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: StringReplacementSystem.ReplacementContext.Dispose()
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Localization.StringReplacementSystem.ReplacementContext.Dispose*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt32,Unity.Collections.FixedString512Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<uint, FixedString512Bytes>
+  nameWithType: NativeHashMap<uint, FixedString512Bytes>
+  fullName: Unity.Collections.NativeHashMap<uint, Unity.Collections.FixedString512Bytes>
+  nameWithType.vb: NativeHashMap(Of UInteger, FixedString512Bytes)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UInteger, Unity.Collections.FixedString512Bytes)
+  name.vb: NativeHashMap(Of UInteger, FixedString512Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeHashMap{System.UInt32,System.Boolean}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt32,System.Boolean}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<uint, bool>
+  nameWithType: NativeHashMap<uint, bool>
+  fullName: Unity.Collections.NativeHashMap<uint, bool>
+  nameWithType.vb: NativeHashMap(Of UInteger, Boolean)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UInteger, Boolean)
+  name.vb: NativeHashMap(Of UInteger, Boolean)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext.Dispose*
+  commentId: Overload:Core.Localization.StringReplacementSystem.ReplacementContext.Dispose
+  href: Core.Localization.StringReplacementSystem.ReplacementContext.html#Core_Localization_StringReplacementSystem_ReplacementContext_Dispose
+  name: Dispose
+  nameWithType: StringReplacementSystem.ReplacementContext.Dispose
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext.Dispose

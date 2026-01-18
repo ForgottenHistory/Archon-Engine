@@ -1,0 +1,406 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPColorCollectionJob
+  commentId: T:Map.Loading.Images.BMPColorCollectionJob
+  id: BMPColorCollectionJob
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPColorCollectionJob.Execute(System.Int32,System.Int32)
+  - Map.Loading.Images.BMPColorCollectionJob.Height
+  - Map.Loading.Images.BMPColorCollectionJob.PixelData
+  - Map.Loading.Images.BMPColorCollectionJob.ResultCounts
+  - Map.Loading.Images.BMPColorCollectionJob.TempResults
+  - Map.Loading.Images.BMPColorCollectionJob.Width
+  langs:
+  - csharp
+  - vb
+  name: BMPColorCollectionJob
+  nameWithType: BMPColorCollectionJob
+  fullName: Map.Loading.Images.BMPColorCollectionJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPColorCollectionJob
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Burst-compiled job for parallel BMP pixel processing
+
+    Processes chunks of pixels to collect unique colors
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
+
+      public struct BMPColorCollectionJob
+    content.vb: >-
+      <BurstCompile(OptimizeFor:=OptimizeFor.Performance)>
+
+      Public Structure BMPColorCollectionJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: OptimizeFor
+      type: Unity.Burst.OptimizeFor
+      value: 1
+- uid: Map.Loading.Images.BMPColorCollectionJob.PixelData
+  commentId: F:Map.Loading.Images.BMPColorCollectionJob.PixelData
+  id: PixelData
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: PixelData
+  nameWithType: BMPColorCollectionJob.PixelData
+  fullName: Map.Loading.Images.BMPColorCollectionJob.PixelData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelData
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public BMPParser.BMPPixelData PixelData
+    return:
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    content.vb: >-
+      <ReadOnly>
+
+      Public PixelData As BMPParser.BMPPixelData
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPColorCollectionJob.Width
+  commentId: F:Map.Loading.Images.BMPColorCollectionJob.Width
+  id: Width
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: BMPColorCollectionJob.Width
+  fullName: Map.Loading.Images.BMPColorCollectionJob.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int Width
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public Width As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPColorCollectionJob.Height
+  commentId: F:Map.Loading.Images.BMPColorCollectionJob.Height
+  id: Height
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: BMPColorCollectionJob.Height
+  fullName: Map.Loading.Images.BMPColorCollectionJob.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int Height
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public Height As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPColorCollectionJob.TempResults
+  commentId: F:Map.Loading.Images.BMPColorCollectionJob.TempResults
+  id: TempResults
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: TempResults
+  nameWithType: BMPColorCollectionJob.TempResults
+  fullName: Map.Loading.Images.BMPColorCollectionJob.TempResults
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TempResults
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<int> TempResults
+    return:
+      type: Unity.Collections.NativeArray{System.Int32}
+    content.vb: Public TempResults As NativeArray(Of Integer)
+- uid: Map.Loading.Images.BMPColorCollectionJob.ResultCounts
+  commentId: F:Map.Loading.Images.BMPColorCollectionJob.ResultCounts
+  id: ResultCounts
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: ResultCounts
+  nameWithType: BMPColorCollectionJob.ResultCounts
+  fullName: Map.Loading.Images.BMPColorCollectionJob.ResultCounts
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResultCounts
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<int> ResultCounts
+    return:
+      type: Unity.Collections.NativeArray{System.Int32}
+    content.vb: Public ResultCounts As NativeArray(Of Integer)
+- uid: Map.Loading.Images.BMPColorCollectionJob.Execute(System.Int32,System.Int32)
+  commentId: M:Map.Loading.Images.BMPColorCollectionJob.Execute(System.Int32,System.Int32)
+  id: Execute(System.Int32,System.Int32)
+  parent: Map.Loading.Images.BMPColorCollectionJob
+  langs:
+  - csharp
+  - vb
+  name: Execute(int, int)
+  nameWithType: BMPColorCollectionJob.Execute(int, int)
+  fullName: Map.Loading.Images.BMPColorCollectionJob.Execute(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  example: []
+  syntax:
+    content: public void Execute(int startIndex, int count)
+    parameters:
+    - id: startIndex
+      type: System.Int32
+    - id: count
+      type: System.Int32
+    content.vb: Public Sub Execute(startIndex As Integer, count As Integer)
+  overload: Map.Loading.Images.BMPColorCollectionJob.Execute*
+  nameWithType.vb: BMPColorCollectionJob.Execute(Integer, Integer)
+  fullName.vb: Map.Loading.Images.BMPColorCollectionJob.Execute(Integer, Integer)
+  name.vb: Execute(Integer, Integer)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{System.Int32}
+  commentId: T:Unity.Collections.NativeArray{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int>
+  nameWithType: NativeArray<int>
+  fullName: Unity.Collections.NativeArray<int>
+  nameWithType.vb: NativeArray(Of Integer)
+  fullName.vb: Unity.Collections.NativeArray(Of Integer)
+  name.vb: NativeArray(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.Images.BMPColorCollectionJob.Execute*
+  commentId: Overload:Map.Loading.Images.BMPColorCollectionJob.Execute
+  href: Map.Loading.Images.BMPColorCollectionJob.html#Map_Loading_Images_BMPColorCollectionJob_Execute_System_Int32_System_Int32_
+  name: Execute
+  nameWithType: BMPColorCollectionJob.Execute
+  fullName: Map.Loading.Images.BMPColorCollectionJob.Execute

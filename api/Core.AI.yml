@@ -1,0 +1,226 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI
+  commentId: N:Core.AI
+  id: Core.AI
+  children:
+  - Core.AI.AIDebugInfo
+  - Core.AI.AIDistanceCalculator
+  - Core.AI.AIGoal
+  - Core.AI.AIGoalDiscovery
+  - Core.AI.AIGoalRegistry
+  - Core.AI.AIScheduler
+  - Core.AI.AISchedulingConfig
+  - Core.AI.AIState
+  - Core.AI.AIStatistics
+  - Core.AI.AISystem
+  - Core.AI.AITierConfig
+  - Core.AI.AtWarConstraint
+  - Core.AI.AtWarWithConstraint
+  - Core.AI.BurstBFSDistanceJob
+  - Core.AI.DelegateConstraint
+  - Core.AI.DelegateConstraint.ConstraintCheck
+  - Core.AI.GoalAttribute
+  - Core.AI.GoalEvaluation
+  - Core.AI.HighestScoreSelector
+  - Core.AI.IGoalConstraint
+  - Core.AI.IGoalSelector
+  - Core.AI.MinProvincesConstraint
+  - Core.AI.MinResourceConstraint
+  langs:
+  - csharp
+  - vb
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.AI.AIGoalRegistry
+  commentId: T:Core.AI.AIGoalRegistry
+  parent: Core.AI
+  href: Core.AI.AIGoalRegistry.html
+  name: AIGoalRegistry
+  nameWithType: AIGoalRegistry
+  fullName: Core.AI.AIGoalRegistry
+- uid: Core.AI.AIGoalDiscovery
+  commentId: T:Core.AI.AIGoalDiscovery
+  href: Core.AI.AIGoalDiscovery.html
+  name: AIGoalDiscovery
+  nameWithType: AIGoalDiscovery
+  fullName: Core.AI.AIGoalDiscovery
+- uid: Core.AI.IGoalSelector
+  commentId: T:Core.AI.IGoalSelector
+  parent: Core.AI
+  href: Core.AI.IGoalSelector.html
+  name: IGoalSelector
+  nameWithType: IGoalSelector
+  fullName: Core.AI.IGoalSelector
+- uid: Core.AI.GoalEvaluation
+  commentId: T:Core.AI.GoalEvaluation
+  href: Core.AI.GoalEvaluation.html
+  name: GoalEvaluation
+  nameWithType: GoalEvaluation
+  fullName: Core.AI.GoalEvaluation
+- uid: Core.AI.HighestScoreSelector
+  commentId: T:Core.AI.HighestScoreSelector
+  parent: Core.AI
+  href: Core.AI.HighestScoreSelector.html
+  name: HighestScoreSelector
+  nameWithType: HighestScoreSelector
+  fullName: Core.AI.HighestScoreSelector
+- uid: Core.AI.AIGoal
+  commentId: T:Core.AI.AIGoal
+  parent: Core.AI
+  href: Core.AI.AIGoal.html
+  name: AIGoal
+  nameWithType: AIGoal
+  fullName: Core.AI.AIGoal
+- uid: Core.AI.AIScheduler
+  commentId: T:Core.AI.AIScheduler
+  href: Core.AI.AIScheduler.html
+  name: AIScheduler
+  nameWithType: AIScheduler
+  fullName: Core.AI.AIScheduler
+- uid: Core.AI.AIState
+  commentId: T:Core.AI.AIState
+  parent: Core.AI
+  href: Core.AI.AIState.html
+  name: AIState
+  nameWithType: AIState
+  fullName: Core.AI.AIState
+- uid: Core.AI.AITierConfig
+  commentId: T:Core.AI.AITierConfig
+  parent: Core.AI
+  href: Core.AI.AITierConfig.html
+  name: AITierConfig
+  nameWithType: AITierConfig
+  fullName: Core.AI.AITierConfig
+- uid: Core.AI.AISchedulingConfig
+  commentId: T:Core.AI.AISchedulingConfig
+  parent: Core.AI
+  href: Core.AI.AISchedulingConfig.html
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig
+- uid: Core.AI.AISystem
+  commentId: T:Core.AI.AISystem
+  href: Core.AI.AISystem.html
+  name: AISystem
+  nameWithType: AISystem
+  fullName: Core.AI.AISystem
+- uid: Core.AI.GoalAttribute
+  commentId: T:Core.AI.GoalAttribute
+  href: Core.AI.GoalAttribute.html
+  name: GoalAttribute
+  nameWithType: GoalAttribute
+  fullName: Core.AI.GoalAttribute
+- uid: Core.AI.AIDistanceCalculator
+  commentId: T:Core.AI.AIDistanceCalculator
+  href: Core.AI.AIDistanceCalculator.html
+  name: AIDistanceCalculator
+  nameWithType: AIDistanceCalculator
+  fullName: Core.AI.AIDistanceCalculator
+- uid: Core.AI.BurstBFSDistanceJob
+  commentId: T:Core.AI.BurstBFSDistanceJob
+  href: Core.AI.BurstBFSDistanceJob.html
+  name: BurstBFSDistanceJob
+  nameWithType: BurstBFSDistanceJob
+  fullName: Core.AI.BurstBFSDistanceJob
+- uid: Core.AI.AIStatistics
+  commentId: T:Core.AI.AIStatistics
+  parent: Core.AI
+  href: Core.AI.AIStatistics.html
+  name: AIStatistics
+  nameWithType: AIStatistics
+  fullName: Core.AI.AIStatistics
+- uid: Core.AI.AIDebugInfo
+  commentId: T:Core.AI.AIDebugInfo
+  parent: Core.AI
+  href: Core.AI.AIDebugInfo.html
+  name: AIDebugInfo
+  nameWithType: AIDebugInfo
+  fullName: Core.AI.AIDebugInfo
+- uid: Core.AI.IGoalConstraint
+  commentId: T:Core.AI.IGoalConstraint
+  parent: Core.AI
+  href: Core.AI.IGoalConstraint.html
+  name: IGoalConstraint
+  nameWithType: IGoalConstraint
+  fullName: Core.AI.IGoalConstraint
+- uid: Core.AI.MinProvincesConstraint
+  commentId: T:Core.AI.MinProvincesConstraint
+  href: Core.AI.MinProvincesConstraint.html
+  name: MinProvincesConstraint
+  nameWithType: MinProvincesConstraint
+  fullName: Core.AI.MinProvincesConstraint
+- uid: Core.AI.MinResourceConstraint
+  commentId: T:Core.AI.MinResourceConstraint
+  href: Core.AI.MinResourceConstraint.html
+  name: MinResourceConstraint
+  nameWithType: MinResourceConstraint
+  fullName: Core.AI.MinResourceConstraint
+- uid: Core.AI.AtWarConstraint
+  commentId: T:Core.AI.AtWarConstraint
+  href: Core.AI.AtWarConstraint.html
+  name: AtWarConstraint
+  nameWithType: AtWarConstraint
+  fullName: Core.AI.AtWarConstraint
+- uid: Core.AI.AtWarWithConstraint
+  commentId: T:Core.AI.AtWarWithConstraint
+  href: Core.AI.AtWarWithConstraint.html
+  name: AtWarWithConstraint
+  nameWithType: AtWarWithConstraint
+  fullName: Core.AI.AtWarWithConstraint
+- uid: Core.AI.DelegateConstraint
+  commentId: T:Core.AI.DelegateConstraint
+  href: Core.AI.DelegateConstraint.html
+  name: DelegateConstraint
+  nameWithType: DelegateConstraint
+  fullName: Core.AI.DelegateConstraint
+- uid: Core.AI.DelegateConstraint.ConstraintCheck
+  commentId: T:Core.AI.DelegateConstraint.ConstraintCheck
+  parent: Core.AI
+  href: Core.AI.DelegateConstraint.html
+  name: DelegateConstraint.ConstraintCheck
+  nameWithType: DelegateConstraint.ConstraintCheck
+  fullName: Core.AI.DelegateConstraint.ConstraintCheck
+  spec.csharp:
+  - uid: Core.AI.DelegateConstraint
+    name: DelegateConstraint
+    href: Core.AI.DelegateConstraint.html
+  - name: .
+  - uid: Core.AI.DelegateConstraint.ConstraintCheck
+    name: ConstraintCheck
+    href: Core.AI.DelegateConstraint.ConstraintCheck.html
+  spec.vb:
+  - uid: Core.AI.DelegateConstraint
+    name: DelegateConstraint
+    href: Core.AI.DelegateConstraint.html
+  - name: .
+  - uid: Core.AI.DelegateConstraint.ConstraintCheck
+    name: ConstraintCheck
+    href: Core.AI.DelegateConstraint.ConstraintCheck.html
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html

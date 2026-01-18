@@ -1,0 +1,374 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderMeshGenerator
+  commentId: T:Map.Rendering.BorderMeshGenerator
+  id: BorderMeshGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
+  - Map.Rendering.BorderMeshGenerator.Dispose
+  - Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
+  - Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
+  - Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes
+  langs:
+  - csharp
+  - vb
+  name: BorderMeshGenerator
+  nameWithType: BorderMeshGenerator
+  fullName: Map.Rendering.BorderMeshGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderMeshGenerator
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generates quad meshes from smoothed polyline borders
+
+    Converts Chaikin-smoothed curves into renderable triangle geometry
+
+    Each line segment becomes a thin quad (2 triangles) with flat square caps
+  example: []
+  syntax:
+    content: public class BorderMeshGenerator
+    content.vb: Public Class BorderMeshGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
+  commentId: M:Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single)'
+  parent: Map.Rendering.BorderMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: BorderMeshGenerator(float, float, float)
+  nameWithType: BorderMeshGenerator.BorderMeshGenerator(float, float, float)
+  fullName: Map.Rendering.BorderMeshGenerator.BorderMeshGenerator(float, float, float)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public BorderMeshGenerator(float width, float mapWidthPixels, float mapHeightPixels)
+    parameters:
+    - id: width
+      type: System.Single
+    - id: mapWidthPixels
+      type: System.Single
+    - id: mapHeightPixels
+      type: System.Single
+    content.vb: Public Sub New(width As Single, mapWidthPixels As Single, mapHeightPixels As Single)
+  overload: Map.Rendering.BorderMeshGenerator.#ctor*
+  nameWithType.vb: BorderMeshGenerator.New(Single, Single, Single)
+  fullName.vb: Map.Rendering.BorderMeshGenerator.New(Single, Single, Single)
+  name.vb: New(Single, Single, Single)
+- uid: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
+  commentId: M:Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
+  id: GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
+  parent: Map.Rendering.BorderMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateBorderMeshes(BorderCurveCache)
+  nameWithType: BorderMeshGenerator.GenerateBorderMeshes(BorderCurveCache)
+  fullName: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateBorderMeshes
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate meshes from border curve data
+
+    Creates multiple meshes if vertex count exceeds 65k limit
+  example: []
+  syntax:
+    content: public void GenerateBorderMeshes(BorderCurveCache cache)
+    parameters:
+    - id: cache
+      type: Map.Rendering.BorderCurveCache
+    content.vb: Public Sub GenerateBorderMeshes(cache As BorderCurveCache)
+  overload: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes*
+- uid: Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes
+  commentId: M:Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes
+  id: GetProvinceBorderMeshes
+  parent: Map.Rendering.BorderMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceBorderMeshes()
+  nameWithType: BorderMeshGenerator.GetProvinceBorderMeshes()
+  fullName: Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceBorderMeshes
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 357
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get generated meshes for province borders
+  example: []
+  syntax:
+    content: public List<Mesh> GetProvinceBorderMeshes()
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Mesh}
+    content.vb: Public Function GetProvinceBorderMeshes() As List(Of Mesh)
+  overload: Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes*
+- uid: Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
+  commentId: M:Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
+  id: GetCountryBorderMeshes
+  parent: Map.Rendering.BorderMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetCountryBorderMeshes()
+  nameWithType: BorderMeshGenerator.GetCountryBorderMeshes()
+  fullName: Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryBorderMeshes
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 362
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get generated meshes for country borders
+  example: []
+  syntax:
+    content: public List<Mesh> GetCountryBorderMeshes()
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Mesh}
+    content.vb: Public Function GetCountryBorderMeshes() As List(Of Mesh)
+  overload: Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes*
+- uid: Map.Rendering.BorderMeshGenerator.Dispose
+  commentId: M:Map.Rendering.BorderMeshGenerator.Dispose
+  id: Dispose
+  parent: Map.Rendering.BorderMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: BorderMeshGenerator.Dispose()
+  fullName: Map.Rendering.BorderMeshGenerator.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
+    startLine: 367
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Clean up meshes
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Rendering.BorderMeshGenerator.Dispose*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.BorderMeshGenerator.#ctor*
+  commentId: Overload:Map.Rendering.BorderMeshGenerator.#ctor
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator__ctor_System_Single_System_Single_System_Single_
+  name: BorderMeshGenerator
+  nameWithType: BorderMeshGenerator.BorderMeshGenerator
+  fullName: Map.Rendering.BorderMeshGenerator.BorderMeshGenerator
+  nameWithType.vb: BorderMeshGenerator.New
+  fullName.vb: Map.Rendering.BorderMeshGenerator.New
+  name.vb: New
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes*
+  commentId: Overload:Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator_GenerateBorderMeshes_Map_Rendering_BorderCurveCache_
+  name: GenerateBorderMeshes
+  nameWithType: BorderMeshGenerator.GenerateBorderMeshes
+  fullName: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes
+- uid: Map.Rendering.BorderCurveCache
+  commentId: T:Map.Rendering.BorderCurveCache
+  parent: Map.Rendering
+  href: Map.Rendering.BorderCurveCache.html
+  name: BorderCurveCache
+  nameWithType: BorderCurveCache
+  fullName: Map.Rendering.BorderCurveCache
+- uid: Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes*
+  commentId: Overload:Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator_GetProvinceBorderMeshes
+  name: GetProvinceBorderMeshes
+  nameWithType: BorderMeshGenerator.GetProvinceBorderMeshes
+  fullName: Map.Rendering.BorderMeshGenerator.GetProvinceBorderMeshes
+- uid: System.Collections.Generic.List{UnityEngine.Mesh}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Mesh}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Mesh>
+  nameWithType: List<Mesh>
+  fullName: System.Collections.Generic.List<UnityEngine.Mesh>
+  nameWithType.vb: List(Of Mesh)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Mesh)
+  name.vb: List(Of Mesh)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Mesh
+    name: Mesh
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Mesh
+    name: Mesh
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes*
+  commentId: Overload:Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator_GetCountryBorderMeshes
+  name: GetCountryBorderMeshes
+  nameWithType: BorderMeshGenerator.GetCountryBorderMeshes
+  fullName: Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
+- uid: Map.Rendering.BorderMeshGenerator.Dispose*
+  commentId: Overload:Map.Rendering.BorderMeshGenerator.Dispose
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator_Dispose
+  name: Dispose
+  nameWithType: BorderMeshGenerator.Dispose
+  fullName: Map.Rendering.BorderMeshGenerator.Dispose

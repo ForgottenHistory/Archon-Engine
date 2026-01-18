@@ -1,0 +1,375 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Common.ResultExtensions
+  commentId: T:Core.Common.ResultExtensions
+  id: ResultExtensions
+  parent: Core.Common
+  children:
+  - Core.Common.ResultExtensions.Combine(Core.Common.Result[])
+  - Core.Common.ResultExtensions.CombineAll(Core.Common.Result[])
+  - Core.Common.ResultExtensions.Try(System.Action)
+  - Core.Common.ResultExtensions.Try``1(System.Func{``0})
+  langs:
+  - csharp
+  - vb
+  name: ResultExtensions
+  nameWithType: ResultExtensions
+  fullName: Core.Common.ResultExtensions
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResultExtensions
+    path: Scripts/Core/Common/Result.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Extension methods for Result types.
+  example: []
+  syntax:
+    content: public static class ResultExtensions
+    content.vb: Public Module ResultExtensions
+  inheritance:
+  - System.Object
+- uid: Core.Common.ResultExtensions.Combine(Core.Common.Result[])
+  commentId: M:Core.Common.ResultExtensions.Combine(Core.Common.Result[])
+  id: Combine(Core.Common.Result[])
+  parent: Core.Common.ResultExtensions
+  langs:
+  - csharp
+  - vb
+  name: Combine(params Result[])
+  nameWithType: ResultExtensions.Combine(params Result[])
+  fullName: Core.Common.ResultExtensions.Combine(params Core.Common.Result[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Combine
+    path: Scripts/Core/Common/Result.cs
+    startLine: 205
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Combines multiple results, returning failure if any failed.
+  example: []
+  syntax:
+    content: public static Result Combine(params Result[] results)
+    parameters:
+    - id: results
+      type: Core.Common.Result[]
+    return:
+      type: Core.Common.Result
+    content.vb: Public Shared Function Combine(ParamArray results As Result()) As Result
+  overload: Core.Common.ResultExtensions.Combine*
+  nameWithType.vb: ResultExtensions.Combine(ParamArray Result())
+  fullName.vb: Core.Common.ResultExtensions.Combine(ParamArray Core.Common.Result())
+  name.vb: Combine(ParamArray Result())
+- uid: Core.Common.ResultExtensions.CombineAll(Core.Common.Result[])
+  commentId: M:Core.Common.ResultExtensions.CombineAll(Core.Common.Result[])
+  id: CombineAll(Core.Common.Result[])
+  parent: Core.Common.ResultExtensions
+  langs:
+  - csharp
+  - vb
+  name: CombineAll(params Result[])
+  nameWithType: ResultExtensions.CombineAll(params Result[])
+  fullName: Core.Common.ResultExtensions.CombineAll(params Core.Common.Result[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CombineAll
+    path: Scripts/Core/Common/Result.cs
+    startLine: 218
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Combines multiple results, collecting all errors.
+  example: []
+  syntax:
+    content: public static Result CombineAll(params Result[] results)
+    parameters:
+    - id: results
+      type: Core.Common.Result[]
+    return:
+      type: Core.Common.Result
+    content.vb: Public Shared Function CombineAll(ParamArray results As Result()) As Result
+  overload: Core.Common.ResultExtensions.CombineAll*
+  nameWithType.vb: ResultExtensions.CombineAll(ParamArray Result())
+  fullName.vb: Core.Common.ResultExtensions.CombineAll(ParamArray Core.Common.Result())
+  name.vb: CombineAll(ParamArray Result())
+- uid: Core.Common.ResultExtensions.Try(System.Action)
+  commentId: M:Core.Common.ResultExtensions.Try(System.Action)
+  id: Try(System.Action)
+  parent: Core.Common.ResultExtensions
+  langs:
+  - csharp
+  - vb
+  name: Try(Action)
+  nameWithType: ResultExtensions.Try(Action)
+  fullName: Core.Common.ResultExtensions.Try(System.Action)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Try
+    path: Scripts/Core/Common/Result.cs
+    startLine: 239
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Wraps an action that might throw in a Result.
+  example: []
+  syntax:
+    content: public static Result Try(Action action)
+    parameters:
+    - id: action
+      type: System.Action
+    return:
+      type: Core.Common.Result
+    content.vb: Public Shared Function [Try](action As Action) As Result
+  overload: Core.Common.ResultExtensions.Try*
+- uid: Core.Common.ResultExtensions.Try``1(System.Func{``0})
+  commentId: M:Core.Common.ResultExtensions.Try``1(System.Func{``0})
+  id: Try``1(System.Func{``0})
+  parent: Core.Common.ResultExtensions
+  langs:
+  - csharp
+  - vb
+  name: Try<T>(Func<T>)
+  nameWithType: ResultExtensions.Try<T>(Func<T>)
+  fullName: Core.Common.ResultExtensions.Try<T>(System.Func<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Try
+    path: Scripts/Core/Common/Result.cs
+    startLine: 255
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Wraps a function that might throw in a Result.
+  example: []
+  syntax:
+    content: public static Result<T> Try<T>(Func<T> func)
+    parameters:
+    - id: func
+      type: System.Func{{T}}
+    typeParameters:
+    - id: T
+    return:
+      type: Core.Common.Result{{T}}
+    content.vb: Public Shared Function [Try](Of T)(func As Func(Of T)) As Result(Of T)
+  overload: Core.Common.ResultExtensions.Try*
+  nameWithType.vb: ResultExtensions.Try(Of T)(Func(Of T))
+  fullName.vb: Core.Common.ResultExtensions.Try(Of T)(System.Func(Of T))
+  name.vb: Try(Of T)(Func(Of T))
+references:
+- uid: Core.Common
+  commentId: N:Core.Common
+  href: Core.html
+  name: Core.Common
+  nameWithType: Core.Common
+  fullName: Core.Common
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Common.ResultExtensions.Combine*
+  commentId: Overload:Core.Common.ResultExtensions.Combine
+  href: Core.Common.ResultExtensions.html#Core_Common_ResultExtensions_Combine_Core_Common_Result___
+  name: Combine
+  nameWithType: ResultExtensions.Combine
+  fullName: Core.Common.ResultExtensions.Combine
+- uid: Core.Common.Result[]
+  isExternal: true
+  href: Core.Common.Result.html
+  name: Result[]
+  nameWithType: Result[]
+  fullName: Core.Common.Result[]
+  nameWithType.vb: Result()
+  fullName.vb: Core.Common.Result()
+  name.vb: Result()
+  spec.csharp:
+  - uid: Core.Common.Result
+    name: Result
+    href: Core.Common.Result.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.Common.Result
+    name: Result
+    href: Core.Common.Result.html
+  - name: (
+  - name: )
+- uid: Core.Common.Result
+  commentId: T:Core.Common.Result
+  parent: Core.Common
+  href: Core.Common.Result.html
+  name: Result
+  nameWithType: Result
+  fullName: Core.Common.Result
+- uid: Core.Common.ResultExtensions.CombineAll*
+  commentId: Overload:Core.Common.ResultExtensions.CombineAll
+  href: Core.Common.ResultExtensions.html#Core_Common_ResultExtensions_CombineAll_Core_Common_Result___
+  name: CombineAll
+  nameWithType: ResultExtensions.CombineAll
+  fullName: Core.Common.ResultExtensions.CombineAll
+- uid: Core.Common.ResultExtensions.Try*
+  commentId: Overload:Core.Common.ResultExtensions.Try
+  href: Core.Common.ResultExtensions.html#Core_Common_ResultExtensions_Try_System_Action_
+  name: Try
+  nameWithType: ResultExtensions.Try
+  fullName: Core.Common.ResultExtensions.Try
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: System.Func{{T}}
+  commentId: T:System.Func{``0}
+  parent: System
+  definition: System.Func`1
+  name: Func<T>
+  nameWithType: Func<T>
+  fullName: System.Func<T>
+  nameWithType.vb: Func(Of T)
+  fullName.vb: System.Func(Of T)
+  name.vb: Func(Of T)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Common.Result{{T}}
+  commentId: T:Core.Common.Result{``0}
+  parent: Core.Common
+  definition: Core.Common.Result`1
+  href: Core.Common.Result-1.html
+  name: Result<T>
+  nameWithType: Result<T>
+  fullName: Core.Common.Result<T>
+  nameWithType.vb: Result(Of T)
+  fullName.vb: Core.Common.Result(Of T)
+  name.vb: Result(Of T)
+  spec.csharp:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Core.Common.Result`1
+  commentId: T:Core.Common.Result`1
+  parent: Core.Common
+  href: Core.Common.Result-1.html
+  name: Result<T>
+  nameWithType: Result<T>
+  fullName: Core.Common.Result<T>
+  nameWithType.vb: Result(Of T)
+  fullName.vb: Core.Common.Result(Of T)
+  name.vb: Result(Of T)
+  spec.csharp:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

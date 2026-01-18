@@ -1,0 +1,300 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  commentId: T:Core.Diplomacy.DiplomacyWarDeclaredEvent
+  id: DiplomacyWarDeclaredEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+  - Core.Diplomacy.DiplomacyWarDeclaredEvent.attackerID
+  - Core.Diplomacy.DiplomacyWarDeclaredEvent.defenderID
+  - Core.Diplomacy.DiplomacyWarDeclaredEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyWarDeclaredEvent
+  nameWithType: DiplomacyWarDeclaredEvent
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyWarDeclaredEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Diplomatic event definitions
+
+
+    Architecture:
+
+    - Structs for zero-allocation EventBus
+
+    - Emitted by DiplomacySystem on state changes
+
+    - GAME layer subscribes to trigger UI updates, notifications, AI reactions
+
+
+    Pattern 3: Event-Driven Architecture (Zero-Allocation)
+
+    - Events are structs (no boxing)
+
+    - EventBus uses EventQueue{T} wrapper
+
+    - Frame-coherent processing
+  example: []
+  syntax:
+    content: 'public struct DiplomacyWarDeclaredEvent : IGameEvent'
+    content.vb: Public Structure DiplomacyWarDeclaredEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.attackerID
+  commentId: F:Core.Diplomacy.DiplomacyWarDeclaredEvent.attackerID
+  id: attackerID
+  parent: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  langs:
+  - csharp
+  - vb
+  name: attackerID
+  nameWithType: DiplomacyWarDeclaredEvent.attackerID
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.attackerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: attackerID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort attackerID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly attackerID As UShort
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.defenderID
+  commentId: F:Core.Diplomacy.DiplomacyWarDeclaredEvent.defenderID
+  id: defenderID
+  parent: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  langs:
+  - csharp
+  - vb
+  name: defenderID
+  nameWithType: DiplomacyWarDeclaredEvent.defenderID
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.defenderID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: defenderID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort defenderID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly defenderID As UShort
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.tick
+  commentId: F:Core.Diplomacy.DiplomacyWarDeclaredEvent.tick
+  id: tick
+  parent: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: DiplomacyWarDeclaredEvent.tick
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+  commentId: P:Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: DiplomacyWarDeclaredEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.DiplomacyWarDeclaredEvent
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyWarDeclaredEvent(ushort, ushort, int)
+  nameWithType: DiplomacyWarDeclaredEvent.DiplomacyWarDeclaredEvent(ushort, ushort, int)
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.DiplomacyWarDeclaredEvent(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public DiplomacyWarDeclaredEvent(ushort attacker, ushort defender, int tick)
+    parameters:
+    - id: attacker
+      type: System.UInt16
+    - id: defender
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(attacker As UShort, defender As UShort, tick As Integer)
+  overload: Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor*
+  nameWithType.vb: DiplomacyWarDeclaredEvent.New(UShort, UShort, Integer)
+  fullName.vb: Core.Diplomacy.DiplomacyWarDeclaredEvent.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+  href: Core.Diplomacy.DiplomacyWarDeclaredEvent.html#Core_Diplomacy_DiplomacyWarDeclaredEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: DiplomacyWarDeclaredEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarDeclaredEvent.#ctor
+  href: Core.Diplomacy.DiplomacyWarDeclaredEvent.html#Core_Diplomacy_DiplomacyWarDeclaredEvent__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: DiplomacyWarDeclaredEvent
+  nameWithType: DiplomacyWarDeclaredEvent.DiplomacyWarDeclaredEvent
+  fullName: Core.Diplomacy.DiplomacyWarDeclaredEvent.DiplomacyWarDeclaredEvent
+  nameWithType.vb: DiplomacyWarDeclaredEvent.New
+  fullName.vb: Core.Diplomacy.DiplomacyWarDeclaredEvent.New
+  name.vb: New

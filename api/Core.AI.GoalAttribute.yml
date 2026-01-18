@@ -1,0 +1,240 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.GoalAttribute
+  commentId: T:Core.AI.GoalAttribute
+  id: GoalAttribute
+  parent: Core.AI
+  children:
+  - Core.AI.GoalAttribute.#ctor
+  - Core.AI.GoalAttribute.Category
+  - Core.AI.GoalAttribute.Description
+  langs:
+  - csharp
+  - vb
+  name: GoalAttribute
+  nameWithType: GoalAttribute
+  fullName: Core.AI.GoalAttribute
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/GoalAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GoalAttribute
+    path: Scripts/Core/AI/GoalAttribute.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Marks an AIGoal class for auto-discovery and registration.
+
+
+    Usage:
+
+    [Goal]
+
+    public class BuildEconomyGoal : AIGoal { ... }
+
+
+    Or with metadata:
+
+    [Goal(Description = "Economic development", Category = "Economy")]
+
+    public class BuildEconomyGoal : AIGoal { ... }
+
+
+    Discovery:
+
+    AIGoalDiscovery.DiscoverAndRegister(registry, eventBus, assemblies);
+  example: []
+  syntax:
+    content: >-
+      [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+
+      public class GoalAttribute : Attribute
+    content.vb: >-
+      <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False)>
+
+      Public Class GoalAttribute Inherits Attribute
+  inheritance:
+  - System.Object
+  - System.Attribute
+  attributes:
+  - type: System.AttributeUsageAttribute
+    ctor: System.AttributeUsageAttribute.#ctor(System.AttributeTargets)
+    arguments:
+    - type: System.AttributeTargets
+      value: 4
+    namedArguments:
+    - name: AllowMultiple
+      type: System.Boolean
+      value: false
+- uid: Core.AI.GoalAttribute.Description
+  commentId: P:Core.AI.GoalAttribute.Description
+  id: Description
+  parent: Core.AI.GoalAttribute
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: GoalAttribute.Description
+  fullName: Core.AI.GoalAttribute.Description
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/GoalAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Description
+    path: Scripts/Core/AI/GoalAttribute.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Description of what this goal does (for debugging/documentation).
+  example: []
+  syntax:
+    content: public string Description { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Description As String
+  overload: Core.AI.GoalAttribute.Description*
+- uid: Core.AI.GoalAttribute.Category
+  commentId: P:Core.AI.GoalAttribute.Category
+  id: Category
+  parent: Core.AI.GoalAttribute
+  langs:
+  - csharp
+  - vb
+  name: Category
+  nameWithType: GoalAttribute.Category
+  fullName: Core.AI.GoalAttribute.Category
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/GoalAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Category
+    path: Scripts/Core/AI/GoalAttribute.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Category for grouping goals (e.g., "Economy", "Military", "Diplomacy").
+  example: []
+  syntax:
+    content: public string Category { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Category As String
+  overload: Core.AI.GoalAttribute.Category*
+- uid: Core.AI.GoalAttribute.#ctor
+  commentId: M:Core.AI.GoalAttribute.#ctor
+  id: '#ctor'
+  parent: Core.AI.GoalAttribute
+  langs:
+  - csharp
+  - vb
+  name: GoalAttribute()
+  nameWithType: GoalAttribute.GoalAttribute()
+  fullName: Core.AI.GoalAttribute.GoalAttribute()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/GoalAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/GoalAttribute.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public GoalAttribute()
+    content.vb: Public Sub New()
+  overload: Core.AI.GoalAttribute.#ctor*
+  nameWithType.vb: GoalAttribute.New()
+  fullName.vb: Core.AI.GoalAttribute.New()
+  name.vb: New()
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Attribute
+  commentId: T:System.Attribute
+  parent: System
+  isExternal: true
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.GoalAttribute.Description*
+  commentId: Overload:Core.AI.GoalAttribute.Description
+  href: Core.AI.GoalAttribute.html#Core_AI_GoalAttribute_Description
+  name: Description
+  nameWithType: GoalAttribute.Description
+  fullName: Core.AI.GoalAttribute.Description
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.AI.GoalAttribute.Category*
+  commentId: Overload:Core.AI.GoalAttribute.Category
+  href: Core.AI.GoalAttribute.html#Core_AI_GoalAttribute_Category
+  name: Category
+  nameWithType: GoalAttribute.Category
+  fullName: Core.AI.GoalAttribute.Category
+- uid: Core.AI.GoalAttribute.#ctor*
+  commentId: Overload:Core.AI.GoalAttribute.#ctor
+  href: Core.AI.GoalAttribute.html#Core_AI_GoalAttribute__ctor
+  name: GoalAttribute
+  nameWithType: GoalAttribute.GoalAttribute
+  fullName: Core.AI.GoalAttribute.GoalAttribute
+  nameWithType.vb: GoalAttribute.New
+  fullName.vb: Core.AI.GoalAttribute.New
+  name.vb: New

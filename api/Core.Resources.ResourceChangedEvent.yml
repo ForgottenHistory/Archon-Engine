@@ -1,0 +1,417 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceChangedEvent
+  commentId: T:Core.Resources.ResourceChangedEvent
+  id: ResourceChangedEvent
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceChangedEvent.CountryId
+  - Core.Resources.ResourceChangedEvent.Delta
+  - Core.Resources.ResourceChangedEvent.IsDecrease
+  - Core.Resources.ResourceChangedEvent.IsIncrease
+  - Core.Resources.ResourceChangedEvent.NewAmount
+  - Core.Resources.ResourceChangedEvent.OldAmount
+  - Core.Resources.ResourceChangedEvent.ResourceId
+  - Core.Resources.ResourceChangedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: ResourceChangedEvent
+  nameWithType: ResourceChangedEvent
+  fullName: Core.Resources.ResourceChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceChangedEvent
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    ENGINE: Event fired when a resource amount changes for a country.
+
+    Subscribe via EventBus for reactive UI updates.
+  example: []
+  syntax:
+    content: 'public struct ResourceChangedEvent : IGameEvent'
+    content.vb: Public Structure ResourceChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Resources.ResourceChangedEvent.CountryId
+  commentId: F:Core.Resources.ResourceChangedEvent.CountryId
+  id: CountryId
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: ResourceChangedEvent.CountryId
+  fullName: Core.Resources.ResourceChangedEvent.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The country whose resource changed
+  example: []
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: Core.Resources.ResourceChangedEvent.ResourceId
+  commentId: F:Core.Resources.ResourceChangedEvent.ResourceId
+  id: ResourceId
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: ResourceId
+  nameWithType: ResourceChangedEvent.ResourceId
+  fullName: Core.Resources.ResourceChangedEvent.ResourceId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The resource type that changed
+  example: []
+  syntax:
+    content: public ushort ResourceId
+    return:
+      type: System.UInt16
+    content.vb: Public ResourceId As UShort
+- uid: Core.Resources.ResourceChangedEvent.OldAmount
+  commentId: F:Core.Resources.ResourceChangedEvent.OldAmount
+  id: OldAmount
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldAmount
+  nameWithType: ResourceChangedEvent.OldAmount
+  fullName: Core.Resources.ResourceChangedEvent.OldAmount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldAmount
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Previous amount
+  example: []
+  syntax:
+    content: public FixedPoint64 OldAmount
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public OldAmount As FixedPoint64
+- uid: Core.Resources.ResourceChangedEvent.NewAmount
+  commentId: F:Core.Resources.ResourceChangedEvent.NewAmount
+  id: NewAmount
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewAmount
+  nameWithType: ResourceChangedEvent.NewAmount
+  fullName: Core.Resources.ResourceChangedEvent.NewAmount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewAmount
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: New amount
+  example: []
+  syntax:
+    content: public FixedPoint64 NewAmount
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public NewAmount As FixedPoint64
+- uid: Core.Resources.ResourceChangedEvent.TimeStamp
+  commentId: P:Core.Resources.ResourceChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ResourceChangedEvent.TimeStamp
+  fullName: Core.Resources.ResourceChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Event timestamp (auto-set by EventBus)
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Resources.ResourceChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Resources.ResourceChangedEvent.Delta
+  commentId: P:Core.Resources.ResourceChangedEvent.Delta
+  id: Delta
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: Delta
+  nameWithType: ResourceChangedEvent.Delta
+  fullName: Core.Resources.ResourceChangedEvent.Delta
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Delta
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The difference (NewAmount - OldAmount)
+  example: []
+  syntax:
+    content: public FixedPoint64 Delta { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public ReadOnly Property Delta As FixedPoint64
+  overload: Core.Resources.ResourceChangedEvent.Delta*
+- uid: Core.Resources.ResourceChangedEvent.IsIncrease
+  commentId: P:Core.Resources.ResourceChangedEvent.IsIncrease
+  id: IsIncrease
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: IsIncrease
+  nameWithType: ResourceChangedEvent.IsIncrease
+  fullName: Core.Resources.ResourceChangedEvent.IsIncrease
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsIncrease
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: True if resource increased
+  example: []
+  syntax:
+    content: public bool IsIncrease { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsIncrease As Boolean
+  overload: Core.Resources.ResourceChangedEvent.IsIncrease*
+- uid: Core.Resources.ResourceChangedEvent.IsDecrease
+  commentId: P:Core.Resources.ResourceChangedEvent.IsDecrease
+  id: IsDecrease
+  parent: Core.Resources.ResourceChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: IsDecrease
+  nameWithType: ResourceChangedEvent.IsDecrease
+  fullName: Core.Resources.ResourceChangedEvent.IsDecrease
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDecrease
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: True if resource decreased
+  example: []
+  syntax:
+    content: public bool IsDecrease { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDecrease As Boolean
+  overload: Core.Resources.ResourceChangedEvent.IsDecrease*
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Resources.ResourceChangedEvent.TimeStamp*
+  commentId: Overload:Core.Resources.ResourceChangedEvent.TimeStamp
+  href: Core.Resources.ResourceChangedEvent.html#Core_Resources_ResourceChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ResourceChangedEvent.TimeStamp
+  fullName: Core.Resources.ResourceChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Resources.ResourceChangedEvent.Delta*
+  commentId: Overload:Core.Resources.ResourceChangedEvent.Delta
+  href: Core.Resources.ResourceChangedEvent.html#Core_Resources_ResourceChangedEvent_Delta
+  name: Delta
+  nameWithType: ResourceChangedEvent.Delta
+  fullName: Core.Resources.ResourceChangedEvent.Delta
+- uid: Core.Resources.ResourceChangedEvent.IsIncrease*
+  commentId: Overload:Core.Resources.ResourceChangedEvent.IsIncrease
+  href: Core.Resources.ResourceChangedEvent.html#Core_Resources_ResourceChangedEvent_IsIncrease
+  name: IsIncrease
+  nameWithType: ResourceChangedEvent.IsIncrease
+  fullName: Core.Resources.ResourceChangedEvent.IsIncrease
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Resources.ResourceChangedEvent.IsDecrease*
+  commentId: Overload:Core.Resources.ResourceChangedEvent.IsDecrease
+  href: Core.Resources.ResourceChangedEvent.html#Core_Resources_ResourceChangedEvent_IsDecrease
+  name: IsDecrease
+  nameWithType: ResourceChangedEvent.IsDecrease
+  fullName: Core.Resources.ResourceChangedEvent.IsDecrease

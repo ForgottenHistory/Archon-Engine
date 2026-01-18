@@ -1,0 +1,785 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.InstancedBillboardRenderer
+  commentId: T:Map.Rendering.InstancedBillboardRenderer
+  id: InstancedBillboardRenderer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.InstancedBillboardRenderer.Awake
+  - Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh
+  - Map.Rendering.InstancedBillboardRenderer.ForceRebuild
+  - Map.Rendering.InstancedBillboardRenderer.LateUpdate
+  - Map.Rendering.InstancedBillboardRenderer.MarkDirty
+  - Map.Rendering.InstancedBillboardRenderer.OnDestroy
+  - Map.Rendering.InstancedBillboardRenderer.RebuildInstances
+  - Map.Rendering.InstancedBillboardRenderer.autoCreateQuad
+  - Map.Rendering.InstancedBillboardRenderer.initialCapacity
+  - Map.Rendering.InstancedBillboardRenderer.isDirty
+  - Map.Rendering.InstancedBillboardRenderer.material
+  - Map.Rendering.InstancedBillboardRenderer.matrices
+  - Map.Rendering.InstancedBillboardRenderer.propertyBlock
+  - Map.Rendering.InstancedBillboardRenderer.quadMesh
+  langs:
+  - csharp
+  - vb
+  name: InstancedBillboardRenderer
+  nameWithType: InstancedBillboardRenderer
+  fullName: Map.Rendering.InstancedBillboardRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InstancedBillboardRenderer
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Base class for GPU instanced billboard rendering.
+
+    Renders thousands of billboarded sprites in a single draw call using Graphics.DrawMeshInstanced.
+
+
+    Architecture:
+
+    - Maintains matrix lists for world positions
+
+    - Uses MaterialPropertyBlock for per-instance data
+
+    - Subclasses implement data source integration (event systems, polling, etc.)
+
+    - Dirty flag system for efficient updates
+
+
+    Performance:
+
+    - Single draw call for all instances
+
+    - Billboard rotation in vertex shader (GPU-side)
+
+    - Event-driven updates (no Update loop overhead)
+
+
+    Usage:
+
+    - Inherit and implement abstract methods
+
+    - Call MarkDirty() when data changes
+
+    - RebuildInstances() is called automatically on dirty flag
+  example: []
+  syntax:
+    content: 'public abstract class InstancedBillboardRenderer : MonoBehaviour'
+    content.vb: Public MustInherit Class InstancedBillboardRenderer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.InstancedBillboardRenderer.quadMesh
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.quadMesh
+  id: quadMesh
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: quadMesh
+  nameWithType: InstancedBillboardRenderer.quadMesh
+  fullName: Map.Rendering.InstancedBillboardRenderer.quadMesh
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: quadMesh
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Header("Rendering Setup")]
+
+      [SerializeField]
+
+      protected Mesh quadMesh
+    return:
+      type: UnityEngine.Mesh
+    content.vb: >-
+      <Header("Rendering Setup")>
+
+      <SerializeField>
+
+      Protected quadMesh As Mesh
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Rendering Setup
+  - type: UnityEngine.SerializeField
+    ctor: UnityEngine.SerializeField.#ctor
+    arguments: []
+- uid: Map.Rendering.InstancedBillboardRenderer.material
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.material
+  id: material
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: material
+  nameWithType: InstancedBillboardRenderer.material
+  fullName: Map.Rendering.InstancedBillboardRenderer.material
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: material
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [SerializeField]
+
+      protected Material material
+    return:
+      type: UnityEngine.Material
+    content.vb: >-
+      <SerializeField>
+
+      Protected material As Material
+  attributes:
+  - type: UnityEngine.SerializeField
+    ctor: UnityEngine.SerializeField.#ctor
+    arguments: []
+- uid: Map.Rendering.InstancedBillboardRenderer.initialCapacity
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.initialCapacity
+  id: initialCapacity
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: initialCapacity
+  nameWithType: InstancedBillboardRenderer.initialCapacity
+  fullName: Map.Rendering.InstancedBillboardRenderer.initialCapacity
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: initialCapacity
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Header("Configuration")]
+
+      [SerializeField]
+
+      protected int initialCapacity
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Header("Configuration")>
+
+      <SerializeField>
+
+      Protected initialCapacity As Integer
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Configuration
+  - type: UnityEngine.SerializeField
+    ctor: UnityEngine.SerializeField.#ctor
+    arguments: []
+- uid: Map.Rendering.InstancedBillboardRenderer.autoCreateQuad
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.autoCreateQuad
+  id: autoCreateQuad
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: autoCreateQuad
+  nameWithType: InstancedBillboardRenderer.autoCreateQuad
+  fullName: Map.Rendering.InstancedBillboardRenderer.autoCreateQuad
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: autoCreateQuad
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [SerializeField]
+
+      protected bool autoCreateQuad
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <SerializeField>
+
+      Protected autoCreateQuad As Boolean
+  attributes:
+  - type: UnityEngine.SerializeField
+    ctor: UnityEngine.SerializeField.#ctor
+    arguments: []
+- uid: Map.Rendering.InstancedBillboardRenderer.matrices
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.matrices
+  id: matrices
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: matrices
+  nameWithType: InstancedBillboardRenderer.matrices
+  fullName: Map.Rendering.InstancedBillboardRenderer.matrices
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: matrices
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected List<Matrix4x4> matrices
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Matrix4x4}
+    content.vb: Protected matrices As List(Of Matrix4x4)
+- uid: Map.Rendering.InstancedBillboardRenderer.propertyBlock
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.propertyBlock
+  id: propertyBlock
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: propertyBlock
+  nameWithType: InstancedBillboardRenderer.propertyBlock
+  fullName: Map.Rendering.InstancedBillboardRenderer.propertyBlock
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: propertyBlock
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected MaterialPropertyBlock propertyBlock
+    return:
+      type: UnityEngine.MaterialPropertyBlock
+    content.vb: Protected propertyBlock As MaterialPropertyBlock
+- uid: Map.Rendering.InstancedBillboardRenderer.isDirty
+  commentId: F:Map.Rendering.InstancedBillboardRenderer.isDirty
+  id: isDirty
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: isDirty
+  nameWithType: InstancedBillboardRenderer.isDirty
+  fullName: Map.Rendering.InstancedBillboardRenderer.isDirty
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: isDirty
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected bool isDirty
+    return:
+      type: System.Boolean
+    content.vb: Protected isDirty As Boolean
+- uid: Map.Rendering.InstancedBillboardRenderer.Awake
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.Awake
+  id: Awake
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: Awake()
+  nameWithType: InstancedBillboardRenderer.Awake()
+  fullName: Map.Rendering.InstancedBillboardRenderer.Awake()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Awake
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected virtual void Awake()
+    content.vb: Protected Overridable Sub Awake()
+  overload: Map.Rendering.InstancedBillboardRenderer.Awake*
+- uid: Map.Rendering.InstancedBillboardRenderer.LateUpdate
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.LateUpdate
+  id: LateUpdate
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: LateUpdate()
+  nameWithType: InstancedBillboardRenderer.LateUpdate()
+  fullName: Map.Rendering.InstancedBillboardRenderer.LateUpdate()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LateUpdate
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 55
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected virtual void LateUpdate()
+    content.vb: Protected Overridable Sub LateUpdate()
+  overload: Map.Rendering.InstancedBillboardRenderer.LateUpdate*
+- uid: Map.Rendering.InstancedBillboardRenderer.MarkDirty
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.MarkDirty
+  id: MarkDirty
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty()
+  nameWithType: InstancedBillboardRenderer.MarkDirty()
+  fullName: Map.Rendering.InstancedBillboardRenderer.MarkDirty()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MarkDirty
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Mark renderer as dirty to trigger rebuild on next LateUpdate.
+
+    Call this when data changes (events, state changes, etc.).
+  example: []
+  syntax:
+    content: protected void MarkDirty()
+    content.vb: Protected Sub MarkDirty()
+  overload: Map.Rendering.InstancedBillboardRenderer.MarkDirty*
+- uid: Map.Rendering.InstancedBillboardRenderer.ForceRebuild
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.ForceRebuild
+  id: ForceRebuild
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: ForceRebuild()
+  nameWithType: InstancedBillboardRenderer.ForceRebuild()
+  fullName: Map.Rendering.InstancedBillboardRenderer.ForceRebuild()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceRebuild
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 90
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Force immediate rebuild of all instances.
+
+    Normally called automatically via dirty flag.
+  example: []
+  syntax:
+    content: public void ForceRebuild()
+    content.vb: Public Sub ForceRebuild()
+  overload: Map.Rendering.InstancedBillboardRenderer.ForceRebuild*
+- uid: Map.Rendering.InstancedBillboardRenderer.RebuildInstances
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.RebuildInstances
+  id: RebuildInstances
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: RebuildInstances()
+  nameWithType: InstancedBillboardRenderer.RebuildInstances()
+  fullName: Map.Rendering.InstancedBillboardRenderer.RebuildInstances()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebuildInstances
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Rebuild all instance matrices and properties.
+
+    Called automatically when dirty flag is set.
+
+
+    Implementation should:
+
+    1. Clear matrices list
+
+    2. Query data source for current state
+
+    3. Build Matrix4x4 for each instance
+
+    4. Set per-instance properties in propertyBlock
+  example: []
+  syntax:
+    content: protected abstract void RebuildInstances()
+    content.vb: Protected MustOverride Sub RebuildInstances()
+  overload: Map.Rendering.InstancedBillboardRenderer.RebuildInstances*
+- uid: Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh
+  id: CreateQuadMesh
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: CreateQuadMesh()
+  nameWithType: InstancedBillboardRenderer.CreateQuadMesh()
+  fullName: Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateQuadMesh
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 112
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Create a simple quad mesh for billboarded sprites.
+
+    Centered at origin, 1x1 unit size.
+  example: []
+  syntax:
+    content: protected virtual Mesh CreateQuadMesh()
+    return:
+      type: UnityEngine.Mesh
+    content.vb: Protected Overridable Function CreateQuadMesh() As Mesh
+  overload: Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh*
+- uid: Map.Rendering.InstancedBillboardRenderer.OnDestroy
+  commentId: M:Map.Rendering.InstancedBillboardRenderer.OnDestroy
+  id: OnDestroy
+  parent: Map.Rendering.InstancedBillboardRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnDestroy()
+  nameWithType: InstancedBillboardRenderer.OnDestroy()
+  fullName: Map.Rendering.InstancedBillboardRenderer.OnDestroy()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDestroy
+    path: Scripts/Map/Rendering/InstancedBillboardRenderer.cs
+    startLine: 148
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: protected virtual void OnDestroy()
+    content.vb: Protected Overridable Sub OnDestroy()
+  overload: Map.Rendering.InstancedBillboardRenderer.OnDestroy*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: UnityEngine.Mesh
+  commentId: T:UnityEngine.Mesh
+  parent: UnityEngine
+  isExternal: true
+  name: Mesh
+  nameWithType: Mesh
+  fullName: UnityEngine.Mesh
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.List{UnityEngine.Matrix4x4}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Matrix4x4}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Matrix4x4>
+  nameWithType: List<Matrix4x4>
+  fullName: System.Collections.Generic.List<UnityEngine.Matrix4x4>
+  nameWithType.vb: List(Of Matrix4x4)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Matrix4x4)
+  name.vb: List(Of Matrix4x4)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Matrix4x4
+    name: Matrix4x4
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Matrix4x4
+    name: Matrix4x4
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: UnityEngine.MaterialPropertyBlock
+  commentId: T:UnityEngine.MaterialPropertyBlock
+  parent: UnityEngine
+  isExternal: true
+  name: MaterialPropertyBlock
+  nameWithType: MaterialPropertyBlock
+  fullName: UnityEngine.MaterialPropertyBlock
+- uid: Map.Rendering.InstancedBillboardRenderer.Awake*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.Awake
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_Awake
+  name: Awake
+  nameWithType: InstancedBillboardRenderer.Awake
+  fullName: Map.Rendering.InstancedBillboardRenderer.Awake
+- uid: Map.Rendering.InstancedBillboardRenderer.LateUpdate*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.LateUpdate
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_LateUpdate
+  name: LateUpdate
+  nameWithType: InstancedBillboardRenderer.LateUpdate
+  fullName: Map.Rendering.InstancedBillboardRenderer.LateUpdate
+- uid: Map.Rendering.InstancedBillboardRenderer.MarkDirty*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.MarkDirty
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_MarkDirty
+  name: MarkDirty
+  nameWithType: InstancedBillboardRenderer.MarkDirty
+  fullName: Map.Rendering.InstancedBillboardRenderer.MarkDirty
+- uid: Map.Rendering.InstancedBillboardRenderer.ForceRebuild*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.ForceRebuild
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_ForceRebuild
+  name: ForceRebuild
+  nameWithType: InstancedBillboardRenderer.ForceRebuild
+  fullName: Map.Rendering.InstancedBillboardRenderer.ForceRebuild
+- uid: Map.Rendering.InstancedBillboardRenderer.RebuildInstances*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.RebuildInstances
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_RebuildInstances
+  name: RebuildInstances
+  nameWithType: InstancedBillboardRenderer.RebuildInstances
+  fullName: Map.Rendering.InstancedBillboardRenderer.RebuildInstances
+- uid: Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_CreateQuadMesh
+  name: CreateQuadMesh
+  nameWithType: InstancedBillboardRenderer.CreateQuadMesh
+  fullName: Map.Rendering.InstancedBillboardRenderer.CreateQuadMesh
+- uid: Map.Rendering.InstancedBillboardRenderer.OnDestroy*
+  commentId: Overload:Map.Rendering.InstancedBillboardRenderer.OnDestroy
+  href: Map.Rendering.InstancedBillboardRenderer.html#Map_Rendering_InstancedBillboardRenderer_OnDestroy
+  name: OnDestroy
+  nameWithType: InstancedBillboardRenderer.OnDestroy
+  fullName: Map.Rendering.InstancedBillboardRenderer.OnDestroy

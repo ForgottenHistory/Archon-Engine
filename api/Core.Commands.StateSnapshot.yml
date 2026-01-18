@@ -1,0 +1,163 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.StateSnapshot
+  commentId: T:Core.Commands.StateSnapshot
+  id: StateSnapshot
+  parent: Core.Commands
+  children:
+  - Core.Commands.StateSnapshot.StateChecksum
+  - Core.Commands.StateSnapshot.Tick
+  - Core.Commands.StateSnapshot.Timestamp
+  langs:
+  - csharp
+  - vb
+  name: StateSnapshot
+  nameWithType: StateSnapshot
+  fullName: Core.Commands.StateSnapshot
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateSnapshot
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 397
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Lightweight state snapshot for rollback
+  example: []
+  syntax:
+    content: public struct StateSnapshot
+    content.vb: Public Structure StateSnapshot
+- uid: Core.Commands.StateSnapshot.Tick
+  commentId: F:Core.Commands.StateSnapshot.Tick
+  id: Tick
+  parent: Core.Commands.StateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: Tick
+  nameWithType: StateSnapshot.Tick
+  fullName: Core.Commands.StateSnapshot.Tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 399
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Tick
+    return:
+      type: System.UInt32
+    content.vb: Public Tick As UInteger
+- uid: Core.Commands.StateSnapshot.StateChecksum
+  commentId: F:Core.Commands.StateSnapshot.StateChecksum
+  id: StateChecksum
+  parent: Core.Commands.StateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: StateChecksum
+  nameWithType: StateSnapshot.StateChecksum
+  fullName: Core.Commands.StateSnapshot.StateChecksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateChecksum
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 400
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint StateChecksum
+    return:
+      type: System.UInt32
+    content.vb: Public StateChecksum As UInteger
+- uid: Core.Commands.StateSnapshot.Timestamp
+  commentId: F:Core.Commands.StateSnapshot.Timestamp
+  id: Timestamp
+  parent: Core.Commands.StateSnapshot
+  langs:
+  - csharp
+  - vb
+  name: Timestamp
+  nameWithType: StateSnapshot.Timestamp
+  fullName: Core.Commands.StateSnapshot.Timestamp
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Timestamp
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 401
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public DateTime Timestamp
+    return:
+      type: System.DateTime
+    content.vb: Public Timestamp As Date
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date

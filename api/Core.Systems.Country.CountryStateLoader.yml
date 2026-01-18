@@ -1,0 +1,225 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.Country.CountryStateLoader
+  commentId: T:Core.Systems.Country.CountryStateLoader
+  id: CountryStateLoader
+  parent: Core.Systems.Country
+  children:
+  - Core.Systems.Country.CountryStateLoader.#ctor(Core.Systems.Country.CountryDataManager,Core.EventBus,System.Int32)
+  - Core.Systems.Country.CountryStateLoader.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  langs:
+  - csharp
+  - vb
+  name: CountryStateLoader
+  nameWithType: CountryStateLoader
+  fullName: Core.Systems.Country.CountryStateLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryStateLoader
+    path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Systems.Country
+  summary: >-
+    Handles loading and initializing country data
+
+    Extracted from CountrySystem.cs for better separation of concerns
+  example: []
+  syntax:
+    content: public class CountryStateLoader
+    content.vb: Public Class CountryStateLoader
+  inheritance:
+  - System.Object
+- uid: Core.Systems.Country.CountryStateLoader.#ctor(Core.Systems.Country.CountryDataManager,Core.EventBus,System.Int32)
+  commentId: M:Core.Systems.Country.CountryStateLoader.#ctor(Core.Systems.Country.CountryDataManager,Core.EventBus,System.Int32)
+  id: '#ctor(Core.Systems.Country.CountryDataManager,Core.EventBus,System.Int32)'
+  parent: Core.Systems.Country.CountryStateLoader
+  langs:
+  - csharp
+  - vb
+  name: CountryStateLoader(CountryDataManager, EventBus, int)
+  nameWithType: CountryStateLoader.CountryStateLoader(CountryDataManager, EventBus, int)
+  fullName: Core.Systems.Country.CountryStateLoader.CountryStateLoader(Core.Systems.Country.CountryDataManager, Core.EventBus, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Systems.Country
+  syntax:
+    content: public CountryStateLoader(CountryDataManager dataManager, EventBus eventBus, int initialCapacity)
+    parameters:
+    - id: dataManager
+      type: Core.Systems.Country.CountryDataManager
+    - id: eventBus
+      type: Core.EventBus
+    - id: initialCapacity
+      type: System.Int32
+    content.vb: Public Sub New(dataManager As CountryDataManager, eventBus As EventBus, initialCapacity As Integer)
+  overload: Core.Systems.Country.CountryStateLoader.#ctor*
+  nameWithType.vb: CountryStateLoader.New(CountryDataManager, EventBus, Integer)
+  fullName.vb: Core.Systems.Country.CountryStateLoader.New(Core.Systems.Country.CountryDataManager, Core.EventBus, Integer)
+  name.vb: New(CountryDataManager, EventBus, Integer)
+- uid: Core.Systems.Country.CountryStateLoader.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  commentId: M:Core.Systems.Country.CountryStateLoader.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  id: InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  parent: Core.Systems.Country.CountryStateLoader
+  langs:
+  - csharp
+  - vb
+  name: InitializeFromCountryData(CountryDataLoadResult)
+  nameWithType: CountryStateLoader.InitializeFromCountryData(CountryDataLoadResult)
+  fullName: Core.Systems.Country.CountryStateLoader.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeFromCountryData
+    path: Scripts/Core/Systems/Country/CountryStateLoader.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Systems.Country
+  summary: Initialize countries from JobifiedCountryLoader result
+  example: []
+  syntax:
+    content: public void InitializeFromCountryData(CountryDataLoadResult countryDataResult)
+    parameters:
+    - id: countryDataResult
+      type: Core.Data.CountryDataLoadResult
+    content.vb: Public Sub InitializeFromCountryData(countryDataResult As CountryDataLoadResult)
+  overload: Core.Systems.Country.CountryStateLoader.InitializeFromCountryData*
+references:
+- uid: Core.Systems.Country
+  commentId: N:Core.Systems.Country
+  href: Core.html
+  name: Core.Systems.Country
+  nameWithType: Core.Systems.Country
+  fullName: Core.Systems.Country
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Country
+    name: Country
+    href: Core.Systems.Country.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Country
+    name: Country
+    href: Core.Systems.Country.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.Country.CountryStateLoader.#ctor*
+  commentId: Overload:Core.Systems.Country.CountryStateLoader.#ctor
+  href: Core.Systems.Country.CountryStateLoader.html#Core_Systems_Country_CountryStateLoader__ctor_Core_Systems_Country_CountryDataManager_Core_EventBus_System_Int32_
+  name: CountryStateLoader
+  nameWithType: CountryStateLoader.CountryStateLoader
+  fullName: Core.Systems.Country.CountryStateLoader.CountryStateLoader
+  nameWithType.vb: CountryStateLoader.New
+  fullName.vb: Core.Systems.Country.CountryStateLoader.New
+  name.vb: New
+- uid: Core.Systems.Country.CountryDataManager
+  commentId: T:Core.Systems.Country.CountryDataManager
+  parent: Core.Systems.Country
+  href: Core.Systems.Country.CountryDataManager.html
+  name: CountryDataManager
+  nameWithType: CountryDataManager
+  fullName: Core.Systems.Country.CountryDataManager
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.Country.CountryStateLoader.InitializeFromCountryData*
+  commentId: Overload:Core.Systems.Country.CountryStateLoader.InitializeFromCountryData
+  href: Core.Systems.Country.CountryStateLoader.html#Core_Systems_Country_CountryStateLoader_InitializeFromCountryData_Core_Data_CountryDataLoadResult_
+  name: InitializeFromCountryData
+  nameWithType: CountryStateLoader.InitializeFromCountryData
+  fullName: Core.Systems.Country.CountryStateLoader.InitializeFromCountryData
+- uid: Core.Data.CountryDataLoadResult
+  commentId: T:Core.Data.CountryDataLoadResult
+  parent: Core.Data
+  href: Core.Data.CountryDataLoadResult.html
+  name: CountryDataLoadResult
+  nameWithType: CountryDataLoadResult
+  fullName: Core.Data.CountryDataLoadResult
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html

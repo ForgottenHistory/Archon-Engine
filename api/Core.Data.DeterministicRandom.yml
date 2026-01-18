@@ -1,0 +1,1708 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.DeterministicRandom
+  commentId: T:Core.Data.DeterministicRandom
+  id: DeterministicRandom
+  parent: Core.Data
+  children:
+  - Core.Data.DeterministicRandom.#ctor(System.UInt32)
+  - Core.Data.DeterministicRandom.#ctor(Unity.Mathematics.uint4)
+  - Core.Data.DeterministicRandom.Branch(System.UInt32)
+  - Core.Data.DeterministicRandom.FromSeedPhrase(System.String)
+  - Core.Data.DeterministicRandom.GetStateHash
+  - Core.Data.DeterministicRandom.HasSameState(Core.Data.DeterministicRandom)
+  - Core.Data.DeterministicRandom.NextBool
+  - Core.Data.DeterministicRandom.NextBool(Core.Data.FixedPoint32)
+  - Core.Data.DeterministicRandom.NextElementExceptIndices``1(``0[],System.Int32[])
+  - Core.Data.DeterministicRandom.NextElementExcept``1(``0[],``0)
+  - Core.Data.DeterministicRandom.NextElement``1(Unity.Collections.NativeArray{``0})
+  - Core.Data.DeterministicRandom.NextElement``1(``0[])
+  - Core.Data.DeterministicRandom.NextFixed
+  - Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32)
+  - Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  - Core.Data.DeterministicRandom.NextGaussian
+  - Core.Data.DeterministicRandom.NextGaussian(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  - Core.Data.DeterministicRandom.NextInt(System.Int32)
+  - Core.Data.DeterministicRandom.NextInt(System.Int32,System.Int32)
+  - Core.Data.DeterministicRandom.NextPercent(System.Int32)
+  - Core.Data.DeterministicRandom.NextPoint(Unity.Mathematics.int2,Unity.Mathematics.int2)
+  - Core.Data.DeterministicRandom.NextPointInCircle(Core.Data.FixedPoint32)
+  - Core.Data.DeterministicRandom.NextUInt
+  - Core.Data.DeterministicRandom.NextUInt(System.UInt32)
+  - Core.Data.DeterministicRandom.NextUInt(System.UInt32,System.UInt32)
+  - Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],Core.Data.FixedPoint32[])
+  - Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],System.Int32[])
+  - Core.Data.DeterministicRandom.NextWeightedIndex(System.Int32[])
+  - Core.Data.DeterministicRandom.SetSeed(System.UInt32)
+  - Core.Data.DeterministicRandom.Shuffle``1(Unity.Collections.NativeArray{``0})
+  - Core.Data.DeterministicRandom.Shuffle``1(``0[])
+  - Core.Data.DeterministicRandom.State
+  - Core.Data.DeterministicRandom.ToSeedPhrase
+  - Core.Data.DeterministicRandom.ToString
+  langs:
+  - csharp
+  - vb
+  name: DeterministicRandom
+  nameWithType: DeterministicRandom
+  fullName: Core.Data.DeterministicRandom
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeterministicRandom
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Deterministic random number generator for multiplayer consistency
+
+    Uses xorshift128+ algorithm for fast, high-quality random numbers
+
+    Guarantees identical results across all platforms and clients
+  example: []
+  syntax:
+    content: public struct DeterministicRandom
+    content.vb: Public Structure DeterministicRandom
+- uid: Core.Data.DeterministicRandom.State
+  commentId: P:Core.Data.DeterministicRandom.State
+  id: State
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: State
+  nameWithType: DeterministicRandom.State
+  fullName: Core.Data.DeterministicRandom.State
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: State
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Current state of the random number generator
+
+    Can be serialized for save/load or network synchronization
+  example: []
+  syntax:
+    content: public uint4 State { get; set; }
+    parameters: []
+    return:
+      type: Unity.Mathematics.uint4
+    content.vb: Public Property State As uint4
+  overload: Core.Data.DeterministicRandom.State*
+- uid: Core.Data.DeterministicRandom.#ctor(System.UInt32)
+  commentId: M:Core.Data.DeterministicRandom.#ctor(System.UInt32)
+  id: '#ctor(System.UInt32)'
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: DeterministicRandom(uint)
+  nameWithType: DeterministicRandom.DeterministicRandom(uint)
+  fullName: Core.Data.DeterministicRandom.DeterministicRandom(uint)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create a new deterministic random generator with a seed
+  example: []
+  syntax:
+    content: public DeterministicRandom(uint seed)
+    parameters:
+    - id: seed
+      type: System.UInt32
+    content.vb: Public Sub New(seed As UInteger)
+  overload: Core.Data.DeterministicRandom.#ctor*
+  nameWithType.vb: DeterministicRandom.New(UInteger)
+  fullName.vb: Core.Data.DeterministicRandom.New(UInteger)
+  name.vb: New(UInteger)
+- uid: Core.Data.DeterministicRandom.#ctor(Unity.Mathematics.uint4)
+  commentId: M:Core.Data.DeterministicRandom.#ctor(Unity.Mathematics.uint4)
+  id: '#ctor(Unity.Mathematics.uint4)'
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: DeterministicRandom(uint4)
+  nameWithType: DeterministicRandom.DeterministicRandom(uint4)
+  fullName: Core.Data.DeterministicRandom.DeterministicRandom(Unity.Mathematics.uint4)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from an existing state
+  example: []
+  syntax:
+    content: public DeterministicRandom(uint4 initialState)
+    parameters:
+    - id: initialState
+      type: Unity.Mathematics.uint4
+    content.vb: Public Sub New(initialState As uint4)
+  overload: Core.Data.DeterministicRandom.#ctor*
+  nameWithType.vb: DeterministicRandom.New(uint4)
+  fullName.vb: Core.Data.DeterministicRandom.New(Unity.Mathematics.uint4)
+  name.vb: New(uint4)
+- uid: Core.Data.DeterministicRandom.NextUInt
+  commentId: M:Core.Data.DeterministicRandom.NextUInt
+  id: NextUInt
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextUInt()
+  nameWithType: DeterministicRandom.NextUInt()
+  fullName: Core.Data.DeterministicRandom.NextUInt()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextUInt
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate next random uint32 using xorshift128+ algorithm
+  example: []
+  syntax:
+    content: public uint NextUInt()
+    return:
+      type: System.UInt32
+    content.vb: Public Function NextUInt() As UInteger
+  overload: Core.Data.DeterministicRandom.NextUInt*
+- uid: Core.Data.DeterministicRandom.NextUInt(System.UInt32)
+  commentId: M:Core.Data.DeterministicRandom.NextUInt(System.UInt32)
+  id: NextUInt(System.UInt32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextUInt(uint)
+  nameWithType: DeterministicRandom.NextUInt(uint)
+  fullName: Core.Data.DeterministicRandom.NextUInt(uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextUInt
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 99
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Generate random integer in range [0, max)
+
+    Uses rejection sampling to avoid bias
+  example: []
+  syntax:
+    content: public uint NextUInt(uint max)
+    parameters:
+    - id: max
+      type: System.UInt32
+    return:
+      type: System.UInt32
+    content.vb: Public Function NextUInt(max As UInteger) As UInteger
+  overload: Core.Data.DeterministicRandom.NextUInt*
+  nameWithType.vb: DeterministicRandom.NextUInt(UInteger)
+  fullName.vb: Core.Data.DeterministicRandom.NextUInt(UInteger)
+  name.vb: NextUInt(UInteger)
+- uid: Core.Data.DeterministicRandom.NextUInt(System.UInt32,System.UInt32)
+  commentId: M:Core.Data.DeterministicRandom.NextUInt(System.UInt32,System.UInt32)
+  id: NextUInt(System.UInt32,System.UInt32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextUInt(uint, uint)
+  nameWithType: DeterministicRandom.NextUInt(uint, uint)
+  fullName: Core.Data.DeterministicRandom.NextUInt(uint, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextUInt
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random integer in range [min, max)
+  example: []
+  syntax:
+    content: public uint NextUInt(uint min, uint max)
+    parameters:
+    - id: min
+      type: System.UInt32
+    - id: max
+      type: System.UInt32
+    return:
+      type: System.UInt32
+    content.vb: Public Function NextUInt(min As UInteger, max As UInteger) As UInteger
+  overload: Core.Data.DeterministicRandom.NextUInt*
+  nameWithType.vb: DeterministicRandom.NextUInt(UInteger, UInteger)
+  fullName.vb: Core.Data.DeterministicRandom.NextUInt(UInteger, UInteger)
+  name.vb: NextUInt(UInteger, UInteger)
+- uid: Core.Data.DeterministicRandom.NextInt(System.Int32)
+  commentId: M:Core.Data.DeterministicRandom.NextInt(System.Int32)
+  id: NextInt(System.Int32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextInt(int)
+  nameWithType: DeterministicRandom.NextInt(int)
+  fullName: Core.Data.DeterministicRandom.NextInt(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextInt
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random integer in range [0, max)
+  example: []
+  syntax:
+    content: public int NextInt(int max)
+    parameters:
+    - id: max
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function NextInt(max As Integer) As Integer
+  overload: Core.Data.DeterministicRandom.NextInt*
+  nameWithType.vb: DeterministicRandom.NextInt(Integer)
+  fullName.vb: Core.Data.DeterministicRandom.NextInt(Integer)
+  name.vb: NextInt(Integer)
+- uid: Core.Data.DeterministicRandom.NextInt(System.Int32,System.Int32)
+  commentId: M:Core.Data.DeterministicRandom.NextInt(System.Int32,System.Int32)
+  id: NextInt(System.Int32,System.Int32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextInt(int, int)
+  nameWithType: DeterministicRandom.NextInt(int, int)
+  fullName: Core.Data.DeterministicRandom.NextInt(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextInt
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random integer in range [min, max)
+  example: []
+  syntax:
+    content: public int NextInt(int min, int max)
+    parameters:
+    - id: min
+      type: System.Int32
+    - id: max
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function NextInt(min As Integer, max As Integer) As Integer
+  overload: Core.Data.DeterministicRandom.NextInt*
+  nameWithType.vb: DeterministicRandom.NextInt(Integer, Integer)
+  fullName.vb: Core.Data.DeterministicRandom.NextInt(Integer, Integer)
+  name.vb: NextInt(Integer, Integer)
+- uid: Core.Data.DeterministicRandom.NextFixed
+  commentId: M:Core.Data.DeterministicRandom.NextFixed
+  id: NextFixed
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextFixed()
+  nameWithType: DeterministicRandom.NextFixed()
+  fullName: Core.Data.DeterministicRandom.NextFixed()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextFixed
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 145
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Generate random float in range [0, 1)
+
+    Uses fixed-point arithmetic for deterministic results
+  example: []
+  syntax:
+    content: public FixedPoint32 NextFixed()
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Function NextFixed() As FixedPoint32
+  overload: Core.Data.DeterministicRandom.NextFixed*
+- uid: Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32)
+  commentId: M:Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32)
+  id: NextFixed(Core.Data.FixedPoint32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextFixed(FixedPoint32)
+  nameWithType: DeterministicRandom.NextFixed(FixedPoint32)
+  fullName: Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextFixed
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 155
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random fixed-point value in range [0, max)
+  example: []
+  syntax:
+    content: public FixedPoint32 NextFixed(FixedPoint32 max)
+    parameters:
+    - id: max
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Function NextFixed(max As FixedPoint32) As FixedPoint32
+  overload: Core.Data.DeterministicRandom.NextFixed*
+- uid: Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  id: NextFixed(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextFixed(FixedPoint32, FixedPoint32)
+  nameWithType: DeterministicRandom.NextFixed(FixedPoint32, FixedPoint32)
+  fullName: Core.Data.DeterministicRandom.NextFixed(Core.Data.FixedPoint32, Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextFixed
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 167
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random fixed-point value in range [min, max)
+  example: []
+  syntax:
+    content: public FixedPoint32 NextFixed(FixedPoint32 min, FixedPoint32 max)
+    parameters:
+    - id: min
+      type: Core.Data.FixedPoint32
+    - id: max
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Function NextFixed(min As FixedPoint32, max As FixedPoint32) As FixedPoint32
+  overload: Core.Data.DeterministicRandom.NextFixed*
+- uid: Core.Data.DeterministicRandom.NextBool
+  commentId: M:Core.Data.DeterministicRandom.NextBool
+  id: NextBool
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextBool()
+  nameWithType: DeterministicRandom.NextBool()
+  fullName: Core.Data.DeterministicRandom.NextBool()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextBool
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 176
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random boolean
+  example: []
+  syntax:
+    content: public bool NextBool()
+    return:
+      type: System.Boolean
+    content.vb: Public Function NextBool() As Boolean
+  overload: Core.Data.DeterministicRandom.NextBool*
+- uid: Core.Data.DeterministicRandom.NextBool(Core.Data.FixedPoint32)
+  commentId: M:Core.Data.DeterministicRandom.NextBool(Core.Data.FixedPoint32)
+  id: NextBool(Core.Data.FixedPoint32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextBool(FixedPoint32)
+  nameWithType: DeterministicRandom.NextBool(FixedPoint32)
+  fullName: Core.Data.DeterministicRandom.NextBool(Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextBool
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random boolean with specified probability
+  example: []
+  syntax:
+    content: public bool NextBool(FixedPoint32 probability)
+    parameters:
+    - id: probability
+      type: Core.Data.FixedPoint32
+    return:
+      type: System.Boolean
+    content.vb: Public Function NextBool(probability As FixedPoint32) As Boolean
+  overload: Core.Data.DeterministicRandom.NextBool*
+- uid: Core.Data.DeterministicRandom.NextPercent(System.Int32)
+  commentId: M:Core.Data.DeterministicRandom.NextPercent(System.Int32)
+  id: NextPercent(System.Int32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextPercent(int)
+  nameWithType: DeterministicRandom.NextPercent(int)
+  fullName: Core.Data.DeterministicRandom.NextPercent(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextPercent
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random boolean with percentage chance (0-100)
+  example: []
+  syntax:
+    content: public bool NextPercent(int percent)
+    parameters:
+    - id: percent
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function NextPercent(percent As Integer) As Boolean
+  overload: Core.Data.DeterministicRandom.NextPercent*
+  nameWithType.vb: DeterministicRandom.NextPercent(Integer)
+  fullName.vb: Core.Data.DeterministicRandom.NextPercent(Integer)
+  name.vb: NextPercent(Integer)
+- uid: Core.Data.DeterministicRandom.NextElement``1(``0[])
+  commentId: M:Core.Data.DeterministicRandom.NextElement``1(``0[])
+  id: NextElement``1(``0[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextElement<T>(T[])
+  nameWithType: DeterministicRandom.NextElement<T>(T[])
+  fullName: Core.Data.DeterministicRandom.NextElement<T>(T[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextElement
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 202
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random element from array
+  example: []
+  syntax:
+    content: 'public T NextElement<T>(T[] array) where T : unmanaged'
+    parameters:
+    - id: array
+      type: '{T}[]'
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextElement(Of T As Structure)(array As T()) As T
+  overload: Core.Data.DeterministicRandom.NextElement*
+  nameWithType.vb: DeterministicRandom.NextElement(Of T)(T())
+  fullName.vb: Core.Data.DeterministicRandom.NextElement(Of T)(T())
+  name.vb: NextElement(Of T)(T())
+- uid: Core.Data.DeterministicRandom.NextElement``1(Unity.Collections.NativeArray{``0})
+  commentId: M:Core.Data.DeterministicRandom.NextElement``1(Unity.Collections.NativeArray{``0})
+  id: NextElement``1(Unity.Collections.NativeArray{``0})
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextElement<T>(NativeArray<T>)
+  nameWithType: DeterministicRandom.NextElement<T>(NativeArray<T>)
+  fullName: Core.Data.DeterministicRandom.NextElement<T>(Unity.Collections.NativeArray<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextElement
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 213
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random element from NativeArray
+  example: []
+  syntax:
+    content: 'public T NextElement<T>(NativeArray<T> array) where T : unmanaged'
+    parameters:
+    - id: array
+      type: Unity.Collections.NativeArray{{T}}
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextElement(Of T As Structure)(array As NativeArray(Of T)) As T
+  overload: Core.Data.DeterministicRandom.NextElement*
+  nameWithType.vb: DeterministicRandom.NextElement(Of T)(NativeArray(Of T))
+  fullName.vb: Core.Data.DeterministicRandom.NextElement(Of T)(Unity.Collections.NativeArray(Of T))
+  name.vb: NextElement(Of T)(NativeArray(Of T))
+- uid: Core.Data.DeterministicRandom.Shuffle``1(``0[])
+  commentId: M:Core.Data.DeterministicRandom.Shuffle``1(``0[])
+  id: Shuffle``1(``0[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: Shuffle<T>(T[])
+  nameWithType: DeterministicRandom.Shuffle<T>(T[])
+  fullName: Core.Data.DeterministicRandom.Shuffle<T>(T[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Shuffle
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 224
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Shuffle array in-place using Fisher-Yates algorithm
+  example: []
+  syntax:
+    content: 'public void Shuffle<T>(T[] array) where T : unmanaged'
+    parameters:
+    - id: array
+      type: '{T}[]'
+    typeParameters:
+    - id: T
+    content.vb: Public Sub Shuffle(Of T As Structure)(array As T())
+  overload: Core.Data.DeterministicRandom.Shuffle*
+  nameWithType.vb: DeterministicRandom.Shuffle(Of T)(T())
+  fullName.vb: Core.Data.DeterministicRandom.Shuffle(Of T)(T())
+  name.vb: Shuffle(Of T)(T())
+- uid: Core.Data.DeterministicRandom.Shuffle``1(Unity.Collections.NativeArray{``0})
+  commentId: M:Core.Data.DeterministicRandom.Shuffle``1(Unity.Collections.NativeArray{``0})
+  id: Shuffle``1(Unity.Collections.NativeArray{``0})
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: Shuffle<T>(NativeArray<T>)
+  nameWithType: DeterministicRandom.Shuffle<T>(NativeArray<T>)
+  fullName: Core.Data.DeterministicRandom.Shuffle<T>(Unity.Collections.NativeArray<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Shuffle
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 240
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Shuffle NativeArray in-place using Fisher-Yates algorithm
+  example: []
+  syntax:
+    content: 'public void Shuffle<T>(NativeArray<T> array) where T : unmanaged'
+    parameters:
+    - id: array
+      type: Unity.Collections.NativeArray{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Public Sub Shuffle(Of T As Structure)(array As NativeArray(Of T))
+  overload: Core.Data.DeterministicRandom.Shuffle*
+  nameWithType.vb: DeterministicRandom.Shuffle(Of T)(NativeArray(Of T))
+  fullName.vb: Core.Data.DeterministicRandom.Shuffle(Of T)(Unity.Collections.NativeArray(Of T))
+  name.vb: Shuffle(Of T)(NativeArray(Of T))
+- uid: Core.Data.DeterministicRandom.NextPoint(Unity.Mathematics.int2,Unity.Mathematics.int2)
+  commentId: M:Core.Data.DeterministicRandom.NextPoint(Unity.Mathematics.int2,Unity.Mathematics.int2)
+  id: NextPoint(Unity.Mathematics.int2,Unity.Mathematics.int2)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextPoint(int2, int2)
+  nameWithType: DeterministicRandom.NextPoint(int2, int2)
+  fullName: Core.Data.DeterministicRandom.NextPoint(Unity.Mathematics.int2, Unity.Mathematics.int2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextPoint
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 256
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random 2D point within a rectangle
+  example: []
+  syntax:
+    content: public int2 NextPoint(int2 min, int2 max)
+    parameters:
+    - id: min
+      type: Unity.Mathematics.int2
+    - id: max
+      type: Unity.Mathematics.int2
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Function NextPoint(min As int2, max As int2) As int2
+  overload: Core.Data.DeterministicRandom.NextPoint*
+- uid: Core.Data.DeterministicRandom.NextPointInCircle(Core.Data.FixedPoint32)
+  commentId: M:Core.Data.DeterministicRandom.NextPointInCircle(Core.Data.FixedPoint32)
+  id: NextPointInCircle(Core.Data.FixedPoint32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextPointInCircle(FixedPoint32)
+  nameWithType: DeterministicRandom.NextPointInCircle(FixedPoint32)
+  fullName: Core.Data.DeterministicRandom.NextPointInCircle(Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextPointInCircle
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 267
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random 2D point within a circle (using rejection sampling)
+  example: []
+  syntax:
+    content: public FixedPoint2 NextPointInCircle(FixedPoint32 radius)
+    parameters:
+    - id: radius
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Function NextPointInCircle(radius As FixedPoint32) As FixedPoint2
+  overload: Core.Data.DeterministicRandom.NextPointInCircle*
+- uid: Core.Data.DeterministicRandom.NextGaussian
+  commentId: M:Core.Data.DeterministicRandom.NextGaussian
+  id: NextGaussian
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextGaussian()
+  nameWithType: DeterministicRandom.NextGaussian()
+  fullName: Core.Data.DeterministicRandom.NextGaussian()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextGaussian
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 288
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Generate random value from standard normal distribution (mean=0, stddev=1).
+
+    Uses Box-Muller transform with fixed-point math for determinism.
+  example: []
+  syntax:
+    content: public FixedPoint32 NextGaussian()
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Function NextGaussian() As FixedPoint32
+  overload: Core.Data.DeterministicRandom.NextGaussian*
+- uid: Core.Data.DeterministicRandom.NextGaussian(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.DeterministicRandom.NextGaussian(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  id: NextGaussian(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextGaussian(FixedPoint32, FixedPoint32)
+  nameWithType: DeterministicRandom.NextGaussian(FixedPoint32, FixedPoint32)
+  fullName: Core.Data.DeterministicRandom.NextGaussian(Core.Data.FixedPoint32, Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextGaussian
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 324
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Generate random value from normal distribution with specified mean and standard deviation.
+  example: []
+  syntax:
+    content: public FixedPoint32 NextGaussian(FixedPoint32 mean, FixedPoint32 stdDev)
+    parameters:
+    - id: mean
+      type: Core.Data.FixedPoint32
+    - id: stdDev
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Function NextGaussian(mean As FixedPoint32, stdDev As FixedPoint32) As FixedPoint32
+  overload: Core.Data.DeterministicRandom.NextGaussian*
+- uid: Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],System.Int32[])
+  commentId: M:Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],System.Int32[])
+  id: NextWeightedElement``1(``0[],System.Int32[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextWeightedElement<T>(T[], int[])
+  nameWithType: DeterministicRandom.NextWeightedElement<T>(T[], int[])
+  fullName: Core.Data.DeterministicRandom.NextWeightedElement<T>(T[], int[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextWeightedElement
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 337
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Select random element from array using weights.
+
+    Higher weight = more likely to be selected.
+  example: []
+  syntax:
+    content: 'public T NextWeightedElement<T>(T[] elements, int[] weights) where T : unmanaged'
+    parameters:
+    - id: elements
+      type: '{T}[]'
+    - id: weights
+      type: System.Int32[]
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextWeightedElement(Of T As Structure)(elements As T(), weights As Integer()) As T
+  overload: Core.Data.DeterministicRandom.NextWeightedElement*
+  nameWithType.vb: DeterministicRandom.NextWeightedElement(Of T)(T(), Integer())
+  fullName.vb: Core.Data.DeterministicRandom.NextWeightedElement(Of T)(T(), Integer())
+  name.vb: NextWeightedElement(Of T)(T(), Integer())
+- uid: Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],Core.Data.FixedPoint32[])
+  commentId: M:Core.Data.DeterministicRandom.NextWeightedElement``1(``0[],Core.Data.FixedPoint32[])
+  id: NextWeightedElement``1(``0[],Core.Data.FixedPoint32[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextWeightedElement<T>(T[], FixedPoint32[])
+  nameWithType: DeterministicRandom.NextWeightedElement<T>(T[], FixedPoint32[])
+  fullName: Core.Data.DeterministicRandom.NextWeightedElement<T>(T[], Core.Data.FixedPoint32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextWeightedElement
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 375
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random element from array using FixedPoint weights.
+  example: []
+  syntax:
+    content: 'public T NextWeightedElement<T>(T[] elements, FixedPoint32[] weights) where T : unmanaged'
+    parameters:
+    - id: elements
+      type: '{T}[]'
+    - id: weights
+      type: Core.Data.FixedPoint32[]
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextWeightedElement(Of T As Structure)(elements As T(), weights As FixedPoint32()) As T
+  overload: Core.Data.DeterministicRandom.NextWeightedElement*
+  nameWithType.vb: DeterministicRandom.NextWeightedElement(Of T)(T(), FixedPoint32())
+  fullName.vb: Core.Data.DeterministicRandom.NextWeightedElement(Of T)(T(), Core.Data.FixedPoint32())
+  name.vb: NextWeightedElement(Of T)(T(), FixedPoint32())
+- uid: Core.Data.DeterministicRandom.NextWeightedIndex(System.Int32[])
+  commentId: M:Core.Data.DeterministicRandom.NextWeightedIndex(System.Int32[])
+  id: NextWeightedIndex(System.Int32[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextWeightedIndex(int[])
+  nameWithType: DeterministicRandom.NextWeightedIndex(int[])
+  fullName: Core.Data.DeterministicRandom.NextWeightedIndex(int[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextWeightedIndex
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 412
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random index using weights (useful when you need the index, not the element).
+  example: []
+  syntax:
+    content: public int NextWeightedIndex(int[] weights)
+    parameters:
+    - id: weights
+      type: System.Int32[]
+    return:
+      type: System.Int32
+    content.vb: Public Function NextWeightedIndex(weights As Integer()) As Integer
+  overload: Core.Data.DeterministicRandom.NextWeightedIndex*
+  nameWithType.vb: DeterministicRandom.NextWeightedIndex(Integer())
+  fullName.vb: Core.Data.DeterministicRandom.NextWeightedIndex(Integer())
+  name.vb: NextWeightedIndex(Integer())
+- uid: Core.Data.DeterministicRandom.NextElementExcept``1(``0[],``0)
+  commentId: M:Core.Data.DeterministicRandom.NextElementExcept``1(``0[],``0)
+  id: NextElementExcept``1(``0[],``0)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextElementExcept<T>(T[], T)
+  nameWithType: DeterministicRandom.NextElementExcept<T>(T[], T)
+  fullName: Core.Data.DeterministicRandom.NextElementExcept<T>(T[], T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextElementExcept
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 447
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random element from array, excluding a specific element.
+  example: []
+  syntax:
+    content: 'public T NextElementExcept<T>(T[] array, T excluded) where T : unmanaged, IEquatable<T>'
+    parameters:
+    - id: array
+      type: '{T}[]'
+    - id: excluded
+      type: '{T}'
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextElementExcept(Of T As {Structure, IEquatable(Of T)})(array As T(), excluded As T) As T
+  overload: Core.Data.DeterministicRandom.NextElementExcept*
+  nameWithType.vb: DeterministicRandom.NextElementExcept(Of T)(T(), T)
+  fullName.vb: Core.Data.DeterministicRandom.NextElementExcept(Of T)(T(), T)
+  name.vb: NextElementExcept(Of T)(T(), T)
+- uid: Core.Data.DeterministicRandom.NextElementExceptIndices``1(``0[],System.Int32[])
+  commentId: M:Core.Data.DeterministicRandom.NextElementExceptIndices``1(``0[],System.Int32[])
+  id: NextElementExceptIndices``1(``0[],System.Int32[])
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: NextElementExceptIndices<T>(T[], params int[])
+  nameWithType: DeterministicRandom.NextElementExceptIndices<T>(T[], params int[])
+  fullName: Core.Data.DeterministicRandom.NextElementExceptIndices<T>(T[], params int[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NextElementExceptIndices
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 471
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Select random element from array, excluding elements at specific indices.
+  example: []
+  syntax:
+    content: 'public T NextElementExceptIndices<T>(T[] array, params int[] excludedIndices) where T : unmanaged'
+    parameters:
+    - id: array
+      type: '{T}[]'
+    - id: excludedIndices
+      type: System.Int32[]
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function NextElementExceptIndices(Of T As Structure)(array As T(), ParamArray excludedIndices As Integer()) As T
+  overload: Core.Data.DeterministicRandom.NextElementExceptIndices*
+  nameWithType.vb: DeterministicRandom.NextElementExceptIndices(Of T)(T(), ParamArray Integer())
+  fullName.vb: Core.Data.DeterministicRandom.NextElementExceptIndices(Of T)(T(), ParamArray Integer())
+  name.vb: NextElementExceptIndices(Of T)(T(), ParamArray Integer())
+- uid: Core.Data.DeterministicRandom.ToSeedPhrase
+  commentId: M:Core.Data.DeterministicRandom.ToSeedPhrase
+  id: ToSeedPhrase
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: ToSeedPhrase()
+  nameWithType: DeterministicRandom.ToSeedPhrase()
+  fullName: Core.Data.DeterministicRandom.ToSeedPhrase()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToSeedPhrase
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 530
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Export current state as human-readable seed phrase.
+
+    Format: 8 words encoding the full 128-bit state.
+  example: []
+  syntax:
+    content: public string ToSeedPhrase()
+    return:
+      type: System.String
+    content.vb: Public Function ToSeedPhrase() As String
+  overload: Core.Data.DeterministicRandom.ToSeedPhrase*
+- uid: Core.Data.DeterministicRandom.FromSeedPhrase(System.String)
+  commentId: M:Core.Data.DeterministicRandom.FromSeedPhrase(System.String)
+  id: FromSeedPhrase(System.String)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: FromSeedPhrase(string)
+  nameWithType: DeterministicRandom.FromSeedPhrase(string)
+  fullName: Core.Data.DeterministicRandom.FromSeedPhrase(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromSeedPhrase
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 552
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Create DeterministicRandom from seed phrase.
+
+    Note: This is a simplified encoding - not full state recovery, but deterministic.
+  example: []
+  syntax:
+    content: public static DeterministicRandom FromSeedPhrase(string phrase)
+    parameters:
+    - id: phrase
+      type: System.String
+    return:
+      type: Core.Data.DeterministicRandom
+    content.vb: Public Shared Function FromSeedPhrase(phrase As String) As DeterministicRandom
+  overload: Core.Data.DeterministicRandom.FromSeedPhrase*
+  nameWithType.vb: DeterministicRandom.FromSeedPhrase(String)
+  fullName.vb: Core.Data.DeterministicRandom.FromSeedPhrase(String)
+  name.vb: FromSeedPhrase(String)
+- uid: Core.Data.DeterministicRandom.Branch(System.UInt32)
+  commentId: M:Core.Data.DeterministicRandom.Branch(System.UInt32)
+  id: Branch(System.UInt32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: Branch(uint)
+  nameWithType: DeterministicRandom.Branch(uint)
+  fullName: Core.Data.DeterministicRandom.Branch(uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Branch
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 596
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Create a new random generator with different state (for sub-systems)
+
+    This allows different systems to have independent random sequences
+
+    while maintaining overall determinism
+  example: []
+  syntax:
+    content: public DeterministicRandom Branch(uint offset = 1)
+    parameters:
+    - id: offset
+      type: System.UInt32
+    return:
+      type: Core.Data.DeterministicRandom
+    content.vb: Public Function Branch(offset As UInteger = 1) As DeterministicRandom
+  overload: Core.Data.DeterministicRandom.Branch*
+  nameWithType.vb: DeterministicRandom.Branch(UInteger)
+  fullName.vb: Core.Data.DeterministicRandom.Branch(UInteger)
+  name.vb: Branch(UInteger)
+- uid: Core.Data.DeterministicRandom.GetStateHash
+  commentId: M:Core.Data.DeterministicRandom.GetStateHash
+  id: GetStateHash
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: GetStateHash()
+  nameWithType: DeterministicRandom.GetStateHash()
+  fullName: Core.Data.DeterministicRandom.GetStateHash()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStateHash
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 611
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get a hash of the current state for verification
+  example: []
+  syntax:
+    content: public uint GetStateHash()
+    return:
+      type: System.UInt32
+    content.vb: Public Function GetStateHash() As UInteger
+  overload: Core.Data.DeterministicRandom.GetStateHash*
+- uid: Core.Data.DeterministicRandom.SetSeed(System.UInt32)
+  commentId: M:Core.Data.DeterministicRandom.SetSeed(System.UInt32)
+  id: SetSeed(System.UInt32)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: SetSeed(uint)
+  nameWithType: DeterministicRandom.SetSeed(uint)
+  fullName: Core.Data.DeterministicRandom.SetSeed(uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetSeed
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 619
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Reset to a known state (for testing or save/load)
+  example: []
+  syntax:
+    content: public void SetSeed(uint seed)
+    parameters:
+    - id: seed
+      type: System.UInt32
+    content.vb: Public Sub SetSeed(seed As UInteger)
+  overload: Core.Data.DeterministicRandom.SetSeed*
+  nameWithType.vb: DeterministicRandom.SetSeed(UInteger)
+  fullName.vb: Core.Data.DeterministicRandom.SetSeed(UInteger)
+  name.vb: SetSeed(UInteger)
+- uid: Core.Data.DeterministicRandom.ToString
+  commentId: M:Core.Data.DeterministicRandom.ToString
+  id: ToString
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: DeterministicRandom.ToString()
+  fullName: Core.Data.DeterministicRandom.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 624
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.DeterministicRandom.ToString*
+- uid: Core.Data.DeterministicRandom.HasSameState(Core.Data.DeterministicRandom)
+  commentId: M:Core.Data.DeterministicRandom.HasSameState(Core.Data.DeterministicRandom)
+  id: HasSameState(Core.Data.DeterministicRandom)
+  parent: Core.Data.DeterministicRandom
+  langs:
+  - csharp
+  - vb
+  name: HasSameState(DeterministicRandom)
+  nameWithType: DeterministicRandom.HasSameState(DeterministicRandom)
+  fullName: Core.Data.DeterministicRandom.HasSameState(Core.Data.DeterministicRandom)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/DeterministicRandom.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasSameState
+    path: Scripts/Core/Data/DeterministicRandom.cs
+    startLine: 632
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Verify two random generators have the same state
+  example: []
+  syntax:
+    content: public bool HasSameState(DeterministicRandom other)
+    parameters:
+    - id: other
+      type: Core.Data.DeterministicRandom
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasSameState(other As DeterministicRandom) As Boolean
+  overload: Core.Data.DeterministicRandom.HasSameState*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Data.DeterministicRandom.State*
+  commentId: Overload:Core.Data.DeterministicRandom.State
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_State
+  name: State
+  nameWithType: DeterministicRandom.State
+  fullName: Core.Data.DeterministicRandom.State
+- uid: Unity.Mathematics.uint4
+  commentId: T:Unity.Mathematics.uint4
+  parent: Unity.Mathematics
+  isExternal: true
+  name: uint4
+  nameWithType: uint4
+  fullName: Unity.Mathematics.uint4
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: Core.Data.DeterministicRandom.#ctor*
+  commentId: Overload:Core.Data.DeterministicRandom.#ctor
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom__ctor_System_UInt32_
+  name: DeterministicRandom
+  nameWithType: DeterministicRandom.DeterministicRandom
+  fullName: Core.Data.DeterministicRandom.DeterministicRandom
+  nameWithType.vb: DeterministicRandom.New
+  fullName.vb: Core.Data.DeterministicRandom.New
+  name.vb: New
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.DeterministicRandom.NextUInt*
+  commentId: Overload:Core.Data.DeterministicRandom.NextUInt
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextUInt
+  name: NextUInt
+  nameWithType: DeterministicRandom.NextUInt
+  fullName: Core.Data.DeterministicRandom.NextUInt
+- uid: Core.Data.DeterministicRandom.NextInt*
+  commentId: Overload:Core.Data.DeterministicRandom.NextInt
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextInt_System_Int32_
+  name: NextInt
+  nameWithType: DeterministicRandom.NextInt
+  fullName: Core.Data.DeterministicRandom.NextInt
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.DeterministicRandom.NextFixed*
+  commentId: Overload:Core.Data.DeterministicRandom.NextFixed
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextFixed
+  name: NextFixed
+  nameWithType: DeterministicRandom.NextFixed
+  fullName: Core.Data.DeterministicRandom.NextFixed
+- uid: Core.Data.FixedPoint32
+  commentId: T:Core.Data.FixedPoint32
+  parent: Core.Data
+  href: Core.Data.FixedPoint32.html
+  name: FixedPoint32
+  nameWithType: FixedPoint32
+  fullName: Core.Data.FixedPoint32
+- uid: Core.Data.DeterministicRandom.NextBool*
+  commentId: Overload:Core.Data.DeterministicRandom.NextBool
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextBool
+  name: NextBool
+  nameWithType: DeterministicRandom.NextBool
+  fullName: Core.Data.DeterministicRandom.NextBool
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.DeterministicRandom.NextPercent*
+  commentId: Overload:Core.Data.DeterministicRandom.NextPercent
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextPercent_System_Int32_
+  name: NextPercent
+  nameWithType: DeterministicRandom.NextPercent
+  fullName: Core.Data.DeterministicRandom.NextPercent
+- uid: Core.Data.DeterministicRandom.NextElement*
+  commentId: Overload:Core.Data.DeterministicRandom.NextElement
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextElement__1___0___
+  name: NextElement
+  nameWithType: DeterministicRandom.NextElement
+  fullName: Core.Data.DeterministicRandom.NextElement
+- uid: '{T}[]'
+  isExternal: true
+  name: T[]
+  nameWithType: T[]
+  fullName: T[]
+  nameWithType.vb: T()
+  fullName.vb: T()
+  name.vb: T()
+  spec.csharp:
+  - name: T
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - name: T
+  - name: (
+  - name: )
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Unity.Collections.NativeArray{{T}}
+  commentId: T:Unity.Collections.NativeArray{``0}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Data.DeterministicRandom.Shuffle*
+  commentId: Overload:Core.Data.DeterministicRandom.Shuffle
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_Shuffle__1___0___
+  name: Shuffle
+  nameWithType: DeterministicRandom.Shuffle
+  fullName: Core.Data.DeterministicRandom.Shuffle
+- uid: Core.Data.DeterministicRandom.NextPoint*
+  commentId: Overload:Core.Data.DeterministicRandom.NextPoint
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextPoint_Unity_Mathematics_int2_Unity_Mathematics_int2_
+  name: NextPoint
+  nameWithType: DeterministicRandom.NextPoint
+  fullName: Core.Data.DeterministicRandom.NextPoint
+- uid: Unity.Mathematics.int2
+  commentId: T:Unity.Mathematics.int2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: int2
+  nameWithType: int2
+  fullName: Unity.Mathematics.int2
+- uid: Core.Data.DeterministicRandom.NextPointInCircle*
+  commentId: Overload:Core.Data.DeterministicRandom.NextPointInCircle
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextPointInCircle_Core_Data_FixedPoint32_
+  name: NextPointInCircle
+  nameWithType: DeterministicRandom.NextPointInCircle
+  fullName: Core.Data.DeterministicRandom.NextPointInCircle
+- uid: Core.Data.FixedPoint2
+  commentId: T:Core.Data.FixedPoint2
+  parent: Core.Data
+  href: Core.Data.FixedPoint2.html
+  name: FixedPoint2
+  nameWithType: FixedPoint2
+  fullName: Core.Data.FixedPoint2
+- uid: Core.Data.DeterministicRandom.NextGaussian*
+  commentId: Overload:Core.Data.DeterministicRandom.NextGaussian
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextGaussian
+  name: NextGaussian
+  nameWithType: DeterministicRandom.NextGaussian
+  fullName: Core.Data.DeterministicRandom.NextGaussian
+- uid: Core.Data.DeterministicRandom.NextWeightedElement*
+  commentId: Overload:Core.Data.DeterministicRandom.NextWeightedElement
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextWeightedElement__1___0___System_Int32___
+  name: NextWeightedElement
+  nameWithType: DeterministicRandom.NextWeightedElement
+  fullName: Core.Data.DeterministicRandom.NextWeightedElement
+- uid: System.Int32[]
+  isExternal: true
+  name: int[]
+  nameWithType: int[]
+  fullName: int[]
+  nameWithType.vb: Integer()
+  fullName.vb: Integer()
+  name.vb: Integer()
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint32[]
+  isExternal: true
+  href: Core.Data.FixedPoint32.html
+  name: FixedPoint32[]
+  nameWithType: FixedPoint32[]
+  fullName: Core.Data.FixedPoint32[]
+  nameWithType.vb: FixedPoint32()
+  fullName.vb: Core.Data.FixedPoint32()
+  name.vb: FixedPoint32()
+  spec.csharp:
+  - uid: Core.Data.FixedPoint32
+    name: FixedPoint32
+    href: Core.Data.FixedPoint32.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.Data.FixedPoint32
+    name: FixedPoint32
+    href: Core.Data.FixedPoint32.html
+  - name: (
+  - name: )
+- uid: Core.Data.DeterministicRandom.NextWeightedIndex*
+  commentId: Overload:Core.Data.DeterministicRandom.NextWeightedIndex
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextWeightedIndex_System_Int32___
+  name: NextWeightedIndex
+  nameWithType: DeterministicRandom.NextWeightedIndex
+  fullName: Core.Data.DeterministicRandom.NextWeightedIndex
+- uid: Core.Data.DeterministicRandom.NextElementExcept*
+  commentId: Overload:Core.Data.DeterministicRandom.NextElementExcept
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextElementExcept__1___0_____0_
+  name: NextElementExcept
+  nameWithType: DeterministicRandom.NextElementExcept
+  fullName: Core.Data.DeterministicRandom.NextElementExcept
+- uid: Core.Data.DeterministicRandom.NextElementExceptIndices*
+  commentId: Overload:Core.Data.DeterministicRandom.NextElementExceptIndices
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_NextElementExceptIndices__1___0___System_Int32___
+  name: NextElementExceptIndices
+  nameWithType: DeterministicRandom.NextElementExceptIndices
+  fullName: Core.Data.DeterministicRandom.NextElementExceptIndices
+- uid: Core.Data.DeterministicRandom.ToSeedPhrase*
+  commentId: Overload:Core.Data.DeterministicRandom.ToSeedPhrase
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_ToSeedPhrase
+  name: ToSeedPhrase
+  nameWithType: DeterministicRandom.ToSeedPhrase
+  fullName: Core.Data.DeterministicRandom.ToSeedPhrase
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.DeterministicRandom.FromSeedPhrase*
+  commentId: Overload:Core.Data.DeterministicRandom.FromSeedPhrase
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_FromSeedPhrase_System_String_
+  name: FromSeedPhrase
+  nameWithType: DeterministicRandom.FromSeedPhrase
+  fullName: Core.Data.DeterministicRandom.FromSeedPhrase
+- uid: Core.Data.DeterministicRandom
+  commentId: T:Core.Data.DeterministicRandom
+  parent: Core.Data
+  href: Core.Data.DeterministicRandom.html
+  name: DeterministicRandom
+  nameWithType: DeterministicRandom
+  fullName: Core.Data.DeterministicRandom
+- uid: Core.Data.DeterministicRandom.Branch*
+  commentId: Overload:Core.Data.DeterministicRandom.Branch
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_Branch_System_UInt32_
+  name: Branch
+  nameWithType: DeterministicRandom.Branch
+  fullName: Core.Data.DeterministicRandom.Branch
+- uid: Core.Data.DeterministicRandom.GetStateHash*
+  commentId: Overload:Core.Data.DeterministicRandom.GetStateHash
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_GetStateHash
+  name: GetStateHash
+  nameWithType: DeterministicRandom.GetStateHash
+  fullName: Core.Data.DeterministicRandom.GetStateHash
+- uid: Core.Data.DeterministicRandom.SetSeed*
+  commentId: Overload:Core.Data.DeterministicRandom.SetSeed
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_SetSeed_System_UInt32_
+  name: SetSeed
+  nameWithType: DeterministicRandom.SetSeed
+  fullName: Core.Data.DeterministicRandom.SetSeed
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.DeterministicRandom.ToString*
+  commentId: Overload:Core.Data.DeterministicRandom.ToString
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_ToString
+  name: ToString
+  nameWithType: DeterministicRandom.ToString
+  fullName: Core.Data.DeterministicRandom.ToString
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: Core.Data.DeterministicRandom.HasSameState*
+  commentId: Overload:Core.Data.DeterministicRandom.HasSameState
+  href: Core.Data.DeterministicRandom.html#Core_Data_DeterministicRandom_HasSameState_Core_Data_DeterministicRandom_
+  name: HasSameState
+  nameWithType: DeterministicRandom.HasSameState
+  fullName: Core.Data.DeterministicRandom.HasSameState

@@ -1,0 +1,281 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent
+  commentId: T:Core.Diplomacy.NonAggressionPactFormedEvent
+  id: NonAggressionPactFormedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.NonAggressionPactFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+  - Core.Diplomacy.NonAggressionPactFormedEvent.country1
+  - Core.Diplomacy.NonAggressionPactFormedEvent.country2
+  - Core.Diplomacy.NonAggressionPactFormedEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: NonAggressionPactFormedEvent
+  nameWithType: NonAggressionPactFormedEvent
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NonAggressionPactFormedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 150
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Emitted when a non-aggression pact is formed
+  example: []
+  syntax:
+    content: 'public struct NonAggressionPactFormedEvent : IGameEvent'
+    content.vb: Public Structure NonAggressionPactFormedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.country1
+  commentId: F:Core.Diplomacy.NonAggressionPactFormedEvent.country1
+  id: country1
+  parent: Core.Diplomacy.NonAggressionPactFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: country1
+  nameWithType: NonAggressionPactFormedEvent.country1
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.country1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country1
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 152
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country1
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country1 As UShort
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.country2
+  commentId: F:Core.Diplomacy.NonAggressionPactFormedEvent.country2
+  id: country2
+  parent: Core.Diplomacy.NonAggressionPactFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: country2
+  nameWithType: NonAggressionPactFormedEvent.country2
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.country2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country2
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 153
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country2
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country2 As UShort
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.tick
+  commentId: F:Core.Diplomacy.NonAggressionPactFormedEvent.tick
+  id: tick
+  parent: Core.Diplomacy.NonAggressionPactFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: NonAggressionPactFormedEvent.tick
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 154
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.NonAggressionPactFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: NonAggressionPactFormedEvent.TimeStamp
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 155
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.NonAggressionPactFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.NonAggressionPactFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: NonAggressionPactFormedEvent(ushort, ushort, int)
+  nameWithType: NonAggressionPactFormedEvent.NonAggressionPactFormedEvent(ushort, ushort, int)
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.NonAggressionPactFormedEvent(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 157
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public NonAggressionPactFormedEvent(ushort c1, ushort c2, int tick)
+    parameters:
+    - id: c1
+      type: System.UInt16
+    - id: c2
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(c1 As UShort, c2 As UShort, tick As Integer)
+  overload: Core.Diplomacy.NonAggressionPactFormedEvent.#ctor*
+  nameWithType.vb: NonAggressionPactFormedEvent.New(UShort, UShort, Integer)
+  fullName.vb: Core.Diplomacy.NonAggressionPactFormedEvent.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+  href: Core.Diplomacy.NonAggressionPactFormedEvent.html#Core_Diplomacy_NonAggressionPactFormedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: NonAggressionPactFormedEvent.TimeStamp
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.NonAggressionPactFormedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.NonAggressionPactFormedEvent.#ctor
+  href: Core.Diplomacy.NonAggressionPactFormedEvent.html#Core_Diplomacy_NonAggressionPactFormedEvent__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: NonAggressionPactFormedEvent
+  nameWithType: NonAggressionPactFormedEvent.NonAggressionPactFormedEvent
+  fullName: Core.Diplomacy.NonAggressionPactFormedEvent.NonAggressionPactFormedEvent
+  nameWithType.vb: NonAggressionPactFormedEvent.New
+  fullName.vb: Core.Diplomacy.NonAggressionPactFormedEvent.New
+  name.vb: New

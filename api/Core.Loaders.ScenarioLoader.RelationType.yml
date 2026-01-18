@@ -1,0 +1,236 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.RelationType
+  commentId: T:Core.Loaders.ScenarioLoader.RelationType
+  id: ScenarioLoader.RelationType
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.RelationType.Alliance
+  - Core.Loaders.ScenarioLoader.RelationType.PersonalUnion
+  - Core.Loaders.ScenarioLoader.RelationType.Trade
+  - Core.Loaders.ScenarioLoader.RelationType.Truce
+  - Core.Loaders.ScenarioLoader.RelationType.Vassalage
+  - Core.Loaders.ScenarioLoader.RelationType.War
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.RelationType
+  nameWithType: ScenarioLoader.RelationType
+  fullName: Core.Loaders.ScenarioLoader.RelationType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RelationType
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public enum ScenarioLoader.RelationType
+    content.vb: Public Enum ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.Alliance
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.Alliance
+  id: Alliance
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: Alliance
+  nameWithType: ScenarioLoader.RelationType.Alliance
+  fullName: Core.Loaders.ScenarioLoader.RelationType.Alliance
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Alliance
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: Alliance = 0
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.War
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.War
+  id: War
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: War
+  nameWithType: ScenarioLoader.RelationType.War
+  fullName: Core.Loaders.ScenarioLoader.RelationType.War
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: War
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: War = 1
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.Truce
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.Truce
+  id: Truce
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: Truce
+  nameWithType: ScenarioLoader.RelationType.Truce
+  fullName: Core.Loaders.ScenarioLoader.RelationType.Truce
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Truce
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 111
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: Truce = 2
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.Trade
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.Trade
+  id: Trade
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: Trade
+  nameWithType: ScenarioLoader.RelationType.Trade
+  fullName: Core.Loaders.ScenarioLoader.RelationType.Trade
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Trade
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: Trade = 3
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.Vassalage
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.Vassalage
+  id: Vassalage
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: Vassalage
+  nameWithType: ScenarioLoader.RelationType.Vassalage
+  fullName: Core.Loaders.ScenarioLoader.RelationType.Vassalage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Vassalage
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: Vassalage = 4
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.RelationType.PersonalUnion
+  commentId: F:Core.Loaders.ScenarioLoader.RelationType.PersonalUnion
+  id: PersonalUnion
+  parent: Core.Loaders.ScenarioLoader.RelationType
+  langs:
+  - csharp
+  - vb
+  name: PersonalUnion
+  nameWithType: ScenarioLoader.RelationType.PersonalUnion
+  fullName: Core.Loaders.ScenarioLoader.RelationType.PersonalUnion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PersonalUnion
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: PersonalUnion = 5
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: Core.Loaders.ScenarioLoader.RelationType
+  commentId: T:Core.Loaders.ScenarioLoader.RelationType
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.RelationType
+  nameWithType: ScenarioLoader.RelationType
+  fullName: Core.Loaders.ScenarioLoader.RelationType
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html

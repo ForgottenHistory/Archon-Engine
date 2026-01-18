@@ -1,0 +1,369 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackChain
+  id: LocalizationFallbackChain.FallbackChain
+  parent: Core.Localization
+  children:
+  - Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose
+  - Core.Localization.LocalizationFallbackChain.FallbackChain.Languages
+  - Core.Localization.LocalizationFallbackChain.FallbackChain.PrimaryLanguage
+  - Core.Localization.LocalizationFallbackChain.FallbackChain.RegionalFallbacks
+  - Core.Localization.LocalizationFallbackChain.FallbackChain.UseRegionalFallbacks
+  langs:
+  - csharp
+  - vb
+  name: LocalizationFallbackChain.FallbackChain
+  nameWithType: LocalizationFallbackChain.FallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FallbackChain
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Fallback chain configuration
+  example: []
+  syntax:
+    content: public struct LocalizationFallbackChain.FallbackChain
+    content.vb: Public Structure LocalizationFallbackChain.FallbackChain
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.Languages
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackChain.Languages
+  id: Languages
+  parent: Core.Localization.LocalizationFallbackChain.FallbackChain
+  langs:
+  - csharp
+  - vb
+  name: Languages
+  nameWithType: LocalizationFallbackChain.FallbackChain.Languages
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.Languages
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Languages
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeList<FixedString64Bytes> Languages
+    return:
+      type: Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+    content.vb: Public Languages As NativeList(Of FixedString64Bytes)
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.RegionalFallbacks
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackChain.RegionalFallbacks
+  id: RegionalFallbacks
+  parent: Core.Localization.LocalizationFallbackChain.FallbackChain
+  langs:
+  - csharp
+  - vb
+  name: RegionalFallbacks
+  nameWithType: LocalizationFallbackChain.FallbackChain.RegionalFallbacks
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.RegionalFallbacks
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegionalFallbacks
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeHashMap<FixedString64Bytes, FixedString64Bytes> RegionalFallbacks
+    return:
+      type: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes}
+    content.vb: Public RegionalFallbacks As NativeHashMap(Of FixedString64Bytes, FixedString64Bytes)
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.PrimaryLanguage
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackChain.PrimaryLanguage
+  id: PrimaryLanguage
+  parent: Core.Localization.LocalizationFallbackChain.FallbackChain
+  langs:
+  - csharp
+  - vb
+  name: PrimaryLanguage
+  nameWithType: LocalizationFallbackChain.FallbackChain.PrimaryLanguage
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.PrimaryLanguage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PrimaryLanguage
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString64Bytes PrimaryLanguage
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public PrimaryLanguage As FixedString64Bytes
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.UseRegionalFallbacks
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackChain.UseRegionalFallbacks
+  id: UseRegionalFallbacks
+  parent: Core.Localization.LocalizationFallbackChain.FallbackChain
+  langs:
+  - csharp
+  - vb
+  name: UseRegionalFallbacks
+  nameWithType: LocalizationFallbackChain.FallbackChain.UseRegionalFallbacks
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.UseRegionalFallbacks
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UseRegionalFallbacks
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool UseRegionalFallbacks
+    return:
+      type: System.Boolean
+    content.vb: Public UseRegionalFallbacks As Boolean
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose
+  commentId: M:Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose
+  id: Dispose
+  parent: Core.Localization.LocalizationFallbackChain.FallbackChain
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: LocalizationFallbackChain.FallbackChain.Dispose()
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+  commentId: T:Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<FixedString64Bytes>
+  nameWithType: NativeList<FixedString64Bytes>
+  fullName: Unity.Collections.NativeList<Unity.Collections.FixedString64Bytes>
+  nameWithType.vb: NativeList(Of FixedString64Bytes)
+  fullName.vb: Unity.Collections.NativeList(Of Unity.Collections.FixedString64Bytes)
+  name.vb: NativeList(Of FixedString64Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes}
+  commentId: T:Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString64Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<FixedString64Bytes, FixedString64Bytes>
+  nameWithType: NativeHashMap<FixedString64Bytes, FixedString64Bytes>
+  fullName: Unity.Collections.NativeHashMap<Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString64Bytes>
+  nameWithType.vb: NativeHashMap(Of FixedString64Bytes, FixedString64Bytes)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString64Bytes)
+  name.vb: NativeHashMap(Of FixedString64Bytes, FixedString64Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose*
+  commentId: Overload:Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose
+  href: Core.Localization.LocalizationFallbackChain.FallbackChain.html#Core_Localization_LocalizationFallbackChain_FallbackChain_Dispose
+  name: Dispose
+  nameWithType: LocalizationFallbackChain.FallbackChain.Dispose
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain.Dispose

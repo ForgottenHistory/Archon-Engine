@@ -1,0 +1,389 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.GameSettings.ValidationResult
+  commentId: T:Core.GameSettings.ValidationResult
+  id: GameSettings.ValidationResult
+  parent: Core
+  children:
+  - Core.GameSettings.ValidationResult.AddError(System.String)
+  - Core.GameSettings.ValidationResult.AddWarning(System.String)
+  - Core.GameSettings.ValidationResult.Errors
+  - Core.GameSettings.ValidationResult.GetSummary
+  - Core.GameSettings.ValidationResult.HasWarnings
+  - Core.GameSettings.ValidationResult.IsValid
+  - Core.GameSettings.ValidationResult.Warnings
+  langs:
+  - csharp
+  - vb
+  name: GameSettings.ValidationResult
+  nameWithType: GameSettings.ValidationResult
+  fullName: Core.GameSettings.ValidationResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationResult
+    path: Scripts/Core/GameSettings.cs
+    startLine: 129
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Result of path validation
+  example: []
+  syntax:
+    content: public struct GameSettings.ValidationResult
+    content.vb: Public Structure GameSettings.ValidationResult
+- uid: Core.GameSettings.ValidationResult.Errors
+  commentId: F:Core.GameSettings.ValidationResult.Errors
+  id: Errors
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: Errors
+  nameWithType: GameSettings.ValidationResult.Errors
+  fullName: Core.GameSettings.ValidationResult.Errors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Errors
+    path: Scripts/Core/GameSettings.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public List<string> Errors
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Errors As List(Of String)
+- uid: Core.GameSettings.ValidationResult.Warnings
+  commentId: F:Core.GameSettings.ValidationResult.Warnings
+  id: Warnings
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: Warnings
+  nameWithType: GameSettings.ValidationResult.Warnings
+  fullName: Core.GameSettings.ValidationResult.Warnings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Warnings
+    path: Scripts/Core/GameSettings.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public List<string> Warnings
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Warnings As List(Of String)
+- uid: Core.GameSettings.ValidationResult.IsValid
+  commentId: P:Core.GameSettings.ValidationResult.IsValid
+  id: IsValid
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: GameSettings.ValidationResult.IsValid
+  fullName: Core.GameSettings.ValidationResult.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/GameSettings.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Core.GameSettings.ValidationResult.IsValid*
+- uid: Core.GameSettings.ValidationResult.HasWarnings
+  commentId: P:Core.GameSettings.ValidationResult.HasWarnings
+  id: HasWarnings
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: HasWarnings
+  nameWithType: GameSettings.ValidationResult.HasWarnings
+  fullName: Core.GameSettings.ValidationResult.HasWarnings
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasWarnings
+    path: Scripts/Core/GameSettings.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool HasWarnings { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasWarnings As Boolean
+  overload: Core.GameSettings.ValidationResult.HasWarnings*
+- uid: Core.GameSettings.ValidationResult.AddError(System.String)
+  commentId: M:Core.GameSettings.ValidationResult.AddError(System.String)
+  id: AddError(System.String)
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: AddError(string)
+  nameWithType: GameSettings.ValidationResult.AddError(string)
+  fullName: Core.GameSettings.ValidationResult.AddError(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddError
+    path: Scripts/Core/GameSettings.cs
+    startLine: 137
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public void AddError(string error)
+    parameters:
+    - id: error
+      type: System.String
+    content.vb: Public Sub AddError([error] As String)
+  overload: Core.GameSettings.ValidationResult.AddError*
+  nameWithType.vb: GameSettings.ValidationResult.AddError(String)
+  fullName.vb: Core.GameSettings.ValidationResult.AddError(String)
+  name.vb: AddError(String)
+- uid: Core.GameSettings.ValidationResult.AddWarning(System.String)
+  commentId: M:Core.GameSettings.ValidationResult.AddWarning(System.String)
+  id: AddWarning(System.String)
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: AddWarning(string)
+  nameWithType: GameSettings.ValidationResult.AddWarning(string)
+  fullName: Core.GameSettings.ValidationResult.AddWarning(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddWarning
+    path: Scripts/Core/GameSettings.cs
+    startLine: 143
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public void AddWarning(string warning)
+    parameters:
+    - id: warning
+      type: System.String
+    content.vb: Public Sub AddWarning(warning As String)
+  overload: Core.GameSettings.ValidationResult.AddWarning*
+  nameWithType.vb: GameSettings.ValidationResult.AddWarning(String)
+  fullName.vb: Core.GameSettings.ValidationResult.AddWarning(String)
+  name.vb: AddWarning(String)
+- uid: Core.GameSettings.ValidationResult.GetSummary
+  commentId: M:Core.GameSettings.ValidationResult.GetSummary
+  id: GetSummary
+  parent: Core.GameSettings.ValidationResult
+  langs:
+  - csharp
+  - vb
+  name: GetSummary()
+  nameWithType: GameSettings.ValidationResult.GetSummary()
+  fullName: Core.GameSettings.ValidationResult.GetSummary()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSummary
+    path: Scripts/Core/GameSettings.cs
+    startLine: 149
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public string GetSummary()
+    return:
+      type: System.String
+    content.vb: Public Function GetSummary() As String
+  overload: Core.GameSettings.ValidationResult.GetSummary*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.GameSettings.ValidationResult.IsValid*
+  commentId: Overload:Core.GameSettings.ValidationResult.IsValid
+  href: Core.GameSettings.ValidationResult.html#Core_GameSettings_ValidationResult_IsValid
+  name: IsValid
+  nameWithType: GameSettings.ValidationResult.IsValid
+  fullName: Core.GameSettings.ValidationResult.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.GameSettings.ValidationResult.HasWarnings*
+  commentId: Overload:Core.GameSettings.ValidationResult.HasWarnings
+  href: Core.GameSettings.ValidationResult.html#Core_GameSettings_ValidationResult_HasWarnings
+  name: HasWarnings
+  nameWithType: GameSettings.ValidationResult.HasWarnings
+  fullName: Core.GameSettings.ValidationResult.HasWarnings
+- uid: Core.GameSettings.ValidationResult.AddError*
+  commentId: Overload:Core.GameSettings.ValidationResult.AddError
+  href: Core.GameSettings.ValidationResult.html#Core_GameSettings_ValidationResult_AddError_System_String_
+  name: AddError
+  nameWithType: GameSettings.ValidationResult.AddError
+  fullName: Core.GameSettings.ValidationResult.AddError
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.GameSettings.ValidationResult.AddWarning*
+  commentId: Overload:Core.GameSettings.ValidationResult.AddWarning
+  href: Core.GameSettings.ValidationResult.html#Core_GameSettings_ValidationResult_AddWarning_System_String_
+  name: AddWarning
+  nameWithType: GameSettings.ValidationResult.AddWarning
+  fullName: Core.GameSettings.ValidationResult.AddWarning
+- uid: Core.GameSettings.ValidationResult.GetSummary*
+  commentId: Overload:Core.GameSettings.ValidationResult.GetSummary
+  href: Core.GameSettings.ValidationResult.html#Core_GameSettings_ValidationResult_GetSummary
+  name: GetSummary
+  nameWithType: GameSettings.ValidationResult.GetSummary
+  fullName: Core.GameSettings.ValidationResult.GetSummary

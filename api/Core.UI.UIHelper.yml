@@ -1,0 +1,1430 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.UI.UIHelper
+  commentId: T:Core.UI.UIHelper
+  id: UIHelper
+  parent: Core.UI
+  children:
+  - Core.UI.UIHelper.AddHoverEffect(UnityEngine.UIElements.VisualElement,UnityEngine.Color,UnityEngine.Color)
+  - Core.UI.UIHelper.CreateButton(System.String,System.Action,System.Int32,System.Nullable{UnityEngine.Color})
+  - Core.UI.UIHelper.CreateColorIndicator(UnityEngine.Color,System.Single,System.Single)
+  - Core.UI.UIHelper.CreateLabel(System.String,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  - Core.UI.UIHelper.CreatePanel(System.String,UnityEngine.Color,System.Single,System.Single)
+  - Core.UI.UIHelper.Hide(UnityEngine.UIElements.VisualElement)
+  - Core.UI.UIHelper.RemoveBorders(UnityEngine.UIElements.VisualElement)
+  - Core.UI.UIHelper.SetAbsolutePosition(UnityEngine.UIElements.VisualElement,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  - Core.UI.UIHelper.SetBorderColor(UnityEngine.UIElements.VisualElement,UnityEngine.Color)
+  - Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  - Core.UI.UIHelper.SetBorderWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetFlexColumn(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - Core.UI.UIHelper.SetFlexRow(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  - Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  - Core.UI.UIHelper.SetMaxHeight(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetMinWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single)
+  - Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  - Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  - Core.UI.UIHelper.SetSize(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  - Core.UI.UIHelper.SetTextAlign(UnityEngine.UIElements.VisualElement,UnityEngine.TextAnchor)
+  - Core.UI.UIHelper.SetVisible(UnityEngine.UIElements.VisualElement,System.Boolean)
+  - Core.UI.UIHelper.Show(UnityEngine.UIElements.VisualElement)
+  - Core.UI.UIHelper.StyleLabel(UnityEngine.UIElements.Label,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  langs:
+  - csharp
+  - vb
+  name: UIHelper
+  nameWithType: UIHelper
+  fullName: Core.UI.UIHelper
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UIHelper
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: >-
+    ENGINE - Static helper methods for UI Toolkit styling.
+
+    Reduces boilerplate when creating UI elements programmatically.
+  example: []
+  syntax:
+    content: public static class UIHelper
+    content.vb: Public Module UIHelper
+  inheritance:
+  - System.Object
+- uid: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetPadding(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetPadding(VisualElement, float)
+  nameWithType: UIHelper.SetPadding(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPadding
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set uniform padding on all sides.
+  example: []
+  syntax:
+    content: public static void SetPadding(VisualElement element, float all)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: all
+      type: System.Single
+    content.vb: Public Shared Sub SetPadding(element As VisualElement, all As Single)
+  overload: Core.UI.UIHelper.SetPadding*
+  nameWithType.vb: UIHelper.SetPadding(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetPadding(VisualElement, Single)
+- uid: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  id: SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetPadding(VisualElement, float, float)
+  nameWithType: UIHelper.SetPadding(VisualElement, float, float)
+  fullName: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPadding
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set padding with vertical and horizontal values.
+  example: []
+  syntax:
+    content: public static void SetPadding(VisualElement element, float vertical, float horizontal)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: vertical
+      type: System.Single
+    - id: horizontal
+      type: System.Single
+    content.vb: Public Shared Sub SetPadding(element As VisualElement, vertical As Single, horizontal As Single)
+  overload: Core.UI.UIHelper.SetPadding*
+  nameWithType.vb: UIHelper.SetPadding(VisualElement, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, Single, Single)
+  name.vb: SetPadding(VisualElement, Single, Single)
+- uid: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  id: SetPadding(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetPadding(VisualElement, float, float, float, float)
+  nameWithType: UIHelper.SetPadding(VisualElement, float, float, float, float)
+  fullName: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPadding
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set padding with individual values.
+  example: []
+  syntax:
+    content: public static void SetPadding(VisualElement element, float top, float right, float bottom, float left)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: top
+      type: System.Single
+    - id: right
+      type: System.Single
+    - id: bottom
+      type: System.Single
+    - id: left
+      type: System.Single
+    content.vb: Public Shared Sub SetPadding(element As VisualElement, top As Single, right As Single, bottom As Single, left As Single)
+  overload: Core.UI.UIHelper.SetPadding*
+  nameWithType.vb: UIHelper.SetPadding(VisualElement, Single, Single, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetPadding(UnityEngine.UIElements.VisualElement, Single, Single, Single, Single)
+  name.vb: SetPadding(VisualElement, Single, Single, Single, Single)
+- uid: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetMargin(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetMargin(VisualElement, float)
+  nameWithType: UIHelper.SetMargin(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMargin
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set uniform margin on all sides.
+  example: []
+  syntax:
+    content: public static void SetMargin(VisualElement element, float all)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: all
+      type: System.Single
+    content.vb: Public Shared Sub SetMargin(element As VisualElement, all As Single)
+  overload: Core.UI.UIHelper.SetMargin*
+  nameWithType.vb: UIHelper.SetMargin(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetMargin(VisualElement, Single)
+- uid: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  id: SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetMargin(VisualElement, float, float)
+  nameWithType: UIHelper.SetMargin(VisualElement, float, float)
+  fullName: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMargin
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set margin with vertical and horizontal values.
+  example: []
+  syntax:
+    content: public static void SetMargin(VisualElement element, float vertical, float horizontal)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: vertical
+      type: System.Single
+    - id: horizontal
+      type: System.Single
+    content.vb: Public Shared Sub SetMargin(element As VisualElement, vertical As Single, horizontal As Single)
+  overload: Core.UI.UIHelper.SetMargin*
+  nameWithType.vb: UIHelper.SetMargin(VisualElement, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, Single, Single)
+  name.vb: SetMargin(VisualElement, Single, Single)
+- uid: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  id: SetMargin(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetMargin(VisualElement, float, float, float, float)
+  nameWithType: UIHelper.SetMargin(VisualElement, float, float, float, float)
+  fullName: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMargin
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set margin with individual values.
+  example: []
+  syntax:
+    content: public static void SetMargin(VisualElement element, float top, float right, float bottom, float left)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: top
+      type: System.Single
+    - id: right
+      type: System.Single
+    - id: bottom
+      type: System.Single
+    - id: left
+      type: System.Single
+    content.vb: Public Shared Sub SetMargin(element As VisualElement, top As Single, right As Single, bottom As Single, left As Single)
+  overload: Core.UI.UIHelper.SetMargin*
+  nameWithType.vb: UIHelper.SetMargin(VisualElement, Single, Single, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetMargin(UnityEngine.UIElements.VisualElement, Single, Single, Single, Single)
+  name.vb: SetMargin(VisualElement, Single, Single, Single, Single)
+- uid: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetBorderRadius(VisualElement, float)
+  nameWithType: UIHelper.SetBorderRadius(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderRadius
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set uniform border radius on all corners.
+  example: []
+  syntax:
+    content: public static void SetBorderRadius(VisualElement element, float all)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: all
+      type: System.Single
+    content.vb: Public Shared Sub SetBorderRadius(element As VisualElement, all As Single)
+  overload: Core.UI.UIHelper.SetBorderRadius*
+  nameWithType.vb: UIHelper.SetBorderRadius(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetBorderRadius(VisualElement, Single)
+- uid: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  id: SetBorderRadius(UnityEngine.UIElements.VisualElement,System.Single,System.Single,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetBorderRadius(VisualElement, float, float, float, float)
+  nameWithType: UIHelper.SetBorderRadius(VisualElement, float, float, float, float)
+  fullName: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement, float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderRadius
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set border radius with individual values.
+  example: []
+  syntax:
+    content: public static void SetBorderRadius(VisualElement element, float topLeft, float topRight, float bottomRight, float bottomLeft)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: topLeft
+      type: System.Single
+    - id: topRight
+      type: System.Single
+    - id: bottomRight
+      type: System.Single
+    - id: bottomLeft
+      type: System.Single
+    content.vb: Public Shared Sub SetBorderRadius(element As VisualElement, topLeft As Single, topRight As Single, bottomRight As Single, bottomLeft As Single)
+  overload: Core.UI.UIHelper.SetBorderRadius*
+  nameWithType.vb: UIHelper.SetBorderRadius(VisualElement, Single, Single, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetBorderRadius(UnityEngine.UIElements.VisualElement, Single, Single, Single, Single)
+  name.vb: SetBorderRadius(VisualElement, Single, Single, Single, Single)
+- uid: Core.UI.UIHelper.SetBorderWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetBorderWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetBorderWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetBorderWidth(VisualElement, float)
+  nameWithType: UIHelper.SetBorderWidth(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetBorderWidth(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderWidth
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set uniform border width on all sides.
+  example: []
+  syntax:
+    content: public static void SetBorderWidth(VisualElement element, float all)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: all
+      type: System.Single
+    content.vb: Public Shared Sub SetBorderWidth(element As VisualElement, all As Single)
+  overload: Core.UI.UIHelper.SetBorderWidth*
+  nameWithType.vb: UIHelper.SetBorderWidth(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetBorderWidth(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetBorderWidth(VisualElement, Single)
+- uid: Core.UI.UIHelper.RemoveBorders(UnityEngine.UIElements.VisualElement)
+  commentId: M:Core.UI.UIHelper.RemoveBorders(UnityEngine.UIElements.VisualElement)
+  id: RemoveBorders(UnityEngine.UIElements.VisualElement)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: RemoveBorders(VisualElement)
+  nameWithType: UIHelper.RemoveBorders(VisualElement)
+  fullName: Core.UI.UIHelper.RemoveBorders(UnityEngine.UIElements.VisualElement)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveBorders
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Remove all borders.
+  example: []
+  syntax:
+    content: public static void RemoveBorders(VisualElement element)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Public Shared Sub RemoveBorders(element As VisualElement)
+  overload: Core.UI.UIHelper.RemoveBorders*
+- uid: Core.UI.UIHelper.SetBorderColor(UnityEngine.UIElements.VisualElement,UnityEngine.Color)
+  commentId: M:Core.UI.UIHelper.SetBorderColor(UnityEngine.UIElements.VisualElement,UnityEngine.Color)
+  id: SetBorderColor(UnityEngine.UIElements.VisualElement,UnityEngine.Color)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetBorderColor(VisualElement, Color)
+  nameWithType: UIHelper.SetBorderColor(VisualElement, Color)
+  fullName: Core.UI.UIHelper.SetBorderColor(UnityEngine.UIElements.VisualElement, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderColor
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 119
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set uniform border color on all sides.
+  example: []
+  syntax:
+    content: public static void SetBorderColor(VisualElement element, Color color)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: color
+      type: UnityEngine.Color
+    content.vb: Public Shared Sub SetBorderColor(element As VisualElement, color As Color)
+  overload: Core.UI.UIHelper.SetBorderColor*
+- uid: Core.UI.UIHelper.SetAbsolutePosition(UnityEngine.UIElements.VisualElement,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  commentId: M:Core.UI.UIHelper.SetAbsolutePosition(UnityEngine.UIElements.VisualElement,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  id: SetAbsolutePosition(UnityEngine.UIElements.VisualElement,System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetAbsolutePosition(VisualElement, float?, float?, float?, float?)
+  nameWithType: UIHelper.SetAbsolutePosition(VisualElement, float?, float?, float?, float?)
+  fullName: Core.UI.UIHelper.SetAbsolutePosition(UnityEngine.UIElements.VisualElement, float?, float?, float?, float?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetAbsolutePosition
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Position element absolutely at specified coordinates.
+  example: []
+  syntax:
+    content: public static void SetAbsolutePosition(VisualElement element, float? top = null, float? right = null, float? bottom = null, float? left = null)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: top
+      type: System.Nullable{System.Single}
+    - id: right
+      type: System.Nullable{System.Single}
+    - id: bottom
+      type: System.Nullable{System.Single}
+    - id: left
+      type: System.Nullable{System.Single}
+    content.vb: Public Shared Sub SetAbsolutePosition(element As VisualElement, top As Single? = Nothing, right As Single? = Nothing, bottom As Single? = Nothing, left As Single? = Nothing)
+  overload: Core.UI.UIHelper.SetAbsolutePosition*
+  nameWithType.vb: UIHelper.SetAbsolutePosition(VisualElement, Single?, Single?, Single?, Single?)
+  fullName.vb: Core.UI.UIHelper.SetAbsolutePosition(UnityEngine.UIElements.VisualElement, Single?, Single?, Single?, Single?)
+  name.vb: SetAbsolutePosition(VisualElement, Single?, Single?, Single?, Single?)
+- uid: Core.UI.UIHelper.SetFlexRow(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:Core.UI.UIHelper.SetFlexRow(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  id: SetFlexRow(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetFlexRow(VisualElement, Justify, Align)
+  nameWithType: UIHelper.SetFlexRow(VisualElement, Justify, Align)
+  fullName: Core.UI.UIHelper.SetFlexRow(UnityEngine.UIElements.VisualElement, UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetFlexRow
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 146
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set flex direction to row with optional alignment.
+  example: []
+  syntax:
+    content: public static void SetFlexRow(VisualElement element, Justify justify = Justify.FlexStart, Align align = Align.Stretch)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: justify
+      type: UnityEngine.UIElements.Justify
+    - id: align
+      type: UnityEngine.UIElements.Align
+    content.vb: Public Shared Sub SetFlexRow(element As VisualElement, justify As Justify = Justify.FlexStart, align As Align = Align.Stretch)
+  overload: Core.UI.UIHelper.SetFlexRow*
+- uid: Core.UI.UIHelper.SetFlexColumn(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:Core.UI.UIHelper.SetFlexColumn(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  id: SetFlexColumn(UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetFlexColumn(VisualElement, Justify, Align)
+  nameWithType: UIHelper.SetFlexColumn(VisualElement, Justify, Align)
+  fullName: Core.UI.UIHelper.SetFlexColumn(UnityEngine.UIElements.VisualElement, UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetFlexColumn
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 154
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set flex direction to column with optional alignment.
+  example: []
+  syntax:
+    content: public static void SetFlexColumn(VisualElement element, Justify justify = Justify.FlexStart, Align align = Align.Stretch)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: justify
+      type: UnityEngine.UIElements.Justify
+    - id: align
+      type: UnityEngine.UIElements.Align
+    content.vb: Public Shared Sub SetFlexColumn(element As VisualElement, justify As Justify = Justify.FlexStart, align As Align = Align.Stretch)
+  overload: Core.UI.UIHelper.SetFlexColumn*
+- uid: Core.UI.UIHelper.SetSize(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.SetSize(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  id: SetSize(UnityEngine.UIElements.VisualElement,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetSize(VisualElement, float, float)
+  nameWithType: UIHelper.SetSize(VisualElement, float, float)
+  fullName: Core.UI.UIHelper.SetSize(UnityEngine.UIElements.VisualElement, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetSize
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 166
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set fixed width and height.
+  example: []
+  syntax:
+    content: public static void SetSize(VisualElement element, float width, float height)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: width
+      type: System.Single
+    - id: height
+      type: System.Single
+    content.vb: Public Shared Sub SetSize(element As VisualElement, width As Single, height As Single)
+  overload: Core.UI.UIHelper.SetSize*
+  nameWithType.vb: UIHelper.SetSize(VisualElement, Single, Single)
+  fullName.vb: Core.UI.UIHelper.SetSize(UnityEngine.UIElements.VisualElement, Single, Single)
+  name.vb: SetSize(VisualElement, Single, Single)
+- uid: Core.UI.UIHelper.SetMinWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetMinWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetMinWidth(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetMinWidth(VisualElement, float)
+  nameWithType: UIHelper.SetMinWidth(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetMinWidth(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMinWidth
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 173
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set minimum width.
+  example: []
+  syntax:
+    content: public static void SetMinWidth(VisualElement element, float width)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: width
+      type: System.Single
+    content.vb: Public Shared Sub SetMinWidth(element As VisualElement, width As Single)
+  overload: Core.UI.UIHelper.SetMinWidth*
+  nameWithType.vb: UIHelper.SetMinWidth(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetMinWidth(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetMinWidth(VisualElement, Single)
+- uid: Core.UI.UIHelper.SetMaxHeight(UnityEngine.UIElements.VisualElement,System.Single)
+  commentId: M:Core.UI.UIHelper.SetMaxHeight(UnityEngine.UIElements.VisualElement,System.Single)
+  id: SetMaxHeight(UnityEngine.UIElements.VisualElement,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetMaxHeight(VisualElement, float)
+  nameWithType: UIHelper.SetMaxHeight(VisualElement, float)
+  fullName: Core.UI.UIHelper.SetMaxHeight(UnityEngine.UIElements.VisualElement, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMaxHeight
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 179
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set maximum height.
+  example: []
+  syntax:
+    content: public static void SetMaxHeight(VisualElement element, float height)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: height
+      type: System.Single
+    content.vb: Public Shared Sub SetMaxHeight(element As VisualElement, height As Single)
+  overload: Core.UI.UIHelper.SetMaxHeight*
+  nameWithType.vb: UIHelper.SetMaxHeight(VisualElement, Single)
+  fullName.vb: Core.UI.UIHelper.SetMaxHeight(UnityEngine.UIElements.VisualElement, Single)
+  name.vb: SetMaxHeight(VisualElement, Single)
+- uid: Core.UI.UIHelper.StyleLabel(UnityEngine.UIElements.Label,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  commentId: M:Core.UI.UIHelper.StyleLabel(UnityEngine.UIElements.Label,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  id: StyleLabel(UnityEngine.UIElements.Label,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: StyleLabel(Label, int, Color, FontStyle)
+  nameWithType: UIHelper.StyleLabel(Label, int, Color, FontStyle)
+  fullName: Core.UI.UIHelper.StyleLabel(UnityEngine.UIElements.Label, int, UnityEngine.Color, UnityEngine.FontStyle)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StyleLabel
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 189
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Style a label with common text properties.
+  example: []
+  syntax:
+    content: public static void StyleLabel(Label label, int fontSize, Color color, FontStyle fontStyle = FontStyle.Normal)
+    parameters:
+    - id: label
+      type: UnityEngine.UIElements.Label
+    - id: fontSize
+      type: System.Int32
+    - id: color
+      type: UnityEngine.Color
+    - id: fontStyle
+      type: UnityEngine.FontStyle
+    content.vb: Public Shared Sub StyleLabel(label As Label, fontSize As Integer, color As Color, fontStyle As FontStyle = FontStyle.Normal)
+  overload: Core.UI.UIHelper.StyleLabel*
+  nameWithType.vb: UIHelper.StyleLabel(Label, Integer, Color, FontStyle)
+  fullName.vb: Core.UI.UIHelper.StyleLabel(UnityEngine.UIElements.Label, Integer, UnityEngine.Color, UnityEngine.FontStyle)
+  name.vb: StyleLabel(Label, Integer, Color, FontStyle)
+- uid: Core.UI.UIHelper.SetTextAlign(UnityEngine.UIElements.VisualElement,UnityEngine.TextAnchor)
+  commentId: M:Core.UI.UIHelper.SetTextAlign(UnityEngine.UIElements.VisualElement,UnityEngine.TextAnchor)
+  id: SetTextAlign(UnityEngine.UIElements.VisualElement,UnityEngine.TextAnchor)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetTextAlign(VisualElement, TextAnchor)
+  nameWithType: UIHelper.SetTextAlign(VisualElement, TextAnchor)
+  fullName: Core.UI.UIHelper.SetTextAlign(UnityEngine.UIElements.VisualElement, UnityEngine.TextAnchor)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTextAlign
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set text alignment.
+  example: []
+  syntax:
+    content: public static void SetTextAlign(VisualElement element, TextAnchor anchor)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: anchor
+      type: UnityEngine.TextAnchor
+    content.vb: Public Shared Sub SetTextAlign(element As VisualElement, anchor As TextAnchor)
+  overload: Core.UI.UIHelper.SetTextAlign*
+- uid: Core.UI.UIHelper.Show(UnityEngine.UIElements.VisualElement)
+  commentId: M:Core.UI.UIHelper.Show(UnityEngine.UIElements.VisualElement)
+  id: Show(UnityEngine.UIElements.VisualElement)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: Show(VisualElement)
+  nameWithType: UIHelper.Show(VisualElement)
+  fullName: Core.UI.UIHelper.Show(UnityEngine.UIElements.VisualElement)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Show
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 207
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Show element.
+  example: []
+  syntax:
+    content: public static void Show(VisualElement element)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Public Shared Sub Show(element As VisualElement)
+  overload: Core.UI.UIHelper.Show*
+- uid: Core.UI.UIHelper.Hide(UnityEngine.UIElements.VisualElement)
+  commentId: M:Core.UI.UIHelper.Hide(UnityEngine.UIElements.VisualElement)
+  id: Hide(UnityEngine.UIElements.VisualElement)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: Hide(VisualElement)
+  nameWithType: UIHelper.Hide(VisualElement)
+  fullName: Core.UI.UIHelper.Hide(UnityEngine.UIElements.VisualElement)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hide
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 214
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Hide element.
+  example: []
+  syntax:
+    content: public static void Hide(VisualElement element)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Public Shared Sub Hide(element As VisualElement)
+  overload: Core.UI.UIHelper.Hide*
+- uid: Core.UI.UIHelper.SetVisible(UnityEngine.UIElements.VisualElement,System.Boolean)
+  commentId: M:Core.UI.UIHelper.SetVisible(UnityEngine.UIElements.VisualElement,System.Boolean)
+  id: SetVisible(UnityEngine.UIElements.VisualElement,System.Boolean)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: SetVisible(VisualElement, bool)
+  nameWithType: UIHelper.SetVisible(VisualElement, bool)
+  fullName: Core.UI.UIHelper.SetVisible(UnityEngine.UIElements.VisualElement, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetVisible
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 221
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Set visibility based on condition.
+  example: []
+  syntax:
+    content: public static void SetVisible(VisualElement element, bool visible)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: visible
+      type: System.Boolean
+    content.vb: Public Shared Sub SetVisible(element As VisualElement, visible As Boolean)
+  overload: Core.UI.UIHelper.SetVisible*
+  nameWithType.vb: UIHelper.SetVisible(VisualElement, Boolean)
+  fullName.vb: Core.UI.UIHelper.SetVisible(UnityEngine.UIElements.VisualElement, Boolean)
+  name.vb: SetVisible(VisualElement, Boolean)
+- uid: Core.UI.UIHelper.CreatePanel(System.String,UnityEngine.Color,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.CreatePanel(System.String,UnityEngine.Color,System.Single,System.Single)
+  id: CreatePanel(System.String,UnityEngine.Color,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: CreatePanel(string, Color, float, float)
+  nameWithType: UIHelper.CreatePanel(string, Color, float, float)
+  fullName: Core.UI.UIHelper.CreatePanel(string, UnityEngine.Color, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreatePanel
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 232
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Create a styled panel container.
+  example: []
+  syntax:
+    content: public static VisualElement CreatePanel(string name, Color backgroundColor, float padding = 10, float borderRadius = 6)
+    parameters:
+    - id: name
+      type: System.String
+    - id: backgroundColor
+      type: UnityEngine.Color
+    - id: padding
+      type: System.Single
+    - id: borderRadius
+      type: System.Single
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Public Shared Function CreatePanel(name As String, backgroundColor As Color, padding As Single = 10, borderRadius As Single = 6) As VisualElement
+  overload: Core.UI.UIHelper.CreatePanel*
+  nameWithType.vb: UIHelper.CreatePanel(String, Color, Single, Single)
+  fullName.vb: Core.UI.UIHelper.CreatePanel(String, UnityEngine.Color, Single, Single)
+  name.vb: CreatePanel(String, Color, Single, Single)
+- uid: Core.UI.UIHelper.CreateLabel(System.String,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  commentId: M:Core.UI.UIHelper.CreateLabel(System.String,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  id: CreateLabel(System.String,System.Int32,UnityEngine.Color,UnityEngine.FontStyle)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: CreateLabel(string, int, Color, FontStyle)
+  nameWithType: UIHelper.CreateLabel(string, int, Color, FontStyle)
+  fullName: Core.UI.UIHelper.CreateLabel(string, int, UnityEngine.Color, UnityEngine.FontStyle)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateLabel
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 243
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Create a styled label.
+  example: []
+  syntax:
+    content: public static Label CreateLabel(string text, int fontSize, Color color, FontStyle fontStyle = FontStyle.Normal)
+    parameters:
+    - id: text
+      type: System.String
+    - id: fontSize
+      type: System.Int32
+    - id: color
+      type: UnityEngine.Color
+    - id: fontStyle
+      type: UnityEngine.FontStyle
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Public Shared Function CreateLabel(text As String, fontSize As Integer, color As Color, fontStyle As FontStyle = FontStyle.Normal) As Label
+  overload: Core.UI.UIHelper.CreateLabel*
+  nameWithType.vb: UIHelper.CreateLabel(String, Integer, Color, FontStyle)
+  fullName.vb: Core.UI.UIHelper.CreateLabel(String, Integer, UnityEngine.Color, UnityEngine.FontStyle)
+  name.vb: CreateLabel(String, Integer, Color, FontStyle)
+- uid: Core.UI.UIHelper.CreateButton(System.String,System.Action,System.Int32,System.Nullable{UnityEngine.Color})
+  commentId: M:Core.UI.UIHelper.CreateButton(System.String,System.Action,System.Int32,System.Nullable{UnityEngine.Color})
+  id: CreateButton(System.String,System.Action,System.Int32,System.Nullable{UnityEngine.Color})
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: CreateButton(string, Action, int, Color?)
+  nameWithType: UIHelper.CreateButton(string, Action, int, Color?)
+  fullName: Core.UI.UIHelper.CreateButton(string, System.Action, int, UnityEngine.Color?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateButton
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 251
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Create a styled button.
+  example: []
+  syntax:
+    content: public static Button CreateButton(string text, Action onClick, int fontSize = 14, Color? backgroundColor = null)
+    parameters:
+    - id: text
+      type: System.String
+    - id: onClick
+      type: System.Action
+    - id: fontSize
+      type: System.Int32
+    - id: backgroundColor
+      type: System.Nullable{UnityEngine.Color}
+    return:
+      type: UnityEngine.UIElements.Button
+    content.vb: Public Shared Function CreateButton(text As String, onClick As Action, fontSize As Integer = 14, backgroundColor As Color? = Nothing) As Button
+  overload: Core.UI.UIHelper.CreateButton*
+  nameWithType.vb: UIHelper.CreateButton(String, Action, Integer, Color?)
+  fullName.vb: Core.UI.UIHelper.CreateButton(String, System.Action, Integer, UnityEngine.Color?)
+  name.vb: CreateButton(String, Action, Integer, Color?)
+- uid: Core.UI.UIHelper.CreateColorIndicator(UnityEngine.Color,System.Single,System.Single)
+  commentId: M:Core.UI.UIHelper.CreateColorIndicator(UnityEngine.Color,System.Single,System.Single)
+  id: CreateColorIndicator(UnityEngine.Color,System.Single,System.Single)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: CreateColorIndicator(Color, float, float)
+  nameWithType: UIHelper.CreateColorIndicator(Color, float, float)
+  fullName: Core.UI.UIHelper.CreateColorIndicator(UnityEngine.Color, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateColorIndicator
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 264
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Create a color indicator box (for country colors, etc.).
+  example: []
+  syntax:
+    content: public static VisualElement CreateColorIndicator(Color color, float size = 16, float borderRadius = 2)
+    parameters:
+    - id: color
+      type: UnityEngine.Color
+    - id: size
+      type: System.Single
+    - id: borderRadius
+      type: System.Single
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Public Shared Function CreateColorIndicator(color As Color, size As Single = 16, borderRadius As Single = 2) As VisualElement
+  overload: Core.UI.UIHelper.CreateColorIndicator*
+  nameWithType.vb: UIHelper.CreateColorIndicator(Color, Single, Single)
+  fullName.vb: Core.UI.UIHelper.CreateColorIndicator(UnityEngine.Color, Single, Single)
+  name.vb: CreateColorIndicator(Color, Single, Single)
+- uid: Core.UI.UIHelper.AddHoverEffect(UnityEngine.UIElements.VisualElement,UnityEngine.Color,UnityEngine.Color)
+  commentId: M:Core.UI.UIHelper.AddHoverEffect(UnityEngine.UIElements.VisualElement,UnityEngine.Color,UnityEngine.Color)
+  id: AddHoverEffect(UnityEngine.UIElements.VisualElement,UnityEngine.Color,UnityEngine.Color)
+  parent: Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: AddHoverEffect(VisualElement, Color, Color)
+  nameWithType: UIHelper.AddHoverEffect(VisualElement, Color, Color)
+  fullName: Core.UI.UIHelper.AddHoverEffect(UnityEngine.UIElements.VisualElement, UnityEngine.Color, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/UIHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddHoverEffect
+    path: Scripts/Core/UI/UIHelper.cs
+    startLine: 278
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Add hover color effect to an element.
+  example: []
+  syntax:
+    content: public static void AddHoverEffect(VisualElement element, Color normalColor, Color hoverColor)
+    parameters:
+    - id: element
+      type: UnityEngine.UIElements.VisualElement
+    - id: normalColor
+      type: UnityEngine.Color
+    - id: hoverColor
+      type: UnityEngine.Color
+    content.vb: Public Shared Sub AddHoverEffect(element As VisualElement, normalColor As Color, hoverColor As Color)
+  overload: Core.UI.UIHelper.AddHoverEffect*
+references:
+- uid: Core.UI
+  commentId: N:Core.UI
+  href: Core.html
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.UI.UIHelper.SetPadding*
+  commentId: Overload:Core.UI.UIHelper.SetPadding
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetPadding_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetPadding
+  nameWithType: UIHelper.SetPadding
+  fullName: Core.UI.UIHelper.SetPadding
+- uid: UnityEngine.UIElements.VisualElement
+  commentId: T:UnityEngine.UIElements.VisualElement
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: VisualElement
+  nameWithType: VisualElement
+  fullName: UnityEngine.UIElements.VisualElement
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: UnityEngine.UIElements
+  commentId: N:UnityEngine.UIElements
+  isExternal: true
+  name: UnityEngine.UIElements
+  nameWithType: UnityEngine.UIElements
+  fullName: UnityEngine.UIElements
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+- uid: Core.UI.UIHelper.SetMargin*
+  commentId: Overload:Core.UI.UIHelper.SetMargin
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetMargin_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetMargin
+  nameWithType: UIHelper.SetMargin
+  fullName: Core.UI.UIHelper.SetMargin
+- uid: Core.UI.UIHelper.SetBorderRadius*
+  commentId: Overload:Core.UI.UIHelper.SetBorderRadius
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetBorderRadius_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetBorderRadius
+  nameWithType: UIHelper.SetBorderRadius
+  fullName: Core.UI.UIHelper.SetBorderRadius
+- uid: Core.UI.UIHelper.SetBorderWidth*
+  commentId: Overload:Core.UI.UIHelper.SetBorderWidth
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetBorderWidth_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetBorderWidth
+  nameWithType: UIHelper.SetBorderWidth
+  fullName: Core.UI.UIHelper.SetBorderWidth
+- uid: Core.UI.UIHelper.RemoveBorders*
+  commentId: Overload:Core.UI.UIHelper.RemoveBorders
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_RemoveBorders_UnityEngine_UIElements_VisualElement_
+  name: RemoveBorders
+  nameWithType: UIHelper.RemoveBorders
+  fullName: Core.UI.UIHelper.RemoveBorders
+- uid: Core.UI.UIHelper.SetBorderColor*
+  commentId: Overload:Core.UI.UIHelper.SetBorderColor
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetBorderColor_UnityEngine_UIElements_VisualElement_UnityEngine_Color_
+  name: SetBorderColor
+  nameWithType: UIHelper.SetBorderColor
+  fullName: Core.UI.UIHelper.SetBorderColor
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.UI.UIHelper.SetAbsolutePosition*
+  commentId: Overload:Core.UI.UIHelper.SetAbsolutePosition
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetAbsolutePosition_UnityEngine_UIElements_VisualElement_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_System_Single__
+  name: SetAbsolutePosition
+  nameWithType: UIHelper.SetAbsolutePosition
+  fullName: Core.UI.UIHelper.SetAbsolutePosition
+- uid: System.Nullable{System.Single}
+  commentId: T:System.Nullable{System.Single}
+  parent: System
+  definition: System.Nullable`1
+  name: float?
+  nameWithType: float?
+  fullName: float?
+  nameWithType.vb: Single?
+  fullName.vb: Single?
+  name.vb: Single?
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.UI.UIHelper.SetFlexRow*
+  commentId: Overload:Core.UI.UIHelper.SetFlexRow
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetFlexRow_UnityEngine_UIElements_VisualElement_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: SetFlexRow
+  nameWithType: UIHelper.SetFlexRow
+  fullName: Core.UI.UIHelper.SetFlexRow
+- uid: UnityEngine.UIElements.Justify
+  commentId: T:UnityEngine.UIElements.Justify
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Justify
+  nameWithType: Justify
+  fullName: UnityEngine.UIElements.Justify
+- uid: UnityEngine.UIElements.Align
+  commentId: T:UnityEngine.UIElements.Align
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Align
+  nameWithType: Align
+  fullName: UnityEngine.UIElements.Align
+- uid: Core.UI.UIHelper.SetFlexColumn*
+  commentId: Overload:Core.UI.UIHelper.SetFlexColumn
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetFlexColumn_UnityEngine_UIElements_VisualElement_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: SetFlexColumn
+  nameWithType: UIHelper.SetFlexColumn
+  fullName: Core.UI.UIHelper.SetFlexColumn
+- uid: Core.UI.UIHelper.SetSize*
+  commentId: Overload:Core.UI.UIHelper.SetSize
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetSize_UnityEngine_UIElements_VisualElement_System_Single_System_Single_
+  name: SetSize
+  nameWithType: UIHelper.SetSize
+  fullName: Core.UI.UIHelper.SetSize
+- uid: Core.UI.UIHelper.SetMinWidth*
+  commentId: Overload:Core.UI.UIHelper.SetMinWidth
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetMinWidth_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetMinWidth
+  nameWithType: UIHelper.SetMinWidth
+  fullName: Core.UI.UIHelper.SetMinWidth
+- uid: Core.UI.UIHelper.SetMaxHeight*
+  commentId: Overload:Core.UI.UIHelper.SetMaxHeight
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetMaxHeight_UnityEngine_UIElements_VisualElement_System_Single_
+  name: SetMaxHeight
+  nameWithType: UIHelper.SetMaxHeight
+  fullName: Core.UI.UIHelper.SetMaxHeight
+- uid: Core.UI.UIHelper.StyleLabel*
+  commentId: Overload:Core.UI.UIHelper.StyleLabel
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_StyleLabel_UnityEngine_UIElements_Label_System_Int32_UnityEngine_Color_UnityEngine_FontStyle_
+  name: StyleLabel
+  nameWithType: UIHelper.StyleLabel
+  fullName: Core.UI.UIHelper.StyleLabel
+- uid: UnityEngine.UIElements.Label
+  commentId: T:UnityEngine.UIElements.Label
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Label
+  nameWithType: Label
+  fullName: UnityEngine.UIElements.Label
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.FontStyle
+  commentId: T:UnityEngine.FontStyle
+  parent: UnityEngine
+  isExternal: true
+  name: FontStyle
+  nameWithType: FontStyle
+  fullName: UnityEngine.FontStyle
+- uid: Core.UI.UIHelper.SetTextAlign*
+  commentId: Overload:Core.UI.UIHelper.SetTextAlign
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetTextAlign_UnityEngine_UIElements_VisualElement_UnityEngine_TextAnchor_
+  name: SetTextAlign
+  nameWithType: UIHelper.SetTextAlign
+  fullName: Core.UI.UIHelper.SetTextAlign
+- uid: UnityEngine.TextAnchor
+  commentId: T:UnityEngine.TextAnchor
+  parent: UnityEngine
+  isExternal: true
+  name: TextAnchor
+  nameWithType: TextAnchor
+  fullName: UnityEngine.TextAnchor
+- uid: Core.UI.UIHelper.Show*
+  commentId: Overload:Core.UI.UIHelper.Show
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_Show_UnityEngine_UIElements_VisualElement_
+  name: Show
+  nameWithType: UIHelper.Show
+  fullName: Core.UI.UIHelper.Show
+- uid: Core.UI.UIHelper.Hide*
+  commentId: Overload:Core.UI.UIHelper.Hide
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_Hide_UnityEngine_UIElements_VisualElement_
+  name: Hide
+  nameWithType: UIHelper.Hide
+  fullName: Core.UI.UIHelper.Hide
+- uid: Core.UI.UIHelper.SetVisible*
+  commentId: Overload:Core.UI.UIHelper.SetVisible
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_SetVisible_UnityEngine_UIElements_VisualElement_System_Boolean_
+  name: SetVisible
+  nameWithType: UIHelper.SetVisible
+  fullName: Core.UI.UIHelper.SetVisible
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.UI.UIHelper.CreatePanel*
+  commentId: Overload:Core.UI.UIHelper.CreatePanel
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_CreatePanel_System_String_UnityEngine_Color_System_Single_System_Single_
+  name: CreatePanel
+  nameWithType: UIHelper.CreatePanel
+  fullName: Core.UI.UIHelper.CreatePanel
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.UI.UIHelper.CreateLabel*
+  commentId: Overload:Core.UI.UIHelper.CreateLabel
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_CreateLabel_System_String_System_Int32_UnityEngine_Color_UnityEngine_FontStyle_
+  name: CreateLabel
+  nameWithType: UIHelper.CreateLabel
+  fullName: Core.UI.UIHelper.CreateLabel
+- uid: Core.UI.UIHelper.CreateButton*
+  commentId: Overload:Core.UI.UIHelper.CreateButton
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_CreateButton_System_String_System_Action_System_Int32_System_Nullable_UnityEngine_Color__
+  name: CreateButton
+  nameWithType: UIHelper.CreateButton
+  fullName: Core.UI.UIHelper.CreateButton
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: System.Nullable{UnityEngine.Color}
+  commentId: T:System.Nullable{UnityEngine.Color}
+  parent: System
+  definition: System.Nullable`1
+  name: Color?
+  nameWithType: Color?
+  fullName: UnityEngine.Color?
+  spec.csharp:
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: '?'
+  spec.vb:
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: '?'
+- uid: UnityEngine.UIElements.Button
+  commentId: T:UnityEngine.UIElements.Button
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Button
+  nameWithType: Button
+  fullName: UnityEngine.UIElements.Button
+- uid: Core.UI.UIHelper.CreateColorIndicator*
+  commentId: Overload:Core.UI.UIHelper.CreateColorIndicator
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_CreateColorIndicator_UnityEngine_Color_System_Single_System_Single_
+  name: CreateColorIndicator
+  nameWithType: UIHelper.CreateColorIndicator
+  fullName: Core.UI.UIHelper.CreateColorIndicator
+- uid: Core.UI.UIHelper.AddHoverEffect*
+  commentId: Overload:Core.UI.UIHelper.AddHoverEffect
+  href: Core.UI.UIHelper.html#Core_UI_UIHelper_AddHoverEffect_UnityEngine_UIElements_VisualElement_UnityEngine_Color_UnityEngine_Color_
+  name: AddHoverEffect
+  nameWithType: UIHelper.AddHoverEffect
+  fullName: Core.UI.UIHelper.AddHoverEffect

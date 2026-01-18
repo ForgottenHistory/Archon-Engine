@@ -1,0 +1,426 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  commentId: T:Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  id: ProvinceMapParser.ProvinceStats
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.Centroid
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.IsValid
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxX
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxY
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinX
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinY
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.PixelCount
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.ProvinceID
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapParser.ProvinceStats
+  nameWithType: ProvinceMapParser.ProvinceStats
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceStats
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 271
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get province statistics (pixel count, bounding box, etc.)
+  example: []
+  syntax:
+    content: public struct ProvinceMapParser.ProvinceStats
+    content.vb: Public Structure ProvinceMapParser.ProvinceStats
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.ProvinceID
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.ProvinceID
+  id: ProvinceID
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceMapParser.ProvinceStats.ProvinceID
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 273
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int ProvinceID
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceID As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.PixelCount
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.PixelCount
+  id: PixelCount
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: PixelCount
+  nameWithType: ProvinceMapParser.ProvinceStats.PixelCount
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.PixelCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelCount
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 274
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int PixelCount
+    return:
+      type: System.Int32
+    content.vb: Public PixelCount As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinX
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinX
+  id: MinX
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: MinX
+  nameWithType: ProvinceMapParser.ProvinceStats.MinX
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinX
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 275
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MinX
+    return:
+      type: System.Int32
+    content.vb: Public MinX As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinY
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinY
+  id: MinY
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: MinY
+  nameWithType: ProvinceMapParser.ProvinceStats.MinY
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MinY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinY
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 275
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MinY
+    return:
+      type: System.Int32
+    content.vb: Public MinY As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxX
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxX
+  id: MaxX
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: MaxX
+  nameWithType: ProvinceMapParser.ProvinceStats.MaxX
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxX
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 275
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MaxX
+    return:
+      type: System.Int32
+    content.vb: Public MaxX As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxY
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxY
+  id: MaxY
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: MaxY
+  nameWithType: ProvinceMapParser.ProvinceStats.MaxY
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.MaxY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxY
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 275
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MaxY
+    return:
+      type: System.Int32
+    content.vb: Public MaxY As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Centroid
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Centroid
+  id: Centroid
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: Centroid
+  nameWithType: ProvinceMapParser.ProvinceStats.Centroid
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Centroid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Centroid
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 276
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public PixelCoord Centroid
+    return:
+      type: Map.Loading.Images.PixelCoord
+    content.vb: Public Centroid As PixelCoord
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.IsValid
+  commentId: F:Map.Loading.Images.ProvinceMapParser.ProvinceStats.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: ProvinceMapParser.ProvinceStats.IsValid
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.IsValid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 277
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid
+    return:
+      type: System.Boolean
+    content.vb: Public IsValid As Boolean
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+  commentId: P:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+  id: Width
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: ProvinceMapParser.ProvinceStats.Width
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 279
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Width As Integer
+  overload: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width*
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+  commentId: P:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+  id: Height
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: ProvinceMapParser.ProvinceStats.Height
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 280
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Height As Integer
+  overload: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height*
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area
+  commentId: P:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area
+  id: Area
+  parent: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  langs:
+  - csharp
+  - vb
+  name: Area
+  nameWithType: ProvinceMapParser.ProvinceStats.Area
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Area
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 281
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Area { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Area As Integer
+  overload: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.PixelCoord
+  commentId: T:Map.Loading.Images.PixelCoord
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PixelCoord.html
+  name: PixelCoord
+  nameWithType: PixelCoord
+  fullName: Map.Loading.Images.PixelCoord
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+  href: Map.Loading.Images.ProvinceMapParser.ProvinceStats.html#Map_Loading_Images_ProvinceMapParser_ProvinceStats_Width
+  name: Width
+  nameWithType: ProvinceMapParser.ProvinceStats.Width
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Width
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+  href: Map.Loading.Images.ProvinceMapParser.ProvinceStats.html#Map_Loading_Images_ProvinceMapParser_ProvinceStats_Height
+  name: Height
+  nameWithType: ProvinceMapParser.ProvinceStats.Height
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Height
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area
+  href: Map.Loading.Images.ProvinceMapParser.ProvinceStats.html#Map_Loading_Images_ProvinceMapParser_ProvinceStats_Area
+  name: Area
+  nameWithType: ProvinceMapParser.ProvinceStats.Area
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats.Area

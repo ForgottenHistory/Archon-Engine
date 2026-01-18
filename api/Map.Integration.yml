@@ -1,0 +1,44 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Integration
+  commentId: N:Map.Integration
+  id: Map.Integration
+  children:
+  - Map.Integration.MapDataIntegrator
+  - Map.Integration.ProvinceDataConverter
+  - Map.Integration.ProvinceMetadataManager
+  - Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: Map.Integration
+  nameWithType: Map.Integration
+  fullName: Map.Integration
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Integration.MapDataIntegrator
+  commentId: T:Map.Integration.MapDataIntegrator
+  href: Map.Integration.MapDataIntegrator.html
+  name: MapDataIntegrator
+  nameWithType: MapDataIntegrator
+  fullName: Map.Integration.MapDataIntegrator
+- uid: Map.Integration.ProvinceMetadataManager
+  commentId: T:Map.Integration.ProvinceMetadataManager
+  href: Map.Integration.ProvinceMetadataManager.html
+  name: ProvinceMetadataManager
+  nameWithType: ProvinceMetadataManager
+  fullName: Map.Integration.ProvinceMetadataManager
+- uid: Map.Integration.ProvinceDataConverter
+  commentId: T:Map.Integration.ProvinceDataConverter
+  href: Map.Integration.ProvinceDataConverter.html
+  name: ProvinceDataConverter
+  nameWithType: ProvinceDataConverter
+  fullName: Map.Integration.ProvinceDataConverter
+- uid: Map.Integration.ProvinceTextureSynchronizer
+  commentId: T:Map.Integration.ProvinceTextureSynchronizer
+  href: Map.Integration.ProvinceTextureSynchronizer.html
+  name: ProvinceTextureSynchronizer
+  nameWithType: ProvinceTextureSynchronizer
+  fullName: Map.Integration.ProvinceTextureSynchronizer

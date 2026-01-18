@@ -1,0 +1,831 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Compositing.CompositorConfig
+  commentId: T:Map.Rendering.Compositing.CompositorConfig
+  id: CompositorConfig
+  parent: Map.Rendering.Compositing
+  children:
+  - Map.Rendering.Compositing.CompositorConfig.Default
+  - Map.Rendering.Compositing.CompositorConfig.baseColorOrder
+  - Map.Rendering.Compositing.CompositorConfig.borderBlendMode
+  - Map.Rendering.Compositing.CompositorConfig.borderOrder
+  - Map.Rendering.Compositing.CompositorConfig.enableBaseColor
+  - Map.Rendering.Compositing.CompositorConfig.enableBorders
+  - Map.Rendering.Compositing.CompositorConfig.enableFogOfWar
+  - Map.Rendering.Compositing.CompositorConfig.enableHighlights
+  - Map.Rendering.Compositing.CompositorConfig.enableLighting
+  - Map.Rendering.Compositing.CompositorConfig.enableOverlay
+  - Map.Rendering.Compositing.CompositorConfig.fogBlendMode
+  - Map.Rendering.Compositing.CompositorConfig.fogOrder
+  - Map.Rendering.Compositing.CompositorConfig.highlightBlendMode
+  - Map.Rendering.Compositing.CompositorConfig.highlightOrder
+  - Map.Rendering.Compositing.CompositorConfig.lightingOrder
+  - Map.Rendering.Compositing.CompositorConfig.overlayBlendMode
+  - Map.Rendering.Compositing.CompositorConfig.overlayOrder
+  langs:
+  - csharp
+  - vb
+  name: CompositorConfig
+  nameWithType: CompositorConfig
+  fullName: Map.Rendering.Compositing.CompositorConfig
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompositorConfig
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: >-
+    Configuration for shader compositing.
+
+    Passed to shader via material properties.
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public class CompositorConfig
+    content.vb: >-
+      <Serializable>
+
+      Public Class CompositorConfig
+  inheritance:
+  - System.Object
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Map.Rendering.Compositing.CompositorConfig.enableBaseColor
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableBaseColor
+  id: enableBaseColor
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableBaseColor
+  nameWithType: CompositorConfig.enableBaseColor
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableBaseColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableBaseColor
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 104
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Header("Layer Visibility")]
+
+      [Tooltip("Enable base map mode coloring")]
+
+      public bool enableBaseColor
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Layer Visibility")>
+
+      <Tooltip("Enable base map mode coloring")>
+
+      Public enableBaseColor As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Layer Visibility
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable base map mode coloring
+- uid: Map.Rendering.Compositing.CompositorConfig.enableLighting
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableLighting
+  id: enableLighting
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableLighting
+  nameWithType: CompositorConfig.enableLighting
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableLighting
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableLighting
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 107
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Enable normal map lighting")]
+
+      public bool enableLighting
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable normal map lighting")>
+
+      Public enableLighting As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable normal map lighting
+- uid: Map.Rendering.Compositing.CompositorConfig.enableBorders
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableBorders
+  id: enableBorders
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableBorders
+  nameWithType: CompositorConfig.enableBorders
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableBorders
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableBorders
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 110
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Enable border rendering")]
+
+      public bool enableBorders
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable border rendering")>
+
+      Public enableBorders As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable border rendering
+- uid: Map.Rendering.Compositing.CompositorConfig.enableHighlights
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableHighlights
+  id: enableHighlights
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableHighlights
+  nameWithType: CompositorConfig.enableHighlights
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableHighlights
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableHighlights
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 113
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Enable highlight rendering")]
+
+      public bool enableHighlights
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable highlight rendering")>
+
+      Public enableHighlights As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable highlight rendering
+- uid: Map.Rendering.Compositing.CompositorConfig.enableFogOfWar
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableFogOfWar
+  id: enableFogOfWar
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableFogOfWar
+  nameWithType: CompositorConfig.enableFogOfWar
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableFogOfWar
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableFogOfWar
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 116
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Enable fog of war")]
+
+      public bool enableFogOfWar
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable fog of war")>
+
+      Public enableFogOfWar As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable fog of war
+- uid: Map.Rendering.Compositing.CompositorConfig.enableOverlay
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.enableOverlay
+  id: enableOverlay
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: enableOverlay
+  nameWithType: CompositorConfig.enableOverlay
+  fullName: Map.Rendering.Compositing.CompositorConfig.enableOverlay
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableOverlay
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 119
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Enable overlay texture")]
+
+      public bool enableOverlay
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable overlay texture")>
+
+      Public enableOverlay As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable overlay texture
+- uid: Map.Rendering.Compositing.CompositorConfig.borderBlendMode
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.borderBlendMode
+  id: borderBlendMode
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: borderBlendMode
+  nameWithType: CompositorConfig.borderBlendMode
+  fullName: Map.Rendering.Compositing.CompositorConfig.borderBlendMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: borderBlendMode
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 123
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Header("Blend Modes")]
+
+      [Tooltip("How borders blend with base color")]
+
+      public BlendMode borderBlendMode
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+    content.vb: >-
+      <Header("Blend Modes")>
+
+      <Tooltip("How borders blend with base color")>
+
+      Public borderBlendMode As BlendMode
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Blend Modes
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: How borders blend with base color
+- uid: Map.Rendering.Compositing.CompositorConfig.highlightBlendMode
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.highlightBlendMode
+  id: highlightBlendMode
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: highlightBlendMode
+  nameWithType: CompositorConfig.highlightBlendMode
+  fullName: Map.Rendering.Compositing.CompositorConfig.highlightBlendMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: highlightBlendMode
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 126
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("How highlights blend with base color")]
+
+      public BlendMode highlightBlendMode
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+    content.vb: >-
+      <Tooltip("How highlights blend with base color")>
+
+      Public highlightBlendMode As BlendMode
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: How highlights blend with base color
+- uid: Map.Rendering.Compositing.CompositorConfig.fogBlendMode
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.fogBlendMode
+  id: fogBlendMode
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: fogBlendMode
+  nameWithType: CompositorConfig.fogBlendMode
+  fullName: Map.Rendering.Compositing.CompositorConfig.fogBlendMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: fogBlendMode
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 129
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("How fog of war blends with base color")]
+
+      public BlendMode fogBlendMode
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+    content.vb: >-
+      <Tooltip("How fog of war blends with base color")>
+
+      Public fogBlendMode As BlendMode
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: How fog of war blends with base color
+- uid: Map.Rendering.Compositing.CompositorConfig.overlayBlendMode
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.overlayBlendMode
+  id: overlayBlendMode
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: overlayBlendMode
+  nameWithType: CompositorConfig.overlayBlendMode
+  fullName: Map.Rendering.Compositing.CompositorConfig.overlayBlendMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: overlayBlendMode
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 132
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("How overlay blends with base color")]
+
+      public BlendMode overlayBlendMode
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+    content.vb: >-
+      <Tooltip("How overlay blends with base color")>
+
+      Public overlayBlendMode As BlendMode
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: How overlay blends with base color
+- uid: Map.Rendering.Compositing.CompositorConfig.baseColorOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.baseColorOrder
+  id: baseColorOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: baseColorOrder
+  nameWithType: CompositorConfig.baseColorOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.baseColorOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: baseColorOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 136
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Header("Layer Order (lower = rendered first)")]
+
+      [Tooltip("Base color layer order (usually 0)")]
+
+      public int baseColorOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Header("Layer Order (lower = rendered first)")>
+
+      <Tooltip("Base color layer order (usually 0)")>
+
+      Public baseColorOrder As Integer
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Layer Order (lower = rendered first)
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Base color layer order (usually 0)
+- uid: Map.Rendering.Compositing.CompositorConfig.lightingOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.lightingOrder
+  id: lightingOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: lightingOrder
+  nameWithType: CompositorConfig.lightingOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.lightingOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: lightingOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 139
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Lighting layer order")]
+
+      public int lightingOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Lighting layer order")>
+
+      Public lightingOrder As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Lighting layer order
+- uid: Map.Rendering.Compositing.CompositorConfig.borderOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.borderOrder
+  id: borderOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: borderOrder
+  nameWithType: CompositorConfig.borderOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.borderOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: borderOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 142
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Border layer order")]
+
+      public int borderOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Border layer order")>
+
+      Public borderOrder As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Border layer order
+- uid: Map.Rendering.Compositing.CompositorConfig.highlightOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.highlightOrder
+  id: highlightOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: highlightOrder
+  nameWithType: CompositorConfig.highlightOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.highlightOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: highlightOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Highlight layer order")]
+
+      public int highlightOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Highlight layer order")>
+
+      Public highlightOrder As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Highlight layer order
+- uid: Map.Rendering.Compositing.CompositorConfig.fogOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.fogOrder
+  id: fogOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: fogOrder
+  nameWithType: CompositorConfig.fogOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.fogOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: fogOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 148
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Fog of war layer order")]
+
+      public int fogOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Fog of war layer order")>
+
+      Public fogOrder As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Fog of war layer order
+- uid: Map.Rendering.Compositing.CompositorConfig.overlayOrder
+  commentId: F:Map.Rendering.Compositing.CompositorConfig.overlayOrder
+  id: overlayOrder
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: overlayOrder
+  nameWithType: CompositorConfig.overlayOrder
+  fullName: Map.Rendering.Compositing.CompositorConfig.overlayOrder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: overlayOrder
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 151
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: >-
+      [Tooltip("Overlay layer order")]
+
+      public int overlayOrder
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Overlay layer order")>
+
+      Public overlayOrder As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Overlay layer order
+- uid: Map.Rendering.Compositing.CompositorConfig.Default
+  commentId: P:Map.Rendering.Compositing.CompositorConfig.Default
+  id: Default
+  parent: Map.Rendering.Compositing.CompositorConfig
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: CompositorConfig.Default
+  fullName: Map.Rendering.Compositing.CompositorConfig.Default
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Default
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 156
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Create default configuration
+  example: []
+  syntax:
+    content: public static CompositorConfig Default { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.Compositing.CompositorConfig
+    content.vb: Public Shared ReadOnly Property [Default] As CompositorConfig
+  overload: Map.Rendering.Compositing.CompositorConfig.Default*
+references:
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Compositing.BlendMode
+  commentId: T:Map.Rendering.Compositing.BlendMode
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.BlendMode.html
+  name: BlendMode
+  nameWithType: BlendMode
+  fullName: Map.Rendering.Compositing.BlendMode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.Compositing.CompositorConfig.Default*
+  commentId: Overload:Map.Rendering.Compositing.CompositorConfig.Default
+  href: Map.Rendering.Compositing.CompositorConfig.html#Map_Rendering_Compositing_CompositorConfig_Default
+  name: Default
+  nameWithType: CompositorConfig.Default
+  fullName: Map.Rendering.Compositing.CompositorConfig.Default
+- uid: Map.Rendering.Compositing.CompositorConfig
+  commentId: T:Map.Rendering.Compositing.CompositorConfig
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.CompositorConfig.html
+  name: CompositorConfig
+  nameWithType: CompositorConfig
+  fullName: Map.Rendering.Compositing.CompositorConfig

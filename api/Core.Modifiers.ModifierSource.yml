@@ -1,0 +1,586 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  id: ModifierSource
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierSource.CreatePermanent(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  - Core.Modifiers.ModifierSource.CreateTemporary(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean,System.Int32)
+  - Core.Modifiers.ModifierSource.ExpirationTick
+  - Core.Modifiers.ModifierSource.HasExpired(System.Int32)
+  - Core.Modifiers.ModifierSource.IsMultiplicative
+  - Core.Modifiers.ModifierSource.IsTemporary
+  - Core.Modifiers.ModifierSource.ModifierTypeId
+  - Core.Modifiers.ModifierSource.SourceID
+  - Core.Modifiers.ModifierSource.ToString
+  - Core.Modifiers.ModifierSource.Type
+  - Core.Modifiers.ModifierSource.Value
+  langs:
+  - csharp
+  - vb
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierSource
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Tracks the source of a modifier for tooltips and removal
+
+    Pattern used by: EU4 (modifier tooltips), CK3 (effect stacking), Stellaris (modifier tracking)
+
+
+    Examples:
+
+    - Building: Farm in Province #42 gives +5 production
+
+    - Tech: "Advanced Agriculture" gives +20% production (permanent)
+
+    - Event: "Harvest Festival" gives +10% production for 12 months (temporary)
+  example: []
+  syntax:
+    content: public struct ModifierSource
+    content.vb: Public Structure ModifierSource
+- uid: Core.Modifiers.ModifierSource.Type
+  commentId: F:Core.Modifiers.ModifierSource.Type
+  id: Type
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: ModifierSource.Type
+  fullName: Core.Modifiers.ModifierSource.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public ModifierSource.SourceType Type
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+    content.vb: Public Type As ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceID
+  commentId: F:Core.Modifiers.ModifierSource.SourceID
+  id: SourceID
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: SourceID
+  nameWithType: ModifierSource.SourceID
+  fullName: Core.Modifiers.ModifierSource.SourceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SourceID
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public uint SourceID
+    return:
+      type: System.UInt32
+    content.vb: Public SourceID As UInteger
+- uid: Core.Modifiers.ModifierSource.ModifierTypeId
+  commentId: F:Core.Modifiers.ModifierSource.ModifierTypeId
+  id: ModifierTypeId
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: ModifierTypeId
+  nameWithType: ModifierSource.ModifierTypeId
+  fullName: Core.Modifiers.ModifierSource.ModifierTypeId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierTypeId
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public ushort ModifierTypeId
+    return:
+      type: System.UInt16
+    content.vb: Public ModifierTypeId As UShort
+- uid: Core.Modifiers.ModifierSource.Value
+  commentId: F:Core.Modifiers.ModifierSource.Value
+  id: Value
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: ModifierSource.Value
+  fullName: Core.Modifiers.ModifierSource.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public FixedPoint64 Value
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Value As FixedPoint64
+- uid: Core.Modifiers.ModifierSource.IsMultiplicative
+  commentId: F:Core.Modifiers.ModifierSource.IsMultiplicative
+  id: IsMultiplicative
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplicative
+  nameWithType: ModifierSource.IsMultiplicative
+  fullName: Core.Modifiers.ModifierSource.IsMultiplicative
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsMultiplicative
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public bool IsMultiplicative
+    return:
+      type: System.Boolean
+    content.vb: Public IsMultiplicative As Boolean
+- uid: Core.Modifiers.ModifierSource.IsTemporary
+  commentId: F:Core.Modifiers.ModifierSource.IsTemporary
+  id: IsTemporary
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: IsTemporary
+  nameWithType: ModifierSource.IsTemporary
+  fullName: Core.Modifiers.ModifierSource.IsTemporary
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsTemporary
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public bool IsTemporary
+    return:
+      type: System.Boolean
+    content.vb: Public IsTemporary As Boolean
+- uid: Core.Modifiers.ModifierSource.ExpirationTick
+  commentId: F:Core.Modifiers.ModifierSource.ExpirationTick
+  id: ExpirationTick
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: ExpirationTick
+  nameWithType: ModifierSource.ExpirationTick
+  fullName: Core.Modifiers.ModifierSource.ExpirationTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExpirationTick
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public int ExpirationTick
+    return:
+      type: System.Int32
+    content.vb: Public ExpirationTick As Integer
+- uid: Core.Modifiers.ModifierSource.CreatePermanent(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  commentId: M:Core.Modifiers.ModifierSource.CreatePermanent(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  id: CreatePermanent(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: CreatePermanent(SourceType, uint, ushort, FixedPoint64, bool)
+  nameWithType: ModifierSource.CreatePermanent(ModifierSource.SourceType, uint, ushort, FixedPoint64, bool)
+  fullName: Core.Modifiers.ModifierSource.CreatePermanent(Core.Modifiers.ModifierSource.SourceType, uint, ushort, Core.Data.FixedPoint64, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreatePermanent
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Create a permanent modifier source
+  example: []
+  syntax:
+    content: public static ModifierSource CreatePermanent(ModifierSource.SourceType type, uint sourceId, ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
+    parameters:
+    - id: type
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: isMultiplicative
+      type: System.Boolean
+    return:
+      type: Core.Modifiers.ModifierSource
+    content.vb: Public Shared Function CreatePermanent(type As ModifierSource.SourceType, sourceId As UInteger, modifierTypeId As UShort, value As FixedPoint64, isMultiplicative As Boolean) As ModifierSource
+  overload: Core.Modifiers.ModifierSource.CreatePermanent*
+  nameWithType.vb: ModifierSource.CreatePermanent(ModifierSource.SourceType, UInteger, UShort, FixedPoint64, Boolean)
+  fullName.vb: Core.Modifiers.ModifierSource.CreatePermanent(Core.Modifiers.ModifierSource.SourceType, UInteger, UShort, Core.Data.FixedPoint64, Boolean)
+  name.vb: CreatePermanent(SourceType, UInteger, UShort, FixedPoint64, Boolean)
+- uid: Core.Modifiers.ModifierSource.CreateTemporary(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean,System.Int32)
+  commentId: M:Core.Modifiers.ModifierSource.CreateTemporary(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean,System.Int32)
+  id: CreateTemporary(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16,Core.Data.FixedPoint64,System.Boolean,System.Int32)
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: CreateTemporary(SourceType, uint, ushort, FixedPoint64, bool, int)
+  nameWithType: ModifierSource.CreateTemporary(ModifierSource.SourceType, uint, ushort, FixedPoint64, bool, int)
+  fullName: Core.Modifiers.ModifierSource.CreateTemporary(Core.Modifiers.ModifierSource.SourceType, uint, ushort, Core.Data.FixedPoint64, bool, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateTemporary
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Create a temporary modifier source
+  example: []
+  syntax:
+    content: public static ModifierSource CreateTemporary(ModifierSource.SourceType type, uint sourceId, ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative, int expirationTick)
+    parameters:
+    - id: type
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: isMultiplicative
+      type: System.Boolean
+    - id: expirationTick
+      type: System.Int32
+    return:
+      type: Core.Modifiers.ModifierSource
+    content.vb: Public Shared Function CreateTemporary(type As ModifierSource.SourceType, sourceId As UInteger, modifierTypeId As UShort, value As FixedPoint64, isMultiplicative As Boolean, expirationTick As Integer) As ModifierSource
+  overload: Core.Modifiers.ModifierSource.CreateTemporary*
+  nameWithType.vb: ModifierSource.CreateTemporary(ModifierSource.SourceType, UInteger, UShort, FixedPoint64, Boolean, Integer)
+  fullName.vb: Core.Modifiers.ModifierSource.CreateTemporary(Core.Modifiers.ModifierSource.SourceType, UInteger, UShort, Core.Data.FixedPoint64, Boolean, Integer)
+  name.vb: CreateTemporary(SourceType, UInteger, UShort, FixedPoint64, Boolean, Integer)
+- uid: Core.Modifiers.ModifierSource.HasExpired(System.Int32)
+  commentId: M:Core.Modifiers.ModifierSource.HasExpired(System.Int32)
+  id: HasExpired(System.Int32)
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: HasExpired(int)
+  nameWithType: ModifierSource.HasExpired(int)
+  fullName: Core.Modifiers.ModifierSource.HasExpired(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasExpired
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if this modifier has expired
+  example: []
+  syntax:
+    content: public bool HasExpired(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasExpired(currentTick As Integer) As Boolean
+  overload: Core.Modifiers.ModifierSource.HasExpired*
+  nameWithType.vb: ModifierSource.HasExpired(Integer)
+  fullName.vb: Core.Modifiers.ModifierSource.HasExpired(Integer)
+  name.vb: HasExpired(Integer)
+- uid: Core.Modifiers.ModifierSource.ToString
+  commentId: M:Core.Modifiers.ModifierSource.ToString
+  id: ToString
+  parent: Core.Modifiers.ModifierSource
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ModifierSource.ToString()
+  fullName: Core.Modifiers.ModifierSource.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Modifiers.ModifierSource.ToString*
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Modifiers.ModifierSource.CreatePermanent*
+  commentId: Overload:Core.Modifiers.ModifierSource.CreatePermanent
+  href: Core.Modifiers.ModifierSource.html#Core_Modifiers_ModifierSource_CreatePermanent_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_UInt16_Core_Data_FixedPoint64_System_Boolean_
+  name: CreatePermanent
+  nameWithType: ModifierSource.CreatePermanent
+  fullName: Core.Modifiers.ModifierSource.CreatePermanent
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+- uid: Core.Modifiers.ModifierSource.CreateTemporary*
+  commentId: Overload:Core.Modifiers.ModifierSource.CreateTemporary
+  href: Core.Modifiers.ModifierSource.html#Core_Modifiers_ModifierSource_CreateTemporary_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_UInt16_Core_Data_FixedPoint64_System_Boolean_System_Int32_
+  name: CreateTemporary
+  nameWithType: ModifierSource.CreateTemporary
+  fullName: Core.Modifiers.ModifierSource.CreateTemporary
+- uid: Core.Modifiers.ModifierSource.HasExpired*
+  commentId: Overload:Core.Modifiers.ModifierSource.HasExpired
+  href: Core.Modifiers.ModifierSource.html#Core_Modifiers_ModifierSource_HasExpired_System_Int32_
+  name: HasExpired
+  nameWithType: ModifierSource.HasExpired
+  fullName: Core.Modifiers.ModifierSource.HasExpired
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Modifiers.ModifierSource.ToString*
+  commentId: Overload:Core.Modifiers.ModifierSource.ToString
+  href: Core.Modifiers.ModifierSource.html#Core_Modifiers_ModifierSource_ToString
+  name: ToString
+  nameWithType: ModifierSource.ToString
+  fullName: Core.Modifiers.ModifierSource.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

@@ -1,0 +1,1316 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.MapModes.FarmDensityMapMode
+  commentId: T:StarterKit.MapModes.FarmDensityMapMode
+  id: FarmDensityMapMode
+  parent: StarterKit.MapModes
+  children:
+  - StarterKit.MapModes.FarmDensityMapMode.#ctor(StarterKit.BuildingSystem,Map.MapModes.MapModeManager)
+  - StarterKit.MapModes.FarmDensityMapMode.GetGradient
+  - StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  - StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency
+  - StarterKit.MapModes.FarmDensityMapMode.GetValueCategory(System.Single)
+  - StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  - StarterKit.MapModes.FarmDensityMapMode.Mode
+  - StarterKit.MapModes.FarmDensityMapMode.Name
+  - StarterKit.MapModes.FarmDensityMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  - StarterKit.MapModes.FarmDensityMapMode.OnDeactivate(UnityEngine.Material)
+  - StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+  langs:
+  - csharp
+  - vb
+  name: FarmDensityMapMode
+  nameWithType: FarmDensityMapMode
+  fullName: StarterKit.MapModes.FarmDensityMapMode
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FarmDensityMapMode
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 23
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: >-
+    STARTERKIT: Farm Density Map Mode
+
+
+    Demonstrates how to create a custom GAME-layer map mode that extends
+
+    the ENGINE's GradientMapMode base class.
+
+
+    Shows farms built per province as a heatmap:
+
+    - Cream/off-white = no farms (owned land)
+
+    - Yellow/Orange = some farms
+
+    - Dark orange = many farms (max density)
+
+
+    Architecture:
+
+    - ENGINE provides mechanism (GradientMapMode, texture array)
+
+    - GAME provides policy (farm data, gradient colors)
+
+    - Mode switching is instant (just changes shader int)
+  example: []
+  syntax:
+    content: 'public class FarmDensityMapMode : GradientMapMode, IMapModeHandler'
+    content.vb: Public Class FarmDensityMapMode Inherits GradientMapMode Implements IMapModeHandler
+  inheritance:
+  - System.Object
+  - Map.MapModes.GradientMapMode
+  implements:
+  - Map.MapModes.IMapModeHandler
+  inheritedMembers:
+  - Map.MapModes.GradientMapMode.OceanColor
+  - Map.MapModes.GradientMapMode.UnownedColor
+  - Map.MapModes.GradientMapMode.MarkDirty
+  - Map.MapModes.GradientMapMode.IsActive
+  - Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  - Map.MapModes.GradientMapMode.OnMapModeActivated
+  - Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  - Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  - Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  - Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  - Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  - Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  - Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  - Map.MapModes.GradientMapMode.LogActivation(System.String)
+  - Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  - Map.MapModes.GradientMapMode.Dispose
+- uid: StarterKit.MapModes.FarmDensityMapMode.#ctor(StarterKit.BuildingSystem,Map.MapModes.MapModeManager)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.#ctor(StarterKit.BuildingSystem,Map.MapModes.MapModeManager)
+  id: '#ctor(StarterKit.BuildingSystem,Map.MapModes.MapModeManager)'
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: FarmDensityMapMode(BuildingSystem, MapModeManager)
+  nameWithType: FarmDensityMapMode.FarmDensityMapMode(BuildingSystem, MapModeManager)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.FarmDensityMapMode(StarterKit.BuildingSystem, Map.MapModes.MapModeManager)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 30
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  syntax:
+    content: public FarmDensityMapMode(BuildingSystem buildingSystemRef, MapModeManager mapModeManagerRef)
+    parameters:
+    - id: buildingSystemRef
+      type: StarterKit.BuildingSystem
+    - id: mapModeManagerRef
+      type: Map.MapModes.MapModeManager
+    content.vb: Public Sub New(buildingSystemRef As BuildingSystem, mapModeManagerRef As MapModeManager)
+  overload: StarterKit.MapModes.FarmDensityMapMode.#ctor*
+  nameWithType.vb: FarmDensityMapMode.New(BuildingSystem, MapModeManager)
+  fullName.vb: StarterKit.MapModes.FarmDensityMapMode.New(StarterKit.BuildingSystem, Map.MapModes.MapModeManager)
+  name.vb: New(BuildingSystem, MapModeManager)
+- uid: StarterKit.MapModes.FarmDensityMapMode.Mode
+  commentId: P:StarterKit.MapModes.FarmDensityMapMode.Mode
+  id: Mode
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: Mode
+  nameWithType: FarmDensityMapMode.Mode
+  fullName: StarterKit.MapModes.FarmDensityMapMode.Mode
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mode
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 52
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Map mode type this handler manages
+  example: []
+  syntax:
+    content: public override MapMode Mode { get; }
+    parameters: []
+    return:
+      type: Map.MapModes.MapMode
+    content.vb: Public Overrides ReadOnly Property Mode As MapMode
+  overridden: Map.MapModes.GradientMapMode.Mode
+  overload: StarterKit.MapModes.FarmDensityMapMode.Mode*
+- uid: StarterKit.MapModes.FarmDensityMapMode.Name
+  commentId: P:StarterKit.MapModes.FarmDensityMapMode.Name
+  id: Name
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: FarmDensityMapMode.Name
+  fullName: StarterKit.MapModes.FarmDensityMapMode.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 54
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Display name for UI
+  example: []
+  syntax:
+    content: public override string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property Name As String
+  overridden: Map.MapModes.GradientMapMode.Name
+  overload: StarterKit.MapModes.FarmDensityMapMode.Name*
+- uid: StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+  commentId: P:StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+  id: ShaderModeID
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: ShaderModeID
+  nameWithType: FarmDensityMapMode.ShaderModeID
+  fullName: StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShaderModeID
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 57
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Shader mode ID for the GPU
+  example: []
+  syntax:
+    content: public override int ShaderModeID { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Overrides ReadOnly Property ShaderModeID As Integer
+  overridden: Map.MapModes.GradientMapMode.ShaderModeID
+  overload: StarterKit.MapModes.FarmDensityMapMode.ShaderModeID*
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency
+  id: GetUpdateFrequency
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetUpdateFrequency()
+  nameWithType: FarmDensityMapMode.GetUpdateFrequency()
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUpdateFrequency
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 59
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Get update frequency for this map mode's textures
+  example: []
+  syntax:
+    content: public override UpdateFrequency GetUpdateFrequency()
+    return:
+      type: Map.MapModes.UpdateFrequency
+    content.vb: Public Overrides Function GetUpdateFrequency() As UpdateFrequency
+  overridden: Map.MapModes.GradientMapMode.GetUpdateFrequency
+  overload: StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency*
+- uid: StarterKit.MapModes.FarmDensityMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  id: OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: FarmDensityMapMode.OnActivate(Material, MapModeDataTextures)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnActivate
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 61
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: >-
+    Called when this map mode becomes active
+
+    Set up shader properties, enable keywords, etc.
+  example: []
+  syntax:
+    content: public override void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    - id: dataTextures
+      type: Map.MapModes.MapModeDataTextures
+    content.vb: Public Overrides Sub OnActivate(mapMaterial As Material, dataTextures As MapModeDataTextures)
+  overridden: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  overload: StarterKit.MapModes.FarmDensityMapMode.OnActivate*
+- uid: StarterKit.MapModes.FarmDensityMapMode.OnDeactivate(UnityEngine.Material)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.OnDeactivate(UnityEngine.Material)
+  id: OnDeactivate(UnityEngine.Material)
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: OnDeactivate(Material)
+  nameWithType: FarmDensityMapMode.OnDeactivate(Material)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.OnDeactivate(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDeactivate
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 67
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: >-
+    Called when this map mode becomes inactive
+
+    Clean up, disable keywords, etc.
+  example: []
+  syntax:
+    content: public override void OnDeactivate(Material mapMaterial)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    content.vb: Public Overrides Sub OnDeactivate(mapMaterial As Material)
+  overridden: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  overload: StarterKit.MapModes.FarmDensityMapMode.OnDeactivate*
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  id: GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: FarmDensityMapMode.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTooltip
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 72
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Get tooltip text for a specific province in this map mode
+  example: []
+  syntax:
+    content: public override string GetProvinceTooltip(ushort provinceId, ProvinceQueries provinceQueries, CountryQueries countryQueries)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: countryQueries
+      type: Core.Queries.CountryQueries
+    return:
+      type: System.String
+    content.vb: Public Overrides Function GetProvinceTooltip(provinceId As UShort, provinceQueries As ProvinceQueries, countryQueries As CountryQueries) As String
+  overridden: Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  overload: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip*
+  nameWithType.vb: FarmDensityMapMode.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetGradient
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.GetGradient
+  id: GetGradient
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetGradient()
+  nameWithType: FarmDensityMapMode.GetGradient()
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetGradient()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGradient
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 93
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: 'Define the color gradient: cream (no farms) -&gt; yellow -&gt; orange (max farms)'
+  example: []
+  syntax:
+    content: protected override ColorGradient GetGradient()
+    return:
+      type: Map.MapModes.ColorGradient
+    content.vb: Protected Overrides Function GetGradient() As ColorGradient
+  overridden: Map.MapModes.GradientMapMode.GetGradient
+  overload: StarterKit.MapModes.FarmDensityMapMode.GetGradient*
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  id: GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetValueForProvince(ushort, ProvinceQueries, object)
+  nameWithType: FarmDensityMapMode.GetValueForProvince(ushort, ProvinceQueries, object)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince(ushort, Core.Queries.ProvinceQueries, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValueForProvince
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 107
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Get the farm count for a province.
+  example: []
+  syntax:
+    content: protected override float GetValueForProvince(ushort provinceId, ProvinceQueries provinceQueries, object gameProvinceSystem)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: gameProvinceSystem
+      type: System.Object
+    return:
+      type: System.Single
+    content.vb: Protected Overrides Function GetValueForProvince(provinceId As UShort, provinceQueries As ProvinceQueries, gameProvinceSystem As Object) As Single
+  overridden: Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  overload: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince*
+  nameWithType.vb: FarmDensityMapMode.GetValueForProvince(UShort, ProvinceQueries, Object)
+  fullName.vb: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince(UShort, Core.Queries.ProvinceQueries, Object)
+  name.vb: GetValueForProvince(UShort, ProvinceQueries, Object)
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory(System.Single)
+  commentId: M:StarterKit.MapModes.FarmDensityMapMode.GetValueCategory(System.Single)
+  id: GetValueCategory(System.Single)
+  parent: StarterKit.MapModes.FarmDensityMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetValueCategory(float)
+  nameWithType: FarmDensityMapMode.GetValueCategory(float)
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValueCategory
+    path: Scripts/StarterKit/MapModes/FarmDensityMapMode.cs
+    startLine: 127
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.MapModes
+  summary: Custom category names for farm density
+  example: []
+  syntax:
+    content: protected override string GetValueCategory(float value)
+    parameters:
+    - id: value
+      type: System.Single
+    return:
+      type: System.String
+    content.vb: Protected Overrides Function GetValueCategory(value As Single) As String
+  overridden: Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  overload: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory*
+  nameWithType.vb: FarmDensityMapMode.GetValueCategory(Single)
+  fullName.vb: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory(Single)
+  name.vb: GetValueCategory(Single)
+references:
+- uid: StarterKit.MapModes
+  commentId: N:StarterKit.MapModes
+  href: StarterKit.html
+  name: StarterKit.MapModes
+  nameWithType: StarterKit.MapModes
+  fullName: StarterKit.MapModes
+  spec.csharp:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.MapModes
+    name: MapModes
+    href: StarterKit.MapModes.html
+  spec.vb:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.MapModes
+    name: MapModes
+    href: StarterKit.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.MapModes.GradientMapMode
+  commentId: T:Map.MapModes.GradientMapMode
+  parent: Map.MapModes
+  href: Map.MapModes.GradientMapMode.html
+  name: GradientMapMode
+  nameWithType: GradientMapMode
+  fullName: Map.MapModes.GradientMapMode
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.GradientMapMode.OceanColor
+  commentId: P:Map.MapModes.GradientMapMode.OceanColor
+  parent: Map.MapModes.GradientMapMode
+  name: OceanColor
+  nameWithType: GradientMapMode.OceanColor
+  fullName: Map.MapModes.GradientMapMode.OceanColor
+- uid: Map.MapModes.GradientMapMode.UnownedColor
+  commentId: P:Map.MapModes.GradientMapMode.UnownedColor
+  parent: Map.MapModes.GradientMapMode
+  name: UnownedColor
+  nameWithType: GradientMapMode.UnownedColor
+  fullName: Map.MapModes.GradientMapMode.UnownedColor
+- uid: Map.MapModes.GradientMapMode.MarkDirty
+  commentId: M:Map.MapModes.GradientMapMode.MarkDirty
+  parent: Map.MapModes.GradientMapMode
+  name: MarkDirty()
+  nameWithType: GradientMapMode.MarkDirty()
+  fullName: Map.MapModes.GradientMapMode.MarkDirty()
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.MarkDirty
+    name: MarkDirty
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.MarkDirty
+    name: MarkDirty
+  - name: (
+  - name: )
+- uid: Map.MapModes.GradientMapMode.IsActive
+  commentId: P:Map.MapModes.GradientMapMode.IsActive
+  parent: Map.MapModes.GradientMapMode
+  name: IsActive
+  nameWithType: GradientMapMode.IsActive
+  fullName: Map.MapModes.GradientMapMode.IsActive
+- uid: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  commentId: M:Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  parent: Map.MapModes.GradientMapMode
+  name: RegisterWithMapModeManager(MapModeManager)
+  nameWithType: GradientMapMode.RegisterWithMapModeManager(MapModeManager)
+  fullName: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+    name: RegisterWithMapModeManager
+  - name: (
+  - uid: Map.MapModes.MapModeManager
+    name: MapModeManager
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+    name: RegisterWithMapModeManager
+  - name: (
+  - uid: Map.MapModes.MapModeManager
+    name: MapModeManager
+  - name: )
+- uid: Map.MapModes.GradientMapMode.OnMapModeActivated
+  commentId: M:Map.MapModes.GradientMapMode.OnMapModeActivated
+  parent: Map.MapModes.GradientMapMode
+  name: OnMapModeActivated()
+  nameWithType: GradientMapMode.OnMapModeActivated()
+  fullName: Map.MapModes.GradientMapMode.OnMapModeActivated()
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.OnMapModeActivated
+    name: OnMapModeActivated
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.OnMapModeActivated
+    name: OnMapModeActivated
+  - name: (
+  - name: )
+- uid: Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  commentId: P:Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  parent: Map.MapModes.GradientMapMode
+  name: RequiresFrequentUpdates
+  nameWithType: GradientMapMode.RequiresFrequentUpdates
+  fullName: Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+- uid: Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  commentId: M:Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: GetCategoryThreshold(int)
+  nameWithType: GradientMapMode.GetCategoryThreshold(int)
+  fullName: Map.MapModes.GradientMapMode.GetCategoryThreshold(int)
+  nameWithType.vb: GradientMapMode.GetCategoryThreshold(Integer)
+  fullName.vb: Map.MapModes.GradientMapMode.GetCategoryThreshold(Integer)
+  name.vb: GetCategoryThreshold(Integer)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+    name: GetCategoryThreshold
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+    name: GetCategoryThreshold
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  commentId: M:Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: FormatValue(float)
+  nameWithType: GradientMapMode.FormatValue(float)
+  fullName: Map.MapModes.GradientMapMode.FormatValue(float)
+  nameWithType.vb: GradientMapMode.FormatValue(Single)
+  fullName.vb: Map.MapModes.GradientMapMode.FormatValue(Single)
+  name.vb: FormatValue(Single)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.FormatValue(System.Single)
+    name: FormatValue
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.FormatValue(System.Single)
+    name: FormatValue
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  nameWithType: GradientMapMode.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  fullName: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, object)
+  nameWithType.vb: GradientMapMode.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, Object)
+  name.vb: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  commentId: M:Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: DisableAllMapModeKeywords(Material)
+  nameWithType: GradientMapMode.DisableAllMapModeKeywords(Material)
+  fullName: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+    name: DisableAllMapModeKeywords
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+    name: DisableAllMapModeKeywords
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  commentId: M:Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: EnableMapModeKeyword(Material, string)
+  nameWithType: GradientMapMode.EnableMapModeKeyword(Material, string)
+  fullName: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material, string)
+  nameWithType.vb: GradientMapMode.EnableMapModeKeyword(Material, String)
+  fullName.vb: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material, String)
+  name.vb: EnableMapModeKeyword(Material, String)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+    name: EnableMapModeKeyword
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+    name: EnableMapModeKeyword
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  commentId: M:Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: SetShaderMode(Material, int)
+  nameWithType: GradientMapMode.SetShaderMode(Material, int)
+  fullName: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material, int)
+  nameWithType.vb: GradientMapMode.SetShaderMode(Material, Integer)
+  fullName.vb: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material, Integer)
+  name.vb: SetShaderMode(Material, Integer)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+    name: SetShaderMode
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+    name: SetShaderMode
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.LogActivation(System.String)
+  commentId: M:Map.MapModes.GradientMapMode.LogActivation(System.String)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: LogActivation(string)
+  nameWithType: GradientMapMode.LogActivation(string)
+  fullName: Map.MapModes.GradientMapMode.LogActivation(string)
+  nameWithType.vb: GradientMapMode.LogActivation(String)
+  fullName.vb: Map.MapModes.GradientMapMode.LogActivation(String)
+  name.vb: LogActivation(String)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.LogActivation(System.String)
+    name: LogActivation
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.LogActivation(System.String)
+    name: LogActivation
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  commentId: M:Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: LogDeactivation(string)
+  nameWithType: GradientMapMode.LogDeactivation(string)
+  fullName: Map.MapModes.GradientMapMode.LogDeactivation(string)
+  nameWithType.vb: GradientMapMode.LogDeactivation(String)
+  fullName.vb: Map.MapModes.GradientMapMode.LogDeactivation(String)
+  name.vb: LogDeactivation(String)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+    name: LogDeactivation
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+    name: LogDeactivation
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.Dispose
+  commentId: M:Map.MapModes.GradientMapMode.Dispose
+  parent: Map.MapModes.GradientMapMode
+  name: Dispose()
+  nameWithType: GradientMapMode.Dispose()
+  fullName: Map.MapModes.GradientMapMode.Dispose()
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.Dispose
+    name: Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.Dispose
+    name: Dispose
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: StarterKit.MapModes.FarmDensityMapMode.#ctor*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.#ctor
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode__ctor_StarterKit_BuildingSystem_Map_MapModes_MapModeManager_
+  name: FarmDensityMapMode
+  nameWithType: FarmDensityMapMode.FarmDensityMapMode
+  fullName: StarterKit.MapModes.FarmDensityMapMode.FarmDensityMapMode
+  nameWithType.vb: FarmDensityMapMode.New
+  fullName.vb: StarterKit.MapModes.FarmDensityMapMode.New
+  name.vb: New
+- uid: StarterKit.BuildingSystem
+  commentId: T:StarterKit.BuildingSystem
+  parent: StarterKit
+  href: StarterKit.BuildingSystem.html
+  name: BuildingSystem
+  nameWithType: BuildingSystem
+  fullName: StarterKit.BuildingSystem
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeManager.html
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: Map.MapModes.GradientMapMode.Mode
+  commentId: P:Map.MapModes.GradientMapMode.Mode
+  parent: Map.MapModes.GradientMapMode
+  name: Mode
+  nameWithType: GradientMapMode.Mode
+  fullName: Map.MapModes.GradientMapMode.Mode
+- uid: StarterKit.MapModes.FarmDensityMapMode.Mode*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.Mode
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_Mode
+  name: Mode
+  nameWithType: FarmDensityMapMode.Mode
+  fullName: StarterKit.MapModes.FarmDensityMapMode.Mode
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes.GradientMapMode.Name
+  commentId: P:Map.MapModes.GradientMapMode.Name
+  parent: Map.MapModes.GradientMapMode
+  name: Name
+  nameWithType: GradientMapMode.Name
+  fullName: Map.MapModes.GradientMapMode.Name
+- uid: StarterKit.MapModes.FarmDensityMapMode.Name*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.Name
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_Name
+  name: Name
+  nameWithType: FarmDensityMapMode.Name
+  fullName: StarterKit.MapModes.FarmDensityMapMode.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.MapModes.GradientMapMode.ShaderModeID
+  commentId: P:Map.MapModes.GradientMapMode.ShaderModeID
+  parent: Map.MapModes.GradientMapMode
+  name: ShaderModeID
+  nameWithType: GradientMapMode.ShaderModeID
+  fullName: Map.MapModes.GradientMapMode.ShaderModeID
+- uid: StarterKit.MapModes.FarmDensityMapMode.ShaderModeID*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_ShaderModeID
+  name: ShaderModeID
+  nameWithType: FarmDensityMapMode.ShaderModeID
+  fullName: StarterKit.MapModes.FarmDensityMapMode.ShaderModeID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.GradientMapMode.GetUpdateFrequency
+  commentId: M:Map.MapModes.GradientMapMode.GetUpdateFrequency
+  parent: Map.MapModes.GradientMapMode
+  name: GetUpdateFrequency()
+  nameWithType: GradientMapMode.GetUpdateFrequency()
+  fullName: Map.MapModes.GradientMapMode.GetUpdateFrequency()
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetUpdateFrequency
+    name: GetUpdateFrequency
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetUpdateFrequency
+    name: GetUpdateFrequency
+  - name: (
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_GetUpdateFrequency
+  name: GetUpdateFrequency
+  nameWithType: FarmDensityMapMode.GetUpdateFrequency
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetUpdateFrequency
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: GradientMapMode.OnActivate(Material, MapModeDataTextures)
+  fullName: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.OnActivate*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.OnActivate
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  name: OnActivate
+  nameWithType: FarmDensityMapMode.OnActivate
+  fullName: StarterKit.MapModes.FarmDensityMapMode.OnActivate
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.MapModes.MapModeDataTextures
+  commentId: T:Map.MapModes.MapModeDataTextures
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeDataTextures.html
+  name: MapModeDataTextures
+  nameWithType: MapModeDataTextures
+  fullName: Map.MapModes.MapModeDataTextures
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  commentId: M:Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: OnDeactivate(Material)
+  nameWithType: GradientMapMode.OnDeactivate(Material)
+  fullName: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.OnDeactivate*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.OnDeactivate
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_OnDeactivate_UnityEngine_Material_
+  name: OnDeactivate
+  nameWithType: FarmDensityMapMode.OnDeactivate
+  fullName: StarterKit.MapModes.FarmDensityMapMode.OnDeactivate
+- uid: Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: GradientMapMode.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: Map.MapModes.GradientMapMode.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  nameWithType.vb: GradientMapMode.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: Map.MapModes.GradientMapMode.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  name: GetProvinceTooltip
+  nameWithType: FarmDensityMapMode.GetProvinceTooltip
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetProvinceTooltip
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  parent: Core.Queries
+  href: Core.Queries.CountryQueries.html
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: Map.MapModes.GradientMapMode.GetGradient
+  commentId: M:Map.MapModes.GradientMapMode.GetGradient
+  parent: Map.MapModes.GradientMapMode
+  name: GetGradient()
+  nameWithType: GradientMapMode.GetGradient()
+  fullName: Map.MapModes.GradientMapMode.GetGradient()
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetGradient
+    name: GetGradient
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetGradient
+    name: GetGradient
+  - name: (
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetGradient*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.GetGradient
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_GetGradient
+  name: GetGradient
+  nameWithType: FarmDensityMapMode.GetGradient
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetGradient
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  parent: Map.MapModes
+  href: Map.MapModes.ColorGradient.html
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+- uid: Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  commentId: M:Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: GetValueForProvince(ushort, ProvinceQueries, object)
+  nameWithType: GradientMapMode.GetValueForProvince(ushort, ProvinceQueries, object)
+  fullName: Map.MapModes.GradientMapMode.GetValueForProvince(ushort, Core.Queries.ProvinceQueries, object)
+  nameWithType.vb: GradientMapMode.GetValueForProvince(UShort, ProvinceQueries, Object)
+  fullName.vb: Map.MapModes.GradientMapMode.GetValueForProvince(UShort, Core.Queries.ProvinceQueries, Object)
+  name.vb: GetValueForProvince(UShort, ProvinceQueries, Object)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+    name: GetValueForProvince
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+    name: GetValueForProvince
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_GetValueForProvince_System_UInt16_Core_Queries_ProvinceQueries_System_Object_
+  name: GetValueForProvince
+  nameWithType: FarmDensityMapMode.GetValueForProvince
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetValueForProvince
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  commentId: M:Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  parent: Map.MapModes.GradientMapMode
+  isExternal: true
+  name: GetValueCategory(float)
+  nameWithType: GradientMapMode.GetValueCategory(float)
+  fullName: Map.MapModes.GradientMapMode.GetValueCategory(float)
+  nameWithType.vb: GradientMapMode.GetValueCategory(Single)
+  fullName.vb: Map.MapModes.GradientMapMode.GetValueCategory(Single)
+  name.vb: GetValueCategory(Single)
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+    name: GetValueCategory
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+    name: GetValueCategory
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory*
+  commentId: Overload:StarterKit.MapModes.FarmDensityMapMode.GetValueCategory
+  href: StarterKit.MapModes.FarmDensityMapMode.html#StarterKit_MapModes_FarmDensityMapMode_GetValueCategory_System_Single_
+  name: GetValueCategory
+  nameWithType: FarmDensityMapMode.GetValueCategory
+  fullName: StarterKit.MapModes.FarmDensityMapMode.GetValueCategory

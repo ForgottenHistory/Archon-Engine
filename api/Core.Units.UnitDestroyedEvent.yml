@@ -1,0 +1,288 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitDestroyedEvent
+  commentId: T:Core.Units.UnitDestroyedEvent
+  id: UnitDestroyedEvent
+  parent: Core.Units
+  children:
+  - Core.Units.UnitDestroyedEvent.CountryID
+  - Core.Units.UnitDestroyedEvent.ProvinceID
+  - Core.Units.UnitDestroyedEvent.Reason
+  - Core.Units.UnitDestroyedEvent.TimeStamp
+  - Core.Units.UnitDestroyedEvent.UnitID
+  - Core.Units.UnitDestroyedEvent.UnitTypeID
+  langs:
+  - csharp
+  - vb
+  name: UnitDestroyedEvent
+  nameWithType: UnitDestroyedEvent
+  fullName: Core.Units.UnitDestroyedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitDestroyedEvent
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Emitted when a unit is destroyed (disbanded, killed in combat, etc.)
+  example: []
+  syntax:
+    content: 'public struct UnitDestroyedEvent : IGameEvent'
+    content.vb: Public Structure UnitDestroyedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Units.UnitDestroyedEvent.UnitID
+  commentId: F:Core.Units.UnitDestroyedEvent.UnitID
+  id: UnitID
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitID
+  nameWithType: UnitDestroyedEvent.UnitID
+  fullName: Core.Units.UnitDestroyedEvent.UnitID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitID As UShort
+- uid: Core.Units.UnitDestroyedEvent.ProvinceID
+  commentId: F:Core.Units.UnitDestroyedEvent.ProvinceID
+  id: ProvinceID
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: UnitDestroyedEvent.ProvinceID
+  fullName: Core.Units.UnitDestroyedEvent.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Core.Units.UnitDestroyedEvent.CountryID
+  commentId: F:Core.Units.UnitDestroyedEvent.CountryID
+  id: CountryID
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryID
+  nameWithType: UnitDestroyedEvent.CountryID
+  fullName: Core.Units.UnitDestroyedEvent.CountryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort CountryID
+    return:
+      type: System.UInt16
+    content.vb: Public CountryID As UShort
+- uid: Core.Units.UnitDestroyedEvent.UnitTypeID
+  commentId: F:Core.Units.UnitDestroyedEvent.UnitTypeID
+  id: UnitTypeID
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitTypeID
+  nameWithType: UnitDestroyedEvent.UnitTypeID
+  fullName: Core.Units.UnitDestroyedEvent.UnitTypeID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitTypeID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitTypeID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitTypeID As UShort
+- uid: Core.Units.UnitDestroyedEvent.Reason
+  commentId: F:Core.Units.UnitDestroyedEvent.Reason
+  id: Reason
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: Reason
+  nameWithType: UnitDestroyedEvent.Reason
+  fullName: Core.Units.UnitDestroyedEvent.Reason
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Reason
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public DestructionReason Reason
+    return:
+      type: Core.Units.DestructionReason
+    content.vb: Public Reason As DestructionReason
+- uid: Core.Units.UnitDestroyedEvent.TimeStamp
+  commentId: P:Core.Units.UnitDestroyedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Units.UnitDestroyedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: UnitDestroyedEvent.TimeStamp
+  fullName: Core.Units.UnitDestroyedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Units.UnitDestroyedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.DestructionReason
+  commentId: T:Core.Units.DestructionReason
+  parent: Core.Units
+  href: Core.Units.DestructionReason.html
+  name: DestructionReason
+  nameWithType: DestructionReason
+  fullName: Core.Units.DestructionReason
+- uid: Core.Units.UnitDestroyedEvent.TimeStamp*
+  commentId: Overload:Core.Units.UnitDestroyedEvent.TimeStamp
+  href: Core.Units.UnitDestroyedEvent.html#Core_Units_UnitDestroyedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: UnitDestroyedEvent.TimeStamp
+  fullName: Core.Units.UnitDestroyedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

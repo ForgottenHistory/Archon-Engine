@@ -1,0 +1,284 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPProvinceStatsData
+  commentId: T:Map.Loading.Images.BMPProvinceStatsData
+  id: BMPProvinceStatsData
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPProvinceStatsData.Dispose
+  - Map.Loading.Images.BMPProvinceStatsData.ProvinceBounds
+  - Map.Loading.Images.BMPProvinceStatsData.ProvincePixelCounts
+  langs:
+  - csharp
+  - vb
+  name: BMPProvinceStatsData
+  nameWithType: BMPProvinceStatsData
+  fullName: Map.Loading.Images.BMPProvinceStatsData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPProvinceStatsData
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Data structure for collecting province statistics across job batches
+  example: []
+  syntax:
+    content: public struct BMPProvinceStatsData
+    content.vb: Public Structure BMPProvinceStatsData
+- uid: Map.Loading.Images.BMPProvinceStatsData.ProvincePixelCounts
+  commentId: F:Map.Loading.Images.BMPProvinceStatsData.ProvincePixelCounts
+  id: ProvincePixelCounts
+  parent: Map.Loading.Images.BMPProvinceStatsData
+  langs:
+  - csharp
+  - vb
+  name: ProvincePixelCounts
+  nameWithType: BMPProvinceStatsData.ProvincePixelCounts
+  fullName: Map.Loading.Images.BMPProvinceStatsData.ProvincePixelCounts
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincePixelCounts
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 168
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeHashMap<int, int> ProvincePixelCounts
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: Public ProvincePixelCounts As NativeHashMap(Of Integer, Integer)
+- uid: Map.Loading.Images.BMPProvinceStatsData.ProvinceBounds
+  commentId: F:Map.Loading.Images.BMPProvinceStatsData.ProvinceBounds
+  id: ProvinceBounds
+  parent: Map.Loading.Images.BMPProvinceStatsData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceBounds
+  nameWithType: BMPProvinceStatsData.ProvinceBounds
+  fullName: Map.Loading.Images.BMPProvinceStatsData.ProvinceBounds
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBounds
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 169
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeHashMap<int, ProvinceBounds> ProvinceBounds
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,Map.Loading.Images.ProvinceBounds}
+    content.vb: Public ProvinceBounds As NativeHashMap(Of Integer, ProvinceBounds)
+- uid: Map.Loading.Images.BMPProvinceStatsData.Dispose
+  commentId: M:Map.Loading.Images.BMPProvinceStatsData.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.BMPProvinceStatsData
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: BMPProvinceStatsData.Dispose()
+  fullName: Map.Loading.Images.BMPProvinceStatsData.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 171
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.BMPProvinceStatsData.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<int, int>
+  nameWithType: NativeHashMap<int, int>
+  fullName: Unity.Collections.NativeHashMap<int, int>
+  nameWithType.vb: NativeHashMap(Of Integer, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Integer, Integer)
+  name.vb: NativeHashMap(Of Integer, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeHashMap{System.Int32,Map.Loading.Images.ProvinceBounds}
+  commentId: T:Unity.Collections.NativeHashMap{System.Int32,Map.Loading.Images.ProvinceBounds}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  href: Map.Loading.Images.ProvinceBounds.html
+  name: NativeHashMap<int, ProvinceBounds>
+  nameWithType: NativeHashMap<int, ProvinceBounds>
+  fullName: Unity.Collections.NativeHashMap<int, Map.Loading.Images.ProvinceBounds>
+  nameWithType.vb: NativeHashMap(Of Integer, ProvinceBounds)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Integer, Map.Loading.Images.ProvinceBounds)
+  name.vb: NativeHashMap(Of Integer, ProvinceBounds)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Loading.Images.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Loading.Images.ProvinceBounds.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Loading.Images.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Loading.Images.ProvinceBounds.html
+  - name: )
+- uid: Map.Loading.Images.BMPProvinceStatsData.Dispose*
+  commentId: Overload:Map.Loading.Images.BMPProvinceStatsData.Dispose
+  href: Map.Loading.Images.BMPProvinceStatsData.html#Map_Loading_Images_BMPProvinceStatsData_Dispose
+  name: Dispose
+  nameWithType: BMPProvinceStatsData.Dispose
+  fullName: Map.Loading.Images.BMPProvinceStatsData.Dispose

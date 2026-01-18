@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ImageParser.ImageHeader
+  commentId: T:Map.Loading.Images.ImageParser.ImageHeader
+  id: ImageParser.ImageHeader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ImageParser.ImageHeader.BMPHeader
+  - Map.Loading.Images.ImageParser.ImageHeader.BitsPerPixel
+  - Map.Loading.Images.ImageParser.ImageHeader.Format
+  - Map.Loading.Images.ImageParser.ImageHeader.HasPalette
+  - Map.Loading.Images.ImageParser.ImageHeader.Height
+  - Map.Loading.Images.ImageParser.ImageHeader.IsSuccess
+  - Map.Loading.Images.ImageParser.ImageHeader.IsValid
+  - Map.Loading.Images.ImageParser.ImageHeader.PNGHeader
+  - Map.Loading.Images.ImageParser.ImageHeader.Width
+  langs:
+  - csharp
+  - vb
+  name: ImageParser.ImageHeader
+  nameWithType: ImageParser.ImageHeader
+  fullName: Map.Loading.Images.ImageParser.ImageHeader
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ImageHeader
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Unified image header information
+  example: []
+  syntax:
+    content: public struct ImageParser.ImageHeader
+    content.vb: Public Structure ImageParser.ImageHeader
+- uid: Map.Loading.Images.ImageParser.ImageHeader.Width
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.Width
+  id: Width
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: ImageParser.ImageHeader.Width
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width
+    return:
+      type: System.Int32
+    content.vb: Public Width As Integer
+- uid: Map.Loading.Images.ImageParser.ImageHeader.Height
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.Height
+  id: Height
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: ImageParser.ImageHeader.Height
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height
+    return:
+      type: System.Int32
+    content.vb: Public Height As Integer
+- uid: Map.Loading.Images.ImageParser.ImageHeader.BitsPerPixel
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.BitsPerPixel
+  id: BitsPerPixel
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: BitsPerPixel
+  nameWithType: ImageParser.ImageHeader.BitsPerPixel
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.BitsPerPixel
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BitsPerPixel
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int BitsPerPixel
+    return:
+      type: System.Int32
+    content.vb: Public BitsPerPixel As Integer
+- uid: Map.Loading.Images.ImageParser.ImageHeader.Format
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.Format
+  id: Format
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: Format
+  nameWithType: ImageParser.ImageHeader.Format
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.Format
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Format
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ImageParser.ImageFormat Format
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+    content.vb: Public Format As ImageParser.ImageFormat
+- uid: Map.Loading.Images.ImageParser.ImageHeader.IsSuccess
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ImageParser.ImageHeader.IsSuccess
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.ImageParser.ImageHeader.HasPalette
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.HasPalette
+  id: HasPalette
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: HasPalette
+  nameWithType: ImageParser.ImageHeader.HasPalette
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.HasPalette
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasPalette
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool HasPalette
+    return:
+      type: System.Boolean
+    content.vb: Public HasPalette As Boolean
+- uid: Map.Loading.Images.ImageParser.ImageHeader.BMPHeader
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.BMPHeader
+  id: BMPHeader
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: BMPHeader
+  nameWithType: ImageParser.ImageHeader.BMPHeader
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.BMPHeader
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPHeader
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public BMPParser.BMPHeader BMPHeader
+    return:
+      type: Map.Loading.Images.BMPParser.BMPHeader
+    content.vb: Public BMPHeader As BMPParser.BMPHeader
+- uid: Map.Loading.Images.ImageParser.ImageHeader.PNGHeader
+  commentId: F:Map.Loading.Images.ImageParser.ImageHeader.PNGHeader
+  id: PNGHeader
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: PNGHeader
+  nameWithType: ImageParser.ImageHeader.PNGHeader
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.PNGHeader
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PNGHeader
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public PNGParser.PNGHeader PNGHeader
+    return:
+      type: Map.Loading.Images.PNGParser.PNGHeader
+    content.vb: Public PNGHeader As PNGParser.PNGHeader
+- uid: Map.Loading.Images.ImageParser.ImageHeader.IsValid
+  commentId: P:Map.Loading.Images.ImageParser.ImageHeader.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.ImageParser.ImageHeader
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: ImageParser.ImageHeader.IsValid
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Map.Loading.Images.ImageParser.ImageHeader.IsValid*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.BMPParser.BMPHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPHeader
+  nameWithType: BMPParser.BMPHeader
+  fullName: Map.Loading.Images.BMPParser.BMPHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+- uid: Map.Loading.Images.PNGParser.PNGHeader
+  commentId: T:Map.Loading.Images.PNGParser.PNGHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGHeader
+  nameWithType: PNGParser.PNGHeader
+  fullName: Map.Loading.Images.PNGParser.PNGHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+- uid: Map.Loading.Images.ImageParser.ImageHeader.IsValid*
+  commentId: Overload:Map.Loading.Images.ImageParser.ImageHeader.IsValid
+  href: Map.Loading.Images.ImageParser.ImageHeader.html#Map_Loading_Images_ImageParser_ImageHeader_IsValid
+  name: IsValid
+  nameWithType: ImageParser.ImageHeader.IsValid
+  fullName: Map.Loading.Images.ImageParser.ImageHeader.IsValid

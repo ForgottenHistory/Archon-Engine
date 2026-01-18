@@ -1,0 +1,866 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ActiveModifierList
+  commentId: T:Core.Modifiers.ActiveModifierList
+  id: ActiveModifierList
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ActiveModifierList.ActiveCount
+  - Core.Modifiers.ActiveModifierList.Add(Core.Modifiers.ModifierSource)
+  - Core.Modifiers.ActiveModifierList.ApplyTo(Core.Modifiers.ModifierSet@)
+  - Core.Modifiers.ActiveModifierList.Clear
+  - Core.Modifiers.ActiveModifierList.CountBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ActiveModifierList.Create(System.Int32,Unity.Collections.Allocator)
+  - Core.Modifiers.ActiveModifierList.DEFAULT_CAPACITY
+  - Core.Modifiers.ActiveModifierList.Dispose
+  - Core.Modifiers.ActiveModifierList.ExpireModifiers(System.Int32)
+  - Core.Modifiers.ActiveModifierList.ForEach(System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ActiveModifierList.ForEachByModifierType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ActiveModifierList.ForEachBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  - Core.Modifiers.ActiveModifierList.HasAnyModifiers
+  - Core.Modifiers.ActiveModifierList.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  - Core.Modifiers.ActiveModifierList.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ActiveModifierList
+  nameWithType: ActiveModifierList
+  fullName: Core.Modifiers.ActiveModifierList
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ActiveModifierList
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Pool-based list of active modifiers with add/remove/expire logic
+
+    Pattern used by: EU4 (timed modifiers), CK3 (character effects), Stellaris (empire modifiers)
+
+
+    Design:
+
+    - Fixed-size array (zero allocations)
+
+    - Lazy deletion (mark as empty, compact on rebuild)
+
+    - Efficient iteration (skip empty slots)
+
+    - Track active count for quick checks
+
+
+    Performance: O(n) iteration where n = active modifiers (not max capacity)
+  example: []
+  syntax:
+    content: public struct ActiveModifierList
+    content.vb: Public Structure ActiveModifierList
+- uid: Core.Modifiers.ActiveModifierList.DEFAULT_CAPACITY
+  commentId: F:Core.Modifiers.ActiveModifierList.DEFAULT_CAPACITY
+  id: DEFAULT_CAPACITY
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: DEFAULT_CAPACITY
+  nameWithType: ActiveModifierList.DEFAULT_CAPACITY
+  fullName: Core.Modifiers.ActiveModifierList.DEFAULT_CAPACITY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DEFAULT_CAPACITY
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public const int DEFAULT_CAPACITY = 64
+    return:
+      type: System.Int32
+    content.vb: Public Const DEFAULT_CAPACITY As Integer = 64
+- uid: Core.Modifiers.ActiveModifierList.Create(System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Modifiers.ActiveModifierList.Create(System.Int32,Unity.Collections.Allocator)
+  id: Create(System.Int32,Unity.Collections.Allocator)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: Create(int, Allocator)
+  nameWithType: ActiveModifierList.Create(int, Allocator)
+  fullName: Core.Modifiers.ActiveModifierList.Create(int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Create a new active modifier list with specified capacity
+  example: []
+  syntax:
+    content: public static ActiveModifierList Create(int capacity = 64, Allocator allocator = Allocator.Persistent)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Modifiers.ActiveModifierList
+    content.vb: Public Shared Function Create(capacity As Integer = 64, allocator As Allocator = Allocator.Persistent) As ActiveModifierList
+  overload: Core.Modifiers.ActiveModifierList.Create*
+  nameWithType.vb: ActiveModifierList.Create(Integer, Allocator)
+  fullName.vb: Core.Modifiers.ActiveModifierList.Create(Integer, Unity.Collections.Allocator)
+  name.vb: Create(Integer, Allocator)
+- uid: Core.Modifiers.ActiveModifierList.Add(Core.Modifiers.ModifierSource)
+  commentId: M:Core.Modifiers.ActiveModifierList.Add(Core.Modifiers.ModifierSource)
+  id: Add(Core.Modifiers.ModifierSource)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: Add(ModifierSource)
+  nameWithType: ActiveModifierList.Add(ModifierSource)
+  fullName: Core.Modifiers.ActiveModifierList.Add(Core.Modifiers.ModifierSource)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Add a new modifier to the list
+
+    Returns false if capacity exceeded
+  example: []
+  syntax:
+    content: public bool Add(ModifierSource source)
+    parameters:
+    - id: source
+      type: Core.Modifiers.ModifierSource
+    return:
+      type: System.Boolean
+    content.vb: Public Function Add(source As ModifierSource) As Boolean
+  overload: Core.Modifiers.ActiveModifierList.Add*
+- uid: Core.Modifiers.ActiveModifierList.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ActiveModifierList.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: RemoveBySource(SourceType, uint)
+  nameWithType: ActiveModifierList.RemoveBySource(ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ActiveModifierList.RemoveBySource(Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveBySource
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Remove modifiers from a specific source
+
+    Returns count of modifiers removed
+  example: []
+  syntax:
+    content: public int RemoveBySource(ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ActiveModifierList.RemoveBySource*
+  nameWithType.vb: ActiveModifierList.RemoveBySource(ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ActiveModifierList.RemoveBySource(Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: RemoveBySource(SourceType, UInteger)
+- uid: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  commentId: M:Core.Modifiers.ActiveModifierList.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  id: RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: RemoveBySourceAndType(SourceType, uint, ushort)
+  nameWithType: ActiveModifierList.RemoveBySourceAndType(ModifierSource.SourceType, uint, ushort)
+  fullName: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType, uint, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveBySourceAndType
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Remove modifiers of a specific type from a specific source
+
+    Returns count of modifiers removed
+  example: []
+  syntax:
+    content: public int RemoveBySourceAndType(ModifierSource.SourceType sourceType, uint sourceId, ushort modifierTypeId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: modifierTypeId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function RemoveBySourceAndType(sourceType As ModifierSource.SourceType, sourceId As UInteger, modifierTypeId As UShort) As Integer
+  overload: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType*
+  nameWithType.vb: ActiveModifierList.RemoveBySourceAndType(ModifierSource.SourceType, UInteger, UShort)
+  fullName.vb: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType, UInteger, UShort)
+  name.vb: RemoveBySourceAndType(SourceType, UInteger, UShort)
+- uid: Core.Modifiers.ActiveModifierList.ExpireModifiers(System.Int32)
+  commentId: M:Core.Modifiers.ActiveModifierList.ExpireModifiers(System.Int32)
+  id: ExpireModifiers(System.Int32)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ExpireModifiers(int)
+  nameWithType: ActiveModifierList.ExpireModifiers(int)
+  fullName: Core.Modifiers.ActiveModifierList.ExpireModifiers(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExpireModifiers
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Expire temporary modifiers that have passed their expiration tick
+
+    Returns count of modifiers expired
+  example: []
+  syntax:
+    content: public int ExpireModifiers(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function ExpireModifiers(currentTick As Integer) As Integer
+  overload: Core.Modifiers.ActiveModifierList.ExpireModifiers*
+  nameWithType.vb: ActiveModifierList.ExpireModifiers(Integer)
+  fullName.vb: Core.Modifiers.ActiveModifierList.ExpireModifiers(Integer)
+  name.vb: ExpireModifiers(Integer)
+- uid: Core.Modifiers.ActiveModifierList.ApplyTo(Core.Modifiers.ModifierSet@)
+  commentId: M:Core.Modifiers.ActiveModifierList.ApplyTo(Core.Modifiers.ModifierSet@)
+  id: ApplyTo(Core.Modifiers.ModifierSet@)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ApplyTo(ref ModifierSet)
+  nameWithType: ActiveModifierList.ApplyTo(ref ModifierSet)
+  fullName: Core.Modifiers.ActiveModifierList.ApplyTo(ref Core.Modifiers.ModifierSet)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyTo
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Apply all active modifiers to a ModifierSet
+  example: []
+  syntax:
+    content: public void ApplyTo(ref ModifierSet modifierSet)
+    parameters:
+    - id: modifierSet
+      type: Core.Modifiers.ModifierSet
+    content.vb: Public Sub ApplyTo(modifierSet As ModifierSet)
+  overload: Core.Modifiers.ActiveModifierList.ApplyTo*
+  nameWithType.vb: ActiveModifierList.ApplyTo(ModifierSet)
+  fullName.vb: Core.Modifiers.ActiveModifierList.ApplyTo(Core.Modifiers.ModifierSet)
+  name.vb: ApplyTo(ModifierSet)
+- uid: Core.Modifiers.ActiveModifierList.Clear
+  commentId: M:Core.Modifiers.ActiveModifierList.Clear
+  id: Clear
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ActiveModifierList.Clear()
+  fullName: Core.Modifiers.ActiveModifierList.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 149
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Clear all modifiers
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Modifiers.ActiveModifierList.Clear*
+- uid: Core.Modifiers.ActiveModifierList.HasAnyModifiers
+  commentId: P:Core.Modifiers.ActiveModifierList.HasAnyModifiers
+  id: HasAnyModifiers
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: HasAnyModifiers
+  nameWithType: ActiveModifierList.HasAnyModifiers
+  fullName: Core.Modifiers.ActiveModifierList.HasAnyModifiers
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasAnyModifiers
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 161
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if any modifiers are active
+  example: []
+  syntax:
+    content: public bool HasAnyModifiers { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasAnyModifiers As Boolean
+  overload: Core.Modifiers.ActiveModifierList.HasAnyModifiers*
+- uid: Core.Modifiers.ActiveModifierList.ActiveCount
+  commentId: P:Core.Modifiers.ActiveModifierList.ActiveCount
+  id: ActiveCount
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ActiveCount
+  nameWithType: ActiveModifierList.ActiveCount
+  fullName: Core.Modifiers.ActiveModifierList.ActiveCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ActiveCount
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 166
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Get count of active modifiers
+  example: []
+  syntax:
+    content: public int ActiveCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ActiveCount As Integer
+  overload: Core.Modifiers.ActiveModifierList.ActiveCount*
+- uid: Core.Modifiers.ActiveModifierList.ForEach(System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ActiveModifierList.ForEach(System.Action{Core.Modifiers.ModifierSource})
+  id: ForEach(System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ForEach(Action<ModifierSource>)
+  nameWithType: ActiveModifierList.ForEach(Action<ModifierSource>)
+  fullName: Core.Modifiers.ActiveModifierList.ForEach(System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEach
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over all active modifiers (for debugging/tooltips)
+  example: []
+  syntax:
+    content: public void ForEach(Action<ModifierSource> action)
+    parameters:
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEach(action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ActiveModifierList.ForEach*
+  nameWithType.vb: ActiveModifierList.ForEach(Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ActiveModifierList.ForEach(System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEach(Action(Of ModifierSource))
+- uid: Core.Modifiers.ActiveModifierList.ForEachBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ActiveModifierList.ForEachBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ForEachBySource(SourceType, uint, Action<ModifierSource>)
+  nameWithType: ActiveModifierList.ForEachBySource(ModifierSource.SourceType, uint, Action<ModifierSource>)
+  fullName: Core.Modifiers.ActiveModifierList.ForEachBySource(Core.Modifiers.ModifierSource.SourceType, uint, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachBySource
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over modifiers from a specific source
+  example: []
+  syntax:
+    content: public void ForEachBySource(ModifierSource.SourceType sourceType, uint sourceId, Action<ModifierSource> action)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ActiveModifierList.ForEachBySource*
+  nameWithType.vb: ActiveModifierList.ForEachBySource(ModifierSource.SourceType, UInteger, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ActiveModifierList.ForEachBySource(Core.Modifiers.ModifierSource.SourceType, UInteger, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachBySource(SourceType, UInteger, Action(Of ModifierSource))
+- uid: Core.Modifiers.ActiveModifierList.ForEachByModifierType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  commentId: M:Core.Modifiers.ActiveModifierList.ForEachByModifierType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  id: ForEachByModifierType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: ForEachByModifierType(ushort, Action<ModifierSource>)
+  nameWithType: ActiveModifierList.ForEachByModifierType(ushort, Action<ModifierSource>)
+  fullName: Core.Modifiers.ActiveModifierList.ForEachByModifierType(ushort, System.Action<Core.Modifiers.ModifierSource>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForEachByModifierType
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 201
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Iterate over modifiers of a specific modifier type
+  example: []
+  syntax:
+    content: public void ForEachByModifierType(ushort modifierTypeId, Action<ModifierSource> action)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: action
+      type: System.Action{Core.Modifiers.ModifierSource}
+    content.vb: Public Sub ForEachByModifierType(modifierTypeId As UShort, action As Action(Of ModifierSource))
+  overload: Core.Modifiers.ActiveModifierList.ForEachByModifierType*
+  nameWithType.vb: ActiveModifierList.ForEachByModifierType(UShort, Action(Of ModifierSource))
+  fullName.vb: Core.Modifiers.ActiveModifierList.ForEachByModifierType(UShort, System.Action(Of Core.Modifiers.ModifierSource))
+  name.vb: ForEachByModifierType(UShort, Action(Of ModifierSource))
+- uid: Core.Modifiers.ActiveModifierList.CountBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  commentId: M:Core.Modifiers.ActiveModifierList.CountBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  id: CountBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: CountBySource(SourceType, uint)
+  nameWithType: ActiveModifierList.CountBySource(ModifierSource.SourceType, uint)
+  fullName: Core.Modifiers.ActiveModifierList.CountBySource(Core.Modifiers.ModifierSource.SourceType, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountBySource
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 215
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Count modifiers from a specific source
+  example: []
+  syntax:
+    content: public int CountBySource(ModifierSource.SourceType sourceType, uint sourceId)
+    parameters:
+    - id: sourceType
+      type: Core.Modifiers.ModifierSource.SourceType
+    - id: sourceId
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Function CountBySource(sourceType As ModifierSource.SourceType, sourceId As UInteger) As Integer
+  overload: Core.Modifiers.ActiveModifierList.CountBySource*
+  nameWithType.vb: ActiveModifierList.CountBySource(ModifierSource.SourceType, UInteger)
+  fullName.vb: Core.Modifiers.ActiveModifierList.CountBySource(Core.Modifiers.ModifierSource.SourceType, UInteger)
+  name.vb: CountBySource(SourceType, UInteger)
+- uid: Core.Modifiers.ActiveModifierList.Dispose
+  commentId: M:Core.Modifiers.ActiveModifierList.Dispose
+  id: Dispose
+  parent: Core.Modifiers.ActiveModifierList
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ActiveModifierList.Dispose()
+  fullName: Core.Modifiers.ActiveModifierList.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ActiveModifierList.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Modifiers/ActiveModifierList.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Dispose native collections
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Modifiers.ActiveModifierList.Dispose*
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Modifiers.ActiveModifierList.Create*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.Create
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_Create_System_Int32_Unity_Collections_Allocator_
+  name: Create
+  nameWithType: ActiveModifierList.Create
+  fullName: Core.Modifiers.ActiveModifierList.Create
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Modifiers.ActiveModifierList
+  commentId: T:Core.Modifiers.ActiveModifierList
+  parent: Core.Modifiers
+  href: Core.Modifiers.ActiveModifierList.html
+  name: ActiveModifierList
+  nameWithType: ActiveModifierList
+  fullName: Core.Modifiers.ActiveModifierList
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Modifiers.ActiveModifierList.Add*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.Add
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_Add_Core_Modifiers_ModifierSource_
+  name: Add
+  nameWithType: ActiveModifierList.Add
+  fullName: Core.Modifiers.ActiveModifierList.Add
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Modifiers.ActiveModifierList.RemoveBySource*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.RemoveBySource
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_RemoveBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: RemoveBySource
+  nameWithType: ActiveModifierList.RemoveBySource
+  fullName: Core.Modifiers.ActiveModifierList.RemoveBySource
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.RemoveBySourceAndType
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_RemoveBySourceAndType_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_UInt16_
+  name: RemoveBySourceAndType
+  nameWithType: ActiveModifierList.RemoveBySourceAndType
+  fullName: Core.Modifiers.ActiveModifierList.RemoveBySourceAndType
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Modifiers.ActiveModifierList.ExpireModifiers*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ExpireModifiers
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ExpireModifiers_System_Int32_
+  name: ExpireModifiers
+  nameWithType: ActiveModifierList.ExpireModifiers
+  fullName: Core.Modifiers.ActiveModifierList.ExpireModifiers
+- uid: Core.Modifiers.ActiveModifierList.ApplyTo*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ApplyTo
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ApplyTo_Core_Modifiers_ModifierSet__
+  name: ApplyTo
+  nameWithType: ActiveModifierList.ApplyTo
+  fullName: Core.Modifiers.ActiveModifierList.ApplyTo
+- uid: Core.Modifiers.ModifierSet
+  commentId: T:Core.Modifiers.ModifierSet
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSet.html
+  name: ModifierSet
+  nameWithType: ModifierSet
+  fullName: Core.Modifiers.ModifierSet
+- uid: Core.Modifiers.ActiveModifierList.Clear*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.Clear
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_Clear
+  name: Clear
+  nameWithType: ActiveModifierList.Clear
+  fullName: Core.Modifiers.ActiveModifierList.Clear
+- uid: Core.Modifiers.ActiveModifierList.HasAnyModifiers*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.HasAnyModifiers
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_HasAnyModifiers
+  name: HasAnyModifiers
+  nameWithType: ActiveModifierList.HasAnyModifiers
+  fullName: Core.Modifiers.ActiveModifierList.HasAnyModifiers
+- uid: Core.Modifiers.ActiveModifierList.ActiveCount*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ActiveCount
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ActiveCount
+  name: ActiveCount
+  nameWithType: ActiveModifierList.ActiveCount
+  fullName: Core.Modifiers.ActiveModifierList.ActiveCount
+- uid: Core.Modifiers.ActiveModifierList.ForEach*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ForEach
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ForEach_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEach
+  nameWithType: ActiveModifierList.ForEach
+  fullName: Core.Modifiers.ActiveModifierList.ForEach
+- uid: System.Action{Core.Modifiers.ModifierSource}
+  commentId: T:System.Action{Core.Modifiers.ModifierSource}
+  parent: System
+  definition: System.Action`1
+  href: Core.Modifiers.ModifierSource.html
+  name: Action<ModifierSource>
+  nameWithType: Action<ModifierSource>
+  fullName: System.Action<Core.Modifiers.ModifierSource>
+  nameWithType.vb: Action(Of ModifierSource)
+  fullName.vb: System.Action(Of Core.Modifiers.ModifierSource)
+  name.vb: Action(Of ModifierSource)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Modifiers.ActiveModifierList.ForEachBySource*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ForEachBySource
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ForEachBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachBySource
+  nameWithType: ActiveModifierList.ForEachBySource
+  fullName: Core.Modifiers.ActiveModifierList.ForEachBySource
+- uid: Core.Modifiers.ActiveModifierList.ForEachByModifierType*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.ForEachByModifierType
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_ForEachByModifierType_System_UInt16_System_Action_Core_Modifiers_ModifierSource__
+  name: ForEachByModifierType
+  nameWithType: ActiveModifierList.ForEachByModifierType
+  fullName: Core.Modifiers.ActiveModifierList.ForEachByModifierType
+- uid: Core.Modifiers.ActiveModifierList.CountBySource*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.CountBySource
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_CountBySource_Core_Modifiers_ModifierSource_SourceType_System_UInt32_
+  name: CountBySource
+  nameWithType: ActiveModifierList.CountBySource
+  fullName: Core.Modifiers.ActiveModifierList.CountBySource
+- uid: Core.Modifiers.ActiveModifierList.Dispose*
+  commentId: Overload:Core.Modifiers.ActiveModifierList.Dispose
+  href: Core.Modifiers.ActiveModifierList.html#Core_Modifiers_ActiveModifierList_Dispose
+  name: Dispose
+  nameWithType: ActiveModifierList.Dispose
+  fullName: Core.Modifiers.ActiveModifierList.Dispose

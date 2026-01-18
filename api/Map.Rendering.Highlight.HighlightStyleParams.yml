@@ -1,0 +1,250 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Highlight.HighlightStyleParams
+  commentId: T:Map.Rendering.Highlight.HighlightStyleParams
+  id: HighlightStyleParams
+  parent: Map.Rendering.Highlight
+  children:
+  - Map.Rendering.Highlight.HighlightStyleParams.BorderThickness
+  - Map.Rendering.Highlight.HighlightStyleParams.DefaultMode
+  - Map.Rendering.Highlight.HighlightStyleParams.HoverColor
+  - Map.Rendering.Highlight.HighlightStyleParams.OpacityMultiplier
+  - Map.Rendering.Highlight.HighlightStyleParams.SelectionColor
+  langs:
+  - csharp
+  - vb
+  name: HighlightStyleParams
+  nameWithType: HighlightStyleParams
+  fullName: Map.Rendering.Highlight.HighlightStyleParams
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightStyleParams
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: >-
+    Style parameters for highlight rendering.
+
+    Passed to ApplyToMaterial for visual customization.
+  example: []
+  syntax:
+    content: public struct HighlightStyleParams
+    content.vb: Public Structure HighlightStyleParams
+- uid: Map.Rendering.Highlight.HighlightStyleParams.SelectionColor
+  commentId: F:Map.Rendering.Highlight.HighlightStyleParams.SelectionColor
+  id: SelectionColor
+  parent: Map.Rendering.Highlight.HighlightStyleParams
+  langs:
+  - csharp
+  - vb
+  name: SelectionColor
+  nameWithType: HighlightStyleParams.SelectionColor
+  fullName: Map.Rendering.Highlight.HighlightStyleParams.SelectionColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SelectionColor
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Default color for province selection
+  example: []
+  syntax:
+    content: public Color SelectionColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public SelectionColor As Color
+- uid: Map.Rendering.Highlight.HighlightStyleParams.HoverColor
+  commentId: F:Map.Rendering.Highlight.HighlightStyleParams.HoverColor
+  id: HoverColor
+  parent: Map.Rendering.Highlight.HighlightStyleParams
+  langs:
+  - csharp
+  - vb
+  name: HoverColor
+  nameWithType: HighlightStyleParams.HoverColor
+  fullName: Map.Rendering.Highlight.HighlightStyleParams.HoverColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HoverColor
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 109
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Default color for province hover
+  example: []
+  syntax:
+    content: public Color HoverColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public HoverColor As Color
+- uid: Map.Rendering.Highlight.HighlightStyleParams.DefaultMode
+  commentId: F:Map.Rendering.Highlight.HighlightStyleParams.DefaultMode
+  id: DefaultMode
+  parent: Map.Rendering.Highlight.HighlightStyleParams
+  langs:
+  - csharp
+  - vb
+  name: DefaultMode
+  nameWithType: HighlightStyleParams.DefaultMode
+  fullName: Map.Rendering.Highlight.HighlightStyleParams.DefaultMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefaultMode
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 112
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Default highlight mode
+  example: []
+  syntax:
+    content: public HighlightMode DefaultMode
+    return:
+      type: Map.Rendering.Highlight.HighlightMode
+    content.vb: Public DefaultMode As HighlightMode
+- uid: Map.Rendering.Highlight.HighlightStyleParams.BorderThickness
+  commentId: F:Map.Rendering.Highlight.HighlightStyleParams.BorderThickness
+  id: BorderThickness
+  parent: Map.Rendering.Highlight.HighlightStyleParams
+  langs:
+  - csharp
+  - vb
+  name: BorderThickness
+  nameWithType: HighlightStyleParams.BorderThickness
+  fullName: Map.Rendering.Highlight.HighlightStyleParams.BorderThickness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderThickness
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 115
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Border thickness for BorderOnly mode (1-5 pixels)
+  example: []
+  syntax:
+    content: public float BorderThickness
+    return:
+      type: System.Single
+    content.vb: Public BorderThickness As Single
+- uid: Map.Rendering.Highlight.HighlightStyleParams.OpacityMultiplier
+  commentId: F:Map.Rendering.Highlight.HighlightStyleParams.OpacityMultiplier
+  id: OpacityMultiplier
+  parent: Map.Rendering.Highlight.HighlightStyleParams
+  langs:
+  - csharp
+  - vb
+  name: OpacityMultiplier
+  nameWithType: HighlightStyleParams.OpacityMultiplier
+  fullName: Map.Rendering.Highlight.HighlightStyleParams.OpacityMultiplier
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OpacityMultiplier
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Highlight opacity multiplier
+  example: []
+  syntax:
+    content: public float OpacityMultiplier
+    return:
+      type: System.Single
+    content.vb: Public OpacityMultiplier As Single
+references:
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Highlight.HighlightMode
+  commentId: T:Map.Rendering.Highlight.HighlightMode
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightMode.html
+  name: HighlightMode
+  nameWithType: HighlightMode
+  fullName: Map.Rendering.Highlight.HighlightMode
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

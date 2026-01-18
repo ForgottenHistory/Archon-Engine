@@ -1,0 +1,788 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.CountryQueryBuilder
+  commentId: T:Core.Queries.CountryQueryBuilder
+  id: CountryQueryBuilder
+  parent: Core.Queries
+  children:
+  - Core.Queries.CountryQueryBuilder.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.Queries.CountryQueryBuilder.Any
+  - Core.Queries.CountryQueryBuilder.BorderingCountry(System.UInt16)
+  - Core.Queries.CountryQueryBuilder.Count
+  - Core.Queries.CountryQueryBuilder.Dispose
+  - Core.Queries.CountryQueryBuilder.Execute(Unity.Collections.Allocator)
+  - Core.Queries.CountryQueryBuilder.FirstOrDefault
+  - Core.Queries.CountryQueryBuilder.HasNoProvinces
+  - Core.Queries.CountryQueryBuilder.HasProvinces
+  - Core.Queries.CountryQueryBuilder.WithGraphicalCulture(System.Byte)
+  - Core.Queries.CountryQueryBuilder.WithMaxProvinces(System.Int32)
+  - Core.Queries.CountryQueryBuilder.WithMinProvinces(System.Int32)
+  - Core.Queries.CountryQueryBuilder.WithProvinceCount(System.Int32,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: CountryQueryBuilder
+  nameWithType: CountryQueryBuilder
+  fullName: Core.Queries.CountryQueryBuilder
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryQueryBuilder
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Fluent query builder for country filtering.
+
+    Lazy evaluation - filters are applied when terminal operation is called.
+
+
+    Usage:
+      using var results = new CountryQueryBuilder(countrySystem, provinceSystem)
+          .WithMinProvinces(5)
+          .BorderingCountry(targetCountryId)
+          .Execute(Allocator.Temp);
+
+    Performance: O(C) where C = countries, single pass with combined filters.
+  example: []
+  syntax:
+    content: public struct CountryQueryBuilder
+    content.vb: Public Structure CountryQueryBuilder
+- uid: Core.Queries.CountryQueryBuilder.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Queries.CountryQueryBuilder.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: '#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)'
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: CountryQueryBuilder(CountrySystem, ProvinceSystem, AdjacencySystem)
+  nameWithType: CountryQueryBuilder.CountryQueryBuilder(CountrySystem, ProvinceSystem, AdjacencySystem)
+  fullName: Core.Queries.CountryQueryBuilder.CountryQueryBuilder(Core.Systems.CountrySystem, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public CountryQueryBuilder(CountrySystem countrySystem, ProvinceSystem provinceSystem = null, AdjacencySystem adjacencySystem = null)
+    parameters:
+    - id: countrySystem
+      type: Core.Systems.CountrySystem
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Sub New(countrySystem As CountrySystem, provinceSystem As ProvinceSystem = Nothing, adjacencySystem As AdjacencySystem = Nothing)
+  overload: Core.Queries.CountryQueryBuilder.#ctor*
+  nameWithType.vb: CountryQueryBuilder.New(CountrySystem, ProvinceSystem, AdjacencySystem)
+  fullName.vb: Core.Queries.CountryQueryBuilder.New(Core.Systems.CountrySystem, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  name.vb: New(CountrySystem, ProvinceSystem, AdjacencySystem)
+- uid: Core.Queries.CountryQueryBuilder.WithMinProvinces(System.Int32)
+  commentId: M:Core.Queries.CountryQueryBuilder.WithMinProvinces(System.Int32)
+  id: WithMinProvinces(System.Int32)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithMinProvinces(int)
+  nameWithType: CountryQueryBuilder.WithMinProvinces(int)
+  fullName: Core.Queries.CountryQueryBuilder.WithMinProvinces(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WithMinProvinces
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries with at least N provinces.
+
+    Requires ProvinceSystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder WithMinProvinces(int minCount)
+    parameters:
+    - id: minCount
+      type: System.Int32
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function WithMinProvinces(minCount As Integer) As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.WithMinProvinces*
+  nameWithType.vb: CountryQueryBuilder.WithMinProvinces(Integer)
+  fullName.vb: Core.Queries.CountryQueryBuilder.WithMinProvinces(Integer)
+  name.vb: WithMinProvinces(Integer)
+- uid: Core.Queries.CountryQueryBuilder.WithMaxProvinces(System.Int32)
+  commentId: M:Core.Queries.CountryQueryBuilder.WithMaxProvinces(System.Int32)
+  id: WithMaxProvinces(System.Int32)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithMaxProvinces(int)
+  nameWithType: CountryQueryBuilder.WithMaxProvinces(int)
+  fullName: Core.Queries.CountryQueryBuilder.WithMaxProvinces(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WithMaxProvinces
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries with at most N provinces.
+
+    Requires ProvinceSystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder WithMaxProvinces(int maxCount)
+    parameters:
+    - id: maxCount
+      type: System.Int32
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function WithMaxProvinces(maxCount As Integer) As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.WithMaxProvinces*
+  nameWithType.vb: CountryQueryBuilder.WithMaxProvinces(Integer)
+  fullName.vb: Core.Queries.CountryQueryBuilder.WithMaxProvinces(Integer)
+  name.vb: WithMaxProvinces(Integer)
+- uid: Core.Queries.CountryQueryBuilder.WithProvinceCount(System.Int32,System.Int32)
+  commentId: M:Core.Queries.CountryQueryBuilder.WithProvinceCount(System.Int32,System.Int32)
+  id: WithProvinceCount(System.Int32,System.Int32)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithProvinceCount(int, int)
+  nameWithType: CountryQueryBuilder.WithProvinceCount(int, int)
+  fullName: Core.Queries.CountryQueryBuilder.WithProvinceCount(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WithProvinceCount
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries with province count in range.
+
+    Requires ProvinceSystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder WithProvinceCount(int min, int max)
+    parameters:
+    - id: min
+      type: System.Int32
+    - id: max
+      type: System.Int32
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function WithProvinceCount(min As Integer, max As Integer) As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.WithProvinceCount*
+  nameWithType.vb: CountryQueryBuilder.WithProvinceCount(Integer, Integer)
+  fullName.vb: Core.Queries.CountryQueryBuilder.WithProvinceCount(Integer, Integer)
+  name.vb: WithProvinceCount(Integer, Integer)
+- uid: Core.Queries.CountryQueryBuilder.BorderingCountry(System.UInt16)
+  commentId: M:Core.Queries.CountryQueryBuilder.BorderingCountry(System.UInt16)
+  id: BorderingCountry(System.UInt16)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: BorderingCountry(ushort)
+  nameWithType: CountryQueryBuilder.BorderingCountry(ushort)
+  fullName: Core.Queries.CountryQueryBuilder.BorderingCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderingCountry
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 88
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries that border a specific country.
+
+    Requires ProvinceSystem and AdjacencySystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder BorderingCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function BorderingCountry(countryId As UShort) As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.BorderingCountry*
+  nameWithType.vb: CountryQueryBuilder.BorderingCountry(UShort)
+  fullName.vb: Core.Queries.CountryQueryBuilder.BorderingCountry(UShort)
+  name.vb: BorderingCountry(UShort)
+- uid: Core.Queries.CountryQueryBuilder.HasProvinces
+  commentId: M:Core.Queries.CountryQueryBuilder.HasProvinces
+  id: HasProvinces
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: HasProvinces()
+  nameWithType: CountryQueryBuilder.HasProvinces()
+  fullName: Core.Queries.CountryQueryBuilder.HasProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasProvinces
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries that have at least one province.
+
+    Requires ProvinceSystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder HasProvinces()
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function HasProvinces() As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.HasProvinces*
+- uid: Core.Queries.CountryQueryBuilder.HasNoProvinces
+  commentId: M:Core.Queries.CountryQueryBuilder.HasNoProvinces
+  id: HasNoProvinces
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: HasNoProvinces()
+  nameWithType: CountryQueryBuilder.HasNoProvinces()
+  fullName: Core.Queries.CountryQueryBuilder.HasNoProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasNoProvinces
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Filter to countries with no provinces.
+
+    Requires ProvinceSystem.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder HasNoProvinces()
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function HasNoProvinces() As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.HasNoProvinces*
+- uid: Core.Queries.CountryQueryBuilder.WithGraphicalCulture(System.Byte)
+  commentId: M:Core.Queries.CountryQueryBuilder.WithGraphicalCulture(System.Byte)
+  id: WithGraphicalCulture(System.Byte)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithGraphicalCulture(byte)
+  nameWithType: CountryQueryBuilder.WithGraphicalCulture(byte)
+  fullName: Core.Queries.CountryQueryBuilder.WithGraphicalCulture(byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WithGraphicalCulture
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Filter to countries with specific graphical culture.
+  example: []
+  syntax:
+    content: public CountryQueryBuilder WithGraphicalCulture(byte cultureId)
+    parameters:
+    - id: cultureId
+      type: System.Byte
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Function WithGraphicalCulture(cultureId As Byte) As CountryQueryBuilder
+  overload: Core.Queries.CountryQueryBuilder.WithGraphicalCulture*
+  nameWithType.vb: CountryQueryBuilder.WithGraphicalCulture(Byte)
+  fullName.vb: Core.Queries.CountryQueryBuilder.WithGraphicalCulture(Byte)
+  name.vb: WithGraphicalCulture(Byte)
+- uid: Core.Queries.CountryQueryBuilder.Execute(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.CountryQueryBuilder.Execute(Unity.Collections.Allocator)
+  id: Execute(Unity.Collections.Allocator)
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: Execute(Allocator)
+  nameWithType: CountryQueryBuilder.Execute(Allocator)
+  fullName: Core.Queries.CountryQueryBuilder.Execute(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Execute query and return matching country IDs.
+
+    Caller must dispose the returned NativeList.
+  example: []
+  syntax:
+    content: public NativeList<ushort> Execute(Allocator allocator)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function Execute(allocator As Allocator) As NativeList(Of UShort)
+  overload: Core.Queries.CountryQueryBuilder.Execute*
+- uid: Core.Queries.CountryQueryBuilder.Count
+  commentId: M:Core.Queries.CountryQueryBuilder.Count
+  id: Count
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: Count()
+  nameWithType: CountryQueryBuilder.Count()
+  fullName: Core.Queries.CountryQueryBuilder.Count()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 161
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Count matching countries without allocating result list.
+  example: []
+  syntax:
+    content: public int Count()
+    return:
+      type: System.Int32
+    content.vb: Public Function Count() As Integer
+  overload: Core.Queries.CountryQueryBuilder.Count*
+- uid: Core.Queries.CountryQueryBuilder.Any
+  commentId: M:Core.Queries.CountryQueryBuilder.Any
+  id: Any
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: Any()
+  nameWithType: CountryQueryBuilder.Any()
+  fullName: Core.Queries.CountryQueryBuilder.Any()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Any
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 170
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Check if any country matches the filters.
+  example: []
+  syntax:
+    content: public bool Any()
+    return:
+      type: System.Boolean
+    content.vb: Public Function Any() As Boolean
+  overload: Core.Queries.CountryQueryBuilder.Any*
+- uid: Core.Queries.CountryQueryBuilder.FirstOrDefault
+  commentId: M:Core.Queries.CountryQueryBuilder.FirstOrDefault
+  id: FirstOrDefault
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: FirstOrDefault()
+  nameWithType: CountryQueryBuilder.FirstOrDefault()
+  fullName: Core.Queries.CountryQueryBuilder.FirstOrDefault()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FirstOrDefault
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Get first matching country, or 0 if none.
+  example: []
+  syntax:
+    content: public ushort FirstOrDefault()
+    return:
+      type: System.UInt16
+    content.vb: Public Function FirstOrDefault() As UShort
+  overload: Core.Queries.CountryQueryBuilder.FirstOrDefault*
+- uid: Core.Queries.CountryQueryBuilder.Dispose
+  commentId: M:Core.Queries.CountryQueryBuilder.Dispose
+  id: Dispose
+  parent: Core.Queries.CountryQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CountryQueryBuilder.Dispose()
+  fullName: Core.Queries.CountryQueryBuilder.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueryBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Queries/CountryQueryBuilder.cs
+    startLine: 294
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Queries.CountryQueryBuilder.Dispose*
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: Core.Queries.CountryQueryBuilder.#ctor*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.#ctor
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder__ctor_Core_Systems_CountrySystem_Core_Systems_ProvinceSystem_Core_Systems_AdjacencySystem_
+  name: CountryQueryBuilder
+  nameWithType: CountryQueryBuilder.CountryQueryBuilder
+  fullName: Core.Queries.CountryQueryBuilder.CountryQueryBuilder
+  nameWithType.vb: CountryQueryBuilder.New
+  fullName.vb: Core.Queries.CountryQueryBuilder.New
+  name.vb: New
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Queries.CountryQueryBuilder.WithMinProvinces*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.WithMinProvinces
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_WithMinProvinces_System_Int32_
+  name: WithMinProvinces
+  nameWithType: CountryQueryBuilder.WithMinProvinces
+  fullName: Core.Queries.CountryQueryBuilder.WithMinProvinces
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Queries.CountryQueryBuilder
+  commentId: T:Core.Queries.CountryQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.CountryQueryBuilder.html
+  name: CountryQueryBuilder
+  nameWithType: CountryQueryBuilder
+  fullName: Core.Queries.CountryQueryBuilder
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Queries.CountryQueryBuilder.WithMaxProvinces*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.WithMaxProvinces
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_WithMaxProvinces_System_Int32_
+  name: WithMaxProvinces
+  nameWithType: CountryQueryBuilder.WithMaxProvinces
+  fullName: Core.Queries.CountryQueryBuilder.WithMaxProvinces
+- uid: Core.Queries.CountryQueryBuilder.WithProvinceCount*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.WithProvinceCount
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_WithProvinceCount_System_Int32_System_Int32_
+  name: WithProvinceCount
+  nameWithType: CountryQueryBuilder.WithProvinceCount
+  fullName: Core.Queries.CountryQueryBuilder.WithProvinceCount
+- uid: Core.Queries.CountryQueryBuilder.BorderingCountry*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.BorderingCountry
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_BorderingCountry_System_UInt16_
+  name: BorderingCountry
+  nameWithType: CountryQueryBuilder.BorderingCountry
+  fullName: Core.Queries.CountryQueryBuilder.BorderingCountry
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Queries.CountryQueryBuilder.HasProvinces*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.HasProvinces
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_HasProvinces
+  name: HasProvinces
+  nameWithType: CountryQueryBuilder.HasProvinces
+  fullName: Core.Queries.CountryQueryBuilder.HasProvinces
+- uid: Core.Queries.CountryQueryBuilder.HasNoProvinces*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.HasNoProvinces
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_HasNoProvinces
+  name: HasNoProvinces
+  nameWithType: CountryQueryBuilder.HasNoProvinces
+  fullName: Core.Queries.CountryQueryBuilder.HasNoProvinces
+- uid: Core.Queries.CountryQueryBuilder.WithGraphicalCulture*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.WithGraphicalCulture
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_WithGraphicalCulture_System_Byte_
+  name: WithGraphicalCulture
+  nameWithType: CountryQueryBuilder.WithGraphicalCulture
+  fullName: Core.Queries.CountryQueryBuilder.WithGraphicalCulture
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Queries.CountryQueryBuilder.Execute*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.Execute
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_Execute_Unity_Collections_Allocator_
+  name: Execute
+  nameWithType: CountryQueryBuilder.Execute
+  fullName: Core.Queries.CountryQueryBuilder.Execute
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Queries.CountryQueryBuilder.Count*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.Count
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_Count
+  name: Count
+  nameWithType: CountryQueryBuilder.Count
+  fullName: Core.Queries.CountryQueryBuilder.Count
+- uid: Core.Queries.CountryQueryBuilder.Any*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.Any
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_Any
+  name: Any
+  nameWithType: CountryQueryBuilder.Any
+  fullName: Core.Queries.CountryQueryBuilder.Any
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Queries.CountryQueryBuilder.FirstOrDefault*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.FirstOrDefault
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_FirstOrDefault
+  name: FirstOrDefault
+  nameWithType: CountryQueryBuilder.FirstOrDefault
+  fullName: Core.Queries.CountryQueryBuilder.FirstOrDefault
+- uid: Core.Queries.CountryQueryBuilder.Dispose*
+  commentId: Overload:Core.Queries.CountryQueryBuilder.Dispose
+  href: Core.Queries.CountryQueryBuilder.html#Core_Queries_CountryQueryBuilder_Dispose
+  name: Dispose
+  nameWithType: CountryQueryBuilder.Dispose
+  fullName: Core.Queries.CountryQueryBuilder.Dispose

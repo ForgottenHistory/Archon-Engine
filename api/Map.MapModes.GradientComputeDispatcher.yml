@@ -1,0 +1,299 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.GradientComputeDispatcher
+  commentId: T:Map.MapModes.GradientComputeDispatcher
+  id: GradientComputeDispatcher
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.GradientComputeDispatcher.#ctor
+  - Map.MapModes.GradientComputeDispatcher.Dispatch(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.ColorGradient,UnityEngine.Color)
+  - Map.MapModes.GradientComputeDispatcher.Dispose
+  - Map.MapModes.GradientComputeDispatcher.IsInitialized
+  langs:
+  - csharp
+  - vb
+  name: GradientComputeDispatcher
+  nameWithType: GradientComputeDispatcher
+  fullName: Map.MapModes.GradientComputeDispatcher
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GradientComputeDispatcher
+    path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    ENGINE LAYER - Manages GPU compute shader for gradient map mode colorization
+
+    Processes province values into colored textures entirely on GPU for maximum performance
+
+
+    Performance: ~1ms for 11.5M pixels vs 105ms CPU-side processing
+
+    Architecture: CPU simulation data → GPU colorization → Output texture (dual-layer)
+  example: []
+  syntax:
+    content: public class GradientComputeDispatcher
+    content.vb: Public Class GradientComputeDispatcher
+  inheritance:
+  - System.Object
+- uid: Map.MapModes.GradientComputeDispatcher.IsInitialized
+  commentId: P:Map.MapModes.GradientComputeDispatcher.IsInitialized
+  id: IsInitialized
+  parent: Map.MapModes.GradientComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: GradientComputeDispatcher.IsInitialized
+  fullName: Map.MapModes.GradientComputeDispatcher.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Map.MapModes.GradientComputeDispatcher.IsInitialized*
+- uid: Map.MapModes.GradientComputeDispatcher.#ctor
+  commentId: M:Map.MapModes.GradientComputeDispatcher.#ctor
+  id: '#ctor'
+  parent: Map.MapModes.GradientComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: GradientComputeDispatcher()
+  nameWithType: GradientComputeDispatcher.GradientComputeDispatcher()
+  fullName: Map.MapModes.GradientComputeDispatcher.GradientComputeDispatcher()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public GradientComputeDispatcher()
+    content.vb: Public Sub New()
+  overload: Map.MapModes.GradientComputeDispatcher.#ctor*
+  nameWithType.vb: GradientComputeDispatcher.New()
+  fullName.vb: Map.MapModes.GradientComputeDispatcher.New()
+  name.vb: New()
+- uid: Map.MapModes.GradientComputeDispatcher.Dispatch(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.ColorGradient,UnityEngine.Color)
+  commentId: M:Map.MapModes.GradientComputeDispatcher.Dispatch(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.ColorGradient,UnityEngine.Color)
+  id: Dispatch(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.ColorGradient,UnityEngine.Color)
+  parent: Map.MapModes.GradientComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: Dispatch(RenderTexture, RenderTexture, float[], ColorGradient, Color)
+  nameWithType: GradientComputeDispatcher.Dispatch(RenderTexture, RenderTexture, float[], ColorGradient, Color)
+  fullName: Map.MapModes.GradientComputeDispatcher.Dispatch(UnityEngine.RenderTexture, UnityEngine.RenderTexture, float[], Map.MapModes.ColorGradient, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispatch
+    path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+    startLine: 72
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Dispatch gradient colorization on GPU
+  example: []
+  syntax:
+    content: public void Dispatch(RenderTexture provinceIDTexture, RenderTexture outputTexture, float[] provinceValues, ColorGradient gradient, Color oceanColor)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+      description: 'Input: Province ID texture (RG16 encoded)'
+    - id: outputTexture
+      type: UnityEngine.RenderTexture
+      description: 'Output: Colorized RGBA texture'
+    - id: provinceValues
+      type: System.Single[]
+      description: Province values (normalized 0-1)
+    - id: gradient
+      type: Map.MapModes.ColorGradient
+    - id: oceanColor
+      type: UnityEngine.Color
+      description: Color for ocean provinces
+    content.vb: Public Sub Dispatch(provinceIDTexture As RenderTexture, outputTexture As RenderTexture, provinceValues As Single(), gradient As ColorGradient, oceanColor As Color)
+  overload: Map.MapModes.GradientComputeDispatcher.Dispatch*
+  nameWithType.vb: GradientComputeDispatcher.Dispatch(RenderTexture, RenderTexture, Single(), ColorGradient, Color)
+  fullName.vb: Map.MapModes.GradientComputeDispatcher.Dispatch(UnityEngine.RenderTexture, UnityEngine.RenderTexture, Single(), Map.MapModes.ColorGradient, UnityEngine.Color)
+  name.vb: Dispatch(RenderTexture, RenderTexture, Single(), ColorGradient, Color)
+- uid: Map.MapModes.GradientComputeDispatcher.Dispose
+  commentId: M:Map.MapModes.GradientComputeDispatcher.Dispose
+  id: Dispose
+  parent: Map.MapModes.GradientComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: GradientComputeDispatcher.Dispose()
+  fullName: Map.MapModes.GradientComputeDispatcher.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
+    startLine: 157
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Release compute buffers
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.MapModes.GradientComputeDispatcher.Dispose*
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.GradientComputeDispatcher.IsInitialized*
+  commentId: Overload:Map.MapModes.GradientComputeDispatcher.IsInitialized
+  href: Map.MapModes.GradientComputeDispatcher.html#Map_MapModes_GradientComputeDispatcher_IsInitialized
+  name: IsInitialized
+  nameWithType: GradientComputeDispatcher.IsInitialized
+  fullName: Map.MapModes.GradientComputeDispatcher.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.MapModes.GradientComputeDispatcher.#ctor*
+  commentId: Overload:Map.MapModes.GradientComputeDispatcher.#ctor
+  href: Map.MapModes.GradientComputeDispatcher.html#Map_MapModes_GradientComputeDispatcher__ctor
+  name: GradientComputeDispatcher
+  nameWithType: GradientComputeDispatcher.GradientComputeDispatcher
+  fullName: Map.MapModes.GradientComputeDispatcher.GradientComputeDispatcher
+  nameWithType.vb: GradientComputeDispatcher.New
+  fullName.vb: Map.MapModes.GradientComputeDispatcher.New
+  name.vb: New
+- uid: Map.MapModes.GradientComputeDispatcher.Dispatch*
+  commentId: Overload:Map.MapModes.GradientComputeDispatcher.Dispatch
+  href: Map.MapModes.GradientComputeDispatcher.html#Map_MapModes_GradientComputeDispatcher_Dispatch_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_ColorGradient_UnityEngine_Color_
+  name: Dispatch
+  nameWithType: GradientComputeDispatcher.Dispatch
+  fullName: Map.MapModes.GradientComputeDispatcher.Dispatch
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: System.Single[]
+  isExternal: true
+  name: float[]
+  nameWithType: float[]
+  fullName: float[]
+  nameWithType.vb: Single()
+  fullName.vb: Single()
+  name.vb: Single()
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  parent: Map.MapModes
+  href: Map.MapModes.ColorGradient.html
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.GradientComputeDispatcher.Dispose*
+  commentId: Overload:Map.MapModes.GradientComputeDispatcher.Dispose
+  href: Map.MapModes.GradientComputeDispatcher.html#Map_MapModes_GradientComputeDispatcher_Dispose
+  name: Dispose
+  nameWithType: GradientComputeDispatcher.Dispose
+  fullName: Map.MapModes.GradientComputeDispatcher.Dispose

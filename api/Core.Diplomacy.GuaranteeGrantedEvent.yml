@@ -1,0 +1,281 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.GuaranteeGrantedEvent
+  commentId: T:Core.Diplomacy.GuaranteeGrantedEvent
+  id: GuaranteeGrantedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.GuaranteeGrantedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+  - Core.Diplomacy.GuaranteeGrantedEvent.guaranteedID
+  - Core.Diplomacy.GuaranteeGrantedEvent.guarantorID
+  - Core.Diplomacy.GuaranteeGrantedEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: GuaranteeGrantedEvent
+  nameWithType: GuaranteeGrantedEvent
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GuaranteeGrantedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 189
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Emitted when a country guarantees another's independence (directional)
+  example: []
+  syntax:
+    content: 'public struct GuaranteeGrantedEvent : IGameEvent'
+    content.vb: Public Structure GuaranteeGrantedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.guarantorID
+  commentId: F:Core.Diplomacy.GuaranteeGrantedEvent.guarantorID
+  id: guarantorID
+  parent: Core.Diplomacy.GuaranteeGrantedEvent
+  langs:
+  - csharp
+  - vb
+  name: guarantorID
+  nameWithType: GuaranteeGrantedEvent.guarantorID
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.guarantorID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: guarantorID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort guarantorID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly guarantorID As UShort
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.guaranteedID
+  commentId: F:Core.Diplomacy.GuaranteeGrantedEvent.guaranteedID
+  id: guaranteedID
+  parent: Core.Diplomacy.GuaranteeGrantedEvent
+  langs:
+  - csharp
+  - vb
+  name: guaranteedID
+  nameWithType: GuaranteeGrantedEvent.guaranteedID
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.guaranteedID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: guaranteedID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort guaranteedID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly guaranteedID As UShort
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.tick
+  commentId: F:Core.Diplomacy.GuaranteeGrantedEvent.tick
+  id: tick
+  parent: Core.Diplomacy.GuaranteeGrantedEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: GuaranteeGrantedEvent.tick
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.GuaranteeGrantedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: GuaranteeGrantedEvent.TimeStamp
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 194
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.GuaranteeGrantedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.GuaranteeGrantedEvent
+  langs:
+  - csharp
+  - vb
+  name: GuaranteeGrantedEvent(ushort, ushort, int)
+  nameWithType: GuaranteeGrantedEvent.GuaranteeGrantedEvent(ushort, ushort, int)
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.GuaranteeGrantedEvent(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 196
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public GuaranteeGrantedEvent(ushort guarantor, ushort guaranteed, int tick)
+    parameters:
+    - id: guarantor
+      type: System.UInt16
+    - id: guaranteed
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(guarantor As UShort, guaranteed As UShort, tick As Integer)
+  overload: Core.Diplomacy.GuaranteeGrantedEvent.#ctor*
+  nameWithType.vb: GuaranteeGrantedEvent.New(UShort, UShort, Integer)
+  fullName.vb: Core.Diplomacy.GuaranteeGrantedEvent.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+  href: Core.Diplomacy.GuaranteeGrantedEvent.html#Core_Diplomacy_GuaranteeGrantedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: GuaranteeGrantedEvent.TimeStamp
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.GuaranteeGrantedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.GuaranteeGrantedEvent.#ctor
+  href: Core.Diplomacy.GuaranteeGrantedEvent.html#Core_Diplomacy_GuaranteeGrantedEvent__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: GuaranteeGrantedEvent
+  nameWithType: GuaranteeGrantedEvent.GuaranteeGrantedEvent
+  fullName: Core.Diplomacy.GuaranteeGrantedEvent.GuaranteeGrantedEvent
+  nameWithType.vb: GuaranteeGrantedEvent.New
+  fullName.vb: Core.Diplomacy.GuaranteeGrantedEvent.New
+  name.vb: New

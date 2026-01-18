@@ -1,0 +1,1038 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.Json5Loader
+  commentId: T:Core.Loaders.Json5Loader
+  id: Json5Loader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.Json5Loader.GetBool(Newtonsoft.Json.Linq.JObject,System.String,System.Boolean)
+  - Core.Loaders.Json5Loader.GetColor32(Newtonsoft.Json.Linq.JObject,System.String,UnityEngine.Color32)
+  - Core.Loaders.Json5Loader.GetDateEntries(Newtonsoft.Json.Linq.JObject)
+  - Core.Loaders.Json5Loader.GetFloat(Newtonsoft.Json.Linq.JObject,System.String,System.Single)
+  - Core.Loaders.Json5Loader.GetInt(Newtonsoft.Json.Linq.JObject,System.String,System.Int32)
+  - Core.Loaders.Json5Loader.GetIntArray(Newtonsoft.Json.Linq.JObject,System.String)
+  - Core.Loaders.Json5Loader.GetKeysStartingWith(Newtonsoft.Json.Linq.JObject,System.String)
+  - Core.Loaders.Json5Loader.GetObject(Newtonsoft.Json.Linq.JObject,System.String)
+  - Core.Loaders.Json5Loader.GetString(Newtonsoft.Json.Linq.JObject,System.String,System.String)
+  - Core.Loaders.Json5Loader.GetStringArray(Newtonsoft.Json.Linq.JObject,System.String)
+  - Core.Loaders.Json5Loader.HasKey(Newtonsoft.Json.Linq.JObject,System.String)
+  - Core.Loaders.Json5Loader.IsDateBeforeOrEqual(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+  - Core.Loaders.Json5Loader.IsDateKey(System.String)
+  - Core.Loaders.Json5Loader.LoadJson5File(System.String)
+  - Core.Loaders.Json5Loader.TryParseDate(System.String,System.Int32@,System.Int32@,System.Int32@)
+  langs:
+  - csharp
+  - vb
+  name: Json5Loader
+  nameWithType: Json5Loader
+  fullName: Core.Loaders.Json5Loader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Json5Loader
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Simple and reliable JSON5 loader to replace the broken ParadoxParser
+
+    Handles JSON5 files converted from Paradox format with proper structure
+  example: []
+  syntax:
+    content: public static class Json5Loader
+    content.vb: Public Module Json5Loader
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.Json5Loader.LoadJson5File(System.String)
+  commentId: M:Core.Loaders.Json5Loader.LoadJson5File(System.String)
+  id: LoadJson5File(System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: LoadJson5File(string)
+  nameWithType: Json5Loader.LoadJson5File(string)
+  fullName: Core.Loaders.Json5Loader.LoadJson5File(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadJson5File
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load and parse a JSON5 file
+  example: []
+  syntax:
+    content: public static JObject LoadJson5File(string filePath)
+    parameters:
+    - id: filePath
+      type: System.String
+    return:
+      type: Newtonsoft.Json.Linq.JObject
+    content.vb: Public Shared Function LoadJson5File(filePath As String) As JObject
+  overload: Core.Loaders.Json5Loader.LoadJson5File*
+  nameWithType.vb: Json5Loader.LoadJson5File(String)
+  fullName.vb: Core.Loaders.Json5Loader.LoadJson5File(String)
+  name.vb: LoadJson5File(String)
+- uid: Core.Loaders.Json5Loader.GetString(Newtonsoft.Json.Linq.JObject,System.String,System.String)
+  commentId: M:Core.Loaders.Json5Loader.GetString(Newtonsoft.Json.Linq.JObject,System.String,System.String)
+  id: GetString(Newtonsoft.Json.Linq.JObject,System.String,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetString(JObject, string, string)
+  nameWithType: Json5Loader.GetString(JObject, string, string)
+  fullName: Core.Loaders.Json5Loader.GetString(Newtonsoft.Json.Linq.JObject, string, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetString
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get string value from JObject
+  example: []
+  syntax:
+    content: public static string GetString(JObject obj, string key, string defaultValue = "")
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetString(obj As JObject, key As String, defaultValue As String = "") As String
+  overload: Core.Loaders.Json5Loader.GetString*
+  nameWithType.vb: Json5Loader.GetString(JObject, String, String)
+  fullName.vb: Core.Loaders.Json5Loader.GetString(Newtonsoft.Json.Linq.JObject, String, String)
+  name.vb: GetString(JObject, String, String)
+- uid: Core.Loaders.Json5Loader.GetInt(Newtonsoft.Json.Linq.JObject,System.String,System.Int32)
+  commentId: M:Core.Loaders.Json5Loader.GetInt(Newtonsoft.Json.Linq.JObject,System.String,System.Int32)
+  id: GetInt(Newtonsoft.Json.Linq.JObject,System.String,System.Int32)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetInt(JObject, string, int)
+  nameWithType: Json5Loader.GetInt(JObject, string, int)
+  fullName: Core.Loaders.Json5Loader.GetInt(Newtonsoft.Json.Linq.JObject, string, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetInt
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 83
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get integer value from JObject
+  example: []
+  syntax:
+    content: public static int GetInt(JObject obj, string key, int defaultValue = 0)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function GetInt(obj As JObject, key As String, defaultValue As Integer = 0) As Integer
+  overload: Core.Loaders.Json5Loader.GetInt*
+  nameWithType.vb: Json5Loader.GetInt(JObject, String, Integer)
+  fullName.vb: Core.Loaders.Json5Loader.GetInt(Newtonsoft.Json.Linq.JObject, String, Integer)
+  name.vb: GetInt(JObject, String, Integer)
+- uid: Core.Loaders.Json5Loader.GetFloat(Newtonsoft.Json.Linq.JObject,System.String,System.Single)
+  commentId: M:Core.Loaders.Json5Loader.GetFloat(Newtonsoft.Json.Linq.JObject,System.String,System.Single)
+  id: GetFloat(Newtonsoft.Json.Linq.JObject,System.String,System.Single)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetFloat(JObject, string, float)
+  nameWithType: Json5Loader.GetFloat(JObject, string, float)
+  fullName: Core.Loaders.Json5Loader.GetFloat(Newtonsoft.Json.Linq.JObject, string, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFloat
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 92
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get float value from JObject
+  example: []
+  syntax:
+    content: public static float GetFloat(JObject obj, string key, float defaultValue = 0)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Public Shared Function GetFloat(obj As JObject, key As String, defaultValue As Single = 0) As Single
+  overload: Core.Loaders.Json5Loader.GetFloat*
+  nameWithType.vb: Json5Loader.GetFloat(JObject, String, Single)
+  fullName.vb: Core.Loaders.Json5Loader.GetFloat(Newtonsoft.Json.Linq.JObject, String, Single)
+  name.vb: GetFloat(JObject, String, Single)
+- uid: Core.Loaders.Json5Loader.GetBool(Newtonsoft.Json.Linq.JObject,System.String,System.Boolean)
+  commentId: M:Core.Loaders.Json5Loader.GetBool(Newtonsoft.Json.Linq.JObject,System.String,System.Boolean)
+  id: GetBool(Newtonsoft.Json.Linq.JObject,System.String,System.Boolean)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetBool(JObject, string, bool)
+  nameWithType: Json5Loader.GetBool(JObject, string, bool)
+  fullName: Core.Loaders.Json5Loader.GetBool(Newtonsoft.Json.Linq.JObject, string, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBool
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 101
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get boolean value from JObject
+  example: []
+  syntax:
+    content: public static bool GetBool(JObject obj, string key, bool defaultValue = false)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: System.Boolean
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function GetBool(obj As JObject, key As String, defaultValue As Boolean = False) As Boolean
+  overload: Core.Loaders.Json5Loader.GetBool*
+  nameWithType.vb: Json5Loader.GetBool(JObject, String, Boolean)
+  fullName.vb: Core.Loaders.Json5Loader.GetBool(Newtonsoft.Json.Linq.JObject, String, Boolean)
+  name.vb: GetBool(JObject, String, Boolean)
+- uid: Core.Loaders.Json5Loader.GetStringArray(Newtonsoft.Json.Linq.JObject,System.String)
+  commentId: M:Core.Loaders.Json5Loader.GetStringArray(Newtonsoft.Json.Linq.JObject,System.String)
+  id: GetStringArray(Newtonsoft.Json.Linq.JObject,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetStringArray(JObject, string)
+  nameWithType: Json5Loader.GetStringArray(JObject, string)
+  fullName: Core.Loaders.Json5Loader.GetStringArray(Newtonsoft.Json.Linq.JObject, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStringArray
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get array of strings from JObject
+  example: []
+  syntax:
+    content: public static List<string> GetStringArray(JObject obj, string key)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Shared Function GetStringArray(obj As JObject, key As String) As List(Of String)
+  overload: Core.Loaders.Json5Loader.GetStringArray*
+  nameWithType.vb: Json5Loader.GetStringArray(JObject, String)
+  fullName.vb: Core.Loaders.Json5Loader.GetStringArray(Newtonsoft.Json.Linq.JObject, String)
+  name.vb: GetStringArray(JObject, String)
+- uid: Core.Loaders.Json5Loader.GetIntArray(Newtonsoft.Json.Linq.JObject,System.String)
+  commentId: M:Core.Loaders.Json5Loader.GetIntArray(Newtonsoft.Json.Linq.JObject,System.String)
+  id: GetIntArray(Newtonsoft.Json.Linq.JObject,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetIntArray(JObject, string)
+  nameWithType: Json5Loader.GetIntArray(JObject, string)
+  fullName: Core.Loaders.Json5Loader.GetIntArray(Newtonsoft.Json.Linq.JObject, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetIntArray
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 129
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get array of integers from JObject
+  example: []
+  syntax:
+    content: public static List<int> GetIntArray(JObject obj, string key)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Shared Function GetIntArray(obj As JObject, key As String) As List(Of Integer)
+  overload: Core.Loaders.Json5Loader.GetIntArray*
+  nameWithType.vb: Json5Loader.GetIntArray(JObject, String)
+  fullName.vb: Core.Loaders.Json5Loader.GetIntArray(Newtonsoft.Json.Linq.JObject, String)
+  name.vb: GetIntArray(JObject, String)
+- uid: Core.Loaders.Json5Loader.GetObject(Newtonsoft.Json.Linq.JObject,System.String)
+  commentId: M:Core.Loaders.Json5Loader.GetObject(Newtonsoft.Json.Linq.JObject,System.String)
+  id: GetObject(Newtonsoft.Json.Linq.JObject,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetObject(JObject, string)
+  nameWithType: Json5Loader.GetObject(JObject, string)
+  fullName: Core.Loaders.Json5Loader.GetObject(Newtonsoft.Json.Linq.JObject, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetObject
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 148
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get nested object from JObject
+  example: []
+  syntax:
+    content: public static JObject GetObject(JObject obj, string key)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    return:
+      type: Newtonsoft.Json.Linq.JObject
+    content.vb: Public Shared Function GetObject(obj As JObject, key As String) As JObject
+  overload: Core.Loaders.Json5Loader.GetObject*
+  nameWithType.vb: Json5Loader.GetObject(JObject, String)
+  fullName.vb: Core.Loaders.Json5Loader.GetObject(Newtonsoft.Json.Linq.JObject, String)
+  name.vb: GetObject(JObject, String)
+- uid: Core.Loaders.Json5Loader.GetKeysStartingWith(Newtonsoft.Json.Linq.JObject,System.String)
+  commentId: M:Core.Loaders.Json5Loader.GetKeysStartingWith(Newtonsoft.Json.Linq.JObject,System.String)
+  id: GetKeysStartingWith(Newtonsoft.Json.Linq.JObject,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetKeysStartingWith(JObject, string)
+  nameWithType: Json5Loader.GetKeysStartingWith(JObject, string)
+  fullName: Core.Loaders.Json5Loader.GetKeysStartingWith(Newtonsoft.Json.Linq.JObject, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetKeysStartingWith
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 157
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get all keys that start with a prefix (useful for date entries)
+  example: []
+  syntax:
+    content: public static List<string> GetKeysStartingWith(JObject obj, string prefix)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: prefix
+      type: System.String
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Shared Function GetKeysStartingWith(obj As JObject, prefix As String) As List(Of String)
+  overload: Core.Loaders.Json5Loader.GetKeysStartingWith*
+  nameWithType.vb: Json5Loader.GetKeysStartingWith(JObject, String)
+  fullName.vb: Core.Loaders.Json5Loader.GetKeysStartingWith(Newtonsoft.Json.Linq.JObject, String)
+  name.vb: GetKeysStartingWith(JObject, String)
+- uid: Core.Loaders.Json5Loader.HasKey(Newtonsoft.Json.Linq.JObject,System.String)
+  commentId: M:Core.Loaders.Json5Loader.HasKey(Newtonsoft.Json.Linq.JObject,System.String)
+  id: HasKey(Newtonsoft.Json.Linq.JObject,System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: HasKey(JObject, string)
+  nameWithType: Json5Loader.HasKey(JObject, string)
+  fullName: Core.Loaders.Json5Loader.HasKey(Newtonsoft.Json.Linq.JObject, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasKey
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 175
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Check if key exists in object
+  example: []
+  syntax:
+    content: public static bool HasKey(JObject obj, string key)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasKey(obj As JObject, key As String) As Boolean
+  overload: Core.Loaders.Json5Loader.HasKey*
+  nameWithType.vb: Json5Loader.HasKey(JObject, String)
+  fullName.vb: Core.Loaders.Json5Loader.HasKey(Newtonsoft.Json.Linq.JObject, String)
+  name.vb: HasKey(JObject, String)
+- uid: Core.Loaders.Json5Loader.GetColor32(Newtonsoft.Json.Linq.JObject,System.String,UnityEngine.Color32)
+  commentId: M:Core.Loaders.Json5Loader.GetColor32(Newtonsoft.Json.Linq.JObject,System.String,UnityEngine.Color32)
+  id: GetColor32(Newtonsoft.Json.Linq.JObject,System.String,UnityEngine.Color32)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetColor32(JObject, string, Color32)
+  nameWithType: Json5Loader.GetColor32(JObject, string, Color32)
+  fullName: Core.Loaders.Json5Loader.GetColor32(Newtonsoft.Json.Linq.JObject, string, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColor32
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 183
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Convert Color array to Unity Color32
+  example: []
+  syntax:
+    content: public static Color32 GetColor32(JObject obj, string key, Color32 defaultColor = default)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    - id: key
+      type: System.String
+    - id: defaultColor
+      type: UnityEngine.Color32
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Shared Function GetColor32(obj As JObject, key As String, defaultColor As Color32 = Nothing) As Color32
+  overload: Core.Loaders.Json5Loader.GetColor32*
+  nameWithType.vb: Json5Loader.GetColor32(JObject, String, Color32)
+  fullName.vb: Core.Loaders.Json5Loader.GetColor32(Newtonsoft.Json.Linq.JObject, String, UnityEngine.Color32)
+  name.vb: GetColor32(JObject, String, Color32)
+- uid: Core.Loaders.Json5Loader.GetDateEntries(Newtonsoft.Json.Linq.JObject)
+  commentId: M:Core.Loaders.Json5Loader.GetDateEntries(Newtonsoft.Json.Linq.JObject)
+  id: GetDateEntries(Newtonsoft.Json.Linq.JObject)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: GetDateEntries(JObject)
+  nameWithType: Json5Loader.GetDateEntries(JObject)
+  fullName: Core.Loaders.Json5Loader.GetDateEntries(Newtonsoft.Json.Linq.JObject)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDateEntries
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get all date-based entries (keys that look like dates)
+  example: []
+  syntax:
+    content: public static Dictionary<string, JObject> GetDateEntries(JObject obj)
+    parameters:
+    - id: obj
+      type: Newtonsoft.Json.Linq.JObject
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,Newtonsoft.Json.Linq.JObject}
+    content.vb: Public Shared Function GetDateEntries(obj As JObject) As Dictionary(Of String, JObject)
+  overload: Core.Loaders.Json5Loader.GetDateEntries*
+- uid: Core.Loaders.Json5Loader.IsDateKey(System.String)
+  commentId: M:Core.Loaders.Json5Loader.IsDateKey(System.String)
+  id: IsDateKey(System.String)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: IsDateKey(string)
+  nameWithType: Json5Loader.IsDateKey(string)
+  fullName: Core.Loaders.Json5Loader.IsDateKey(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDateKey
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 222
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Check if a key looks like a date (e.g., "1444.11.11")
+  example: []
+  syntax:
+    content: public static bool IsDateKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsDateKey(key As String) As Boolean
+  overload: Core.Loaders.Json5Loader.IsDateKey*
+  nameWithType.vb: Json5Loader.IsDateKey(String)
+  fullName.vb: Core.Loaders.Json5Loader.IsDateKey(String)
+  name.vb: IsDateKey(String)
+- uid: Core.Loaders.Json5Loader.TryParseDate(System.String,System.Int32@,System.Int32@,System.Int32@)
+  commentId: M:Core.Loaders.Json5Loader.TryParseDate(System.String,System.Int32@,System.Int32@,System.Int32@)
+  id: TryParseDate(System.String,System.Int32@,System.Int32@,System.Int32@)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: TryParseDate(string, out int, out int, out int)
+  nameWithType: Json5Loader.TryParseDate(string, out int, out int, out int)
+  fullName: Core.Loaders.Json5Loader.TryParseDate(string, out int, out int, out int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryParseDate
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Parse EU4 date format (Y.M.D like "1442.1.1")
+  example: []
+  syntax:
+    content: public static bool TryParseDate(string dateStr, out int year, out int month, out int day)
+    parameters:
+    - id: dateStr
+      type: System.String
+    - id: year
+      type: System.Int32
+    - id: month
+      type: System.Int32
+    - id: day
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryParseDate(dateStr As String, year As Integer, month As Integer, day As Integer) As Boolean
+  overload: Core.Loaders.Json5Loader.TryParseDate*
+  nameWithType.vb: Json5Loader.TryParseDate(String, Integer, Integer, Integer)
+  fullName.vb: Core.Loaders.Json5Loader.TryParseDate(String, Integer, Integer, Integer)
+  name.vb: TryParseDate(String, Integer, Integer, Integer)
+- uid: Core.Loaders.Json5Loader.IsDateBeforeOrEqual(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Loaders.Json5Loader.IsDateBeforeOrEqual(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+  id: IsDateBeforeOrEqual(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)
+  parent: Core.Loaders.Json5Loader
+  langs:
+  - csharp
+  - vb
+  name: IsDateBeforeOrEqual(int, int, int, int, int, int)
+  nameWithType: Json5Loader.IsDateBeforeOrEqual(int, int, int, int, int, int)
+  fullName: Core.Loaders.Json5Loader.IsDateBeforeOrEqual(int, int, int, int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5Loader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDateBeforeOrEqual
+    path: Scripts/Core/Loaders/Json5Loader.cs
+    startLine: 254
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Check if date1 is before or equal to date2
+  example: []
+  syntax:
+    content: public static bool IsDateBeforeOrEqual(int y1, int m1, int d1, int y2, int m2, int d2)
+    parameters:
+    - id: y1
+      type: System.Int32
+    - id: m1
+      type: System.Int32
+    - id: d1
+      type: System.Int32
+    - id: y2
+      type: System.Int32
+    - id: m2
+      type: System.Int32
+    - id: d2
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsDateBeforeOrEqual(y1 As Integer, m1 As Integer, d1 As Integer, y2 As Integer, m2 As Integer, d2 As Integer) As Boolean
+  overload: Core.Loaders.Json5Loader.IsDateBeforeOrEqual*
+  nameWithType.vb: Json5Loader.IsDateBeforeOrEqual(Integer, Integer, Integer, Integer, Integer, Integer)
+  fullName.vb: Core.Loaders.Json5Loader.IsDateBeforeOrEqual(Integer, Integer, Integer, Integer, Integer, Integer)
+  name.vb: IsDateBeforeOrEqual(Integer, Integer, Integer, Integer, Integer, Integer)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.Json5Loader.LoadJson5File*
+  commentId: Overload:Core.Loaders.Json5Loader.LoadJson5File
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_LoadJson5File_System_String_
+  name: LoadJson5File
+  nameWithType: Json5Loader.LoadJson5File
+  fullName: Core.Loaders.Json5Loader.LoadJson5File
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Newtonsoft.Json.Linq.JObject
+  commentId: T:Newtonsoft.Json.Linq.JObject
+  parent: Newtonsoft.Json.Linq
+  isExternal: true
+  name: JObject
+  nameWithType: JObject
+  fullName: Newtonsoft.Json.Linq.JObject
+- uid: Newtonsoft.Json.Linq
+  commentId: N:Newtonsoft.Json.Linq
+  isExternal: true
+  name: Newtonsoft.Json.Linq
+  nameWithType: Newtonsoft.Json.Linq
+  fullName: Newtonsoft.Json.Linq
+  spec.csharp:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json.Linq
+    name: Linq
+    isExternal: true
+  spec.vb:
+  - uid: Newtonsoft
+    name: Newtonsoft
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json
+    name: Json
+    isExternal: true
+  - name: .
+  - uid: Newtonsoft.Json.Linq
+    name: Linq
+    isExternal: true
+- uid: Core.Loaders.Json5Loader.GetString*
+  commentId: Overload:Core.Loaders.Json5Loader.GetString
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetString_Newtonsoft_Json_Linq_JObject_System_String_System_String_
+  name: GetString
+  nameWithType: Json5Loader.GetString
+  fullName: Core.Loaders.Json5Loader.GetString
+- uid: Core.Loaders.Json5Loader.GetInt*
+  commentId: Overload:Core.Loaders.Json5Loader.GetInt
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetInt_Newtonsoft_Json_Linq_JObject_System_String_System_Int32_
+  name: GetInt
+  nameWithType: Json5Loader.GetInt
+  fullName: Core.Loaders.Json5Loader.GetInt
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Loaders.Json5Loader.GetFloat*
+  commentId: Overload:Core.Loaders.Json5Loader.GetFloat
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetFloat_Newtonsoft_Json_Linq_JObject_System_String_System_Single_
+  name: GetFloat
+  nameWithType: Json5Loader.GetFloat
+  fullName: Core.Loaders.Json5Loader.GetFloat
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Loaders.Json5Loader.GetBool*
+  commentId: Overload:Core.Loaders.Json5Loader.GetBool
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetBool_Newtonsoft_Json_Linq_JObject_System_String_System_Boolean_
+  name: GetBool
+  nameWithType: Json5Loader.GetBool
+  fullName: Core.Loaders.Json5Loader.GetBool
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Loaders.Json5Loader.GetStringArray*
+  commentId: Overload:Core.Loaders.Json5Loader.GetStringArray
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetStringArray_Newtonsoft_Json_Linq_JObject_System_String_
+  name: GetStringArray
+  nameWithType: Json5Loader.GetStringArray
+  fullName: Core.Loaders.Json5Loader.GetStringArray
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Loaders.Json5Loader.GetIntArray*
+  commentId: Overload:Core.Loaders.Json5Loader.GetIntArray
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetIntArray_Newtonsoft_Json_Linq_JObject_System_String_
+  name: GetIntArray
+  nameWithType: Json5Loader.GetIntArray
+  fullName: Core.Loaders.Json5Loader.GetIntArray
+- uid: System.Collections.Generic.List{System.Int32}
+  commentId: T:System.Collections.Generic.List{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<int>
+  nameWithType: List<int>
+  fullName: System.Collections.Generic.List<int>
+  nameWithType.vb: List(Of Integer)
+  fullName.vb: System.Collections.Generic.List(Of Integer)
+  name.vb: List(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.Json5Loader.GetObject*
+  commentId: Overload:Core.Loaders.Json5Loader.GetObject
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetObject_Newtonsoft_Json_Linq_JObject_System_String_
+  name: GetObject
+  nameWithType: Json5Loader.GetObject
+  fullName: Core.Loaders.Json5Loader.GetObject
+- uid: Core.Loaders.Json5Loader.GetKeysStartingWith*
+  commentId: Overload:Core.Loaders.Json5Loader.GetKeysStartingWith
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetKeysStartingWith_Newtonsoft_Json_Linq_JObject_System_String_
+  name: GetKeysStartingWith
+  nameWithType: Json5Loader.GetKeysStartingWith
+  fullName: Core.Loaders.Json5Loader.GetKeysStartingWith
+- uid: Core.Loaders.Json5Loader.HasKey*
+  commentId: Overload:Core.Loaders.Json5Loader.HasKey
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_HasKey_Newtonsoft_Json_Linq_JObject_System_String_
+  name: HasKey
+  nameWithType: Json5Loader.HasKey
+  fullName: Core.Loaders.Json5Loader.HasKey
+- uid: Core.Loaders.Json5Loader.GetColor32*
+  commentId: Overload:Core.Loaders.Json5Loader.GetColor32
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetColor32_Newtonsoft_Json_Linq_JObject_System_String_UnityEngine_Color32_
+  name: GetColor32
+  nameWithType: Json5Loader.GetColor32
+  fullName: Core.Loaders.Json5Loader.GetColor32
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Loaders.Json5Loader.GetDateEntries*
+  commentId: Overload:Core.Loaders.Json5Loader.GetDateEntries
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_GetDateEntries_Newtonsoft_Json_Linq_JObject_
+  name: GetDateEntries
+  nameWithType: Json5Loader.GetDateEntries
+  fullName: Core.Loaders.Json5Loader.GetDateEntries
+- uid: System.Collections.Generic.Dictionary{System.String,Newtonsoft.Json.Linq.JObject}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Newtonsoft.Json.Linq.JObject}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<string, JObject>
+  nameWithType: Dictionary<string, JObject>
+  fullName: System.Collections.Generic.Dictionary<string, Newtonsoft.Json.Linq.JObject>
+  nameWithType.vb: Dictionary(Of String, JObject)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Newtonsoft.Json.Linq.JObject)
+  name.vb: Dictionary(Of String, JObject)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Newtonsoft.Json.Linq.JObject
+    name: JObject
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Newtonsoft.Json.Linq.JObject
+    name: JObject
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Loaders.Json5Loader.IsDateKey*
+  commentId: Overload:Core.Loaders.Json5Loader.IsDateKey
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_IsDateKey_System_String_
+  name: IsDateKey
+  nameWithType: Json5Loader.IsDateKey
+  fullName: Core.Loaders.Json5Loader.IsDateKey
+- uid: Core.Loaders.Json5Loader.TryParseDate*
+  commentId: Overload:Core.Loaders.Json5Loader.TryParseDate
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_TryParseDate_System_String_System_Int32__System_Int32__System_Int32__
+  name: TryParseDate
+  nameWithType: Json5Loader.TryParseDate
+  fullName: Core.Loaders.Json5Loader.TryParseDate
+- uid: Core.Loaders.Json5Loader.IsDateBeforeOrEqual*
+  commentId: Overload:Core.Loaders.Json5Loader.IsDateBeforeOrEqual
+  href: Core.Loaders.Json5Loader.html#Core_Loaders_Json5Loader_IsDateBeforeOrEqual_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: IsDateBeforeOrEqual
+  nameWithType: Json5Loader.IsDateBeforeOrEqual
+  fullName: Core.Loaders.Json5Loader.IsDateBeforeOrEqual

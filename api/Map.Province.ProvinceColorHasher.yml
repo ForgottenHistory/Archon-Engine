@@ -1,0 +1,180 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceColorHasher
+  commentId: T:Map.Province.ProvinceColorHasher
+  id: ProvinceColorHasher
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceColorHasher.FastHashColor32(UnityEngine.Color32)
+  - Map.Province.ProvinceColorHasher.HashColor32(UnityEngine.Color32)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorHasher
+  nameWithType: ProvinceColorHasher
+  fullName: Map.Province.ProvinceColorHasher
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorHasher
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Fast hash function for Color32 lookups
+
+    Optimized for province color distributions
+  example: []
+  syntax:
+    content: public static class ProvinceColorHasher
+    content.vb: Public Module ProvinceColorHasher
+  inheritance:
+  - System.Object
+- uid: Map.Province.ProvinceColorHasher.HashColor32(UnityEngine.Color32)
+  commentId: M:Map.Province.ProvinceColorHasher.HashColor32(UnityEngine.Color32)
+  id: HashColor32(UnityEngine.Color32)
+  parent: Map.Province.ProvinceColorHasher
+  langs:
+  - csharp
+  - vb
+  name: HashColor32(Color32)
+  nameWithType: ProvinceColorHasher.HashColor32(Color32)
+  fullName: Map.Province.ProvinceColorHasher.HashColor32(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HashColor32
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Fast hash function for Color32 values
+
+    Uses FNV-1a hash for good distribution
+  example: []
+  syntax:
+    content: public static uint HashColor32(Color32 color)
+    parameters:
+    - id: color
+      type: UnityEngine.Color32
+    return:
+      type: System.UInt32
+    content.vb: Public Shared Function HashColor32(color As Color32) As UInteger
+  overload: Map.Province.ProvinceColorHasher.HashColor32*
+- uid: Map.Province.ProvinceColorHasher.FastHashColor32(UnityEngine.Color32)
+  commentId: M:Map.Province.ProvinceColorHasher.FastHashColor32(UnityEngine.Color32)
+  id: FastHashColor32(UnityEngine.Color32)
+  parent: Map.Province.ProvinceColorHasher
+  langs:
+  - csharp
+  - vb
+  name: FastHashColor32(Color32)
+  nameWithType: ProvinceColorHasher.FastHashColor32(Color32)
+  fullName: Map.Province.ProvinceColorHasher.FastHashColor32(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FastHashColor32
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 117
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Alternative hash using bit manipulation for very fast computation
+  example: []
+  syntax:
+    content: public static uint FastHashColor32(Color32 color)
+    parameters:
+    - id: color
+      type: UnityEngine.Color32
+    return:
+      type: System.UInt32
+    content.vb: Public Shared Function FastHashColor32(color As Color32) As UInteger
+  overload: Map.Province.ProvinceColorHasher.FastHashColor32*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceColorHasher.HashColor32*
+  commentId: Overload:Map.Province.ProvinceColorHasher.HashColor32
+  href: Map.Province.ProvinceColorHasher.html#Map_Province_ProvinceColorHasher_HashColor32_UnityEngine_Color32_
+  name: HashColor32
+  nameWithType: ProvinceColorHasher.HashColor32
+  fullName: Map.Province.ProvinceColorHasher.HashColor32
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Province.ProvinceColorHasher.FastHashColor32*
+  commentId: Overload:Map.Province.ProvinceColorHasher.FastHashColor32
+  href: Map.Province.ProvinceColorHasher.html#Map_Province_ProvinceColorHasher_FastHashColor32_UnityEngine_Color32_
+  name: FastHashColor32
+  nameWithType: ProvinceColorHasher.FastHashColor32
+  fullName: Map.Province.ProvinceColorHasher.FastHashColor32

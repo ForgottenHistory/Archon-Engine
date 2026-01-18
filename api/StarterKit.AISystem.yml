@@ -1,0 +1,191 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.AISystem
+  commentId: T:StarterKit.AISystem
+  id: AISystem
+  parent: StarterKit
+  children:
+  - StarterKit.AISystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.BuildingSystem,StarterKit.EconomySystem,System.Boolean)
+  - StarterKit.AISystem.Dispose
+  langs:
+  - csharp
+  - vb
+  name: AISystem
+  nameWithType: AISystem
+  fullName: StarterKit.AISystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/AISystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AISystem
+    path: Scripts/StarterKit/Systems/AISystem.cs
+    startLine: 20
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Simple AI for StarterKit. Non-player countries colonize and build farms on monthly tick.
+
+    AI countries use the shared EconomySystem for gold (same as player).
+
+    Priority: Colonize first (expand), then build farms (develop).
+
+
+    Demonstrates: ProvinceQueryBuilder for fluent province filtering.
+  example: []
+  syntax:
+    content: public class AISystem
+    content.vb: Public Class AISystem
+  inheritance:
+  - System.Object
+- uid: StarterKit.AISystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.BuildingSystem,StarterKit.EconomySystem,System.Boolean)
+  commentId: M:StarterKit.AISystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.BuildingSystem,StarterKit.EconomySystem,System.Boolean)
+  id: '#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.BuildingSystem,StarterKit.EconomySystem,System.Boolean)'
+  parent: StarterKit.AISystem
+  langs:
+  - csharp
+  - vb
+  name: AISystem(GameState, PlayerState, BuildingSystem, EconomySystem, bool)
+  nameWithType: AISystem.AISystem(GameState, PlayerState, BuildingSystem, EconomySystem, bool)
+  fullName: StarterKit.AISystem.AISystem(Core.GameState, StarterKit.PlayerState, StarterKit.BuildingSystem, StarterKit.EconomySystem, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/AISystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/Systems/AISystem.cs
+    startLine: 38
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public AISystem(GameState gameStateRef, PlayerState playerStateRef, BuildingSystem buildingSystemRef, EconomySystem economySystemRef, bool log = true)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: playerStateRef
+      type: StarterKit.PlayerState
+    - id: buildingSystemRef
+      type: StarterKit.BuildingSystem
+    - id: economySystemRef
+      type: StarterKit.EconomySystem
+    - id: log
+      type: System.Boolean
+    content.vb: Public Sub New(gameStateRef As GameState, playerStateRef As PlayerState, buildingSystemRef As BuildingSystem, economySystemRef As EconomySystem, log As Boolean = True)
+  overload: StarterKit.AISystem.#ctor*
+  nameWithType.vb: AISystem.New(GameState, PlayerState, BuildingSystem, EconomySystem, Boolean)
+  fullName.vb: StarterKit.AISystem.New(Core.GameState, StarterKit.PlayerState, StarterKit.BuildingSystem, StarterKit.EconomySystem, Boolean)
+  name.vb: New(GameState, PlayerState, BuildingSystem, EconomySystem, Boolean)
+- uid: StarterKit.AISystem.Dispose
+  commentId: M:StarterKit.AISystem.Dispose
+  id: Dispose
+  parent: StarterKit.AISystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: AISystem.Dispose()
+  fullName: StarterKit.AISystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/AISystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/StarterKit/Systems/AISystem.cs
+    startLine: 208
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: StarterKit.AISystem.Dispose*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.AISystem.#ctor*
+  commentId: Overload:StarterKit.AISystem.#ctor
+  href: StarterKit.AISystem.html#StarterKit_AISystem__ctor_Core_GameState_StarterKit_PlayerState_StarterKit_BuildingSystem_StarterKit_EconomySystem_System_Boolean_
+  name: AISystem
+  nameWithType: AISystem.AISystem
+  fullName: StarterKit.AISystem.AISystem
+  nameWithType.vb: AISystem.New
+  fullName.vb: StarterKit.AISystem.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  parent: StarterKit
+  href: StarterKit.PlayerState.html
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+- uid: StarterKit.BuildingSystem
+  commentId: T:StarterKit.BuildingSystem
+  parent: StarterKit
+  href: StarterKit.BuildingSystem.html
+  name: BuildingSystem
+  nameWithType: BuildingSystem
+  fullName: StarterKit.BuildingSystem
+- uid: StarterKit.EconomySystem
+  commentId: T:StarterKit.EconomySystem
+  parent: StarterKit
+  href: StarterKit.EconomySystem.html
+  name: EconomySystem
+  nameWithType: EconomySystem
+  fullName: StarterKit.EconomySystem
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: StarterKit.AISystem.Dispose*
+  commentId: Overload:StarterKit.AISystem.Dispose
+  href: StarterKit.AISystem.html#StarterKit_AISystem_Dispose
+  name: Dispose
+  nameWithType: AISystem.Dispose
+  fullName: StarterKit.AISystem.Dispose

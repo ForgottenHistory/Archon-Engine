@@ -1,0 +1,262 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.TreatyFlags
+  commentId: T:Core.Diplomacy.TreatyFlags
+  id: TreatyFlags
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.TreatyFlags.Alliance
+  - Core.Diplomacy.TreatyFlags.GuaranteeFrom1To2
+  - Core.Diplomacy.TreatyFlags.GuaranteeFrom2To1
+  - Core.Diplomacy.TreatyFlags.MilitaryAccessFrom1To2
+  - Core.Diplomacy.TreatyFlags.MilitaryAccessFrom2To1
+  - Core.Diplomacy.TreatyFlags.NonAggressionPact
+  - Core.Diplomacy.TreatyFlags.None
+  langs:
+  - csharp
+  - vb
+  name: TreatyFlags
+  nameWithType: TreatyFlags
+  fullName: Core.Diplomacy.TreatyFlags
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TreatyFlags
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Treaty type bitfield flags
+
+    Used in RelationData.treatyFlags to track active treaties
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum TreatyFlags : byte
+    content.vb: >-
+      <Flags>
+
+      Public Enum TreatyFlags As Byte
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Core.Diplomacy.TreatyFlags.None
+  commentId: F:Core.Diplomacy.TreatyFlags.None
+  id: None
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: TreatyFlags.None
+  fullName: Core.Diplomacy.TreatyFlags.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: None = 0
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.Alliance
+  commentId: F:Core.Diplomacy.TreatyFlags.Alliance
+  id: Alliance
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: Alliance
+  nameWithType: TreatyFlags.Alliance
+  fullName: Core.Diplomacy.TreatyFlags.Alliance
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Alliance
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: Alliance = 1
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.NonAggressionPact
+  commentId: F:Core.Diplomacy.TreatyFlags.NonAggressionPact
+  id: NonAggressionPact
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: NonAggressionPact
+  nameWithType: TreatyFlags.NonAggressionPact
+  fullName: Core.Diplomacy.TreatyFlags.NonAggressionPact
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NonAggressionPact
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: NonAggressionPact = 2
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.GuaranteeFrom1To2
+  commentId: F:Core.Diplomacy.TreatyFlags.GuaranteeFrom1To2
+  id: GuaranteeFrom1To2
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: GuaranteeFrom1To2
+  nameWithType: TreatyFlags.GuaranteeFrom1To2
+  fullName: Core.Diplomacy.TreatyFlags.GuaranteeFrom1To2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GuaranteeFrom1To2
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: GuaranteeFrom1To2 = 4
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.GuaranteeFrom2To1
+  commentId: F:Core.Diplomacy.TreatyFlags.GuaranteeFrom2To1
+  id: GuaranteeFrom2To1
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: GuaranteeFrom2To1
+  nameWithType: TreatyFlags.GuaranteeFrom2To1
+  fullName: Core.Diplomacy.TreatyFlags.GuaranteeFrom2To1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GuaranteeFrom2To1
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: GuaranteeFrom2To1 = 8
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.MilitaryAccessFrom1To2
+  commentId: F:Core.Diplomacy.TreatyFlags.MilitaryAccessFrom1To2
+  id: MilitaryAccessFrom1To2
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: MilitaryAccessFrom1To2
+  nameWithType: TreatyFlags.MilitaryAccessFrom1To2
+  fullName: Core.Diplomacy.TreatyFlags.MilitaryAccessFrom1To2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MilitaryAccessFrom1To2
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: MilitaryAccessFrom1To2 = 16
+    return:
+      type: Core.Diplomacy.TreatyFlags
+- uid: Core.Diplomacy.TreatyFlags.MilitaryAccessFrom2To1
+  commentId: F:Core.Diplomacy.TreatyFlags.MilitaryAccessFrom2To1
+  id: MilitaryAccessFrom2To1
+  parent: Core.Diplomacy.TreatyFlags
+  langs:
+  - csharp
+  - vb
+  name: MilitaryAccessFrom2To1
+  nameWithType: TreatyFlags.MilitaryAccessFrom2To1
+  fullName: Core.Diplomacy.TreatyFlags.MilitaryAccessFrom2To1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MilitaryAccessFrom2To1
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: MilitaryAccessFrom2To1 = 32
+    return:
+      type: Core.Diplomacy.TreatyFlags
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.Diplomacy.TreatyFlags
+  commentId: T:Core.Diplomacy.TreatyFlags
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.TreatyFlags.html
+  name: TreatyFlags
+  nameWithType: TreatyFlags
+  fullName: Core.Diplomacy.TreatyFlags

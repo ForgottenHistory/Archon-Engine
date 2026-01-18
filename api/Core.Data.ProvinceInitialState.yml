@@ -1,0 +1,809 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceInitialState
+  commentId: T:Core.Data.ProvinceInitialState
+  id: ProvinceInitialState
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceInitialState.BaseManpower
+  - Core.Data.ProvinceInitialState.BaseProduction
+  - Core.Data.ProvinceInitialState.BaseTax
+  - Core.Data.ProvinceInitialState.CalculateDevelopment
+  - Core.Data.ProvinceInitialState.CenterOfTrade
+  - Core.Data.ProvinceInitialState.ControllerID
+  - Core.Data.ProvinceInitialState.ControllerTag
+  - Core.Data.ProvinceInitialState.Create(System.Int32)
+  - Core.Data.ProvinceInitialState.Culture
+  - Core.Data.ProvinceInitialState.Development
+  - Core.Data.ProvinceInitialState.Flags
+  - Core.Data.ProvinceInitialState.Invalid
+  - Core.Data.ProvinceInitialState.IsValid
+  - Core.Data.ProvinceInitialState.OwnerID
+  - Core.Data.ProvinceInitialState.OwnerTag
+  - Core.Data.ProvinceInitialState.PackFlags(System.Boolean,System.Boolean)
+  - Core.Data.ProvinceInitialState.ProvinceID
+  - Core.Data.ProvinceInitialState.Religion
+  - Core.Data.ProvinceInitialState.Terrain
+  - Core.Data.ProvinceInitialState.ToProvinceState
+  - Core.Data.ProvinceInitialState.TradeGood
+  langs:
+  - csharp
+  - vb
+  name: ProvinceInitialState
+  nameWithType: ProvinceInitialState
+  fullName: Core.Data.ProvinceInitialState
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceInitialState
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Initial state data extracted from province history files
+
+    Used to initialize ProvinceState (hot data) at game start
+
+    This is the Burst-compatible version of province history
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct ProvinceInitialState
+    content.vb: >-
+      <Serializable>
+
+      Public Structure ProvinceInitialState
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.ProvinceInitialState.ProvinceID
+  commentId: F:Core.Data.ProvinceInitialState.ProvinceID
+  id: ProvinceID
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceInitialState.ProvinceID
+  fullName: Core.Data.ProvinceInitialState.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ProvinceID
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceID As Integer
+- uid: Core.Data.ProvinceInitialState.IsValid
+  commentId: F:Core.Data.ProvinceInitialState.IsValid
+  id: IsValid
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: ProvinceInitialState.IsValid
+  fullName: Core.Data.ProvinceInitialState.IsValid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool IsValid
+    return:
+      type: System.Boolean
+    content.vb: Public IsValid As Boolean
+- uid: Core.Data.ProvinceInitialState.OwnerID
+  commentId: F:Core.Data.ProvinceInitialState.OwnerID
+  id: OwnerID
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: OwnerID
+  nameWithType: ProvinceInitialState.OwnerID
+  fullName: Core.Data.ProvinceInitialState.OwnerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnerID
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort OwnerID
+    return:
+      type: System.UInt16
+    content.vb: Public OwnerID As UShort
+- uid: Core.Data.ProvinceInitialState.ControllerID
+  commentId: F:Core.Data.ProvinceInitialState.ControllerID
+  id: ControllerID
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: ControllerID
+  nameWithType: ProvinceInitialState.ControllerID
+  fullName: Core.Data.ProvinceInitialState.ControllerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ControllerID
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort ControllerID
+    return:
+      type: System.UInt16
+    content.vb: Public ControllerID As UShort
+- uid: Core.Data.ProvinceInitialState.Development
+  commentId: F:Core.Data.ProvinceInitialState.Development
+  id: Development
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Development
+  nameWithType: ProvinceInitialState.Development
+  fullName: Core.Data.ProvinceInitialState.Development
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Development
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte Development
+    return:
+      type: System.Byte
+    content.vb: Public Development As Byte
+- uid: Core.Data.ProvinceInitialState.Terrain
+  commentId: F:Core.Data.ProvinceInitialState.Terrain
+  id: Terrain
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Terrain
+  nameWithType: ProvinceInitialState.Terrain
+  fullName: Core.Data.ProvinceInitialState.Terrain
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Terrain
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte Terrain
+    return:
+      type: System.Byte
+    content.vb: Public Terrain As Byte
+- uid: Core.Data.ProvinceInitialState.Flags
+  commentId: F:Core.Data.ProvinceInitialState.Flags
+  id: Flags
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Flags
+  nameWithType: ProvinceInitialState.Flags
+  fullName: Core.Data.ProvinceInitialState.Flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Flags
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte Flags
+    return:
+      type: System.Byte
+    content.vb: Public Flags As Byte
+- uid: Core.Data.ProvinceInitialState.OwnerTag
+  commentId: F:Core.Data.ProvinceInitialState.OwnerTag
+  id: OwnerTag
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: OwnerTag
+  nameWithType: ProvinceInitialState.OwnerTag
+  fullName: Core.Data.ProvinceInitialState.OwnerTag
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnerTag
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes OwnerTag
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public OwnerTag As FixedString64Bytes
+- uid: Core.Data.ProvinceInitialState.ControllerTag
+  commentId: F:Core.Data.ProvinceInitialState.ControllerTag
+  id: ControllerTag
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: ControllerTag
+  nameWithType: ProvinceInitialState.ControllerTag
+  fullName: Core.Data.ProvinceInitialState.ControllerTag
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ControllerTag
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes ControllerTag
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public ControllerTag As FixedString64Bytes
+- uid: Core.Data.ProvinceInitialState.Culture
+  commentId: F:Core.Data.ProvinceInitialState.Culture
+  id: Culture
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Culture
+  nameWithType: ProvinceInitialState.Culture
+  fullName: Core.Data.ProvinceInitialState.Culture
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Culture
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes Culture
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public Culture As FixedString64Bytes
+- uid: Core.Data.ProvinceInitialState.Religion
+  commentId: F:Core.Data.ProvinceInitialState.Religion
+  id: Religion
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Religion
+  nameWithType: ProvinceInitialState.Religion
+  fullName: Core.Data.ProvinceInitialState.Religion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Religion
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes Religion
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public Religion As FixedString64Bytes
+- uid: Core.Data.ProvinceInitialState.TradeGood
+  commentId: F:Core.Data.ProvinceInitialState.TradeGood
+  id: TradeGood
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: TradeGood
+  nameWithType: ProvinceInitialState.TradeGood
+  fullName: Core.Data.ProvinceInitialState.TradeGood
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TradeGood
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes TradeGood
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public TradeGood As FixedString64Bytes
+- uid: Core.Data.ProvinceInitialState.BaseTax
+  commentId: F:Core.Data.ProvinceInitialState.BaseTax
+  id: BaseTax
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: BaseTax
+  nameWithType: ProvinceInitialState.BaseTax
+  fullName: Core.Data.ProvinceInitialState.BaseTax
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseTax
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte BaseTax
+    return:
+      type: System.Byte
+    content.vb: Public BaseTax As Byte
+- uid: Core.Data.ProvinceInitialState.BaseProduction
+  commentId: F:Core.Data.ProvinceInitialState.BaseProduction
+  id: BaseProduction
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: BaseProduction
+  nameWithType: ProvinceInitialState.BaseProduction
+  fullName: Core.Data.ProvinceInitialState.BaseProduction
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseProduction
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte BaseProduction
+    return:
+      type: System.Byte
+    content.vb: Public BaseProduction As Byte
+- uid: Core.Data.ProvinceInitialState.BaseManpower
+  commentId: F:Core.Data.ProvinceInitialState.BaseManpower
+  id: BaseManpower
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: BaseManpower
+  nameWithType: ProvinceInitialState.BaseManpower
+  fullName: Core.Data.ProvinceInitialState.BaseManpower
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseManpower
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte BaseManpower
+    return:
+      type: System.Byte
+    content.vb: Public BaseManpower As Byte
+- uid: Core.Data.ProvinceInitialState.CenterOfTrade
+  commentId: F:Core.Data.ProvinceInitialState.CenterOfTrade
+  id: CenterOfTrade
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: CenterOfTrade
+  nameWithType: ProvinceInitialState.CenterOfTrade
+  fullName: Core.Data.ProvinceInitialState.CenterOfTrade
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterOfTrade
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte CenterOfTrade
+    return:
+      type: System.Byte
+    content.vb: Public CenterOfTrade As Byte
+- uid: Core.Data.ProvinceInitialState.Invalid
+  commentId: P:Core.Data.ProvinceInitialState.Invalid
+  id: Invalid
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Invalid
+  nameWithType: ProvinceInitialState.Invalid
+  fullName: Core.Data.ProvinceInitialState.Invalid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Invalid
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static ProvinceInitialState Invalid { get; }
+    parameters: []
+    return:
+      type: Core.Data.ProvinceInitialState
+    content.vb: Public Shared ReadOnly Property Invalid As ProvinceInitialState
+  overload: Core.Data.ProvinceInitialState.Invalid*
+- uid: Core.Data.ProvinceInitialState.Create(System.Int32)
+  commentId: M:Core.Data.ProvinceInitialState.Create(System.Int32)
+  id: Create(System.Int32)
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: Create(int)
+  nameWithType: ProvinceInitialState.Create(int)
+  fullName: Core.Data.ProvinceInitialState.Create(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static ProvinceInitialState Create(int provinceID)
+    parameters:
+    - id: provinceID
+      type: System.Int32
+    return:
+      type: Core.Data.ProvinceInitialState
+    content.vb: Public Shared Function Create(provinceID As Integer) As ProvinceInitialState
+  overload: Core.Data.ProvinceInitialState.Create*
+  nameWithType.vb: ProvinceInitialState.Create(Integer)
+  fullName.vb: Core.Data.ProvinceInitialState.Create(Integer)
+  name.vb: Create(Integer)
+- uid: Core.Data.ProvinceInitialState.ToProvinceState
+  commentId: M:Core.Data.ProvinceInitialState.ToProvinceState
+  id: ToProvinceState
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: ToProvinceState()
+  nameWithType: ProvinceInitialState.ToProvinceState()
+  fullName: Core.Data.ProvinceInitialState.ToProvinceState()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToProvinceState
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Convert to hot ProvinceState for simulation (engine layer only)
+
+    NOTE: Development, FortLevel, Flags removed from ProvinceState (now game-specific)
+
+    Game layer must initialize HegemonProvinceData separately with Development value
+  example: []
+  syntax:
+    content: public ProvinceState ToProvinceState()
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Function ToProvinceState() As ProvinceState
+  overload: Core.Data.ProvinceInitialState.ToProvinceState*
+- uid: Core.Data.ProvinceInitialState.CalculateDevelopment
+  commentId: M:Core.Data.ProvinceInitialState.CalculateDevelopment
+  id: CalculateDevelopment
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: CalculateDevelopment()
+  nameWithType: ProvinceInitialState.CalculateDevelopment()
+  fullName: Core.Data.ProvinceInitialState.CalculateDevelopment()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDevelopment
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Calculate development from base values
+
+    Default formula: sum of components, capped at 255
+
+    NOTE: This is a convenience default for Burst compatibility
+
+    GAME can override Development value after loading if different formula is needed
+  example: []
+  syntax:
+    content: public void CalculateDevelopment()
+    content.vb: Public Sub CalculateDevelopment()
+  overload: Core.Data.ProvinceInitialState.CalculateDevelopment*
+- uid: Core.Data.ProvinceInitialState.PackFlags(System.Boolean,System.Boolean)
+  commentId: M:Core.Data.ProvinceInitialState.PackFlags(System.Boolean,System.Boolean)
+  id: PackFlags(System.Boolean,System.Boolean)
+  parent: Core.Data.ProvinceInitialState
+  langs:
+  - csharp
+  - vb
+  name: PackFlags(bool, bool)
+  nameWithType: ProvinceInitialState.PackFlags(bool, bool)
+  fullName: Core.Data.ProvinceInitialState.PackFlags(bool, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PackFlags
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Pack boolean flags into single byte
+  example: []
+  syntax:
+    content: public void PackFlags(bool isCity, bool isHRE)
+    parameters:
+    - id: isCity
+      type: System.Boolean
+    - id: isHRE
+      type: System.Boolean
+    content.vb: Public Sub PackFlags(isCity As Boolean, isHRE As Boolean)
+  overload: Core.Data.ProvinceInitialState.PackFlags*
+  nameWithType.vb: ProvinceInitialState.PackFlags(Boolean, Boolean)
+  fullName.vb: Core.Data.ProvinceInitialState.PackFlags(Boolean, Boolean)
+  name.vb: PackFlags(Boolean, Boolean)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Data.ProvinceInitialState.Invalid*
+  commentId: Overload:Core.Data.ProvinceInitialState.Invalid
+  href: Core.Data.ProvinceInitialState.html#Core_Data_ProvinceInitialState_Invalid
+  name: Invalid
+  nameWithType: ProvinceInitialState.Invalid
+  fullName: Core.Data.ProvinceInitialState.Invalid
+- uid: Core.Data.ProvinceInitialState
+  commentId: T:Core.Data.ProvinceInitialState
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialState.html
+  name: ProvinceInitialState
+  nameWithType: ProvinceInitialState
+  fullName: Core.Data.ProvinceInitialState
+- uid: Core.Data.ProvinceInitialState.Create*
+  commentId: Overload:Core.Data.ProvinceInitialState.Create
+  href: Core.Data.ProvinceInitialState.html#Core_Data_ProvinceInitialState_Create_System_Int32_
+  name: Create
+  nameWithType: ProvinceInitialState.Create
+  fullName: Core.Data.ProvinceInitialState.Create
+- uid: Core.Data.ProvinceInitialState.ToProvinceState*
+  commentId: Overload:Core.Data.ProvinceInitialState.ToProvinceState
+  href: Core.Data.ProvinceInitialState.html#Core_Data_ProvinceInitialState_ToProvinceState
+  name: ToProvinceState
+  nameWithType: ProvinceInitialState.ToProvinceState
+  fullName: Core.Data.ProvinceInitialState.ToProvinceState
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Data.ProvinceInitialState.CalculateDevelopment*
+  commentId: Overload:Core.Data.ProvinceInitialState.CalculateDevelopment
+  href: Core.Data.ProvinceInitialState.html#Core_Data_ProvinceInitialState_CalculateDevelopment
+  name: CalculateDevelopment
+  nameWithType: ProvinceInitialState.CalculateDevelopment
+  fullName: Core.Data.ProvinceInitialState.CalculateDevelopment
+- uid: Core.Data.ProvinceInitialState.PackFlags*
+  commentId: Overload:Core.Data.ProvinceInitialState.PackFlags
+  href: Core.Data.ProvinceInitialState.html#Core_Data_ProvinceInitialState_PackFlags_System_Boolean_System_Boolean_
+  name: PackFlags
+  nameWithType: ProvinceInitialState.PackFlags
+  fullName: Core.Data.ProvinceInitialState.PackFlags

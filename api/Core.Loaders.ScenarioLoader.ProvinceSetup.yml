@@ -1,0 +1,204 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+  commentId: T:Core.Loaders.ScenarioLoader.ProvinceSetup
+  id: ScenarioLoader.ProvinceSetup
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.ProvinceSetup.Controller
+  - Core.Loaders.ScenarioLoader.ProvinceSetup.Owner
+  - Core.Loaders.ScenarioLoader.ProvinceSetup.ProvinceId
+  - Core.Loaders.ScenarioLoader.ProvinceSetup.Terrain
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.ProvinceSetup
+  nameWithType: ScenarioLoader.ProvinceSetup
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSetup
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 69
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Initial setup for a province (ENGINE LAYER - minimal fields only)
+
+    Game-specific fields like Development should be handled by game layer loaders
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct ScenarioLoader.ProvinceSetup
+    content.vb: >-
+      <Serializable>
+
+      Public Structure ScenarioLoader.ProvinceSetup
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup.ProvinceId
+  commentId: F:Core.Loaders.ScenarioLoader.ProvinceSetup.ProvinceId
+  id: ProvinceId
+  parent: Core.Loaders.ScenarioLoader.ProvinceSetup
+  langs:
+  - csharp
+  - vb
+  name: ProvinceId
+  nameWithType: ScenarioLoader.ProvinceSetup.ProvinceId
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup.ProvinceId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceId
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort ProvinceId
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceId As UShort
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup.Owner
+  commentId: F:Core.Loaders.ScenarioLoader.ProvinceSetup.Owner
+  id: Owner
+  parent: Core.Loaders.ScenarioLoader.ProvinceSetup
+  langs:
+  - csharp
+  - vb
+  name: Owner
+  nameWithType: ScenarioLoader.ProvinceSetup.Owner
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup.Owner
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Owner
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort Owner
+    return:
+      type: System.UInt16
+    content.vb: Public Owner As UShort
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup.Controller
+  commentId: F:Core.Loaders.ScenarioLoader.ProvinceSetup.Controller
+  id: Controller
+  parent: Core.Loaders.ScenarioLoader.ProvinceSetup
+  langs:
+  - csharp
+  - vb
+  name: Controller
+  nameWithType: ScenarioLoader.ProvinceSetup.Controller
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup.Controller
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Controller
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort Controller
+    return:
+      type: System.UInt16
+    content.vb: Public Controller As UShort
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup.Terrain
+  commentId: F:Core.Loaders.ScenarioLoader.ProvinceSetup.Terrain
+  id: Terrain
+  parent: Core.Loaders.ScenarioLoader.ProvinceSetup
+  langs:
+  - csharp
+  - vb
+  name: Terrain
+  nameWithType: ScenarioLoader.ProvinceSetup.Terrain
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup.Terrain
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Terrain
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public byte Terrain
+    return:
+      type: System.Byte
+    content.vb: Public Terrain As Byte
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte

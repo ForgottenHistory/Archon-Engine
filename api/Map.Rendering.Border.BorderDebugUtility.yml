@@ -1,0 +1,447 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderDebugUtility
+  commentId: T:Map.Rendering.Border.BorderDebugUtility
+  id: BorderDebugUtility
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderDebugUtility.#ctor(Map.Rendering.MapTextureManager,System.Boolean)
+  - Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection(System.Action{Map.Rendering.BorderMode})
+  - Map.Rendering.Border.BorderDebugUtility.ClearBorders
+  - Map.Rendering.Border.BorderDebugUtility.FillBordersWhite
+  - Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture
+  - Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug(System.String)
+  langs:
+  - csharp
+  - vb
+  name: BorderDebugUtility
+  nameWithType: BorderDebugUtility
+  fullName: Map.Rendering.Border.BorderDebugUtility
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDebugUtility
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Debug and benchmarking utilities for border rendering
+
+    Extracted from BorderComputeDispatcher for single responsibility
+
+
+    Responsibilities:
+
+    - Benchmark border detection performance
+
+    - Generate debug visualizations
+
+    - Clear/fill border textures for debugging
+
+    - Save debug textures to disk
+  example: []
+  syntax:
+    content: public class BorderDebugUtility
+    content.vb: Public Class BorderDebugUtility
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderDebugUtility.#ctor(Map.Rendering.MapTextureManager,System.Boolean)
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.#ctor(Map.Rendering.MapTextureManager,System.Boolean)
+  id: '#ctor(Map.Rendering.MapTextureManager,System.Boolean)'
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: BorderDebugUtility(MapTextureManager, bool)
+  nameWithType: BorderDebugUtility.BorderDebugUtility(MapTextureManager, bool)
+  fullName: Map.Rendering.Border.BorderDebugUtility.BorderDebugUtility(Map.Rendering.MapTextureManager, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderDebugUtility(MapTextureManager manager, bool enablePerformanceLogging = false)
+    parameters:
+    - id: manager
+      type: Map.Rendering.MapTextureManager
+    - id: enablePerformanceLogging
+      type: System.Boolean
+    content.vb: Public Sub New(manager As MapTextureManager, enablePerformanceLogging As Boolean = False)
+  overload: Map.Rendering.Border.BorderDebugUtility.#ctor*
+  nameWithType.vb: BorderDebugUtility.New(MapTextureManager, Boolean)
+  fullName.vb: Map.Rendering.Border.BorderDebugUtility.New(Map.Rendering.MapTextureManager, Boolean)
+  name.vb: New(MapTextureManager, Boolean)
+- uid: Map.Rendering.Border.BorderDebugUtility.FillBordersWhite
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.FillBordersWhite
+  id: FillBordersWhite
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: FillBordersWhite()
+  nameWithType: BorderDebugUtility.FillBordersWhite()
+  fullName: Map.Rendering.Border.BorderDebugUtility.FillBordersWhite()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FillBordersWhite
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Fill border texture with white for debugging
+  example: []
+  syntax:
+    content: public void FillBordersWhite()
+    content.vb: Public Sub FillBordersWhite()
+  overload: Map.Rendering.Border.BorderDebugUtility.FillBordersWhite*
+- uid: Map.Rendering.Border.BorderDebugUtility.ClearBorders
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.ClearBorders
+  id: ClearBorders
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: ClearBorders()
+  nameWithType: BorderDebugUtility.ClearBorders()
+  fullName: Map.Rendering.Border.BorderDebugUtility.ClearBorders()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearBorders
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Clear all borders
+  example: []
+  syntax:
+    content: public void ClearBorders()
+    content.vb: Public Sub ClearBorders()
+  overload: Map.Rendering.Border.BorderDebugUtility.ClearBorders*
+- uid: Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture
+  id: GenerateCurveDebugTexture
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: GenerateCurveDebugTexture()
+  nameWithType: BorderDebugUtility.GenerateCurveDebugTexture()
+  fullName: Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateCurveDebugTexture
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 63
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Generate debug texture showing extracted curve points as colored dots
+
+    RED = Country borders, GREEN = Province borders
+  example: []
+  syntax:
+    content: public Texture2D GenerateCurveDebugTexture()
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Function GenerateCurveDebugTexture() As Texture2D
+  overload: Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture*
+- uid: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug(System.String)
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug(System.String)
+  id: SaveCurvePointsDebug(System.String)
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: SaveCurvePointsDebug(string)
+  nameWithType: BorderDebugUtility.SaveCurvePointsDebug(string)
+  fullName: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveCurvePointsDebug
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 73
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Save curve points debug visualization to disk
+  example: []
+  syntax:
+    content: public void SaveCurvePointsDebug(string outputPath = "D:/Stuff/My Games/Hegemon/curve_points_debug.png")
+    parameters:
+    - id: outputPath
+      type: System.String
+    content.vb: Public Sub SaveCurvePointsDebug(outputPath As String = "D:/Stuff/My Games/Hegemon/curve_points_debug.png")
+  overload: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug*
+  nameWithType.vb: BorderDebugUtility.SaveCurvePointsDebug(String)
+  fullName.vb: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug(String)
+  name.vb: SaveCurvePointsDebug(String)
+- uid: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection(System.Action{Map.Rendering.BorderMode})
+  commentId: M:Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection(System.Action{Map.Rendering.BorderMode})
+  id: BenchmarkBorderDetection(System.Action{Map.Rendering.BorderMode})
+  parent: Map.Rendering.Border.BorderDebugUtility
+  langs:
+  - csharp
+  - vb
+  name: BenchmarkBorderDetection(Action<BorderMode>)
+  nameWithType: BorderDebugUtility.BenchmarkBorderDetection(Action<BorderMode>)
+  fullName: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection(System.Action<Map.Rendering.BorderMode>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BenchmarkBorderDetection
+    path: Scripts/Map/Rendering/Border/BorderDebugUtility.cs
+    startLine: 96
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Benchmark border detection performance across different modes
+  example: []
+  syntax:
+    content: public void BenchmarkBorderDetection(Action<BorderMode> detectBordersCallback)
+    parameters:
+    - id: detectBordersCallback
+      type: System.Action{Map.Rendering.BorderMode}
+    content.vb: Public Sub BenchmarkBorderDetection(detectBordersCallback As Action(Of BorderMode))
+  overload: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection*
+  nameWithType.vb: BorderDebugUtility.BenchmarkBorderDetection(Action(Of BorderMode))
+  fullName.vb: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection(System.Action(Of Map.Rendering.BorderMode))
+  name.vb: BenchmarkBorderDetection(Action(Of BorderMode))
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderDebugUtility.#ctor*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.#ctor
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility__ctor_Map_Rendering_MapTextureManager_System_Boolean_
+  name: BorderDebugUtility
+  nameWithType: BorderDebugUtility.BorderDebugUtility
+  fullName: Map.Rendering.Border.BorderDebugUtility.BorderDebugUtility
+  nameWithType.vb: BorderDebugUtility.New
+  fullName.vb: Map.Rendering.Border.BorderDebugUtility.New
+  name.vb: New
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.Border.BorderDebugUtility.FillBordersWhite*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.FillBordersWhite
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility_FillBordersWhite
+  name: FillBordersWhite
+  nameWithType: BorderDebugUtility.FillBordersWhite
+  fullName: Map.Rendering.Border.BorderDebugUtility.FillBordersWhite
+- uid: Map.Rendering.Border.BorderDebugUtility.ClearBorders*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.ClearBorders
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility_ClearBorders
+  name: ClearBorders
+  nameWithType: BorderDebugUtility.ClearBorders
+  fullName: Map.Rendering.Border.BorderDebugUtility.ClearBorders
+- uid: Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility_GenerateCurveDebugTexture
+  name: GenerateCurveDebugTexture
+  nameWithType: BorderDebugUtility.GenerateCurveDebugTexture
+  fullName: Map.Rendering.Border.BorderDebugUtility.GenerateCurveDebugTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility_SaveCurvePointsDebug_System_String_
+  name: SaveCurvePointsDebug
+  nameWithType: BorderDebugUtility.SaveCurvePointsDebug
+  fullName: Map.Rendering.Border.BorderDebugUtility.SaveCurvePointsDebug
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection*
+  commentId: Overload:Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection
+  href: Map.Rendering.Border.BorderDebugUtility.html#Map_Rendering_Border_BorderDebugUtility_BenchmarkBorderDetection_System_Action_Map_Rendering_BorderMode__
+  name: BenchmarkBorderDetection
+  nameWithType: BorderDebugUtility.BenchmarkBorderDetection
+  fullName: Map.Rendering.Border.BorderDebugUtility.BenchmarkBorderDetection
+- uid: System.Action{Map.Rendering.BorderMode}
+  commentId: T:System.Action{Map.Rendering.BorderMode}
+  parent: System
+  definition: System.Action`1
+  href: Map.Rendering.BorderMode.html
+  name: Action<BorderMode>
+  nameWithType: Action<BorderMode>
+  fullName: System.Action<Map.Rendering.BorderMode>
+  nameWithType.vb: Action(Of BorderMode)
+  fullName.vb: System.Action(Of Map.Rendering.BorderMode)
+  name.vb: Action(Of BorderMode)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Map.Rendering.BorderMode
+    name: BorderMode
+    href: Map.Rendering.BorderMode.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Rendering.BorderMode
+    name: BorderMode
+    href: Map.Rendering.BorderMode.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

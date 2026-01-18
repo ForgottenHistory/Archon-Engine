@@ -1,0 +1,56 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Events.ISubscriptionToken
+  commentId: T:Core.Events.ISubscriptionToken
+  id: ISubscriptionToken
+  parent: Core.Events
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: ISubscriptionToken
+  nameWithType: ISubscriptionToken
+  fullName: Core.Events.ISubscriptionToken
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Events/SubscriptionToken.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ISubscriptionToken
+    path: Scripts/Core/Events/SubscriptionToken.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: >-
+    Non-generic interface for subscription tokens.
+
+    Allows storing mixed token types in collections.
+  example: []
+  syntax:
+    content: public interface ISubscriptionToken
+    content.vb: Public Interface ISubscriptionToken
+references:
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html

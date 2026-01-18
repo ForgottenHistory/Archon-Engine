@@ -1,0 +1,213 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Collections.PathfindingNode
+  commentId: T:Core.Collections.PathfindingNode
+  id: PathfindingNode
+  parent: Core.Collections
+  children:
+  - Core.Collections.PathfindingNode.CompareTo(Core.Collections.PathfindingNode)
+  - Core.Collections.PathfindingNode.fScore
+  - Core.Collections.PathfindingNode.provinceID
+  langs:
+  - csharp
+  - vb
+  name: PathfindingNode
+  nameWithType: PathfindingNode
+  fullName: Core.Collections.PathfindingNode
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Collections/NativeMinHeap.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathfindingNode
+    path: Scripts/Core/Collections/NativeMinHeap.cs
+    startLine: 139
+  assemblies:
+  - Core
+  namespace: Core.Collections
+  summary: >-
+    Pathfinding node for A* algorithm.
+
+    Comparable by fScore for min-heap priority queue.
+  example: []
+  syntax:
+    content: public struct PathfindingNode
+    content.vb: Public Structure PathfindingNode
+- uid: Core.Collections.PathfindingNode.provinceID
+  commentId: F:Core.Collections.PathfindingNode.provinceID
+  id: provinceID
+  parent: Core.Collections.PathfindingNode
+  langs:
+  - csharp
+  - vb
+  name: provinceID
+  nameWithType: PathfindingNode.provinceID
+  fullName: Core.Collections.PathfindingNode.provinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Collections/NativeMinHeap.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceID
+    path: Scripts/Core/Collections/NativeMinHeap.cs
+    startLine: 141
+  assemblies:
+  - Core
+  namespace: Core.Collections
+  syntax:
+    content: public ushort provinceID
+    return:
+      type: System.UInt16
+    content.vb: Public provinceID As UShort
+- uid: Core.Collections.PathfindingNode.fScore
+  commentId: F:Core.Collections.PathfindingNode.fScore
+  id: fScore
+  parent: Core.Collections.PathfindingNode
+  langs:
+  - csharp
+  - vb
+  name: fScore
+  nameWithType: PathfindingNode.fScore
+  fullName: Core.Collections.PathfindingNode.fScore
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Collections/NativeMinHeap.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: fScore
+    path: Scripts/Core/Collections/NativeMinHeap.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.Collections
+  syntax:
+    content: public FixedPoint64 fScore
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public fScore As FixedPoint64
+- uid: Core.Collections.PathfindingNode.CompareTo(Core.Collections.PathfindingNode)
+  commentId: M:Core.Collections.PathfindingNode.CompareTo(Core.Collections.PathfindingNode)
+  id: CompareTo(Core.Collections.PathfindingNode)
+  parent: Core.Collections.PathfindingNode
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(PathfindingNode)
+  nameWithType: PathfindingNode.CompareTo(PathfindingNode)
+  fullName: Core.Collections.PathfindingNode.CompareTo(Core.Collections.PathfindingNode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Collections/NativeMinHeap.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompareTo
+    path: Scripts/Core/Collections/NativeMinHeap.cs
+    startLine: 144
+  assemblies:
+  - Core
+  namespace: Core.Collections
+  example: []
+  syntax:
+    content: public int CompareTo(PathfindingNode other)
+    parameters:
+    - id: other
+      type: Core.Collections.PathfindingNode
+    return:
+      type: System.Int32
+    content.vb: Public Function CompareTo(other As PathfindingNode) As Integer
+  overload: Core.Collections.PathfindingNode.CompareTo*
+references:
+- uid: Core.Collections
+  commentId: N:Core.Collections
+  href: Core.html
+  name: Core.Collections
+  nameWithType: Core.Collections
+  fullName: Core.Collections
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Collections.PathfindingNode.CompareTo*
+  commentId: Overload:Core.Collections.PathfindingNode.CompareTo
+  href: Core.Collections.PathfindingNode.html#Core_Collections_PathfindingNode_CompareTo_Core_Collections_PathfindingNode_
+  name: CompareTo
+  nameWithType: PathfindingNode.CompareTo
+  fullName: Core.Collections.PathfindingNode.CompareTo
+- uid: Core.Collections.PathfindingNode
+  commentId: T:Core.Collections.PathfindingNode
+  parent: Core.Collections
+  href: Core.Collections.PathfindingNode.html
+  name: PathfindingNode
+  nameWithType: PathfindingNode
+  fullName: Core.Collections.PathfindingNode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

@@ -1,0 +1,698 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.BurstPathfindingJob
+  commentId: T:Core.Systems.BurstPathfindingJob
+  id: BurstPathfindingJob
+  parent: Core.Systems
+  children:
+  - Core.Systems.BurstPathfindingJob.Execute
+  - Core.Systems.BurstPathfindingJob.adjacencyData
+  - Core.Systems.BurstPathfindingJob.cameFrom
+  - Core.Systems.BurstPathfindingJob.closedSet
+  - Core.Systems.BurstPathfindingJob.gScore
+  - Core.Systems.BurstPathfindingJob.goal
+  - Core.Systems.BurstPathfindingJob.neighborBuffer
+  - Core.Systems.BurstPathfindingJob.openHeap
+  - Core.Systems.BurstPathfindingJob.pathResult
+  - Core.Systems.BurstPathfindingJob.start
+  langs:
+  - csharp
+  - vb
+  name: BurstPathfindingJob
+  nameWithType: BurstPathfindingJob
+  fullName: Core.Systems.BurstPathfindingJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BurstPathfindingJob
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 488
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Burst-compiled A* pathfinding job.
+
+    Uses binary min-heap for O(log n) priority queue operations.
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile]
+
+      public struct BurstPathfindingJob
+    content.vb: >-
+      <BurstCompile>
+
+      Public Structure BurstPathfindingJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+- uid: Core.Systems.BurstPathfindingJob.start
+  commentId: F:Core.Systems.BurstPathfindingJob.start
+  id: start
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: start
+  nameWithType: BurstPathfindingJob.start
+  fullName: Core.Systems.BurstPathfindingJob.start
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: start
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 491
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ushort start
+    return:
+      type: System.UInt16
+    content.vb: Public start As UShort
+- uid: Core.Systems.BurstPathfindingJob.goal
+  commentId: F:Core.Systems.BurstPathfindingJob.goal
+  id: goal
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: goal
+  nameWithType: BurstPathfindingJob.goal
+  fullName: Core.Systems.BurstPathfindingJob.goal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: goal
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 492
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ushort goal
+    return:
+      type: System.UInt16
+    content.vb: Public goal As UShort
+- uid: Core.Systems.BurstPathfindingJob.adjacencyData
+  commentId: F:Core.Systems.BurstPathfindingJob.adjacencyData
+  id: adjacencyData
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: adjacencyData
+  nameWithType: BurstPathfindingJob.adjacencyData
+  fullName: Core.Systems.BurstPathfindingJob.adjacencyData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: adjacencyData
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 494
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeAdjacencyData adjacencyData
+    return:
+      type: Core.Systems.NativeAdjacencyData
+    content.vb: Public adjacencyData As NativeAdjacencyData
+- uid: Core.Systems.BurstPathfindingJob.openHeap
+  commentId: F:Core.Systems.BurstPathfindingJob.openHeap
+  id: openHeap
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: openHeap
+  nameWithType: BurstPathfindingJob.openHeap
+  fullName: Core.Systems.BurstPathfindingJob.openHeap
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: openHeap
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 496
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeMinHeap<PathfindingNode> openHeap
+    return:
+      type: Core.Collections.NativeMinHeap{Core.Collections.PathfindingNode}
+    content.vb: Public openHeap As NativeMinHeap(Of PathfindingNode)
+- uid: Core.Systems.BurstPathfindingJob.closedSet
+  commentId: F:Core.Systems.BurstPathfindingJob.closedSet
+  id: closedSet
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: closedSet
+  nameWithType: BurstPathfindingJob.closedSet
+  fullName: Core.Systems.BurstPathfindingJob.closedSet
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: closedSet
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 497
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeHashSet<ushort> closedSet
+    return:
+      type: Unity.Collections.NativeHashSet{System.UInt16}
+    content.vb: Public closedSet As NativeHashSet(Of UShort)
+- uid: Core.Systems.BurstPathfindingJob.cameFrom
+  commentId: F:Core.Systems.BurstPathfindingJob.cameFrom
+  id: cameFrom
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: cameFrom
+  nameWithType: BurstPathfindingJob.cameFrom
+  fullName: Core.Systems.BurstPathfindingJob.cameFrom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: cameFrom
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 498
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeHashMap<ushort, ushort> cameFrom
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt16,System.UInt16}
+    content.vb: Public cameFrom As NativeHashMap(Of UShort, UShort)
+- uid: Core.Systems.BurstPathfindingJob.gScore
+  commentId: F:Core.Systems.BurstPathfindingJob.gScore
+  id: gScore
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: gScore
+  nameWithType: BurstPathfindingJob.gScore
+  fullName: Core.Systems.BurstPathfindingJob.gScore
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gScore
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 499
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeHashMap<ushort, FixedPoint64> gScore
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt16,Core.Data.FixedPoint64}
+    content.vb: Public gScore As NativeHashMap(Of UShort, FixedPoint64)
+- uid: Core.Systems.BurstPathfindingJob.pathResult
+  commentId: F:Core.Systems.BurstPathfindingJob.pathResult
+  id: pathResult
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: pathResult
+  nameWithType: BurstPathfindingJob.pathResult
+  fullName: Core.Systems.BurstPathfindingJob.pathResult
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: pathResult
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 500
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeList<ushort> pathResult
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public pathResult As NativeList(Of UShort)
+- uid: Core.Systems.BurstPathfindingJob.neighborBuffer
+  commentId: F:Core.Systems.BurstPathfindingJob.neighborBuffer
+  id: neighborBuffer
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: neighborBuffer
+  nameWithType: BurstPathfindingJob.neighborBuffer
+  fullName: Core.Systems.BurstPathfindingJob.neighborBuffer
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: neighborBuffer
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 501
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeList<ushort> neighborBuffer
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public neighborBuffer As NativeList(Of UShort)
+- uid: Core.Systems.BurstPathfindingJob.Execute
+  commentId: M:Core.Systems.BurstPathfindingJob.Execute
+  id: Execute
+  parent: Core.Systems.BurstPathfindingJob
+  langs:
+  - csharp
+  - vb
+  name: Execute()
+  nameWithType: BurstPathfindingJob.Execute()
+  fullName: Core.Systems.BurstPathfindingJob.Execute()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 503
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: <p>Implement this method to perform work on a worker thread.</p>
+  example: []
+  syntax:
+    content: public void Execute()
+    content.vb: Public Sub Execute()
+  overload: Core.Systems.BurstPathfindingJob.Execute*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.NativeAdjacencyData
+  commentId: T:Core.Systems.NativeAdjacencyData
+  parent: Core.Systems
+  href: Core.Systems.NativeAdjacencyData.html
+  name: NativeAdjacencyData
+  nameWithType: NativeAdjacencyData
+  fullName: Core.Systems.NativeAdjacencyData
+- uid: Core.Collections.NativeMinHeap{Core.Collections.PathfindingNode}
+  commentId: T:Core.Collections.NativeMinHeap{Core.Collections.PathfindingNode}
+  parent: Core.Collections
+  definition: Core.Collections.NativeMinHeap`1
+  href: Core.Collections.NativeMinHeap-1.html
+  name: NativeMinHeap<PathfindingNode>
+  nameWithType: NativeMinHeap<PathfindingNode>
+  fullName: Core.Collections.NativeMinHeap<Core.Collections.PathfindingNode>
+  nameWithType.vb: NativeMinHeap(Of PathfindingNode)
+  fullName.vb: Core.Collections.NativeMinHeap(Of Core.Collections.PathfindingNode)
+  name.vb: NativeMinHeap(Of PathfindingNode)
+  spec.csharp:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: <
+  - uid: Core.Collections.PathfindingNode
+    name: PathfindingNode
+    href: Core.Collections.PathfindingNode.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Collections.PathfindingNode
+    name: PathfindingNode
+    href: Core.Collections.PathfindingNode.html
+  - name: )
+- uid: Core.Collections.NativeMinHeap`1
+  commentId: T:Core.Collections.NativeMinHeap`1
+  href: Core.Collections.NativeMinHeap-1.html
+  name: NativeMinHeap<T>
+  nameWithType: NativeMinHeap<T>
+  fullName: Core.Collections.NativeMinHeap<T>
+  nameWithType.vb: NativeMinHeap(Of T)
+  fullName.vb: Core.Collections.NativeMinHeap(Of T)
+  name.vb: NativeMinHeap(Of T)
+  spec.csharp:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Collections
+  commentId: N:Core.Collections
+  href: Core.html
+  name: Core.Collections
+  nameWithType: Core.Collections
+  fullName: Core.Collections
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html
+- uid: Unity.Collections.NativeHashSet{System.UInt16}
+  commentId: T:Unity.Collections.NativeHashSet{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashSet`1
+  name: NativeHashSet<ushort>
+  nameWithType: NativeHashSet<ushort>
+  fullName: Unity.Collections.NativeHashSet<ushort>
+  nameWithType.vb: NativeHashSet(Of UShort)
+  fullName.vb: Unity.Collections.NativeHashSet(Of UShort)
+  name.vb: NativeHashSet(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashSet`1
+  commentId: T:Unity.Collections.NativeHashSet`1
+  isExternal: true
+  name: NativeHashSet<T>
+  nameWithType: NativeHashSet<T>
+  fullName: Unity.Collections.NativeHashSet<T>
+  nameWithType.vb: NativeHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeHashSet(Of T)
+  name.vb: NativeHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeHashMap{System.UInt16,System.UInt16}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<ushort, ushort>
+  nameWithType: NativeHashMap<ushort, ushort>
+  fullName: Unity.Collections.NativeHashMap<ushort, ushort>
+  nameWithType.vb: NativeHashMap(Of UShort, UShort)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, UShort)
+  name.vb: NativeHashMap(Of UShort, UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections.NativeHashMap{System.UInt16,Core.Data.FixedPoint64}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,Core.Data.FixedPoint64}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  href: Core.Data.FixedPoint64.html
+  name: NativeHashMap<ushort, FixedPoint64>
+  nameWithType: NativeHashMap<ushort, FixedPoint64>
+  fullName: Unity.Collections.NativeHashMap<ushort, Core.Data.FixedPoint64>
+  nameWithType.vb: NativeHashMap(Of UShort, FixedPoint64)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, Core.Data.FixedPoint64)
+  name.vb: NativeHashMap(Of UShort, FixedPoint64)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: )
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.BurstPathfindingJob.Execute*
+  commentId: Overload:Core.Systems.BurstPathfindingJob.Execute
+  href: Core.Systems.BurstPathfindingJob.html#Core_Systems_BurstPathfindingJob_Execute
+  name: Execute
+  nameWithType: BurstPathfindingJob.Execute
+  fullName: Core.Systems.BurstPathfindingJob.Execute

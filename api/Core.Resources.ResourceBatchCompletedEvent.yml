@@ -1,0 +1,174 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceBatchCompletedEvent
+  commentId: T:Core.Resources.ResourceBatchCompletedEvent
+  id: ResourceBatchCompletedEvent
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceBatchCompletedEvent.ChangeCount
+  - Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: ResourceBatchCompletedEvent
+  nameWithType: ResourceBatchCompletedEvent
+  fullName: Core.Resources.ResourceBatchCompletedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceBatchCompletedEvent
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    ENGINE: Event fired when batch mode ends (single event instead of many individual changes).
+
+    Contains summary information about what changed during the batch.
+  example: []
+  syntax:
+    content: 'public struct ResourceBatchCompletedEvent : IGameEvent'
+    content.vb: Public Structure ResourceBatchCompletedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Resources.ResourceBatchCompletedEvent.ChangeCount
+  commentId: F:Core.Resources.ResourceBatchCompletedEvent.ChangeCount
+  id: ChangeCount
+  parent: Core.Resources.ResourceBatchCompletedEvent
+  langs:
+  - csharp
+  - vb
+  name: ChangeCount
+  nameWithType: ResourceBatchCompletedEvent.ChangeCount
+  fullName: Core.Resources.ResourceBatchCompletedEvent.ChangeCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeCount
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Number of individual changes that occurred during the batch
+  example: []
+  syntax:
+    content: public int ChangeCount
+    return:
+      type: System.Int32
+    content.vb: Public ChangeCount As Integer
+- uid: Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+  commentId: P:Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Resources.ResourceBatchCompletedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ResourceBatchCompletedEvent.TimeStamp
+  fullName: Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Event timestamp (auto-set by EventBus)
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Resources.ResourceBatchCompletedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Resources.ResourceBatchCompletedEvent.TimeStamp*
+  commentId: Overload:Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+  href: Core.Resources.ResourceBatchCompletedEvent.html#Core_Resources_ResourceBatchCompletedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ResourceBatchCompletedEvent.TimeStamp
+  fullName: Core.Resources.ResourceBatchCompletedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

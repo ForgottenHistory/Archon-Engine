@@ -1,0 +1,290 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandBufferStatistics
+  commentId: T:Core.Commands.CommandBufferStatistics
+  id: CommandBufferStatistics
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandBufferStatistics.ConfirmedTick
+  - Core.Commands.CommandBufferStatistics.PendingTicksCount
+  - Core.Commands.CommandBufferStatistics.PredictedTick
+  - Core.Commands.CommandBufferStatistics.StateSnapshotsStored
+  - Core.Commands.CommandBufferStatistics.ToString
+  - Core.Commands.CommandBufferStatistics.UnconfirmedCommands
+  langs:
+  - csharp
+  - vb
+  name: CommandBufferStatistics
+  nameWithType: CommandBufferStatistics
+  fullName: Core.Commands.CommandBufferStatistics
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandBufferStatistics
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 475
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public struct CommandBufferStatistics
+    content.vb: Public Structure CommandBufferStatistics
+- uid: Core.Commands.CommandBufferStatistics.ConfirmedTick
+  commentId: F:Core.Commands.CommandBufferStatistics.ConfirmedTick
+  id: ConfirmedTick
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: ConfirmedTick
+  nameWithType: CommandBufferStatistics.ConfirmedTick
+  fullName: Core.Commands.CommandBufferStatistics.ConfirmedTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConfirmedTick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 477
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint ConfirmedTick
+    return:
+      type: System.UInt32
+    content.vb: Public ConfirmedTick As UInteger
+- uid: Core.Commands.CommandBufferStatistics.PredictedTick
+  commentId: F:Core.Commands.CommandBufferStatistics.PredictedTick
+  id: PredictedTick
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: PredictedTick
+  nameWithType: CommandBufferStatistics.PredictedTick
+  fullName: Core.Commands.CommandBufferStatistics.PredictedTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PredictedTick
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 478
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint PredictedTick
+    return:
+      type: System.UInt32
+    content.vb: Public PredictedTick As UInteger
+- uid: Core.Commands.CommandBufferStatistics.UnconfirmedCommands
+  commentId: F:Core.Commands.CommandBufferStatistics.UnconfirmedCommands
+  id: UnconfirmedCommands
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: UnconfirmedCommands
+  nameWithType: CommandBufferStatistics.UnconfirmedCommands
+  fullName: Core.Commands.CommandBufferStatistics.UnconfirmedCommands
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnconfirmedCommands
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 479
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int UnconfirmedCommands
+    return:
+      type: System.Int32
+    content.vb: Public UnconfirmedCommands As Integer
+- uid: Core.Commands.CommandBufferStatistics.StateSnapshotsStored
+  commentId: F:Core.Commands.CommandBufferStatistics.StateSnapshotsStored
+  id: StateSnapshotsStored
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: StateSnapshotsStored
+  nameWithType: CommandBufferStatistics.StateSnapshotsStored
+  fullName: Core.Commands.CommandBufferStatistics.StateSnapshotsStored
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateSnapshotsStored
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 480
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int StateSnapshotsStored
+    return:
+      type: System.Int32
+    content.vb: Public StateSnapshotsStored As Integer
+- uid: Core.Commands.CommandBufferStatistics.PendingTicksCount
+  commentId: F:Core.Commands.CommandBufferStatistics.PendingTicksCount
+  id: PendingTicksCount
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: PendingTicksCount
+  nameWithType: CommandBufferStatistics.PendingTicksCount
+  fullName: Core.Commands.CommandBufferStatistics.PendingTicksCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PendingTicksCount
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 481
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int PendingTicksCount
+    return:
+      type: System.Int32
+    content.vb: Public PendingTicksCount As Integer
+- uid: Core.Commands.CommandBufferStatistics.ToString
+  commentId: M:Core.Commands.CommandBufferStatistics.ToString
+  id: ToString
+  parent: Core.Commands.CommandBufferStatistics
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: CommandBufferStatistics.ToString()
+  fullName: Core.Commands.CommandBufferStatistics.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 483
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Commands.CommandBufferStatistics.ToString*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.CommandBufferStatistics.ToString*
+  commentId: Overload:Core.Commands.CommandBufferStatistics.ToString
+  href: Core.Commands.CommandBufferStatistics.html#Core_Commands_CommandBufferStatistics_ToString
+  name: ToString
+  nameWithType: CommandBufferStatistics.ToString
+  fullName: Core.Commands.CommandBufferStatistics.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

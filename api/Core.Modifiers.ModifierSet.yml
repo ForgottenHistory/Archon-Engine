@@ -1,0 +1,430 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierSet
+  commentId: T:Core.Modifiers.ModifierSet
+  id: ModifierSet
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierSet.Add(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  - Core.Modifiers.ModifierSet.ApplyModifier(System.UInt16,Core.Data.FixedPoint64)
+  - Core.Modifiers.ModifierSet.Clear
+  - Core.Modifiers.ModifierSet.Get(System.UInt16)
+  - Core.Modifiers.ModifierSet.MAX_MODIFIER_TYPES
+  - Core.Modifiers.ModifierSet.Remove(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  - Core.Modifiers.ModifierSet.Set(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: ModifierSet
+  nameWithType: ModifierSet
+  fullName: Core.Modifiers.ModifierSet
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierSet
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Fixed-size modifier storage (cache-friendly, deterministic)
+
+    Uses fixed arrays for zero allocations and cache locality
+
+
+    Performance: O(1) lookup, 8KB per instance (512 types × 2 longs × 8 bytes)
+
+    Memory layout: Contiguous arrays for additive and multiplicative values
+
+
+    DETERMINISM: Stores FixedPoint64.RawValue (long) for cross-platform compatibility
+
+    Pattern used by: EU4 (modifier system), CK3 (character modifiers), Stellaris (empire modifiers)
+  example: []
+  syntax:
+    content: public struct ModifierSet
+    content.vb: Public Structure ModifierSet
+- uid: Core.Modifiers.ModifierSet.MAX_MODIFIER_TYPES
+  commentId: F:Core.Modifiers.ModifierSet.MAX_MODIFIER_TYPES
+  id: MAX_MODIFIER_TYPES
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: MAX_MODIFIER_TYPES
+  nameWithType: ModifierSet.MAX_MODIFIER_TYPES
+  fullName: Core.Modifiers.ModifierSet.MAX_MODIFIER_TYPES
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MAX_MODIFIER_TYPES
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public const int MAX_MODIFIER_TYPES = 512
+    return:
+      type: System.Int32
+    content.vb: Public Const MAX_MODIFIER_TYPES As Integer = 512
+- uid: Core.Modifiers.ModifierSet.Get(System.UInt16)
+  commentId: M:Core.Modifiers.ModifierSet.Get(System.UInt16)
+  id: Get(System.UInt16)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: Get(ushort)
+  nameWithType: ModifierSet.Get(ushort)
+  fullName: Core.Modifiers.ModifierSet.Get(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Get accumulated modifier value
+  example: []
+  syntax:
+    content: public ModifierValue Get(ushort modifierTypeId)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    return:
+      type: Core.Modifiers.ModifierValue
+    content.vb: Public Function [Get](modifierTypeId As UShort) As ModifierValue
+  overload: Core.Modifiers.ModifierSet.Get*
+  nameWithType.vb: ModifierSet.Get(UShort)
+  fullName.vb: Core.Modifiers.ModifierSet.Get(UShort)
+  name.vb: Get(UShort)
+- uid: Core.Modifiers.ModifierSet.Add(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  commentId: M:Core.Modifiers.ModifierSet.Add(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  id: Add(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: Add(ushort, FixedPoint64, bool)
+  nameWithType: ModifierSet.Add(ushort, FixedPoint64, bool)
+  fullName: Core.Modifiers.ModifierSet.Add(ushort, Core.Data.FixedPoint64, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Add a modifier (stacks with existing)
+  example: []
+  syntax:
+    content: public void Add(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: isMultiplicative
+      type: System.Boolean
+    content.vb: Public Sub Add(modifierTypeId As UShort, value As FixedPoint64, isMultiplicative As Boolean)
+  overload: Core.Modifiers.ModifierSet.Add*
+  nameWithType.vb: ModifierSet.Add(UShort, FixedPoint64, Boolean)
+  fullName.vb: Core.Modifiers.ModifierSet.Add(UShort, Core.Data.FixedPoint64, Boolean)
+  name.vb: Add(UShort, FixedPoint64, Boolean)
+- uid: Core.Modifiers.ModifierSet.Remove(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  commentId: M:Core.Modifiers.ModifierSet.Remove(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  id: Remove(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: Remove(ushort, FixedPoint64, bool)
+  nameWithType: ModifierSet.Remove(ushort, FixedPoint64, bool)
+  fullName: Core.Modifiers.ModifierSet.Remove(ushort, Core.Data.FixedPoint64, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Remove
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Remove a modifier (for temporary effects)
+  example: []
+  syntax:
+    content: public void Remove(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: isMultiplicative
+      type: System.Boolean
+    content.vb: Public Sub Remove(modifierTypeId As UShort, value As FixedPoint64, isMultiplicative As Boolean)
+  overload: Core.Modifiers.ModifierSet.Remove*
+  nameWithType.vb: ModifierSet.Remove(UShort, FixedPoint64, Boolean)
+  fullName.vb: Core.Modifiers.ModifierSet.Remove(UShort, Core.Data.FixedPoint64, Boolean)
+  name.vb: Remove(UShort, FixedPoint64, Boolean)
+- uid: Core.Modifiers.ModifierSet.Set(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  commentId: M:Core.Modifiers.ModifierSet.Set(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  id: Set(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: Set(ushort, FixedPoint64, bool)
+  nameWithType: ModifierSet.Set(ushort, FixedPoint64, bool)
+  fullName: Core.Modifiers.ModifierSet.Set(ushort, Core.Data.FixedPoint64, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Set
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Set modifier to exact value (replaces existing)
+  example: []
+  syntax:
+    content: public void Set(ushort modifierTypeId, FixedPoint64 value, bool isMultiplicative)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: isMultiplicative
+      type: System.Boolean
+    content.vb: Public Sub [Set](modifierTypeId As UShort, value As FixedPoint64, isMultiplicative As Boolean)
+  overload: Core.Modifiers.ModifierSet.Set*
+  nameWithType.vb: ModifierSet.Set(UShort, FixedPoint64, Boolean)
+  fullName.vb: Core.Modifiers.ModifierSet.Set(UShort, Core.Data.FixedPoint64, Boolean)
+  name.vb: Set(UShort, FixedPoint64, Boolean)
+- uid: Core.Modifiers.ModifierSet.Clear
+  commentId: M:Core.Modifiers.ModifierSet.Clear
+  id: Clear
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ModifierSet.Clear()
+  fullName: Core.Modifiers.ModifierSet.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Clear all modifiers (reset to zero)
+
+    Vectorized for performance
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Modifiers.ModifierSet.Clear*
+- uid: Core.Modifiers.ModifierSet.ApplyModifier(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ModifierSet.ApplyModifier(System.UInt16,Core.Data.FixedPoint64)
+  id: ApplyModifier(System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: ApplyModifier(ushort, FixedPoint64)
+  nameWithType: ModifierSet.ApplyModifier(ushort, FixedPoint64)
+  fullName: Core.Modifiers.ModifierSet.ApplyModifier(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyModifier
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Apply modifier to base value
+
+    Formula: (base + additive) * (1 + multiplicative)
+  example: []
+  syntax:
+    content: public FixedPoint64 ApplyModifier(ushort modifierTypeId, FixedPoint64 baseValue)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function ApplyModifier(modifierTypeId As UShort, baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ModifierSet.ApplyModifier*
+  nameWithType.vb: ModifierSet.ApplyModifier(UShort, FixedPoint64)
+  fullName.vb: Core.Modifiers.ModifierSet.ApplyModifier(UShort, Core.Data.FixedPoint64)
+  name.vb: ApplyModifier(UShort, FixedPoint64)
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Modifiers.ModifierSet.Get*
+  commentId: Overload:Core.Modifiers.ModifierSet.Get
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_Get_System_UInt16_
+  name: Get
+  nameWithType: ModifierSet.Get
+  fullName: Core.Modifiers.ModifierSet.Get
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Modifiers.ModifierValue
+  commentId: T:Core.Modifiers.ModifierValue
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierValue.html
+  name: ModifierValue
+  nameWithType: ModifierValue
+  fullName: Core.Modifiers.ModifierValue
+- uid: Core.Modifiers.ModifierSet.Add*
+  commentId: Overload:Core.Modifiers.ModifierSet.Add
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_Add_System_UInt16_Core_Data_FixedPoint64_System_Boolean_
+  name: Add
+  nameWithType: ModifierSet.Add
+  fullName: Core.Modifiers.ModifierSet.Add
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Modifiers.ModifierSet.Remove*
+  commentId: Overload:Core.Modifiers.ModifierSet.Remove
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_Remove_System_UInt16_Core_Data_FixedPoint64_System_Boolean_
+  name: Remove
+  nameWithType: ModifierSet.Remove
+  fullName: Core.Modifiers.ModifierSet.Remove
+- uid: Core.Modifiers.ModifierSet.Set*
+  commentId: Overload:Core.Modifiers.ModifierSet.Set
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_Set_System_UInt16_Core_Data_FixedPoint64_System_Boolean_
+  name: Set
+  nameWithType: ModifierSet.Set
+  fullName: Core.Modifiers.ModifierSet.Set
+- uid: Core.Modifiers.ModifierSet.Clear*
+  commentId: Overload:Core.Modifiers.ModifierSet.Clear
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_Clear
+  name: Clear
+  nameWithType: ModifierSet.Clear
+  fullName: Core.Modifiers.ModifierSet.Clear
+- uid: Core.Modifiers.ModifierSet.ApplyModifier*
+  commentId: Overload:Core.Modifiers.ModifierSet.ApplyModifier
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_ApplyModifier_System_UInt16_Core_Data_FixedPoint64_
+  name: ApplyModifier
+  nameWithType: ModifierSet.ApplyModifier
+  fullName: Core.Modifiers.ModifierSet.ApplyModifier

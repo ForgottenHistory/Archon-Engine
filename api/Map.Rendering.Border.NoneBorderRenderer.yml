@@ -1,0 +1,737 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.NoneBorderRenderer
+  commentId: T:Map.Rendering.Border.NoneBorderRenderer
+  id: NoneBorderRenderer
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  - Map.Rendering.Border.NoneBorderRenderer.DisplayName
+  - Map.Rendering.Border.NoneBorderRenderer.Dispose
+  - Map.Rendering.Border.NoneBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  - Map.Rendering.Border.NoneBorderRenderer.OnInitialize
+  - Map.Rendering.Border.NoneBorderRenderer.RendererId
+  - Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+  langs:
+  - csharp
+  - vb
+  name: NoneBorderRenderer
+  nameWithType: NoneBorderRenderer
+  fullName: Map.Rendering.Border.NoneBorderRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoneBorderRenderer
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    ENGINE: No-op border renderer for when borders are disabled.
+
+    Provides clean shutdown of border rendering.
+  example: []
+  syntax:
+    content: 'public class NoneBorderRenderer : BorderRendererBase, IBorderRenderer'
+    content.vb: Public Class NoneBorderRenderer Inherits BorderRendererBase Implements IBorderRenderer
+  inheritance:
+  - System.Object
+  - Map.Rendering.Border.BorderRendererBase
+  implements:
+  - Map.Rendering.Border.IBorderRenderer
+  inheritedMembers:
+  - Map.Rendering.Border.BorderRendererBase.textureManager
+  - Map.Rendering.Border.BorderRendererBase.context
+  - Map.Rendering.Border.BorderRendererBase.isInitialized
+  - Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  - Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  - Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  - Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  - Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  - Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+- uid: Map.Rendering.Border.NoneBorderRenderer.RendererId
+  commentId: P:Map.Rendering.Border.NoneBorderRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: NoneBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.NoneBorderRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Unique identifier for this renderer (e.g., "DistanceField", "PixelPerfect", "MyCustom")
+  example: []
+  syntax:
+    content: public override string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property RendererId As String
+  overridden: Map.Rendering.Border.BorderRendererBase.RendererId
+  overload: Map.Rendering.Border.NoneBorderRenderer.RendererId*
+- uid: Map.Rendering.Border.NoneBorderRenderer.DisplayName
+  commentId: P:Map.Rendering.Border.NoneBorderRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: NoneBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.NoneBorderRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Display name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.Border.BorderRendererBase.DisplayName
+  overload: Map.Rendering.Border.NoneBorderRenderer.DisplayName*
+- uid: Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+  id: RequiresPerFrameUpdate
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RequiresPerFrameUpdate
+  nameWithType: NoneBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresPerFrameUpdate
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Whether this renderer requires per-frame updates (e.g., MeshGeometry needs OnRenderFrame)
+  example: []
+  syntax:
+    content: public override bool RequiresPerFrameUpdate { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides ReadOnly Property RequiresPerFrameUpdate As Boolean
+  overridden: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  overload: Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate*
+- uid: Map.Rendering.Border.NoneBorderRenderer.OnInitialize
+  commentId: M:Map.Rendering.Border.NoneBorderRenderer.OnInitialize
+  id: OnInitialize
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: NoneBorderRenderer.OnInitialize()
+  fullName: Map.Rendering.Border.NoneBorderRenderer.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Override for custom initialization logic.
+
+    Called after textureManager and context are set.
+  example: []
+  syntax:
+    content: protected override void OnInitialize()
+    content.vb: Protected Overrides Sub OnInitialize()
+  overridden: Map.Rendering.Border.BorderRendererBase.OnInitialize
+  overload: Map.Rendering.Border.NoneBorderRenderer.OnInitialize*
+- uid: Map.Rendering.Border.NoneBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  commentId: M:Map.Rendering.Border.NoneBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  id: GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: GenerateBorders(BorderGenerationParams)
+  nameWithType: NoneBorderRenderer.GenerateBorders(BorderGenerationParams)
+  fullName: Map.Rendering.Border.NoneBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateBorders
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Generate/update borders. Called when borders are dirty or ownership changes.
+  example: []
+  syntax:
+    content: public override void GenerateBorders(BorderGenerationParams parameters)
+    parameters:
+    - id: parameters
+      type: Map.Rendering.Border.BorderGenerationParams
+    content.vb: Public Overrides Sub GenerateBorders(parameters As BorderGenerationParams)
+  overridden: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  overload: Map.Rendering.Border.NoneBorderRenderer.GenerateBorders*
+- uid: Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  id: ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: ApplyToMaterial(Material, BorderStyleParams)
+  nameWithType: NoneBorderRenderer.ApplyToMaterial(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyToMaterial
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Apply visual parameters to the material (colors, widths, etc.)
+
+    Called when visual style parameters change.
+  example: []
+  syntax:
+    content: public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: styleParams
+      type: Map.Rendering.Border.BorderStyleParams
+    content.vb: Public Overrides Sub ApplyToMaterial(material As Material, styleParams As BorderStyleParams)
+  overridden: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  overload: Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial*
+- uid: Map.Rendering.Border.NoneBorderRenderer.Dispose
+  commentId: M:Map.Rendering.Border.NoneBorderRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.Border.NoneBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: NoneBorderRenderer.Dispose()
+  fullName: Map.Rendering.Border.NoneBorderRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Border/Implementations/NoneBorderRenderer.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Cleanup resources when renderer is deactivated or destroyed.
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: Map.Rendering.Border.BorderRendererBase.Dispose
+  overload: Map.Rendering.Border.NoneBorderRenderer.Dispose*
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.Border.BorderRendererBase
+  commentId: T:Map.Rendering.Border.BorderRendererBase
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderRendererBase.html
+  name: BorderRendererBase
+  nameWithType: BorderRendererBase
+  fullName: Map.Rendering.Border.BorderRendererBase
+- uid: Map.Rendering.Border.IBorderRenderer
+  commentId: T:Map.Rendering.Border.IBorderRenderer
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.IBorderRenderer.html
+  name: IBorderRenderer
+  nameWithType: IBorderRenderer
+  fullName: Map.Rendering.Border.IBorderRenderer
+- uid: Map.Rendering.Border.BorderRendererBase.textureManager
+  commentId: F:Map.Rendering.Border.BorderRendererBase.textureManager
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_textureManager
+  name: textureManager
+  nameWithType: BorderRendererBase.textureManager
+  fullName: Map.Rendering.Border.BorderRendererBase.textureManager
+- uid: Map.Rendering.Border.BorderRendererBase.context
+  commentId: F:Map.Rendering.Border.BorderRendererBase.context
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_context
+  name: context
+  nameWithType: BorderRendererBase.context
+  fullName: Map.Rendering.Border.BorderRendererBase.context
+- uid: Map.Rendering.Border.BorderRendererBase.isInitialized
+  commentId: F:Map.Rendering.Border.BorderRendererBase.isInitialized
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_isInitialized
+  name: isInitialized
+  nameWithType: BorderRendererBase.isInitialized
+  fullName: Map.Rendering.Border.BorderRendererBase.isInitialized
+- uid: Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  commentId: F:Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: BorderRendererBase.THREAD_GROUP_SIZE
+  fullName: Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+- uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  name: Initialize(MapTextureManager, BorderRendererContext)
+  nameWithType: BorderRendererBase.Initialize(MapTextureManager, BorderRendererContext)
+  fullName: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.Border.BorderRendererContext)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+    name: Initialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderRendererContext
+    name: BorderRendererContext
+    href: Map.Rendering.Border.BorderRendererContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+    name: Initialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderRendererContext
+    name: BorderRendererContext
+    href: Map.Rendering.Border.BorderRendererContext.html
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  commentId: M:Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: BorderRendererBase.OnRenderFrame()
+  fullName: Map.Rendering.Border.BorderRendererBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: BorderRendererBase.CalculateThreadGroups(int, int)
+  fullName: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: BorderRendererBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  name: GetShaderModeValue(string)
+  nameWithType: BorderRendererBase.GetShaderModeValue(string)
+  fullName: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(string)
+  nameWithType.vb: BorderRendererBase.GetShaderModeValue(String)
+  fullName.vb: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(String)
+  name.vb: GetShaderModeValue(String)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+    name: GetShaderModeValue
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+    name: GetShaderModeValue
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyCommonStyleParams(Material, BorderStyleParams)
+  nameWithType: BorderRendererBase.ApplyCommonStyleParams(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderRendererBase.RendererId
+  commentId: P:Map.Rendering.Border.BorderRendererBase.RendererId
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_RendererId
+  name: RendererId
+  nameWithType: BorderRendererBase.RendererId
+  fullName: Map.Rendering.Border.BorderRendererBase.RendererId
+- uid: Map.Rendering.Border.NoneBorderRenderer.RendererId*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.RendererId
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_RendererId
+  name: RendererId
+  nameWithType: NoneBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.NoneBorderRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Border.BorderRendererBase.DisplayName
+  commentId: P:Map.Rendering.Border.BorderRendererBase.DisplayName
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_DisplayName
+  name: DisplayName
+  nameWithType: BorderRendererBase.DisplayName
+  fullName: Map.Rendering.Border.BorderRendererBase.DisplayName
+- uid: Map.Rendering.Border.NoneBorderRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.DisplayName
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_DisplayName
+  name: DisplayName
+  nameWithType: NoneBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.NoneBorderRenderer.DisplayName
+- uid: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: BorderRendererBase.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+- uid: Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: NoneBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.NoneBorderRenderer.RequiresPerFrameUpdate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+  commentId: M:Map.Rendering.Border.BorderRendererBase.OnInitialize
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  name: OnInitialize()
+  nameWithType: BorderRendererBase.OnInitialize()
+  fullName: Map.Rendering.Border.BorderRendererBase.OnInitialize()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.NoneBorderRenderer.OnInitialize*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.OnInitialize
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_OnInitialize
+  name: OnInitialize
+  nameWithType: NoneBorderRenderer.OnInitialize
+  fullName: Map.Rendering.Border.NoneBorderRenderer.OnInitialize
+- uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  name: GenerateBorders(BorderGenerationParams)
+  nameWithType: BorderRendererBase.GenerateBorders(BorderGenerationParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+    name: GenerateBorders
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  - name: (
+  - uid: Map.Rendering.Border.BorderGenerationParams
+    name: BorderGenerationParams
+    href: Map.Rendering.Border.BorderGenerationParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+    name: GenerateBorders
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  - name: (
+  - uid: Map.Rendering.Border.BorderGenerationParams
+    name: BorderGenerationParams
+    href: Map.Rendering.Border.BorderGenerationParams.html
+  - name: )
+- uid: Map.Rendering.Border.NoneBorderRenderer.GenerateBorders*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.GenerateBorders
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  name: GenerateBorders
+  nameWithType: NoneBorderRenderer.GenerateBorders
+  fullName: Map.Rendering.Border.NoneBorderRenderer.GenerateBorders
+- uid: Map.Rendering.Border.BorderGenerationParams
+  commentId: T:Map.Rendering.Border.BorderGenerationParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderGenerationParams.html
+  name: BorderGenerationParams
+  nameWithType: BorderGenerationParams
+  fullName: Map.Rendering.Border.BorderGenerationParams
+- uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyToMaterial(Material, BorderStyleParams)
+  nameWithType: BorderRendererBase.ApplyToMaterial(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+- uid: Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyToMaterial
+  nameWithType: NoneBorderRenderer.ApplyToMaterial
+  fullName: Map.Rendering.Border.NoneBorderRenderer.ApplyToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.Border.BorderStyleParams
+  commentId: T:Map.Rendering.Border.BorderStyleParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderStyleParams.html
+  name: BorderStyleParams
+  nameWithType: BorderStyleParams
+  fullName: Map.Rendering.Border.BorderStyleParams
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.BorderRendererBase.Dispose
+  commentId: M:Map.Rendering.Border.BorderRendererBase.Dispose
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  name: Dispose()
+  nameWithType: BorderRendererBase.Dispose()
+  fullName: Map.Rendering.Border.BorderRendererBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.NoneBorderRenderer.Dispose*
+  commentId: Overload:Map.Rendering.Border.NoneBorderRenderer.Dispose
+  href: Map.Rendering.Border.NoneBorderRenderer.html#Map_Rendering_Border_NoneBorderRenderer_Dispose
+  name: Dispose
+  nameWithType: NoneBorderRenderer.Dispose
+  fullName: Map.Rendering.Border.NoneBorderRenderer.Dispose

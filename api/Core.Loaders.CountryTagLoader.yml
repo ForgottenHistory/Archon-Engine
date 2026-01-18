@@ -1,0 +1,659 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CountryTagLoader
+  commentId: T:Core.Loaders.CountryTagLoader
+  id: CountryTagLoader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CountryTagLoader.IsComment(System.String)
+  - Core.Loaders.CountryTagLoader.LoadCountryTags(System.String)
+  langs:
+  - csharp
+  - vb
+  name: CountryTagLoader
+  nameWithType: CountryTagLoader
+  fullName: Core.Loaders.CountryTagLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CountryTagLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryTagLoader
+    path: Scripts/Core/Loaders/CountryTagLoader.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Loads country tags using ManifestLoader (Pattern 2)
+
+    Parses common/country_tags/00_countries.txt to get tag → file mapping
+
+    Example: SWE = "countries/Sweden.txt"
+
+    Following paradox-data-patterns-guide.md specifications
+  example: []
+  syntax:
+    content: 'public class CountryTagLoader : ManifestLoader<object>'
+    content.vb: Public Class CountryTagLoader Inherits ManifestLoader(Of Object)
+  inheritance:
+  - System.Object
+  - Core.Loaders.ManifestLoader{System.Object}
+  inheritedMembers:
+  - Core.Loaders.ManifestLoader{System.Object}.manifest
+  - Core.Loaders.ManifestLoader{System.Object}.errors
+  - Core.Loaders.ManifestLoader{System.Object}.LoadManifest(System.String)
+  - Core.Loaders.ManifestLoader{System.Object}.ParseManifestLines(System.String[])
+  - Core.Loaders.ManifestLoader{System.Object}.IsDirective(System.String)
+  - Core.Loaders.ManifestLoader{System.Object}.GetManifest
+  - Core.Loaders.ManifestLoader{System.Object}.GetErrors
+  - Core.Loaders.ManifestLoader{System.Object}.HasErrors
+- uid: Core.Loaders.CountryTagLoader.LoadCountryTags(System.String)
+  commentId: M:Core.Loaders.CountryTagLoader.LoadCountryTags(System.String)
+  id: LoadCountryTags(System.String)
+  parent: Core.Loaders.CountryTagLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadCountryTags(string)
+  nameWithType: CountryTagLoader.LoadCountryTags(string)
+  fullName: Core.Loaders.CountryTagLoader.LoadCountryTags(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CountryTagLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadCountryTags
+    path: Scripts/Core/Loaders/CountryTagLoader.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Load country tags from 00_countries.txt
+
+    Returns mapping of country tags to their definition file paths
+  example: []
+  syntax:
+    content: public static CountryTagLoadResult LoadCountryTags(string dataPath)
+    parameters:
+    - id: dataPath
+      type: System.String
+    return:
+      type: Core.Loaders.CountryTagLoadResult
+    content.vb: Public Shared Function LoadCountryTags(dataPath As String) As CountryTagLoadResult
+  overload: Core.Loaders.CountryTagLoader.LoadCountryTags*
+  nameWithType.vb: CountryTagLoader.LoadCountryTags(String)
+  fullName.vb: Core.Loaders.CountryTagLoader.LoadCountryTags(String)
+  name.vb: LoadCountryTags(String)
+- uid: Core.Loaders.CountryTagLoader.IsComment(System.String)
+  commentId: M:Core.Loaders.CountryTagLoader.IsComment(System.String)
+  id: IsComment(System.String)
+  parent: Core.Loaders.CountryTagLoader
+  langs:
+  - csharp
+  - vb
+  name: IsComment(string)
+  nameWithType: CountryTagLoader.IsComment(string)
+  fullName: Core.Loaders.CountryTagLoader.IsComment(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CountryTagLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsComment
+    path: Scripts/Core/Loaders/CountryTagLoader.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Override to add country-specific validation
+  example: []
+  syntax:
+    content: protected override bool IsComment(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Protected Overrides Function IsComment(key As String) As Boolean
+  overridden: Core.Loaders.ManifestLoader{System.Object}.IsComment(System.String)
+  overload: Core.Loaders.CountryTagLoader.IsComment*
+  nameWithType.vb: CountryTagLoader.IsComment(String)
+  fullName.vb: Core.Loaders.CountryTagLoader.IsComment(String)
+  name.vb: IsComment(String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Loaders.ManifestLoader{System.Object}
+  commentId: T:Core.Loaders.ManifestLoader{System.Object}
+  parent: Core.Loaders
+  definition: Core.Loaders.ManifestLoader`1
+  href: Core.Loaders.ManifestLoader-1.html
+  name: ManifestLoader<object>
+  nameWithType: ManifestLoader<object>
+  fullName: Core.Loaders.ManifestLoader<object>
+  nameWithType.vb: ManifestLoader(Of Object)
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object)
+  name.vb: ManifestLoader(Of Object)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: <
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.manifest
+  commentId: F:Core.Loaders.ManifestLoader{System.Object}.manifest
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.manifest
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_manifest
+  name: manifest
+  nameWithType: ManifestLoader<object>.manifest
+  fullName: Core.Loaders.ManifestLoader<object>.manifest
+  nameWithType.vb: ManifestLoader(Of Object).manifest
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).manifest
+- uid: Core.Loaders.ManifestLoader{System.Object}.errors
+  commentId: F:Core.Loaders.ManifestLoader{System.Object}.errors
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.errors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_errors
+  name: errors
+  nameWithType: ManifestLoader<object>.errors
+  fullName: Core.Loaders.ManifestLoader<object>.errors
+  nameWithType.vb: ManifestLoader(Of Object).errors
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).errors
+- uid: Core.Loaders.ManifestLoader{System.Object}.LoadManifest(System.String)
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.LoadManifest(System.String)
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.LoadManifest(System.String)
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  name: LoadManifest(string)
+  nameWithType: ManifestLoader<object>.LoadManifest(string)
+  fullName: Core.Loaders.ManifestLoader<object>.LoadManifest(string)
+  nameWithType.vb: ManifestLoader(Of Object).LoadManifest(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).LoadManifest(String)
+  name.vb: LoadManifest(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.LoadManifest(System.String)
+    name: LoadManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.LoadManifest(System.String)
+    name: LoadManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.ParseManifestLines(System.String[])
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.ParseManifestLines(System.String[])
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.ParseManifestLines(System.String[])
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  name: ParseManifestLines(string[])
+  nameWithType: ManifestLoader<object>.ParseManifestLines(string[])
+  fullName: Core.Loaders.ManifestLoader<object>.ParseManifestLines(string[])
+  nameWithType.vb: ManifestLoader(Of Object).ParseManifestLines(String())
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).ParseManifestLines(String())
+  name.vb: ParseManifestLines(String())
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.ParseManifestLines(System.String[])
+    name: ParseManifestLines
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.ParseManifestLines(System.String[])
+    name: ParseManifestLines
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.IsDirective(System.String)
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.IsDirective(System.String)
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.IsDirective(System.String)
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  name: IsDirective(string)
+  nameWithType: ManifestLoader<object>.IsDirective(string)
+  fullName: Core.Loaders.ManifestLoader<object>.IsDirective(string)
+  nameWithType.vb: ManifestLoader(Of Object).IsDirective(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).IsDirective(String)
+  name.vb: IsDirective(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.IsDirective(System.String)
+    name: IsDirective
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.IsDirective(System.String)
+    name: IsDirective
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.GetManifest
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.GetManifest
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.GetManifest
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  name: GetManifest()
+  nameWithType: ManifestLoader<object>.GetManifest()
+  fullName: Core.Loaders.ManifestLoader<object>.GetManifest()
+  nameWithType.vb: ManifestLoader(Of Object).GetManifest()
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).GetManifest()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.GetManifest
+    name: GetManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.GetManifest
+    name: GetManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  - name: (
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.GetErrors
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.GetErrors
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.GetErrors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  name: GetErrors()
+  nameWithType: ManifestLoader<object>.GetErrors()
+  fullName: Core.Loaders.ManifestLoader<object>.GetErrors()
+  nameWithType.vb: ManifestLoader(Of Object).GetErrors()
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).GetErrors()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.GetErrors
+    name: GetErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.GetErrors
+    name: GetErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  - name: (
+  - name: )
+- uid: Core.Loaders.ManifestLoader{System.Object}.HasErrors
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.HasErrors
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.HasErrors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  name: HasErrors()
+  nameWithType: ManifestLoader<object>.HasErrors()
+  fullName: Core.Loaders.ManifestLoader<object>.HasErrors()
+  nameWithType.vb: ManifestLoader(Of Object).HasErrors()
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).HasErrors()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.HasErrors
+    name: HasErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.HasErrors
+    name: HasErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.ManifestLoader`1
+  commentId: T:Core.Loaders.ManifestLoader`1
+  href: Core.Loaders.ManifestLoader-1.html
+  name: ManifestLoader<T>
+  nameWithType: ManifestLoader<T>
+  fullName: Core.Loaders.ManifestLoader<T>
+  nameWithType.vb: ManifestLoader(Of T)
+  fullName.vb: Core.Loaders.ManifestLoader(Of T)
+  name.vb: ManifestLoader(Of T)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.manifest
+  commentId: F:Core.Loaders.ManifestLoader`1.manifest
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_manifest
+  name: manifest
+  nameWithType: ManifestLoader<T>.manifest
+  fullName: Core.Loaders.ManifestLoader<T>.manifest
+  nameWithType.vb: ManifestLoader(Of T).manifest
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).manifest
+- uid: Core.Loaders.ManifestLoader`1.errors
+  commentId: F:Core.Loaders.ManifestLoader`1.errors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_errors
+  name: errors
+  nameWithType: ManifestLoader<T>.errors
+  fullName: Core.Loaders.ManifestLoader<T>.errors
+  nameWithType.vb: ManifestLoader(Of T).errors
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).errors
+- uid: Core.Loaders.ManifestLoader`1.LoadManifest(System.String)
+  commentId: M:Core.Loaders.ManifestLoader`1.LoadManifest(System.String)
+  isExternal: true
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  name: LoadManifest(string)
+  nameWithType: ManifestLoader<T>.LoadManifest(string)
+  fullName: Core.Loaders.ManifestLoader<T>.LoadManifest(string)
+  nameWithType.vb: ManifestLoader(Of T).LoadManifest(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).LoadManifest(String)
+  name.vb: LoadManifest(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.LoadManifest(System.String)
+    name: LoadManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.LoadManifest(System.String)
+    name: LoadManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_LoadManifest_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.ParseManifestLines(System.String[])
+  commentId: M:Core.Loaders.ManifestLoader`1.ParseManifestLines(System.String[])
+  isExternal: true
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  name: ParseManifestLines(string[])
+  nameWithType: ManifestLoader<T>.ParseManifestLines(string[])
+  fullName: Core.Loaders.ManifestLoader<T>.ParseManifestLines(string[])
+  nameWithType.vb: ManifestLoader(Of T).ParseManifestLines(String())
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).ParseManifestLines(String())
+  name.vb: ParseManifestLines(String())
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.ParseManifestLines(System.String[])
+    name: ParseManifestLines
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.ParseManifestLines(System.String[])
+    name: ParseManifestLines
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_ParseManifestLines_System_String___
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.IsDirective(System.String)
+  commentId: M:Core.Loaders.ManifestLoader`1.IsDirective(System.String)
+  isExternal: true
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  name: IsDirective(string)
+  nameWithType: ManifestLoader<T>.IsDirective(string)
+  fullName: Core.Loaders.ManifestLoader<T>.IsDirective(string)
+  nameWithType.vb: ManifestLoader(Of T).IsDirective(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).IsDirective(String)
+  name.vb: IsDirective(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.IsDirective(System.String)
+    name: IsDirective
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.IsDirective(System.String)
+    name: IsDirective
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsDirective_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.GetManifest
+  commentId: M:Core.Loaders.ManifestLoader`1.GetManifest
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  name: GetManifest()
+  nameWithType: ManifestLoader<T>.GetManifest()
+  fullName: Core.Loaders.ManifestLoader<T>.GetManifest()
+  nameWithType.vb: ManifestLoader(Of T).GetManifest()
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).GetManifest()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.GetManifest
+    name: GetManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.GetManifest
+    name: GetManifest
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetManifest
+  - name: (
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.GetErrors
+  commentId: M:Core.Loaders.ManifestLoader`1.GetErrors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  name: GetErrors()
+  nameWithType: ManifestLoader<T>.GetErrors()
+  fullName: Core.Loaders.ManifestLoader<T>.GetErrors()
+  nameWithType.vb: ManifestLoader(Of T).GetErrors()
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).GetErrors()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.GetErrors
+    name: GetErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.GetErrors
+    name: GetErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_GetErrors
+  - name: (
+  - name: )
+- uid: Core.Loaders.ManifestLoader`1.HasErrors
+  commentId: M:Core.Loaders.ManifestLoader`1.HasErrors
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  name: HasErrors()
+  nameWithType: ManifestLoader<T>.HasErrors()
+  fullName: Core.Loaders.ManifestLoader<T>.HasErrors()
+  nameWithType.vb: ManifestLoader(Of T).HasErrors()
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).HasErrors()
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.HasErrors
+    name: HasErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.HasErrors
+    name: HasErrors
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_HasErrors
+  - name: (
+  - name: )
+- uid: Core.Loaders.CountryTagLoader.LoadCountryTags*
+  commentId: Overload:Core.Loaders.CountryTagLoader.LoadCountryTags
+  href: Core.Loaders.CountryTagLoader.html#Core_Loaders_CountryTagLoader_LoadCountryTags_System_String_
+  name: LoadCountryTags
+  nameWithType: CountryTagLoader.LoadCountryTags
+  fullName: Core.Loaders.CountryTagLoader.LoadCountryTags
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Loaders.CountryTagLoadResult
+  commentId: T:Core.Loaders.CountryTagLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.CountryTagLoadResult.html
+  name: CountryTagLoadResult
+  nameWithType: CountryTagLoadResult
+  fullName: Core.Loaders.CountryTagLoadResult
+- uid: Core.Loaders.ManifestLoader{System.Object}.IsComment(System.String)
+  commentId: M:Core.Loaders.ManifestLoader{System.Object}.IsComment(System.String)
+  parent: Core.Loaders.ManifestLoader{System.Object}
+  definition: Core.Loaders.ManifestLoader`1.IsComment(System.String)
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  name: IsComment(string)
+  nameWithType: ManifestLoader<object>.IsComment(string)
+  fullName: Core.Loaders.ManifestLoader<object>.IsComment(string)
+  nameWithType.vb: ManifestLoader(Of Object).IsComment(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of Object).IsComment(String)
+  name.vb: IsComment(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.IsComment(System.String)
+    name: IsComment
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader{System.Object}.IsComment(System.String)
+    name: IsComment
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Loaders.CountryTagLoader.IsComment*
+  commentId: Overload:Core.Loaders.CountryTagLoader.IsComment
+  href: Core.Loaders.CountryTagLoader.html#Core_Loaders_CountryTagLoader_IsComment_System_String_
+  name: IsComment
+  nameWithType: CountryTagLoader.IsComment
+  fullName: Core.Loaders.CountryTagLoader.IsComment
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Loaders.ManifestLoader`1.IsComment(System.String)
+  commentId: M:Core.Loaders.ManifestLoader`1.IsComment(System.String)
+  isExternal: true
+  href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  name: IsComment(string)
+  nameWithType: ManifestLoader<T>.IsComment(string)
+  fullName: Core.Loaders.ManifestLoader<T>.IsComment(string)
+  nameWithType.vb: ManifestLoader(Of T).IsComment(String)
+  fullName.vb: Core.Loaders.ManifestLoader(Of T).IsComment(String)
+  name.vb: IsComment(String)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1.IsComment(System.String)
+    name: IsComment
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1.IsComment(System.String)
+    name: IsComment
+    href: Core.Loaders.ManifestLoader-1.html#Core_Loaders_ManifestLoader_1_IsComment_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )

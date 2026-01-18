@@ -1,0 +1,196 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Common
+  commentId: N:Core.Common
+  id: Core.Common
+  children:
+  - Core.Common.FrameCacheValue`1
+  - Core.Common.FrameCache`2
+  - Core.Common.Result
+  - Core.Common.ResultExtensions
+  - Core.Common.Result`1
+  - Core.Common.TimedCacheValue`1
+  - Core.Common.TimedCache`2
+  langs:
+  - csharp
+  - vb
+  name: Core.Common
+  nameWithType: Core.Common
+  fullName: Core.Common
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Common.Result
+  commentId: T:Core.Common.Result
+  parent: Core.Common
+  href: Core.Common.Result.html
+  name: Result
+  nameWithType: Result
+  fullName: Core.Common.Result
+- uid: Core.Common.Result`1
+  commentId: T:Core.Common.Result`1
+  parent: Core.Common
+  href: Core.Common.Result-1.html
+  name: Result<T>
+  nameWithType: Result<T>
+  fullName: Core.Common.Result<T>
+  nameWithType.vb: Result(Of T)
+  fullName.vb: Core.Common.Result(Of T)
+  name.vb: Result(Of T)
+  spec.csharp:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Common.ResultExtensions
+  commentId: T:Core.Common.ResultExtensions
+  href: Core.Common.ResultExtensions.html
+  name: ResultExtensions
+  nameWithType: ResultExtensions
+  fullName: Core.Common.ResultExtensions
+- uid: Core.Common.FrameCache`2
+  commentId: T:Core.Common.FrameCache`2
+  href: Core.Common.FrameCache-2.html
+  name: FrameCache<TKey, TValue>
+  nameWithType: FrameCache<TKey, TValue>
+  fullName: Core.Common.FrameCache<TKey, TValue>
+  nameWithType.vb: FrameCache(Of TKey, TValue)
+  fullName.vb: Core.Common.FrameCache(Of TKey, TValue)
+  name.vb: FrameCache(Of TKey, TValue)
+  spec.csharp:
+  - uid: Core.Common.FrameCache`2
+    name: FrameCache
+    href: Core.Common.FrameCache-2.html
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.FrameCache`2
+    name: FrameCache
+    href: Core.Common.FrameCache-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Common.FrameCacheValue`1
+  commentId: T:Core.Common.FrameCacheValue`1
+  href: Core.Common.FrameCacheValue-1.html
+  name: FrameCacheValue<TValue>
+  nameWithType: FrameCacheValue<TValue>
+  fullName: Core.Common.FrameCacheValue<TValue>
+  nameWithType.vb: FrameCacheValue(Of TValue)
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue)
+  name.vb: FrameCacheValue(Of TValue)
+  spec.csharp:
+  - uid: Core.Common.FrameCacheValue`1
+    name: FrameCacheValue
+    href: Core.Common.FrameCacheValue-1.html
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.FrameCacheValue`1
+    name: FrameCacheValue
+    href: Core.Common.FrameCacheValue-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Common.TimedCache`2
+  commentId: T:Core.Common.TimedCache`2
+  href: Core.Common.TimedCache-2.html
+  name: TimedCache<TKey, TValue>
+  nameWithType: TimedCache<TKey, TValue>
+  fullName: Core.Common.TimedCache<TKey, TValue>
+  nameWithType.vb: TimedCache(Of TKey, TValue)
+  fullName.vb: Core.Common.TimedCache(Of TKey, TValue)
+  name.vb: TimedCache(Of TKey, TValue)
+  spec.csharp:
+  - uid: Core.Common.TimedCache`2
+    name: TimedCache
+    href: Core.Common.TimedCache-2.html
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.TimedCache`2
+    name: TimedCache
+    href: Core.Common.TimedCache-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Common.TimedCacheValue`1
+  commentId: T:Core.Common.TimedCacheValue`1
+  href: Core.Common.TimedCacheValue-1.html
+  name: TimedCacheValue<TValue>
+  nameWithType: TimedCacheValue<TValue>
+  fullName: Core.Common.TimedCacheValue<TValue>
+  nameWithType.vb: TimedCacheValue(Of TValue)
+  fullName.vb: Core.Common.TimedCacheValue(Of TValue)
+  name.vb: TimedCacheValue(Of TValue)
+  spec.csharp:
+  - uid: Core.Common.TimedCacheValue`1
+    name: TimedCacheValue
+    href: Core.Common.TimedCacheValue-1.html
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.TimedCacheValue`1
+    name: TimedCacheValue
+    href: Core.Common.TimedCacheValue-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Common
+  commentId: N:Core.Common
+  href: Core.html
+  name: Core.Common
+  nameWithType: Core.Common
+  fullName: Core.Common
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html

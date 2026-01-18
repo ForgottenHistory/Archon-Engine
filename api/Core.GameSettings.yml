@@ -1,0 +1,875 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.GameSettings
+  commentId: T:Core.GameSettings
+  id: GameSettings
+  parent: Core
+  children:
+  - Core.GameSettings.CreateDefault
+  - Core.GameSettings.DataDirectory
+  - Core.GameSettings.DebugOutputDirectory
+  - Core.GameSettings.EnableDataValidation
+  - Core.GameSettings.EnableMemoryLeakDetection
+  - Core.GameSettings.EnableParallelLoading
+  - Core.GameSettings.EnableVerboseLogging
+  - Core.GameSettings.Instance
+  - Core.GameSettings.LogConfiguration
+  - Core.GameSettings.MapDirectory
+  - Core.GameSettings.RegisterAsActive
+  - Core.GameSettings.RetryAttempts
+  - Core.GameSettings.ShowDetailedErrors
+  - Core.GameSettings.SkipCacheWarming
+  - Core.GameSettings.TemplateDataDirectory
+  - Core.GameSettings.UseGracefulDegradation
+  - Core.GameSettings.ValidatePaths
+  langs:
+  - csharp
+  - vb
+  name: GameSettings
+  nameWithType: GameSettings
+  fullName: Core.GameSettings
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameSettings
+    path: Scripts/Core/GameSettings.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    ScriptableObject configuration for game initialization and data loading.
+
+    Access via GameSettings.Instance after initialization.
+  example: []
+  syntax:
+    content: >-
+      [CreateAssetMenu(fileName = "GameSettings", menuName = "Archon/Game Settings", order = 1)]
+
+      public class GameSettings : ScriptableObject
+    content.vb: >-
+      <CreateAssetMenu(fileName:="GameSettings", menuName:="Archon/Game Settings", order:=1)>
+
+      Public Class GameSettings Inherits ScriptableObject
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.ScriptableObject
+  attributes:
+  - type: UnityEngine.CreateAssetMenuAttribute
+    ctor: UnityEngine.CreateAssetMenuAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: fileName
+      type: System.String
+      value: GameSettings
+    - name: menuName
+      type: System.String
+      value: Archon/Game Settings
+    - name: order
+      type: System.Int32
+      value: 1
+- uid: Core.GameSettings.Instance
+  commentId: P:Core.GameSettings.Instance
+  id: Instance
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: GameSettings.Instance
+  fullName: Core.GameSettings.Instance
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Instance
+    path: Scripts/Core/GameSettings.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Static instance for easy access from anywhere.
+
+    Set automatically when EngineInitializer loads settings.
+  example: []
+  syntax:
+    content: public static GameSettings Instance { get; }
+    parameters: []
+    return:
+      type: Core.GameSettings
+    content.vb: Public Shared Property Instance As GameSettings
+  overload: Core.GameSettings.Instance*
+- uid: Core.GameSettings.RegisterAsActive
+  commentId: M:Core.GameSettings.RegisterAsActive
+  id: RegisterAsActive
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: RegisterAsActive()
+  nameWithType: GameSettings.RegisterAsActive()
+  fullName: Core.GameSettings.RegisterAsActive()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterAsActive
+    path: Scripts/Core/GameSettings.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Register this settings instance as the active one.
+
+    Called by EngineInitializer during initialization.
+  example: []
+  syntax:
+    content: public void RegisterAsActive()
+    content.vb: Public Sub RegisterAsActive()
+  overload: Core.GameSettings.RegisterAsActive*
+- uid: Core.GameSettings.DataDirectory
+  commentId: F:Core.GameSettings.DataDirectory
+  id: DataDirectory
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: DataDirectory
+  nameWithType: GameSettings.DataDirectory
+  fullName: Core.GameSettings.DataDirectory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DataDirectory
+    path: Scripts/Core/GameSettings.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Data File Paths")]
+
+      [Tooltip("Root data directory containing all game data")]
+
+      public string DataDirectory
+    return:
+      type: System.String
+    content.vb: >-
+      <Header("Data File Paths")>
+
+      <Tooltip("Root data directory containing all game data")>
+
+      Public DataDirectory As String
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Data File Paths
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Root data directory containing all game data
+- uid: Core.GameSettings.TemplateDataDirectory
+  commentId: F:Core.GameSettings.TemplateDataDirectory
+  id: TemplateDataDirectory
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: TemplateDataDirectory
+  nameWithType: GameSettings.TemplateDataDirectory
+  fullName: Core.GameSettings.TemplateDataDirectory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TemplateDataDirectory
+    path: Scripts/Core/GameSettings.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Template data directory for StarterKit (units, buildings, etc.)")]
+
+      public string TemplateDataDirectory
+    return:
+      type: System.String
+    content.vb: >-
+      <Tooltip("Template data directory for StarterKit (units, buildings, etc.)")>
+
+      Public TemplateDataDirectory As String
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Template data directory for StarterKit (units, buildings, etc.)
+- uid: Core.GameSettings.MapDirectory
+  commentId: F:Core.GameSettings.MapDirectory
+  id: MapDirectory
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: MapDirectory
+  nameWithType: GameSettings.MapDirectory
+  fullName: Core.GameSettings.MapDirectory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapDirectory
+    path: Scripts/Core/GameSettings.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Map data directory")]
+
+      public string MapDirectory
+    return:
+      type: System.String
+    content.vb: >-
+      <Tooltip("Map data directory")>
+
+      Public MapDirectory As String
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Map data directory
+- uid: Core.GameSettings.DebugOutputDirectory
+  commentId: F:Core.GameSettings.DebugOutputDirectory
+  id: DebugOutputDirectory
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: DebugOutputDirectory
+  nameWithType: GameSettings.DebugOutputDirectory
+  fullName: Core.GameSettings.DebugOutputDirectory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DebugOutputDirectory
+    path: Scripts/Core/GameSettings.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Debug/Screenshots output directory")]
+
+      public string DebugOutputDirectory
+    return:
+      type: System.String
+    content.vb: >-
+      <Tooltip("Debug/Screenshots output directory")>
+
+      Public DebugOutputDirectory As String
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Debug/Screenshots output directory
+- uid: Core.GameSettings.EnableParallelLoading
+  commentId: F:Core.GameSettings.EnableParallelLoading
+  id: EnableParallelLoading
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: EnableParallelLoading
+  nameWithType: GameSettings.EnableParallelLoading
+  fullName: Core.GameSettings.EnableParallelLoading
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableParallelLoading
+    path: Scripts/Core/GameSettings.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Loading Configuration")]
+
+      [Tooltip("Enable parallel loading where possible")]
+
+      public bool EnableParallelLoading
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Loading Configuration")>
+
+      <Tooltip("Enable parallel loading where possible")>
+
+      Public EnableParallelLoading As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Loading Configuration
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable parallel loading where possible
+- uid: Core.GameSettings.EnableDataValidation
+  commentId: F:Core.GameSettings.EnableDataValidation
+  id: EnableDataValidation
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: EnableDataValidation
+  nameWithType: GameSettings.EnableDataValidation
+  fullName: Core.GameSettings.EnableDataValidation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableDataValidation
+    path: Scripts/Core/GameSettings.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Enable detailed validation of loaded data")]
+
+      public bool EnableDataValidation
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable detailed validation of loaded data")>
+
+      Public EnableDataValidation As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable detailed validation of loaded data
+- uid: Core.GameSettings.UseGracefulDegradation
+  commentId: F:Core.GameSettings.UseGracefulDegradation
+  id: UseGracefulDegradation
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: UseGracefulDegradation
+  nameWithType: GameSettings.UseGracefulDegradation
+  fullName: Core.GameSettings.UseGracefulDegradation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UseGracefulDegradation
+    path: Scripts/Core/GameSettings.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Error Handling")]
+
+      [Tooltip("Continue loading with defaults if non-critical files are missing")]
+
+      public bool UseGracefulDegradation
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Error Handling")>
+
+      <Tooltip("Continue loading with defaults if non-critical files are missing")>
+
+      Public UseGracefulDegradation As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Error Handling
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Continue loading with defaults if non-critical files are missing
+- uid: Core.GameSettings.ShowDetailedErrors
+  commentId: F:Core.GameSettings.ShowDetailedErrors
+  id: ShowDetailedErrors
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: ShowDetailedErrors
+  nameWithType: GameSettings.ShowDetailedErrors
+  fullName: Core.GameSettings.ShowDetailedErrors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShowDetailedErrors
+    path: Scripts/Core/GameSettings.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Show detailed error messages to user")]
+
+      public bool ShowDetailedErrors
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Show detailed error messages to user")>
+
+      Public ShowDetailedErrors As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Show detailed error messages to user
+- uid: Core.GameSettings.RetryAttempts
+  commentId: F:Core.GameSettings.RetryAttempts
+  id: RetryAttempts
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: RetryAttempts
+  nameWithType: GameSettings.RetryAttempts
+  fullName: Core.GameSettings.RetryAttempts
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RetryAttempts
+    path: Scripts/Core/GameSettings.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Retry failed operations this many times")]
+
+      [Range(0, 5)]
+
+      public int RetryAttempts
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Tooltip("Retry failed operations this many times")>
+
+      <Range(0, 5)>
+
+      Public RetryAttempts As Integer
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Retry failed operations this many times
+  - type: UnityEngine.RangeAttribute
+    ctor: UnityEngine.RangeAttribute.#ctor(System.Single,System.Single)
+    arguments:
+    - type: System.Single
+      value: 0
+    - type: System.Single
+      value: 5
+- uid: Core.GameSettings.EnableVerboseLogging
+  commentId: F:Core.GameSettings.EnableVerboseLogging
+  id: EnableVerboseLogging
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: EnableVerboseLogging
+  nameWithType: GameSettings.EnableVerboseLogging
+  fullName: Core.GameSettings.EnableVerboseLogging
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableVerboseLogging
+    path: Scripts/Core/GameSettings.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Development Options")]
+
+      [Tooltip("Enable verbose logging during development")]
+
+      public bool EnableVerboseLogging
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Development Options")>
+
+      <Tooltip("Enable verbose logging during development")>
+
+      Public EnableVerboseLogging As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Development Options
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable verbose logging during development
+- uid: Core.GameSettings.EnableMemoryLeakDetection
+  commentId: F:Core.GameSettings.EnableMemoryLeakDetection
+  id: EnableMemoryLeakDetection
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: EnableMemoryLeakDetection
+  nameWithType: GameSettings.EnableMemoryLeakDetection
+  fullName: Core.GameSettings.EnableMemoryLeakDetection
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableMemoryLeakDetection
+    path: Scripts/Core/GameSettings.cs
+    startLine: 63
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Enable memory leak detection")]
+
+      public bool EnableMemoryLeakDetection
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable memory leak detection")>
+
+      Public EnableMemoryLeakDetection As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable memory leak detection
+- uid: Core.GameSettings.SkipCacheWarming
+  commentId: F:Core.GameSettings.SkipCacheWarming
+  id: SkipCacheWarming
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: SkipCacheWarming
+  nameWithType: GameSettings.SkipCacheWarming
+  fullName: Core.GameSettings.SkipCacheWarming
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SkipCacheWarming
+    path: Scripts/Core/GameSettings.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Skip cache warming for faster iteration")]
+
+      public bool SkipCacheWarming
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Skip cache warming for faster iteration")>
+
+      Public SkipCacheWarming As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Skip cache warming for faster iteration
+- uid: Core.GameSettings.ValidatePaths
+  commentId: M:Core.GameSettings.ValidatePaths
+  id: ValidatePaths
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: ValidatePaths()
+  nameWithType: GameSettings.ValidatePaths()
+  fullName: Core.GameSettings.ValidatePaths()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidatePaths
+    path: Scripts/Core/GameSettings.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Validate that all required paths exist and are accessible
+  example: []
+  syntax:
+    content: public GameSettings.ValidationResult ValidatePaths()
+    return:
+      type: Core.GameSettings.ValidationResult
+    content.vb: Public Function ValidatePaths() As GameSettings.ValidationResult
+  overload: Core.GameSettings.ValidatePaths*
+- uid: Core.GameSettings.CreateDefault
+  commentId: M:Core.GameSettings.CreateDefault
+  id: CreateDefault
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: CreateDefault()
+  nameWithType: GameSettings.CreateDefault()
+  fullName: Core.GameSettings.CreateDefault()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateDefault
+    path: Scripts/Core/GameSettings.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Create default settings for testing
+  example: []
+  syntax:
+    content: public static GameSettings CreateDefault()
+    return:
+      type: Core.GameSettings
+    content.vb: Public Shared Function CreateDefault() As GameSettings
+  overload: Core.GameSettings.CreateDefault*
+- uid: Core.GameSettings.LogConfiguration
+  commentId: M:Core.GameSettings.LogConfiguration
+  id: LogConfiguration
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: LogConfiguration()
+  nameWithType: GameSettings.LogConfiguration()
+  fullName: Core.GameSettings.LogConfiguration()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogConfiguration
+    path: Scripts/Core/GameSettings.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Log current configuration
+  example: []
+  syntax:
+    content: public void LogConfiguration()
+    content.vb: Public Sub LogConfiguration()
+  overload: Core.GameSettings.LogConfiguration*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.ScriptableObject
+  commentId: T:UnityEngine.ScriptableObject
+  parent: UnityEngine
+  isExternal: true
+  name: ScriptableObject
+  nameWithType: ScriptableObject
+  fullName: UnityEngine.ScriptableObject
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.GameSettings.Instance*
+  commentId: Overload:Core.GameSettings.Instance
+  href: Core.GameSettings.html#Core_GameSettings_Instance
+  name: Instance
+  nameWithType: GameSettings.Instance
+  fullName: Core.GameSettings.Instance
+- uid: Core.GameSettings
+  commentId: T:Core.GameSettings
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings
+  nameWithType: GameSettings
+  fullName: Core.GameSettings
+- uid: Core.GameSettings.RegisterAsActive*
+  commentId: Overload:Core.GameSettings.RegisterAsActive
+  href: Core.GameSettings.html#Core_GameSettings_RegisterAsActive
+  name: RegisterAsActive
+  nameWithType: GameSettings.RegisterAsActive
+  fullName: Core.GameSettings.RegisterAsActive
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.GameSettings.ValidatePaths*
+  commentId: Overload:Core.GameSettings.ValidatePaths
+  href: Core.GameSettings.html#Core_GameSettings_ValidatePaths
+  name: ValidatePaths
+  nameWithType: GameSettings.ValidatePaths
+  fullName: Core.GameSettings.ValidatePaths
+- uid: Core.GameSettings.ValidationResult
+  commentId: T:Core.GameSettings.ValidationResult
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings.ValidationResult
+  nameWithType: GameSettings.ValidationResult
+  fullName: Core.GameSettings.ValidationResult
+  spec.csharp:
+  - uid: Core.GameSettings
+    name: GameSettings
+    href: Core.GameSettings.html
+  - name: .
+  - uid: Core.GameSettings.ValidationResult
+    name: ValidationResult
+    href: Core.GameSettings.ValidationResult.html
+  spec.vb:
+  - uid: Core.GameSettings
+    name: GameSettings
+    href: Core.GameSettings.html
+  - name: .
+  - uid: Core.GameSettings.ValidationResult
+    name: ValidationResult
+    href: Core.GameSettings.ValidationResult.html
+- uid: Core.GameSettings.CreateDefault*
+  commentId: Overload:Core.GameSettings.CreateDefault
+  href: Core.GameSettings.html#Core_GameSettings_CreateDefault
+  name: CreateDefault
+  nameWithType: GameSettings.CreateDefault
+  fullName: Core.GameSettings.CreateDefault
+- uid: Core.GameSettings.LogConfiguration*
+  commentId: Overload:Core.GameSettings.LogConfiguration
+  href: Core.GameSettings.html#Core_GameSettings_LogConfiguration
+  name: LogConfiguration
+  nameWithType: GameSettings.LogConfiguration
+  fullName: Core.GameSettings.LogConfiguration

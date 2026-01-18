@@ -1,0 +1,306 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderDistanceFieldGenerator
+  commentId: T:Map.Rendering.BorderDistanceFieldGenerator
+  id: BorderDistanceFieldGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
+  - Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  - Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
+  - Map.Rendering.BorderDistanceFieldGenerator.TestGeneration
+  langs:
+  - csharp
+  - vb
+  name: BorderDistanceFieldGenerator
+  nameWithType: BorderDistanceFieldGenerator
+  fullName: Map.Rendering.BorderDistanceFieldGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDistanceFieldGenerator
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generates distance field textures for modern Paradox-style smooth anti-aliased borders.
+
+    Uses Jump Flooding Algorithm (JFA) for efficient GPU-based distance field generation.
+
+
+    Algorithm:
+
+    1. Edge Detection: Mark border pixels
+
+    2. Jump Flooding: Propagate closest border distance (log(n) passes)
+
+    3. Finalize: Convert positions to distances
+
+
+    Result: Silky smooth borders at any zoom level (CK3/Stellaris quality)
+  example: []
+  syntax:
+    content: 'public class BorderDistanceFieldGenerator : MonoBehaviour'
+    content.vb: Public Class BorderDistanceFieldGenerator Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
+  commentId: M:Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
+  id: SetTextureManager(Map.Rendering.MapTextureManager)
+  parent: Map.Rendering.BorderDistanceFieldGenerator
+  langs:
+  - csharp
+  - vb
+  name: SetTextureManager(MapTextureManager)
+  nameWithType: BorderDistanceFieldGenerator.SetTextureManager(MapTextureManager)
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTextureManager
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public void SetTextureManager(MapTextureManager manager)
+    parameters:
+    - id: manager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub SetTextureManager(manager As MapTextureManager)
+  overload: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager*
+- uid: Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
+  commentId: M:Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
+  id: GenerateDistanceField
+  parent: Map.Rendering.BorderDistanceFieldGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateDistanceField()
+  nameWithType: BorderDistanceFieldGenerator.GenerateDistanceField()
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateDistanceField
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate distance field for borders (main entry point)
+
+    Runs dual-channel JFA: once for country borders (R), once for province borders (G)
+  example: []
+  syntax:
+    content: public void GenerateDistanceField()
+    content.vb: Public Sub GenerateDistanceField()
+  overload: Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField*
+- uid: Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  commentId: M:Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  id: GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  parent: Map.Rendering.BorderDistanceFieldGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateQuarterResolutionDistanceField(RenderTexture)
+  nameWithType: BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(RenderTexture)
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateQuarterResolutionDistanceField
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 148
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate AAA-quality distance field at 1/4 resolution for multi-tap rendering
+
+    This is the modern approach used by grand strategy titles - generates distance values
+
+    at reduced resolution, compensated by 9-tap multi-sampling in fragment shader
+
+
+    Memory: ~1.4MB at 1/4 resolution vs ~46MB full resolution = 97% savings
+
+    Quality: Indistinguishable from full resolution due to multi-tap + bilinear filtering
+  example: []
+  syntax:
+    content: public void GenerateQuarterResolutionDistanceField(RenderTexture outputTexture)
+    parameters:
+    - id: outputTexture
+      type: UnityEngine.RenderTexture
+      description: Target RenderTexture at 1/4 resolution (from DynamicTextureSet)
+    content.vb: Public Sub GenerateQuarterResolutionDistanceField(outputTexture As RenderTexture)
+  overload: Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField*
+- uid: Map.Rendering.BorderDistanceFieldGenerator.TestGeneration
+  commentId: M:Map.Rendering.BorderDistanceFieldGenerator.TestGeneration
+  id: TestGeneration
+  parent: Map.Rendering.BorderDistanceFieldGenerator
+  langs:
+  - csharp
+  - vb
+  name: TestGeneration()
+  nameWithType: BorderDistanceFieldGenerator.TestGeneration()
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.TestGeneration()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TestGeneration
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 419
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [ContextMenu("Test Distance Field Generation")]
+
+      public void TestGeneration()
+    content.vb: >-
+      <ContextMenu("Test Distance Field Generation")>
+
+      Public Sub TestGeneration()
+  overload: Map.Rendering.BorderDistanceFieldGenerator.TestGeneration*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Test Distance Field Generation
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager*
+  commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager
+  href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_SetTextureManager_Map_Rendering_MapTextureManager_
+  name: SetTextureManager
+  nameWithType: BorderDistanceFieldGenerator.SetTextureManager
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField*
+  commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
+  href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_GenerateDistanceField
+  name: GenerateDistanceField
+  nameWithType: BorderDistanceFieldGenerator.GenerateDistanceField
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
+- uid: Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField*
+  commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField
+  href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_GenerateQuarterResolutionDistanceField_UnityEngine_RenderTexture_
+  name: GenerateQuarterResolutionDistanceField
+  nameWithType: BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: Map.Rendering.BorderDistanceFieldGenerator.TestGeneration*
+  commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.TestGeneration
+  href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_TestGeneration
+  name: TestGeneration
+  nameWithType: BorderDistanceFieldGenerator.TestGeneration
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.TestGeneration

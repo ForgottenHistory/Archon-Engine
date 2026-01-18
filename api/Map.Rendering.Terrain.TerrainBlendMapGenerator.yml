@@ -1,0 +1,421 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  commentId: T:Map.Rendering.Terrain.TerrainBlendMapGenerator
+  id: TerrainBlendMapGenerator
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  - Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(System.String)
+  - Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
+  langs:
+  - csharp
+  - vb
+  name: TerrainBlendMapGenerator
+  nameWithType: TerrainBlendMapGenerator
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainBlendMapGenerator
+    path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    ENGINE: Generates terrain blend maps for Imperator Rome-style 4-channel blending
+
+    Pre-computes DetailIndexTexture + DetailMaskTexture at load time (~50-100ms)
+
+
+    Algorithm:
+
+    - Sample ProvinceIDTexture in 5x5 radius per pixel
+
+    - Count terrain types via ProvinceTerrainBuffer lookup
+
+    - Take top 4 terrain types by frequency
+
+    - Normalize to weights (0-1 range)
+
+    - Write indices to DetailIndexTexture, weights to DetailMaskTexture
+
+
+    Output:
+
+    - DetailIndexTexture (RGBA8): 4 material indices per pixel
+
+    - DetailMaskTexture (RGBA8): 4 blend weights per pixel
+
+
+    Usage: MapDataLoader calls Generate() after province terrain analysis complete
+  example: []
+  syntax:
+    content: 'public class TerrainBlendMapGenerator : MonoBehaviour'
+    content.vb: Public Class TerrainBlendMapGenerator Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
+  commentId: M:Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
+  id: Initialize(Map.Rendering.MapTextureManager)
+  parent: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager)
+  nameWithType: TerrainBlendMapGenerator.Initialize(MapTextureManager)
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+    startLine: 70
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Initialize and register default terrain renderer with MapRendererRegistry.
+
+    Call this during map initialization.
+  example: []
+  syntax:
+    content: public void Initialize(MapTextureManager textureManager)
+    parameters:
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub Initialize(textureManager As MapTextureManager)
+  overload: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize*
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(System.String)
+  commentId: M:Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(System.String)
+  id: GetActiveTerrainRenderer(System.String)
+  parent: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetActiveTerrainRenderer(string)
+  nameWithType: TerrainBlendMapGenerator.GetActiveTerrainRenderer(string)
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetActiveTerrainRenderer
+    path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+    startLine: 112
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Get the active terrain renderer from registry.
+  example: []
+  syntax:
+    content: public ITerrainRenderer GetActiveTerrainRenderer(string rendererId = null)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.Terrain.ITerrainRenderer
+    content.vb: Public Function GetActiveTerrainRenderer(rendererId As String = Nothing) As ITerrainRenderer
+  overload: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer*
+  nameWithType.vb: TerrainBlendMapGenerator.GetActiveTerrainRenderer(String)
+  fullName.vb: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(String)
+  name.vb: GetActiveTerrainRenderer(String)
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  id: Generate(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: Generate(RenderTexture, ComputeBuffer, int, int)
+  nameWithType: TerrainBlendMapGenerator.Generate(RenderTexture, ComputeBuffer, int, int)
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Generate
+    path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+    startLine: 129
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Generate terrain blend maps (DetailIndexTexture + DetailMaskTexture)
+
+    Call this after ProvinceTerrainAnalyzer completes
+  example: []
+  syntax:
+    content: public (RenderTexture detailIndex, RenderTexture detailMask) Generate(RenderTexture provinceIDTexture, ComputeBuffer provinceTerrainBuffer, int width, int height)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+      description: Province ID texture (5632x2048 RG16)
+    - id: provinceTerrainBuffer
+      type: UnityEngine.ComputeBuffer
+      description: Province terrain buffer (65536 entries, uint per province)
+    - id: width
+      type: System.Int32
+      description: Map width (5632)
+    - id: height
+      type: System.Int32
+      description: Map height (2048)
+    return:
+      type: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+      description: Tuple of (DetailIndexTexture, DetailMaskTexture)
+    content.vb: Public Function Generate(provinceIDTexture As RenderTexture, provinceTerrainBuffer As ComputeBuffer, width As Integer, height As Integer) As (detailIndex As RenderTexture, detailMask As RenderTexture)
+  overload: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate*
+  nameWithType.vb: TerrainBlendMapGenerator.Generate(RenderTexture, ComputeBuffer, Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, Integer, Integer)
+  name.vb: Generate(RenderTexture, ComputeBuffer, Integer, Integer)
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html#Map_Rendering_Terrain_TerrainBlendMapGenerator_Initialize_Map_Rendering_MapTextureManager_
+  name: Initialize
+  nameWithType: TerrainBlendMapGenerator.Initialize
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html#Map_Rendering_Terrain_TerrainBlendMapGenerator_GetActiveTerrainRenderer_System_String_
+  name: GetActiveTerrainRenderer
+  nameWithType: TerrainBlendMapGenerator.GetActiveTerrainRenderer
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Terrain.ITerrainRenderer
+  commentId: T:Map.Rendering.Terrain.ITerrainRenderer
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.ITerrainRenderer.html
+  name: ITerrainRenderer
+  nameWithType: ITerrainRenderer
+  fullName: Map.Rendering.Terrain.ITerrainRenderer
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html#Map_Rendering_Terrain_TerrainBlendMapGenerator_Generate_UnityEngine_RenderTexture_UnityEngine_ComputeBuffer_System_Int32_System_Int32_
+  name: Generate
+  nameWithType: TerrainBlendMapGenerator.Generate
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: UnityEngine.ComputeBuffer
+  commentId: T:UnityEngine.ComputeBuffer
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeBuffer
+  nameWithType: ComputeBuffer
+  fullName: UnityEngine.ComputeBuffer
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+  commentId: T:System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (RenderTexture detailIndex, RenderTexture detailMask)
+  nameWithType: (RenderTexture detailIndex, RenderTexture detailMask)
+  fullName: (UnityEngine.RenderTexture detailIndex, UnityEngine.RenderTexture detailMask)
+  nameWithType.vb: (detailIndex As RenderTexture, detailMask As RenderTexture)
+  fullName.vb: (detailIndex As UnityEngine.RenderTexture, detailMask As UnityEngine.RenderTexture)
+  name.vb: (detailIndex As RenderTexture, detailMask As RenderTexture)
+  spec.csharp:
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailIndex
+    name: detailIndex
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailMask
+    name: detailMask
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailIndex
+    name: detailIndex
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailMask
+    name: detailMask
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )

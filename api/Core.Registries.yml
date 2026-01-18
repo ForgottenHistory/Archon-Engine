@@ -1,0 +1,158 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  id: Core.Registries
+  children:
+  - Core.Registries.BuildingData
+  - Core.Registries.CountryData
+  - Core.Registries.CountryRegistry
+  - Core.Registries.GameRegistries
+  - Core.Registries.GovernmentData
+  - Core.Registries.IRegistry`1
+  - Core.Registries.ProvinceData
+  - Core.Registries.ProvinceRegistry
+  - Core.Registries.Registry`1
+  - Core.Registries.TechnologyData
+  - Core.Registries.TerrainData
+  langs:
+  - csharp
+  - vb
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries.TerrainData
+  commentId: T:Core.Registries.TerrainData
+  href: Core.Registries.TerrainData.html
+  name: TerrainData
+  nameWithType: TerrainData
+  fullName: Core.Registries.TerrainData
+- uid: Core.Registries.BuildingData
+  commentId: T:Core.Registries.BuildingData
+  href: Core.Registries.BuildingData.html
+  name: BuildingData
+  nameWithType: BuildingData
+  fullName: Core.Registries.BuildingData
+- uid: Core.Registries.TechnologyData
+  commentId: T:Core.Registries.TechnologyData
+  href: Core.Registries.TechnologyData.html
+  name: TechnologyData
+  nameWithType: TechnologyData
+  fullName: Core.Registries.TechnologyData
+- uid: Core.Registries.GovernmentData
+  commentId: T:Core.Registries.GovernmentData
+  href: Core.Registries.GovernmentData.html
+  name: GovernmentData
+  nameWithType: GovernmentData
+  fullName: Core.Registries.GovernmentData
+- uid: Core.Registries.Registry`1
+  commentId: T:Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<T>
+  nameWithType: Registry<T>
+  fullName: Core.Registries.Registry<T>
+  nameWithType.vb: Registry(Of T)
+  fullName.vb: Core.Registries.Registry(Of T)
+  name.vb: Registry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.CountryRegistry
+  commentId: T:Core.Registries.CountryRegistry
+  parent: Core.Registries
+  href: Core.Registries.CountryRegistry.html
+  name: CountryRegistry
+  nameWithType: CountryRegistry
+  fullName: Core.Registries.CountryRegistry
+- uid: Core.Registries.CountryData
+  commentId: T:Core.Registries.CountryData
+  parent: Core.Registries
+  href: Core.Registries.CountryData.html
+  name: CountryData
+  nameWithType: CountryData
+  fullName: Core.Registries.CountryData
+- uid: Core.Registries.IRegistry`1
+  commentId: T:Core.Registries.IRegistry`1
+  href: Core.Registries.IRegistry-1.html
+  name: IRegistry<T>
+  nameWithType: IRegistry<T>
+  fullName: Core.Registries.IRegistry<T>
+  nameWithType.vb: IRegistry(Of T)
+  fullName.vb: Core.Registries.IRegistry(Of T)
+  name.vb: IRegistry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.ProvinceRegistry
+  commentId: T:Core.Registries.ProvinceRegistry
+  parent: Core.Registries
+  href: Core.Registries.ProvinceRegistry.html
+  name: ProvinceRegistry
+  nameWithType: ProvinceRegistry
+  fullName: Core.Registries.ProvinceRegistry
+- uid: Core.Registries.ProvinceData
+  commentId: T:Core.Registries.ProvinceData
+  parent: Core.Registries
+  href: Core.Registries.ProvinceData.html
+  name: ProvinceData
+  nameWithType: ProvinceData
+  fullName: Core.Registries.ProvinceData
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html

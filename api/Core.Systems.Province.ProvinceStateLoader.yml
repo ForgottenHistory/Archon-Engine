@@ -1,0 +1,403 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.Province.ProvinceStateLoader
+  commentId: T:Core.Systems.Province.ProvinceStateLoader
+  id: ProvinceStateLoader
+  parent: Core.Systems.Province
+  children:
+  - Core.Systems.Province.ProvinceStateLoader.#ctor(Core.Systems.Province.ProvinceDataManager,Core.EventBus,Core.Data.ProvinceHistoryDatabase)
+  - Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState})
+  - Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates(System.String)
+  - Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking(System.String)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceStateLoader
+  nameWithType: ProvinceStateLoader
+  fullName: Core.Systems.Province.ProvinceStateLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceStateLoader
+    path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Handles loading and applying province initial states
+
+    Extracted from ProvinceSystem.cs for better separation of concerns
+  example: []
+  syntax:
+    content: public class ProvinceStateLoader
+    content.vb: Public Class ProvinceStateLoader
+  inheritance:
+  - System.Object
+- uid: Core.Systems.Province.ProvinceStateLoader.#ctor(Core.Systems.Province.ProvinceDataManager,Core.EventBus,Core.Data.ProvinceHistoryDatabase)
+  commentId: M:Core.Systems.Province.ProvinceStateLoader.#ctor(Core.Systems.Province.ProvinceDataManager,Core.EventBus,Core.Data.ProvinceHistoryDatabase)
+  id: '#ctor(Core.Systems.Province.ProvinceDataManager,Core.EventBus,Core.Data.ProvinceHistoryDatabase)'
+  parent: Core.Systems.Province.ProvinceStateLoader
+  langs:
+  - csharp
+  - vb
+  name: ProvinceStateLoader(ProvinceDataManager, EventBus, ProvinceHistoryDatabase)
+  nameWithType: ProvinceStateLoader.ProvinceStateLoader(ProvinceDataManager, EventBus, ProvinceHistoryDatabase)
+  fullName: Core.Systems.Province.ProvinceStateLoader.ProvinceStateLoader(Core.Systems.Province.ProvinceDataManager, Core.EventBus, Core.Data.ProvinceHistoryDatabase)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  syntax:
+    content: public ProvinceStateLoader(ProvinceDataManager dataManager, EventBus eventBus, ProvinceHistoryDatabase historyDatabase)
+    parameters:
+    - id: dataManager
+      type: Core.Systems.Province.ProvinceDataManager
+    - id: eventBus
+      type: Core.EventBus
+    - id: historyDatabase
+      type: Core.Data.ProvinceHistoryDatabase
+    content.vb: Public Sub New(dataManager As ProvinceDataManager, eventBus As EventBus, historyDatabase As ProvinceHistoryDatabase)
+  overload: Core.Systems.Province.ProvinceStateLoader.#ctor*
+  nameWithType.vb: ProvinceStateLoader.New(ProvinceDataManager, EventBus, ProvinceHistoryDatabase)
+  fullName.vb: Core.Systems.Province.ProvinceStateLoader.New(Core.Systems.Province.ProvinceDataManager, Core.EventBus, Core.Data.ProvinceHistoryDatabase)
+  name.vb: New(ProvinceDataManager, EventBus, ProvinceHistoryDatabase)
+- uid: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates(System.String)
+  commentId: M:Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates(System.String)
+  id: LoadProvinceInitialStates(System.String)
+  parent: Core.Systems.Province.ProvinceStateLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceInitialStates(string)
+  nameWithType: ProvinceStateLoader.LoadProvinceInitialStates(string)
+  fullName: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceInitialStates
+    path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Load province initial states using Burst-compiled parallel jobs
+
+    Architecture-compliant: hot/cold separation, bounded data, parallel processing
+  example: []
+  syntax:
+    content: public void LoadProvinceInitialStates(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    content.vb: Public Sub LoadProvinceInitialStates(dataDirectory As String)
+  overload: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates*
+  nameWithType.vb: ProvinceStateLoader.LoadProvinceInitialStates(String)
+  fullName.vb: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates(String)
+  name.vb: LoadProvinceInitialStates(String)
+- uid: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking(System.String)
+  commentId: M:Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking(System.String)
+  id: LoadProvinceInitialStatesForLinking(System.String)
+  parent: Core.Systems.Province.ProvinceStateLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceInitialStatesForLinking(string)
+  nameWithType: ProvinceStateLoader.LoadProvinceInitialStatesForLinking(string)
+  fullName: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceInitialStatesForLinking
+    path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Load province initial states but return them for reference resolution before applying
+
+    Used by data linking architecture to resolve string references to IDs
+  example: []
+  syntax:
+    content: public ProvinceInitialStateLoadResult LoadProvinceInitialStatesForLinking(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    return:
+      type: Core.Data.ProvinceInitialStateLoadResult
+    content.vb: Public Function LoadProvinceInitialStatesForLinking(dataDirectory As String) As ProvinceInitialStateLoadResult
+  overload: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking*
+  nameWithType.vb: ProvinceStateLoader.LoadProvinceInitialStatesForLinking(String)
+  fullName.vb: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking(String)
+  name.vb: LoadProvinceInitialStatesForLinking(String)
+- uid: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState})
+  commentId: M:Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState})
+  id: ApplyResolvedInitialStates(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState})
+  parent: Core.Systems.Province.ProvinceStateLoader
+  langs:
+  - csharp
+  - vb
+  name: ApplyResolvedInitialStates(NativeArray<ProvinceInitialState>)
+  nameWithType: ProvinceStateLoader.ApplyResolvedInitialStates(NativeArray<ProvinceInitialState>)
+  fullName: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates(Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyResolvedInitialStates
+    path: Scripts/Core/Systems/Province/ProvinceStateLoader.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Apply resolved initial states to hot province data after reference resolution
+  example: []
+  syntax:
+    content: public void ApplyResolvedInitialStates(NativeArray<ProvinceInitialState> initialStates)
+    parameters:
+    - id: initialStates
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+    content.vb: Public Sub ApplyResolvedInitialStates(initialStates As NativeArray(Of ProvinceInitialState))
+  overload: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates*
+  nameWithType.vb: ProvinceStateLoader.ApplyResolvedInitialStates(NativeArray(Of ProvinceInitialState))
+  fullName.vb: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates(Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState))
+  name.vb: ApplyResolvedInitialStates(NativeArray(Of ProvinceInitialState))
+references:
+- uid: Core.Systems.Province
+  commentId: N:Core.Systems.Province
+  href: Core.html
+  name: Core.Systems.Province
+  nameWithType: Core.Systems.Province
+  fullName: Core.Systems.Province
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.Province.ProvinceStateLoader.#ctor*
+  commentId: Overload:Core.Systems.Province.ProvinceStateLoader.#ctor
+  href: Core.Systems.Province.ProvinceStateLoader.html#Core_Systems_Province_ProvinceStateLoader__ctor_Core_Systems_Province_ProvinceDataManager_Core_EventBus_Core_Data_ProvinceHistoryDatabase_
+  name: ProvinceStateLoader
+  nameWithType: ProvinceStateLoader.ProvinceStateLoader
+  fullName: Core.Systems.Province.ProvinceStateLoader.ProvinceStateLoader
+  nameWithType.vb: ProvinceStateLoader.New
+  fullName.vb: Core.Systems.Province.ProvinceStateLoader.New
+  name.vb: New
+- uid: Core.Systems.Province.ProvinceDataManager
+  commentId: T:Core.Systems.Province.ProvinceDataManager
+  parent: Core.Systems.Province
+  href: Core.Systems.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Core.Systems.Province.ProvinceDataManager
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core.Data.ProvinceHistoryDatabase
+  commentId: T:Core.Data.ProvinceHistoryDatabase
+  parent: Core.Data
+  href: Core.Data.ProvinceHistoryDatabase.html
+  name: ProvinceHistoryDatabase
+  nameWithType: ProvinceHistoryDatabase
+  fullName: Core.Data.ProvinceHistoryDatabase
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates*
+  commentId: Overload:Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates
+  href: Core.Systems.Province.ProvinceStateLoader.html#Core_Systems_Province_ProvinceStateLoader_LoadProvinceInitialStates_System_String_
+  name: LoadProvinceInitialStates
+  nameWithType: ProvinceStateLoader.LoadProvinceInitialStates
+  fullName: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStates
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking*
+  commentId: Overload:Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking
+  href: Core.Systems.Province.ProvinceStateLoader.html#Core_Systems_Province_ProvinceStateLoader_LoadProvinceInitialStatesForLinking_System_String_
+  name: LoadProvinceInitialStatesForLinking
+  nameWithType: ProvinceStateLoader.LoadProvinceInitialStatesForLinking
+  fullName: Core.Systems.Province.ProvinceStateLoader.LoadProvinceInitialStatesForLinking
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialStateLoadResult.html
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+- uid: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates*
+  commentId: Overload:Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates
+  href: Core.Systems.Province.ProvinceStateLoader.html#Core_Systems_Province_ProvinceStateLoader_ApplyResolvedInitialStates_Unity_Collections_NativeArray_Core_Data_ProvinceInitialState__
+  name: ApplyResolvedInitialStates
+  nameWithType: ProvinceStateLoader.ApplyResolvedInitialStates
+  fullName: Core.Systems.Province.ProvinceStateLoader.ApplyResolvedInitialStates
+- uid: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.ProvinceInitialState.html
+  name: NativeArray<ProvinceInitialState>
+  nameWithType: NativeArray<ProvinceInitialState>
+  fullName: Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>
+  nameWithType.vb: NativeArray(Of ProvinceInitialState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState)
+  name.vb: NativeArray(Of ProvinceInitialState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true

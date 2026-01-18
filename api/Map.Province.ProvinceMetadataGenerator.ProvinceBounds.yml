@@ -1,0 +1,269 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  commentId: T:Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  id: ProvinceMetadataGenerator.ProvinceBounds
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Max
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Min
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataGenerator.ProvinceBounds
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBounds
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Province bounding box information
+  example: []
+  syntax:
+    content: public struct ProvinceMetadataGenerator.ProvinceBounds
+    content.vb: Public Structure ProvinceMetadataGenerator.ProvinceBounds
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Min
+  commentId: F:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Min
+  id: Min
+  parent: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Min
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Min
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Min
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Min
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Min
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Min As int2
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Max
+  commentId: F:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Max
+  id: Max
+  parent: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Max
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Max
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Max
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Max
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Max
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Max As int2
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+  commentId: P:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+  id: Size
+  parent: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Size
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Size
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Size { get; }
+    parameters: []
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public ReadOnly Property Size As int2
+  overload: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size*
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+  commentId: P:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+  id: Area
+  parent: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Area
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Area
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Area
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int Area { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Area As Integer
+  overload: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area*
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+  commentId: P:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+  id: Center
+  parent: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Center
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Center
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Center
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float2 Center { get; }
+    parameters: []
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public ReadOnly Property Center As float2
+  overload: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Unity.Mathematics.int2
+  commentId: T:Unity.Mathematics.int2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: int2
+  nameWithType: int2
+  fullName: Unity.Mathematics.int2
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+  href: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.html#Map_Province_ProvinceMetadataGenerator_ProvinceBounds_Size
+  name: Size
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Size
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Size
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+  href: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.html#Map_Province_ProvinceMetadataGenerator_ProvinceBounds_Area
+  name: Area
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Area
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Area
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+  href: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.html#Map_Province_ProvinceMetadataGenerator_ProvinceBounds_Center
+  name: Center
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds.Center
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.Center
+- uid: Unity.Mathematics.float2
+  commentId: T:Unity.Mathematics.float2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: float2
+  nameWithType: float2
+  fullName: Unity.Mathematics.float2

@@ -1,0 +1,157 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandRegistry.CommandRegistration
+  commentId: T:Core.Commands.CommandRegistry.CommandRegistration
+  id: CommandRegistry.CommandRegistration
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandRegistry.CommandRegistration.Factory
+  - Core.Commands.CommandRegistry.CommandRegistration.Metadata
+  langs:
+  - csharp
+  - vb
+  name: CommandRegistry.CommandRegistration
+  nameWithType: CommandRegistry.CommandRegistration
+  fullName: Core.Commands.CommandRegistry.CommandRegistration
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandRegistration
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 199
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Registration entry for a command.
+  example: []
+  syntax:
+    content: public class CommandRegistry.CommandRegistration
+    content.vb: Public Class CommandRegistry.CommandRegistration
+  inheritance:
+  - System.Object
+- uid: Core.Commands.CommandRegistry.CommandRegistration.Metadata
+  commentId: P:Core.Commands.CommandRegistry.CommandRegistration.Metadata
+  id: Metadata
+  parent: Core.Commands.CommandRegistry.CommandRegistration
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: CommandRegistry.CommandRegistration.Metadata
+  fullName: Core.Commands.CommandRegistry.CommandRegistration.Metadata
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Metadata
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 201
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandMetadataAttribute Metadata { get; set; }
+    parameters: []
+    return:
+      type: Core.Commands.CommandMetadataAttribute
+    content.vb: Public Property Metadata As CommandMetadataAttribute
+  overload: Core.Commands.CommandRegistry.CommandRegistration.Metadata*
+- uid: Core.Commands.CommandRegistry.CommandRegistration.Factory
+  commentId: P:Core.Commands.CommandRegistry.CommandRegistration.Factory
+  id: Factory
+  parent: Core.Commands.CommandRegistry.CommandRegistration
+  langs:
+  - csharp
+  - vb
+  name: Factory
+  nameWithType: CommandRegistry.CommandRegistration.Factory
+  fullName: Core.Commands.CommandRegistry.CommandRegistration.Factory
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Factory
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 202
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ICommandFactory Factory { get; set; }
+    parameters: []
+    return:
+      type: Core.Commands.ICommandFactory
+    content.vb: Public Property Factory As ICommandFactory
+  overload: Core.Commands.CommandRegistry.CommandRegistration.Factory*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandRegistry.CommandRegistration.Metadata*
+  commentId: Overload:Core.Commands.CommandRegistry.CommandRegistration.Metadata
+  href: Core.Commands.CommandRegistry.CommandRegistration.html#Core_Commands_CommandRegistry_CommandRegistration_Metadata
+  name: Metadata
+  nameWithType: CommandRegistry.CommandRegistration.Metadata
+  fullName: Core.Commands.CommandRegistry.CommandRegistration.Metadata
+- uid: Core.Commands.CommandMetadataAttribute
+  commentId: T:Core.Commands.CommandMetadataAttribute
+  parent: Core.Commands
+  href: Core.Commands.CommandMetadataAttribute.html
+  name: CommandMetadataAttribute
+  nameWithType: CommandMetadataAttribute
+  fullName: Core.Commands.CommandMetadataAttribute
+- uid: Core.Commands.CommandRegistry.CommandRegistration.Factory*
+  commentId: Overload:Core.Commands.CommandRegistry.CommandRegistration.Factory
+  href: Core.Commands.CommandRegistry.CommandRegistration.html#Core_Commands_CommandRegistry_CommandRegistration_Factory
+  name: Factory
+  nameWithType: CommandRegistry.CommandRegistration.Factory
+  fullName: Core.Commands.CommandRegistry.CommandRegistration.Factory
+- uid: Core.Commands.ICommandFactory
+  commentId: T:Core.Commands.ICommandFactory
+  parent: Core.Commands
+  href: Core.Commands.ICommandFactory.html
+  name: ICommandFactory
+  nameWithType: ICommandFactory
+  fullName: Core.Commands.ICommandFactory

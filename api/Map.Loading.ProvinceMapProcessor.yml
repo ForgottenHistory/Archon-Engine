@@ -1,0 +1,320 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor
+  commentId: T:Map.Loading.ProvinceMapProcessor
+  id: ProvinceMapProcessor
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync(System.String,System.String)
+  - Map.Loading.ProvinceMapProcessor.OnProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor
+  nameWithType: ProvinceMapProcessor
+  fullName: Map.Loading.ProvinceMapProcessor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapProcessor
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Wraps ProvinceMapParser to provide async loading interface for Map layer
+
+    Bridges between ParadoxParser.Bitmap and Map layer expectations
+
+    Supports both BMP and PNG image formats via auto-detection
+  example: []
+  syntax:
+    content: public class ProvinceMapProcessor
+    content.vb: Public Class ProvinceMapProcessor
+  inheritance:
+  - System.Object
+- uid: Map.Loading.ProvinceMapProcessor.OnProgressUpdate
+  commentId: E:Map.Loading.ProvinceMapProcessor.OnProgressUpdate
+  id: OnProgressUpdate
+  parent: Map.Loading.ProvinceMapProcessor
+  langs:
+  - csharp
+  - vb
+  name: OnProgressUpdate
+  nameWithType: ProvinceMapProcessor.OnProgressUpdate
+  fullName: Map.Loading.ProvinceMapProcessor.OnProgressUpdate
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProgressUpdate
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public event Action<ProvinceMapProcessor.ProcessingProgress> OnProgressUpdate
+    return:
+      type: System.Action{Map.Loading.ProvinceMapProcessor.ProcessingProgress}
+    content.vb: Public Event OnProgressUpdate As Action(Of ProvinceMapProcessor.ProcessingProgress)
+- uid: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync(System.String,System.String)
+  commentId: M:Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync(System.String,System.String)
+  id: LoadProvinceMapAsync(System.String,System.String)
+  parent: Map.Loading.ProvinceMapProcessor
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceMapAsync(string, string)
+  nameWithType: ProvinceMapProcessor.LoadProvinceMapAsync(string, string)
+  fullName: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync(string, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceMapAsync
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 178
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Load province map asynchronously
+
+    Note: Runs on main thread due to NativeCollection thread safety requirements
+  example: []
+  syntax:
+    content: public Task<ProvinceMapProcessor.ProvinceMapResult> LoadProvinceMapAsync(string bmpPath, string csvPath)
+    parameters:
+    - id: bmpPath
+      type: System.String
+    - id: csvPath
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}
+    content.vb: Public Function LoadProvinceMapAsync(bmpPath As String, csvPath As String) As Task(Of ProvinceMapProcessor.ProvinceMapResult)
+  overload: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync*
+  nameWithType.vb: ProvinceMapProcessor.LoadProvinceMapAsync(String, String)
+  fullName.vb: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync(String, String)
+  name.vb: LoadProvinceMapAsync(String, String)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Action{Map.Loading.ProvinceMapProcessor.ProcessingProgress}
+  commentId: T:System.Action{Map.Loading.ProvinceMapProcessor.ProcessingProgress}
+  parent: System
+  definition: System.Action`1
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: Action<ProvinceMapProcessor.ProcessingProgress>
+  nameWithType: Action<ProvinceMapProcessor.ProcessingProgress>
+  fullName: System.Action<Map.Loading.ProvinceMapProcessor.ProcessingProgress>
+  nameWithType.vb: Action(Of ProvinceMapProcessor.ProcessingProgress)
+  fullName.vb: System.Action(Of Map.Loading.ProvinceMapProcessor.ProcessingProgress)
+  name.vb: Action(Of ProvinceMapProcessor.ProcessingProgress)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+    name: ProcessingProgress
+    href: Map.Loading.ProvinceMapProcessor.ProcessingProgress.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+    name: ProcessingProgress
+    href: Map.Loading.ProvinceMapProcessor.ProcessingProgress.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync
+  href: Map.Loading.ProvinceMapProcessor.html#Map_Loading_ProvinceMapProcessor_LoadProvinceMapAsync_System_String_System_String_
+  name: LoadProvinceMapAsync
+  nameWithType: ProvinceMapProcessor.LoadProvinceMapAsync
+  fullName: Map.Loading.ProvinceMapProcessor.LoadProvinceMapAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.Tasks.Task{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}
+  commentId: T:System.Threading.Tasks.Task{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: Task<ProvinceMapProcessor.ProvinceMapResult>
+  nameWithType: Task<ProvinceMapProcessor.ProvinceMapResult>
+  fullName: System.Threading.Tasks.Task<Map.Loading.ProvinceMapProcessor.ProvinceMapResult>
+  nameWithType.vb: Task(Of ProvinceMapProcessor.ProvinceMapResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Map.Loading.ProvinceMapProcessor.ProvinceMapResult)
+  name.vb: Task(Of ProvinceMapProcessor.ProvinceMapResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.html
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true

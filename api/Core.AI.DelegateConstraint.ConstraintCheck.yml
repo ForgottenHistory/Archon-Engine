@@ -1,0 +1,97 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.DelegateConstraint.ConstraintCheck
+  commentId: T:Core.AI.DelegateConstraint.ConstraintCheck
+  id: DelegateConstraint.ConstraintCheck
+  parent: Core.AI
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: DelegateConstraint.ConstraintCheck
+  nameWithType: DelegateConstraint.ConstraintCheck
+  fullName: Core.AI.DelegateConstraint.ConstraintCheck
+  type: Delegate
+  source:
+    remote:
+      path: Scripts/Core/AI/GoalConstraint.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConstraintCheck
+    path: Scripts/Core/AI/GoalConstraint.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public delegate bool DelegateConstraint.ConstraintCheck(ushort countryID, GameState gameState)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.Boolean
+    content.vb: Public Delegate Function DelegateConstraint.ConstraintCheck(countryID As UShort, gameState As GameState) As Boolean
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core

@@ -1,0 +1,1314 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.Province.ProvinceDataManager
+  commentId: T:Core.Systems.Province.ProvinceDataManager
+  id: ProvinceDataManager
+  parent: Core.Systems.Province
+  children:
+  - Core.Systems.Province.ProvinceDataManager.#ctor(Core.GameStateSnapshot,Unity.Collections.NativeHashMap{System.UInt16,System.Int32},Unity.Collections.NativeList{System.UInt16},Core.EventBus)
+  - Core.Systems.Province.ProvinceDataManager.AddProvince(System.UInt16,System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.Clear
+  - Core.Systems.Province.ProvinceDataManager.ClearDirty
+  - Core.Systems.Province.ProvinceDataManager.DirtyCount
+  - Core.Systems.Province.ProvinceDataManager.Dispose
+  - Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds(Unity.Collections.Allocator)
+  - Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  - Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Core.Systems.Province.ProvinceDataManager.GetDirtyIndices(Unity.Collections.Allocator)
+  - Core.Systems.Province.ProvinceDataManager.GetProvinceController(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.GetProvinceOwner(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.GetProvinceState(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces
+  - Core.Systems.Province.ProvinceDataManager.HasProvince(System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.ProvinceCount
+  - Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount(System.Int32)
+  - Core.Systems.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  - Core.Systems.Province.ProvinceDataManager.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  - Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain(System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Core.Systems.Province.ProvinceDataManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDataManager
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Manages province hot data (double-buffered) operations
+
+    Handles get/set operations, queries, and ID mapping
+
+    Uses snapshot's WRITE buffer for all simulation operations
+
+    Extracted from ProvinceSystem.cs for better separation of concerns
+
+
+    DIRTY TRACKING: Tracks which provinces have been modified since last buffer swap.
+
+    This enables efficient partial copies instead of full buffer copies on swap.
+  example: []
+  syntax:
+    content: public class ProvinceDataManager
+    content.vb: Public Class ProvinceDataManager
+  inheritance:
+  - System.Object
+- uid: Core.Systems.Province.ProvinceDataManager.ProvinceCount
+  commentId: P:Core.Systems.Province.ProvinceDataManager.ProvinceCount
+  id: ProvinceCount
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceDataManager.ProvinceCount
+  fullName: Core.Systems.Province.ProvinceDataManager.ProvinceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  syntax:
+    content: public int ProvinceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ProvinceCount As Integer
+  overload: Core.Systems.Province.ProvinceDataManager.ProvinceCount*
+- uid: Core.Systems.Province.ProvinceDataManager.DirtyCount
+  commentId: P:Core.Systems.Province.ProvinceDataManager.DirtyCount
+  id: DirtyCount
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: DirtyCount
+  nameWithType: ProvinceDataManager.DirtyCount
+  fullName: Core.Systems.Province.ProvinceDataManager.DirtyCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DirtyCount
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  syntax:
+    content: public int DirtyCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property DirtyCount As Integer
+  overload: Core.Systems.Province.ProvinceDataManager.DirtyCount*
+- uid: Core.Systems.Province.ProvinceDataManager.#ctor(Core.GameStateSnapshot,Unity.Collections.NativeHashMap{System.UInt16,System.Int32},Unity.Collections.NativeList{System.UInt16},Core.EventBus)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.#ctor(Core.GameStateSnapshot,Unity.Collections.NativeHashMap{System.UInt16,System.Int32},Unity.Collections.NativeList{System.UInt16},Core.EventBus)
+  id: '#ctor(Core.GameStateSnapshot,Unity.Collections.NativeHashMap{System.UInt16,System.Int32},Unity.Collections.NativeList{System.UInt16},Core.EventBus)'
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDataManager(GameStateSnapshot, NativeHashMap<ushort, int>, NativeList<ushort>, EventBus)
+  nameWithType: ProvinceDataManager.ProvinceDataManager(GameStateSnapshot, NativeHashMap<ushort, int>, NativeList<ushort>, EventBus)
+  fullName: Core.Systems.Province.ProvinceDataManager.ProvinceDataManager(Core.GameStateSnapshot, Unity.Collections.NativeHashMap<ushort, int>, Unity.Collections.NativeList<ushort>, Core.EventBus)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  syntax:
+    content: public ProvinceDataManager(GameStateSnapshot snapshot, NativeHashMap<ushort, int> idToIndex, NativeList<ushort> activeProvinceIds, EventBus eventBus)
+    parameters:
+    - id: snapshot
+      type: Core.GameStateSnapshot
+    - id: idToIndex
+      type: Unity.Collections.NativeHashMap{System.UInt16,System.Int32}
+    - id: activeProvinceIds
+      type: Unity.Collections.NativeList{System.UInt16}
+    - id: eventBus
+      type: Core.EventBus
+    content.vb: Public Sub New(snapshot As GameStateSnapshot, idToIndex As NativeHashMap(Of UShort, Integer), activeProvinceIds As NativeList(Of UShort), eventBus As EventBus)
+  overload: Core.Systems.Province.ProvinceDataManager.#ctor*
+  nameWithType.vb: ProvinceDataManager.New(GameStateSnapshot, NativeHashMap(Of UShort, Integer), NativeList(Of UShort), EventBus)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.New(Core.GameStateSnapshot, Unity.Collections.NativeHashMap(Of UShort, Integer), Unity.Collections.NativeList(Of UShort), Core.EventBus)
+  name.vb: New(GameStateSnapshot, NativeHashMap(Of UShort, Integer), NativeList(Of UShort), EventBus)
+- uid: Core.Systems.Province.ProvinceDataManager.AddProvince(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.AddProvince(System.UInt16,System.UInt16)
+  id: AddProvince(System.UInt16,System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: AddProvince(ushort, ushort)
+  nameWithType: ProvinceDataManager.AddProvince(ushort, ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.AddProvince(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvince
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Add a new province to the system
+  example: []
+  syntax:
+    content: public void AddProvince(ushort provinceId, ushort terrainType)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: terrainType
+      type: System.UInt16
+    content.vb: Public Sub AddProvince(provinceId As UShort, terrainType As UShort)
+  overload: Core.Systems.Province.ProvinceDataManager.AddProvince*
+  nameWithType.vb: ProvinceDataManager.AddProvince(UShort, UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.AddProvince(UShort, UShort)
+  name.vb: AddProvince(UShort, UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.Clear
+  commentId: M:Core.Systems.Province.ProvinceDataManager.Clear
+  id: Clear
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ProvinceDataManager.Clear()
+  fullName: Core.Systems.Province.ProvinceDataManager.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Clear all province data
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Systems.Province.ProvinceDataManager.Clear*
+- uid: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount(System.Int32)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount(System.Int32)
+  id: RestoreProvinceCount(System.Int32)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: RestoreProvinceCount(int)
+  nameWithType: ProvinceDataManager.RestoreProvinceCount(int)
+  fullName: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RestoreProvinceCount
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Restore province count after loading from save (Clear() sets it to 0)
+
+    CRITICAL for GetAllProvinceIds() to work after load
+  example: []
+  syntax:
+    content: public void RestoreProvinceCount(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+    content.vb: Public Sub RestoreProvinceCount(count As Integer)
+  overload: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount*
+  nameWithType.vb: ProvinceDataManager.RestoreProvinceCount(Integer)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount(Integer)
+  name.vb: RestoreProvinceCount(Integer)
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetProvinceOwner(System.UInt16)
+  id: GetProvinceOwner(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceOwner(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceOwner(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceOwner
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get province owner - most common query (must be ultra-fast)
+  example: []
+  syntax:
+    content: public ushort GetProvinceOwner(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceOwner(provinceId As UShort) As UShort
+  overload: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner*
+  nameWithType.vb: ProvinceDataManager.GetProvinceOwner(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner(UShort)
+  name.vb: GetProvinceOwner(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceController(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetProvinceController(System.UInt16)
+  id: GetProvinceController(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceController(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceController(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceController(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceController
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 118
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get province controller (who currently controls, may differ from owner during occupation)
+  example: []
+  syntax:
+    content: public ushort GetProvinceController(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceController(provinceId As UShort) As UShort
+  overload: Core.Systems.Province.ProvinceDataManager.GetProvinceController*
+  nameWithType.vb: ProvinceDataManager.GetProvinceController(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetProvinceController(UShort)
+  name.vb: GetProvinceController(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  id: SetProvinceOwner(System.UInt16,System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceOwner(ushort, ushort)
+  nameWithType: ProvinceDataManager.SetProvinceOwner(ushort, ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceOwner
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Set province owner and emit events
+  example: []
+  syntax:
+    content: public void SetProvinceOwner(ushort provinceId, ushort newOwner)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: newOwner
+      type: System.UInt16
+    content.vb: Public Sub SetProvinceOwner(provinceId As UShort, newOwner As UShort)
+  overload: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner*
+  nameWithType.vb: ProvinceDataManager.SetProvinceOwner(UShort, UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner(UShort, UShort)
+  name.vb: SetProvinceOwner(UShort, UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain(System.UInt16)
+  id: GetProvinceTerrain(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTerrain(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceTerrain(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTerrain
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get province terrain type (now ushort instead of byte)
+  example: []
+  syntax:
+    content: public ushort GetProvinceTerrain(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceTerrain(provinceId As UShort) As UShort
+  overload: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain*
+  nameWithType.vb: ProvinceDataManager.GetProvinceTerrain(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain(UShort)
+  name.vb: GetProvinceTerrain(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain(System.UInt16,System.UInt16)
+  id: SetProvinceTerrain(System.UInt16,System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceTerrain(ushort, ushort)
+  nameWithType: ProvinceDataManager.SetProvinceTerrain(ushort, ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceTerrain
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 180
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Set province terrain type (now ushort instead of byte)
+  example: []
+  syntax:
+    content: public void SetProvinceTerrain(ushort provinceId, ushort terrain)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: terrain
+      type: System.UInt16
+    content.vb: Public Sub SetProvinceTerrain(provinceId As UShort, terrain As UShort)
+  overload: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain*
+  nameWithType.vb: ProvinceDataManager.SetProvinceTerrain(UShort, UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain(UShort, UShort)
+  name.vb: SetProvinceTerrain(UShort, UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceState(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetProvinceState(System.UInt16)
+  id: GetProvinceState(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceState(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceState(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceState(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceState
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 201
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get complete province state (8-byte struct)
+  example: []
+  syntax:
+    content: public ProvinceState GetProvinceState(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Function GetProvinceState(provinceId As UShort) As ProvinceState
+  overload: Core.Systems.Province.ProvinceDataManager.GetProvinceState*
+  nameWithType.vb: ProvinceDataManager.GetProvinceState(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetProvinceState(UShort)
+  name.vb: GetProvinceState(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  id: SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceState(ushort, ProvinceState)
+  nameWithType: ProvinceDataManager.SetProvinceState(ushort, ProvinceState)
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceState(ushort, Core.Data.ProvinceState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceState
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 213
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Set complete province state (internal use)
+  example: []
+  syntax:
+    content: public void SetProvinceState(ushort provinceId, ProvinceState state)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: state
+      type: Core.Data.ProvinceState
+    content.vb: Public Sub SetProvinceState(provinceId As UShort, state As ProvinceState)
+  overload: Core.Systems.Province.ProvinceDataManager.SetProvinceState*
+  nameWithType.vb: ProvinceDataManager.SetProvinceState(UShort, ProvinceState)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.SetProvinceState(UShort, Core.Data.ProvinceState)
+  name.vb: SetProvinceState(UShort, ProvinceState)
+- uid: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  id: GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinces(ushort, Allocator)
+  nameWithType: ProvinceDataManager.GetCountryProvinces(ushort, Allocator)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinces
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Get all provinces owned by a specific country
+
+    Returns a native array that must be disposed by caller
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetCountryProvinces(countryId As UShort, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces*
+  nameWithType.vb: ProvinceDataManager.GetCountryProvinces(UShort, Allocator)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(UShort, Unity.Collections.Allocator)
+  name.vb: GetCountryProvinces(UShort, Allocator)
+- uid: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinces(ushort, NativeList<ushort>)
+  nameWithType: ProvinceDataManager.GetCountryProvinces(ushort, NativeList<ushort>)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinces
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 256
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get all provinces owned by country (fills existing NativeList, zero-allocation)
+  example: []
+  syntax:
+    content: public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetCountryProvinces(countryId As UShort, resultBuffer As NativeList(Of UShort))
+  overload: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces*
+  nameWithType.vb: ProvinceDataManager.GetCountryProvinces(UShort, NativeList(Of UShort))
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetCountryProvinces(UShort, NativeList(Of UShort))
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry(System.UInt16)
+  id: GetProvinceCountForCountry(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceCountForCountry(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceCountForCountry(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceCountForCountry
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 273
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get count of provinces owned by a country (no allocation).
+  example: []
+  syntax:
+    content: public int GetProvinceCountForCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetProvinceCountForCountry(countryId As UShort) As Integer
+  overload: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry*
+  nameWithType.vb: ProvinceDataManager.GetProvinceCountForCountry(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry(UShort)
+  name.vb: GetProvinceCountForCountry(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds(Unity.Collections.Allocator)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds(Unity.Collections.Allocator)
+  id: GetAllProvinceIds(Unity.Collections.Allocator)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinceIds(Allocator)
+  nameWithType: ProvinceDataManager.GetAllProvinceIds(Allocator)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinceIds
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 292
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Get all active province IDs
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetAllProvinceIds(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds*
+- uid: Core.Systems.Province.ProvinceDataManager.HasProvince(System.UInt16)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.HasProvince(System.UInt16)
+  id: HasProvince(System.UInt16)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: HasProvince(ushort)
+  nameWithType: ProvinceDataManager.HasProvince(ushort)
+  fullName: Core.Systems.Province.ProvinceDataManager.HasProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasProvince
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 305
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Check if province exists
+  example: []
+  syntax:
+    content: public bool HasProvince(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasProvince(provinceId As UShort) As Boolean
+  overload: Core.Systems.Province.ProvinceDataManager.HasProvince*
+  nameWithType.vb: ProvinceDataManager.HasProvince(UShort)
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.HasProvince(UShort)
+  name.vb: HasProvince(UShort)
+- uid: Core.Systems.Province.ProvinceDataManager.GetDirtyIndices(Unity.Collections.Allocator)
+  commentId: M:Core.Systems.Province.ProvinceDataManager.GetDirtyIndices(Unity.Collections.Allocator)
+  id: GetDirtyIndices(Unity.Collections.Allocator)
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetDirtyIndices(Allocator)
+  nameWithType: ProvinceDataManager.GetDirtyIndices(Allocator)
+  fullName: Core.Systems.Province.ProvinceDataManager.GetDirtyIndices(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDirtyIndices
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 330
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: >-
+    Get all dirty indices for buffer swap
+
+    Returns a NativeArray that must be disposed by caller
+  example: []
+  syntax:
+    content: public NativeArray<int> GetDirtyIndices(Allocator allocator = Allocator.Temp)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.Int32}
+    content.vb: Public Function GetDirtyIndices(allocator As Allocator = Allocator.Temp) As NativeArray(Of Integer)
+  overload: Core.Systems.Province.ProvinceDataManager.GetDirtyIndices*
+- uid: Core.Systems.Province.ProvinceDataManager.ClearDirty
+  commentId: M:Core.Systems.Province.ProvinceDataManager.ClearDirty
+  id: ClearDirty
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: ClearDirty()
+  nameWithType: ProvinceDataManager.ClearDirty()
+  fullName: Core.Systems.Province.ProvinceDataManager.ClearDirty()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearDirty
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 344
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Clear dirty tracking after buffer swap
+  example: []
+  syntax:
+    content: public void ClearDirty()
+    content.vb: Public Sub ClearDirty()
+  overload: Core.Systems.Province.ProvinceDataManager.ClearDirty*
+- uid: Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces
+  commentId: M:Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces
+  id: HasDirtyProvinces
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: HasDirtyProvinces()
+  nameWithType: ProvinceDataManager.HasDirtyProvinces()
+  fullName: Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasDirtyProvinces
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 355
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Check if any provinces are dirty
+  example: []
+  syntax:
+    content: public bool HasDirtyProvinces()
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasDirtyProvinces() As Boolean
+  overload: Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces*
+- uid: Core.Systems.Province.ProvinceDataManager.Dispose
+  commentId: M:Core.Systems.Province.ProvinceDataManager.Dispose
+  id: Dispose
+  parent: Core.Systems.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceDataManager.Dispose()
+  fullName: Core.Systems.Province.ProvinceDataManager.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Systems/Province/ProvinceDataManager.cs
+    startLine: 363
+  assemblies:
+  - Core
+  namespace: Core.Systems.Province
+  summary: Dispose native collections
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Systems.Province.ProvinceDataManager.Dispose*
+references:
+- uid: Core.Systems.Province
+  commentId: N:Core.Systems.Province
+  href: Core.html
+  name: Core.Systems.Province
+  nameWithType: Core.Systems.Province
+  fullName: Core.Systems.Province
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.Province.ProvinceDataManager.ProvinceCount*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.ProvinceCount
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_ProvinceCount
+  name: ProvinceCount
+  nameWithType: ProvinceDataManager.ProvinceCount
+  fullName: Core.Systems.Province.ProvinceDataManager.ProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.Province.ProvinceDataManager.DirtyCount*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.DirtyCount
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_DirtyCount
+  name: DirtyCount
+  nameWithType: ProvinceDataManager.DirtyCount
+  fullName: Core.Systems.Province.ProvinceDataManager.DirtyCount
+- uid: Core.Systems.Province.ProvinceDataManager.#ctor*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.#ctor
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager__ctor_Core_GameStateSnapshot_Unity_Collections_NativeHashMap_System_UInt16_System_Int32__Unity_Collections_NativeList_System_UInt16__Core_EventBus_
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager.ProvinceDataManager
+  fullName: Core.Systems.Province.ProvinceDataManager.ProvinceDataManager
+  nameWithType.vb: ProvinceDataManager.New
+  fullName.vb: Core.Systems.Province.ProvinceDataManager.New
+  name.vb: New
+- uid: Core.GameStateSnapshot
+  commentId: T:Core.GameStateSnapshot
+  parent: Core
+  href: Core.GameStateSnapshot.html
+  name: GameStateSnapshot
+  nameWithType: GameStateSnapshot
+  fullName: Core.GameStateSnapshot
+- uid: Unity.Collections.NativeHashMap{System.UInt16,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<ushort, int>
+  nameWithType: NativeHashMap<ushort, int>
+  fullName: Unity.Collections.NativeHashMap<ushort, int>
+  nameWithType.vb: NativeHashMap(Of UShort, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, Integer)
+  name.vb: NativeHashMap(Of UShort, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.Province.ProvinceDataManager.AddProvince*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.AddProvince
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_AddProvince_System_UInt16_System_UInt16_
+  name: AddProvince
+  nameWithType: ProvinceDataManager.AddProvince
+  fullName: Core.Systems.Province.ProvinceDataManager.AddProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Systems.Province.ProvinceDataManager.Clear*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.Clear
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_Clear
+  name: Clear
+  nameWithType: ProvinceDataManager.Clear
+  fullName: Core.Systems.Province.ProvinceDataManager.Clear
+- uid: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_RestoreProvinceCount_System_Int32_
+  name: RestoreProvinceCount
+  nameWithType: ProvinceDataManager.RestoreProvinceCount
+  fullName: Core.Systems.Province.ProvinceDataManager.RestoreProvinceCount
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetProvinceOwner
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetProvinceOwner_System_UInt16_
+  name: GetProvinceOwner
+  nameWithType: ProvinceDataManager.GetProvinceOwner
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceOwner
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceController*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetProvinceController
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetProvinceController_System_UInt16_
+  name: GetProvinceController
+  nameWithType: ProvinceDataManager.GetProvinceController
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceController
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.SetProvinceOwner
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_SetProvinceOwner_System_UInt16_System_UInt16_
+  name: SetProvinceOwner
+  nameWithType: ProvinceDataManager.SetProvinceOwner
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceOwner
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetProvinceTerrain_System_UInt16_
+  name: GetProvinceTerrain
+  nameWithType: ProvinceDataManager.GetProvinceTerrain
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceTerrain
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_SetProvinceTerrain_System_UInt16_System_UInt16_
+  name: SetProvinceTerrain
+  nameWithType: ProvinceDataManager.SetProvinceTerrain
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceTerrain
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceState*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetProvinceState
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetProvinceState_System_UInt16_
+  name: GetProvinceState
+  nameWithType: ProvinceDataManager.GetProvinceState
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceState
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.Province.ProvinceDataManager.SetProvinceState*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.SetProvinceState
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_SetProvinceState_System_UInt16_Core_Data_ProvinceState_
+  name: SetProvinceState
+  nameWithType: ProvinceDataManager.SetProvinceState
+  fullName: Core.Systems.Province.ProvinceDataManager.SetProvinceState
+- uid: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetCountryProvinces
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetCountryProvinces_System_UInt16_Unity_Collections_Allocator_
+  name: GetCountryProvinces
+  nameWithType: ProvinceDataManager.GetCountryProvinces
+  fullName: Core.Systems.Province.ProvinceDataManager.GetCountryProvinces
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetProvinceCountForCountry_System_UInt16_
+  name: GetProvinceCountForCountry
+  nameWithType: ProvinceDataManager.GetProvinceCountForCountry
+  fullName: Core.Systems.Province.ProvinceDataManager.GetProvinceCountForCountry
+- uid: Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetAllProvinceIds_Unity_Collections_Allocator_
+  name: GetAllProvinceIds
+  nameWithType: ProvinceDataManager.GetAllProvinceIds
+  fullName: Core.Systems.Province.ProvinceDataManager.GetAllProvinceIds
+- uid: Core.Systems.Province.ProvinceDataManager.HasProvince*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.HasProvince
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_HasProvince_System_UInt16_
+  name: HasProvince
+  nameWithType: ProvinceDataManager.HasProvince
+  fullName: Core.Systems.Province.ProvinceDataManager.HasProvince
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.Province.ProvinceDataManager.GetDirtyIndices*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.GetDirtyIndices
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_GetDirtyIndices_Unity_Collections_Allocator_
+  name: GetDirtyIndices
+  nameWithType: ProvinceDataManager.GetDirtyIndices
+  fullName: Core.Systems.Province.ProvinceDataManager.GetDirtyIndices
+- uid: Unity.Collections.NativeArray{System.Int32}
+  commentId: T:Unity.Collections.NativeArray{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int>
+  nameWithType: NativeArray<int>
+  fullName: Unity.Collections.NativeArray<int>
+  nameWithType.vb: NativeArray(Of Integer)
+  fullName.vb: Unity.Collections.NativeArray(Of Integer)
+  name.vb: NativeArray(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Core.Systems.Province.ProvinceDataManager.ClearDirty*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.ClearDirty
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_ClearDirty
+  name: ClearDirty
+  nameWithType: ProvinceDataManager.ClearDirty
+  fullName: Core.Systems.Province.ProvinceDataManager.ClearDirty
+- uid: Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_HasDirtyProvinces
+  name: HasDirtyProvinces
+  nameWithType: ProvinceDataManager.HasDirtyProvinces
+  fullName: Core.Systems.Province.ProvinceDataManager.HasDirtyProvinces
+- uid: Core.Systems.Province.ProvinceDataManager.Dispose*
+  commentId: Overload:Core.Systems.Province.ProvinceDataManager.Dispose
+  href: Core.Systems.Province.ProvinceDataManager.html#Core_Systems_Province_ProvinceDataManager_Dispose
+  name: Dispose
+  nameWithType: ProvinceDataManager.Dispose
+  fullName: Core.Systems.Province.ProvinceDataManager.Dispose

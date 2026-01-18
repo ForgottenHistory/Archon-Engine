@@ -1,0 +1,159 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.TerrainTypeTextureGenerator
+  commentId: T:Map.Loading.TerrainTypeTextureGenerator
+  id: TerrainTypeTextureGenerator
+  parent: Map.Loading
+  children:
+  - Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(UnityEngine.Texture2D,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: TerrainTypeTextureGenerator
+  nameWithType: TerrainTypeTextureGenerator
+  fullName: Map.Loading.TerrainTypeTextureGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainTypeTextureGenerator
+    path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Generates terrain type texture (R8) from terrain color texture (RGBA32)
+
+    Maps terrain colors back to terrain type indices using TerrainColorMapper
+
+    Purpose: Enables terrain splatting for detail texture selection
+
+
+    Architecture:
+
+    - Input: ProvinceTerrainTexture (RGBA32) with terrain colors
+
+    - Output: TerrainTypeTexture (R8) with terrain type indices (0-255)
+
+    - Method: Reverse color lookup via TerrainColorMapper
+  example: []
+  syntax:
+    content: public static class TerrainTypeTextureGenerator
+    content.vb: Public Module TerrainTypeTextureGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(UnityEngine.Texture2D,System.Boolean)
+  commentId: M:Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(UnityEngine.Texture2D,System.Boolean)
+  id: GenerateTerrainTypeTexture(UnityEngine.Texture2D,System.Boolean)
+  parent: Map.Loading.TerrainTypeTextureGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateTerrainTypeTexture(Texture2D, bool)
+  nameWithType: TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(Texture2D, bool)
+  fullName: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(UnityEngine.Texture2D, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateTerrainTypeTexture
+    path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Generate terrain type texture from terrain color texture
+
+    Uses reverse lookup to map colors → terrain type indices
+  example: []
+  syntax:
+    content: public static Texture2D GenerateTerrainTypeTexture(Texture2D terrainColorTexture, bool logProgress = true)
+    parameters:
+    - id: terrainColorTexture
+      type: UnityEngine.Texture2D
+      description: Source terrain texture (RGBA32)
+    - id: logProgress
+      type: System.Boolean
+      description: Enable progress logging
+    return:
+      type: UnityEngine.Texture2D
+      description: Terrain type texture (R8 format, 0-255 terrain indices)
+    content.vb: Public Shared Function GenerateTerrainTypeTexture(terrainColorTexture As Texture2D, logProgress As Boolean = True) As Texture2D
+  overload: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture*
+  nameWithType.vb: TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(Texture2D, Boolean)
+  fullName.vb: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture(UnityEngine.Texture2D, Boolean)
+  name.vb: GenerateTerrainTypeTexture(Texture2D, Boolean)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture*
+  commentId: Overload:Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture
+  href: Map.Loading.TerrainTypeTextureGenerator.html#Map_Loading_TerrainTypeTextureGenerator_GenerateTerrainTypeTexture_UnityEngine_Texture2D_System_Boolean_
+  name: GenerateTerrainTypeTexture
+  nameWithType: TerrainTypeTextureGenerator.GenerateTerrainTypeTexture
+  fullName: Map.Loading.TerrainTypeTextureGenerator.GenerateTerrainTypeTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

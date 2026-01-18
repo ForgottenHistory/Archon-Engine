@@ -1,0 +1,337 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Linking.CrossReferenceBuilder
+  commentId: T:Core.Linking.CrossReferenceBuilder
+  id: CrossReferenceBuilder
+  parent: Core.Linking
+  children:
+  - Core.Linking.CrossReferenceBuilder.#ctor(Core.Registries.GameRegistries)
+  - Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences
+  - Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences
+  - Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences
+  - Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics
+  - Core.Linking.CrossReferenceBuilder.ValidateCrossReferences
+  langs:
+  - csharp
+  - vb
+  name: CrossReferenceBuilder
+  nameWithType: CrossReferenceBuilder
+  fullName: Core.Linking.CrossReferenceBuilder
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CrossReferenceBuilder
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: >-
+    Builds bidirectional references between game entities
+
+    Creates efficient lookup structures for runtime queries
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: public class CrossReferenceBuilder
+    content.vb: Public Class CrossReferenceBuilder
+  inheritance:
+  - System.Object
+- uid: Core.Linking.CrossReferenceBuilder.#ctor(Core.Registries.GameRegistries)
+  commentId: M:Core.Linking.CrossReferenceBuilder.#ctor(Core.Registries.GameRegistries)
+  id: '#ctor(Core.Registries.GameRegistries)'
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: CrossReferenceBuilder(GameRegistries)
+  nameWithType: CrossReferenceBuilder.CrossReferenceBuilder(GameRegistries)
+  fullName: Core.Linking.CrossReferenceBuilder.CrossReferenceBuilder(Core.Registries.GameRegistries)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  syntax:
+    content: public CrossReferenceBuilder(GameRegistries registries)
+    parameters:
+    - id: registries
+      type: Core.Registries.GameRegistries
+    content.vb: Public Sub New(registries As GameRegistries)
+  overload: Core.Linking.CrossReferenceBuilder.#ctor*
+  nameWithType.vb: CrossReferenceBuilder.New(GameRegistries)
+  fullName.vb: Core.Linking.CrossReferenceBuilder.New(Core.Registries.GameRegistries)
+  name.vb: New(GameRegistries)
+- uid: Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences
+  commentId: M:Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences
+  id: BuildAllCrossReferences
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: BuildAllCrossReferences()
+  nameWithType: CrossReferenceBuilder.BuildAllCrossReferences()
+  fullName: Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildAllCrossReferences
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Build all cross-references after data loading is complete
+  example: []
+  syntax:
+    content: public void BuildAllCrossReferences()
+    content.vb: Public Sub BuildAllCrossReferences()
+  overload: Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences*
+- uid: Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences
+  commentId: M:Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences
+  id: BuildCountryProvinceReferences
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: BuildCountryProvinceReferences()
+  nameWithType: CrossReferenceBuilder.BuildCountryProvinceReferences()
+  fullName: Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildCountryProvinceReferences
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: >-
+    Build bidirectional references between countries and provinces
+
+    Countries get lists of owned/controlled provinces
+  example: []
+  syntax:
+    content: public void BuildCountryProvinceReferences()
+    content.vb: Public Sub BuildCountryProvinceReferences()
+  overload: Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences*
+- uid: Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences
+  commentId: M:Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences
+  id: BuildProvinceNeighborReferences
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: BuildProvinceNeighborReferences()
+  nameWithType: CrossReferenceBuilder.BuildProvinceNeighborReferences()
+  fullName: Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildProvinceNeighborReferences
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Build province neighbor references (placeholder for future implementation)
+  example: []
+  syntax:
+    content: public void BuildProvinceNeighborReferences()
+    content.vb: Public Sub BuildProvinceNeighborReferences()
+  overload: Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences*
+- uid: Core.Linking.CrossReferenceBuilder.ValidateCrossReferences
+  commentId: M:Core.Linking.CrossReferenceBuilder.ValidateCrossReferences
+  id: ValidateCrossReferences
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: ValidateCrossReferences()
+  nameWithType: CrossReferenceBuilder.ValidateCrossReferences()
+  fullName: Core.Linking.CrossReferenceBuilder.ValidateCrossReferences()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateCrossReferences
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Validate all cross-references for consistency
+  example: []
+  syntax:
+    content: public void ValidateCrossReferences()
+    content.vb: Public Sub ValidateCrossReferences()
+  overload: Core.Linking.CrossReferenceBuilder.ValidateCrossReferences*
+- uid: Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics
+  commentId: M:Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics
+  id: GetCrossReferenceStatistics
+  parent: Core.Linking.CrossReferenceBuilder
+  langs:
+  - csharp
+  - vb
+  name: GetCrossReferenceStatistics()
+  nameWithType: CrossReferenceBuilder.GetCrossReferenceStatistics()
+  fullName: Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCrossReferenceStatistics
+    path: Scripts/Core/Linking/CrossReferenceBuilder.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Get statistics about the built cross-references
+  example: []
+  syntax:
+    content: public string GetCrossReferenceStatistics()
+    return:
+      type: System.String
+    content.vb: Public Function GetCrossReferenceStatistics() As String
+  overload: Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics*
+references:
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  href: Core.html
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Linking.CrossReferenceBuilder.#ctor*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.#ctor
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder__ctor_Core_Registries_GameRegistries_
+  name: CrossReferenceBuilder
+  nameWithType: CrossReferenceBuilder.CrossReferenceBuilder
+  fullName: Core.Linking.CrossReferenceBuilder.CrossReferenceBuilder
+  nameWithType.vb: CrossReferenceBuilder.New
+  fullName.vb: Core.Linking.CrossReferenceBuilder.New
+  name.vb: New
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder_BuildAllCrossReferences
+  name: BuildAllCrossReferences
+  nameWithType: CrossReferenceBuilder.BuildAllCrossReferences
+  fullName: Core.Linking.CrossReferenceBuilder.BuildAllCrossReferences
+- uid: Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder_BuildCountryProvinceReferences
+  name: BuildCountryProvinceReferences
+  nameWithType: CrossReferenceBuilder.BuildCountryProvinceReferences
+  fullName: Core.Linking.CrossReferenceBuilder.BuildCountryProvinceReferences
+- uid: Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder_BuildProvinceNeighborReferences
+  name: BuildProvinceNeighborReferences
+  nameWithType: CrossReferenceBuilder.BuildProvinceNeighborReferences
+  fullName: Core.Linking.CrossReferenceBuilder.BuildProvinceNeighborReferences
+- uid: Core.Linking.CrossReferenceBuilder.ValidateCrossReferences*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.ValidateCrossReferences
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder_ValidateCrossReferences
+  name: ValidateCrossReferences
+  nameWithType: CrossReferenceBuilder.ValidateCrossReferences
+  fullName: Core.Linking.CrossReferenceBuilder.ValidateCrossReferences
+- uid: Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics*
+  commentId: Overload:Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics
+  href: Core.Linking.CrossReferenceBuilder.html#Core_Linking_CrossReferenceBuilder_GetCrossReferenceStatistics
+  name: GetCrossReferenceStatistics
+  nameWithType: CrossReferenceBuilder.GetCrossReferenceStatistics
+  fullName: Core.Linking.CrossReferenceBuilder.GetCrossReferenceStatistics
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

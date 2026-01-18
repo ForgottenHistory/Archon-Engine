@@ -1,0 +1,393 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.ProvinceHistorySystem
+  commentId: T:StarterKit.ProvinceHistorySystem
+  id: ProvinceHistorySystem
+  parent: StarterKit
+  children:
+  - StarterKit.ProvinceHistorySystem.#ctor(Core.GameState,System.Boolean)
+  - StarterKit.ProvinceHistorySystem.Dispose
+  - StarterKit.ProvinceHistorySystem.GetProvinceHistory(System.UInt16)
+  - StarterKit.ProvinceHistorySystem.GetStorageStats
+  - StarterKit.ProvinceHistorySystem.HasHistory(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistorySystem
+  nameWithType: ProvinceHistorySystem
+  fullName: StarterKit.ProvinceHistorySystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceHistorySystem
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT: Tracks province ownership history.
+
+    Demonstrates Pattern 4: Hot/Cold Data Separation.
+
+
+    - Hot data: ProvinceState.ownerID (accessed every frame, 2 bytes)
+
+    - Cold data: ProvinceHistoryData (accessed on-demand when viewing province)
+
+
+    This system:
+
+    - Subscribes to ProvinceOwnershipChangedEvent
+
+    - Records ownership changes to cold storage
+
+    - Provides on-demand access to history when UI needs it
+
+
+    Memory is bounded via CircularBuffer (last N changes per province).
+  example: []
+  syntax:
+    content: public class ProvinceHistorySystem
+    content.vb: Public Class ProvinceHistorySystem
+  inheritance:
+  - System.Object
+- uid: StarterKit.ProvinceHistorySystem.#ctor(Core.GameState,System.Boolean)
+  commentId: M:StarterKit.ProvinceHistorySystem.#ctor(Core.GameState,System.Boolean)
+  id: '#ctor(Core.GameState,System.Boolean)'
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistorySystem(GameState, bool)
+  nameWithType: ProvinceHistorySystem.ProvinceHistorySystem(GameState, bool)
+  fullName: StarterKit.ProvinceHistorySystem.ProvinceHistorySystem(Core.GameState, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 33
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ProvinceHistorySystem(GameState gameStateRef, bool log = true)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: log
+      type: System.Boolean
+    content.vb: Public Sub New(gameStateRef As GameState, log As Boolean = True)
+  overload: StarterKit.ProvinceHistorySystem.#ctor*
+  nameWithType.vb: ProvinceHistorySystem.New(GameState, Boolean)
+  fullName.vb: StarterKit.ProvinceHistorySystem.New(Core.GameState, Boolean)
+  name.vb: New(GameState, Boolean)
+- uid: StarterKit.ProvinceHistorySystem.GetProvinceHistory(System.UInt16)
+  commentId: M:StarterKit.ProvinceHistorySystem.GetProvinceHistory(System.UInt16)
+  id: GetProvinceHistory(System.UInt16)
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceHistory(ushort)
+  nameWithType: ProvinceHistorySystem.GetProvinceHistory(ushort)
+  fullName: StarterKit.ProvinceHistorySystem.GetProvinceHistory(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceHistory
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 79
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Get history data for a province (on-demand access).
+
+    Returns null if no history recorded for this province.
+
+
+    This is the key API demonstrating cold data access:
+
+    - Only called when player clicks/views a province
+
+    - NOT called every frame
+  example: []
+  syntax:
+    content: public ProvinceHistoryData GetProvinceHistory(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: StarterKit.ProvinceHistoryData
+    content.vb: Public Function GetProvinceHistory(provinceId As UShort) As ProvinceHistoryData
+  overload: StarterKit.ProvinceHistorySystem.GetProvinceHistory*
+  nameWithType.vb: ProvinceHistorySystem.GetProvinceHistory(UShort)
+  fullName.vb: StarterKit.ProvinceHistorySystem.GetProvinceHistory(UShort)
+  name.vb: GetProvinceHistory(UShort)
+- uid: StarterKit.ProvinceHistorySystem.HasHistory(System.UInt16)
+  commentId: M:StarterKit.ProvinceHistorySystem.HasHistory(System.UInt16)
+  id: HasHistory(System.UInt16)
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: HasHistory(ushort)
+  nameWithType: ProvinceHistorySystem.HasHistory(ushort)
+  fullName: StarterKit.ProvinceHistorySystem.HasHistory(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasHistory
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 87
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a province has any recorded history.
+  example: []
+  syntax:
+    content: public bool HasHistory(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasHistory(provinceId As UShort) As Boolean
+  overload: StarterKit.ProvinceHistorySystem.HasHistory*
+  nameWithType.vb: ProvinceHistorySystem.HasHistory(UShort)
+  fullName.vb: StarterKit.ProvinceHistorySystem.HasHistory(UShort)
+  name.vb: HasHistory(UShort)
+- uid: StarterKit.ProvinceHistorySystem.GetStorageStats
+  commentId: M:StarterKit.ProvinceHistorySystem.GetStorageStats
+  id: GetStorageStats
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: GetStorageStats()
+  nameWithType: ProvinceHistorySystem.GetStorageStats()
+  fullName: StarterKit.ProvinceHistorySystem.GetStorageStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStorageStats
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 95
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get statistics about cold data storage (for debugging/monitoring).
+  example: []
+  syntax:
+    content: public (int provincesWithHistory, int totalRecords) GetStorageStats()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int32}
+    content.vb: Public Function GetStorageStats() As (provincesWithHistory As Integer, totalRecords As Integer)
+  overload: StarterKit.ProvinceHistorySystem.GetStorageStats*
+- uid: StarterKit.ProvinceHistorySystem.Dispose
+  commentId: M:StarterKit.ProvinceHistorySystem.Dispose
+  id: Dispose
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceHistorySystem.Dispose()
+  fullName: StarterKit.ProvinceHistorySystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 130
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: StarterKit.ProvinceHistorySystem.Dispose*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.ProvinceHistorySystem.#ctor*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.#ctor
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem__ctor_Core_GameState_System_Boolean_
+  name: ProvinceHistorySystem
+  nameWithType: ProvinceHistorySystem.ProvinceHistorySystem
+  fullName: StarterKit.ProvinceHistorySystem.ProvinceHistorySystem
+  nameWithType.vb: ProvinceHistorySystem.New
+  fullName.vb: StarterKit.ProvinceHistorySystem.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: StarterKit.ProvinceHistorySystem.GetProvinceHistory*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.GetProvinceHistory
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_GetProvinceHistory_System_UInt16_
+  name: GetProvinceHistory
+  nameWithType: ProvinceHistorySystem.GetProvinceHistory
+  fullName: StarterKit.ProvinceHistorySystem.GetProvinceHistory
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.ProvinceHistoryData
+  commentId: T:StarterKit.ProvinceHistoryData
+  parent: StarterKit
+  href: StarterKit.ProvinceHistoryData.html
+  name: ProvinceHistoryData
+  nameWithType: ProvinceHistoryData
+  fullName: StarterKit.ProvinceHistoryData
+- uid: StarterKit.ProvinceHistorySystem.HasHistory*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.HasHistory
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_HasHistory_System_UInt16_
+  name: HasHistory
+  nameWithType: ProvinceHistorySystem.HasHistory
+  fullName: StarterKit.ProvinceHistorySystem.HasHistory
+- uid: StarterKit.ProvinceHistorySystem.GetStorageStats*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.GetStorageStats
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_GetStorageStats
+  name: GetStorageStats
+  nameWithType: ProvinceHistorySystem.GetStorageStats
+  fullName: StarterKit.ProvinceHistorySystem.GetStorageStats
+- uid: System.ValueTuple{System.Int32,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (int x, int y)
+  nameWithType: (int x, int y)
+  fullName: (int x, int y)
+  nameWithType.vb: (x As Integer, y As Integer)
+  fullName.vb: (x As Integer, y As Integer)
+  name.vb: (x As Integer, y As Integer)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.x
+    name: x
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.y
+    name: y
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int32}.x
+    name: x
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.y
+    name: y
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: StarterKit.ProvinceHistorySystem.Dispose*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.Dispose
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_Dispose
+  name: Dispose
+  nameWithType: ProvinceHistorySystem.Dispose
+  fullName: StarterKit.ProvinceHistorySystem.Dispose

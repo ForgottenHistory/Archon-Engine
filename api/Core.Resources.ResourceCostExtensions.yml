@@ -1,0 +1,279 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceCostExtensions
+  commentId: T:Core.Resources.ResourceCostExtensions
+  id: ResourceCostExtensions
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceCostExtensions.ContainsResource(Core.Resources.ResourceCost[],System.UInt16)
+  - Core.Resources.ResourceCostExtensions.GetTotalForResource(Core.Resources.ResourceCost[],System.UInt16)
+  - Core.Resources.ResourceCostExtensions.Scale(Core.Resources.ResourceCost[],Core.Data.FixedPoint64)
+  langs:
+  - csharp
+  - vb
+  name: ResourceCostExtensions
+  nameWithType: ResourceCostExtensions
+  fullName: Core.Resources.ResourceCostExtensions
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceCost.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceCostExtensions
+    path: Scripts/Core/Resources/ResourceCost.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Helper methods for working with ResourceCost arrays
+  example: []
+  syntax:
+    content: public static class ResourceCostExtensions
+    content.vb: Public Module ResourceCostExtensions
+  inheritance:
+  - System.Object
+- uid: Core.Resources.ResourceCostExtensions.GetTotalForResource(Core.Resources.ResourceCost[],System.UInt16)
+  commentId: M:Core.Resources.ResourceCostExtensions.GetTotalForResource(Core.Resources.ResourceCost[],System.UInt16)
+  id: GetTotalForResource(Core.Resources.ResourceCost[],System.UInt16)
+  isExtensionMethod: true
+  parent: Core.Resources.ResourceCostExtensions
+  langs:
+  - csharp
+  - vb
+  name: GetTotalForResource(ResourceCost[], ushort)
+  nameWithType: ResourceCostExtensions.GetTotalForResource(ResourceCost[], ushort)
+  fullName: Core.Resources.ResourceCostExtensions.GetTotalForResource(Core.Resources.ResourceCost[], ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceCost.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTotalForResource
+    path: Scripts/Core/Resources/ResourceCost.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Calculate total cost for a specific resource from an array of costs
+  example: []
+  syntax:
+    content: public static FixedPoint64 GetTotalForResource(this ResourceCost[] costs, ushort resourceId)
+    parameters:
+    - id: costs
+      type: Core.Resources.ResourceCost[]
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function GetTotalForResource(costs As ResourceCost(), resourceId As UShort) As FixedPoint64
+  overload: Core.Resources.ResourceCostExtensions.GetTotalForResource*
+  nameWithType.vb: ResourceCostExtensions.GetTotalForResource(ResourceCost(), UShort)
+  fullName.vb: Core.Resources.ResourceCostExtensions.GetTotalForResource(Core.Resources.ResourceCost(), UShort)
+  name.vb: GetTotalForResource(ResourceCost(), UShort)
+- uid: Core.Resources.ResourceCostExtensions.ContainsResource(Core.Resources.ResourceCost[],System.UInt16)
+  commentId: M:Core.Resources.ResourceCostExtensions.ContainsResource(Core.Resources.ResourceCost[],System.UInt16)
+  id: ContainsResource(Core.Resources.ResourceCost[],System.UInt16)
+  isExtensionMethod: true
+  parent: Core.Resources.ResourceCostExtensions
+  langs:
+  - csharp
+  - vb
+  name: ContainsResource(ResourceCost[], ushort)
+  nameWithType: ResourceCostExtensions.ContainsResource(ResourceCost[], ushort)
+  fullName: Core.Resources.ResourceCostExtensions.ContainsResource(Core.Resources.ResourceCost[], ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceCost.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ContainsResource
+    path: Scripts/Core/Resources/ResourceCost.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Check if costs array contains a specific resource
+  example: []
+  syntax:
+    content: public static bool ContainsResource(this ResourceCost[] costs, ushort resourceId)
+    parameters:
+    - id: costs
+      type: Core.Resources.ResourceCost[]
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function ContainsResource(costs As ResourceCost(), resourceId As UShort) As Boolean
+  overload: Core.Resources.ResourceCostExtensions.ContainsResource*
+  nameWithType.vb: ResourceCostExtensions.ContainsResource(ResourceCost(), UShort)
+  fullName.vb: Core.Resources.ResourceCostExtensions.ContainsResource(Core.Resources.ResourceCost(), UShort)
+  name.vb: ContainsResource(ResourceCost(), UShort)
+- uid: Core.Resources.ResourceCostExtensions.Scale(Core.Resources.ResourceCost[],Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.ResourceCostExtensions.Scale(Core.Resources.ResourceCost[],Core.Data.FixedPoint64)
+  id: Scale(Core.Resources.ResourceCost[],Core.Data.FixedPoint64)
+  isExtensionMethod: true
+  parent: Core.Resources.ResourceCostExtensions
+  langs:
+  - csharp
+  - vb
+  name: Scale(ResourceCost[], FixedPoint64)
+  nameWithType: ResourceCostExtensions.Scale(ResourceCost[], FixedPoint64)
+  fullName: Core.Resources.ResourceCostExtensions.Scale(Core.Resources.ResourceCost[], Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceCost.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Scale
+    path: Scripts/Core/Resources/ResourceCost.cs
+    startLine: 141
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Scale all costs by a multiplier (e.g., for discounts)
+  example: []
+  syntax:
+    content: public static ResourceCost[] Scale(this ResourceCost[] costs, FixedPoint64 multiplier)
+    parameters:
+    - id: costs
+      type: Core.Resources.ResourceCost[]
+    - id: multiplier
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Resources.ResourceCost[]
+    content.vb: Public Shared Function Scale(costs As ResourceCost(), multiplier As FixedPoint64) As ResourceCost()
+  overload: Core.Resources.ResourceCostExtensions.Scale*
+  nameWithType.vb: ResourceCostExtensions.Scale(ResourceCost(), FixedPoint64)
+  fullName.vb: Core.Resources.ResourceCostExtensions.Scale(Core.Resources.ResourceCost(), Core.Data.FixedPoint64)
+  name.vb: Scale(ResourceCost(), FixedPoint64)
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Resources.ResourceCostExtensions.GetTotalForResource*
+  commentId: Overload:Core.Resources.ResourceCostExtensions.GetTotalForResource
+  href: Core.Resources.ResourceCostExtensions.html#Core_Resources_ResourceCostExtensions_GetTotalForResource_Core_Resources_ResourceCost___System_UInt16_
+  name: GetTotalForResource
+  nameWithType: ResourceCostExtensions.GetTotalForResource
+  fullName: Core.Resources.ResourceCostExtensions.GetTotalForResource
+- uid: Core.Resources.ResourceCost[]
+  isExternal: true
+  href: Core.Resources.ResourceCost.html
+  name: ResourceCost[]
+  nameWithType: ResourceCost[]
+  fullName: Core.Resources.ResourceCost[]
+  nameWithType.vb: ResourceCost()
+  fullName.vb: Core.Resources.ResourceCost()
+  name.vb: ResourceCost()
+  spec.csharp:
+  - uid: Core.Resources.ResourceCost
+    name: ResourceCost
+    href: Core.Resources.ResourceCost.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.Resources.ResourceCost
+    name: ResourceCost
+    href: Core.Resources.ResourceCost.html
+  - name: (
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Resources.ResourceCostExtensions.ContainsResource*
+  commentId: Overload:Core.Resources.ResourceCostExtensions.ContainsResource
+  href: Core.Resources.ResourceCostExtensions.html#Core_Resources_ResourceCostExtensions_ContainsResource_Core_Resources_ResourceCost___System_UInt16_
+  name: ContainsResource
+  nameWithType: ResourceCostExtensions.ContainsResource
+  fullName: Core.Resources.ResourceCostExtensions.ContainsResource
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Resources.ResourceCostExtensions.Scale*
+  commentId: Overload:Core.Resources.ResourceCostExtensions.Scale
+  href: Core.Resources.ResourceCostExtensions.html#Core_Resources_ResourceCostExtensions_Scale_Core_Resources_ResourceCost___Core_Data_FixedPoint64_
+  name: Scale
+  nameWithType: ResourceCostExtensions.Scale
+  fullName: Core.Resources.ResourceCostExtensions.Scale

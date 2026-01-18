@@ -1,0 +1,373 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.UnitType
+  commentId: T:StarterKit.UnitType
+  id: UnitType
+  parent: StarterKit
+  children:
+  - StarterKit.UnitType.Attack
+  - StarterKit.UnitType.Cost
+  - StarterKit.UnitType.Defense
+  - StarterKit.UnitType.ID
+  - StarterKit.UnitType.Maintenance
+  - StarterKit.UnitType.Name
+  - StarterKit.UnitType.Speed
+  - StarterKit.UnitType.StringID
+  langs:
+  - csharp
+  - vb
+  name: UnitType
+  nameWithType: UnitType
+  fullName: StarterKit.UnitType
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitType
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 14
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Simple unit type definition. Lighter weight than GAME layer's UnitDefinition.
+  example: []
+  syntax:
+    content: public class UnitType
+    content.vb: Public Class UnitType
+  inheritance:
+  - System.Object
+- uid: StarterKit.UnitType.ID
+  commentId: P:StarterKit.UnitType.ID
+  id: ID
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: UnitType.ID
+  fullName: StarterKit.UnitType.ID
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ID
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 16
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ushort ID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property ID As UShort
+  overload: StarterKit.UnitType.ID*
+- uid: StarterKit.UnitType.StringID
+  commentId: P:StarterKit.UnitType.StringID
+  id: StringID
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: StringID
+  nameWithType: UnitType.StringID
+  fullName: StarterKit.UnitType.StringID
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StringID
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 17
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public string StringID { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StringID As String
+  overload: StarterKit.UnitType.StringID*
+- uid: StarterKit.UnitType.Name
+  commentId: P:StarterKit.UnitType.Name
+  id: Name
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: UnitType.Name
+  fullName: StarterKit.UnitType.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 18
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: StarterKit.UnitType.Name*
+- uid: StarterKit.UnitType.Cost
+  commentId: P:StarterKit.UnitType.Cost
+  id: Cost
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Cost
+  nameWithType: UnitType.Cost
+  fullName: StarterKit.UnitType.Cost
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Cost
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 19
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Cost { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Cost As Integer
+  overload: StarterKit.UnitType.Cost*
+- uid: StarterKit.UnitType.Maintenance
+  commentId: P:StarterKit.UnitType.Maintenance
+  id: Maintenance
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Maintenance
+  nameWithType: UnitType.Maintenance
+  fullName: StarterKit.UnitType.Maintenance
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Maintenance
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 20
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Maintenance { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Maintenance As Integer
+  overload: StarterKit.UnitType.Maintenance*
+- uid: StarterKit.UnitType.Attack
+  commentId: P:StarterKit.UnitType.Attack
+  id: Attack
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Attack
+  nameWithType: UnitType.Attack
+  fullName: StarterKit.UnitType.Attack
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Attack
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 21
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Attack { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Attack As Integer
+  overload: StarterKit.UnitType.Attack*
+- uid: StarterKit.UnitType.Defense
+  commentId: P:StarterKit.UnitType.Defense
+  id: Defense
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Defense
+  nameWithType: UnitType.Defense
+  fullName: StarterKit.UnitType.Defense
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Defense
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Defense { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Defense As Integer
+  overload: StarterKit.UnitType.Defense*
+- uid: StarterKit.UnitType.Speed
+  commentId: P:StarterKit.UnitType.Speed
+  id: Speed
+  parent: StarterKit.UnitType
+  langs:
+  - csharp
+  - vb
+  name: Speed
+  nameWithType: UnitType.Speed
+  fullName: StarterKit.UnitType.Speed
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Speed
+    path: Scripts/StarterKit/Systems/UnitSystem.cs
+    startLine: 23
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Speed { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Speed As Integer
+  overload: StarterKit.UnitType.Speed*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.UnitType.ID*
+  commentId: Overload:StarterKit.UnitType.ID
+  href: StarterKit.UnitType.html#StarterKit_UnitType_ID
+  name: ID
+  nameWithType: UnitType.ID
+  fullName: StarterKit.UnitType.ID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.UnitType.StringID*
+  commentId: Overload:StarterKit.UnitType.StringID
+  href: StarterKit.UnitType.html#StarterKit_UnitType_StringID
+  name: StringID
+  nameWithType: UnitType.StringID
+  fullName: StarterKit.UnitType.StringID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.UnitType.Name*
+  commentId: Overload:StarterKit.UnitType.Name
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Name
+  name: Name
+  nameWithType: UnitType.Name
+  fullName: StarterKit.UnitType.Name
+- uid: StarterKit.UnitType.Cost*
+  commentId: Overload:StarterKit.UnitType.Cost
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Cost
+  name: Cost
+  nameWithType: UnitType.Cost
+  fullName: StarterKit.UnitType.Cost
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.UnitType.Maintenance*
+  commentId: Overload:StarterKit.UnitType.Maintenance
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Maintenance
+  name: Maintenance
+  nameWithType: UnitType.Maintenance
+  fullName: StarterKit.UnitType.Maintenance
+- uid: StarterKit.UnitType.Attack*
+  commentId: Overload:StarterKit.UnitType.Attack
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Attack
+  name: Attack
+  nameWithType: UnitType.Attack
+  fullName: StarterKit.UnitType.Attack
+- uid: StarterKit.UnitType.Defense*
+  commentId: Overload:StarterKit.UnitType.Defense
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Defense
+  name: Defense
+  nameWithType: UnitType.Defense
+  fullName: StarterKit.UnitType.Defense
+- uid: StarterKit.UnitType.Speed*
+  commentId: Overload:StarterKit.UnitType.Speed
+  href: StarterKit.UnitType.html#StarterKit_UnitType_Speed
+  name: Speed
+  nameWithType: UnitType.Speed
+  fullName: StarterKit.UnitType.Speed

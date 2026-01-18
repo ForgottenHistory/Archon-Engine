@@ -1,0 +1,98 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  id: IGameEvent
+  parent: Core
+  children:
+  - Core.IGameEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/EventBus.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IGameEvent
+    path: Scripts/Core/EventBus.cs
+    startLine: 280
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Base interface for all game events.
+
+    Events MUST be structs (not classes) to avoid heap allocations during gameplay.
+
+    The EventBus uses generic EventQueue&lt;T&gt; which keeps events as value types throughout,
+
+    ensuring zero boxing and zero GC pressure.
+  example: []
+  syntax:
+    content: public interface IGameEvent
+    content.vb: Public Interface IGameEvent
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.IGameEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EventBus.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/EventBus.cs
+    startLine: 285
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: float TimeStamp { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Property TimeStamp As Single
+  overload: Core.IGameEvent.TimeStamp*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.IGameEvent.TimeStamp*
+  commentId: Overload:Core.IGameEvent.TimeStamp
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

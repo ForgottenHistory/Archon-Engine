@@ -1,0 +1,93 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  id: Map.Rendering.FogOfWar
+  children:
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase
+  - Map.Rendering.FogOfWar.FogOfWarRendererContext
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams
+  - Map.Rendering.FogOfWar.IFogOfWarRenderer
+  - Map.Rendering.FogOfWar.VisibilityState
+  langs:
+  - csharp
+  - vb
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  commentId: T:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html
+  name: DefaultFogOfWarRenderer
+  nameWithType: DefaultFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+- uid: Map.Rendering.FogOfWar.IFogOfWarRenderer
+  commentId: T:Map.Rendering.FogOfWar.IFogOfWarRenderer
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.IFogOfWarRenderer.html
+  name: IFogOfWarRenderer
+  nameWithType: IFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.IFogOfWarRenderer
+- uid: Map.Rendering.FogOfWar.VisibilityState
+  commentId: T:Map.Rendering.FogOfWar.VisibilityState
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.VisibilityState.html
+  name: VisibilityState
+  nameWithType: VisibilityState
+  fullName: Map.Rendering.FogOfWar.VisibilityState
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarRendererContext
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.FogOfWarRendererContext.html
+  name: FogOfWarRendererContext
+  nameWithType: FogOfWarRendererContext
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererContext
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarStyleParams
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.FogOfWarStyleParams.html
+  name: FogOfWarStyleParams
+  nameWithType: FogOfWarStyleParams
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarRendererBase
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html
+  name: FogOfWarRendererBase
+  nameWithType: FogOfWarRendererBase
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html

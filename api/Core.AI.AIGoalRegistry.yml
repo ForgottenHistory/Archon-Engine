@@ -1,0 +1,507 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIGoalRegistry
+  commentId: T:Core.AI.AIGoalRegistry
+  id: AIGoalRegistry
+  parent: Core.AI
+  children:
+  - Core.AI.AIGoalRegistry.#ctor(Core.EventBus)
+  - Core.AI.AIGoalRegistry.Dispose
+  - Core.AI.AIGoalRegistry.GetAllGoals
+  - Core.AI.AIGoalRegistry.GetGoal(System.UInt16)
+  - Core.AI.AIGoalRegistry.GetGoalByName(System.String)
+  - Core.AI.AIGoalRegistry.GoalCount
+  - Core.AI.AIGoalRegistry.Register(Core.AI.AIGoal)
+  langs:
+  - csharp
+  - vb
+  name: AIGoalRegistry
+  nameWithType: AIGoalRegistry
+  fullName: Core.AI.AIGoalRegistry
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIGoalRegistry
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Registry for AI goals (plug-and-play extensibility).
+
+
+    Design:
+
+    - GAME layer registers concrete goals during initialization
+
+    - ENGINE layer queries goals during AI processing
+
+    - Goals assigned sequential IDs (1, 2, 3, ...)
+
+    - ID 0 = no active goal
+
+
+    Usage:
+
+    - Registration: registry.Register(new BuildEconomyGoal());
+
+    - Query: var goal = registry.GetGoal(goalID);
+
+    - Iteration: foreach (var goal in registry.GetAllGoals())
+
+
+    Pattern: Registry Pattern (similar to CommandFactory)
+  example: []
+  syntax:
+    content: public class AIGoalRegistry
+    content.vb: Public Class AIGoalRegistry
+  inheritance:
+  - System.Object
+- uid: Core.AI.AIGoalRegistry.#ctor(Core.EventBus)
+  commentId: M:Core.AI.AIGoalRegistry.#ctor(Core.EventBus)
+  id: '#ctor(Core.EventBus)'
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: AIGoalRegistry(EventBus)
+  nameWithType: AIGoalRegistry.AIGoalRegistry(EventBus)
+  fullName: Core.AI.AIGoalRegistry.AIGoalRegistry(Core.EventBus)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AIGoalRegistry(EventBus eventBus = null)
+    parameters:
+    - id: eventBus
+      type: Core.EventBus
+    content.vb: Public Sub New(eventBus As EventBus = Nothing)
+  overload: Core.AI.AIGoalRegistry.#ctor*
+  nameWithType.vb: AIGoalRegistry.New(EventBus)
+  fullName.vb: Core.AI.AIGoalRegistry.New(Core.EventBus)
+  name.vb: New(EventBus)
+- uid: Core.AI.AIGoalRegistry.Register(Core.AI.AIGoal)
+  commentId: M:Core.AI.AIGoalRegistry.Register(Core.AI.AIGoal)
+  id: Register(Core.AI.AIGoal)
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: Register(AIGoal)
+  nameWithType: AIGoalRegistry.Register(AIGoal)
+  fullName: Core.AI.AIGoalRegistry.Register(Core.AI.AIGoal)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Register
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Register a new goal (called during initialization).
+  example: []
+  syntax:
+    content: public void Register(AIGoal goal)
+    parameters:
+    - id: goal
+      type: Core.AI.AIGoal
+    content.vb: Public Sub Register(goal As AIGoal)
+  overload: Core.AI.AIGoalRegistry.Register*
+- uid: Core.AI.AIGoalRegistry.GetGoal(System.UInt16)
+  commentId: M:Core.AI.AIGoalRegistry.GetGoal(System.UInt16)
+  id: GetGoal(System.UInt16)
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetGoal(ushort)
+  nameWithType: AIGoalRegistry.GetGoal(ushort)
+  fullName: Core.AI.AIGoalRegistry.GetGoal(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGoal
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get goal by ID (fast O(1) lookup).
+  example: []
+  syntax:
+    content: public AIGoal GetGoal(ushort goalID)
+    parameters:
+    - id: goalID
+      type: System.UInt16
+    return:
+      type: Core.AI.AIGoal
+    content.vb: Public Function GetGoal(goalID As UShort) As AIGoal
+  overload: Core.AI.AIGoalRegistry.GetGoal*
+  nameWithType.vb: AIGoalRegistry.GetGoal(UShort)
+  fullName.vb: Core.AI.AIGoalRegistry.GetGoal(UShort)
+  name.vb: GetGoal(UShort)
+- uid: Core.AI.AIGoalRegistry.GetGoalByName(System.String)
+  commentId: M:Core.AI.AIGoalRegistry.GetGoalByName(System.String)
+  id: GetGoalByName(System.String)
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetGoalByName(string)
+  nameWithType: AIGoalRegistry.GetGoalByName(string)
+  fullName: Core.AI.AIGoalRegistry.GetGoalByName(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGoalByName
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get goal by name (for debugging/testing).
+  example: []
+  syntax:
+    content: public AIGoal GetGoalByName(string name)
+    parameters:
+    - id: name
+      type: System.String
+    return:
+      type: Core.AI.AIGoal
+    content.vb: Public Function GetGoalByName(name As String) As AIGoal
+  overload: Core.AI.AIGoalRegistry.GetGoalByName*
+  nameWithType.vb: AIGoalRegistry.GetGoalByName(String)
+  fullName.vb: Core.AI.AIGoalRegistry.GetGoalByName(String)
+  name.vb: GetGoalByName(String)
+- uid: Core.AI.AIGoalRegistry.GetAllGoals
+  commentId: M:Core.AI.AIGoalRegistry.GetAllGoals
+  id: GetAllGoals
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAllGoals()
+  nameWithType: AIGoalRegistry.GetAllGoals()
+  fullName: Core.AI.AIGoalRegistry.GetAllGoals()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllGoals
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get all registered goals (for iteration during AI processing).
+  example: []
+  syntax:
+    content: public IReadOnlyList<AIGoal> GetAllGoals()
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Core.AI.AIGoal}
+    content.vb: Public Function GetAllGoals() As IReadOnlyList(Of AIGoal)
+  overload: Core.AI.AIGoalRegistry.GetAllGoals*
+- uid: Core.AI.AIGoalRegistry.GoalCount
+  commentId: P:Core.AI.AIGoalRegistry.GoalCount
+  id: GoalCount
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: GoalCount
+  nameWithType: AIGoalRegistry.GoalCount
+  fullName: Core.AI.AIGoalRegistry.GoalCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GoalCount
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get count of registered goals.
+  example: []
+  syntax:
+    content: public int GoalCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property GoalCount As Integer
+  overload: Core.AI.AIGoalRegistry.GoalCount*
+- uid: Core.AI.AIGoalRegistry.Dispose
+  commentId: M:Core.AI.AIGoalRegistry.Dispose
+  id: Dispose
+  parent: Core.AI.AIGoalRegistry
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: AIGoalRegistry.Dispose()
+  fullName: Core.AI.AIGoalRegistry.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/AI/AIGoalRegistry.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Dispose all goals (cleanup buffers).
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.AI.AIGoalRegistry.Dispose*
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.AIGoalRegistry.#ctor*
+  commentId: Overload:Core.AI.AIGoalRegistry.#ctor
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry__ctor_Core_EventBus_
+  name: AIGoalRegistry
+  nameWithType: AIGoalRegistry.AIGoalRegistry
+  fullName: Core.AI.AIGoalRegistry.AIGoalRegistry
+  nameWithType.vb: AIGoalRegistry.New
+  fullName.vb: Core.AI.AIGoalRegistry.New
+  name.vb: New
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.AI.AIGoalRegistry.Register*
+  commentId: Overload:Core.AI.AIGoalRegistry.Register
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_Register_Core_AI_AIGoal_
+  name: Register
+  nameWithType: AIGoalRegistry.Register
+  fullName: Core.AI.AIGoalRegistry.Register
+- uid: Core.AI.AIGoal
+  commentId: T:Core.AI.AIGoal
+  parent: Core.AI
+  href: Core.AI.AIGoal.html
+  name: AIGoal
+  nameWithType: AIGoal
+  fullName: Core.AI.AIGoal
+- uid: Core.AI.AIGoalRegistry.GetGoal*
+  commentId: Overload:Core.AI.AIGoalRegistry.GetGoal
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_GetGoal_System_UInt16_
+  name: GetGoal
+  nameWithType: AIGoalRegistry.GetGoal
+  fullName: Core.AI.AIGoalRegistry.GetGoal
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.AI.AIGoalRegistry.GetGoalByName*
+  commentId: Overload:Core.AI.AIGoalRegistry.GetGoalByName
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_GetGoalByName_System_String_
+  name: GetGoalByName
+  nameWithType: AIGoalRegistry.GetGoalByName
+  fullName: Core.AI.AIGoalRegistry.GetGoalByName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.AI.AIGoalRegistry.GetAllGoals*
+  commentId: Overload:Core.AI.AIGoalRegistry.GetAllGoals
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_GetAllGoals
+  name: GetAllGoals
+  nameWithType: AIGoalRegistry.GetAllGoals
+  fullName: Core.AI.AIGoalRegistry.GetAllGoals
+- uid: System.Collections.Generic.IReadOnlyList{Core.AI.AIGoal}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Core.AI.AIGoal}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: Core.AI.AIGoal.html
+  name: IReadOnlyList<AIGoal>
+  nameWithType: IReadOnlyList<AIGoal>
+  fullName: System.Collections.Generic.IReadOnlyList<Core.AI.AIGoal>
+  nameWithType.vb: IReadOnlyList(Of AIGoal)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Core.AI.AIGoal)
+  name.vb: IReadOnlyList(Of AIGoal)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: Core.AI.AIGoal
+    name: AIGoal
+    href: Core.AI.AIGoal.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.AI.AIGoal
+    name: AIGoal
+    href: Core.AI.AIGoal.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.AI.AIGoalRegistry.GoalCount*
+  commentId: Overload:Core.AI.AIGoalRegistry.GoalCount
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_GoalCount
+  name: GoalCount
+  nameWithType: AIGoalRegistry.GoalCount
+  fullName: Core.AI.AIGoalRegistry.GoalCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.AI.AIGoalRegistry.Dispose*
+  commentId: Overload:Core.AI.AIGoalRegistry.Dispose
+  href: Core.AI.AIGoalRegistry.html#Core_AI_AIGoalRegistry_Dispose
+  name: Dispose
+  nameWithType: AIGoalRegistry.Dispose
+  fullName: Core.AI.AIGoalRegistry.Dispose

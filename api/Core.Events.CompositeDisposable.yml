@@ -1,0 +1,359 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Events.CompositeDisposable
+  commentId: T:Core.Events.CompositeDisposable
+  id: CompositeDisposable
+  parent: Core.Events
+  children:
+  - Core.Events.CompositeDisposable.#ctor
+  - Core.Events.CompositeDisposable.#ctor(System.Int32)
+  - Core.Events.CompositeDisposable.Add(System.IDisposable)
+  - Core.Events.CompositeDisposable.Clear
+  - Core.Events.CompositeDisposable.Count
+  - Core.Events.CompositeDisposable.Dispose
+  - Core.Events.CompositeDisposable.Remove(System.IDisposable)
+  langs:
+  - csharp
+  - vb
+  name: CompositeDisposable
+  nameWithType: CompositeDisposable
+  fullName: Core.Events.CompositeDisposable
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompositeDisposable
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: >-
+    Groups multiple IDisposable objects for batch disposal.
+
+    Useful for managing multiple event subscriptions.
+  example: []
+  syntax:
+    content: public sealed class CompositeDisposable
+    content.vb: Public NotInheritable Class CompositeDisposable
+  inheritance:
+  - System.Object
+- uid: Core.Events.CompositeDisposable.#ctor
+  commentId: M:Core.Events.CompositeDisposable.#ctor
+  id: '#ctor'
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: CompositeDisposable()
+  nameWithType: CompositeDisposable.CompositeDisposable()
+  fullName: Core.Events.CompositeDisposable.CompositeDisposable()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Events
+  syntax:
+    content: public CompositeDisposable()
+    content.vb: Public Sub New()
+  overload: Core.Events.CompositeDisposable.#ctor*
+  nameWithType.vb: CompositeDisposable.New()
+  fullName.vb: Core.Events.CompositeDisposable.New()
+  name.vb: New()
+- uid: Core.Events.CompositeDisposable.#ctor(System.Int32)
+  commentId: M:Core.Events.CompositeDisposable.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: CompositeDisposable(int)
+  nameWithType: CompositeDisposable.CompositeDisposable(int)
+  fullName: Core.Events.CompositeDisposable.CompositeDisposable(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Events
+  syntax:
+    content: public CompositeDisposable(int capacity)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer)
+  overload: Core.Events.CompositeDisposable.#ctor*
+  nameWithType.vb: CompositeDisposable.New(Integer)
+  fullName.vb: Core.Events.CompositeDisposable.New(Integer)
+  name.vb: New(Integer)
+- uid: Core.Events.CompositeDisposable.Add(System.IDisposable)
+  commentId: M:Core.Events.CompositeDisposable.Add(System.IDisposable)
+  id: Add(System.IDisposable)
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: Add(IDisposable)
+  nameWithType: CompositeDisposable.Add(IDisposable)
+  fullName: Core.Events.CompositeDisposable.Add(System.IDisposable)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Add a disposable to the group.
+  example: []
+  syntax:
+    content: public void Add(IDisposable disposable)
+    parameters:
+    - id: disposable
+      type: System.IDisposable
+    content.vb: Public Sub Add(disposable As IDisposable)
+  overload: Core.Events.CompositeDisposable.Add*
+- uid: Core.Events.CompositeDisposable.Remove(System.IDisposable)
+  commentId: M:Core.Events.CompositeDisposable.Remove(System.IDisposable)
+  id: Remove(System.IDisposable)
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: Remove(IDisposable)
+  nameWithType: CompositeDisposable.Remove(IDisposable)
+  fullName: Core.Events.CompositeDisposable.Remove(System.IDisposable)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Remove
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Remove a disposable from the group without disposing it.
+  example: []
+  syntax:
+    content: public bool Remove(IDisposable disposable)
+    parameters:
+    - id: disposable
+      type: System.IDisposable
+    return:
+      type: System.Boolean
+    content.vb: Public Function Remove(disposable As IDisposable) As Boolean
+  overload: Core.Events.CompositeDisposable.Remove*
+- uid: Core.Events.CompositeDisposable.Count
+  commentId: P:Core.Events.CompositeDisposable.Count
+  id: Count
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CompositeDisposable.Count
+  fullName: Core.Events.CompositeDisposable.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Number of disposables in the group.
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Events.CompositeDisposable.Count*
+- uid: Core.Events.CompositeDisposable.Clear
+  commentId: M:Core.Events.CompositeDisposable.Clear
+  id: Clear
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: CompositeDisposable.Clear()
+  fullName: Core.Events.CompositeDisposable.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Clear all disposables without disposing them.
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Events.CompositeDisposable.Clear*
+- uid: Core.Events.CompositeDisposable.Dispose
+  commentId: M:Core.Events.CompositeDisposable.Dispose
+  id: Dispose
+  parent: Core.Events.CompositeDisposable
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CompositeDisposable.Dispose()
+  fullName: Core.Events.CompositeDisposable.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/CompositeDisposable.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Events/CompositeDisposable.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: Dispose all contained disposables.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Events.CompositeDisposable.Dispose*
+references:
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Events.CompositeDisposable.#ctor*
+  commentId: Overload:Core.Events.CompositeDisposable.#ctor
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable__ctor
+  name: CompositeDisposable
+  nameWithType: CompositeDisposable.CompositeDisposable
+  fullName: Core.Events.CompositeDisposable.CompositeDisposable
+  nameWithType.vb: CompositeDisposable.New
+  fullName.vb: Core.Events.CompositeDisposable.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Events.CompositeDisposable.Add*
+  commentId: Overload:Core.Events.CompositeDisposable.Add
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable_Add_System_IDisposable_
+  name: Add
+  nameWithType: CompositeDisposable.Add
+  fullName: Core.Events.CompositeDisposable.Add
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: Core.Events.CompositeDisposable.Remove*
+  commentId: Overload:Core.Events.CompositeDisposable.Remove
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable_Remove_System_IDisposable_
+  name: Remove
+  nameWithType: CompositeDisposable.Remove
+  fullName: Core.Events.CompositeDisposable.Remove
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Events.CompositeDisposable.Count*
+  commentId: Overload:Core.Events.CompositeDisposable.Count
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable_Count
+  name: Count
+  nameWithType: CompositeDisposable.Count
+  fullName: Core.Events.CompositeDisposable.Count
+- uid: Core.Events.CompositeDisposable.Clear*
+  commentId: Overload:Core.Events.CompositeDisposable.Clear
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable_Clear
+  name: Clear
+  nameWithType: CompositeDisposable.Clear
+  fullName: Core.Events.CompositeDisposable.Clear
+- uid: Core.Events.CompositeDisposable.Dispose*
+  commentId: Overload:Core.Events.CompositeDisposable.Dispose
+  href: Core.Events.CompositeDisposable.html#Core_Events_CompositeDisposable_Dispose
+  name: Dispose
+  nameWithType: CompositeDisposable.Dispose
+  fullName: Core.Events.CompositeDisposable.Dispose

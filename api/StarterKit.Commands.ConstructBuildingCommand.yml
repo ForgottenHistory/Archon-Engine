@@ -1,0 +1,625 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Commands.ConstructBuildingCommand
+  commentId: T:StarterKit.Commands.ConstructBuildingCommand
+  id: ConstructBuildingCommand
+  parent: StarterKit.Commands
+  children:
+  - StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  - StarterKit.Commands.ConstructBuildingCommand.Execute(Core.GameState)
+  - StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+  - StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: ConstructBuildingCommand
+  nameWithType: ConstructBuildingCommand
+  fullName: StarterKit.Commands.ConstructBuildingCommand
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConstructBuildingCommand
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 13
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  summary: >-
+    StarterKit command: Construct a building in a province.
+
+    Demonstrates fluent validation with multiple GAME-layer validators.
+
+    Uses type-safe ProvinceId wrapper for compile-time safety.
+  example: []
+  syntax:
+    content: >-
+      [Command("build", Aliases = new string[] { "construct" }, Description = "Construct a building in a province", Examples = new string[] { "build market 5", "construct farm 10" })]
+
+      public class ConstructBuildingCommand : SimpleCommand, ICommand
+    content.vb: >-
+      <Command("build", Aliases:=New String() { "construct" }, Description:="Construct a building in a province", Examples:=New String() { "build market 5", "construct farm 10" })>
+
+      Public Class ConstructBuildingCommand Inherits SimpleCommand Implements ICommand
+  inheritance:
+  - System.Object
+  - Core.Commands.BaseCommand
+  - Core.Commands.SimpleCommand
+  implements:
+  - Core.Commands.ICommand
+  inheritedMembers:
+  - Core.Commands.SimpleCommand.Undo(Core.GameState)
+  - Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+  - Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+  - Core.Commands.BaseCommand.Priority
+  - Core.Commands.BaseCommand.CommandId
+  - Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.LogExecution(System.String)
+  attributes:
+  - type: Core.Commands.CommandAttribute
+    ctor: Core.Commands.CommandAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: build
+    namedArguments:
+    - name: Description
+      type: System.String
+      value: Construct a building in a province
+- uid: StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  commentId: P:StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  id: BuildingTypeId
+  parent: StarterKit.Commands.ConstructBuildingCommand
+  langs:
+  - csharp
+  - vb
+  name: BuildingTypeId
+  nameWithType: ConstructBuildingCommand.BuildingTypeId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingTypeId
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 19
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  syntax:
+    content: >-
+      [Arg(0, "buildingType")]
+
+      public string BuildingTypeId { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: >-
+      <Arg(0, "buildingType")>
+
+      Public Property BuildingTypeId As String
+  overload: StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId*
+  attributes:
+  - type: Core.Commands.ArgAttribute
+    ctor: Core.Commands.ArgAttribute.#ctor(System.Int32,System.String)
+    arguments:
+    - type: System.Int32
+      value: 0
+    - type: System.String
+      value: buildingType
+- uid: StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+  commentId: P:StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+  id: ProvinceId
+  parent: StarterKit.Commands.ConstructBuildingCommand
+  langs:
+  - csharp
+  - vb
+  name: ProvinceId
+  nameWithType: ConstructBuildingCommand.ProvinceId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceId
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  syntax:
+    content: >-
+      [Arg(1, "provinceId")]
+
+      public ProvinceId ProvinceId { get; set; }
+    parameters: []
+    return:
+      type: Core.Data.Ids.ProvinceId
+    content.vb: >-
+      <Arg(1, "provinceId")>
+
+      Public Property ProvinceId As ProvinceId
+  overload: StarterKit.Commands.ConstructBuildingCommand.ProvinceId*
+  attributes:
+  - type: Core.Commands.ArgAttribute
+    ctor: Core.Commands.ArgAttribute.#ctor(System.Int32,System.String)
+    arguments:
+    - type: System.Int32
+      value: 1
+    - type: System.String
+      value: provinceId
+- uid: StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
+  commentId: M:StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
+  id: Validate(Core.GameState)
+  parent: StarterKit.Commands.ConstructBuildingCommand
+  langs:
+  - csharp
+  - vb
+  name: Validate(GameState)
+  nameWithType: ConstructBuildingCommand.Validate(GameState)
+  fullName: StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 27
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  summary: Override to implement validation logic.
+  example: []
+  syntax:
+    content: public override bool Validate(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Validate(gameState As GameState) As Boolean
+  overridden: Core.Commands.SimpleCommand.Validate(Core.GameState)
+  overload: StarterKit.Commands.ConstructBuildingCommand.Validate*
+- uid: StarterKit.Commands.ConstructBuildingCommand.Execute(Core.GameState)
+  commentId: M:StarterKit.Commands.ConstructBuildingCommand.Execute(Core.GameState)
+  id: Execute(Core.GameState)
+  parent: StarterKit.Commands.ConstructBuildingCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute(GameState)
+  nameWithType: ConstructBuildingCommand.Execute(GameState)
+  fullName: StarterKit.Commands.ConstructBuildingCommand.Execute(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 37
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  summary: Override to implement execution logic.
+  example: []
+  syntax:
+    content: public override void Execute(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Overrides Sub Execute(gameState As GameState)
+  overridden: Core.Commands.SimpleCommand.Execute(Core.GameState)
+  overload: StarterKit.Commands.ConstructBuildingCommand.Execute*
+references:
+- uid: StarterKit.Commands
+  commentId: N:StarterKit.Commands
+  href: StarterKit.html
+  name: StarterKit.Commands
+  nameWithType: StarterKit.Commands
+  fullName: StarterKit.Commands
+  spec.csharp:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Commands
+    name: Commands
+    href: StarterKit.Commands.html
+  spec.vb:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Commands
+    name: Commands
+    href: StarterKit.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Commands.BaseCommand
+  commentId: T:Core.Commands.BaseCommand
+  parent: Core.Commands
+  href: Core.Commands.BaseCommand.html
+  name: BaseCommand
+  nameWithType: BaseCommand
+  fullName: Core.Commands.BaseCommand
+- uid: Core.Commands.SimpleCommand
+  commentId: T:Core.Commands.SimpleCommand
+  parent: Core.Commands
+  href: Core.Commands.SimpleCommand.html
+  name: SimpleCommand
+  nameWithType: SimpleCommand
+  fullName: Core.Commands.SimpleCommand
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: Core.Commands.SimpleCommand.Undo(Core.GameState)
+  commentId: M:Core.Commands.SimpleCommand.Undo(Core.GameState)
+  parent: Core.Commands.SimpleCommand
+  name: Undo(GameState)
+  nameWithType: SimpleCommand.Undo(GameState)
+  fullName: Core.Commands.SimpleCommand.Undo(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.SimpleCommand.Undo(Core.GameState)
+    name: Undo
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.SimpleCommand.Undo(Core.GameState)
+    name: Undo
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+- uid: Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+  parent: Core.Commands.SimpleCommand
+  isExternal: true
+  name: Serialize(BinaryWriter)
+  nameWithType: SimpleCommand.Serialize(BinaryWriter)
+  fullName: Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+  spec.csharp:
+  - uid: Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.SimpleCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+- uid: Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+  parent: Core.Commands.SimpleCommand
+  isExternal: true
+  name: Deserialize(BinaryReader)
+  nameWithType: SimpleCommand.Deserialize(BinaryReader)
+  fullName: Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+  spec.csharp:
+  - uid: Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.SimpleCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.Priority
+  commentId: P:Core.Commands.BaseCommand.Priority
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Priority
+  name: Priority
+  nameWithType: BaseCommand.Priority
+  fullName: Core.Commands.BaseCommand.Priority
+- uid: Core.Commands.BaseCommand.CommandId
+  commentId: P:Core.Commands.BaseCommand.CommandId
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_CommandId
+  name: CommandId
+  nameWithType: BaseCommand.CommandId
+  fullName: Core.Commands.BaseCommand.CommandId
+- uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  name: ValidateProvinceId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateProvinceId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateProvinceId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, UShort)
+  name.vb: ValidateProvinceId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  name: ValidateCountryId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateCountryId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateCountryId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, UShort)
+  name.vb: ValidateCountryId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.LogExecution(System.String)
+  commentId: M:Core.Commands.BaseCommand.LogExecution(System.String)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  name: LogExecution(string)
+  nameWithType: BaseCommand.LogExecution(string)
+  fullName: Core.Commands.BaseCommand.LogExecution(string)
+  nameWithType.vb: BaseCommand.LogExecution(String)
+  fullName.vb: Core.Commands.BaseCommand.LogExecution(String)
+  name.vb: LogExecution(String)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId*
+  commentId: Overload:StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  href: StarterKit.Commands.ConstructBuildingCommand.html#StarterKit_Commands_ConstructBuildingCommand_BuildingTypeId
+  name: BuildingTypeId
+  nameWithType: ConstructBuildingCommand.BuildingTypeId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.Commands.ConstructBuildingCommand.ProvinceId*
+  commentId: Overload:StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+  href: StarterKit.Commands.ConstructBuildingCommand.html#StarterKit_Commands_ConstructBuildingCommand_ProvinceId
+  name: ProvinceId
+  nameWithType: ConstructBuildingCommand.ProvinceId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.ProvinceId
+- uid: Core.Data.Ids.ProvinceId
+  commentId: T:Core.Data.Ids.ProvinceId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.ProvinceId.html
+  name: ProvinceId
+  nameWithType: ProvinceId
+  fullName: Core.Data.Ids.ProvinceId
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+- uid: Core.Commands.SimpleCommand.Validate(Core.GameState)
+  commentId: M:Core.Commands.SimpleCommand.Validate(Core.GameState)
+  parent: Core.Commands.SimpleCommand
+  name: Validate(GameState)
+  nameWithType: SimpleCommand.Validate(GameState)
+  fullName: Core.Commands.SimpleCommand.Validate(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.SimpleCommand.Validate(Core.GameState)
+    name: Validate
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.SimpleCommand.Validate(Core.GameState)
+    name: Validate
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+- uid: StarterKit.Commands.ConstructBuildingCommand.Validate*
+  commentId: Overload:StarterKit.Commands.ConstructBuildingCommand.Validate
+  href: StarterKit.Commands.ConstructBuildingCommand.html#StarterKit_Commands_ConstructBuildingCommand_Validate_Core_GameState_
+  name: Validate
+  nameWithType: ConstructBuildingCommand.Validate
+  fullName: StarterKit.Commands.ConstructBuildingCommand.Validate
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Commands.SimpleCommand.Execute(Core.GameState)
+  commentId: M:Core.Commands.SimpleCommand.Execute(Core.GameState)
+  parent: Core.Commands.SimpleCommand
+  name: Execute(GameState)
+  nameWithType: SimpleCommand.Execute(GameState)
+  fullName: Core.Commands.SimpleCommand.Execute(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.SimpleCommand.Execute(Core.GameState)
+    name: Execute
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.SimpleCommand.Execute(Core.GameState)
+    name: Execute
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+- uid: StarterKit.Commands.ConstructBuildingCommand.Execute*
+  commentId: Overload:StarterKit.Commands.ConstructBuildingCommand.Execute
+  href: StarterKit.Commands.ConstructBuildingCommand.html#StarterKit_Commands_ConstructBuildingCommand_Execute_Core_GameState_
+  name: Execute
+  nameWithType: ConstructBuildingCommand.Execute
+  fullName: StarterKit.Commands.ConstructBuildingCommand.Execute

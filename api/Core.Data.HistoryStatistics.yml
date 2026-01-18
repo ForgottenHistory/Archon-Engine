@@ -1,0 +1,240 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.HistoryStatistics
+  commentId: T:Core.Data.HistoryStatistics
+  id: HistoryStatistics
+  parent: Core.Data
+  children:
+  - Core.Data.HistoryStatistics.AverageDevelopment
+  - Core.Data.HistoryStatistics.SampleCount
+  - Core.Data.HistoryStatistics.TotalOwnershipChanges
+  - Core.Data.HistoryStatistics.UpdateAverageDevelopment(System.Single,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: HistoryStatistics
+  nameWithType: HistoryStatistics
+  fullName: Core.Data.HistoryStatistics
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HistoryStatistics
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 262
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Long-term statistical summary
+  example: []
+  syntax:
+    content: public class HistoryStatistics
+    content.vb: Public Class HistoryStatistics
+  inheritance:
+  - System.Object
+- uid: Core.Data.HistoryStatistics.TotalOwnershipChanges
+  commentId: P:Core.Data.HistoryStatistics.TotalOwnershipChanges
+  id: TotalOwnershipChanges
+  parent: Core.Data.HistoryStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalOwnershipChanges
+  nameWithType: HistoryStatistics.TotalOwnershipChanges
+  fullName: Core.Data.HistoryStatistics.TotalOwnershipChanges
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalOwnershipChanges
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 264
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int TotalOwnershipChanges { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property TotalOwnershipChanges As Integer
+  overload: Core.Data.HistoryStatistics.TotalOwnershipChanges*
+- uid: Core.Data.HistoryStatistics.AverageDevelopment
+  commentId: P:Core.Data.HistoryStatistics.AverageDevelopment
+  id: AverageDevelopment
+  parent: Core.Data.HistoryStatistics
+  langs:
+  - csharp
+  - vb
+  name: AverageDevelopment
+  nameWithType: HistoryStatistics.AverageDevelopment
+  fullName: Core.Data.HistoryStatistics.AverageDevelopment
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 265
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public float AverageDevelopment { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property AverageDevelopment As Single
+  overload: Core.Data.HistoryStatistics.AverageDevelopment*
+- uid: Core.Data.HistoryStatistics.SampleCount
+  commentId: P:Core.Data.HistoryStatistics.SampleCount
+  id: SampleCount
+  parent: Core.Data.HistoryStatistics
+  langs:
+  - csharp
+  - vb
+  name: SampleCount
+  nameWithType: HistoryStatistics.SampleCount
+  fullName: Core.Data.HistoryStatistics.SampleCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SampleCount
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 266
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int SampleCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property SampleCount As Integer
+  overload: Core.Data.HistoryStatistics.SampleCount*
+- uid: Core.Data.HistoryStatistics.UpdateAverageDevelopment(System.Single,System.Int32)
+  commentId: M:Core.Data.HistoryStatistics.UpdateAverageDevelopment(System.Single,System.Int32)
+  id: UpdateAverageDevelopment(System.Single,System.Int32)
+  parent: Core.Data.HistoryStatistics
+  langs:
+  - csharp
+  - vb
+  name: UpdateAverageDevelopment(float, int)
+  nameWithType: HistoryStatistics.UpdateAverageDevelopment(float, int)
+  fullName: Core.Data.HistoryStatistics.UpdateAverageDevelopment(float, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateAverageDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 268
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void UpdateAverageDevelopment(float newAverage, int newSampleCount)
+    parameters:
+    - id: newAverage
+      type: System.Single
+    - id: newSampleCount
+      type: System.Int32
+    content.vb: Public Sub UpdateAverageDevelopment(newAverage As Single, newSampleCount As Integer)
+  overload: Core.Data.HistoryStatistics.UpdateAverageDevelopment*
+  nameWithType.vb: HistoryStatistics.UpdateAverageDevelopment(Single, Integer)
+  fullName.vb: Core.Data.HistoryStatistics.UpdateAverageDevelopment(Single, Integer)
+  name.vb: UpdateAverageDevelopment(Single, Integer)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.HistoryStatistics.TotalOwnershipChanges*
+  commentId: Overload:Core.Data.HistoryStatistics.TotalOwnershipChanges
+  href: Core.Data.HistoryStatistics.html#Core_Data_HistoryStatistics_TotalOwnershipChanges
+  name: TotalOwnershipChanges
+  nameWithType: HistoryStatistics.TotalOwnershipChanges
+  fullName: Core.Data.HistoryStatistics.TotalOwnershipChanges
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.HistoryStatistics.AverageDevelopment*
+  commentId: Overload:Core.Data.HistoryStatistics.AverageDevelopment
+  href: Core.Data.HistoryStatistics.html#Core_Data_HistoryStatistics_AverageDevelopment
+  name: AverageDevelopment
+  nameWithType: HistoryStatistics.AverageDevelopment
+  fullName: Core.Data.HistoryStatistics.AverageDevelopment
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Data.HistoryStatistics.SampleCount*
+  commentId: Overload:Core.Data.HistoryStatistics.SampleCount
+  href: Core.Data.HistoryStatistics.html#Core_Data_HistoryStatistics_SampleCount
+  name: SampleCount
+  nameWithType: HistoryStatistics.SampleCount
+  fullName: Core.Data.HistoryStatistics.SampleCount
+- uid: Core.Data.HistoryStatistics.UpdateAverageDevelopment*
+  commentId: Overload:Core.Data.HistoryStatistics.UpdateAverageDevelopment
+  href: Core.Data.HistoryStatistics.html#Core_Data_HistoryStatistics_UpdateAverageDevelopment_System_Single_System_Int32_
+  name: UpdateAverageDevelopment
+  nameWithType: HistoryStatistics.UpdateAverageDevelopment
+  fullName: Core.Data.HistoryStatistics.UpdateAverageDevelopment

@@ -1,0 +1,219 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.HeightmapParser.TerrainType
+  commentId: T:Map.Loading.Images.HeightmapParser.TerrainType
+  id: HeightmapParser.TerrainType
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.HeightmapParser.TerrainType.Hills
+  - Map.Loading.Images.HeightmapParser.TerrainType.Mountains
+  - Map.Loading.Images.HeightmapParser.TerrainType.Peaks
+  - Map.Loading.Images.HeightmapParser.TerrainType.Plains
+  - Map.Loading.Images.HeightmapParser.TerrainType.Water
+  langs:
+  - csharp
+  - vb
+  name: HeightmapParser.TerrainType
+  nameWithType: HeightmapParser.TerrainType
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainType
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 224
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Classify terrain based on height and slope
+  example: []
+  syntax:
+    content: 'public enum HeightmapParser.TerrainType : byte'
+    content.vb: Public Enum HeightmapParser.TerrainType As Byte
+- uid: Map.Loading.Images.HeightmapParser.TerrainType.Water
+  commentId: F:Map.Loading.Images.HeightmapParser.TerrainType.Water
+  id: Water
+  parent: Map.Loading.Images.HeightmapParser.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Water
+  nameWithType: HeightmapParser.TerrainType.Water
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType.Water
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Water
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 226
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Water = 0
+    return:
+      type: Map.Loading.Images.HeightmapParser.TerrainType
+- uid: Map.Loading.Images.HeightmapParser.TerrainType.Plains
+  commentId: F:Map.Loading.Images.HeightmapParser.TerrainType.Plains
+  id: Plains
+  parent: Map.Loading.Images.HeightmapParser.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Plains
+  nameWithType: HeightmapParser.TerrainType.Plains
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType.Plains
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Plains
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 227
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Plains = 1
+    return:
+      type: Map.Loading.Images.HeightmapParser.TerrainType
+- uid: Map.Loading.Images.HeightmapParser.TerrainType.Hills
+  commentId: F:Map.Loading.Images.HeightmapParser.TerrainType.Hills
+  id: Hills
+  parent: Map.Loading.Images.HeightmapParser.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Hills
+  nameWithType: HeightmapParser.TerrainType.Hills
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType.Hills
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hills
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 228
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Hills = 2
+    return:
+      type: Map.Loading.Images.HeightmapParser.TerrainType
+- uid: Map.Loading.Images.HeightmapParser.TerrainType.Mountains
+  commentId: F:Map.Loading.Images.HeightmapParser.TerrainType.Mountains
+  id: Mountains
+  parent: Map.Loading.Images.HeightmapParser.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Mountains
+  nameWithType: HeightmapParser.TerrainType.Mountains
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType.Mountains
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mountains
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 229
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Mountains = 3
+    return:
+      type: Map.Loading.Images.HeightmapParser.TerrainType
+- uid: Map.Loading.Images.HeightmapParser.TerrainType.Peaks
+  commentId: F:Map.Loading.Images.HeightmapParser.TerrainType.Peaks
+  id: Peaks
+  parent: Map.Loading.Images.HeightmapParser.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Peaks
+  nameWithType: HeightmapParser.TerrainType.Peaks
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType.Peaks
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Peaks
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 230
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Peaks = 4
+    return:
+      type: Map.Loading.Images.HeightmapParser.TerrainType
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.HeightmapParser.TerrainType
+  commentId: T:Map.Loading.Images.HeightmapParser.TerrainType
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapParser.html
+  name: HeightmapParser.TerrainType
+  nameWithType: HeightmapParser.TerrainType
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.TerrainType
+    name: TerrainType
+    href: Map.Loading.Images.HeightmapParser.TerrainType.html
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.TerrainType
+    name: TerrainType
+    href: Map.Loading.Images.HeightmapParser.TerrainType.html

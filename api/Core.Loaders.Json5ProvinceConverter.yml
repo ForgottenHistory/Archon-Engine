@@ -1,0 +1,156 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.Json5ProvinceConverter
+  commentId: T:Core.Loaders.Json5ProvinceConverter
+  id: Json5ProvinceConverter
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files(System.String)
+  langs:
+  - csharp
+  - vb
+  name: Json5ProvinceConverter
+  nameWithType: Json5ProvinceConverter
+  fullName: Core.Loaders.Json5ProvinceConverter
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Json5ProvinceConverter
+    path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Converts JSON5 province files to burst-compatible structs
+
+    Phase 1 of the hybrid JSON5 + Burst architecture
+  example: []
+  syntax:
+    content: public static class Json5ProvinceConverter
+    content.vb: Public Module Json5ProvinceConverter
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files(System.String)
+  commentId: M:Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files(System.String)
+  id: LoadProvinceJson5Files(System.String)
+  parent: Core.Loaders.Json5ProvinceConverter
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceJson5Files(string)
+  nameWithType: Json5ProvinceConverter.LoadProvinceJson5Files(string)
+  fullName: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceJson5Files
+    path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load all province JSON5 files and convert to burst-compatible structs
+  example: []
+  syntax:
+    content: public static Json5ProvinceLoadResult LoadProvinceJson5Files(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    return:
+      type: Core.Data.Json5ProvinceLoadResult
+    content.vb: Public Shared Function LoadProvinceJson5Files(dataDirectory As String) As Json5ProvinceLoadResult
+  overload: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files*
+  nameWithType.vb: Json5ProvinceConverter.LoadProvinceJson5Files(String)
+  fullName.vb: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files(String)
+  name.vb: LoadProvinceJson5Files(String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files*
+  commentId: Overload:Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files
+  href: Core.Loaders.Json5ProvinceConverter.html#Core_Loaders_Json5ProvinceConverter_LoadProvinceJson5Files_System_String_
+  name: LoadProvinceJson5Files
+  nameWithType: Json5ProvinceConverter.LoadProvinceJson5Files
+  fullName: Core.Loaders.Json5ProvinceConverter.LoadProvinceJson5Files
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.Json5ProvinceLoadResult
+  commentId: T:Core.Data.Json5ProvinceLoadResult
+  parent: Core.Data
+  href: Core.Data.Json5ProvinceLoadResult.html
+  name: Json5ProvinceLoadResult
+  nameWithType: Json5ProvinceLoadResult
+  fullName: Core.Data.Json5ProvinceLoadResult
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html

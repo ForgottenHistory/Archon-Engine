@@ -1,0 +1,37 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Core
+  commentId: N:Map.Core
+  id: Map.Core
+  children:
+  - Map.Core.EngineMapInitializer
+  - Map.Core.MapInitializer
+  - Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: Map.Core
+  nameWithType: Map.Core
+  fullName: Map.Core
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Core.MapSystemCoordinator
+  commentId: T:Map.Core.MapSystemCoordinator
+  href: Map.Core.MapSystemCoordinator.html
+  name: MapSystemCoordinator
+  nameWithType: MapSystemCoordinator
+  fullName: Map.Core.MapSystemCoordinator
+- uid: Map.Core.EngineMapInitializer
+  commentId: T:Map.Core.EngineMapInitializer
+  href: Map.Core.EngineMapInitializer.html
+  name: EngineMapInitializer
+  nameWithType: EngineMapInitializer
+  fullName: Map.Core.EngineMapInitializer
+- uid: Map.Core.MapInitializer
+  commentId: T:Map.Core.MapInitializer
+  href: Map.Core.MapInitializer.html
+  name: MapInitializer
+  nameWithType: MapInitializer
+  fullName: Map.Core.MapInitializer

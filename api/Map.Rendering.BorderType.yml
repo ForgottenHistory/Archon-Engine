@@ -1,0 +1,139 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderType
+  commentId: T:Map.Rendering.BorderType
+  id: BorderType
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderType.Country
+  - Map.Rendering.BorderType.None
+  - Map.Rendering.BorderType.Province
+  langs:
+  - csharp
+  - vb
+  name: BorderType
+  nameWithType: BorderType
+  fullName: Map.Rendering.BorderType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderType
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public enum BorderType
+    content.vb: Public Enum BorderType
+- uid: Map.Rendering.BorderType.None
+  commentId: F:Map.Rendering.BorderType.None
+  id: None
+  parent: Map.Rendering.BorderType
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: BorderType.None
+  fullName: Map.Rendering.BorderType.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: None = 0
+    return:
+      type: Map.Rendering.BorderType
+- uid: Map.Rendering.BorderType.Province
+  commentId: F:Map.Rendering.BorderType.Province
+  id: Province
+  parent: Map.Rendering.BorderType
+  langs:
+  - csharp
+  - vb
+  name: Province
+  nameWithType: BorderType.Province
+  fullName: Map.Rendering.BorderType.Province
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Province
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Province = 1
+    return:
+      type: Map.Rendering.BorderType
+- uid: Map.Rendering.BorderType.Country
+  commentId: F:Map.Rendering.BorderType.Country
+  id: Country
+  parent: Map.Rendering.BorderType
+  langs:
+  - csharp
+  - vb
+  name: Country
+  nameWithType: BorderType.Country
+  fullName: Map.Rendering.BorderType.Country
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Country = 2
+    return:
+      type: Map.Rendering.BorderType
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.BorderType
+  commentId: T:Map.Rendering.BorderType
+  parent: Map.Rendering
+  href: Map.Rendering.BorderType.html
+  name: BorderType
+  nameWithType: BorderType
+  fullName: Map.Rendering.BorderType

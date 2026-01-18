@@ -1,0 +1,212 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.ProvinceStatistics
+  commentId: T:Core.Queries.ProvinceStatistics
+  id: ProvinceStatistics
+  parent: Core.Queries
+  children:
+  - Core.Queries.ProvinceStatistics.LandProvinces
+  - Core.Queries.ProvinceStatistics.OceanProvinces
+  - Core.Queries.ProvinceStatistics.OwnedProvinces
+  - Core.Queries.ProvinceStatistics.TotalProvinces
+  - Core.Queries.ProvinceStatistics.UnownedProvinces
+  langs:
+  - csharp
+  - vb
+  name: ProvinceStatistics
+  nameWithType: ProvinceStatistics
+  fullName: Core.Queries.ProvinceStatistics
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceStatistics
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 750
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Province statistics for debugging and UI (engine-only data)
+
+    Note: Development fields removed (game-specific)
+  example: []
+  syntax:
+    content: public struct ProvinceStatistics
+    content.vb: Public Structure ProvinceStatistics
+- uid: Core.Queries.ProvinceStatistics.TotalProvinces
+  commentId: F:Core.Queries.ProvinceStatistics.TotalProvinces
+  id: TotalProvinces
+  parent: Core.Queries.ProvinceStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalProvinces
+  nameWithType: ProvinceStatistics.TotalProvinces
+  fullName: Core.Queries.ProvinceStatistics.TotalProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 752
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int TotalProvinces
+    return:
+      type: System.Int32
+    content.vb: Public TotalProvinces As Integer
+- uid: Core.Queries.ProvinceStatistics.LandProvinces
+  commentId: F:Core.Queries.ProvinceStatistics.LandProvinces
+  id: LandProvinces
+  parent: Core.Queries.ProvinceStatistics
+  langs:
+  - csharp
+  - vb
+  name: LandProvinces
+  nameWithType: ProvinceStatistics.LandProvinces
+  fullName: Core.Queries.ProvinceStatistics.LandProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LandProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 753
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int LandProvinces
+    return:
+      type: System.Int32
+    content.vb: Public LandProvinces As Integer
+- uid: Core.Queries.ProvinceStatistics.OceanProvinces
+  commentId: F:Core.Queries.ProvinceStatistics.OceanProvinces
+  id: OceanProvinces
+  parent: Core.Queries.ProvinceStatistics
+  langs:
+  - csharp
+  - vb
+  name: OceanProvinces
+  nameWithType: ProvinceStatistics.OceanProvinces
+  fullName: Core.Queries.ProvinceStatistics.OceanProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OceanProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 754
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int OceanProvinces
+    return:
+      type: System.Int32
+    content.vb: Public OceanProvinces As Integer
+- uid: Core.Queries.ProvinceStatistics.OwnedProvinces
+  commentId: F:Core.Queries.ProvinceStatistics.OwnedProvinces
+  id: OwnedProvinces
+  parent: Core.Queries.ProvinceStatistics
+  langs:
+  - csharp
+  - vb
+  name: OwnedProvinces
+  nameWithType: ProvinceStatistics.OwnedProvinces
+  fullName: Core.Queries.ProvinceStatistics.OwnedProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnedProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 755
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int OwnedProvinces
+    return:
+      type: System.Int32
+    content.vb: Public OwnedProvinces As Integer
+- uid: Core.Queries.ProvinceStatistics.UnownedProvinces
+  commentId: F:Core.Queries.ProvinceStatistics.UnownedProvinces
+  id: UnownedProvinces
+  parent: Core.Queries.ProvinceStatistics
+  langs:
+  - csharp
+  - vb
+  name: UnownedProvinces
+  nameWithType: ProvinceStatistics.UnownedProvinces
+  fullName: Core.Queries.ProvinceStatistics.UnownedProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnownedProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 756
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int UnownedProvinces
+    return:
+      type: System.Int32
+    content.vb: Public UnownedProvinces As Integer
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

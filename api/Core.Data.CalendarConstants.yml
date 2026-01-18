@@ -1,0 +1,456 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CalendarConstants
+  commentId: T:Core.Data.CalendarConstants
+  id: CalendarConstants
+  parent: Core.Data
+  children:
+  - Core.Data.CalendarConstants.DAYS_BEFORE_MONTH
+  - Core.Data.CalendarConstants.DAYS_IN_MONTH
+  - Core.Data.CalendarConstants.DAYS_PER_WEEK
+  - Core.Data.CalendarConstants.DAYS_PER_YEAR
+  - Core.Data.CalendarConstants.HOURS_PER_DAY
+  - Core.Data.CalendarConstants.HOURS_PER_WEEK
+  - Core.Data.CalendarConstants.HOURS_PER_YEAR
+  - Core.Data.CalendarConstants.MONTHS_PER_YEAR
+  - Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_MONTH
+  - Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_YEAR
+  - Core.Data.CalendarConstants.SIMPLIFIED_HOURS_PER_YEAR
+  langs:
+  - csharp
+  - vb
+  name: CalendarConstants
+  nameWithType: CalendarConstants
+  fullName: Core.Data.CalendarConstants
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalendarConstants
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    ENGINE: Single source of truth for calendar constants.
+
+    All time-related code should reference these constants instead of hardcoding values.
+
+
+    Design Rationale:
+
+    - Real Earth calendar: 365 days, real month lengths (31/30/28)
+
+    - No leap years: Deterministic for multiplayer (Feb always 28 days)
+
+    - Pre-calculated derived constants: Avoid multiplication in hot paths
+
+
+    MULTIPLAYER CRITICAL: These constants define the time unit conversions
+
+    that must be identical across all clients.
+  example: []
+  syntax:
+    content: public static class CalendarConstants
+    content.vb: Public Module CalendarConstants
+  inheritance:
+  - System.Object
+- uid: Core.Data.CalendarConstants.HOURS_PER_DAY
+  commentId: F:Core.Data.CalendarConstants.HOURS_PER_DAY
+  id: HOURS_PER_DAY
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: HOURS_PER_DAY
+  nameWithType: CalendarConstants.HOURS_PER_DAY
+  fullName: Core.Data.CalendarConstants.HOURS_PER_DAY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HOURS_PER_DAY
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Hours per day (universal constant)
+  example: []
+  syntax:
+    content: public const int HOURS_PER_DAY = 24
+    return:
+      type: System.Int32
+    content.vb: Public Const HOURS_PER_DAY As Integer = 24
+- uid: Core.Data.CalendarConstants.DAYS_PER_WEEK
+  commentId: F:Core.Data.CalendarConstants.DAYS_PER_WEEK
+  id: DAYS_PER_WEEK
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: DAYS_PER_WEEK
+  nameWithType: CalendarConstants.DAYS_PER_WEEK
+  fullName: Core.Data.CalendarConstants.DAYS_PER_WEEK
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DAYS_PER_WEEK
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Days per week (for weekly tick events)
+  example: []
+  syntax:
+    content: public const int DAYS_PER_WEEK = 7
+    return:
+      type: System.Int32
+    content.vb: Public Const DAYS_PER_WEEK As Integer = 7
+- uid: Core.Data.CalendarConstants.MONTHS_PER_YEAR
+  commentId: F:Core.Data.CalendarConstants.MONTHS_PER_YEAR
+  id: MONTHS_PER_YEAR
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: MONTHS_PER_YEAR
+  nameWithType: CalendarConstants.MONTHS_PER_YEAR
+  fullName: Core.Data.CalendarConstants.MONTHS_PER_YEAR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MONTHS_PER_YEAR
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Months per year
+  example: []
+  syntax:
+    content: public const int MONTHS_PER_YEAR = 12
+    return:
+      type: System.Int32
+    content.vb: Public Const MONTHS_PER_YEAR As Integer = 12
+- uid: Core.Data.CalendarConstants.DAYS_PER_YEAR
+  commentId: F:Core.Data.CalendarConstants.DAYS_PER_YEAR
+  id: DAYS_PER_YEAR
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: DAYS_PER_YEAR
+  nameWithType: CalendarConstants.DAYS_PER_YEAR
+  fullName: Core.Data.CalendarConstants.DAYS_PER_YEAR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DAYS_PER_YEAR
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Days per year (365, no leap years for determinism)
+  example: []
+  syntax:
+    content: public const int DAYS_PER_YEAR = 365
+    return:
+      type: System.Int32
+    content.vb: Public Const DAYS_PER_YEAR As Integer = 365
+- uid: Core.Data.CalendarConstants.DAYS_IN_MONTH
+  commentId: F:Core.Data.CalendarConstants.DAYS_IN_MONTH
+  id: DAYS_IN_MONTH
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: DAYS_IN_MONTH
+  nameWithType: CalendarConstants.DAYS_IN_MONTH
+  fullName: Core.Data.CalendarConstants.DAYS_IN_MONTH
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DAYS_IN_MONTH
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Days in each month (1-indexed, index 0 unused).
+
+    Jan=31, Feb=28 (no leap), Mar=31, Apr=30, May=31, Jun=30,
+
+    Jul=31, Aug=31, Sep=30, Oct=31, Nov=30, Dec=31
+  example: []
+  syntax:
+    content: public static readonly int[] DAYS_IN_MONTH
+    return:
+      type: System.Int32[]
+    content.vb: Public Shared ReadOnly DAYS_IN_MONTH As Integer()
+- uid: Core.Data.CalendarConstants.DAYS_BEFORE_MONTH
+  commentId: F:Core.Data.CalendarConstants.DAYS_BEFORE_MONTH
+  id: DAYS_BEFORE_MONTH
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: DAYS_BEFORE_MONTH
+  nameWithType: CalendarConstants.DAYS_BEFORE_MONTH
+  fullName: Core.Data.CalendarConstants.DAYS_BEFORE_MONTH
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DAYS_BEFORE_MONTH
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Cumulative days before each month (1-indexed, for fast day-of-year calculation).
+
+    Index 1 = 0 (Jan starts at day 0), Index 2 = 31 (Feb starts at day 31), etc.
+  example: []
+  syntax:
+    content: public static readonly int[] DAYS_BEFORE_MONTH
+    return:
+      type: System.Int32[]
+    content.vb: Public Shared ReadOnly DAYS_BEFORE_MONTH As Integer()
+- uid: Core.Data.CalendarConstants.HOURS_PER_WEEK
+  commentId: F:Core.Data.CalendarConstants.HOURS_PER_WEEK
+  id: HOURS_PER_WEEK
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: HOURS_PER_WEEK
+  nameWithType: CalendarConstants.HOURS_PER_WEEK
+  fullName: Core.Data.CalendarConstants.HOURS_PER_WEEK
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HOURS_PER_WEEK
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Hours per week (24 × 7 = 168)
+  example: []
+  syntax:
+    content: public const int HOURS_PER_WEEK = 168
+    return:
+      type: System.Int32
+    content.vb: Public Const HOURS_PER_WEEK As Integer = 168
+- uid: Core.Data.CalendarConstants.HOURS_PER_YEAR
+  commentId: F:Core.Data.CalendarConstants.HOURS_PER_YEAR
+  id: HOURS_PER_YEAR
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: HOURS_PER_YEAR
+  nameWithType: CalendarConstants.HOURS_PER_YEAR
+  fullName: Core.Data.CalendarConstants.HOURS_PER_YEAR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HOURS_PER_YEAR
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Hours per year (24 × 365 = 8760)
+  example: []
+  syntax:
+    content: public const int HOURS_PER_YEAR = 8760
+    return:
+      type: System.Int32
+    content.vb: Public Const HOURS_PER_YEAR As Integer = 8760
+- uid: Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_MONTH
+  commentId: F:Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_MONTH
+  id: SIMPLIFIED_DAYS_PER_MONTH
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: SIMPLIFIED_DAYS_PER_MONTH
+  nameWithType: CalendarConstants.SIMPLIFIED_DAYS_PER_MONTH
+  fullName: Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_MONTH
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SIMPLIFIED_DAYS_PER_MONTH
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: 'Simplified: days per month (all months equal)'
+  example: []
+  syntax:
+    content: public const int SIMPLIFIED_DAYS_PER_MONTH = 30
+    return:
+      type: System.Int32
+    content.vb: Public Const SIMPLIFIED_DAYS_PER_MONTH As Integer = 30
+- uid: Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_YEAR
+  commentId: F:Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_YEAR
+  id: SIMPLIFIED_DAYS_PER_YEAR
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: SIMPLIFIED_DAYS_PER_YEAR
+  nameWithType: CalendarConstants.SIMPLIFIED_DAYS_PER_YEAR
+  fullName: Core.Data.CalendarConstants.SIMPLIFIED_DAYS_PER_YEAR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SIMPLIFIED_DAYS_PER_YEAR
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: 'Simplified: days per year (30 × 12 = 360)'
+  example: []
+  syntax:
+    content: public const int SIMPLIFIED_DAYS_PER_YEAR = 360
+    return:
+      type: System.Int32
+    content.vb: Public Const SIMPLIFIED_DAYS_PER_YEAR As Integer = 360
+- uid: Core.Data.CalendarConstants.SIMPLIFIED_HOURS_PER_YEAR
+  commentId: F:Core.Data.CalendarConstants.SIMPLIFIED_HOURS_PER_YEAR
+  id: SIMPLIFIED_HOURS_PER_YEAR
+  parent: Core.Data.CalendarConstants
+  langs:
+  - csharp
+  - vb
+  name: SIMPLIFIED_HOURS_PER_YEAR
+  nameWithType: CalendarConstants.SIMPLIFIED_HOURS_PER_YEAR
+  fullName: Core.Data.CalendarConstants.SIMPLIFIED_HOURS_PER_YEAR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CalendarConstants.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SIMPLIFIED_HOURS_PER_YEAR
+    path: Scripts/Core/Data/CalendarConstants.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: 'Simplified: hours per year (24 × 360 = 8640)'
+  example: []
+  syntax:
+    content: public const int SIMPLIFIED_HOURS_PER_YEAR = 8640
+    return:
+      type: System.Int32
+    content.vb: Public Const SIMPLIFIED_HOURS_PER_YEAR As Integer = 8640
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Int32[]
+  isExternal: true
+  name: int[]
+  nameWithType: int[]
+  fullName: int[]
+  nameWithType.vb: Integer()
+  fullName.vb: Integer()
+  name.vb: Integer()
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: (
+  - name: )

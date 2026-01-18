@@ -1,0 +1,60 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.CameraControllers
+  commentId: N:Map.CameraControllers
+  id: Map.CameraControllers
+  children:
+  - Map.CameraControllers.BaseCameraController
+  - Map.CameraControllers.OrthographicCameraController
+  - Map.CameraControllers.PerspectiveCameraController
+  langs:
+  - csharp
+  - vb
+  name: Map.CameraControllers
+  nameWithType: Map.CameraControllers
+  fullName: Map.CameraControllers
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.CameraControllers.PerspectiveCameraController
+  commentId: T:Map.CameraControllers.PerspectiveCameraController
+  href: Map.CameraControllers.PerspectiveCameraController.html
+  name: PerspectiveCameraController
+  nameWithType: PerspectiveCameraController
+  fullName: Map.CameraControllers.PerspectiveCameraController
+- uid: Map.CameraControllers.BaseCameraController
+  commentId: T:Map.CameraControllers.BaseCameraController
+  parent: Map.CameraControllers
+  href: Map.CameraControllers.BaseCameraController.html
+  name: BaseCameraController
+  nameWithType: BaseCameraController
+  fullName: Map.CameraControllers.BaseCameraController
+- uid: Map.CameraControllers.OrthographicCameraController
+  commentId: T:Map.CameraControllers.OrthographicCameraController
+  href: Map.CameraControllers.OrthographicCameraController.html
+  name: OrthographicCameraController
+  nameWithType: OrthographicCameraController
+  fullName: Map.CameraControllers.OrthographicCameraController
+- uid: Map.CameraControllers
+  commentId: N:Map.CameraControllers
+  href: Map.html
+  name: Map.CameraControllers
+  nameWithType: Map.CameraControllers
+  fullName: Map.CameraControllers
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html

@@ -1,0 +1,72 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Collections
+  commentId: N:Core.Collections
+  id: Core.Collections
+  children:
+  - Core.Collections.NativeMinHeap`1
+  - Core.Collections.PathfindingNode
+  langs:
+  - csharp
+  - vb
+  name: Core.Collections
+  nameWithType: Core.Collections
+  fullName: Core.Collections
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Collections.NativeMinHeap`1
+  commentId: T:Core.Collections.NativeMinHeap`1
+  href: Core.Collections.NativeMinHeap-1.html
+  name: NativeMinHeap<T>
+  nameWithType: NativeMinHeap<T>
+  fullName: Core.Collections.NativeMinHeap<T>
+  nameWithType.vb: NativeMinHeap(Of T)
+  fullName.vb: Core.Collections.NativeMinHeap(Of T)
+  name.vb: NativeMinHeap(Of T)
+  spec.csharp:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap
+    href: Core.Collections.NativeMinHeap-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Collections.PathfindingNode
+  commentId: T:Core.Collections.PathfindingNode
+  parent: Core.Collections
+  href: Core.Collections.PathfindingNode.html
+  name: PathfindingNode
+  nameWithType: PathfindingNode
+  fullName: Core.Collections.PathfindingNode
+- uid: Core.Collections
+  commentId: N:Core.Collections
+  href: Core.html
+  name: Core.Collections
+  nameWithType: Core.Collections
+  fullName: Core.Collections
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Collections
+    name: Collections
+    href: Core.Collections.html

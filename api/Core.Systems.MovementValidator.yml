@@ -1,0 +1,116 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.MovementValidator
+  commentId: T:Core.Systems.MovementValidator
+  id: MovementValidator
+  parent: Core.Systems
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: MovementValidator
+  nameWithType: MovementValidator
+  fullName: Core.Systems.MovementValidator
+  type: Delegate
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MovementValidator
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE LAYER: Pathfinding system for multi-province unit movement
+
+
+    Uses A* algorithm to find shortest path between provinces.
+
+    Burst-compiled for high performance with large maps.
+
+
+    Features:
+
+    - IMovementCostCalculator for terrain/ownership-based costs
+
+    - PathOptions for forbidden zones and avoid preferences
+
+    - LRU path caching for repeated requests
+
+    - Burst path when using uniform costs (fast)
+
+    - Managed path with custom costs (flexible)
+
+
+    Performance:
+
+    - Burst: O(E log V) with binary heap, ~0.1ms typical
+
+    - Pre-allocated collections, zero gameplay allocations
+
+    - LRU cache reduces redundant searches
+  example: []
+  syntax:
+    content: public delegate bool MovementValidator(ushort provinceID, ushort unitOwnerCountryID, ushort unitTypeID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: unitOwnerCountryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Delegate Function MovementValidator(provinceID As UShort, unitOwnerCountryID As UShort, unitTypeID As UShort) As Boolean
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

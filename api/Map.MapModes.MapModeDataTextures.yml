@@ -1,0 +1,1019 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.MapModeDataTextures
+  commentId: T:Map.MapModes.MapModeDataTextures
+  id: MapModeDataTextures
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.MapModeDataTextures.BindToMaterial(UnityEngine.Material)
+  - Map.MapModes.MapModeDataTextures.CountryColorPalette
+  - Map.MapModes.MapModeDataTextures.CultureColorPalette
+  - Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+  - Map.MapModes.MapModeDataTextures.Dispose
+  - Map.MapModes.MapModeDataTextures.Initialize(Map.Rendering.MapTextureManager)
+  - Map.MapModes.MapModeDataTextures.MapHeight
+  - Map.MapModes.MapModeDataTextures.MapWidth
+  - Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+  - Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+  - Map.MapModes.MapModeDataTextures.ReligionColorPalette
+  - Map.MapModes.MapModeDataTextures.TerrainColorPalette
+  - Map.MapModes.MapModeDataTextures.UpdatePalette(UnityEngine.Texture2D,UnityEngine.Color32[])
+  - Map.MapModes.MapModeDataTextures.UpdateTexture(UnityEngine.Texture2D,UnityEngine.Color32[])
+  langs:
+  - csharp
+  - vb
+  name: MapModeDataTextures
+  nameWithType: MapModeDataTextures
+  fullName: Map.MapModes.MapModeDataTextures
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapModeDataTextures
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Manages all data textures required for the map mode system
+
+    Each texture is optimized for specific data types and update patterns
+
+    Performance: Specialized formats, efficient updates, proper GPU memory layout
+  example: []
+  syntax:
+    content: public class MapModeDataTextures
+    content.vb: Public Class MapModeDataTextures
+  inheritance:
+  - System.Object
+- uid: Map.MapModes.MapModeDataTextures.MapWidth
+  commentId: P:Map.MapModes.MapModeDataTextures.MapWidth
+  id: MapWidth
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: MapWidth
+  nameWithType: MapModeDataTextures.MapWidth
+  fullName: Map.MapModes.MapModeDataTextures.MapWidth
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapWidth
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: >-
+      [Header("Map Dimensions")]
+
+      public int MapWidth { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Header("Map Dimensions")>
+
+      Public Property MapWidth As Integer
+  overload: Map.MapModes.MapModeDataTextures.MapWidth*
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Map Dimensions
+- uid: Map.MapModes.MapModeDataTextures.MapHeight
+  commentId: P:Map.MapModes.MapModeDataTextures.MapHeight
+  id: MapHeight
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: MapHeight
+  nameWithType: MapModeDataTextures.MapHeight
+  fullName: Map.MapModes.MapModeDataTextures.MapHeight
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapHeight
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public int MapHeight { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MapHeight As Integer
+  overload: Map.MapModes.MapModeDataTextures.MapHeight*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+  id: ProvinceIDTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDTexture
+  nameWithType: MapModeDataTextures.ProvinceIDTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public RenderTexture ProvinceIDTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public Property ProvinceIDTexture As RenderTexture
+  overload: Map.MapModes.MapModeDataTextures.ProvinceIDTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+  id: ProvinceColorTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorTexture
+  nameWithType: MapModeDataTextures.ProvinceColorTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceColorTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceColorTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceColorTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+  id: ProvinceOwnerTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnerTexture
+  nameWithType: MapModeDataTextures.ProvinceOwnerTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnerTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public RenderTexture ProvinceOwnerTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public Property ProvinceOwnerTexture As RenderTexture
+  overload: Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+  id: ProvinceTerrainTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTerrainTexture
+  nameWithType: MapModeDataTextures.ProvinceTerrainTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceTerrainTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceTerrainTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceTerrainTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+  id: ProvinceDevelopmentTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDevelopmentTexture
+  nameWithType: MapModeDataTextures.ProvinceDevelopmentTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDevelopmentTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public RenderTexture ProvinceDevelopmentTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public Property ProvinceDevelopmentTexture As RenderTexture
+  overload: Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+  id: ProvinceCultureTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCultureTexture
+  nameWithType: MapModeDataTextures.ProvinceCultureTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCultureTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceCultureTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceCultureTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceCultureTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+  id: ProvinceReligionTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceReligionTexture
+  nameWithType: MapModeDataTextures.ProvinceReligionTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceReligionTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceReligionTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceReligionTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceReligionTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+  id: ProvinceTradeValueTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTradeValueTexture
+  nameWithType: MapModeDataTextures.ProvinceTradeValueTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceTradeValueTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceTradeValueTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceTradeValueTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+  id: ProvinceUnrestTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceUnrestTexture
+  nameWithType: MapModeDataTextures.ProvinceUnrestTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceUnrestTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceUnrestTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceUnrestTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture*
+- uid: Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+  id: ProvinceAutonomyTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ProvinceAutonomyTexture
+  nameWithType: MapModeDataTextures.ProvinceAutonomyTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceAutonomyTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ProvinceAutonomyTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ProvinceAutonomyTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture*
+- uid: Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+  id: DiplomaticRelationsTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: DiplomaticRelationsTexture
+  nameWithType: MapModeDataTextures.DiplomaticRelationsTexture
+  fullName: Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomaticRelationsTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D DiplomaticRelationsTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property DiplomaticRelationsTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture*
+- uid: Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+  commentId: P:Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+  id: MilitaryStrengthTexture
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: MilitaryStrengthTexture
+  nameWithType: MapModeDataTextures.MilitaryStrengthTexture
+  fullName: Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MilitaryStrengthTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D MilitaryStrengthTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property MilitaryStrengthTexture As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture*
+- uid: Map.MapModes.MapModeDataTextures.CountryColorPalette
+  commentId: P:Map.MapModes.MapModeDataTextures.CountryColorPalette
+  id: CountryColorPalette
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: CountryColorPalette
+  nameWithType: MapModeDataTextures.CountryColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.CountryColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryColorPalette
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D CountryColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property CountryColorPalette As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.CountryColorPalette*
+- uid: Map.MapModes.MapModeDataTextures.CultureColorPalette
+  commentId: P:Map.MapModes.MapModeDataTextures.CultureColorPalette
+  id: CultureColorPalette
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: CultureColorPalette
+  nameWithType: MapModeDataTextures.CultureColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.CultureColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CultureColorPalette
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D CultureColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property CultureColorPalette As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.CultureColorPalette*
+- uid: Map.MapModes.MapModeDataTextures.ReligionColorPalette
+  commentId: P:Map.MapModes.MapModeDataTextures.ReligionColorPalette
+  id: ReligionColorPalette
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: ReligionColorPalette
+  nameWithType: MapModeDataTextures.ReligionColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.ReligionColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReligionColorPalette
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D ReligionColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property ReligionColorPalette As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.ReligionColorPalette*
+- uid: Map.MapModes.MapModeDataTextures.TerrainColorPalette
+  commentId: P:Map.MapModes.MapModeDataTextures.TerrainColorPalette
+  id: TerrainColorPalette
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: TerrainColorPalette
+  nameWithType: MapModeDataTextures.TerrainColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.TerrainColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainColorPalette
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public Texture2D TerrainColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Property TerrainColorPalette As Texture2D
+  overload: Map.MapModes.MapModeDataTextures.TerrainColorPalette*
+- uid: Map.MapModes.MapModeDataTextures.Initialize(Map.Rendering.MapTextureManager)
+  commentId: M:Map.MapModes.MapModeDataTextures.Initialize(Map.Rendering.MapTextureManager)
+  id: Initialize(Map.Rendering.MapTextureManager)
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager)
+  nameWithType: MapModeDataTextures.Initialize(MapTextureManager)
+  fullName: Map.MapModes.MapModeDataTextures.Initialize(Map.Rendering.MapTextureManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Initialize textures for map mode system using existing textures from MapTextureManager
+  example: []
+  syntax:
+    content: public void Initialize(MapTextureManager textureManager)
+    parameters:
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub Initialize(textureManager As MapTextureManager)
+  overload: Map.MapModes.MapModeDataTextures.Initialize*
+- uid: Map.MapModes.MapModeDataTextures.BindToMaterial(UnityEngine.Material)
+  commentId: M:Map.MapModes.MapModeDataTextures.BindToMaterial(UnityEngine.Material)
+  id: BindToMaterial(UnityEngine.Material)
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: BindToMaterial(Material)
+  nameWithType: MapModeDataTextures.BindToMaterial(Material)
+  fullName: Map.MapModes.MapModeDataTextures.BindToMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BindToMaterial
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 295
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Bind all textures to the material for rendering
+  example: []
+  syntax:
+    content: public void BindToMaterial(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Public Sub BindToMaterial(material As Material)
+  overload: Map.MapModes.MapModeDataTextures.BindToMaterial*
+- uid: Map.MapModes.MapModeDataTextures.UpdateTexture(UnityEngine.Texture2D,UnityEngine.Color32[])
+  commentId: M:Map.MapModes.MapModeDataTextures.UpdateTexture(UnityEngine.Texture2D,UnityEngine.Color32[])
+  id: UpdateTexture(UnityEngine.Texture2D,UnityEngine.Color32[])
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: UpdateTexture(Texture2D, Color32[])
+  nameWithType: MapModeDataTextures.UpdateTexture(Texture2D, Color32[])
+  fullName: Map.MapModes.MapModeDataTextures.UpdateTexture(UnityEngine.Texture2D, UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateTexture
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 328
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Update a specific data texture with new pixel data
+  example: []
+  syntax:
+    content: public void UpdateTexture(Texture2D texture, Color32[] pixels)
+    parameters:
+    - id: texture
+      type: UnityEngine.Texture2D
+    - id: pixels
+      type: UnityEngine.Color32[]
+    content.vb: Public Sub UpdateTexture(texture As Texture2D, pixels As Color32())
+  overload: Map.MapModes.MapModeDataTextures.UpdateTexture*
+  nameWithType.vb: MapModeDataTextures.UpdateTexture(Texture2D, Color32())
+  fullName.vb: Map.MapModes.MapModeDataTextures.UpdateTexture(UnityEngine.Texture2D, UnityEngine.Color32())
+  name.vb: UpdateTexture(Texture2D, Color32())
+- uid: Map.MapModes.MapModeDataTextures.UpdatePalette(UnityEngine.Texture2D,UnityEngine.Color32[])
+  commentId: M:Map.MapModes.MapModeDataTextures.UpdatePalette(UnityEngine.Texture2D,UnityEngine.Color32[])
+  id: UpdatePalette(UnityEngine.Texture2D,UnityEngine.Color32[])
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: UpdatePalette(Texture2D, Color32[])
+  nameWithType: MapModeDataTextures.UpdatePalette(Texture2D, Color32[])
+  fullName: Map.MapModes.MapModeDataTextures.UpdatePalette(UnityEngine.Texture2D, UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdatePalette
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 343
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Update a color palette texture
+  example: []
+  syntax:
+    content: public void UpdatePalette(Texture2D palette, Color32[] colors)
+    parameters:
+    - id: palette
+      type: UnityEngine.Texture2D
+    - id: colors
+      type: UnityEngine.Color32[]
+    content.vb: Public Sub UpdatePalette(palette As Texture2D, colors As Color32())
+  overload: Map.MapModes.MapModeDataTextures.UpdatePalette*
+  nameWithType.vb: MapModeDataTextures.UpdatePalette(Texture2D, Color32())
+  fullName.vb: Map.MapModes.MapModeDataTextures.UpdatePalette(UnityEngine.Texture2D, UnityEngine.Color32())
+  name.vb: UpdatePalette(Texture2D, Color32())
+- uid: Map.MapModes.MapModeDataTextures.Dispose
+  commentId: M:Map.MapModes.MapModeDataTextures.Dispose
+  id: Dispose
+  parent: Map.MapModes.MapModeDataTextures
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: MapModeDataTextures.Dispose()
+  fullName: Map.MapModes.MapModeDataTextures.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeDataTextures.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/MapModes/MapModeDataTextures.cs
+    startLine: 358
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Clean up all textures
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.MapModes.MapModeDataTextures.Dispose*
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.MapModeDataTextures.MapWidth*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.MapWidth
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_MapWidth
+  name: MapWidth
+  nameWithType: MapModeDataTextures.MapWidth
+  fullName: Map.MapModes.MapModeDataTextures.MapWidth
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.MapModeDataTextures.MapHeight*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.MapHeight
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_MapHeight
+  name: MapHeight
+  nameWithType: MapModeDataTextures.MapHeight
+  fullName: Map.MapModes.MapModeDataTextures.MapHeight
+- uid: Map.MapModes.MapModeDataTextures.ProvinceIDTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceIDTexture
+  name: ProvinceIDTexture
+  nameWithType: MapModeDataTextures.ProvinceIDTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceIDTexture
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.MapModeDataTextures.ProvinceColorTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceColorTexture
+  name: ProvinceColorTexture
+  nameWithType: MapModeDataTextures.ProvinceColorTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceColorTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceOwnerTexture
+  name: ProvinceOwnerTexture
+  nameWithType: MapModeDataTextures.ProvinceOwnerTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceOwnerTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceTerrainTexture
+  name: ProvinceTerrainTexture
+  nameWithType: MapModeDataTextures.ProvinceTerrainTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceTerrainTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceDevelopmentTexture
+  name: ProvinceDevelopmentTexture
+  nameWithType: MapModeDataTextures.ProvinceDevelopmentTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceDevelopmentTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceCultureTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceCultureTexture
+  name: ProvinceCultureTexture
+  nameWithType: MapModeDataTextures.ProvinceCultureTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceCultureTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceReligionTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceReligionTexture
+  name: ProvinceReligionTexture
+  nameWithType: MapModeDataTextures.ProvinceReligionTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceReligionTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceTradeValueTexture
+  name: ProvinceTradeValueTexture
+  nameWithType: MapModeDataTextures.ProvinceTradeValueTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceTradeValueTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceUnrestTexture
+  name: ProvinceUnrestTexture
+  nameWithType: MapModeDataTextures.ProvinceUnrestTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceUnrestTexture
+- uid: Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ProvinceAutonomyTexture
+  name: ProvinceAutonomyTexture
+  nameWithType: MapModeDataTextures.ProvinceAutonomyTexture
+  fullName: Map.MapModes.MapModeDataTextures.ProvinceAutonomyTexture
+- uid: Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_DiplomaticRelationsTexture
+  name: DiplomaticRelationsTexture
+  nameWithType: MapModeDataTextures.DiplomaticRelationsTexture
+  fullName: Map.MapModes.MapModeDataTextures.DiplomaticRelationsTexture
+- uid: Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_MilitaryStrengthTexture
+  name: MilitaryStrengthTexture
+  nameWithType: MapModeDataTextures.MilitaryStrengthTexture
+  fullName: Map.MapModes.MapModeDataTextures.MilitaryStrengthTexture
+- uid: Map.MapModes.MapModeDataTextures.CountryColorPalette*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.CountryColorPalette
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_CountryColorPalette
+  name: CountryColorPalette
+  nameWithType: MapModeDataTextures.CountryColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.CountryColorPalette
+- uid: Map.MapModes.MapModeDataTextures.CultureColorPalette*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.CultureColorPalette
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_CultureColorPalette
+  name: CultureColorPalette
+  nameWithType: MapModeDataTextures.CultureColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.CultureColorPalette
+- uid: Map.MapModes.MapModeDataTextures.ReligionColorPalette*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.ReligionColorPalette
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_ReligionColorPalette
+  name: ReligionColorPalette
+  nameWithType: MapModeDataTextures.ReligionColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.ReligionColorPalette
+- uid: Map.MapModes.MapModeDataTextures.TerrainColorPalette*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.TerrainColorPalette
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_TerrainColorPalette
+  name: TerrainColorPalette
+  nameWithType: MapModeDataTextures.TerrainColorPalette
+  fullName: Map.MapModes.MapModeDataTextures.TerrainColorPalette
+- uid: Map.MapModes.MapModeDataTextures.Initialize*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.Initialize
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_Initialize_Map_Rendering_MapTextureManager_
+  name: Initialize
+  nameWithType: MapModeDataTextures.Initialize
+  fullName: Map.MapModes.MapModeDataTextures.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.MapModes.MapModeDataTextures.BindToMaterial*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.BindToMaterial
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_BindToMaterial_UnityEngine_Material_
+  name: BindToMaterial
+  nameWithType: MapModeDataTextures.BindToMaterial
+  fullName: Map.MapModes.MapModeDataTextures.BindToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.MapModes.MapModeDataTextures.UpdateTexture*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.UpdateTexture
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_UpdateTexture_UnityEngine_Texture2D_UnityEngine_Color32___
+  name: UpdateTexture
+  nameWithType: MapModeDataTextures.UpdateTexture
+  fullName: Map.MapModes.MapModeDataTextures.UpdateTexture
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.MapModeDataTextures.UpdatePalette*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.UpdatePalette
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_UpdatePalette_UnityEngine_Texture2D_UnityEngine_Color32___
+  name: UpdatePalette
+  nameWithType: MapModeDataTextures.UpdatePalette
+  fullName: Map.MapModes.MapModeDataTextures.UpdatePalette
+- uid: Map.MapModes.MapModeDataTextures.Dispose*
+  commentId: Overload:Map.MapModes.MapModeDataTextures.Dispose
+  href: Map.MapModes.MapModeDataTextures.html#Map_MapModes_MapModeDataTextures_Dispose
+  name: Dispose
+  nameWithType: MapModeDataTextures.Dispose
+  fullName: Map.MapModes.MapModeDataTextures.Dispose

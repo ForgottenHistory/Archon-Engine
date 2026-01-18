@@ -1,0 +1,201 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.BuildingModifier
+  commentId: T:StarterKit.BuildingModifier
+  id: BuildingModifier
+  parent: StarterKit
+  children:
+  - StarterKit.BuildingModifier.IsCountryWide
+  - StarterKit.BuildingModifier.IsMultiplicative
+  - StarterKit.BuildingModifier.Type
+  - StarterKit.BuildingModifier.Value
+  langs:
+  - csharp
+  - vb
+  name: BuildingModifier
+  nameWithType: BuildingModifier
+  fullName: StarterKit.BuildingModifier
+  type: Struct
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingModifier
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 14
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Building modifier definition (loaded from JSON5).
+  example: []
+  syntax:
+    content: public struct BuildingModifier
+    content.vb: Public Structure BuildingModifier
+- uid: StarterKit.BuildingModifier.Type
+  commentId: F:StarterKit.BuildingModifier.Type
+  id: Type
+  parent: StarterKit.BuildingModifier
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: BuildingModifier.Type
+  fullName: StarterKit.BuildingModifier.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 16
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ModifierType Type
+    return:
+      type: StarterKit.ModifierType
+    content.vb: Public Type As ModifierType
+- uid: StarterKit.BuildingModifier.Value
+  commentId: F:StarterKit.BuildingModifier.Value
+  id: Value
+  parent: StarterKit.BuildingModifier
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: BuildingModifier.Value
+  fullName: StarterKit.BuildingModifier.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 17
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public FixedPoint64 Value
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Value As FixedPoint64
+- uid: StarterKit.BuildingModifier.IsMultiplicative
+  commentId: F:StarterKit.BuildingModifier.IsMultiplicative
+  id: IsMultiplicative
+  parent: StarterKit.BuildingModifier
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplicative
+  nameWithType: BuildingModifier.IsMultiplicative
+  fullName: StarterKit.BuildingModifier.IsMultiplicative
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsMultiplicative
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 18
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public bool IsMultiplicative
+    return:
+      type: System.Boolean
+    content.vb: Public IsMultiplicative As Boolean
+- uid: StarterKit.BuildingModifier.IsCountryWide
+  commentId: F:StarterKit.BuildingModifier.IsCountryWide
+  id: IsCountryWide
+  parent: StarterKit.BuildingModifier
+  langs:
+  - csharp
+  - vb
+  name: IsCountryWide
+  nameWithType: BuildingModifier.IsCountryWide
+  fullName: StarterKit.BuildingModifier.IsCountryWide
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCountryWide
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 19
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public bool IsCountryWide
+    return:
+      type: System.Boolean
+    content.vb: Public IsCountryWide As Boolean
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: StarterKit.ModifierType
+  commentId: T:StarterKit.ModifierType
+  parent: StarterKit
+  href: StarterKit.ModifierType.html
+  name: ModifierType
+  nameWithType: ModifierType
+  fullName: StarterKit.ModifierType
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

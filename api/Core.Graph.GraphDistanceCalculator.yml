@@ -1,0 +1,892 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Graph.GraphDistanceCalculator
+  commentId: T:Core.Graph.GraphDistanceCalculator
+  id: GraphDistanceCalculator
+  parent: Core.Graph
+  children:
+  - Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince(System.UInt16,Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  - Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces(Unity.Collections.NativeArray{System.UInt16},Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  - Core.Graph.GraphDistanceCalculator.Dispose
+  - Core.Graph.GraphDistanceCalculator.GetAllCountryDistances
+  - Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances
+  - Core.Graph.GraphDistanceCalculator.GetCountryDistance(System.UInt16)
+  - Core.Graph.GraphDistanceCalculator.GetDistanceBetween(System.UInt16,System.UInt16,Core.Systems.AdjacencySystem)
+  - Core.Graph.GraphDistanceCalculator.GetProvinceDistance(System.UInt16)
+  - Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance(System.Byte,Unity.Collections.Allocator)
+  - Core.Graph.GraphDistanceCalculator.Initialize(System.Int32,System.Int32)
+  - Core.Graph.GraphDistanceCalculator.IsInitialized
+  langs:
+  - csharp
+  - vb
+  name: GraphDistanceCalculator
+  nameWithType: GraphDistanceCalculator
+  fullName: Core.Graph.GraphDistanceCalculator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GraphDistanceCalculator
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    General-purpose BFS distance calculator for province graph.
+
+    Burst-compiled for performance.
+
+
+    Use cases:
+
+    - Distance from player (AI tiering)
+
+    - Distance between any two provinces
+
+    - Finding provinces within N hops
+
+    - Pathfinding prep
+
+
+    Performance:
+
+    - O(P) where P = total provinces (single BFS traversal)
+
+    - Burst-compiled for SIMD and native code optimization
+
+    - Pre-allocated buffers for zero gameplay allocations
+  example: []
+  syntax:
+    content: public class GraphDistanceCalculator
+    content.vb: Public Class GraphDistanceCalculator
+  inheritance:
+  - System.Object
+- uid: Core.Graph.GraphDistanceCalculator.IsInitialized
+  commentId: P:Core.Graph.GraphDistanceCalculator.IsInitialized
+  id: IsInitialized
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: GraphDistanceCalculator.IsInitialized
+  fullName: Core.Graph.GraphDistanceCalculator.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: Whether the calculator is initialized and ready for use.
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Graph.GraphDistanceCalculator.IsInitialized*
+- uid: Core.Graph.GraphDistanceCalculator.Initialize(System.Int32,System.Int32)
+  commentId: M:Core.Graph.GraphDistanceCalculator.Initialize(System.Int32,System.Int32)
+  id: Initialize(System.Int32,System.Int32)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Initialize(int, int)
+  nameWithType: GraphDistanceCalculator.Initialize(int, int)
+  fullName: Core.Graph.GraphDistanceCalculator.Initialize(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Initialize buffers for distance calculation.
+
+    Call once after province/country counts are known.
+  example: []
+  syntax:
+    content: public void Initialize(int maxProvinceId, int maxCountryId = 0)
+    parameters:
+    - id: maxProvinceId
+      type: System.Int32
+      description: Maximum province ID (buffer size)
+    - id: maxCountryId
+      type: System.Int32
+      description: Maximum country ID (buffer size), or 0 to skip country tracking
+    content.vb: Public Sub Initialize(maxProvinceId As Integer, maxCountryId As Integer = 0)
+  overload: Core.Graph.GraphDistanceCalculator.Initialize*
+  nameWithType.vb: GraphDistanceCalculator.Initialize(Integer, Integer)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.Initialize(Integer, Integer)
+  name.vb: Initialize(Integer, Integer)
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince(System.UInt16,Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  commentId: M:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince(System.UInt16,Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  id: CalculateDistancesFromProvince(System.UInt16,Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: CalculateDistancesFromProvince(ushort, NativeAdjacencyData, NativeProvinceData)
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromProvince(ushort, NativeAdjacencyData, NativeProvinceData)
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince(ushort, Core.Systems.NativeAdjacencyData, Core.Systems.NativeProvinceData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDistancesFromProvince
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: Calculate distances from a single source province.
+  example: []
+  syntax:
+    content: public void CalculateDistancesFromProvince(ushort sourceProvinceId, NativeAdjacencyData adjacencyData, NativeProvinceData provinceData = default)
+    parameters:
+    - id: sourceProvinceId
+      type: System.UInt16
+    - id: adjacencyData
+      type: Core.Systems.NativeAdjacencyData
+    - id: provinceData
+      type: Core.Systems.NativeProvinceData
+    content.vb: Public Sub CalculateDistancesFromProvince(sourceProvinceId As UShort, adjacencyData As NativeAdjacencyData, provinceData As NativeProvinceData = Nothing)
+  overload: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince*
+  nameWithType.vb: GraphDistanceCalculator.CalculateDistancesFromProvince(UShort, NativeAdjacencyData, NativeProvinceData)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince(UShort, Core.Systems.NativeAdjacencyData, Core.Systems.NativeProvinceData)
+  name.vb: CalculateDistancesFromProvince(UShort, NativeAdjacencyData, NativeProvinceData)
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces(Unity.Collections.NativeArray{System.UInt16},Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  commentId: M:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces(Unity.Collections.NativeArray{System.UInt16},Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  id: CalculateDistancesFromProvinces(Unity.Collections.NativeArray{System.UInt16},Core.Systems.NativeAdjacencyData,Core.Systems.NativeProvinceData)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: CalculateDistancesFromProvinces(NativeArray<ushort>, NativeAdjacencyData, NativeProvinceData)
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromProvinces(NativeArray<ushort>, NativeAdjacencyData, NativeProvinceData)
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces(Unity.Collections.NativeArray<ushort>, Core.Systems.NativeAdjacencyData, Core.Systems.NativeProvinceData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDistancesFromProvinces
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Calculate distances from multiple source provinces using Burst-compiled BFS.
+
+    Updates internal distance arrays.
+  example: []
+  syntax:
+    content: public void CalculateDistancesFromProvinces(NativeArray<ushort> sourceProvinces, NativeAdjacencyData adjacencyData, NativeProvinceData provinceData = default)
+    parameters:
+    - id: sourceProvinces
+      type: Unity.Collections.NativeArray{System.UInt16}
+      description: Starting provinces (distance 0)
+    - id: adjacencyData
+      type: Core.Systems.NativeAdjacencyData
+      description: Province adjacency graph
+    - id: provinceData
+      type: Core.Systems.NativeProvinceData
+      description: Optional province data for country distance tracking
+    content.vb: Public Sub CalculateDistancesFromProvinces(sourceProvinces As NativeArray(Of UShort), adjacencyData As NativeAdjacencyData, provinceData As NativeProvinceData = Nothing)
+  overload: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces*
+  nameWithType.vb: GraphDistanceCalculator.CalculateDistancesFromProvinces(NativeArray(Of UShort), NativeAdjacencyData, NativeProvinceData)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces(Unity.Collections.NativeArray(Of UShort), Core.Systems.NativeAdjacencyData, Core.Systems.NativeProvinceData)
+  name.vb: CalculateDistancesFromProvinces(NativeArray(Of UShort), NativeAdjacencyData, NativeProvinceData)
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: CalculateDistancesFromCountry(System.UInt16,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: CalculateDistancesFromCountry(ushort, ProvinceSystem, AdjacencySystem)
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromCountry(ushort, ProvinceSystem, AdjacencySystem)
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry(ushort, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDistancesFromCountry
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 123
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Calculate distances from all provinces owned by a specific country.
+
+    Useful for AI distance tiering.
+  example: []
+  syntax:
+    content: public void CalculateDistancesFromCountry(ushort countryId, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Sub CalculateDistancesFromCountry(countryId As UShort, provinceSystem As ProvinceSystem, adjacencySystem As AdjacencySystem)
+  overload: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry*
+  nameWithType.vb: GraphDistanceCalculator.CalculateDistancesFromCountry(UShort, ProvinceSystem, AdjacencySystem)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry(UShort, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  name.vb: CalculateDistancesFromCountry(UShort, ProvinceSystem, AdjacencySystem)
+- uid: Core.Graph.GraphDistanceCalculator.GetProvinceDistance(System.UInt16)
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetProvinceDistance(System.UInt16)
+  id: GetProvinceDistance(System.UInt16)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceDistance(ushort)
+  nameWithType: GraphDistanceCalculator.GetProvinceDistance(ushort)
+  fullName: Core.Graph.GraphDistanceCalculator.GetProvinceDistance(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceDistance
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 147
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Get distance for a specific province from the last calculation.
+
+    Returns byte.MaxValue if not calculated or unreachable.
+  example: []
+  syntax:
+    content: public byte GetProvinceDistance(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetProvinceDistance(provinceId As UShort) As Byte
+  overload: Core.Graph.GraphDistanceCalculator.GetProvinceDistance*
+  nameWithType.vb: GraphDistanceCalculator.GetProvinceDistance(UShort)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.GetProvinceDistance(UShort)
+  name.vb: GetProvinceDistance(UShort)
+- uid: Core.Graph.GraphDistanceCalculator.GetCountryDistance(System.UInt16)
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetCountryDistance(System.UInt16)
+  id: GetCountryDistance(System.UInt16)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetCountryDistance(ushort)
+  nameWithType: GraphDistanceCalculator.GetCountryDistance(ushort)
+  fullName: Core.Graph.GraphDistanceCalculator.GetCountryDistance(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryDistance
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 159
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Get distance for a specific country from the last calculation.
+
+    Returns byte.MaxValue if country tracking not enabled or unreachable.
+  example: []
+  syntax:
+    content: public byte GetCountryDistance(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetCountryDistance(countryId As UShort) As Byte
+  overload: Core.Graph.GraphDistanceCalculator.GetCountryDistance*
+  nameWithType.vb: GraphDistanceCalculator.GetCountryDistance(UShort)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.GetCountryDistance(UShort)
+  name.vb: GetCountryDistance(UShort)
+- uid: Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances
+  id: GetAllProvinceDistances
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinceDistances()
+  nameWithType: GraphDistanceCalculator.GetAllProvinceDistances()
+  fullName: Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinceDistances
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Get the full province distances array.
+
+    Only valid until next calculation.
+  example: []
+  syntax:
+    content: public NativeArray<byte> GetAllProvinceDistances()
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public Function GetAllProvinceDistances() As NativeArray(Of Byte)
+  overload: Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances*
+- uid: Core.Graph.GraphDistanceCalculator.GetAllCountryDistances
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetAllCountryDistances
+  id: GetAllCountryDistances
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetAllCountryDistances()
+  nameWithType: GraphDistanceCalculator.GetAllCountryDistances()
+  fullName: Core.Graph.GraphDistanceCalculator.GetAllCountryDistances()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllCountryDistances
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Get the full country distances array.
+
+    Only valid until next calculation.
+
+    Returns default if country tracking not enabled.
+  example: []
+  syntax:
+    content: public NativeArray<byte> GetAllCountryDistances()
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public Function GetAllCountryDistances() As NativeArray(Of Byte)
+  overload: Core.Graph.GraphDistanceCalculator.GetAllCountryDistances*
+- uid: Core.Graph.GraphDistanceCalculator.GetDistanceBetween(System.UInt16,System.UInt16,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetDistanceBetween(System.UInt16,System.UInt16,Core.Systems.AdjacencySystem)
+  id: GetDistanceBetween(System.UInt16,System.UInt16,Core.Systems.AdjacencySystem)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetDistanceBetween(ushort, ushort, AdjacencySystem)
+  nameWithType: GraphDistanceCalculator.GetDistanceBetween(ushort, ushort, AdjacencySystem)
+  fullName: Core.Graph.GraphDistanceCalculator.GetDistanceBetween(ushort, ushort, Core.Systems.AdjacencySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDistanceBetween
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Calculate distance between two specific provinces.
+
+    This runs a fresh BFS from source to find target.
+
+    For repeated queries, use CalculateDistancesFromProvince then GetProvinceDistance.
+  example: []
+  syntax:
+    content: public byte GetDistanceBetween(ushort sourceProvinceId, ushort targetProvinceId, AdjacencySystem adjacencySystem)
+    parameters:
+    - id: sourceProvinceId
+      type: System.UInt16
+    - id: targetProvinceId
+      type: System.UInt16
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    return:
+      type: System.Byte
+    content.vb: Public Function GetDistanceBetween(sourceProvinceId As UShort, targetProvinceId As UShort, adjacencySystem As AdjacencySystem) As Byte
+  overload: Core.Graph.GraphDistanceCalculator.GetDistanceBetween*
+  nameWithType.vb: GraphDistanceCalculator.GetDistanceBetween(UShort, UShort, AdjacencySystem)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.GetDistanceBetween(UShort, UShort, Core.Systems.AdjacencySystem)
+  name.vb: GetDistanceBetween(UShort, UShort, AdjacencySystem)
+- uid: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance(System.Byte,Unity.Collections.Allocator)
+  commentId: M:Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance(System.Byte,Unity.Collections.Allocator)
+  id: GetProvincesWithinDistance(System.Byte,Unity.Collections.Allocator)
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesWithinDistance(byte, Allocator)
+  nameWithType: GraphDistanceCalculator.GetProvincesWithinDistance(byte, Allocator)
+  fullName: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance(byte, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesWithinDistance
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 212
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: >-
+    Get all provinces within a specified distance.
+
+    Caller must dispose the returned list.
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetProvincesWithinDistance(byte maxDist, Allocator allocator)
+    parameters:
+    - id: maxDist
+      type: System.Byte
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetProvincesWithinDistance(maxDist As Byte, allocator As Allocator) As NativeList(Of UShort)
+  overload: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance*
+  nameWithType.vb: GraphDistanceCalculator.GetProvincesWithinDistance(Byte, Allocator)
+  fullName.vb: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance(Byte, Unity.Collections.Allocator)
+  name.vb: GetProvincesWithinDistance(Byte, Allocator)
+- uid: Core.Graph.GraphDistanceCalculator.Dispose
+  commentId: M:Core.Graph.GraphDistanceCalculator.Dispose
+  id: Dispose
+  parent: Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: GraphDistanceCalculator.Dispose()
+  fullName: Core.Graph.GraphDistanceCalculator.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Graph/GraphDistanceCalculator.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Graph
+  summary: Cleanup native allocations.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Graph.GraphDistanceCalculator.Dispose*
+references:
+- uid: Core.Graph
+  commentId: N:Core.Graph
+  href: Core.html
+  name: Core.Graph
+  nameWithType: Core.Graph
+  fullName: Core.Graph
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Graph
+    name: Graph
+    href: Core.Graph.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Graph
+    name: Graph
+    href: Core.Graph.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Graph.GraphDistanceCalculator.IsInitialized*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.IsInitialized
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_IsInitialized
+  name: IsInitialized
+  nameWithType: GraphDistanceCalculator.IsInitialized
+  fullName: Core.Graph.GraphDistanceCalculator.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Graph.GraphDistanceCalculator.Initialize*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.Initialize
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_Initialize_System_Int32_System_Int32_
+  name: Initialize
+  nameWithType: GraphDistanceCalculator.Initialize
+  fullName: Core.Graph.GraphDistanceCalculator.Initialize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_CalculateDistancesFromProvince_System_UInt16_Core_Systems_NativeAdjacencyData_Core_Systems_NativeProvinceData_
+  name: CalculateDistancesFromProvince
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromProvince
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Systems.NativeAdjacencyData
+  commentId: T:Core.Systems.NativeAdjacencyData
+  parent: Core.Systems
+  href: Core.Systems.NativeAdjacencyData.html
+  name: NativeAdjacencyData
+  nameWithType: NativeAdjacencyData
+  fullName: Core.Systems.NativeAdjacencyData
+- uid: Core.Systems.NativeProvinceData
+  commentId: T:Core.Systems.NativeProvinceData
+  parent: Core.Systems
+  href: Core.Systems.NativeProvinceData.html
+  name: NativeProvinceData
+  nameWithType: NativeProvinceData
+  fullName: Core.Systems.NativeProvinceData
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_CalculateDistancesFromProvinces_Unity_Collections_NativeArray_System_UInt16__Core_Systems_NativeAdjacencyData_Core_Systems_NativeProvinceData_
+  name: CalculateDistancesFromProvinces
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromProvinces
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromProvinces
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_CalculateDistancesFromCountry_System_UInt16_Core_Systems_ProvinceSystem_Core_Systems_AdjacencySystem_
+  name: CalculateDistancesFromCountry
+  nameWithType: GraphDistanceCalculator.CalculateDistancesFromCountry
+  fullName: Core.Graph.GraphDistanceCalculator.CalculateDistancesFromCountry
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Graph.GraphDistanceCalculator.GetProvinceDistance*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetProvinceDistance
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetProvinceDistance_System_UInt16_
+  name: GetProvinceDistance
+  nameWithType: GraphDistanceCalculator.GetProvinceDistance
+  fullName: Core.Graph.GraphDistanceCalculator.GetProvinceDistance
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Graph.GraphDistanceCalculator.GetCountryDistance*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetCountryDistance
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetCountryDistance_System_UInt16_
+  name: GetCountryDistance
+  nameWithType: GraphDistanceCalculator.GetCountryDistance
+  fullName: Core.Graph.GraphDistanceCalculator.GetCountryDistance
+- uid: Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetAllProvinceDistances
+  name: GetAllProvinceDistances
+  nameWithType: GraphDistanceCalculator.GetAllProvinceDistances
+  fullName: Core.Graph.GraphDistanceCalculator.GetAllProvinceDistances
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Core.Graph.GraphDistanceCalculator.GetAllCountryDistances*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetAllCountryDistances
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetAllCountryDistances
+  name: GetAllCountryDistances
+  nameWithType: GraphDistanceCalculator.GetAllCountryDistances
+  fullName: Core.Graph.GraphDistanceCalculator.GetAllCountryDistances
+- uid: Core.Graph.GraphDistanceCalculator.GetDistanceBetween*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetDistanceBetween
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetDistanceBetween_System_UInt16_System_UInt16_Core_Systems_AdjacencySystem_
+  name: GetDistanceBetween
+  nameWithType: GraphDistanceCalculator.GetDistanceBetween
+  fullName: Core.Graph.GraphDistanceCalculator.GetDistanceBetween
+- uid: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_GetProvincesWithinDistance_System_Byte_Unity_Collections_Allocator_
+  name: GetProvincesWithinDistance
+  nameWithType: GraphDistanceCalculator.GetProvincesWithinDistance
+  fullName: Core.Graph.GraphDistanceCalculator.GetProvincesWithinDistance
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Graph.GraphDistanceCalculator.Dispose*
+  commentId: Overload:Core.Graph.GraphDistanceCalculator.Dispose
+  href: Core.Graph.GraphDistanceCalculator.html#Core_Graph_GraphDistanceCalculator_Dispose
+  name: Dispose
+  nameWithType: GraphDistanceCalculator.Dispose
+  fullName: Core.Graph.GraphDistanceCalculator.Dispose

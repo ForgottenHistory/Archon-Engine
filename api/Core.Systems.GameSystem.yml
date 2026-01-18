@@ -1,0 +1,1026 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.GameSystem
+  commentId: T:Core.Systems.GameSystem
+  id: GameSystem
+  parent: Core.Systems
+  children:
+  - Core.Systems.GameSystem.EnsureInitialized
+  - Core.Systems.GameSystem.GetDependencies
+  - Core.Systems.GameSystem.Initialize
+  - Core.Systems.GameSystem.IsInitialized
+  - Core.Systems.GameSystem.LogSystem(System.String)
+  - Core.Systems.GameSystem.LogSystemError(System.String)
+  - Core.Systems.GameSystem.LogSystemWarning(System.String)
+  - Core.Systems.GameSystem.OnDestroy
+  - Core.Systems.GameSystem.OnInitialize
+  - Core.Systems.GameSystem.OnLoad(Core.SaveLoad.SaveGameData)
+  - Core.Systems.GameSystem.OnSave(Core.SaveLoad.SaveGameData)
+  - Core.Systems.GameSystem.OnShutdown
+  - Core.Systems.GameSystem.Shutdown
+  - Core.Systems.GameSystem.Subscribe``1(Core.EventBus,System.Action{``0})
+  - Core.Systems.GameSystem.Subscribe``1(System.Action{``0})
+  - Core.Systems.GameSystem.SystemName
+  langs:
+  - csharp
+  - vb
+  name: GameSystem
+  nameWithType: GameSystem
+  fullName: Core.Systems.GameSystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameSystem
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE LAYER - Base class for all game systems with standardized lifecycle
+
+
+    Responsibilities:
+
+    - Define standard system lifecycle (Initialize, Shutdown, Save, Load)
+
+    - Enforce dependency validation before initialization
+
+    - Prevent re-initialization and initialization of missing dependencies
+
+    - Provide consistent logging for system operations
+
+
+    Architecture:
+
+    - Pure mechanism, no game-specific knowledge
+
+    - Systems declare dependencies explicitly via GetDependencies()
+
+    - Initialization order determined by dependency graph
+
+    - All state changes go through standard lifecycle methods
+
+
+    Usage (Game Layer):
+
+    public class EconomySystem : GameSystem
+
+    {
+        public override string SystemName =&gt; "Economy";
+
+        protected override IEnumerable{GameSystem} GetDependencies()
+        {
+            yield return timeManager;
+            yield return provinceSystem;
+        }
+
+        protected override void OnInitialize()
+        {
+            // Dependencies guaranteed to be initialized here
+            timeManager.OnMonthlyTick += CollectTaxes;
+        }
+    }
+
+
+    Benefits:
+
+    - No load order bugs (dependencies validated)
+
+    - No circular dependency crashes (detected at startup)
+
+    - Easy testing (mock dependencies)
+
+    - Save/load support (standard serialization hooks)
+
+    - Self-documenting (dependencies explicit)
+  example: []
+  syntax:
+    content: 'public abstract class GameSystem : MonoBehaviour'
+    content.vb: Public MustInherit Class GameSystem Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  derivedClasses:
+  - Core.Diplomacy.DiplomacySystem
+- uid: Core.Systems.GameSystem.SystemName
+  commentId: P:Core.Systems.GameSystem.SystemName
+  id: SystemName
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: SystemName
+  nameWithType: GameSystem.SystemName
+  fullName: Core.Systems.GameSystem.SystemName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SystemName
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Unique name for this system (used in logging and debugging)
+  example: []
+  syntax:
+    content: public abstract string SystemName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public MustOverride ReadOnly Property SystemName As String
+  overload: Core.Systems.GameSystem.SystemName*
+- uid: Core.Systems.GameSystem.IsInitialized
+  commentId: P:Core.Systems.GameSystem.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: GameSystem.IsInitialized
+  fullName: Core.Systems.GameSystem.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Whether this system has been initialized
+
+    Systems cannot be used until initialized
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsInitialized As Boolean
+  overload: Core.Systems.GameSystem.IsInitialized*
+- uid: Core.Systems.GameSystem.GetDependencies
+  commentId: M:Core.Systems.GameSystem.GetDependencies
+  id: GetDependencies
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: GetDependencies()
+  nameWithType: GameSystem.GetDependencies()
+  fullName: Core.Systems.GameSystem.GetDependencies()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDependencies
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get all systems this system depends on
+
+    Dependencies must be initialized before this system
+
+    Override to declare dependencies (return empty if none)
+
+    Internal visibility allows SystemRegistry to access for dependency resolution
+  example: []
+  syntax:
+    content: protected virtual IEnumerable<GameSystem> GetDependencies()
+    return:
+      type: System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+    content.vb: Protected Overridable Function GetDependencies() As IEnumerable(Of GameSystem)
+  overload: Core.Systems.GameSystem.GetDependencies*
+- uid: Core.Systems.GameSystem.Initialize
+  commentId: M:Core.Systems.GameSystem.Initialize
+  id: Initialize
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: GameSystem.Initialize()
+  fullName: Core.Systems.GameSystem.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Initialize this system (call after all dependencies initialized)
+
+    Validates dependencies before calling OnInitialize()
+  example: []
+  syntax:
+    content: public void Initialize()
+    content.vb: Public Sub Initialize()
+  overload: Core.Systems.GameSystem.Initialize*
+- uid: Core.Systems.GameSystem.OnInitialize
+  commentId: M:Core.Systems.GameSystem.OnInitialize
+  id: OnInitialize
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: GameSystem.OnInitialize()
+  fullName: Core.Systems.GameSystem.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Perform system-specific initialization
+
+    All dependencies guaranteed to be initialized when this is called
+
+    Override to set up system state, subscribe to events, etc.
+  example: []
+  syntax:
+    content: protected abstract void OnInitialize()
+    content.vb: Protected MustOverride Sub OnInitialize()
+  overload: Core.Systems.GameSystem.OnInitialize*
+- uid: Core.Systems.GameSystem.Shutdown
+  commentId: M:Core.Systems.GameSystem.Shutdown
+  id: Shutdown
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: Shutdown()
+  nameWithType: GameSystem.Shutdown()
+  fullName: Core.Systems.GameSystem.Shutdown()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Shutdown
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Shutdown this system cleanly
+
+    Unsubscribe from events, release resources, etc.
+
+    Called before scene unload or game exit
+  example: []
+  syntax:
+    content: public void Shutdown()
+    content.vb: Public Sub Shutdown()
+  overload: Core.Systems.GameSystem.Shutdown*
+- uid: Core.Systems.GameSystem.OnShutdown
+  commentId: M:Core.Systems.GameSystem.OnShutdown
+  id: OnShutdown
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: OnShutdown()
+  nameWithType: GameSystem.OnShutdown()
+  fullName: Core.Systems.GameSystem.OnShutdown()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnShutdown
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 145
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Perform system-specific shutdown
+
+    Override to clean up resources, unsubscribe events, etc.
+  example: []
+  syntax:
+    content: protected virtual void OnShutdown()
+    content.vb: Protected Overridable Sub OnShutdown()
+  overload: Core.Systems.GameSystem.OnShutdown*
+- uid: Core.Systems.GameSystem.OnDestroy
+  commentId: M:Core.Systems.GameSystem.OnDestroy
+  id: OnDestroy
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: OnDestroy()
+  nameWithType: GameSystem.OnDestroy()
+  fullName: Core.Systems.GameSystem.OnDestroy()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDestroy
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 153
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Unity lifecycle - automatically shutdown on destroy
+  example: []
+  syntax:
+    content: protected virtual void OnDestroy()
+    content.vb: Protected Overridable Sub OnDestroy()
+  overload: Core.Systems.GameSystem.OnDestroy*
+- uid: Core.Systems.GameSystem.OnSave(Core.SaveLoad.SaveGameData)
+  commentId: M:Core.Systems.GameSystem.OnSave(Core.SaveLoad.SaveGameData)
+  id: OnSave(Core.SaveLoad.SaveGameData)
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: OnSave(SaveGameData)
+  nameWithType: GameSystem.OnSave(SaveGameData)
+  fullName: Core.Systems.GameSystem.OnSave(Core.SaveLoad.SaveGameData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSave
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 165
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Save system state to save data
+
+    Override to serialize system state for save/load
+  example: []
+  syntax:
+    content: protected virtual void OnSave(SaveGameData saveData)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    content.vb: Protected Overridable Sub OnSave(saveData As SaveGameData)
+  overload: Core.Systems.GameSystem.OnSave*
+- uid: Core.Systems.GameSystem.OnLoad(Core.SaveLoad.SaveGameData)
+  commentId: M:Core.Systems.GameSystem.OnLoad(Core.SaveLoad.SaveGameData)
+  id: OnLoad(Core.SaveLoad.SaveGameData)
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: OnLoad(SaveGameData)
+  nameWithType: GameSystem.OnLoad(SaveGameData)
+  fullName: Core.Systems.GameSystem.OnLoad(Core.SaveLoad.SaveGameData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnLoad
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 174
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Load system state from save data
+
+    Override to deserialize system state for save/load
+  example: []
+  syntax:
+    content: protected virtual void OnLoad(SaveGameData saveData)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    content.vb: Protected Overridable Sub OnLoad(saveData As SaveGameData)
+  overload: Core.Systems.GameSystem.OnLoad*
+- uid: Core.Systems.GameSystem.EnsureInitialized
+  commentId: M:Core.Systems.GameSystem.EnsureInitialized
+  id: EnsureInitialized
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: EnsureInitialized()
+  nameWithType: GameSystem.EnsureInitialized()
+  fullName: Core.Systems.GameSystem.EnsureInitialized()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnsureInitialized
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 183
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Check if this system is ready to be used
+
+    Systems should check this before performing operations
+  example: []
+  syntax:
+    content: protected void EnsureInitialized()
+    content.vb: Protected Sub EnsureInitialized()
+  overload: Core.Systems.GameSystem.EnsureInitialized*
+- uid: Core.Systems.GameSystem.Subscribe``1(System.Action{``0})
+  commentId: M:Core.Systems.GameSystem.Subscribe``1(System.Action{``0})
+  id: Subscribe``1(System.Action{``0})
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: Subscribe<T>(Action<T>)
+  nameWithType: GameSystem.Subscribe<T>(Action<T>)
+  fullName: Core.Systems.GameSystem.Subscribe<T>(System.Action<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Subscribe
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 202
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Subscribe to an event with automatic cleanup on shutdown.
+
+    No need to manually unsubscribe - handled automatically.
+
+
+    Usage:
+
+    protected override void OnInitialize()
+
+    {
+        Subscribe{MonthlyTickEvent}(HandleMonthlyTick);
+    }
+
+    // No OnShutdown override needed for unsubscription
+  example: []
+  syntax:
+    content: 'protected void Subscribe<T>(Action<T> handler) where T : struct, IGameEvent'
+    parameters:
+    - id: handler
+      type: System.Action{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Protected Sub Subscribe(Of T As {Structure, IGameEvent})(handler As Action(Of T))
+  overload: Core.Systems.GameSystem.Subscribe*
+  nameWithType.vb: GameSystem.Subscribe(Of T)(Action(Of T))
+  fullName.vb: Core.Systems.GameSystem.Subscribe(Of T)(System.Action(Of T))
+  name.vb: Subscribe(Of T)(Action(Of T))
+- uid: Core.Systems.GameSystem.Subscribe``1(Core.EventBus,System.Action{``0})
+  commentId: M:Core.Systems.GameSystem.Subscribe``1(Core.EventBus,System.Action{``0})
+  id: Subscribe``1(Core.EventBus,System.Action{``0})
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: Subscribe<T>(EventBus, Action<T>)
+  nameWithType: GameSystem.Subscribe<T>(EventBus, Action<T>)
+  fullName: Core.Systems.GameSystem.Subscribe<T>(Core.EventBus, System.Action<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Subscribe
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 219
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Subscribe to an event using a specific EventBus.
+
+    Useful when not using GameState.Instance.
+  example: []
+  syntax:
+    content: 'protected void Subscribe<T>(EventBus eventBus, Action<T> handler) where T : struct, IGameEvent'
+    parameters:
+    - id: eventBus
+      type: Core.EventBus
+    - id: handler
+      type: System.Action{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Protected Sub Subscribe(Of T As {Structure, IGameEvent})(eventBus As EventBus, handler As Action(Of T))
+  overload: Core.Systems.GameSystem.Subscribe*
+  nameWithType.vb: GameSystem.Subscribe(Of T)(EventBus, Action(Of T))
+  fullName.vb: Core.Systems.GameSystem.Subscribe(Of T)(Core.EventBus, System.Action(Of T))
+  name.vb: Subscribe(Of T)(EventBus, Action(Of T))
+- uid: Core.Systems.GameSystem.LogSystem(System.String)
+  commentId: M:Core.Systems.GameSystem.LogSystem(System.String)
+  id: LogSystem(System.String)
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: LogSystem(string)
+  nameWithType: GameSystem.LogSystem(string)
+  fullName: Core.Systems.GameSystem.LogSystem(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogSystem
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 235
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Log a system-specific message
+
+    Prefixes message with system name for easier debugging
+  example: []
+  syntax:
+    content: protected void LogSystem(string message)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogSystem(message As String)
+  overload: Core.Systems.GameSystem.LogSystem*
+  nameWithType.vb: GameSystem.LogSystem(String)
+  fullName.vb: Core.Systems.GameSystem.LogSystem(String)
+  name.vb: LogSystem(String)
+- uid: Core.Systems.GameSystem.LogSystemWarning(System.String)
+  commentId: M:Core.Systems.GameSystem.LogSystemWarning(System.String)
+  id: LogSystemWarning(System.String)
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: LogSystemWarning(string)
+  nameWithType: GameSystem.LogSystemWarning(string)
+  fullName: Core.Systems.GameSystem.LogSystemWarning(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogSystemWarning
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 243
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Log a system-specific warning
+  example: []
+  syntax:
+    content: protected void LogSystemWarning(string message)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogSystemWarning(message As String)
+  overload: Core.Systems.GameSystem.LogSystemWarning*
+  nameWithType.vb: GameSystem.LogSystemWarning(String)
+  fullName.vb: Core.Systems.GameSystem.LogSystemWarning(String)
+  name.vb: LogSystemWarning(String)
+- uid: Core.Systems.GameSystem.LogSystemError(System.String)
+  commentId: M:Core.Systems.GameSystem.LogSystemError(System.String)
+  id: LogSystemError(System.String)
+  parent: Core.Systems.GameSystem
+  langs:
+  - csharp
+  - vb
+  name: LogSystemError(string)
+  nameWithType: GameSystem.LogSystemError(string)
+  fullName: Core.Systems.GameSystem.LogSystemError(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/GameSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogSystemError
+    path: Scripts/Core/Systems/GameSystem.cs
+    startLine: 251
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Log a system-specific error
+  example: []
+  syntax:
+    content: protected void LogSystemError(string message)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogSystemError(message As String)
+  overload: Core.Systems.GameSystem.LogSystemError*
+  nameWithType.vb: GameSystem.LogSystemError(String)
+  fullName.vb: Core.Systems.GameSystem.LogSystemError(String)
+  name.vb: LogSystemError(String)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Systems.GameSystem.SystemName*
+  commentId: Overload:Core.Systems.GameSystem.SystemName
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_SystemName
+  name: SystemName
+  nameWithType: GameSystem.SystemName
+  fullName: Core.Systems.GameSystem.SystemName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.GameSystem.IsInitialized*
+  commentId: Overload:Core.Systems.GameSystem.IsInitialized
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_IsInitialized
+  name: IsInitialized
+  nameWithType: GameSystem.IsInitialized
+  fullName: Core.Systems.GameSystem.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.GameSystem.GetDependencies*
+  commentId: Overload:Core.Systems.GameSystem.GetDependencies
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_GetDependencies
+  name: GetDependencies
+  nameWithType: GameSystem.GetDependencies
+  fullName: Core.Systems.GameSystem.GetDependencies
+- uid: System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+  commentId: T:System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Core.Systems.GameSystem.html
+  name: IEnumerable<GameSystem>
+  nameWithType: IEnumerable<GameSystem>
+  fullName: System.Collections.Generic.IEnumerable<Core.Systems.GameSystem>
+  nameWithType.vb: IEnumerable(Of GameSystem)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Core.Systems.GameSystem)
+  name.vb: IEnumerable(Of GameSystem)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: Core.Systems.GameSystem
+    name: GameSystem
+    href: Core.Systems.GameSystem.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Systems.GameSystem
+    name: GameSystem
+    href: Core.Systems.GameSystem.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Systems.GameSystem.Initialize*
+  commentId: Overload:Core.Systems.GameSystem.Initialize
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_Initialize
+  name: Initialize
+  nameWithType: GameSystem.Initialize
+  fullName: Core.Systems.GameSystem.Initialize
+- uid: Core.Systems.GameSystem.OnInitialize*
+  commentId: Overload:Core.Systems.GameSystem.OnInitialize
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_OnInitialize
+  name: OnInitialize
+  nameWithType: GameSystem.OnInitialize
+  fullName: Core.Systems.GameSystem.OnInitialize
+- uid: Core.Systems.GameSystem.Shutdown*
+  commentId: Overload:Core.Systems.GameSystem.Shutdown
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_Shutdown
+  name: Shutdown
+  nameWithType: GameSystem.Shutdown
+  fullName: Core.Systems.GameSystem.Shutdown
+- uid: Core.Systems.GameSystem.OnShutdown*
+  commentId: Overload:Core.Systems.GameSystem.OnShutdown
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_OnShutdown
+  name: OnShutdown
+  nameWithType: GameSystem.OnShutdown
+  fullName: Core.Systems.GameSystem.OnShutdown
+- uid: Core.Systems.GameSystem.OnDestroy*
+  commentId: Overload:Core.Systems.GameSystem.OnDestroy
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_OnDestroy
+  name: OnDestroy
+  nameWithType: GameSystem.OnDestroy
+  fullName: Core.Systems.GameSystem.OnDestroy
+- uid: Core.Systems.GameSystem.OnSave*
+  commentId: Overload:Core.Systems.GameSystem.OnSave
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_OnSave_Core_SaveLoad_SaveGameData_
+  name: OnSave
+  nameWithType: GameSystem.OnSave
+  fullName: Core.Systems.GameSystem.OnSave
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveGameData.html
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: Core.Systems.GameSystem.OnLoad*
+  commentId: Overload:Core.Systems.GameSystem.OnLoad
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_OnLoad_Core_SaveLoad_SaveGameData_
+  name: OnLoad
+  nameWithType: GameSystem.OnLoad
+  fullName: Core.Systems.GameSystem.OnLoad
+- uid: Core.Systems.GameSystem.EnsureInitialized*
+  commentId: Overload:Core.Systems.GameSystem.EnsureInitialized
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_EnsureInitialized
+  name: EnsureInitialized
+  nameWithType: GameSystem.EnsureInitialized
+  fullName: Core.Systems.GameSystem.EnsureInitialized
+- uid: Core.Systems.GameSystem.Subscribe*
+  commentId: Overload:Core.Systems.GameSystem.Subscribe
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_Subscribe__1_System_Action___0__
+  name: Subscribe
+  nameWithType: GameSystem.Subscribe
+  fullName: Core.Systems.GameSystem.Subscribe
+- uid: System.Action{{T}}
+  commentId: T:System.Action{``0}
+  parent: System
+  definition: System.Action`1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.GameSystem.LogSystem*
+  commentId: Overload:Core.Systems.GameSystem.LogSystem
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_LogSystem_System_String_
+  name: LogSystem
+  nameWithType: GameSystem.LogSystem
+  fullName: Core.Systems.GameSystem.LogSystem
+- uid: Core.Systems.GameSystem.LogSystemWarning*
+  commentId: Overload:Core.Systems.GameSystem.LogSystemWarning
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_LogSystemWarning_System_String_
+  name: LogSystemWarning
+  nameWithType: GameSystem.LogSystemWarning
+  fullName: Core.Systems.GameSystem.LogSystemWarning
+- uid: Core.Systems.GameSystem.LogSystemError*
+  commentId: Overload:Core.Systems.GameSystem.LogSystemError
+  href: Core.Systems.GameSystem.html#Core_Systems_GameSystem_LogSystemError_System_String_
+  name: LogSystemError
+  nameWithType: GameSystem.LogSystemError
+  fullName: Core.Systems.GameSystem.LogSystemError

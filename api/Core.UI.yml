@@ -1,0 +1,53 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.UI
+  commentId: N:Core.UI
+  id: Core.UI
+  children:
+  - Core.UI.BasePanel
+  - Core.UI.UIHelper
+  langs:
+  - csharp
+  - vb
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.UI.BasePanel
+  commentId: T:Core.UI.BasePanel
+  parent: Core.UI
+  href: Core.UI.BasePanel.html
+  name: BasePanel
+  nameWithType: BasePanel
+  fullName: Core.UI.BasePanel
+- uid: Core.UI.UIHelper
+  commentId: T:Core.UI.UIHelper
+  href: Core.UI.UIHelper.html
+  name: UIHelper
+  nameWithType: UIHelper
+  fullName: Core.UI.UIHelper
+- uid: Core.UI
+  commentId: N:Core.UI
+  href: Core.html
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html

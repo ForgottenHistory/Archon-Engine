@@ -1,0 +1,1370 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.DiplomacyPanel
+  commentId: T:StarterKit.DiplomacyPanel
+  id: DiplomacyPanel
+  parent: StarterKit
+  children:
+  - StarterKit.DiplomacyPanel.CreateUI
+  - StarterKit.DiplomacyPanel.Initialize(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem)
+  - StarterKit.DiplomacyPanel.ShowForCountry(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyPanel
+  nameWithType: DiplomacyPanel
+  fullName: StarterKit.DiplomacyPanel
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyPanel
+    path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+    startLine: 24
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Diplomacy panel showing relations with a selected country.
+
+
+    Demonstrates ENGINE diplomacy system:
+
+    - Opinion display with color gradient
+
+    - War/peace status
+
+    - Treaty status (alliance, NAP, etc.)
+
+    - Declare War / Make Peace actions
+
+
+    Architecture:
+
+    - ENGINE: DiplomacySystem provides mechanism (war state, opinion calc)
+
+    - GAME: StarterKit provides policy (UI, when to allow actions)
+  example: []
+  syntax:
+    content: 'public class DiplomacyPanel : StarterKitPanel'
+    content.vb: Public Class DiplomacyPanel Inherits StarterKitPanel
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  - Core.UI.BasePanel
+  - StarterKit.StarterKitPanel
+  inheritedMembers:
+  - StarterKit.StarterKitPanel.BackgroundPanel
+  - StarterKit.StarterKitPanel.BackgroundPanelLight
+  - StarterKit.StarterKitPanel.BackgroundHeader
+  - StarterKit.StarterKitPanel.BackgroundRowAlt
+  - StarterKit.StarterKitPanel.BackgroundRowPlayer
+  - StarterKit.StarterKitPanel.BackgroundButton
+  - StarterKit.StarterKitPanel.BackgroundButtonHover
+  - StarterKit.StarterKitPanel.TextPrimary
+  - StarterKit.StarterKitPanel.TextSecondary
+  - StarterKit.StarterKitPanel.TextLabel
+  - StarterKit.StarterKitPanel.TextGold
+  - StarterKit.StarterKitPanel.TextIncome
+  - StarterKit.StarterKitPanel.TextWarning
+  - StarterKit.StarterKitPanel.FontSizeNormal
+  - StarterKit.StarterKitPanel.FontSizeSmall
+  - StarterKit.StarterKitPanel.FontSizeLarge
+  - StarterKit.StarterKitPanel.FontSizeHeader
+  - StarterKit.StarterKitPanel.SpacingXs
+  - StarterKit.StarterKitPanel.SpacingSm
+  - StarterKit.StarterKitPanel.SpacingMd
+  - StarterKit.StarterKitPanel.SpacingLg
+  - StarterKit.StarterKitPanel.RadiusSm
+  - StarterKit.StarterKitPanel.RadiusMd
+  - StarterKit.StarterKitPanel.RadiusLg
+  - StarterKit.StarterKitPanel.gameState
+  - StarterKit.StarterKitPanel.subscriptions
+  - StarterKit.StarterKitPanel.GameState
+  - StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  - StarterKit.StarterKitPanel.Subscribe``1(System.Action{{T}})
+  - StarterKit.StarterKitPanel.OnDestroy
+  - StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  - StarterKit.StarterKitPanel.CreateHeader(System.String)
+  - StarterKit.StarterKitPanel.CreateTitle(System.String)
+  - StarterKit.StarterKitPanel.CreateText(System.String)
+  - StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  - StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  - StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  - StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  - StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  - StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  - Core.UI.BasePanel.uiDocument
+  - Core.UI.BasePanel.rootElement
+  - Core.UI.BasePanel.panelContainer
+  - Core.UI.BasePanel.isInitialized
+  - Core.UI.BasePanel.isVisible
+  - Core.UI.BasePanel.IsInitialized
+  - Core.UI.BasePanel.IsVisible
+  - Core.UI.BasePanel.InitializeBase
+  - Core.UI.BasePanel.Show
+  - Core.UI.BasePanel.Hide
+  - Core.UI.BasePanel.Toggle
+  - Core.UI.BasePanel.OnShow
+  - Core.UI.BasePanel.OnHide
+  - Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  - Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  - Core.UI.BasePanel.CenterPanel
+- uid: StarterKit.DiplomacyPanel.Initialize(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem)
+  commentId: M:StarterKit.DiplomacyPanel.Initialize(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem)
+  id: Initialize(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem)
+  parent: StarterKit.DiplomacyPanel
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, PlayerState, EconomySystem)
+  nameWithType: DiplomacyPanel.Initialize(GameState, PlayerState, EconomySystem)
+  fullName: StarterKit.DiplomacyPanel.Initialize(Core.GameState, StarterKit.PlayerState, StarterKit.EconomySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+    startLine: 58
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public void Initialize(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef = null)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: playerStateRef
+      type: StarterKit.PlayerState
+    - id: economySystemRef
+      type: StarterKit.EconomySystem
+    content.vb: Public Sub Initialize(gameStateRef As GameState, playerStateRef As PlayerState, economySystemRef As EconomySystem = Nothing)
+  overload: StarterKit.DiplomacyPanel.Initialize*
+- uid: StarterKit.DiplomacyPanel.CreateUI
+  commentId: M:StarterKit.DiplomacyPanel.CreateUI
+  id: CreateUI
+  parent: StarterKit.DiplomacyPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateUI()
+  nameWithType: DiplomacyPanel.CreateUI()
+  fullName: StarterKit.DiplomacyPanel.CreateUI()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateUI
+    path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+    startLine: 83
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Override to create your panel's UI elements.
+
+    Set panelContainer to your main container element.
+  example: []
+  syntax:
+    content: protected override void CreateUI()
+    content.vb: Protected Overrides Sub CreateUI()
+  overridden: Core.UI.BasePanel.CreateUI
+  overload: StarterKit.DiplomacyPanel.CreateUI*
+- uid: StarterKit.DiplomacyPanel.ShowForCountry(System.UInt16)
+  commentId: M:StarterKit.DiplomacyPanel.ShowForCountry(System.UInt16)
+  id: ShowForCountry(System.UInt16)
+  parent: StarterKit.DiplomacyPanel
+  langs:
+  - csharp
+  - vb
+  name: ShowForCountry(ushort)
+  nameWithType: DiplomacyPanel.ShowForCountry(ushort)
+  fullName: StarterKit.DiplomacyPanel.ShowForCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShowForCountry
+    path: Scripts/StarterKit/UI/DiplomacyPanel.cs
+    startLine: 209
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Show the panel for a specific country.
+  example: []
+  syntax:
+    content: public void ShowForCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    content.vb: Public Sub ShowForCountry(countryId As UShort)
+  overload: StarterKit.DiplomacyPanel.ShowForCountry*
+  nameWithType.vb: DiplomacyPanel.ShowForCountry(UShort)
+  fullName.vb: StarterKit.DiplomacyPanel.ShowForCountry(UShort)
+  name.vb: ShowForCountry(UShort)
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: Core.UI.BasePanel
+  commentId: T:Core.UI.BasePanel
+  parent: Core.UI
+  href: Core.UI.BasePanel.html
+  name: BasePanel
+  nameWithType: BasePanel
+  fullName: Core.UI.BasePanel
+- uid: StarterKit.StarterKitPanel
+  commentId: T:StarterKit.StarterKitPanel
+  parent: StarterKit
+  href: StarterKit.StarterKitPanel.html
+  name: StarterKitPanel
+  nameWithType: StarterKitPanel
+  fullName: StarterKit.StarterKitPanel
+- uid: StarterKit.StarterKitPanel.BackgroundPanel
+  commentId: F:StarterKit.StarterKitPanel.BackgroundPanel
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundPanel
+  name: BackgroundPanel
+  nameWithType: StarterKitPanel.BackgroundPanel
+  fullName: StarterKit.StarterKitPanel.BackgroundPanel
+- uid: StarterKit.StarterKitPanel.BackgroundPanelLight
+  commentId: F:StarterKit.StarterKitPanel.BackgroundPanelLight
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundPanelLight
+  name: BackgroundPanelLight
+  nameWithType: StarterKitPanel.BackgroundPanelLight
+  fullName: StarterKit.StarterKitPanel.BackgroundPanelLight
+- uid: StarterKit.StarterKitPanel.BackgroundHeader
+  commentId: F:StarterKit.StarterKitPanel.BackgroundHeader
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundHeader
+  name: BackgroundHeader
+  nameWithType: StarterKitPanel.BackgroundHeader
+  fullName: StarterKit.StarterKitPanel.BackgroundHeader
+- uid: StarterKit.StarterKitPanel.BackgroundRowAlt
+  commentId: F:StarterKit.StarterKitPanel.BackgroundRowAlt
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundRowAlt
+  name: BackgroundRowAlt
+  nameWithType: StarterKitPanel.BackgroundRowAlt
+  fullName: StarterKit.StarterKitPanel.BackgroundRowAlt
+- uid: StarterKit.StarterKitPanel.BackgroundRowPlayer
+  commentId: F:StarterKit.StarterKitPanel.BackgroundRowPlayer
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundRowPlayer
+  name: BackgroundRowPlayer
+  nameWithType: StarterKitPanel.BackgroundRowPlayer
+  fullName: StarterKit.StarterKitPanel.BackgroundRowPlayer
+- uid: StarterKit.StarterKitPanel.BackgroundButton
+  commentId: F:StarterKit.StarterKitPanel.BackgroundButton
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundButton
+  name: BackgroundButton
+  nameWithType: StarterKitPanel.BackgroundButton
+  fullName: StarterKit.StarterKitPanel.BackgroundButton
+- uid: StarterKit.StarterKitPanel.BackgroundButtonHover
+  commentId: F:StarterKit.StarterKitPanel.BackgroundButtonHover
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_BackgroundButtonHover
+  name: BackgroundButtonHover
+  nameWithType: StarterKitPanel.BackgroundButtonHover
+  fullName: StarterKit.StarterKitPanel.BackgroundButtonHover
+- uid: StarterKit.StarterKitPanel.TextPrimary
+  commentId: F:StarterKit.StarterKitPanel.TextPrimary
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextPrimary
+  name: TextPrimary
+  nameWithType: StarterKitPanel.TextPrimary
+  fullName: StarterKit.StarterKitPanel.TextPrimary
+- uid: StarterKit.StarterKitPanel.TextSecondary
+  commentId: F:StarterKit.StarterKitPanel.TextSecondary
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextSecondary
+  name: TextSecondary
+  nameWithType: StarterKitPanel.TextSecondary
+  fullName: StarterKit.StarterKitPanel.TextSecondary
+- uid: StarterKit.StarterKitPanel.TextLabel
+  commentId: F:StarterKit.StarterKitPanel.TextLabel
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextLabel
+  name: TextLabel
+  nameWithType: StarterKitPanel.TextLabel
+  fullName: StarterKit.StarterKitPanel.TextLabel
+- uid: StarterKit.StarterKitPanel.TextGold
+  commentId: F:StarterKit.StarterKitPanel.TextGold
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextGold
+  name: TextGold
+  nameWithType: StarterKitPanel.TextGold
+  fullName: StarterKit.StarterKitPanel.TextGold
+- uid: StarterKit.StarterKitPanel.TextIncome
+  commentId: F:StarterKit.StarterKitPanel.TextIncome
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextIncome
+  name: TextIncome
+  nameWithType: StarterKitPanel.TextIncome
+  fullName: StarterKit.StarterKitPanel.TextIncome
+- uid: StarterKit.StarterKitPanel.TextWarning
+  commentId: F:StarterKit.StarterKitPanel.TextWarning
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_TextWarning
+  name: TextWarning
+  nameWithType: StarterKitPanel.TextWarning
+  fullName: StarterKit.StarterKitPanel.TextWarning
+- uid: StarterKit.StarterKitPanel.FontSizeNormal
+  commentId: F:StarterKit.StarterKitPanel.FontSizeNormal
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_FontSizeNormal
+  name: FontSizeNormal
+  nameWithType: StarterKitPanel.FontSizeNormal
+  fullName: StarterKit.StarterKitPanel.FontSizeNormal
+- uid: StarterKit.StarterKitPanel.FontSizeSmall
+  commentId: F:StarterKit.StarterKitPanel.FontSizeSmall
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_FontSizeSmall
+  name: FontSizeSmall
+  nameWithType: StarterKitPanel.FontSizeSmall
+  fullName: StarterKit.StarterKitPanel.FontSizeSmall
+- uid: StarterKit.StarterKitPanel.FontSizeLarge
+  commentId: F:StarterKit.StarterKitPanel.FontSizeLarge
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_FontSizeLarge
+  name: FontSizeLarge
+  nameWithType: StarterKitPanel.FontSizeLarge
+  fullName: StarterKit.StarterKitPanel.FontSizeLarge
+- uid: StarterKit.StarterKitPanel.FontSizeHeader
+  commentId: F:StarterKit.StarterKitPanel.FontSizeHeader
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_FontSizeHeader
+  name: FontSizeHeader
+  nameWithType: StarterKitPanel.FontSizeHeader
+  fullName: StarterKit.StarterKitPanel.FontSizeHeader
+- uid: StarterKit.StarterKitPanel.SpacingXs
+  commentId: F:StarterKit.StarterKitPanel.SpacingXs
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_SpacingXs
+  name: SpacingXs
+  nameWithType: StarterKitPanel.SpacingXs
+  fullName: StarterKit.StarterKitPanel.SpacingXs
+- uid: StarterKit.StarterKitPanel.SpacingSm
+  commentId: F:StarterKit.StarterKitPanel.SpacingSm
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_SpacingSm
+  name: SpacingSm
+  nameWithType: StarterKitPanel.SpacingSm
+  fullName: StarterKit.StarterKitPanel.SpacingSm
+- uid: StarterKit.StarterKitPanel.SpacingMd
+  commentId: F:StarterKit.StarterKitPanel.SpacingMd
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_SpacingMd
+  name: SpacingMd
+  nameWithType: StarterKitPanel.SpacingMd
+  fullName: StarterKit.StarterKitPanel.SpacingMd
+- uid: StarterKit.StarterKitPanel.SpacingLg
+  commentId: F:StarterKit.StarterKitPanel.SpacingLg
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_SpacingLg
+  name: SpacingLg
+  nameWithType: StarterKitPanel.SpacingLg
+  fullName: StarterKit.StarterKitPanel.SpacingLg
+- uid: StarterKit.StarterKitPanel.RadiusSm
+  commentId: F:StarterKit.StarterKitPanel.RadiusSm
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_RadiusSm
+  name: RadiusSm
+  nameWithType: StarterKitPanel.RadiusSm
+  fullName: StarterKit.StarterKitPanel.RadiusSm
+- uid: StarterKit.StarterKitPanel.RadiusMd
+  commentId: F:StarterKit.StarterKitPanel.RadiusMd
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_RadiusMd
+  name: RadiusMd
+  nameWithType: StarterKitPanel.RadiusMd
+  fullName: StarterKit.StarterKitPanel.RadiusMd
+- uid: StarterKit.StarterKitPanel.RadiusLg
+  commentId: F:StarterKit.StarterKitPanel.RadiusLg
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_RadiusLg
+  name: RadiusLg
+  nameWithType: StarterKitPanel.RadiusLg
+  fullName: StarterKit.StarterKitPanel.RadiusLg
+- uid: StarterKit.StarterKitPanel.gameState
+  commentId: F:StarterKit.StarterKitPanel.gameState
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_gameState
+  name: gameState
+  nameWithType: StarterKitPanel.gameState
+  fullName: StarterKit.StarterKitPanel.gameState
+- uid: StarterKit.StarterKitPanel.subscriptions
+  commentId: F:StarterKit.StarterKitPanel.subscriptions
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_subscriptions
+  name: subscriptions
+  nameWithType: StarterKitPanel.subscriptions
+  fullName: StarterKit.StarterKitPanel.subscriptions
+- uid: StarterKit.StarterKitPanel.GameState
+  commentId: P:StarterKit.StarterKitPanel.GameState
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_GameState
+  name: GameState
+  nameWithType: StarterKitPanel.GameState
+  fullName: StarterKit.StarterKitPanel.GameState
+- uid: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  commentId: M:StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Initialize_Core_GameState_
+  name: Initialize(GameState)
+  nameWithType: StarterKitPanel.Initialize(GameState)
+  fullName: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+    name: Initialize
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Initialize_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+    name: Initialize
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Initialize_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+  - name: )
+- uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{{T}})
+  commentId: M:StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  parent: StarterKit.StarterKitPanel
+  definition: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  name: Subscribe<T>(Action<T>)
+  nameWithType: StarterKitPanel.Subscribe<T>(Action<T>)
+  fullName: StarterKit.StarterKitPanel.Subscribe<T>(System.Action<T>)
+  nameWithType.vb: StarterKitPanel.Subscribe(Of T)(Action(Of T))
+  fullName.vb: StarterKit.StarterKitPanel.Subscribe(Of T)(System.Action(Of T))
+  name.vb: Subscribe(Of T)(Action(Of T))
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+    name: Subscribe
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+    name: Subscribe
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
+- uid: StarterKit.StarterKitPanel.OnDestroy
+  commentId: M:StarterKit.StarterKitPanel.OnDestroy
+  parent: StarterKit.StarterKitPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_OnDestroy
+  name: OnDestroy()
+  nameWithType: StarterKitPanel.OnDestroy()
+  fullName: StarterKit.StarterKitPanel.OnDestroy()
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.OnDestroy
+    name: OnDestroy
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_OnDestroy
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.OnDestroy
+    name: OnDestroy
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_OnDestroy
+  - name: (
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  commentId: M:StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledPanel_System_String_System_Nullable_System_Single__
+  name: CreateStyledPanel(string, float?)
+  nameWithType: StarterKitPanel.CreateStyledPanel(string, float?)
+  fullName: StarterKit.StarterKitPanel.CreateStyledPanel(string, float?)
+  nameWithType.vb: StarterKitPanel.CreateStyledPanel(String, Single?)
+  fullName.vb: StarterKit.StarterKitPanel.CreateStyledPanel(String, Single?)
+  name.vb: CreateStyledPanel(String, Single?)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+    name: CreateStyledPanel
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledPanel_System_String_System_Nullable_System_Single__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+    name: CreateStyledPanel
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledPanel_System_String_System_Nullable_System_Single__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateHeader(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateHeader(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateHeader_System_String_
+  name: CreateHeader(string)
+  nameWithType: StarterKitPanel.CreateHeader(string)
+  fullName: StarterKit.StarterKitPanel.CreateHeader(string)
+  nameWithType.vb: StarterKitPanel.CreateHeader(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateHeader(String)
+  name.vb: CreateHeader(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateHeader(System.String)
+    name: CreateHeader
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateHeader_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateHeader(System.String)
+    name: CreateHeader
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateHeader_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateTitle(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateTitle(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateTitle_System_String_
+  name: CreateTitle(string)
+  nameWithType: StarterKitPanel.CreateTitle(string)
+  fullName: StarterKit.StarterKitPanel.CreateTitle(string)
+  nameWithType.vb: StarterKitPanel.CreateTitle(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateTitle(String)
+  name.vb: CreateTitle(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateTitle(System.String)
+    name: CreateTitle
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateTitle_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateTitle(System.String)
+    name: CreateTitle
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateTitle_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateText(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateText_System_String_
+  name: CreateText(string)
+  nameWithType: StarterKitPanel.CreateText(string)
+  fullName: StarterKit.StarterKitPanel.CreateText(string)
+  nameWithType.vb: StarterKitPanel.CreateText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateText(String)
+  name.vb: CreateText(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateText(System.String)
+    name: CreateText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateText_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateText(System.String)
+    name: CreateText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateText_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateSecondaryText_System_String_
+  name: CreateSecondaryText(string)
+  nameWithType: StarterKitPanel.CreateSecondaryText(string)
+  fullName: StarterKit.StarterKitPanel.CreateSecondaryText(string)
+  nameWithType.vb: StarterKitPanel.CreateSecondaryText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateSecondaryText(String)
+  name.vb: CreateSecondaryText(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+    name: CreateSecondaryText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateSecondaryText_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+    name: CreateSecondaryText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateSecondaryText_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateLabelText_System_String_
+  name: CreateLabelText(string)
+  nameWithType: StarterKitPanel.CreateLabelText(string)
+  fullName: StarterKit.StarterKitPanel.CreateLabelText(string)
+  nameWithType.vb: StarterKitPanel.CreateLabelText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateLabelText(String)
+  name.vb: CreateLabelText(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateLabelText(System.String)
+    name: CreateLabelText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateLabelText_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateLabelText(System.String)
+    name: CreateLabelText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateLabelText_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateGoldText_System_String_
+  name: CreateGoldText(string)
+  nameWithType: StarterKitPanel.CreateGoldText(string)
+  fullName: StarterKit.StarterKitPanel.CreateGoldText(string)
+  nameWithType.vb: StarterKitPanel.CreateGoldText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateGoldText(String)
+  name.vb: CreateGoldText(String)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateGoldText(System.String)
+    name: CreateGoldText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateGoldText_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateGoldText(System.String)
+    name: CreateGoldText
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateGoldText_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  commentId: M:StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledButton_System_String_System_Action_
+  name: CreateStyledButton(string, Action)
+  nameWithType: StarterKitPanel.CreateStyledButton(string, Action)
+  fullName: StarterKit.StarterKitPanel.CreateStyledButton(string, System.Action)
+  nameWithType.vb: StarterKitPanel.CreateStyledButton(String, Action)
+  fullName.vb: StarterKit.StarterKitPanel.CreateStyledButton(String, System.Action)
+  name.vb: CreateStyledButton(String, Action)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+    name: CreateStyledButton
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledButton_System_String_System_Action_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Action
+    name: Action
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+    name: CreateStyledButton
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledButton_System_String_System_Action_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Action
+    name: Action
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRow_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: CreateRow(Justify, Align)
+  nameWithType: StarterKitPanel.CreateRow(Justify, Align)
+  fullName: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+    name: CreateRow
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRow_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  - name: (
+  - uid: UnityEngine.UIElements.Justify
+    name: Justify
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.UIElements.Align
+    name: Align
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+    name: CreateRow
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRow_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  - name: (
+  - uid: UnityEngine.UIElements.Justify
+    name: Justify
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.UIElements.Align
+    name: Align
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColumn_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: CreateColumn(Justify, Align)
+  nameWithType: StarterKitPanel.CreateColumn(Justify, Align)
+  fullName: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+    name: CreateColumn
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColumn_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  - name: (
+  - uid: UnityEngine.UIElements.Justify
+    name: Justify
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.UIElements.Align
+    name: Align
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+    name: CreateColumn
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColumn_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  - name: (
+  - uid: UnityEngine.UIElements.Justify
+    name: Justify
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.UIElements.Align
+    name: Align
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  commentId: M:StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRowEntry_System_Boolean_
+  name: CreateRowEntry(bool)
+  nameWithType: StarterKitPanel.CreateRowEntry(bool)
+  fullName: StarterKit.StarterKitPanel.CreateRowEntry(bool)
+  nameWithType.vb: StarterKitPanel.CreateRowEntry(Boolean)
+  fullName.vb: StarterKit.StarterKitPanel.CreateRowEntry(Boolean)
+  name.vb: CreateRowEntry(Boolean)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+    name: CreateRowEntry
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRowEntry_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+    name: CreateRowEntry
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRowEntry_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  commentId: M:StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  parent: StarterKit.StarterKitPanel
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColorIndicator_UnityEngine_Color_System_Single_
+  name: CreateColorIndicator(Color, float)
+  nameWithType: StarterKitPanel.CreateColorIndicator(Color, float)
+  fullName: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color, float)
+  nameWithType.vb: StarterKitPanel.CreateColorIndicator(Color, Single)
+  fullName.vb: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color, Single)
+  name.vb: CreateColorIndicator(Color, Single)
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+    name: CreateColorIndicator
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColorIndicator_UnityEngine_Color_System_Single_
+  - name: (
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+    name: CreateColorIndicator
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColorIndicator_UnityEngine_Color_System_Single_
+  - name: (
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Core.UI.BasePanel.uiDocument
+  commentId: F:Core.UI.BasePanel.uiDocument
+  parent: Core.UI.BasePanel
+  name: uiDocument
+  nameWithType: BasePanel.uiDocument
+  fullName: Core.UI.BasePanel.uiDocument
+- uid: Core.UI.BasePanel.rootElement
+  commentId: F:Core.UI.BasePanel.rootElement
+  parent: Core.UI.BasePanel
+  name: rootElement
+  nameWithType: BasePanel.rootElement
+  fullName: Core.UI.BasePanel.rootElement
+- uid: Core.UI.BasePanel.panelContainer
+  commentId: F:Core.UI.BasePanel.panelContainer
+  parent: Core.UI.BasePanel
+  name: panelContainer
+  nameWithType: BasePanel.panelContainer
+  fullName: Core.UI.BasePanel.panelContainer
+- uid: Core.UI.BasePanel.isInitialized
+  commentId: F:Core.UI.BasePanel.isInitialized
+  parent: Core.UI.BasePanel
+  name: isInitialized
+  nameWithType: BasePanel.isInitialized
+  fullName: Core.UI.BasePanel.isInitialized
+- uid: Core.UI.BasePanel.isVisible
+  commentId: F:Core.UI.BasePanel.isVisible
+  parent: Core.UI.BasePanel
+  name: isVisible
+  nameWithType: BasePanel.isVisible
+  fullName: Core.UI.BasePanel.isVisible
+- uid: Core.UI.BasePanel.IsInitialized
+  commentId: P:Core.UI.BasePanel.IsInitialized
+  parent: Core.UI.BasePanel
+  name: IsInitialized
+  nameWithType: BasePanel.IsInitialized
+  fullName: Core.UI.BasePanel.IsInitialized
+- uid: Core.UI.BasePanel.IsVisible
+  commentId: P:Core.UI.BasePanel.IsVisible
+  parent: Core.UI.BasePanel
+  name: IsVisible
+  nameWithType: BasePanel.IsVisible
+  fullName: Core.UI.BasePanel.IsVisible
+- uid: Core.UI.BasePanel.InitializeBase
+  commentId: M:Core.UI.BasePanel.InitializeBase
+  parent: Core.UI.BasePanel
+  name: InitializeBase()
+  nameWithType: BasePanel.InitializeBase()
+  fullName: Core.UI.BasePanel.InitializeBase()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.InitializeBase
+    name: InitializeBase
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.InitializeBase
+    name: InitializeBase
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Show
+  commentId: M:Core.UI.BasePanel.Show
+  parent: Core.UI.BasePanel
+  name: Show()
+  nameWithType: BasePanel.Show()
+  fullName: Core.UI.BasePanel.Show()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Hide
+  commentId: M:Core.UI.BasePanel.Hide
+  parent: Core.UI.BasePanel
+  name: Hide()
+  nameWithType: BasePanel.Hide()
+  fullName: Core.UI.BasePanel.Hide()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Toggle
+  commentId: M:Core.UI.BasePanel.Toggle
+  parent: Core.UI.BasePanel
+  name: Toggle()
+  nameWithType: BasePanel.Toggle()
+  fullName: Core.UI.BasePanel.Toggle()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Toggle
+    name: Toggle
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Toggle
+    name: Toggle
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.OnShow
+  commentId: M:Core.UI.BasePanel.OnShow
+  parent: Core.UI.BasePanel
+  name: OnShow()
+  nameWithType: BasePanel.OnShow()
+  fullName: Core.UI.BasePanel.OnShow()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.OnShow
+    name: OnShow
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.OnShow
+    name: OnShow
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.OnHide
+  commentId: M:Core.UI.BasePanel.OnHide
+  parent: Core.UI.BasePanel
+  name: OnHide()
+  nameWithType: BasePanel.OnHide()
+  fullName: Core.UI.BasePanel.OnHide()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.OnHide
+    name: OnHide
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.OnHide
+    name: OnHide
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  commentId: M:Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  parent: Core.UI.BasePanel
+  isExternal: true
+  name: CreatePanelContainer(string, Color, float, float)
+  nameWithType: BasePanel.CreatePanelContainer(string, Color, float, float)
+  fullName: Core.UI.BasePanel.CreatePanelContainer(string, UnityEngine.Color, float, float)
+  nameWithType.vb: BasePanel.CreatePanelContainer(String, Color, Single, Single)
+  fullName.vb: Core.UI.BasePanel.CreatePanelContainer(String, UnityEngine.Color, Single, Single)
+  name.vb: CreatePanelContainer(String, Color, Single, Single)
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+    name: CreatePanelContainer
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+    name: CreatePanelContainer
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  commentId: M:Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  parent: Core.UI.BasePanel
+  isExternal: true
+  name: PositionPanel(float?, float?, float?, float?)
+  nameWithType: BasePanel.PositionPanel(float?, float?, float?, float?)
+  fullName: Core.UI.BasePanel.PositionPanel(float?, float?, float?, float?)
+  nameWithType.vb: BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  fullName.vb: Core.UI.BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  name.vb: PositionPanel(Single?, Single?, Single?, Single?)
+  spec.csharp:
+  - uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+    name: PositionPanel
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+    name: PositionPanel
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: )
+- uid: Core.UI.BasePanel.CenterPanel
+  commentId: M:Core.UI.BasePanel.CenterPanel
+  parent: Core.UI.BasePanel
+  name: CenterPanel()
+  nameWithType: BasePanel.CenterPanel()
+  fullName: Core.UI.BasePanel.CenterPanel()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CenterPanel
+    name: CenterPanel
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CenterPanel
+    name: CenterPanel
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.UI
+  commentId: N:Core.UI
+  href: Core.html
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+- uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  commentId: M:StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  isExternal: true
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  name: Subscribe<T>(Action<T>)
+  nameWithType: StarterKitPanel.Subscribe<T>(Action<T>)
+  fullName: StarterKit.StarterKitPanel.Subscribe<T>(System.Action<T>)
+  nameWithType.vb: StarterKitPanel.Subscribe(Of T)(Action(Of T))
+  fullName.vb: StarterKit.StarterKitPanel.Subscribe(Of T)(System.Action(Of T))
+  name.vb: Subscribe(Of T)(Action(Of T))
+  spec.csharp:
+  - uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+    name: Subscribe
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  - name: <
+  - name: T
+  - name: '>'
+  - name: (
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+    name: Subscribe
+    href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: (
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: )
+- uid: StarterKit.DiplomacyPanel.Initialize*
+  commentId: Overload:StarterKit.DiplomacyPanel.Initialize
+  href: StarterKit.DiplomacyPanel.html#StarterKit_DiplomacyPanel_Initialize_Core_GameState_StarterKit_PlayerState_StarterKit_EconomySystem_
+  name: Initialize
+  nameWithType: DiplomacyPanel.Initialize
+  fullName: StarterKit.DiplomacyPanel.Initialize
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  parent: StarterKit
+  href: StarterKit.PlayerState.html
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+- uid: StarterKit.EconomySystem
+  commentId: T:StarterKit.EconomySystem
+  parent: StarterKit
+  href: StarterKit.EconomySystem.html
+  name: EconomySystem
+  nameWithType: EconomySystem
+  fullName: StarterKit.EconomySystem
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.UI.BasePanel.CreateUI
+  commentId: M:Core.UI.BasePanel.CreateUI
+  parent: Core.UI.BasePanel
+  name: CreateUI()
+  nameWithType: BasePanel.CreateUI()
+  fullName: Core.UI.BasePanel.CreateUI()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CreateUI
+    name: CreateUI
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CreateUI
+    name: CreateUI
+  - name: (
+  - name: )
+- uid: StarterKit.DiplomacyPanel.CreateUI*
+  commentId: Overload:StarterKit.DiplomacyPanel.CreateUI
+  href: StarterKit.DiplomacyPanel.html#StarterKit_DiplomacyPanel_CreateUI
+  name: CreateUI
+  nameWithType: DiplomacyPanel.CreateUI
+  fullName: StarterKit.DiplomacyPanel.CreateUI
+- uid: StarterKit.DiplomacyPanel.ShowForCountry*
+  commentId: Overload:StarterKit.DiplomacyPanel.ShowForCountry
+  href: StarterKit.DiplomacyPanel.html#StarterKit_DiplomacyPanel_ShowForCountry_System_UInt16_
+  name: ShowForCountry
+  nameWithType: DiplomacyPanel.ShowForCountry
+  fullName: StarterKit.DiplomacyPanel.ShowForCountry
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort

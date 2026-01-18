@@ -1,0 +1,231 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Compositing.CompositorContext
+  commentId: T:Map.Rendering.Compositing.CompositorContext
+  id: CompositorContext
+  parent: Map.Rendering.Compositing
+  children:
+  - Map.Rendering.Compositing.CompositorContext.MapHeight
+  - Map.Rendering.Compositing.CompositorContext.MapWidth
+  - Map.Rendering.Compositing.CompositorContext.Registry
+  - Map.Rendering.Compositing.CompositorContext.TextureManager
+  langs:
+  - csharp
+  - vb
+  name: CompositorContext
+  nameWithType: CompositorContext
+  fullName: Map.Rendering.Compositing.CompositorContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompositorContext
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 76
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Context provided during compositor initialization.
+  example: []
+  syntax:
+    content: public struct CompositorContext
+    content.vb: Public Structure CompositorContext
+- uid: Map.Rendering.Compositing.CompositorContext.TextureManager
+  commentId: F:Map.Rendering.Compositing.CompositorContext.TextureManager
+  id: TextureManager
+  parent: Map.Rendering.Compositing.CompositorContext
+  langs:
+  - csharp
+  - vb
+  name: TextureManager
+  nameWithType: CompositorContext.TextureManager
+  fullName: Map.Rendering.Compositing.CompositorContext.TextureManager
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextureManager
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Reference to MapTextureManager for accessing render textures
+  example: []
+  syntax:
+    content: public MapTextureManager TextureManager
+    return:
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public TextureManager As MapTextureManager
+- uid: Map.Rendering.Compositing.CompositorContext.Registry
+  commentId: F:Map.Rendering.Compositing.CompositorContext.Registry
+  id: Registry
+  parent: Map.Rendering.Compositing.CompositorContext
+  langs:
+  - csharp
+  - vb
+  name: Registry
+  nameWithType: CompositorContext.Registry
+  fullName: Map.Rendering.Compositing.CompositorContext.Registry
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Registry
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Reference to MapRendererRegistry for accessing other renderers
+  example: []
+  syntax:
+    content: public MapRendererRegistry Registry
+    return:
+      type: Map.Rendering.MapRendererRegistry
+    content.vb: Public Registry As MapRendererRegistry
+- uid: Map.Rendering.Compositing.CompositorContext.MapWidth
+  commentId: F:Map.Rendering.Compositing.CompositorContext.MapWidth
+  id: MapWidth
+  parent: Map.Rendering.Compositing.CompositorContext
+  langs:
+  - csharp
+  - vb
+  name: MapWidth
+  nameWithType: CompositorContext.MapWidth
+  fullName: Map.Rendering.Compositing.CompositorContext.MapWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapWidth
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Map dimensions
+  example: []
+  syntax:
+    content: public int MapWidth
+    return:
+      type: System.Int32
+    content.vb: Public MapWidth As Integer
+- uid: Map.Rendering.Compositing.CompositorContext.MapHeight
+  commentId: F:Map.Rendering.Compositing.CompositorContext.MapHeight
+  id: MapHeight
+  parent: Map.Rendering.Compositing.CompositorContext
+  langs:
+  - csharp
+  - vb
+  name: MapHeight
+  nameWithType: CompositorContext.MapHeight
+  fullName: Map.Rendering.Compositing.CompositorContext.MapHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapHeight
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 92
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: public int MapHeight
+    return:
+      type: System.Int32
+    content.vb: Public MapHeight As Integer
+references:
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.MapRendererRegistry
+  commentId: T:Map.Rendering.MapRendererRegistry
+  parent: Map.Rendering
+  href: Map.Rendering.MapRendererRegistry.html
+  name: MapRendererRegistry
+  nameWithType: MapRendererRegistry
+  fullName: Map.Rendering.MapRendererRegistry
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

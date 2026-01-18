@@ -1,0 +1,172 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units
+  commentId: N:Core.Units
+  id: Core.Units
+  children:
+  - Core.Units.CreateUnitCommand
+  - Core.Units.DestructionReason
+  - Core.Units.DisbandUnitCommand
+  - Core.Units.MoveUnitCommand
+  - Core.Units.UnitColdData
+  - Core.Units.UnitCountChangedEvent
+  - Core.Units.UnitCreatedEvent
+  - Core.Units.UnitDestroyedEvent
+  - Core.Units.UnitMovedEvent
+  - Core.Units.UnitMovementCancelledEvent
+  - Core.Units.UnitMovementCompletedEvent
+  - Core.Units.UnitMovementQueue
+  - Core.Units.UnitMovementQueue.MovementState
+  - Core.Units.UnitMovementStartedEvent
+  - Core.Units.UnitState
+  - Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Units.UnitCreatedEvent
+  commentId: T:Core.Units.UnitCreatedEvent
+  href: Core.Units.UnitCreatedEvent.html
+  name: UnitCreatedEvent
+  nameWithType: UnitCreatedEvent
+  fullName: Core.Units.UnitCreatedEvent
+- uid: Core.Units.UnitDestroyedEvent
+  commentId: T:Core.Units.UnitDestroyedEvent
+  href: Core.Units.UnitDestroyedEvent.html
+  name: UnitDestroyedEvent
+  nameWithType: UnitDestroyedEvent
+  fullName: Core.Units.UnitDestroyedEvent
+- uid: Core.Units.UnitMovedEvent
+  commentId: T:Core.Units.UnitMovedEvent
+  href: Core.Units.UnitMovedEvent.html
+  name: UnitMovedEvent
+  nameWithType: UnitMovedEvent
+  fullName: Core.Units.UnitMovedEvent
+- uid: Core.Units.UnitCountChangedEvent
+  commentId: T:Core.Units.UnitCountChangedEvent
+  href: Core.Units.UnitCountChangedEvent.html
+  name: UnitCountChangedEvent
+  nameWithType: UnitCountChangedEvent
+  fullName: Core.Units.UnitCountChangedEvent
+- uid: Core.Units.DestructionReason
+  commentId: T:Core.Units.DestructionReason
+  parent: Core.Units
+  href: Core.Units.DestructionReason.html
+  name: DestructionReason
+  nameWithType: DestructionReason
+  fullName: Core.Units.DestructionReason
+- uid: Core.Units.UnitMovementQueue
+  commentId: T:Core.Units.UnitMovementQueue
+  parent: Core.Units
+  href: Core.Units.UnitMovementQueue.html
+  name: UnitMovementQueue
+  nameWithType: UnitMovementQueue
+  fullName: Core.Units.UnitMovementQueue
+- uid: Core.Units.UnitMovementQueue.MovementState
+  commentId: T:Core.Units.UnitMovementQueue.MovementState
+  parent: Core.Units
+  href: Core.Units.UnitMovementQueue.html
+  name: UnitMovementQueue.MovementState
+  nameWithType: UnitMovementQueue.MovementState
+  fullName: Core.Units.UnitMovementQueue.MovementState
+  spec.csharp:
+  - uid: Core.Units.UnitMovementQueue
+    name: UnitMovementQueue
+    href: Core.Units.UnitMovementQueue.html
+  - name: .
+  - uid: Core.Units.UnitMovementQueue.MovementState
+    name: MovementState
+    href: Core.Units.UnitMovementQueue.MovementState.html
+  spec.vb:
+  - uid: Core.Units.UnitMovementQueue
+    name: UnitMovementQueue
+    href: Core.Units.UnitMovementQueue.html
+  - name: .
+  - uid: Core.Units.UnitMovementQueue.MovementState
+    name: MovementState
+    href: Core.Units.UnitMovementQueue.MovementState.html
+- uid: Core.Units.UnitMovementStartedEvent
+  commentId: T:Core.Units.UnitMovementStartedEvent
+  href: Core.Units.UnitMovementStartedEvent.html
+  name: UnitMovementStartedEvent
+  nameWithType: UnitMovementStartedEvent
+  fullName: Core.Units.UnitMovementStartedEvent
+- uid: Core.Units.UnitMovementCompletedEvent
+  commentId: T:Core.Units.UnitMovementCompletedEvent
+  href: Core.Units.UnitMovementCompletedEvent.html
+  name: UnitMovementCompletedEvent
+  nameWithType: UnitMovementCompletedEvent
+  fullName: Core.Units.UnitMovementCompletedEvent
+- uid: Core.Units.UnitMovementCancelledEvent
+  commentId: T:Core.Units.UnitMovementCancelledEvent
+  href: Core.Units.UnitMovementCancelledEvent.html
+  name: UnitMovementCancelledEvent
+  nameWithType: UnitMovementCancelledEvent
+  fullName: Core.Units.UnitMovementCancelledEvent
+- uid: Core.Units.UnitState
+  commentId: T:Core.Units.UnitState
+  parent: Core.Units
+  href: Core.Units.UnitState.html
+  name: UnitState
+  nameWithType: UnitState
+  fullName: Core.Units.UnitState
+- uid: Core.Units.UnitSystem
+  commentId: T:Core.Units.UnitSystem
+  parent: Core.Units
+  href: Core.Units.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: Core.Units.UnitSystem
+- uid: Core.Units.UnitColdData
+  commentId: T:Core.Units.UnitColdData
+  parent: Core.Units
+  href: Core.Units.UnitColdData.html
+  name: UnitColdData
+  nameWithType: UnitColdData
+  fullName: Core.Units.UnitColdData
+- uid: Core.Units.CreateUnitCommand
+  commentId: T:Core.Units.CreateUnitCommand
+  href: Core.Units.CreateUnitCommand.html
+  name: CreateUnitCommand
+  nameWithType: CreateUnitCommand
+  fullName: Core.Units.CreateUnitCommand
+- uid: Core.Units.DisbandUnitCommand
+  commentId: T:Core.Units.DisbandUnitCommand
+  href: Core.Units.DisbandUnitCommand.html
+  name: DisbandUnitCommand
+  nameWithType: DisbandUnitCommand
+  fullName: Core.Units.DisbandUnitCommand
+- uid: Core.Units.MoveUnitCommand
+  commentId: T:Core.Units.MoveUnitCommand
+  href: Core.Units.MoveUnitCommand.html
+  name: MoveUnitCommand
+  nameWithType: MoveUnitCommand
+  fullName: Core.Units.MoveUnitCommand
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html

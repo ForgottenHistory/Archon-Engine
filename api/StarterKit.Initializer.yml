@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Initializer
+  commentId: T:StarterKit.Initializer
+  id: Initializer
+  parent: StarterKit
+  children:
+  - StarterKit.Initializer.AISystem
+  - StarterKit.Initializer.BuildingSystem
+  - StarterKit.Initializer.EconomySystem
+  - StarterKit.Initializer.GetCurrentMapMode
+  - StarterKit.Initializer.Instance
+  - StarterKit.Initializer.IsInitialized
+  - StarterKit.Initializer.PlayerState
+  - StarterKit.Initializer.SetMapMode(Map.MapModes.MapMode)
+  - StarterKit.Initializer.StartInitialization
+  - StarterKit.Initializer.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: Initializer
+  nameWithType: Initializer
+  fullName: StarterKit.Initializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initializer
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 24
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Coordinates EngineMapInitializer + StarterKit systems.
+
+    Use this as the entry point for StarterKit scenes.
+
+    Owns PlayerState and EconomySystem as plain classes.
+
+
+    Access via Initializer.Instance for commands and other systems.
+  example: []
+  syntax:
+    content: 'public class Initializer : MonoBehaviour'
+    content.vb: Public Class Initializer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: StarterKit.Initializer.Instance
+  commentId: P:StarterKit.Initializer.Instance
+  id: Instance
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: Initializer.Instance
+  fullName: StarterKit.Initializer.Instance
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Instance
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 32
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Static instance for easy access from commands.
+
+    Set on Awake, cleared on OnDestroy.
+  example: []
+  syntax:
+    content: public static Initializer Instance { get; }
+    parameters: []
+    return:
+      type: StarterKit.Initializer
+    content.vb: Public Shared Property Instance As Initializer
+  overload: StarterKit.Initializer.Instance*
+- uid: StarterKit.Initializer.IsInitialized
+  commentId: P:StarterKit.Initializer.IsInitialized
+  id: IsInitialized
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: Initializer.IsInitialized
+  fullName: StarterKit.Initializer.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 80
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: True when all StarterKit systems are initialized and ready.
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: StarterKit.Initializer.IsInitialized*
+- uid: StarterKit.Initializer.PlayerState
+  commentId: P:StarterKit.Initializer.PlayerState
+  id: PlayerState
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: PlayerState
+  nameWithType: Initializer.PlayerState
+  fullName: StarterKit.Initializer.PlayerState
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerState
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 83
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Player state tracking which country the player controls.
+  example: []
+  syntax:
+    content: public PlayerState PlayerState { get; }
+    parameters: []
+    return:
+      type: StarterKit.PlayerState
+    content.vb: Public ReadOnly Property PlayerState As PlayerState
+  overload: StarterKit.Initializer.PlayerState*
+- uid: StarterKit.Initializer.EconomySystem
+  commentId: P:StarterKit.Initializer.EconomySystem
+  id: EconomySystem
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: EconomySystem
+  nameWithType: Initializer.EconomySystem
+  fullName: StarterKit.Initializer.EconomySystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EconomySystem
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 86
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Economy system for gold, income, and resource management.
+  example: []
+  syntax:
+    content: public EconomySystem EconomySystem { get; }
+    parameters: []
+    return:
+      type: StarterKit.EconomySystem
+    content.vb: Public ReadOnly Property EconomySystem As EconomySystem
+  overload: StarterKit.Initializer.EconomySystem*
+- uid: StarterKit.Initializer.UnitSystem
+  commentId: P:StarterKit.Initializer.UnitSystem
+  id: UnitSystem
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: UnitSystem
+  nameWithType: Initializer.UnitSystem
+  fullName: StarterKit.Initializer.UnitSystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitSystem
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 89
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Unit system for creating, moving, and managing military units.
+  example: []
+  syntax:
+    content: public UnitSystem UnitSystem { get; }
+    parameters: []
+    return:
+      type: StarterKit.UnitSystem
+    content.vb: Public ReadOnly Property UnitSystem As UnitSystem
+  overload: StarterKit.Initializer.UnitSystem*
+- uid: StarterKit.Initializer.BuildingSystem
+  commentId: P:StarterKit.Initializer.BuildingSystem
+  id: BuildingSystem
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: BuildingSystem
+  nameWithType: Initializer.BuildingSystem
+  fullName: StarterKit.Initializer.BuildingSystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingSystem
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 92
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Building system for constructing and managing province improvements.
+  example: []
+  syntax:
+    content: public BuildingSystem BuildingSystem { get; }
+    parameters: []
+    return:
+      type: StarterKit.BuildingSystem
+    content.vb: Public ReadOnly Property BuildingSystem As BuildingSystem
+  overload: StarterKit.Initializer.BuildingSystem*
+- uid: StarterKit.Initializer.AISystem
+  commentId: P:StarterKit.Initializer.AISystem
+  id: AISystem
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: AISystem
+  nameWithType: Initializer.AISystem
+  fullName: StarterKit.Initializer.AISystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AISystem
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 95
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: AI system for non-player country decision making.
+  example: []
+  syntax:
+    content: public AISystem AISystem { get; }
+    parameters: []
+    return:
+      type: StarterKit.AISystem
+    content.vb: Public ReadOnly Property AISystem As AISystem
+  overload: StarterKit.Initializer.AISystem*
+- uid: StarterKit.Initializer.StartInitialization
+  commentId: M:StarterKit.Initializer.StartInitialization
+  id: StartInitialization
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: StartInitialization()
+  nameWithType: Initializer.StartInitialization()
+  fullName: StarterKit.Initializer.StartInitialization()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartInitialization
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 127
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public void StartInitialization()
+    content.vb: Public Sub StartInitialization()
+  overload: StarterKit.Initializer.StartInitialization*
+- uid: StarterKit.Initializer.SetMapMode(Map.MapModes.MapMode)
+  commentId: M:StarterKit.Initializer.SetMapMode(Map.MapModes.MapMode)
+  id: SetMapMode(Map.MapModes.MapMode)
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: SetMapMode(MapMode)
+  nameWithType: Initializer.SetMapMode(MapMode)
+  fullName: StarterKit.Initializer.SetMapMode(Map.MapModes.MapMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMapMode
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 566
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Set the current map mode. Called by ToolbarUI.
+  example: []
+  syntax:
+    content: public void SetMapMode(MapMode mode)
+    parameters:
+    - id: mode
+      type: Map.MapModes.MapMode
+    content.vb: Public Sub SetMapMode(mode As MapMode)
+  overload: StarterKit.Initializer.SetMapMode*
+- uid: StarterKit.Initializer.GetCurrentMapMode
+  commentId: M:StarterKit.Initializer.GetCurrentMapMode
+  id: GetCurrentMapMode
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentMapMode()
+  nameWithType: Initializer.GetCurrentMapMode()
+  fullName: StarterKit.Initializer.GetCurrentMapMode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCurrentMapMode
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 574
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get the current map mode.
+  example: []
+  syntax:
+    content: public MapMode GetCurrentMapMode()
+    return:
+      type: Map.MapModes.MapMode
+    content.vb: Public Function GetCurrentMapMode() As MapMode
+  overload: StarterKit.Initializer.GetCurrentMapMode*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: StarterKit.Initializer.Instance*
+  commentId: Overload:StarterKit.Initializer.Instance
+  href: StarterKit.Initializer.html#StarterKit_Initializer_Instance
+  name: Instance
+  nameWithType: Initializer.Instance
+  fullName: StarterKit.Initializer.Instance
+- uid: StarterKit.Initializer
+  commentId: T:StarterKit.Initializer
+  parent: StarterKit
+  href: StarterKit.Initializer.html
+  name: Initializer
+  nameWithType: Initializer
+  fullName: StarterKit.Initializer
+- uid: StarterKit.Initializer.IsInitialized*
+  commentId: Overload:StarterKit.Initializer.IsInitialized
+  href: StarterKit.Initializer.html#StarterKit_Initializer_IsInitialized
+  name: IsInitialized
+  nameWithType: Initializer.IsInitialized
+  fullName: StarterKit.Initializer.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.Initializer.PlayerState*
+  commentId: Overload:StarterKit.Initializer.PlayerState
+  href: StarterKit.Initializer.html#StarterKit_Initializer_PlayerState
+  name: PlayerState
+  nameWithType: Initializer.PlayerState
+  fullName: StarterKit.Initializer.PlayerState
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  parent: StarterKit
+  href: StarterKit.PlayerState.html
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+- uid: StarterKit.Initializer.EconomySystem*
+  commentId: Overload:StarterKit.Initializer.EconomySystem
+  href: StarterKit.Initializer.html#StarterKit_Initializer_EconomySystem
+  name: EconomySystem
+  nameWithType: Initializer.EconomySystem
+  fullName: StarterKit.Initializer.EconomySystem
+- uid: StarterKit.EconomySystem
+  commentId: T:StarterKit.EconomySystem
+  parent: StarterKit
+  href: StarterKit.EconomySystem.html
+  name: EconomySystem
+  nameWithType: EconomySystem
+  fullName: StarterKit.EconomySystem
+- uid: StarterKit.Initializer.UnitSystem*
+  commentId: Overload:StarterKit.Initializer.UnitSystem
+  href: StarterKit.Initializer.html#StarterKit_Initializer_UnitSystem
+  name: UnitSystem
+  nameWithType: Initializer.UnitSystem
+  fullName: StarterKit.Initializer.UnitSystem
+- uid: StarterKit.UnitSystem
+  commentId: T:StarterKit.UnitSystem
+  parent: StarterKit
+  href: StarterKit.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: StarterKit.UnitSystem
+- uid: StarterKit.Initializer.BuildingSystem*
+  commentId: Overload:StarterKit.Initializer.BuildingSystem
+  href: StarterKit.Initializer.html#StarterKit_Initializer_BuildingSystem
+  name: BuildingSystem
+  nameWithType: Initializer.BuildingSystem
+  fullName: StarterKit.Initializer.BuildingSystem
+- uid: StarterKit.BuildingSystem
+  commentId: T:StarterKit.BuildingSystem
+  parent: StarterKit
+  href: StarterKit.BuildingSystem.html
+  name: BuildingSystem
+  nameWithType: BuildingSystem
+  fullName: StarterKit.BuildingSystem
+- uid: StarterKit.Initializer.AISystem*
+  commentId: Overload:StarterKit.Initializer.AISystem
+  href: StarterKit.Initializer.html#StarterKit_Initializer_AISystem
+  name: AISystem
+  nameWithType: Initializer.AISystem
+  fullName: StarterKit.Initializer.AISystem
+- uid: StarterKit.AISystem
+  commentId: T:StarterKit.AISystem
+  parent: StarterKit
+  href: StarterKit.AISystem.html
+  name: AISystem
+  nameWithType: AISystem
+  fullName: StarterKit.AISystem
+- uid: StarterKit.Initializer.StartInitialization*
+  commentId: Overload:StarterKit.Initializer.StartInitialization
+  href: StarterKit.Initializer.html#StarterKit_Initializer_StartInitialization
+  name: StartInitialization
+  nameWithType: Initializer.StartInitialization
+  fullName: StarterKit.Initializer.StartInitialization
+- uid: StarterKit.Initializer.SetMapMode*
+  commentId: Overload:StarterKit.Initializer.SetMapMode
+  href: StarterKit.Initializer.html#StarterKit_Initializer_SetMapMode_Map_MapModes_MapMode_
+  name: SetMapMode
+  nameWithType: Initializer.SetMapMode
+  fullName: StarterKit.Initializer.SetMapMode
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: StarterKit.Initializer.GetCurrentMapMode*
+  commentId: Overload:StarterKit.Initializer.GetCurrentMapMode
+  href: StarterKit.Initializer.html#StarterKit_Initializer_GetCurrentMapMode
+  name: GetCurrentMapMode
+  nameWithType: Initializer.GetCurrentMapMode
+  fullName: StarterKit.Initializer.GetCurrentMapMode

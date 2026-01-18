@@ -1,0 +1,398 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  id: ColorGradient
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.ColorGradient.#ctor(UnityEngine.Color32[])
+  - Map.MapModes.ColorGradient.Evaluate(System.Single)
+  - Map.MapModes.ColorGradient.LightToDeepBlue
+  - Map.MapModes.ColorGradient.RedToYellow
+  - Map.MapModes.ColorGradient.StopCount
+  - Map.MapModes.ColorGradient.WhiteToGreen
+  langs:
+  - csharp
+  - vb
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorGradient
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    ENGINE LAYER - Generic color gradient interpolation system
+
+
+    Responsibilities:
+
+    - Interpolate between color stops based on normalized value (0.0 to 1.0)
+
+    - Support any number of color stops (minimum 2)
+
+    - Smooth transitions between stops
+
+
+    Architecture:
+
+    - Pure mechanism, no game knowledge
+
+    - Reusable across any map mode that needs gradient visualization
+
+    - Game layer defines color stops and provides values to normalize
+
+
+    Performance:
+
+    - O(1) evaluation with 2-5 color stops (typical usage)
+
+    - No allocations during gradient evaluation
+
+    - Color stops stored in managed array (small, infrequent access)
+  example: []
+  syntax:
+    content: public class ColorGradient
+    content.vb: Public Class ColorGradient
+  inheritance:
+  - System.Object
+- uid: Map.MapModes.ColorGradient.#ctor(UnityEngine.Color32[])
+  commentId: M:Map.MapModes.ColorGradient.#ctor(UnityEngine.Color32[])
+  id: '#ctor(UnityEngine.Color32[])'
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: ColorGradient(params Color32[])
+  nameWithType: ColorGradient.ColorGradient(params Color32[])
+  fullName: Map.MapModes.ColorGradient.ColorGradient(params UnityEngine.Color32[])
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Create a color gradient with specified color stops
+  example: []
+  syntax:
+    content: public ColorGradient(params Color32[] stops)
+    parameters:
+    - id: stops
+      type: UnityEngine.Color32[]
+      description: Color stops from low (0.0) to high (1.0). Minimum 2 required.
+    content.vb: Public Sub New(ParamArray stops As Color32())
+  overload: Map.MapModes.ColorGradient.#ctor*
+  nameWithType.vb: ColorGradient.New(ParamArray Color32())
+  fullName.vb: Map.MapModes.ColorGradient.New(ParamArray UnityEngine.Color32())
+  name.vb: New(ParamArray Color32())
+- uid: Map.MapModes.ColorGradient.Evaluate(System.Single)
+  commentId: M:Map.MapModes.ColorGradient.Evaluate(System.Single)
+  id: Evaluate(System.Single)
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: Evaluate(float)
+  nameWithType: ColorGradient.Evaluate(float)
+  fullName: Map.MapModes.ColorGradient.Evaluate(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Evaluate
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 51
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Evaluate gradient at normalized value (0.0 to 1.0)
+  example: []
+  syntax:
+    content: public Color32 Evaluate(float normalizedValue)
+    parameters:
+    - id: normalizedValue
+      type: System.Single
+      description: Value from 0.0 (first color stop) to 1.0 (last color stop)
+    return:
+      type: UnityEngine.Color32
+      description: Interpolated color at the specified position
+    content.vb: Public Function Evaluate(normalizedValue As Single) As Color32
+  overload: Map.MapModes.ColorGradient.Evaluate*
+  nameWithType.vb: ColorGradient.Evaluate(Single)
+  fullName.vb: Map.MapModes.ColorGradient.Evaluate(Single)
+  name.vb: Evaluate(Single)
+- uid: Map.MapModes.ColorGradient.StopCount
+  commentId: P:Map.MapModes.ColorGradient.StopCount
+  id: StopCount
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: StopCount
+  nameWithType: ColorGradient.StopCount
+  fullName: Map.MapModes.ColorGradient.StopCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StopCount
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 88
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get the number of color stops in this gradient
+  example: []
+  syntax:
+    content: public int StopCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property StopCount As Integer
+  overload: Map.MapModes.ColorGradient.StopCount*
+- uid: Map.MapModes.ColorGradient.RedToYellow
+  commentId: M:Map.MapModes.ColorGradient.RedToYellow
+  id: RedToYellow
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: RedToYellow()
+  nameWithType: ColorGradient.RedToYellow()
+  fullName: Map.MapModes.ColorGradient.RedToYellow()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RedToYellow
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Create a common red-to-yellow gradient (useful for development/economy visualization)
+  example: []
+  syntax:
+    content: public static ColorGradient RedToYellow()
+    return:
+      type: Map.MapModes.ColorGradient
+    content.vb: Public Shared Function RedToYellow() As ColorGradient
+  overload: Map.MapModes.ColorGradient.RedToYellow*
+- uid: Map.MapModes.ColorGradient.WhiteToGreen
+  commentId: M:Map.MapModes.ColorGradient.WhiteToGreen
+  id: WhiteToGreen
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: WhiteToGreen()
+  nameWithType: ColorGradient.WhiteToGreen()
+  fullName: Map.MapModes.ColorGradient.WhiteToGreen()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WhiteToGreen
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 107
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Create a green gradient (useful for positive values like manpower)
+  example: []
+  syntax:
+    content: public static ColorGradient WhiteToGreen()
+    return:
+      type: Map.MapModes.ColorGradient
+    content.vb: Public Shared Function WhiteToGreen() As ColorGradient
+  overload: Map.MapModes.ColorGradient.WhiteToGreen*
+- uid: Map.MapModes.ColorGradient.LightToDeepBlue
+  commentId: M:Map.MapModes.ColorGradient.LightToDeepBlue
+  id: LightToDeepBlue
+  parent: Map.MapModes.ColorGradient
+  langs:
+  - csharp
+  - vb
+  name: LightToDeepBlue()
+  nameWithType: ColorGradient.LightToDeepBlue()
+  fullName: Map.MapModes.ColorGradient.LightToDeepBlue()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/ColorGradient.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LightToDeepBlue
+    path: Scripts/Map/MapModes/ColorGradient.cs
+    startLine: 121
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Create a blue gradient (useful for water/naval related values)
+  example: []
+  syntax:
+    content: public static ColorGradient LightToDeepBlue()
+    return:
+      type: Map.MapModes.ColorGradient
+    content.vb: Public Shared Function LightToDeepBlue() As ColorGradient
+  overload: Map.MapModes.ColorGradient.LightToDeepBlue*
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.ColorGradient.#ctor*
+  commentId: Overload:Map.MapModes.ColorGradient.#ctor
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient__ctor_UnityEngine_Color32___
+  name: ColorGradient
+  nameWithType: ColorGradient.ColorGradient
+  fullName: Map.MapModes.ColorGradient.ColorGradient
+  nameWithType.vb: ColorGradient.New
+  fullName.vb: Map.MapModes.ColorGradient.New
+  name.vb: New
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.ColorGradient.Evaluate*
+  commentId: Overload:Map.MapModes.ColorGradient.Evaluate
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient_Evaluate_System_Single_
+  name: Evaluate
+  nameWithType: ColorGradient.Evaluate
+  fullName: Map.MapModes.ColorGradient.Evaluate
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.ColorGradient.StopCount*
+  commentId: Overload:Map.MapModes.ColorGradient.StopCount
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient_StopCount
+  name: StopCount
+  nameWithType: ColorGradient.StopCount
+  fullName: Map.MapModes.ColorGradient.StopCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.ColorGradient.RedToYellow*
+  commentId: Overload:Map.MapModes.ColorGradient.RedToYellow
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient_RedToYellow
+  name: RedToYellow
+  nameWithType: ColorGradient.RedToYellow
+  fullName: Map.MapModes.ColorGradient.RedToYellow
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  parent: Map.MapModes
+  href: Map.MapModes.ColorGradient.html
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+- uid: Map.MapModes.ColorGradient.WhiteToGreen*
+  commentId: Overload:Map.MapModes.ColorGradient.WhiteToGreen
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient_WhiteToGreen
+  name: WhiteToGreen
+  nameWithType: ColorGradient.WhiteToGreen
+  fullName: Map.MapModes.ColorGradient.WhiteToGreen
+- uid: Map.MapModes.ColorGradient.LightToDeepBlue*
+  commentId: Overload:Map.MapModes.ColorGradient.LightToDeepBlue
+  href: Map.MapModes.ColorGradient.html#Map_MapModes_ColorGradient_LightToDeepBlue
+  name: LightToDeepBlue
+  nameWithType: ColorGradient.LightToDeepBlue
+  fullName: Map.MapModes.ColorGradient.LightToDeepBlue

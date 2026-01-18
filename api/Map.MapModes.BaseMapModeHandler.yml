@@ -1,0 +1,1038 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.BaseMapModeHandler
+  commentId: T:Map.MapModes.BaseMapModeHandler
+  id: BaseMapModeHandler
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords(UnityEngine.Material)
+  - Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  - Map.MapModes.BaseMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  - Map.MapModes.BaseMapModeHandler.GetUpdateFrequency
+  - Map.MapModes.BaseMapModeHandler.LogActivation(System.String)
+  - Map.MapModes.BaseMapModeHandler.LogDeactivation(System.String)
+  - Map.MapModes.BaseMapModeHandler.Mode
+  - Map.MapModes.BaseMapModeHandler.Name
+  - Map.MapModes.BaseMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  - Map.MapModes.BaseMapModeHandler.OnDeactivate(UnityEngine.Material)
+  - Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+  - Map.MapModes.BaseMapModeHandler.SetShaderMode(UnityEngine.Material,System.Int32)
+  - Map.MapModes.BaseMapModeHandler.ShaderModeID
+  - Map.MapModes.BaseMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  langs:
+  - csharp
+  - vb
+  name: BaseMapModeHandler
+  nameWithType: BaseMapModeHandler
+  fullName: Map.MapModes.BaseMapModeHandler
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseMapModeHandler
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 111
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Base class for map mode handlers with common functionality
+  example: []
+  syntax:
+    content: 'public abstract class BaseMapModeHandler : IMapModeHandler'
+    content.vb: Public MustInherit Class BaseMapModeHandler Implements IMapModeHandler
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - Map.MapModes.DebugMapModeHandler
+  - Map.MapModes.EnginePoliticalMapMode
+  implements:
+  - Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.BaseMapModeHandler.Mode
+  commentId: P:Map.MapModes.BaseMapModeHandler.Mode
+  id: Mode
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: Mode
+  nameWithType: BaseMapModeHandler.Mode
+  fullName: Map.MapModes.BaseMapModeHandler.Mode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mode
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 113
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Map mode type this handler manages
+  example: []
+  syntax:
+    content: public abstract MapMode Mode { get; }
+    parameters: []
+    return:
+      type: Map.MapModes.MapMode
+    content.vb: Public MustOverride ReadOnly Property Mode As MapMode
+  overload: Map.MapModes.BaseMapModeHandler.Mode*
+  implements:
+  - Map.MapModes.IMapModeHandler.Mode
+- uid: Map.MapModes.BaseMapModeHandler.Name
+  commentId: P:Map.MapModes.BaseMapModeHandler.Name
+  id: Name
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: BaseMapModeHandler.Name
+  fullName: Map.MapModes.BaseMapModeHandler.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 114
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Display name for UI
+  example: []
+  syntax:
+    content: public abstract string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public MustOverride ReadOnly Property Name As String
+  overload: Map.MapModes.BaseMapModeHandler.Name*
+  implements:
+  - Map.MapModes.IMapModeHandler.Name
+- uid: Map.MapModes.BaseMapModeHandler.ShaderModeID
+  commentId: P:Map.MapModes.BaseMapModeHandler.ShaderModeID
+  id: ShaderModeID
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: ShaderModeID
+  nameWithType: BaseMapModeHandler.ShaderModeID
+  fullName: Map.MapModes.BaseMapModeHandler.ShaderModeID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShaderModeID
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 115
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Shader mode ID for the GPU
+  example: []
+  syntax:
+    content: public abstract int ShaderModeID { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public MustOverride ReadOnly Property ShaderModeID As Integer
+  overload: Map.MapModes.BaseMapModeHandler.ShaderModeID*
+  implements:
+  - Map.MapModes.IMapModeHandler.ShaderModeID
+- uid: Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+  commentId: P:Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+  id: RequiresFrequentUpdates
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: RequiresFrequentUpdates
+  nameWithType: BaseMapModeHandler.RequiresFrequentUpdates
+  fullName: Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresFrequentUpdates
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 116
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Whether this mode requires frequent texture updates
+  example: []
+  syntax:
+    content: public virtual bool RequiresFrequentUpdates { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overridable ReadOnly Property RequiresFrequentUpdates As Boolean
+  overload: Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates*
+  implements:
+  - Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+- uid: Map.MapModes.BaseMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:Map.MapModes.BaseMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  id: OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: BaseMapModeHandler.OnActivate(Material, MapModeDataTextures)
+  fullName: Map.MapModes.BaseMapModeHandler.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnActivate
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Called when this map mode becomes active
+
+    Set up shader properties, enable keywords, etc.
+  example: []
+  syntax:
+    content: public abstract void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    - id: dataTextures
+      type: Map.MapModes.MapModeDataTextures
+    content.vb: Public MustOverride Sub OnActivate(mapMaterial As Material, dataTextures As MapModeDataTextures)
+  overload: Map.MapModes.BaseMapModeHandler.OnActivate*
+  implements:
+  - Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+- uid: Map.MapModes.BaseMapModeHandler.OnDeactivate(UnityEngine.Material)
+  commentId: M:Map.MapModes.BaseMapModeHandler.OnDeactivate(UnityEngine.Material)
+  id: OnDeactivate(UnityEngine.Material)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: OnDeactivate(Material)
+  nameWithType: BaseMapModeHandler.OnDeactivate(Material)
+  fullName: Map.MapModes.BaseMapModeHandler.OnDeactivate(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDeactivate
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 119
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Called when this map mode becomes inactive
+
+    Clean up, disable keywords, etc.
+  example: []
+  syntax:
+    content: public abstract void OnDeactivate(Material mapMaterial)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    content.vb: Public MustOverride Sub OnDeactivate(mapMaterial As Material)
+  overload: Map.MapModes.BaseMapModeHandler.OnDeactivate*
+  implements:
+  - Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+- uid: Map.MapModes.BaseMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.BaseMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  id: UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  nameWithType: BaseMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  fullName: Map.MapModes.BaseMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateTextures
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 120
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Update the mode-specific data textures from Core simulation data
+
+    Only called when data has changed or mode requires frequent updates
+  example: []
+  syntax:
+    content: public abstract void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping, object gameProvinceSystem = null)
+    parameters:
+    - id: dataTextures
+      type: Map.MapModes.MapModeDataTextures
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: countryQueries
+      type: Core.Queries.CountryQueries
+    - id: provinceMapping
+      type: Map.Rendering.ProvinceMapping
+    - id: gameProvinceSystem
+      type: System.Object
+      description: Optional game-specific province system - engine passes through without knowing type
+    content.vb: Public MustOverride Sub UpdateTextures(dataTextures As MapModeDataTextures, provinceQueries As ProvinceQueries, countryQueries As CountryQueries, provinceMapping As ProvinceMapping, gameProvinceSystem As Object = Nothing)
+  overload: Map.MapModes.BaseMapModeHandler.UpdateTextures*
+  implements:
+  - Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  nameWithType.vb: BaseMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, Object)
+  name.vb: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+- uid: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:Map.MapModes.BaseMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  id: GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: BaseMapModeHandler.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTooltip
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 121
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get tooltip text for a specific province in this map mode
+  example: []
+  syntax:
+    content: public abstract string GetProvinceTooltip(ushort provinceId, ProvinceQueries provinceQueries, CountryQueries countryQueries)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: countryQueries
+      type: Core.Queries.CountryQueries
+    return:
+      type: System.String
+    content.vb: Public MustOverride Function GetProvinceTooltip(provinceId As UShort, provinceQueries As ProvinceQueries, countryQueries As CountryQueries) As String
+  overload: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip*
+  implements:
+  - Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  nameWithType.vb: BaseMapModeHandler.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+- uid: Map.MapModes.BaseMapModeHandler.GetUpdateFrequency
+  commentId: M:Map.MapModes.BaseMapModeHandler.GetUpdateFrequency
+  id: GetUpdateFrequency
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: GetUpdateFrequency()
+  nameWithType: BaseMapModeHandler.GetUpdateFrequency()
+  fullName: Map.MapModes.BaseMapModeHandler.GetUpdateFrequency()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUpdateFrequency
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 122
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get update frequency for this map mode's textures
+  example: []
+  syntax:
+    content: public abstract UpdateFrequency GetUpdateFrequency()
+    return:
+      type: Map.MapModes.UpdateFrequency
+    content.vb: Public MustOverride Function GetUpdateFrequency() As UpdateFrequency
+  overload: Map.MapModes.BaseMapModeHandler.GetUpdateFrequency*
+  implements:
+  - Map.MapModes.IMapModeHandler.GetUpdateFrequency
+- uid: Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords(UnityEngine.Material)
+  commentId: M:Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords(UnityEngine.Material)
+  id: DisableAllMapModeKeywords(UnityEngine.Material)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: DisableAllMapModeKeywords(Material)
+  nameWithType: BaseMapModeHandler.DisableAllMapModeKeywords(Material)
+  fullName: Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisableAllMapModeKeywords
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 127
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: 'Utility: Disable all map mode keywords in the shader'
+  example: []
+  syntax:
+    content: protected void DisableAllMapModeKeywords(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Protected Sub DisableAllMapModeKeywords(material As Material)
+  overload: Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords*
+- uid: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  commentId: M:Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  id: EnableMapModeKeyword(UnityEngine.Material,System.String)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: EnableMapModeKeyword(Material, string)
+  nameWithType: BaseMapModeHandler.EnableMapModeKeyword(Material, string)
+  fullName: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword(UnityEngine.Material, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableMapModeKeyword
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: 'Utility: Enable a specific map mode keyword'
+  example: []
+  syntax:
+    content: protected void EnableMapModeKeyword(Material material, string keyword)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: keyword
+      type: System.String
+    content.vb: Protected Sub EnableMapModeKeyword(material As Material, keyword As String)
+  overload: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword*
+  nameWithType.vb: BaseMapModeHandler.EnableMapModeKeyword(Material, String)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword(UnityEngine.Material, String)
+  name.vb: EnableMapModeKeyword(Material, String)
+- uid: Map.MapModes.BaseMapModeHandler.SetShaderMode(UnityEngine.Material,System.Int32)
+  commentId: M:Map.MapModes.BaseMapModeHandler.SetShaderMode(UnityEngine.Material,System.Int32)
+  id: SetShaderMode(UnityEngine.Material,System.Int32)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: SetShaderMode(Material, int)
+  nameWithType: BaseMapModeHandler.SetShaderMode(Material, int)
+  fullName: Map.MapModes.BaseMapModeHandler.SetShaderMode(UnityEngine.Material, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetShaderMode
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 153
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: 'Utility: Set common shader properties'
+  example: []
+  syntax:
+    content: protected void SetShaderMode(Material material, int modeId)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: modeId
+      type: System.Int32
+    content.vb: Protected Sub SetShaderMode(material As Material, modeId As Integer)
+  overload: Map.MapModes.BaseMapModeHandler.SetShaderMode*
+  nameWithType.vb: BaseMapModeHandler.SetShaderMode(Material, Integer)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.SetShaderMode(UnityEngine.Material, Integer)
+  name.vb: SetShaderMode(Material, Integer)
+- uid: Map.MapModes.BaseMapModeHandler.LogActivation(System.String)
+  commentId: M:Map.MapModes.BaseMapModeHandler.LogActivation(System.String)
+  id: LogActivation(System.String)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: LogActivation(string)
+  nameWithType: BaseMapModeHandler.LogActivation(string)
+  fullName: Map.MapModes.BaseMapModeHandler.LogActivation(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogActivation
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 161
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: 'Utility: Log mode activation'
+  example: []
+  syntax:
+    content: protected void LogActivation(string message = null)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogActivation(message As String = Nothing)
+  overload: Map.MapModes.BaseMapModeHandler.LogActivation*
+  nameWithType.vb: BaseMapModeHandler.LogActivation(String)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.LogActivation(String)
+  name.vb: LogActivation(String)
+- uid: Map.MapModes.BaseMapModeHandler.LogDeactivation(System.String)
+  commentId: M:Map.MapModes.BaseMapModeHandler.LogDeactivation(System.String)
+  id: LogDeactivation(System.String)
+  parent: Map.MapModes.BaseMapModeHandler
+  langs:
+  - csharp
+  - vb
+  name: LogDeactivation(string)
+  nameWithType: BaseMapModeHandler.LogDeactivation(string)
+  fullName: Map.MapModes.BaseMapModeHandler.LogDeactivation(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogDeactivation
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 170
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: 'Utility: Log mode deactivation'
+  example: []
+  syntax:
+    content: protected void LogDeactivation(string message = null)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogDeactivation(message As String = Nothing)
+  overload: Map.MapModes.BaseMapModeHandler.LogDeactivation*
+  nameWithType.vb: BaseMapModeHandler.LogDeactivation(String)
+  fullName.vb: Map.MapModes.BaseMapModeHandler.LogDeactivation(String)
+  name.vb: LogDeactivation(String)
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.BaseMapModeHandler.Mode*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.Mode
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_Mode
+  name: Mode
+  nameWithType: BaseMapModeHandler.Mode
+  fullName: Map.MapModes.BaseMapModeHandler.Mode
+- uid: Map.MapModes.IMapModeHandler.Mode
+  commentId: P:Map.MapModes.IMapModeHandler.Mode
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_Mode
+  name: Mode
+  nameWithType: IMapModeHandler.Mode
+  fullName: Map.MapModes.IMapModeHandler.Mode
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes.BaseMapModeHandler.Name*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.Name
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_Name
+  name: Name
+  nameWithType: BaseMapModeHandler.Name
+  fullName: Map.MapModes.BaseMapModeHandler.Name
+- uid: Map.MapModes.IMapModeHandler.Name
+  commentId: P:Map.MapModes.IMapModeHandler.Name
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_Name
+  name: Name
+  nameWithType: IMapModeHandler.Name
+  fullName: Map.MapModes.IMapModeHandler.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.MapModes.BaseMapModeHandler.ShaderModeID*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.ShaderModeID
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_ShaderModeID
+  name: ShaderModeID
+  nameWithType: BaseMapModeHandler.ShaderModeID
+  fullName: Map.MapModes.BaseMapModeHandler.ShaderModeID
+- uid: Map.MapModes.IMapModeHandler.ShaderModeID
+  commentId: P:Map.MapModes.IMapModeHandler.ShaderModeID
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_ShaderModeID
+  name: ShaderModeID
+  nameWithType: IMapModeHandler.ShaderModeID
+  fullName: Map.MapModes.IMapModeHandler.ShaderModeID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_RequiresFrequentUpdates
+  name: RequiresFrequentUpdates
+  nameWithType: BaseMapModeHandler.RequiresFrequentUpdates
+  fullName: Map.MapModes.BaseMapModeHandler.RequiresFrequentUpdates
+- uid: Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+  commentId: P:Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_RequiresFrequentUpdates
+  name: RequiresFrequentUpdates
+  nameWithType: IMapModeHandler.RequiresFrequentUpdates
+  fullName: Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.MapModes.BaseMapModeHandler.OnActivate*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.OnActivate
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  name: OnActivate
+  nameWithType: BaseMapModeHandler.OnActivate
+  fullName: Map.MapModes.BaseMapModeHandler.OnActivate
+- uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: IMapModeHandler.OnActivate(Material, MapModeDataTextures)
+  fullName: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: )
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.MapModes.MapModeDataTextures
+  commentId: T:Map.MapModes.MapModeDataTextures
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeDataTextures.html
+  name: MapModeDataTextures
+  nameWithType: MapModeDataTextures
+  fullName: Map.MapModes.MapModeDataTextures
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.BaseMapModeHandler.OnDeactivate*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.OnDeactivate
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_OnDeactivate_UnityEngine_Material_
+  name: OnDeactivate
+  nameWithType: BaseMapModeHandler.OnDeactivate
+  fullName: Map.MapModes.BaseMapModeHandler.OnDeactivate
+- uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  commentId: M:Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  name: OnDeactivate(Material)
+  nameWithType: IMapModeHandler.OnDeactivate(Material)
+  fullName: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.BaseMapModeHandler.UpdateTextures*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.UpdateTextures
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  name: UpdateTextures
+  nameWithType: BaseMapModeHandler.UpdateTextures
+  fullName: Map.MapModes.BaseMapModeHandler.UpdateTextures
+- uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  name: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  nameWithType: IMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  fullName: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, object)
+  nameWithType.vb: IMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, Object)
+  name.vb: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  parent: Core.Queries
+  href: Core.Queries.CountryQueries.html
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.GetProvinceTooltip
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  name: GetProvinceTooltip
+  nameWithType: BaseMapModeHandler.GetProvinceTooltip
+  fullName: Map.MapModes.BaseMapModeHandler.GetProvinceTooltip
+- uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: IMapModeHandler.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: Map.MapModes.IMapModeHandler.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  nameWithType.vb: IMapModeHandler.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: Map.MapModes.IMapModeHandler.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.MapModes.BaseMapModeHandler.GetUpdateFrequency*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.GetUpdateFrequency
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_GetUpdateFrequency
+  name: GetUpdateFrequency
+  nameWithType: BaseMapModeHandler.GetUpdateFrequency
+  fullName: Map.MapModes.BaseMapModeHandler.GetUpdateFrequency
+- uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+  commentId: M:Map.MapModes.IMapModeHandler.GetUpdateFrequency
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  name: GetUpdateFrequency()
+  nameWithType: IMapModeHandler.GetUpdateFrequency()
+  fullName: Map.MapModes.IMapModeHandler.GetUpdateFrequency()
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+    name: GetUpdateFrequency
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+    name: GetUpdateFrequency
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  - name: (
+  - name: )
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_DisableAllMapModeKeywords_UnityEngine_Material_
+  name: DisableAllMapModeKeywords
+  nameWithType: BaseMapModeHandler.DisableAllMapModeKeywords
+  fullName: Map.MapModes.BaseMapModeHandler.DisableAllMapModeKeywords
+- uid: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_EnableMapModeKeyword_UnityEngine_Material_System_String_
+  name: EnableMapModeKeyword
+  nameWithType: BaseMapModeHandler.EnableMapModeKeyword
+  fullName: Map.MapModes.BaseMapModeHandler.EnableMapModeKeyword
+- uid: Map.MapModes.BaseMapModeHandler.SetShaderMode*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.SetShaderMode
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_SetShaderMode_UnityEngine_Material_System_Int32_
+  name: SetShaderMode
+  nameWithType: BaseMapModeHandler.SetShaderMode
+  fullName: Map.MapModes.BaseMapModeHandler.SetShaderMode
+- uid: Map.MapModes.BaseMapModeHandler.LogActivation*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.LogActivation
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_LogActivation_System_String_
+  name: LogActivation
+  nameWithType: BaseMapModeHandler.LogActivation
+  fullName: Map.MapModes.BaseMapModeHandler.LogActivation
+- uid: Map.MapModes.BaseMapModeHandler.LogDeactivation*
+  commentId: Overload:Map.MapModes.BaseMapModeHandler.LogDeactivation
+  href: Map.MapModes.BaseMapModeHandler.html#Map_MapModes_BaseMapModeHandler_LogDeactivation_System_String_
+  name: LogDeactivation
+  nameWithType: BaseMapModeHandler.LogDeactivation
+  fullName: Map.MapModes.BaseMapModeHandler.LogDeactivation

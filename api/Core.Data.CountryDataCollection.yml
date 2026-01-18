@@ -1,0 +1,597 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CountryDataCollection
+  commentId: T:Core.Data.CountryDataCollection
+  id: CountryDataCollection
+  parent: Core.Data
+  children:
+  - Core.Data.CountryDataCollection.#ctor(System.Int32,Unity.Collections.Allocator)
+  - Core.Data.CountryDataCollection.AddCountry(Core.Data.CountryData)
+  - Core.Data.CountryDataCollection.Count
+  - Core.Data.CountryDataCollection.Dispose
+  - Core.Data.CountryDataCollection.GetCountryByHash(System.UInt16)
+  - Core.Data.CountryDataCollection.GetCountryByIndex(System.Int32)
+  - Core.Data.CountryDataCollection.GetCountryByTag(System.String)
+  - Core.Data.CountryDataCollection.GetHotDataSlice
+  - Core.Data.CountryDataCollection.GetMemoryUsage
+  - Core.Data.CountryDataCollection.IsCreated
+  langs:
+  - csharp
+  - vb
+  name: CountryDataCollection
+  nameWithType: CountryDataCollection
+  fullName: Core.Data.CountryDataCollection
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryDataCollection
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 271
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Collection for managing multiple countries with performance optimization
+
+    Implements structure-of-arrays for hot data
+  example: []
+  syntax:
+    content: public class CountryDataCollection
+    content.vb: Public Class CountryDataCollection
+  inheritance:
+  - System.Object
+- uid: Core.Data.CountryDataCollection.Count
+  commentId: P:Core.Data.CountryDataCollection.Count
+  id: Count
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CountryDataCollection.Count
+  fullName: Core.Data.CountryDataCollection.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 284
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Data.CountryDataCollection.Count*
+- uid: Core.Data.CountryDataCollection.IsCreated
+  commentId: P:Core.Data.CountryDataCollection.IsCreated
+  id: IsCreated
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: IsCreated
+  nameWithType: CountryDataCollection.IsCreated
+  fullName: Core.Data.CountryDataCollection.IsCreated
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCreated
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 285
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool IsCreated { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsCreated As Boolean
+  overload: Core.Data.CountryDataCollection.IsCreated*
+- uid: Core.Data.CountryDataCollection.#ctor(System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Data.CountryDataCollection.#ctor(System.Int32,Unity.Collections.Allocator)
+  id: '#ctor(System.Int32,Unity.Collections.Allocator)'
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: CountryDataCollection(int, Allocator)
+  nameWithType: CountryDataCollection.CountryDataCollection(int, Allocator)
+  fullName: Core.Data.CountryDataCollection.CountryDataCollection(int, Unity.Collections.Allocator)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryDataCollection(int capacity, Allocator allocator = Allocator.Persistent)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    content.vb: Public Sub New(capacity As Integer, allocator As Allocator = Allocator.Persistent)
+  overload: Core.Data.CountryDataCollection.#ctor*
+  nameWithType.vb: CountryDataCollection.New(Integer, Allocator)
+  fullName.vb: Core.Data.CountryDataCollection.New(Integer, Unity.Collections.Allocator)
+  name.vb: New(Integer, Allocator)
+- uid: Core.Data.CountryDataCollection.AddCountry(Core.Data.CountryData)
+  commentId: M:Core.Data.CountryDataCollection.AddCountry(Core.Data.CountryData)
+  id: AddCountry(Core.Data.CountryData)
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: AddCountry(CountryData)
+  nameWithType: CountryDataCollection.AddCountry(CountryData)
+  fullName: Core.Data.CountryDataCollection.AddCountry(Core.Data.CountryData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddCountry
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 295
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void AddCountry(CountryData country)
+    parameters:
+    - id: country
+      type: Core.Data.CountryData
+    content.vb: Public Sub AddCountry(country As CountryData)
+  overload: Core.Data.CountryDataCollection.AddCountry*
+- uid: Core.Data.CountryDataCollection.GetCountryByTag(System.String)
+  commentId: M:Core.Data.CountryDataCollection.GetCountryByTag(System.String)
+  id: GetCountryByTag(System.String)
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: GetCountryByTag(string)
+  nameWithType: CountryDataCollection.GetCountryByTag(string)
+  fullName: Core.Data.CountryDataCollection.GetCountryByTag(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryByTag
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 309
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryData GetCountryByTag(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: Core.Data.CountryData
+    content.vb: Public Function GetCountryByTag(tag As String) As CountryData
+  overload: Core.Data.CountryDataCollection.GetCountryByTag*
+  nameWithType.vb: CountryDataCollection.GetCountryByTag(String)
+  fullName.vb: Core.Data.CountryDataCollection.GetCountryByTag(String)
+  name.vb: GetCountryByTag(String)
+- uid: Core.Data.CountryDataCollection.GetCountryByHash(System.UInt16)
+  commentId: M:Core.Data.CountryDataCollection.GetCountryByHash(System.UInt16)
+  id: GetCountryByHash(System.UInt16)
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: GetCountryByHash(ushort)
+  nameWithType: CountryDataCollection.GetCountryByHash(ushort)
+  fullName: Core.Data.CountryDataCollection.GetCountryByHash(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryByHash
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 315
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryData GetCountryByHash(ushort tagHash)
+    parameters:
+    - id: tagHash
+      type: System.UInt16
+    return:
+      type: Core.Data.CountryData
+    content.vb: Public Function GetCountryByHash(tagHash As UShort) As CountryData
+  overload: Core.Data.CountryDataCollection.GetCountryByHash*
+  nameWithType.vb: CountryDataCollection.GetCountryByHash(UShort)
+  fullName.vb: Core.Data.CountryDataCollection.GetCountryByHash(UShort)
+  name.vb: GetCountryByHash(UShort)
+- uid: Core.Data.CountryDataCollection.GetCountryByIndex(System.Int32)
+  commentId: M:Core.Data.CountryDataCollection.GetCountryByIndex(System.Int32)
+  id: GetCountryByIndex(System.Int32)
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: GetCountryByIndex(int)
+  nameWithType: CountryDataCollection.GetCountryByIndex(int)
+  fullName: Core.Data.CountryDataCollection.GetCountryByIndex(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryByIndex
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 324
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryData GetCountryByIndex(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: Core.Data.CountryData
+    content.vb: Public Function GetCountryByIndex(index As Integer) As CountryData
+  overload: Core.Data.CountryDataCollection.GetCountryByIndex*
+  nameWithType.vb: CountryDataCollection.GetCountryByIndex(Integer)
+  fullName.vb: Core.Data.CountryDataCollection.GetCountryByIndex(Integer)
+  name.vb: GetCountryByIndex(Integer)
+- uid: Core.Data.CountryDataCollection.GetHotDataSlice
+  commentId: M:Core.Data.CountryDataCollection.GetHotDataSlice
+  id: GetHotDataSlice
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: GetHotDataSlice()
+  nameWithType: CountryDataCollection.GetHotDataSlice()
+  fullName: Core.Data.CountryDataCollection.GetHotDataSlice()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHotDataSlice
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 332
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public NativeSlice<CountryHotData> GetHotDataSlice()
+    return:
+      type: Unity.Collections.NativeSlice{Core.Data.CountryHotData}
+    content.vb: Public Function GetHotDataSlice() As NativeSlice(Of CountryHotData)
+  overload: Core.Data.CountryDataCollection.GetHotDataSlice*
+- uid: Core.Data.CountryDataCollection.Dispose
+  commentId: M:Core.Data.CountryDataCollection.Dispose
+  id: Dispose
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CountryDataCollection.Dispose()
+  fullName: Core.Data.CountryDataCollection.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 345
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Data.CountryDataCollection.Dispose*
+- uid: Core.Data.CountryDataCollection.GetMemoryUsage
+  commentId: M:Core.Data.CountryDataCollection.GetMemoryUsage
+  id: GetMemoryUsage
+  parent: Core.Data.CountryDataCollection
+  langs:
+  - csharp
+  - vb
+  name: GetMemoryUsage()
+  nameWithType: CountryDataCollection.GetMemoryUsage()
+  fullName: Core.Data.CountryDataCollection.GetMemoryUsage()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMemoryUsage
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 357
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get total memory usage of the collection
+  example: []
+  syntax:
+    content: public long GetMemoryUsage()
+    return:
+      type: System.Int64
+    content.vb: Public Function GetMemoryUsage() As Long
+  overload: Core.Data.CountryDataCollection.GetMemoryUsage*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.CountryDataCollection.Count*
+  commentId: Overload:Core.Data.CountryDataCollection.Count
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_Count
+  name: Count
+  nameWithType: CountryDataCollection.Count
+  fullName: Core.Data.CountryDataCollection.Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.CountryDataCollection.IsCreated*
+  commentId: Overload:Core.Data.CountryDataCollection.IsCreated
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_IsCreated
+  name: IsCreated
+  nameWithType: CountryDataCollection.IsCreated
+  fullName: Core.Data.CountryDataCollection.IsCreated
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.CountryDataCollection.#ctor*
+  commentId: Overload:Core.Data.CountryDataCollection.#ctor
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection__ctor_System_Int32_Unity_Collections_Allocator_
+  name: CountryDataCollection
+  nameWithType: CountryDataCollection.CountryDataCollection
+  fullName: Core.Data.CountryDataCollection.CountryDataCollection
+  nameWithType.vb: CountryDataCollection.New
+  fullName.vb: Core.Data.CountryDataCollection.New
+  name.vb: New
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Data.CountryDataCollection.AddCountry*
+  commentId: Overload:Core.Data.CountryDataCollection.AddCountry
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_AddCountry_Core_Data_CountryData_
+  name: AddCountry
+  nameWithType: CountryDataCollection.AddCountry
+  fullName: Core.Data.CountryDataCollection.AddCountry
+- uid: Core.Data.CountryData
+  commentId: T:Core.Data.CountryData
+  parent: Core.Data
+  href: Core.Data.CountryData.html
+  name: CountryData
+  nameWithType: CountryData
+  fullName: Core.Data.CountryData
+- uid: Core.Data.CountryDataCollection.GetCountryByTag*
+  commentId: Overload:Core.Data.CountryDataCollection.GetCountryByTag
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_GetCountryByTag_System_String_
+  name: GetCountryByTag
+  nameWithType: CountryDataCollection.GetCountryByTag
+  fullName: Core.Data.CountryDataCollection.GetCountryByTag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.CountryDataCollection.GetCountryByHash*
+  commentId: Overload:Core.Data.CountryDataCollection.GetCountryByHash
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_GetCountryByHash_System_UInt16_
+  name: GetCountryByHash
+  nameWithType: CountryDataCollection.GetCountryByHash
+  fullName: Core.Data.CountryDataCollection.GetCountryByHash
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.CountryDataCollection.GetCountryByIndex*
+  commentId: Overload:Core.Data.CountryDataCollection.GetCountryByIndex
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_GetCountryByIndex_System_Int32_
+  name: GetCountryByIndex
+  nameWithType: CountryDataCollection.GetCountryByIndex
+  fullName: Core.Data.CountryDataCollection.GetCountryByIndex
+- uid: Core.Data.CountryDataCollection.GetHotDataSlice*
+  commentId: Overload:Core.Data.CountryDataCollection.GetHotDataSlice
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_GetHotDataSlice
+  name: GetHotDataSlice
+  nameWithType: CountryDataCollection.GetHotDataSlice
+  fullName: Core.Data.CountryDataCollection.GetHotDataSlice
+- uid: Unity.Collections.NativeSlice{Core.Data.CountryHotData}
+  commentId: T:Unity.Collections.NativeSlice{Core.Data.CountryHotData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  href: Core.Data.CountryHotData.html
+  name: NativeSlice<CountryHotData>
+  nameWithType: NativeSlice<CountryHotData>
+  fullName: Unity.Collections.NativeSlice<Core.Data.CountryHotData>
+  nameWithType.vb: NativeSlice(Of CountryHotData)
+  fullName.vb: Unity.Collections.NativeSlice(Of Core.Data.CountryHotData)
+  name.vb: NativeSlice(Of CountryHotData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: Core.Data.CountryHotData
+    name: CountryHotData
+    href: Core.Data.CountryHotData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.CountryHotData
+    name: CountryHotData
+    href: Core.Data.CountryHotData.html
+  - name: )
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.CountryDataCollection.Dispose*
+  commentId: Overload:Core.Data.CountryDataCollection.Dispose
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_Dispose
+  name: Dispose
+  nameWithType: CountryDataCollection.Dispose
+  fullName: Core.Data.CountryDataCollection.Dispose
+- uid: Core.Data.CountryDataCollection.GetMemoryUsage*
+  commentId: Overload:Core.Data.CountryDataCollection.GetMemoryUsage
+  href: Core.Data.CountryDataCollection.html#Core_Data_CountryDataCollection_GetMemoryUsage
+  name: GetMemoryUsage
+  nameWithType: CountryDataCollection.GetMemoryUsage
+  fullName: Core.Data.CountryDataCollection.GetMemoryUsage
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long

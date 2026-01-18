@@ -1,0 +1,380 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Integration.ProvinceTextureSynchronizer
+  commentId: T:Map.Integration.ProvinceTextureSynchronizer
+  id: ProvinceTextureSynchronizer
+  parent: Map.Integration
+  children:
+  - Map.Integration.ProvinceTextureSynchronizer.#ctor(Map.Province.ProvinceDataManager,Map.Rendering.MapTextureManager)
+  - Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces(System.Boolean,System.Boolean,System.Boolean)
+  - Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor(System.UInt16)
+  - Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment(System.UInt16)
+  - Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTextureSynchronizer
+  nameWithType: ProvinceTextureSynchronizer
+  fullName: Map.Integration.ProvinceTextureSynchronizer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceTextureSynchronizer
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Handles synchronization between CPU province data and GPU textures
+
+    Provides generic sync patterns to eliminate code duplication
+
+    Extracted from MapDataIntegrator for single responsibility
+  example: []
+  syntax:
+    content: public class ProvinceTextureSynchronizer
+    content.vb: Public Class ProvinceTextureSynchronizer
+  inheritance:
+  - System.Object
+- uid: Map.Integration.ProvinceTextureSynchronizer.#ctor(Map.Province.ProvinceDataManager,Map.Rendering.MapTextureManager)
+  commentId: M:Map.Integration.ProvinceTextureSynchronizer.#ctor(Map.Province.ProvinceDataManager,Map.Rendering.MapTextureManager)
+  id: '#ctor(Map.Province.ProvinceDataManager,Map.Rendering.MapTextureManager)'
+  parent: Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTextureSynchronizer(ProvinceDataManager, MapTextureManager)
+  nameWithType: ProvinceTextureSynchronizer.ProvinceTextureSynchronizer(ProvinceDataManager, MapTextureManager)
+  fullName: Map.Integration.ProvinceTextureSynchronizer.ProvinceTextureSynchronizer(Map.Province.ProvinceDataManager, Map.Rendering.MapTextureManager)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  syntax:
+    content: public ProvinceTextureSynchronizer(ProvinceDataManager dataManager, MapTextureManager textureManager)
+    parameters:
+    - id: dataManager
+      type: Map.Province.ProvinceDataManager
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub New(dataManager As ProvinceDataManager, textureManager As MapTextureManager)
+  overload: Map.Integration.ProvinceTextureSynchronizer.#ctor*
+  nameWithType.vb: ProvinceTextureSynchronizer.New(ProvinceDataManager, MapTextureManager)
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.New(Map.Province.ProvinceDataManager, Map.Rendering.MapTextureManager)
+  name.vb: New(ProvinceDataManager, MapTextureManager)
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner(System.UInt16)
+  commentId: M:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner(System.UInt16)
+  id: SyncProvinceOwner(System.UInt16)
+  parent: Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: SyncProvinceOwner(ushort)
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceOwner(ushort)
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SyncProvinceOwner
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Sync province owner from CPU data to GPU texture
+
+    Updates owner texture for all pixels belonging to the province
+
+    NOTE: Currently uses CPU path with TODO to use GPU compute shader (OwnerTextureDispatcher)
+  example: []
+  syntax:
+    content: public void SyncProvinceOwner(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    content.vb: Public Sub SyncProvinceOwner(provinceID As UShort)
+  overload: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner*
+  nameWithType.vb: ProvinceTextureSynchronizer.SyncProvinceOwner(UShort)
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner(UShort)
+  name.vb: SyncProvinceOwner(UShort)
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor(System.UInt16)
+  commentId: M:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor(System.UInt16)
+  id: SyncProvinceColor(System.UInt16)
+  parent: Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: SyncProvinceColor(ushort)
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceColor(ushort)
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SyncProvinceColor
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Sync province color from CPU data to GPU texture
+
+    Updates color texture for all pixels belonging to the province
+  example: []
+  syntax:
+    content: public void SyncProvinceColor(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    content.vb: Public Sub SyncProvinceColor(provinceID As UShort)
+  overload: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor*
+  nameWithType.vb: ProvinceTextureSynchronizer.SyncProvinceColor(UShort)
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor(UShort)
+  name.vb: SyncProvinceColor(UShort)
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment(System.UInt16)
+  commentId: M:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment(System.UInt16)
+  id: SyncProvinceDevelopment(System.UInt16)
+  parent: Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: SyncProvinceDevelopment(ushort)
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceDevelopment(ushort)
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SyncProvinceDevelopment
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Sync province development value to texture
+
+    Updates development texture for visualization
+  example: []
+  syntax:
+    content: public void SyncProvinceDevelopment(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    content.vb: Public Sub SyncProvinceDevelopment(provinceID As UShort)
+  overload: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment*
+  nameWithType.vb: ProvinceTextureSynchronizer.SyncProvinceDevelopment(UShort)
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment(UShort)
+  name.vb: SyncProvinceDevelopment(UShort)
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces(System.Boolean,System.Boolean,System.Boolean)
+  commentId: M:Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces(System.Boolean,System.Boolean,System.Boolean)
+  id: SyncAllProvinces(System.Boolean,System.Boolean,System.Boolean)
+  parent: Map.Integration.ProvinceTextureSynchronizer
+  langs:
+  - csharp
+  - vb
+  name: SyncAllProvinces(bool, bool, bool)
+  nameWithType: ProvinceTextureSynchronizer.SyncAllProvinces(bool, bool, bool)
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces(bool, bool, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SyncAllProvinces
+    path: Scripts/Map/Integration/ProvinceTextureSynchronizer.cs
+    startLine: 164
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Batch sync all provinces - useful after bulk updates
+
+    NOTE: Expensive operation, use sparingly
+  example: []
+  syntax:
+    content: public void SyncAllProvinces(bool syncOwner = false, bool syncColor = true, bool syncDevelopment = false)
+    parameters:
+    - id: syncOwner
+      type: System.Boolean
+    - id: syncColor
+      type: System.Boolean
+    - id: syncDevelopment
+      type: System.Boolean
+    content.vb: Public Sub SyncAllProvinces(syncOwner As Boolean = False, syncColor As Boolean = True, syncDevelopment As Boolean = False)
+  overload: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces*
+  nameWithType.vb: ProvinceTextureSynchronizer.SyncAllProvinces(Boolean, Boolean, Boolean)
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces(Boolean, Boolean, Boolean)
+  name.vb: SyncAllProvinces(Boolean, Boolean, Boolean)
+references:
+- uid: Map.Integration
+  commentId: N:Map.Integration
+  href: Map.html
+  name: Map.Integration
+  nameWithType: Map.Integration
+  fullName: Map.Integration
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Integration.ProvinceTextureSynchronizer.#ctor*
+  commentId: Overload:Map.Integration.ProvinceTextureSynchronizer.#ctor
+  href: Map.Integration.ProvinceTextureSynchronizer.html#Map_Integration_ProvinceTextureSynchronizer__ctor_Map_Province_ProvinceDataManager_Map_Rendering_MapTextureManager_
+  name: ProvinceTextureSynchronizer
+  nameWithType: ProvinceTextureSynchronizer.ProvinceTextureSynchronizer
+  fullName: Map.Integration.ProvinceTextureSynchronizer.ProvinceTextureSynchronizer
+  nameWithType.vb: ProvinceTextureSynchronizer.New
+  fullName.vb: Map.Integration.ProvinceTextureSynchronizer.New
+  name.vb: New
+- uid: Map.Province.ProvinceDataManager
+  commentId: T:Map.Province.ProvinceDataManager
+  parent: Map.Province
+  href: Map.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner*
+  commentId: Overload:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner
+  href: Map.Integration.ProvinceTextureSynchronizer.html#Map_Integration_ProvinceTextureSynchronizer_SyncProvinceOwner_System_UInt16_
+  name: SyncProvinceOwner
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceOwner
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceOwner
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor*
+  commentId: Overload:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor
+  href: Map.Integration.ProvinceTextureSynchronizer.html#Map_Integration_ProvinceTextureSynchronizer_SyncProvinceColor_System_UInt16_
+  name: SyncProvinceColor
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceColor
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceColor
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment*
+  commentId: Overload:Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment
+  href: Map.Integration.ProvinceTextureSynchronizer.html#Map_Integration_ProvinceTextureSynchronizer_SyncProvinceDevelopment_System_UInt16_
+  name: SyncProvinceDevelopment
+  nameWithType: ProvinceTextureSynchronizer.SyncProvinceDevelopment
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncProvinceDevelopment
+- uid: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces*
+  commentId: Overload:Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces
+  href: Map.Integration.ProvinceTextureSynchronizer.html#Map_Integration_ProvinceTextureSynchronizer_SyncAllProvinces_System_Boolean_System_Boolean_System_Boolean_
+  name: SyncAllProvinces
+  nameWithType: ProvinceTextureSynchronizer.SyncAllProvinces
+  fullName: Map.Integration.ProvinceTextureSynchronizer.SyncAllProvinces
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

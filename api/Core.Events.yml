@@ -1,0 +1,106 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Events
+  commentId: N:Core.Events
+  id: Core.Events
+  children:
+  - Core.Events.CompositeDisposable
+  - Core.Events.ISubscriptionToken
+  - Core.Events.SubscriptionTokenGeneric`1
+  - Core.Events.SubscriptionToken`1
+  langs:
+  - csharp
+  - vb
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Events.SubscriptionToken`1
+  commentId: T:Core.Events.SubscriptionToken`1
+  href: Core.Events.SubscriptionToken-1.html
+  name: SubscriptionToken<T>
+  nameWithType: SubscriptionToken<T>
+  fullName: Core.Events.SubscriptionToken<T>
+  nameWithType.vb: SubscriptionToken(Of T)
+  fullName.vb: Core.Events.SubscriptionToken(Of T)
+  name.vb: SubscriptionToken(Of T)
+  spec.csharp:
+  - uid: Core.Events.SubscriptionToken`1
+    name: SubscriptionToken
+    href: Core.Events.SubscriptionToken-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Events.SubscriptionToken`1
+    name: SubscriptionToken
+    href: Core.Events.SubscriptionToken-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Events.ISubscriptionToken
+  commentId: T:Core.Events.ISubscriptionToken
+  parent: Core.Events
+  href: Core.Events.ISubscriptionToken.html
+  name: ISubscriptionToken
+  nameWithType: ISubscriptionToken
+  fullName: Core.Events.ISubscriptionToken
+- uid: Core.Events.SubscriptionTokenGeneric`1
+  commentId: T:Core.Events.SubscriptionTokenGeneric`1
+  href: Core.Events.SubscriptionTokenGeneric-1.html
+  name: SubscriptionTokenGeneric<T>
+  nameWithType: SubscriptionTokenGeneric<T>
+  fullName: Core.Events.SubscriptionTokenGeneric<T>
+  nameWithType.vb: SubscriptionTokenGeneric(Of T)
+  fullName.vb: Core.Events.SubscriptionTokenGeneric(Of T)
+  name.vb: SubscriptionTokenGeneric(Of T)
+  spec.csharp:
+  - uid: Core.Events.SubscriptionTokenGeneric`1
+    name: SubscriptionTokenGeneric
+    href: Core.Events.SubscriptionTokenGeneric-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Events.SubscriptionTokenGeneric`1
+    name: SubscriptionTokenGeneric
+    href: Core.Events.SubscriptionTokenGeneric-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Events.CompositeDisposable
+  commentId: T:Core.Events.CompositeDisposable
+  parent: Core.Events
+  href: Core.Events.CompositeDisposable.html
+  name: CompositeDisposable
+  nameWithType: CompositeDisposable
+  fullName: Core.Events.CompositeDisposable
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html

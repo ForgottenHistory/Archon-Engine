@@ -1,0 +1,352 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderRendererContext
+  commentId: T:Map.Rendering.Border.BorderRendererContext
+  id: BorderRendererContext
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderRendererContext.AdjacencySystem
+  - Map.Rendering.Border.BorderRendererContext.BorderDetectionCompute
+  - Map.Rendering.Border.BorderRendererContext.BorderSDFCompute
+  - Map.Rendering.Border.BorderRendererContext.CountrySystem
+  - Map.Rendering.Border.BorderRendererContext.MapPlaneTransform
+  - Map.Rendering.Border.BorderRendererContext.ProvinceMapping
+  - Map.Rendering.Border.BorderRendererContext.ProvinceSystem
+  langs:
+  - csharp
+  - vb
+  name: BorderRendererContext
+  nameWithType: BorderRendererContext
+  fullName: Map.Rendering.Border.BorderRendererContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderRendererContext
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Context provided to border renderers during initialization.
+
+    Contains references to systems needed for border generation.
+  example: []
+  syntax:
+    content: public struct BorderRendererContext
+    content.vb: Public Structure BorderRendererContext
+- uid: Map.Rendering.Border.BorderRendererContext.AdjacencySystem
+  commentId: F:Map.Rendering.Border.BorderRendererContext.AdjacencySystem
+  id: AdjacencySystem
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: AdjacencySystem
+  nameWithType: BorderRendererContext.AdjacencySystem
+  fullName: Map.Rendering.Border.BorderRendererContext.AdjacencySystem
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdjacencySystem
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 63
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public AdjacencySystem AdjacencySystem
+    return:
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public AdjacencySystem As AdjacencySystem
+- uid: Map.Rendering.Border.BorderRendererContext.ProvinceSystem
+  commentId: F:Map.Rendering.Border.BorderRendererContext.ProvinceSystem
+  id: ProvinceSystem
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSystem
+  nameWithType: BorderRendererContext.ProvinceSystem
+  fullName: Map.Rendering.Border.BorderRendererContext.ProvinceSystem
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSystem
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 64
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ProvinceSystem ProvinceSystem
+    return:
+      type: Core.Systems.ProvinceSystem
+    content.vb: Public ProvinceSystem As ProvinceSystem
+- uid: Map.Rendering.Border.BorderRendererContext.CountrySystem
+  commentId: F:Map.Rendering.Border.BorderRendererContext.CountrySystem
+  id: CountrySystem
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: CountrySystem
+  nameWithType: BorderRendererContext.CountrySystem
+  fullName: Map.Rendering.Border.BorderRendererContext.CountrySystem
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySystem
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 65
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public CountrySystem CountrySystem
+    return:
+      type: Core.Systems.CountrySystem
+    content.vb: Public CountrySystem As CountrySystem
+- uid: Map.Rendering.Border.BorderRendererContext.ProvinceMapping
+  commentId: F:Map.Rendering.Border.BorderRendererContext.ProvinceMapping
+  id: ProvinceMapping
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapping
+  nameWithType: BorderRendererContext.ProvinceMapping
+  fullName: Map.Rendering.Border.BorderRendererContext.ProvinceMapping
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapping
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 66
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ProvinceMapping ProvinceMapping
+    return:
+      type: Map.Rendering.ProvinceMapping
+    content.vb: Public ProvinceMapping As ProvinceMapping
+- uid: Map.Rendering.Border.BorderRendererContext.MapPlaneTransform
+  commentId: F:Map.Rendering.Border.BorderRendererContext.MapPlaneTransform
+  id: MapPlaneTransform
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: MapPlaneTransform
+  nameWithType: BorderRendererContext.MapPlaneTransform
+  fullName: Map.Rendering.Border.BorderRendererContext.MapPlaneTransform
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapPlaneTransform
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 67
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public Transform MapPlaneTransform
+    return:
+      type: UnityEngine.Transform
+    content.vb: Public MapPlaneTransform As Transform
+- uid: Map.Rendering.Border.BorderRendererContext.BorderDetectionCompute
+  commentId: F:Map.Rendering.Border.BorderRendererContext.BorderDetectionCompute
+  id: BorderDetectionCompute
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: BorderDetectionCompute
+  nameWithType: BorderRendererContext.BorderDetectionCompute
+  fullName: Map.Rendering.Border.BorderRendererContext.BorderDetectionCompute
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDetectionCompute
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 68
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ComputeShader BorderDetectionCompute
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public BorderDetectionCompute As ComputeShader
+- uid: Map.Rendering.Border.BorderRendererContext.BorderSDFCompute
+  commentId: F:Map.Rendering.Border.BorderRendererContext.BorderSDFCompute
+  id: BorderSDFCompute
+  parent: Map.Rendering.Border.BorderRendererContext
+  langs:
+  - csharp
+  - vb
+  name: BorderSDFCompute
+  nameWithType: BorderRendererContext.BorderSDFCompute
+  fullName: Map.Rendering.Border.BorderRendererContext.BorderSDFCompute
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderSDFCompute
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ComputeShader BorderSDFCompute
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public BorderSDFCompute As ComputeShader
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader

@@ -1,0 +1,252 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.PathContext
+  commentId: T:Core.Systems.PathContext
+  id: PathContext
+  parent: Core.Systems
+  children:
+  - Core.Systems.PathContext.Create(System.UInt16,System.UInt16)
+  - Core.Systems.PathContext.Default
+  - Core.Systems.PathContext.Flags
+  - Core.Systems.PathContext.UnitOwnerCountryId
+  - Core.Systems.PathContext.UnitTypeId
+  langs:
+  - csharp
+  - vb
+  name: PathContext
+  nameWithType: PathContext
+  fullName: Core.Systems.PathContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathContext
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Context passed to cost calculator for unit-specific pathfinding.
+  example: []
+  syntax:
+    content: public struct PathContext
+    content.vb: Public Structure PathContext
+- uid: Core.Systems.PathContext.UnitOwnerCountryId
+  commentId: F:Core.Systems.PathContext.UnitOwnerCountryId
+  id: UnitOwnerCountryId
+  parent: Core.Systems.PathContext
+  langs:
+  - csharp
+  - vb
+  name: UnitOwnerCountryId
+  nameWithType: PathContext.UnitOwnerCountryId
+  fullName: Core.Systems.PathContext.UnitOwnerCountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitOwnerCountryId
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Country that owns the unit
+  example: []
+  syntax:
+    content: public ushort UnitOwnerCountryId
+    return:
+      type: System.UInt16
+    content.vb: Public UnitOwnerCountryId As UShort
+- uid: Core.Systems.PathContext.UnitTypeId
+  commentId: F:Core.Systems.PathContext.UnitTypeId
+  id: UnitTypeId
+  parent: Core.Systems.PathContext
+  langs:
+  - csharp
+  - vb
+  name: UnitTypeId
+  nameWithType: PathContext.UnitTypeId
+  fullName: Core.Systems.PathContext.UnitTypeId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitTypeId
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Type of unit (for unit-specific costs)
+  example: []
+  syntax:
+    content: public ushort UnitTypeId
+    return:
+      type: System.UInt16
+    content.vb: Public UnitTypeId As UShort
+- uid: Core.Systems.PathContext.Flags
+  commentId: F:Core.Systems.PathContext.Flags
+  id: Flags
+  parent: Core.Systems.PathContext
+  langs:
+  - csharp
+  - vb
+  name: Flags
+  nameWithType: PathContext.Flags
+  fullName: Core.Systems.PathContext.Flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Flags
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Optional flags for special pathfinding modes
+  example: []
+  syntax:
+    content: public PathContextFlags Flags
+    return:
+      type: Core.Systems.PathContextFlags
+    content.vb: Public Flags As PathContextFlags
+- uid: Core.Systems.PathContext.Default
+  commentId: P:Core.Systems.PathContext.Default
+  id: Default
+  parent: Core.Systems.PathContext
+  langs:
+  - csharp
+  - vb
+  name: Default
+  nameWithType: PathContext.Default
+  fullName: Core.Systems.PathContext.Default
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Default
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static PathContext Default { get; }
+    parameters: []
+    return:
+      type: Core.Systems.PathContext
+    content.vb: Public Shared ReadOnly Property [Default] As PathContext
+  overload: Core.Systems.PathContext.Default*
+- uid: Core.Systems.PathContext.Create(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.PathContext.Create(System.UInt16,System.UInt16)
+  id: Create(System.UInt16,System.UInt16)
+  parent: Core.Systems.PathContext
+  langs:
+  - csharp
+  - vb
+  name: Create(ushort, ushort)
+  nameWithType: PathContext.Create(ushort, ushort)
+  fullName: Core.Systems.PathContext.Create(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static PathContext Create(ushort ownerCountryId, ushort unitTypeId = 0)
+    parameters:
+    - id: ownerCountryId
+      type: System.UInt16
+    - id: unitTypeId
+      type: System.UInt16
+    return:
+      type: Core.Systems.PathContext
+    content.vb: Public Shared Function Create(ownerCountryId As UShort, unitTypeId As UShort = 0) As PathContext
+  overload: Core.Systems.PathContext.Create*
+  nameWithType.vb: PathContext.Create(UShort, UShort)
+  fullName.vb: Core.Systems.PathContext.Create(UShort, UShort)
+  name.vb: Create(UShort, UShort)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.PathContextFlags
+  commentId: T:Core.Systems.PathContextFlags
+  parent: Core.Systems
+  href: Core.Systems.PathContextFlags.html
+  name: PathContextFlags
+  nameWithType: PathContextFlags
+  fullName: Core.Systems.PathContextFlags
+- uid: Core.Systems.PathContext.Default*
+  commentId: Overload:Core.Systems.PathContext.Default
+  href: Core.Systems.PathContext.html#Core_Systems_PathContext_Default
+  name: Default
+  nameWithType: PathContext.Default
+  fullName: Core.Systems.PathContext.Default
+- uid: Core.Systems.PathContext
+  commentId: T:Core.Systems.PathContext
+  parent: Core.Systems
+  href: Core.Systems.PathContext.html
+  name: PathContext
+  nameWithType: PathContext
+  fullName: Core.Systems.PathContext
+- uid: Core.Systems.PathContext.Create*
+  commentId: Overload:Core.Systems.PathContext.Create
+  href: Core.Systems.PathContext.html#Core_Systems_PathContext_Create_System_UInt16_System_UInt16_
+  name: Create
+  nameWithType: PathContext.Create
+  fullName: Core.Systems.PathContext.Create

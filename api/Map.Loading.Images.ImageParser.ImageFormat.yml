@@ -1,0 +1,165 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  id: ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ImageParser.ImageFormat.BMP
+  - Map.Loading.Images.ImageParser.ImageFormat.PNG
+  - Map.Loading.Images.ImageParser.ImageFormat.Unknown
+  langs:
+  - csharp
+  - vb
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ImageFormat
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Image format enumeration
+  example: []
+  syntax:
+    content: public enum ImageParser.ImageFormat
+    content.vb: Public Enum ImageParser.ImageFormat
+- uid: Map.Loading.Images.ImageParser.ImageFormat.Unknown
+  commentId: F:Map.Loading.Images.ImageParser.ImageFormat.Unknown
+  id: Unknown
+  parent: Map.Loading.Images.ImageParser.ImageFormat
+  langs:
+  - csharp
+  - vb
+  name: Unknown
+  nameWithType: ImageParser.ImageFormat.Unknown
+  fullName: Map.Loading.Images.ImageParser.ImageFormat.Unknown
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Unknown
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: Unknown = 0
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+- uid: Map.Loading.Images.ImageParser.ImageFormat.BMP
+  commentId: F:Map.Loading.Images.ImageParser.ImageFormat.BMP
+  id: BMP
+  parent: Map.Loading.Images.ImageParser.ImageFormat
+  langs:
+  - csharp
+  - vb
+  name: BMP
+  nameWithType: ImageParser.ImageFormat.BMP
+  fullName: Map.Loading.Images.ImageParser.ImageFormat.BMP
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMP
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: BMP = 1
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+- uid: Map.Loading.Images.ImageParser.ImageFormat.PNG
+  commentId: F:Map.Loading.Images.ImageParser.ImageFormat.PNG
+  id: PNG
+  parent: Map.Loading.Images.ImageParser.ImageFormat
+  langs:
+  - csharp
+  - vb
+  name: PNG
+  nameWithType: ImageParser.ImageFormat.PNG
+  fullName: Map.Loading.Images.ImageParser.ImageFormat.PNG
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PNG
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: PNG = 2
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html

@@ -1,0 +1,284 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.AllianceFormedEvent
+  commentId: T:Core.Diplomacy.AllianceFormedEvent
+  id: AllianceFormedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.AllianceFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Diplomacy.AllianceFormedEvent.TimeStamp
+  - Core.Diplomacy.AllianceFormedEvent.country1
+  - Core.Diplomacy.AllianceFormedEvent.country2
+  - Core.Diplomacy.AllianceFormedEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: AllianceFormedEvent
+  nameWithType: AllianceFormedEvent
+  fullName: Core.Diplomacy.AllianceFormedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AllianceFormedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 111
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Emitted when an alliance is formed between two countries
+
+    GAME layer uses this to add opinion bonuses, UI notifications
+  example: []
+  syntax:
+    content: 'public struct AllianceFormedEvent : IGameEvent'
+    content.vb: Public Structure AllianceFormedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.AllianceFormedEvent.country1
+  commentId: F:Core.Diplomacy.AllianceFormedEvent.country1
+  id: country1
+  parent: Core.Diplomacy.AllianceFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: country1
+  nameWithType: AllianceFormedEvent.country1
+  fullName: Core.Diplomacy.AllianceFormedEvent.country1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country1
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country1
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country1 As UShort
+- uid: Core.Diplomacy.AllianceFormedEvent.country2
+  commentId: F:Core.Diplomacy.AllianceFormedEvent.country2
+  id: country2
+  parent: Core.Diplomacy.AllianceFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: country2
+  nameWithType: AllianceFormedEvent.country2
+  fullName: Core.Diplomacy.AllianceFormedEvent.country2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country2
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country2
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country2 As UShort
+- uid: Core.Diplomacy.AllianceFormedEvent.tick
+  commentId: F:Core.Diplomacy.AllianceFormedEvent.tick
+  id: tick
+  parent: Core.Diplomacy.AllianceFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: AllianceFormedEvent.tick
+  fullName: Core.Diplomacy.AllianceFormedEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 115
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.AllianceFormedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.AllianceFormedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.AllianceFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: AllianceFormedEvent.TimeStamp
+  fullName: Core.Diplomacy.AllianceFormedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 116
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.AllianceFormedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.AllianceFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.AllianceFormedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.AllianceFormedEvent
+  langs:
+  - csharp
+  - vb
+  name: AllianceFormedEvent(ushort, ushort, int)
+  nameWithType: AllianceFormedEvent.AllianceFormedEvent(ushort, ushort, int)
+  fullName: Core.Diplomacy.AllianceFormedEvent.AllianceFormedEvent(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 118
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public AllianceFormedEvent(ushort c1, ushort c2, int tick)
+    parameters:
+    - id: c1
+      type: System.UInt16
+    - id: c2
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(c1 As UShort, c2 As UShort, tick As Integer)
+  overload: Core.Diplomacy.AllianceFormedEvent.#ctor*
+  nameWithType.vb: AllianceFormedEvent.New(UShort, UShort, Integer)
+  fullName.vb: Core.Diplomacy.AllianceFormedEvent.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.AllianceFormedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.AllianceFormedEvent.TimeStamp
+  href: Core.Diplomacy.AllianceFormedEvent.html#Core_Diplomacy_AllianceFormedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: AllianceFormedEvent.TimeStamp
+  fullName: Core.Diplomacy.AllianceFormedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.AllianceFormedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.AllianceFormedEvent.#ctor
+  href: Core.Diplomacy.AllianceFormedEvent.html#Core_Diplomacy_AllianceFormedEvent__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: AllianceFormedEvent
+  nameWithType: AllianceFormedEvent.AllianceFormedEvent
+  fullName: Core.Diplomacy.AllianceFormedEvent.AllianceFormedEvent
+  nameWithType.vb: AllianceFormedEvent.New
+  fullName.vb: Core.Diplomacy.AllianceFormedEvent.New
+  name.vb: New

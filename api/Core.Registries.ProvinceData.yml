@@ -1,0 +1,926 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.ProvinceData
+  commentId: T:Core.Registries.ProvinceData
+  id: ProvinceData
+  parent: Core.Registries
+  children:
+  - Core.Registries.ProvinceData.BaseManpower
+  - Core.Registries.ProvinceData.BaseProduction
+  - Core.Registries.ProvinceData.BaseTax
+  - Core.Registries.ProvinceData.Buildings
+  - Core.Registries.ProvinceData.CenterOfTrade
+  - Core.Registries.ProvinceData.ControllerId
+  - Core.Registries.ProvinceData.CultureId
+  - Core.Registries.ProvinceData.DefinitionId
+  - Core.Registries.ProvinceData.Development
+  - Core.Registries.ProvinceData.Flags
+  - Core.Registries.ProvinceData.IsCoastal
+  - Core.Registries.ProvinceData.MapColor
+  - Core.Registries.ProvinceData.Name
+  - Core.Registries.ProvinceData.NeighborProvinces
+  - Core.Registries.ProvinceData.OwnerId
+  - Core.Registries.ProvinceData.ReligionId
+  - Core.Registries.ProvinceData.RuntimeId
+  - Core.Registries.ProvinceData.Terrain
+  - Core.Registries.ProvinceData.TradeGoodId
+  langs:
+  - csharp
+  - vb
+  name: ProvinceData
+  nameWithType: ProvinceData
+  fullName: Core.Registries.ProvinceData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceData
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: >-
+    Core province data structure with resolved references
+
+    Contains both runtime simulation data and cold metadata
+  example: []
+  syntax:
+    content: public class ProvinceData
+    content.vb: Public Class ProvinceData
+  inheritance:
+  - System.Object
+- uid: Core.Registries.ProvinceData.RuntimeId
+  commentId: P:Core.Registries.ProvinceData.RuntimeId
+  id: RuntimeId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: RuntimeId
+  nameWithType: ProvinceData.RuntimeId
+  fullName: Core.Registries.ProvinceData.RuntimeId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RuntimeId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort RuntimeId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property RuntimeId As UShort
+  overload: Core.Registries.ProvinceData.RuntimeId*
+- uid: Core.Registries.ProvinceData.DefinitionId
+  commentId: P:Core.Registries.ProvinceData.DefinitionId
+  id: DefinitionId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: DefinitionId
+  nameWithType: ProvinceData.DefinitionId
+  fullName: Core.Registries.ProvinceData.DefinitionId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefinitionId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public int DefinitionId { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property DefinitionId As Integer
+  overload: Core.Registries.ProvinceData.DefinitionId*
+- uid: Core.Registries.ProvinceData.Name
+  commentId: P:Core.Registries.ProvinceData.Name
+  id: Name
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ProvinceData.Name
+  fullName: Core.Registries.ProvinceData.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Core.Registries.ProvinceData.Name*
+- uid: Core.Registries.ProvinceData.OwnerId
+  commentId: P:Core.Registries.ProvinceData.OwnerId
+  id: OwnerId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: OwnerId
+  nameWithType: ProvinceData.OwnerId
+  fullName: Core.Registries.ProvinceData.OwnerId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnerId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort OwnerId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property OwnerId As UShort
+  overload: Core.Registries.ProvinceData.OwnerId*
+- uid: Core.Registries.ProvinceData.ControllerId
+  commentId: P:Core.Registries.ProvinceData.ControllerId
+  id: ControllerId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: ControllerId
+  nameWithType: ProvinceData.ControllerId
+  fullName: Core.Registries.ProvinceData.ControllerId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ControllerId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort ControllerId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property ControllerId As UShort
+  overload: Core.Registries.ProvinceData.ControllerId*
+- uid: Core.Registries.ProvinceData.Development
+  commentId: P:Core.Registries.ProvinceData.Development
+  id: Development
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Development
+  nameWithType: ProvinceData.Development
+  fullName: Core.Registries.ProvinceData.Development
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Development
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte Development { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property Development As Byte
+  overload: Core.Registries.ProvinceData.Development*
+- uid: Core.Registries.ProvinceData.Terrain
+  commentId: P:Core.Registries.ProvinceData.Terrain
+  id: Terrain
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Terrain
+  nameWithType: ProvinceData.Terrain
+  fullName: Core.Registries.ProvinceData.Terrain
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Terrain
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 194
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte Terrain { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property Terrain As Byte
+  overload: Core.Registries.ProvinceData.Terrain*
+- uid: Core.Registries.ProvinceData.Flags
+  commentId: P:Core.Registries.ProvinceData.Flags
+  id: Flags
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Flags
+  nameWithType: ProvinceData.Flags
+  fullName: Core.Registries.ProvinceData.Flags
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Flags
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 195
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte Flags { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property Flags As Byte
+  overload: Core.Registries.ProvinceData.Flags*
+- uid: Core.Registries.ProvinceData.CultureId
+  commentId: P:Core.Registries.ProvinceData.CultureId
+  id: CultureId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: CultureId
+  nameWithType: ProvinceData.CultureId
+  fullName: Core.Registries.ProvinceData.CultureId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CultureId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort CultureId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property CultureId As UShort
+  overload: Core.Registries.ProvinceData.CultureId*
+- uid: Core.Registries.ProvinceData.ReligionId
+  commentId: P:Core.Registries.ProvinceData.ReligionId
+  id: ReligionId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: ReligionId
+  nameWithType: ProvinceData.ReligionId
+  fullName: Core.Registries.ProvinceData.ReligionId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReligionId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 199
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort ReligionId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property ReligionId As UShort
+  overload: Core.Registries.ProvinceData.ReligionId*
+- uid: Core.Registries.ProvinceData.TradeGoodId
+  commentId: P:Core.Registries.ProvinceData.TradeGoodId
+  id: TradeGoodId
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: TradeGoodId
+  nameWithType: ProvinceData.TradeGoodId
+  fullName: Core.Registries.ProvinceData.TradeGoodId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TradeGoodId
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort TradeGoodId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property TradeGoodId As UShort
+  overload: Core.Registries.ProvinceData.TradeGoodId*
+- uid: Core.Registries.ProvinceData.BaseTax
+  commentId: P:Core.Registries.ProvinceData.BaseTax
+  id: BaseTax
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: BaseTax
+  nameWithType: ProvinceData.BaseTax
+  fullName: Core.Registries.ProvinceData.BaseTax
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseTax
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte BaseTax { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property BaseTax As Byte
+  overload: Core.Registries.ProvinceData.BaseTax*
+- uid: Core.Registries.ProvinceData.BaseProduction
+  commentId: P:Core.Registries.ProvinceData.BaseProduction
+  id: BaseProduction
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: BaseProduction
+  nameWithType: ProvinceData.BaseProduction
+  fullName: Core.Registries.ProvinceData.BaseProduction
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseProduction
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 204
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte BaseProduction { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property BaseProduction As Byte
+  overload: Core.Registries.ProvinceData.BaseProduction*
+- uid: Core.Registries.ProvinceData.BaseManpower
+  commentId: P:Core.Registries.ProvinceData.BaseManpower
+  id: BaseManpower
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: BaseManpower
+  nameWithType: ProvinceData.BaseManpower
+  fullName: Core.Registries.ProvinceData.BaseManpower
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseManpower
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 205
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte BaseManpower { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property BaseManpower As Byte
+  overload: Core.Registries.ProvinceData.BaseManpower*
+- uid: Core.Registries.ProvinceData.CenterOfTrade
+  commentId: P:Core.Registries.ProvinceData.CenterOfTrade
+  id: CenterOfTrade
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: CenterOfTrade
+  nameWithType: ProvinceData.CenterOfTrade
+  fullName: Core.Registries.ProvinceData.CenterOfTrade
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterOfTrade
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 206
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public byte CenterOfTrade { get; set; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public Property CenterOfTrade As Byte
+  overload: Core.Registries.ProvinceData.CenterOfTrade*
+- uid: Core.Registries.ProvinceData.Buildings
+  commentId: P:Core.Registries.ProvinceData.Buildings
+  id: Buildings
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Buildings
+  nameWithType: ProvinceData.Buildings
+  fullName: Core.Registries.ProvinceData.Buildings
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Buildings
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 209
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public ushort[] Buildings { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16[]
+    content.vb: Public Property Buildings As UShort()
+  overload: Core.Registries.ProvinceData.Buildings*
+- uid: Core.Registries.ProvinceData.IsCoastal
+  commentId: P:Core.Registries.ProvinceData.IsCoastal
+  id: IsCoastal
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: IsCoastal
+  nameWithType: ProvinceData.IsCoastal
+  fullName: Core.Registries.ProvinceData.IsCoastal
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCoastal
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 212
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public bool IsCoastal { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsCoastal As Boolean
+  overload: Core.Registries.ProvinceData.IsCoastal*
+- uid: Core.Registries.ProvinceData.NeighborProvinces
+  commentId: P:Core.Registries.ProvinceData.NeighborProvinces
+  id: NeighborProvinces
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: NeighborProvinces
+  nameWithType: ProvinceData.NeighborProvinces
+  fullName: Core.Registries.ProvinceData.NeighborProvinces
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NeighborProvinces
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 213
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public List<ushort> NeighborProvinces { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Property NeighborProvinces As List(Of UShort)
+  overload: Core.Registries.ProvinceData.NeighborProvinces*
+- uid: Core.Registries.ProvinceData.MapColor
+  commentId: P:Core.Registries.ProvinceData.MapColor
+  id: MapColor
+  parent: Core.Registries.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: MapColor
+  nameWithType: ProvinceData.MapColor
+  fullName: Core.Registries.ProvinceData.MapColor
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/ProvinceRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapColor
+    path: Scripts/Core/Registries/ProvinceRegistry.cs
+    startLine: 216
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public Color32 MapColor { get; set; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Property MapColor As Color32
+  overload: Core.Registries.ProvinceData.MapColor*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.ProvinceData.RuntimeId*
+  commentId: Overload:Core.Registries.ProvinceData.RuntimeId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_RuntimeId
+  name: RuntimeId
+  nameWithType: ProvinceData.RuntimeId
+  fullName: Core.Registries.ProvinceData.RuntimeId
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Registries.ProvinceData.DefinitionId*
+  commentId: Overload:Core.Registries.ProvinceData.DefinitionId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_DefinitionId
+  name: DefinitionId
+  nameWithType: ProvinceData.DefinitionId
+  fullName: Core.Registries.ProvinceData.DefinitionId
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Registries.ProvinceData.Name*
+  commentId: Overload:Core.Registries.ProvinceData.Name
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_Name
+  name: Name
+  nameWithType: ProvinceData.Name
+  fullName: Core.Registries.ProvinceData.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.ProvinceData.OwnerId*
+  commentId: Overload:Core.Registries.ProvinceData.OwnerId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_OwnerId
+  name: OwnerId
+  nameWithType: ProvinceData.OwnerId
+  fullName: Core.Registries.ProvinceData.OwnerId
+- uid: Core.Registries.ProvinceData.ControllerId*
+  commentId: Overload:Core.Registries.ProvinceData.ControllerId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_ControllerId
+  name: ControllerId
+  nameWithType: ProvinceData.ControllerId
+  fullName: Core.Registries.ProvinceData.ControllerId
+- uid: Core.Registries.ProvinceData.Development*
+  commentId: Overload:Core.Registries.ProvinceData.Development
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_Development
+  name: Development
+  nameWithType: ProvinceData.Development
+  fullName: Core.Registries.ProvinceData.Development
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Registries.ProvinceData.Terrain*
+  commentId: Overload:Core.Registries.ProvinceData.Terrain
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_Terrain
+  name: Terrain
+  nameWithType: ProvinceData.Terrain
+  fullName: Core.Registries.ProvinceData.Terrain
+- uid: Core.Registries.ProvinceData.Flags*
+  commentId: Overload:Core.Registries.ProvinceData.Flags
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_Flags
+  name: Flags
+  nameWithType: ProvinceData.Flags
+  fullName: Core.Registries.ProvinceData.Flags
+- uid: Core.Registries.ProvinceData.CultureId*
+  commentId: Overload:Core.Registries.ProvinceData.CultureId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_CultureId
+  name: CultureId
+  nameWithType: ProvinceData.CultureId
+  fullName: Core.Registries.ProvinceData.CultureId
+- uid: Core.Registries.ProvinceData.ReligionId*
+  commentId: Overload:Core.Registries.ProvinceData.ReligionId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_ReligionId
+  name: ReligionId
+  nameWithType: ProvinceData.ReligionId
+  fullName: Core.Registries.ProvinceData.ReligionId
+- uid: Core.Registries.ProvinceData.TradeGoodId*
+  commentId: Overload:Core.Registries.ProvinceData.TradeGoodId
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_TradeGoodId
+  name: TradeGoodId
+  nameWithType: ProvinceData.TradeGoodId
+  fullName: Core.Registries.ProvinceData.TradeGoodId
+- uid: Core.Registries.ProvinceData.BaseTax*
+  commentId: Overload:Core.Registries.ProvinceData.BaseTax
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_BaseTax
+  name: BaseTax
+  nameWithType: ProvinceData.BaseTax
+  fullName: Core.Registries.ProvinceData.BaseTax
+- uid: Core.Registries.ProvinceData.BaseProduction*
+  commentId: Overload:Core.Registries.ProvinceData.BaseProduction
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_BaseProduction
+  name: BaseProduction
+  nameWithType: ProvinceData.BaseProduction
+  fullName: Core.Registries.ProvinceData.BaseProduction
+- uid: Core.Registries.ProvinceData.BaseManpower*
+  commentId: Overload:Core.Registries.ProvinceData.BaseManpower
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_BaseManpower
+  name: BaseManpower
+  nameWithType: ProvinceData.BaseManpower
+  fullName: Core.Registries.ProvinceData.BaseManpower
+- uid: Core.Registries.ProvinceData.CenterOfTrade*
+  commentId: Overload:Core.Registries.ProvinceData.CenterOfTrade
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_CenterOfTrade
+  name: CenterOfTrade
+  nameWithType: ProvinceData.CenterOfTrade
+  fullName: Core.Registries.ProvinceData.CenterOfTrade
+- uid: Core.Registries.ProvinceData.Buildings*
+  commentId: Overload:Core.Registries.ProvinceData.Buildings
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_Buildings
+  name: Buildings
+  nameWithType: ProvinceData.Buildings
+  fullName: Core.Registries.ProvinceData.Buildings
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Registries.ProvinceData.IsCoastal*
+  commentId: Overload:Core.Registries.ProvinceData.IsCoastal
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_IsCoastal
+  name: IsCoastal
+  nameWithType: ProvinceData.IsCoastal
+  fullName: Core.Registries.ProvinceData.IsCoastal
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Registries.ProvinceData.NeighborProvinces*
+  commentId: Overload:Core.Registries.ProvinceData.NeighborProvinces
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_NeighborProvinces
+  name: NeighborProvinces
+  nameWithType: ProvinceData.NeighborProvinces
+  fullName: Core.Registries.ProvinceData.NeighborProvinces
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Registries.ProvinceData.MapColor*
+  commentId: Overload:Core.Registries.ProvinceData.MapColor
+  href: Core.Registries.ProvinceData.html#Core_Registries_ProvinceData_MapColor
+  name: MapColor
+  nameWithType: ProvinceData.MapColor
+  fullName: Core.Registries.ProvinceData.MapColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

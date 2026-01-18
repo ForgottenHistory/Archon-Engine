@@ -1,0 +1,155 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.FogOfWar.VisibilityState
+  commentId: T:Map.Rendering.FogOfWar.VisibilityState
+  id: VisibilityState
+  parent: Map.Rendering.FogOfWar
+  children:
+  - Map.Rendering.FogOfWar.VisibilityState.Explored
+  - Map.Rendering.FogOfWar.VisibilityState.Unexplored
+  - Map.Rendering.FogOfWar.VisibilityState.Visible
+  langs:
+  - csharp
+  - vb
+  name: VisibilityState
+  nameWithType: VisibilityState
+  fullName: Map.Rendering.FogOfWar.VisibilityState
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: VisibilityState
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 92
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Visibility state for provinces
+  example: []
+  syntax:
+    content: public enum VisibilityState
+    content.vb: Public Enum VisibilityState
+- uid: Map.Rendering.FogOfWar.VisibilityState.Unexplored
+  commentId: F:Map.Rendering.FogOfWar.VisibilityState.Unexplored
+  id: Unexplored
+  parent: Map.Rendering.FogOfWar.VisibilityState
+  langs:
+  - csharp
+  - vb
+  name: Unexplored
+  nameWithType: VisibilityState.Unexplored
+  fullName: Map.Rendering.FogOfWar.VisibilityState.Unexplored
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Unexplored
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 95
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Never seen (0.0)
+  example: []
+  syntax:
+    content: Unexplored = 0
+    return:
+      type: Map.Rendering.FogOfWar.VisibilityState
+- uid: Map.Rendering.FogOfWar.VisibilityState.Explored
+  commentId: F:Map.Rendering.FogOfWar.VisibilityState.Explored
+  id: Explored
+  parent: Map.Rendering.FogOfWar.VisibilityState
+  langs:
+  - csharp
+  - vb
+  name: Explored
+  nameWithType: VisibilityState.Explored
+  fullName: Map.Rendering.FogOfWar.VisibilityState.Explored
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Explored
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 97
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Previously seen but not currently visible (0.5)
+  example: []
+  syntax:
+    content: Explored = 1
+    return:
+      type: Map.Rendering.FogOfWar.VisibilityState
+- uid: Map.Rendering.FogOfWar.VisibilityState.Visible
+  commentId: F:Map.Rendering.FogOfWar.VisibilityState.Visible
+  id: Visible
+  parent: Map.Rendering.FogOfWar.VisibilityState
+  langs:
+  - csharp
+  - vb
+  name: Visible
+  nameWithType: VisibilityState.Visible
+  fullName: Map.Rendering.FogOfWar.VisibilityState.Visible
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Visible
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Currently owned or adjacent to owned (1.0)
+  example: []
+  syntax:
+    content: Visible = 2
+    return:
+      type: Map.Rendering.FogOfWar.VisibilityState
+references:
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+- uid: Map.Rendering.FogOfWar.VisibilityState
+  commentId: T:Map.Rendering.FogOfWar.VisibilityState
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.VisibilityState.html
+  name: VisibilityState
+  nameWithType: VisibilityState
+  fullName: Map.Rendering.FogOfWar.VisibilityState

@@ -1,0 +1,435 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  id: CSVTokenizer.CSVTokenizeResult
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.BytesProcessed
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorColumn
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorContext
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorRow
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure(System.Int32,System.Int32,Unity.Collections.NativeSlice{System.Byte})
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.IsSuccess
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success(System.Int32,System.Int32)
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult.TokensGenerated
+  langs:
+  - csharp
+  - vb
+  name: CSVTokenizer.CSVTokenizeResult
+  nameWithType: CSVTokenizer.CSVTokenizeResult
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVTokenizeResult
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: CSV tokenization result
+  example: []
+  syntax:
+    content: public struct CSVTokenizer.CSVTokenizeResult
+    content.vb: Public Structure CSVTokenizer.CSVTokenizeResult
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.IsSuccess
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: CSVTokenizer.CSVTokenizeResult.IsSuccess
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.TokensGenerated
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.TokensGenerated
+  id: TokensGenerated
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: TokensGenerated
+  nameWithType: CSVTokenizer.CSVTokenizeResult.TokensGenerated
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.TokensGenerated
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TokensGenerated
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int TokensGenerated
+    return:
+      type: System.Int32
+    content.vb: Public TokensGenerated As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.BytesProcessed
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.BytesProcessed
+  id: BytesProcessed
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: BytesProcessed
+  nameWithType: CSVTokenizer.CSVTokenizeResult.BytesProcessed
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.BytesProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BytesProcessed
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int BytesProcessed
+    return:
+      type: System.Int32
+    content.vb: Public BytesProcessed As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorRow
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorRow
+  id: ErrorRow
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorRow
+  nameWithType: CSVTokenizer.CSVTokenizeResult.ErrorRow
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorRow
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorRow
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 55
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int ErrorRow
+    return:
+      type: System.Int32
+    content.vb: Public ErrorRow As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorColumn
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorColumn
+  id: ErrorColumn
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorColumn
+  nameWithType: CSVTokenizer.CSVTokenizeResult.ErrorColumn
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorColumn
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorColumn
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int ErrorColumn
+    return:
+      type: System.Int32
+    content.vb: Public ErrorColumn As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorContext
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorContext
+  id: ErrorContext
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorContext
+  nameWithType: CSVTokenizer.CSVTokenizeResult.ErrorContext
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.ErrorContext
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorContext
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeSlice<byte> ErrorContext
+    return:
+      type: Unity.Collections.NativeSlice{System.Byte}
+    content.vb: Public ErrorContext As NativeSlice(Of Byte)
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success(System.Int32,System.Int32)
+  commentId: M:Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success(System.Int32,System.Int32)
+  id: Success(System.Int32,System.Int32)
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: Success(int, int)
+  nameWithType: CSVTokenizer.CSVTokenizeResult.Success(int, int)
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static CSVTokenizer.CSVTokenizeResult Success(int tokensGenerated, int bytesProcessed)
+    parameters:
+    - id: tokensGenerated
+      type: System.Int32
+    - id: bytesProcessed
+      type: System.Int32
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    content.vb: Public Shared Function Success(tokensGenerated As Integer, bytesProcessed As Integer) As CSVTokenizer.CSVTokenizeResult
+  overload: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success*
+  nameWithType.vb: CSVTokenizer.CSVTokenizeResult.Success(Integer, Integer)
+  fullName.vb: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success(Integer, Integer)
+  name.vb: Success(Integer, Integer)
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure(System.Int32,System.Int32,Unity.Collections.NativeSlice{System.Byte})
+  commentId: M:Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure(System.Int32,System.Int32,Unity.Collections.NativeSlice{System.Byte})
+  id: Failure(System.Int32,System.Int32,Unity.Collections.NativeSlice{System.Byte})
+  parent: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(int, int, NativeSlice<byte>)
+  nameWithType: CSVTokenizer.CSVTokenizeResult.Failure(int, int, NativeSlice<byte>)
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure(int, int, Unity.Collections.NativeSlice<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static CSVTokenizer.CSVTokenizeResult Failure(int errorRow, int errorColumn, NativeSlice<byte> errorContext)
+    parameters:
+    - id: errorRow
+      type: System.Int32
+    - id: errorColumn
+      type: System.Int32
+    - id: errorContext
+      type: Unity.Collections.NativeSlice{System.Byte}
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    content.vb: Public Shared Function Failure(errorRow As Integer, errorColumn As Integer, errorContext As NativeSlice(Of Byte)) As CSVTokenizer.CSVTokenizeResult
+  overload: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure*
+  nameWithType.vb: CSVTokenizer.CSVTokenizeResult.Failure(Integer, Integer, NativeSlice(Of Byte))
+  fullName.vb: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure(Integer, Integer, Unity.Collections.NativeSlice(Of Byte))
+  name.vb: Failure(Integer, Integer, NativeSlice(Of Byte))
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeSlice{System.Byte}
+  commentId: T:Unity.Collections.NativeSlice{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  name: NativeSlice<byte>
+  nameWithType: NativeSlice<byte>
+  fullName: Unity.Collections.NativeSlice<byte>
+  nameWithType.vb: NativeSlice(Of Byte)
+  fullName.vb: Unity.Collections.NativeSlice(Of Byte)
+  name.vb: NativeSlice(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success*
+  commentId: Overload:Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success
+  href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html#Core_Loaders_CSVTokenizer_CSVTokenizeResult_Success_System_Int32_System_Int32_
+  name: Success
+  nameWithType: CSVTokenizer.CSVTokenizeResult.Success
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Success
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVTokenizeResult
+  nameWithType: CSVTokenizer.CSVTokenizeResult
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    name: CSVTokenizeResult
+    href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    name: CSVTokenizeResult
+    href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure*
+  commentId: Overload:Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure
+  href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html#Core_Loaders_CSVTokenizer_CSVTokenizeResult_Failure_System_Int32_System_Int32_Unity_Collections_NativeSlice_System_Byte__
+  name: Failure
+  nameWithType: CSVTokenizer.CSVTokenizeResult.Failure
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult.Failure

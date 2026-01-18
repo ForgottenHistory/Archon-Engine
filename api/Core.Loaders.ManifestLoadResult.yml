@@ -1,0 +1,438 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ManifestLoadResult
+  commentId: T:Core.Loaders.ManifestLoadResult
+  id: ManifestLoadResult
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ManifestLoadResult.ErrorMessage
+  - Core.Loaders.ManifestLoadResult.Errors
+  - Core.Loaders.ManifestLoadResult.Failure(System.String)
+  - Core.Loaders.ManifestLoadResult.IsSuccess
+  - Core.Loaders.ManifestLoadResult.Manifest
+  - Core.Loaders.ManifestLoadResult.Success(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})
+  langs:
+  - csharp
+  - vb
+  name: ManifestLoadResult
+  nameWithType: ManifestLoadResult
+  fullName: Core.Loaders.ManifestLoadResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ManifestLoadResult
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 160
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Result of manifest loading operation
+  example: []
+  syntax:
+    content: public struct ManifestLoadResult
+    content.vb: Public Structure ManifestLoadResult
+- uid: Core.Loaders.ManifestLoadResult.IsSuccess
+  commentId: F:Core.Loaders.ManifestLoadResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ManifestLoadResult.IsSuccess
+  fullName: Core.Loaders.ManifestLoadResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 162
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Loaders.ManifestLoadResult.Manifest
+  commentId: F:Core.Loaders.ManifestLoadResult.Manifest
+  id: Manifest
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Manifest
+  nameWithType: ManifestLoadResult.Manifest
+  fullName: Core.Loaders.ManifestLoadResult.Manifest
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Manifest
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 163
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public Dictionary<string, string> Manifest
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+    content.vb: Public Manifest As Dictionary(Of String, String)
+- uid: Core.Loaders.ManifestLoadResult.Errors
+  commentId: F:Core.Loaders.ManifestLoadResult.Errors
+  id: Errors
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Errors
+  nameWithType: ManifestLoadResult.Errors
+  fullName: Core.Loaders.ManifestLoadResult.Errors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Errors
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 164
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public List<string> Errors
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Errors As List(Of String)
+- uid: Core.Loaders.ManifestLoadResult.ErrorMessage
+  commentId: F:Core.Loaders.ManifestLoadResult.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: ManifestLoadResult.ErrorMessage
+  fullName: Core.Loaders.ManifestLoadResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 165
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Core.Loaders.ManifestLoadResult.Success(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})
+  commentId: M:Core.Loaders.ManifestLoadResult.Success(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})
+  id: Success(System.Collections.Generic.Dictionary{System.String,System.String},System.Collections.Generic.List{System.String})
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Success(Dictionary<string, string>, List<string>)
+  nameWithType: ManifestLoadResult.Success(Dictionary<string, string>, List<string>)
+  fullName: Core.Loaders.ManifestLoadResult.Success(System.Collections.Generic.Dictionary<string, string>, System.Collections.Generic.List<string>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 167
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static ManifestLoadResult Success(Dictionary<string, string> manifest, List<string> errors)
+    parameters:
+    - id: manifest
+      type: System.Collections.Generic.Dictionary{System.String,System.String}
+    - id: errors
+      type: System.Collections.Generic.List{System.String}
+    return:
+      type: Core.Loaders.ManifestLoadResult
+    content.vb: Public Shared Function Success(manifest As Dictionary(Of String, String), errors As List(Of String)) As ManifestLoadResult
+  overload: Core.Loaders.ManifestLoadResult.Success*
+  nameWithType.vb: ManifestLoadResult.Success(Dictionary(Of String, String), List(Of String))
+  fullName.vb: Core.Loaders.ManifestLoadResult.Success(System.Collections.Generic.Dictionary(Of String, String), System.Collections.Generic.List(Of String))
+  name.vb: Success(Dictionary(Of String, String), List(Of String))
+- uid: Core.Loaders.ManifestLoadResult.Failure(System.String)
+  commentId: M:Core.Loaders.ManifestLoadResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Loaders.ManifestLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: ManifestLoadResult.Failure(string)
+  fullName: Core.Loaders.ManifestLoadResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ManifestLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Loaders/ManifestLoader.cs
+    startLine: 177
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static ManifestLoadResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Loaders.ManifestLoadResult
+    content.vb: Public Shared Function Failure([error] As String) As ManifestLoadResult
+  overload: Core.Loaders.ManifestLoadResult.Failure*
+  nameWithType.vb: ManifestLoadResult.Failure(String)
+  fullName.vb: Core.Loaders.ManifestLoadResult.Failure(String)
+  name.vb: Failure(String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.Dictionary{System.String,System.String}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<string, string>
+  nameWithType: Dictionary<string, string>
+  fullName: System.Collections.Generic.Dictionary<string, string>
+  nameWithType.vb: Dictionary(Of String, String)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, String)
+  name.vb: Dictionary(Of String, String)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Loaders.ManifestLoadResult.Success*
+  commentId: Overload:Core.Loaders.ManifestLoadResult.Success
+  href: Core.Loaders.ManifestLoadResult.html#Core_Loaders_ManifestLoadResult_Success_System_Collections_Generic_Dictionary_System_String_System_String__System_Collections_Generic_List_System_String__
+  name: Success
+  nameWithType: ManifestLoadResult.Success
+  fullName: Core.Loaders.ManifestLoadResult.Success
+- uid: Core.Loaders.ManifestLoadResult
+  commentId: T:Core.Loaders.ManifestLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.ManifestLoadResult.html
+  name: ManifestLoadResult
+  nameWithType: ManifestLoadResult
+  fullName: Core.Loaders.ManifestLoadResult
+- uid: Core.Loaders.ManifestLoadResult.Failure*
+  commentId: Overload:Core.Loaders.ManifestLoadResult.Failure
+  href: Core.Loaders.ManifestLoadResult.html#Core_Loaders_ManifestLoadResult_Failure_System_String_
+  name: Failure
+  nameWithType: ManifestLoadResult.Failure
+  fullName: Core.Loaders.ManifestLoadResult.Failure

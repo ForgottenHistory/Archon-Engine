@@ -1,0 +1,51 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Commands
+  commentId: N:StarterKit.Commands
+  id: StarterKit.Commands
+  children:
+  - StarterKit.Commands.AddGoldCommand
+  - StarterKit.Commands.ConstructBuildingCommand
+  - StarterKit.Commands.CreateUnitCommand
+  - StarterKit.Commands.DisbandUnitCommand
+  - StarterKit.Commands.MoveUnitCommand
+  langs:
+  - csharp
+  - vb
+  name: StarterKit.Commands
+  nameWithType: StarterKit.Commands
+  fullName: StarterKit.Commands
+  type: Namespace
+  assemblies:
+  - StarterKit
+references:
+- uid: StarterKit.Commands.CreateUnitCommand
+  commentId: T:StarterKit.Commands.CreateUnitCommand
+  href: StarterKit.Commands.CreateUnitCommand.html
+  name: CreateUnitCommand
+  nameWithType: CreateUnitCommand
+  fullName: StarterKit.Commands.CreateUnitCommand
+- uid: StarterKit.Commands.AddGoldCommand
+  commentId: T:StarterKit.Commands.AddGoldCommand
+  href: StarterKit.Commands.AddGoldCommand.html
+  name: AddGoldCommand
+  nameWithType: AddGoldCommand
+  fullName: StarterKit.Commands.AddGoldCommand
+- uid: StarterKit.Commands.MoveUnitCommand
+  commentId: T:StarterKit.Commands.MoveUnitCommand
+  href: StarterKit.Commands.MoveUnitCommand.html
+  name: MoveUnitCommand
+  nameWithType: MoveUnitCommand
+  fullName: StarterKit.Commands.MoveUnitCommand
+- uid: StarterKit.Commands.ConstructBuildingCommand
+  commentId: T:StarterKit.Commands.ConstructBuildingCommand
+  href: StarterKit.Commands.ConstructBuildingCommand.html
+  name: ConstructBuildingCommand
+  nameWithType: ConstructBuildingCommand
+  fullName: StarterKit.Commands.ConstructBuildingCommand
+- uid: StarterKit.Commands.DisbandUnitCommand
+  commentId: T:StarterKit.Commands.DisbandUnitCommand
+  href: StarterKit.Commands.DisbandUnitCommand.html
+  name: DisbandUnitCommand
+  nameWithType: DisbandUnitCommand
+  fullName: StarterKit.Commands.DisbandUnitCommand

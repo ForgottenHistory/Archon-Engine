@@ -1,0 +1,395 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult
+  commentId: T:Map.Province.ProvinceIDEncoder.EncodingResult
+  id: ProvinceIDEncoder.EncodingResult
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceIDEncoder.EncodingResult.ColorToID
+  - Map.Province.ProvinceIDEncoder.EncodingResult.Dispose
+  - Map.Province.ProvinceIDEncoder.EncodingResult.ErrorMessage
+  - Map.Province.ProvinceIDEncoder.EncodingResult.IDToColor
+  - Map.Province.ProvinceIDEncoder.EncodingResult.IsSuccess
+  - Map.Province.ProvinceIDEncoder.EncodingResult.ProvinceCount
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDEncoder.EncodingResult
+  nameWithType: ProvinceIDEncoder.EncodingResult
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EncodingResult
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Province ID encoding result
+  example: []
+  syntax:
+    content: public struct ProvinceIDEncoder.EncodingResult
+    content.vb: Public Structure ProvinceIDEncoder.EncodingResult
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.IsSuccess
+  commentId: F:Map.Province.ProvinceIDEncoder.EncodingResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ProvinceIDEncoder.EncodingResult.IsSuccess
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.ProvinceCount
+  commentId: F:Map.Province.ProvinceIDEncoder.EncodingResult.ProvinceCount
+  id: ProvinceCount
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceIDEncoder.EncodingResult.ProvinceCount
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.ProvinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int ProvinceCount
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceCount As Integer
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.ColorToID
+  commentId: F:Map.Province.ProvinceIDEncoder.EncodingResult.ColorToID
+  id: ColorToID
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: ColorToID
+  nameWithType: ProvinceIDEncoder.EncodingResult.ColorToID
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.ColorToID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorToID
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public NativeHashMap<Color32, ushort> ColorToID
+    return:
+      type: Unity.Collections.NativeHashMap{UnityEngine.Color32,System.UInt16}
+    content.vb: Public ColorToID As NativeHashMap(Of Color32, UShort)
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.IDToColor
+  commentId: F:Map.Province.ProvinceIDEncoder.EncodingResult.IDToColor
+  id: IDToColor
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: IDToColor
+  nameWithType: ProvinceIDEncoder.EncodingResult.IDToColor
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.IDToColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IDToColor
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public NativeHashMap<ushort, Color32> IDToColor
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+    content.vb: Public IDToColor As NativeHashMap(Of UShort, Color32)
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.ErrorMessage
+  commentId: F:Map.Province.ProvinceIDEncoder.EncodingResult.ErrorMessage
+  id: ErrorMessage
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: ProvinceIDEncoder.EncodingResult.ErrorMessage
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.Dispose
+  commentId: M:Map.Province.ProvinceIDEncoder.EncodingResult.Dispose
+  id: Dispose
+  parent: Map.Province.ProvinceIDEncoder.EncodingResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceIDEncoder.EncodingResult.Dispose()
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Province.ProvinceIDEncoder.EncodingResult.Dispose*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeHashMap{UnityEngine.Color32,System.UInt16}
+  commentId: T:Unity.Collections.NativeHashMap{UnityEngine.Color32,System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<Color32, ushort>
+  nameWithType: NativeHashMap<Color32, ushort>
+  fullName: Unity.Collections.NativeHashMap<UnityEngine.Color32, ushort>
+  nameWithType.vb: NativeHashMap(Of Color32, UShort)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UnityEngine.Color32, UShort)
+  name.vb: NativeHashMap(Of Color32, UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<ushort, Color32>
+  nameWithType: NativeHashMap<ushort, Color32>
+  fullName: Unity.Collections.NativeHashMap<ushort, UnityEngine.Color32>
+  nameWithType.vb: NativeHashMap(Of UShort, Color32)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, UnityEngine.Color32)
+  name.vb: NativeHashMap(Of UShort, Color32)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult.Dispose*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.EncodingResult.Dispose
+  href: Map.Province.ProvinceIDEncoder.EncodingResult.html#Map_Province_ProvinceIDEncoder_EncodingResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceIDEncoder.EncodingResult.Dispose
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult.Dispose

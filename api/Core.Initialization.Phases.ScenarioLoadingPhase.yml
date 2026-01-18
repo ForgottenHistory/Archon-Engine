@@ -1,0 +1,450 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase
+  commentId: T:Core.Initialization.Phases.ScenarioLoadingPhase
+  id: ScenarioLoadingPhase
+  parent: Core.Initialization.Phases
+  children:
+  - Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  - Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+  - Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+  - Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+  - Core.Initialization.Phases.ScenarioLoadingPhase.Rollback(Core.Initialization.InitializationContext)
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoadingPhase
+  nameWithType: ScenarioLoadingPhase
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScenarioLoadingPhase
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: >-
+    Phase 6: Load scenario data
+
+    Loads scenario file or creates default, validates, and applies to game state
+  example: []
+  syntax:
+    content: 'public class ScenarioLoadingPhase : IInitializationPhase'
+    content.vb: Public Class ScenarioLoadingPhase Implements IInitializationPhase
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Initialization.IInitializationPhase
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+  commentId: P:Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+  id: PhaseName
+  parent: Core.Initialization.Phases.ScenarioLoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: PhaseName
+  nameWithType: ScenarioLoadingPhase.PhaseName
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PhaseName
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Human-readable name of this phase (for logging and progress tracking)
+  example: []
+  syntax:
+    content: public string PhaseName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property PhaseName As String
+  overload: Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName*
+  implements:
+  - Core.Initialization.IInitializationPhase.PhaseName
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+  commentId: P:Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+  id: ProgressStart
+  parent: Core.Initialization.Phases.ScenarioLoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: ProgressStart
+  nameWithType: ScenarioLoadingPhase.ProgressStart
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProgressStart
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Progress percentage range this phase covers (0-100)
+  example: []
+  syntax:
+    content: public float ProgressStart { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property ProgressStart As Single
+  overload: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart*
+  implements:
+  - Core.Initialization.IInitializationPhase.ProgressStart
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+  commentId: P:Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+  id: ProgressEnd
+  parent: Core.Initialization.Phases.ScenarioLoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: ProgressEnd
+  nameWithType: ScenarioLoadingPhase.ProgressEnd
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProgressEnd
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  example: []
+  syntax:
+    content: public float ProgressEnd { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property ProgressEnd As Single
+  overload: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd*
+  implements:
+  - Core.Initialization.IInitializationPhase.ProgressEnd
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  id: ExecuteAsync(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.Phases.ScenarioLoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(InitializationContext)
+  nameWithType: ScenarioLoadingPhase.ExecuteAsync(InitializationContext)
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExecuteAsync
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: >-
+    Execute this initialization phase
+
+    Returns IEnumerator for coroutine-based async execution
+  example: []
+  syntax:
+    content: public IEnumerator ExecuteAsync(InitializationContext context)
+    parameters:
+    - id: context
+      type: Core.Initialization.InitializationContext
+      description: Shared initialization context
+    return:
+      type: System.Collections.IEnumerator
+      description: Coroutine enumerator
+    content.vb: Public Function ExecuteAsync(context As InitializationContext) As IEnumerator
+  overload: Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync*
+  implements:
+  - Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.Rollback(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.Phases.ScenarioLoadingPhase.Rollback(Core.Initialization.InitializationContext)
+  id: Rollback(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.Phases.ScenarioLoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: Rollback(InitializationContext)
+  nameWithType: ScenarioLoadingPhase.Rollback(InitializationContext)
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.Rollback(Core.Initialization.InitializationContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Rollback
+    path: Scripts/Core/Initialization/Phases/ScenarioLoadingPhase.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: >-
+    Rollback this phase if initialization fails
+
+    Used for cleanup and error recovery
+  example: []
+  syntax:
+    content: public void Rollback(InitializationContext context)
+    parameters:
+    - id: context
+      type: Core.Initialization.InitializationContext
+      description: Shared initialization context
+    content.vb: Public Sub Rollback(context As InitializationContext)
+  overload: Core.Initialization.Phases.ScenarioLoadingPhase.Rollback*
+  implements:
+  - Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+references:
+- uid: Core.Initialization.Phases
+  commentId: N:Core.Initialization.Phases
+  href: Core.html
+  name: Core.Initialization.Phases
+  nameWithType: Core.Initialization.Phases
+  fullName: Core.Initialization.Phases
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Initialization.IInitializationPhase
+  commentId: T:Core.Initialization.IInitializationPhase
+  parent: Core.Initialization
+  href: Core.Initialization.IInitializationPhase.html
+  name: IInitializationPhase
+  nameWithType: IInitializationPhase
+  fullName: Core.Initialization.IInitializationPhase
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Initialization
+  commentId: N:Core.Initialization
+  href: Core.html
+  name: Core.Initialization
+  nameWithType: Core.Initialization
+  fullName: Core.Initialization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName*
+  commentId: Overload:Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+  href: Core.Initialization.Phases.ScenarioLoadingPhase.html#Core_Initialization_Phases_ScenarioLoadingPhase_PhaseName
+  name: PhaseName
+  nameWithType: ScenarioLoadingPhase.PhaseName
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.PhaseName
+- uid: Core.Initialization.IInitializationPhase.PhaseName
+  commentId: P:Core.Initialization.IInitializationPhase.PhaseName
+  parent: Core.Initialization.IInitializationPhase
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_PhaseName
+  name: PhaseName
+  nameWithType: IInitializationPhase.PhaseName
+  fullName: Core.Initialization.IInitializationPhase.PhaseName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart*
+  commentId: Overload:Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+  href: Core.Initialization.Phases.ScenarioLoadingPhase.html#Core_Initialization_Phases_ScenarioLoadingPhase_ProgressStart
+  name: ProgressStart
+  nameWithType: ScenarioLoadingPhase.ProgressStart
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressStart
+- uid: Core.Initialization.IInitializationPhase.ProgressStart
+  commentId: P:Core.Initialization.IInitializationPhase.ProgressStart
+  parent: Core.Initialization.IInitializationPhase
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ProgressStart
+  name: ProgressStart
+  nameWithType: IInitializationPhase.ProgressStart
+  fullName: Core.Initialization.IInitializationPhase.ProgressStart
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd*
+  commentId: Overload:Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+  href: Core.Initialization.Phases.ScenarioLoadingPhase.html#Core_Initialization_Phases_ScenarioLoadingPhase_ProgressEnd
+  name: ProgressEnd
+  nameWithType: ScenarioLoadingPhase.ProgressEnd
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ProgressEnd
+- uid: Core.Initialization.IInitializationPhase.ProgressEnd
+  commentId: P:Core.Initialization.IInitializationPhase.ProgressEnd
+  parent: Core.Initialization.IInitializationPhase
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ProgressEnd
+  name: ProgressEnd
+  nameWithType: IInitializationPhase.ProgressEnd
+  fullName: Core.Initialization.IInitializationPhase.ProgressEnd
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync*
+  commentId: Overload:Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync
+  href: Core.Initialization.Phases.ScenarioLoadingPhase.html#Core_Initialization_Phases_ScenarioLoadingPhase_ExecuteAsync_Core_Initialization_InitializationContext_
+  name: ExecuteAsync
+  nameWithType: ScenarioLoadingPhase.ExecuteAsync
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.ExecuteAsync
+- uid: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.IInitializationPhase
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ExecuteAsync_Core_Initialization_InitializationContext_
+  name: ExecuteAsync(InitializationContext)
+  nameWithType: IInitializationPhase.ExecuteAsync(InitializationContext)
+  fullName: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  spec.csharp:
+  - uid: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+    name: ExecuteAsync
+    href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ExecuteAsync_Core_Initialization_InitializationContext_
+  - name: (
+  - uid: Core.Initialization.InitializationContext
+    name: InitializationContext
+    href: Core.Initialization.InitializationContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+    name: ExecuteAsync
+    href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ExecuteAsync_Core_Initialization_InitializationContext_
+  - name: (
+  - uid: Core.Initialization.InitializationContext
+    name: InitializationContext
+    href: Core.Initialization.InitializationContext.html
+  - name: )
+- uid: Core.Initialization.InitializationContext
+  commentId: T:Core.Initialization.InitializationContext
+  parent: Core.Initialization
+  href: Core.Initialization.InitializationContext.html
+  name: InitializationContext
+  nameWithType: InitializationContext
+  fullName: Core.Initialization.InitializationContext
+- uid: System.Collections.IEnumerator
+  commentId: T:System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: true
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Initialization.Phases.ScenarioLoadingPhase.Rollback*
+  commentId: Overload:Core.Initialization.Phases.ScenarioLoadingPhase.Rollback
+  href: Core.Initialization.Phases.ScenarioLoadingPhase.html#Core_Initialization_Phases_ScenarioLoadingPhase_Rollback_Core_Initialization_InitializationContext_
+  name: Rollback
+  nameWithType: ScenarioLoadingPhase.Rollback
+  fullName: Core.Initialization.Phases.ScenarioLoadingPhase.Rollback
+- uid: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.IInitializationPhase
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_Rollback_Core_Initialization_InitializationContext_
+  name: Rollback(InitializationContext)
+  nameWithType: IInitializationPhase.Rollback(InitializationContext)
+  fullName: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  spec.csharp:
+  - uid: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+    name: Rollback
+    href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_Rollback_Core_Initialization_InitializationContext_
+  - name: (
+  - uid: Core.Initialization.InitializationContext
+    name: InitializationContext
+    href: Core.Initialization.InitializationContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+    name: Rollback
+    href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_Rollback_Core_Initialization_InitializationContext_
+  - name: (
+  - uid: Core.Initialization.InitializationContext
+    name: InitializationContext
+    href: Core.Initialization.InitializationContext.html
+  - name: )

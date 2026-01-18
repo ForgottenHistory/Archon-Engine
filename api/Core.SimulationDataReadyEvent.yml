@@ -1,0 +1,206 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SimulationDataReadyEvent
+  commentId: T:Core.SimulationDataReadyEvent
+  id: SimulationDataReadyEvent
+  parent: Core
+  children:
+  - Core.SimulationDataReadyEvent.CountryCount
+  - Core.SimulationDataReadyEvent.LoadingTimeSeconds
+  - Core.SimulationDataReadyEvent.ProvinceCount
+  - Core.SimulationDataReadyEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: SimulationDataReadyEvent
+  nameWithType: SimulationDataReadyEvent
+  fullName: Core.SimulationDataReadyEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SimulationDataReadyEvent
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 368
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Emitted when all simulation data is loaded and ready for presentation
+
+    Allows presentation layer (MapGenerator, UI) to initialize without creating dependencies
+  example: []
+  syntax:
+    content: 'public struct SimulationDataReadyEvent : IGameEvent'
+    content.vb: Public Structure SimulationDataReadyEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.SimulationDataReadyEvent.ProvinceCount
+  commentId: F:Core.SimulationDataReadyEvent.ProvinceCount
+  id: ProvinceCount
+  parent: Core.SimulationDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: SimulationDataReadyEvent.ProvinceCount
+  fullName: Core.SimulationDataReadyEvent.ProvinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 370
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public int ProvinceCount
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceCount As Integer
+- uid: Core.SimulationDataReadyEvent.CountryCount
+  commentId: F:Core.SimulationDataReadyEvent.CountryCount
+  id: CountryCount
+  parent: Core.SimulationDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryCount
+  nameWithType: SimulationDataReadyEvent.CountryCount
+  fullName: Core.SimulationDataReadyEvent.CountryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryCount
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 371
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public int CountryCount
+    return:
+      type: System.Int32
+    content.vb: Public CountryCount As Integer
+- uid: Core.SimulationDataReadyEvent.LoadingTimeSeconds
+  commentId: F:Core.SimulationDataReadyEvent.LoadingTimeSeconds
+  id: LoadingTimeSeconds
+  parent: Core.SimulationDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: LoadingTimeSeconds
+  nameWithType: SimulationDataReadyEvent.LoadingTimeSeconds
+  fullName: Core.SimulationDataReadyEvent.LoadingTimeSeconds
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingTimeSeconds
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 372
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public float LoadingTimeSeconds
+    return:
+      type: System.Single
+    content.vb: Public LoadingTimeSeconds As Single
+- uid: Core.SimulationDataReadyEvent.TimeStamp
+  commentId: P:Core.SimulationDataReadyEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.SimulationDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: SimulationDataReadyEvent.TimeStamp
+  fullName: Core.SimulationDataReadyEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 373
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.SimulationDataReadyEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.SimulationDataReadyEvent.TimeStamp*
+  commentId: Overload:Core.SimulationDataReadyEvent.TimeStamp
+  href: Core.SimulationDataReadyEvent.html#Core_SimulationDataReadyEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: SimulationDataReadyEvent.TimeStamp
+  fullName: Core.SimulationDataReadyEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp

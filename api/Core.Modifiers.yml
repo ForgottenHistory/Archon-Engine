@@ -1,0 +1,118 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  id: Core.Modifiers
+  children:
+  - Core.Modifiers.ActiveModifierList
+  - Core.Modifiers.ModifierScopeLevel
+  - Core.Modifiers.ModifierSet
+  - Core.Modifiers.ModifierSource
+  - Core.Modifiers.ModifierSource.SourceType
+  - Core.Modifiers.ModifierSystem
+  - Core.Modifiers.ModifierValue
+  - Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Modifiers.ModifierScopeLevel
+  commentId: T:Core.Modifiers.ModifierScopeLevel
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierScopeLevel.html
+  name: ModifierScopeLevel
+  nameWithType: ModifierScopeLevel
+  fullName: Core.Modifiers.ModifierScopeLevel
+- uid: Core.Modifiers.ModifierSystem
+  commentId: T:Core.Modifiers.ModifierSystem
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSystem.html
+  name: ModifierSystem
+  nameWithType: ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem
+- uid: Core.Modifiers.ScopedModifierContainer
+  commentId: T:Core.Modifiers.ScopedModifierContainer
+  parent: Core.Modifiers
+  href: Core.Modifiers.ScopedModifierContainer.html
+  name: ScopedModifierContainer
+  nameWithType: ScopedModifierContainer
+  fullName: Core.Modifiers.ScopedModifierContainer
+- uid: Core.Modifiers.ModifierSet
+  commentId: T:Core.Modifiers.ModifierSet
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSet.html
+  name: ModifierSet
+  nameWithType: ModifierSet
+  fullName: Core.Modifiers.ModifierSet
+- uid: Core.Modifiers.ActiveModifierList
+  commentId: T:Core.Modifiers.ActiveModifierList
+  parent: Core.Modifiers
+  href: Core.Modifiers.ActiveModifierList.html
+  name: ActiveModifierList
+  nameWithType: ActiveModifierList
+  fullName: Core.Modifiers.ActiveModifierList
+- uid: Core.Modifiers.ModifierValue
+  commentId: T:Core.Modifiers.ModifierValue
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierValue.html
+  name: ModifierValue
+  nameWithType: ModifierValue
+  fullName: Core.Modifiers.ModifierValue
+- uid: Core.Modifiers.ModifierSource
+  commentId: T:Core.Modifiers.ModifierSource
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource
+  nameWithType: ModifierSource
+  fullName: Core.Modifiers.ModifierSource
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html

@@ -1,0 +1,552 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderChainMerger
+  commentId: T:Map.Rendering.Border.BorderChainMerger
+  id: BorderChainMerger
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderChainMerger.#ctor(System.Int32,System.Int32,UnityEngine.Color32[],System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  - Map.Rendering.Border.BorderChainMerger.BridgeToJunction(UnityEngine.Vector2,System.UInt16,System.UInt16,System.Collections.Generic.List{UnityEngine.Vector2})
+  - Map.Rendering.Border.BorderChainMerger.MergeChains(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}})
+  - Map.Rendering.Border.BorderChainMerger.MergeChainsSimple(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}},System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: BorderChainMerger
+  nameWithType: BorderChainMerger
+  fullName: Map.Rendering.Border.BorderChainMerger
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderChainMerger
+    path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Merges multiple border pixel chains into single connected polylines
+
+    Extracted from BorderCurveExtractor for single responsibility
+
+
+    Contains logic for:
+
+    - Merging multiple chains by finding closest endpoints
+
+    - U-turn detection and rejection to prevent bad geometry
+
+    - Chain simplification (keeping only longest chains)
+
+    - Junction bridging (connecting gaps to junctions via BFS)
+  example: []
+  syntax:
+    content: public class BorderChainMerger
+    content.vb: Public Class BorderChainMerger
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderChainMerger.#ctor(System.Int32,System.Int32,UnityEngine.Color32[],System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  commentId: M:Map.Rendering.Border.BorderChainMerger.#ctor(System.Int32,System.Int32,UnityEngine.Color32[],System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  id: '#ctor(System.Int32,System.Int32,UnityEngine.Color32[],System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})'
+  parent: Map.Rendering.Border.BorderChainMerger
+  langs:
+  - csharp
+  - vb
+  name: BorderChainMerger(int, int, Color32[], Dictionary<Vector2, HashSet<ushort>>)
+  nameWithType: BorderChainMerger.BorderChainMerger(int, int, Color32[], Dictionary<Vector2, HashSet<ushort>>)
+  fullName: Map.Rendering.Border.BorderChainMerger.BorderChainMerger(int, int, UnityEngine.Color32[], System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderChainMerger(int width, int height, Color32[] idPixels, Dictionary<Vector2, HashSet<ushort>> junctions)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: idPixels
+      type: UnityEngine.Color32[]
+    - id: junctions
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+    content.vb: Public Sub New(width As Integer, height As Integer, idPixels As Color32(), junctions As Dictionary(Of Vector2, HashSet(Of UShort)))
+  overload: Map.Rendering.Border.BorderChainMerger.#ctor*
+  nameWithType.vb: BorderChainMerger.New(Integer, Integer, Color32(), Dictionary(Of Vector2, HashSet(Of UShort)))
+  fullName.vb: Map.Rendering.Border.BorderChainMerger.New(Integer, Integer, UnityEngine.Color32(), System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort)))
+  name.vb: New(Integer, Integer, Color32(), Dictionary(Of Vector2, HashSet(Of UShort)))
+- uid: Map.Rendering.Border.BorderChainMerger.MergeChains(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}})
+  commentId: M:Map.Rendering.Border.BorderChainMerger.MergeChains(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}})
+  id: MergeChains(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}})
+  parent: Map.Rendering.Border.BorderChainMerger
+  langs:
+  - csharp
+  - vb
+  name: MergeChains(List<List<Vector2>>)
+  nameWithType: BorderChainMerger.MergeChains(List<List<Vector2>>)
+  fullName: Map.Rendering.Border.BorderChainMerger.MergeChains(System.Collections.Generic.List<System.Collections.Generic.List<UnityEngine.Vector2>>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MergeChains
+    path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Merge multiple chains into single polyline using intelligent endpoint matching
+
+    Includes U-turn detection to prevent bad geometry
+  example: []
+  syntax:
+    content: public List<Vector2> MergeChains(List<List<Vector2>> chains)
+    parameters:
+    - id: chains
+      type: System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    content.vb: Public Function MergeChains(chains As List(Of List(Of Vector2))) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderChainMerger.MergeChains*
+  nameWithType.vb: BorderChainMerger.MergeChains(List(Of List(Of Vector2)))
+  fullName.vb: Map.Rendering.Border.BorderChainMerger.MergeChains(System.Collections.Generic.List(Of System.Collections.Generic.List(Of UnityEngine.Vector2)))
+  name.vb: MergeChains(List(Of List(Of Vector2)))
+- uid: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}},System.UInt16,System.UInt16)
+  commentId: M:Map.Rendering.Border.BorderChainMerger.MergeChainsSimple(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}},System.UInt16,System.UInt16)
+  id: MergeChainsSimple(System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}},System.UInt16,System.UInt16)
+  parent: Map.Rendering.Border.BorderChainMerger
+  langs:
+  - csharp
+  - vb
+  name: MergeChainsSimple(List<List<Vector2>>, ushort, ushort)
+  nameWithType: BorderChainMerger.MergeChainsSimple(List<List<Vector2>>, ushort, ushort)
+  fullName: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple(System.Collections.Generic.List<System.Collections.Generic.List<UnityEngine.Vector2>>, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MergeChainsSimple
+    path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+    startLine: 173
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Simple chain merging without U-turn angle check
+
+    Uses self-intersection detection instead (more robust)
+  example: []
+  syntax:
+    content: public List<Vector2> MergeChainsSimple(List<List<Vector2>> chains, ushort provinceA = 0, ushort provinceB = 0)
+    parameters:
+    - id: chains
+      type: System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    content.vb: Public Function MergeChainsSimple(chains As List(Of List(Of Vector2)), provinceA As UShort = 0, provinceB As UShort = 0) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple*
+  nameWithType.vb: BorderChainMerger.MergeChainsSimple(List(Of List(Of Vector2)), UShort, UShort)
+  fullName.vb: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple(System.Collections.Generic.List(Of System.Collections.Generic.List(Of UnityEngine.Vector2)), UShort, UShort)
+  name.vb: MergeChainsSimple(List(Of List(Of Vector2)), UShort, UShort)
+- uid: Map.Rendering.Border.BorderChainMerger.BridgeToJunction(UnityEngine.Vector2,System.UInt16,System.UInt16,System.Collections.Generic.List{UnityEngine.Vector2})
+  commentId: M:Map.Rendering.Border.BorderChainMerger.BridgeToJunction(UnityEngine.Vector2,System.UInt16,System.UInt16,System.Collections.Generic.List{UnityEngine.Vector2})
+  id: BridgeToJunction(UnityEngine.Vector2,System.UInt16,System.UInt16,System.Collections.Generic.List{UnityEngine.Vector2})
+  parent: Map.Rendering.Border.BorderChainMerger
+  langs:
+  - csharp
+  - vb
+  name: BridgeToJunction(Vector2, ushort, ushort, List<Vector2>)
+  nameWithType: BorderChainMerger.BridgeToJunction(Vector2, ushort, ushort, List<Vector2>)
+  fullName: Map.Rendering.Border.BorderChainMerger.BridgeToJunction(UnityEngine.Vector2, ushort, ushort, System.Collections.Generic.List<UnityEngine.Vector2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BridgeToJunction
+    path: Scripts/Map/Rendering/Border/BorderChainMerger.cs
+    startLine: 285
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Bridge disconnected border pixels to junction using BFS pathfinding
+
+    Finds shortest path along valid border pixels to connect gaps
+  example: []
+  syntax:
+    content: public int BridgeToJunction(Vector2 junctionPos, ushort provinceA, ushort provinceB, List<Vector2> borderPixels)
+    parameters:
+    - id: junctionPos
+      type: UnityEngine.Vector2
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    - id: borderPixels
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    return:
+      type: System.Int32
+    content.vb: Public Function BridgeToJunction(junctionPos As Vector2, provinceA As UShort, provinceB As UShort, borderPixels As List(Of Vector2)) As Integer
+  overload: Map.Rendering.Border.BorderChainMerger.BridgeToJunction*
+  nameWithType.vb: BorderChainMerger.BridgeToJunction(Vector2, UShort, UShort, List(Of Vector2))
+  fullName.vb: Map.Rendering.Border.BorderChainMerger.BridgeToJunction(UnityEngine.Vector2, UShort, UShort, System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: BridgeToJunction(Vector2, UShort, UShort, List(Of Vector2))
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderChainMerger.#ctor*
+  commentId: Overload:Map.Rendering.Border.BorderChainMerger.#ctor
+  href: Map.Rendering.Border.BorderChainMerger.html#Map_Rendering_Border_BorderChainMerger__ctor_System_Int32_System_Int32_UnityEngine_Color32___System_Collections_Generic_Dictionary_UnityEngine_Vector2_System_Collections_Generic_HashSet_System_UInt16___
+  name: BorderChainMerger
+  nameWithType: BorderChainMerger.BorderChainMerger
+  fullName: Map.Rendering.Border.BorderChainMerger.BorderChainMerger
+  nameWithType.vb: BorderChainMerger.New
+  fullName.vb: Map.Rendering.Border.BorderChainMerger.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Vector2, HashSet<ushort>>
+  nameWithType: Dictionary<Vector2, HashSet<ushort>>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>
+  nameWithType.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort))
+  name.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Border.BorderChainMerger.MergeChains*
+  commentId: Overload:Map.Rendering.Border.BorderChainMerger.MergeChains
+  href: Map.Rendering.Border.BorderChainMerger.html#Map_Rendering_Border_BorderChainMerger_MergeChains_System_Collections_Generic_List_System_Collections_Generic_List_UnityEngine_Vector2___
+  name: MergeChains
+  nameWithType: BorderChainMerger.MergeChains
+  fullName: Map.Rendering.Border.BorderChainMerger.MergeChains
+- uid: System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+  commentId: T:System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<List<Vector2>>
+  nameWithType: List<List<Vector2>>
+  fullName: System.Collections.Generic.List<System.Collections.Generic.List<UnityEngine.Vector2>>
+  nameWithType.vb: List(Of List(Of Vector2))
+  fullName.vb: System.Collections.Generic.List(Of System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: List(Of List(Of Vector2))
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List{UnityEngine.Vector2}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2>
+  nameWithType: List<Vector2>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2>
+  nameWithType.vb: List(Of Vector2)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2)
+  name.vb: List(Of Vector2)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple*
+  commentId: Overload:Map.Rendering.Border.BorderChainMerger.MergeChainsSimple
+  href: Map.Rendering.Border.BorderChainMerger.html#Map_Rendering_Border_BorderChainMerger_MergeChainsSimple_System_Collections_Generic_List_System_Collections_Generic_List_UnityEngine_Vector2___System_UInt16_System_UInt16_
+  name: MergeChainsSimple
+  nameWithType: BorderChainMerger.MergeChainsSimple
+  fullName: Map.Rendering.Border.BorderChainMerger.MergeChainsSimple
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Rendering.Border.BorderChainMerger.BridgeToJunction*
+  commentId: Overload:Map.Rendering.Border.BorderChainMerger.BridgeToJunction
+  href: Map.Rendering.Border.BorderChainMerger.html#Map_Rendering_Border_BorderChainMerger_BridgeToJunction_UnityEngine_Vector2_System_UInt16_System_UInt16_System_Collections_Generic_List_UnityEngine_Vector2__
+  name: BridgeToJunction
+  nameWithType: BorderChainMerger.BridgeToJunction
+  fullName: Map.Rendering.Border.BorderChainMerger.BridgeToJunction
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

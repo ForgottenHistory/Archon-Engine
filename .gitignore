@@ -102,4 +102,4 @@ tmpclaude-*
 
 # DocFX generated files
 _site/
-api/
+# api/ - NOT ignored! Pre-generated API metadata must be committed for GitHub Pages

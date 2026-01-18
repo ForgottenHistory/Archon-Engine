@@ -1,0 +1,876 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.CountryRegistry
+  commentId: T:Core.Registries.CountryRegistry
+  id: CountryRegistry
+  parent: Core.Registries
+  children:
+  - Core.Registries.CountryRegistry.#ctor(Core.Registries.GameRegistries)
+  - Core.Registries.CountryRegistry.Count
+  - Core.Registries.CountryRegistry.Exists(System.String)
+  - Core.Registries.CountryRegistry.Exists(System.UInt16)
+  - Core.Registries.CountryRegistry.Get(System.String)
+  - Core.Registries.CountryRegistry.Get(System.UInt16)
+  - Core.Registries.CountryRegistry.GetAll
+  - Core.Registries.CountryRegistry.GetAllIds
+  - Core.Registries.CountryRegistry.GetAllTags
+  - Core.Registries.CountryRegistry.GetDiagnostics
+  - Core.Registries.CountryRegistry.GetId(System.String)
+  - Core.Registries.CountryRegistry.Register(System.String,Core.Registries.CountryData)
+  - Core.Registries.CountryRegistry.TryGet(System.String,Core.Registries.CountryData@)
+  - Core.Registries.CountryRegistry.TryGetId(System.String,System.UInt16@)
+  - Core.Registries.CountryRegistry.TypeName
+  langs:
+  - csharp
+  - vb
+  name: CountryRegistry
+  nameWithType: CountryRegistry
+  fullName: Core.Registries.CountryRegistry
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryRegistry
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: >-
+    Specialized registry for countries with 3-letter tags
+
+    Handles country-specific requirements like owned provinces tracking
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: public class CountryRegistry
+    content.vb: Public Class CountryRegistry
+  inheritance:
+  - System.Object
+- uid: Core.Registries.CountryRegistry.TypeName
+  commentId: P:Core.Registries.CountryRegistry.TypeName
+  id: TypeName
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: TypeName
+  nameWithType: CountryRegistry.TypeName
+  fullName: Core.Registries.CountryRegistry.TypeName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TypeName
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string TypeName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property TypeName As String
+  overload: Core.Registries.CountryRegistry.TypeName*
+- uid: Core.Registries.CountryRegistry.Count
+  commentId: P:Core.Registries.CountryRegistry.Count
+  id: Count
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CountryRegistry.Count
+  fullName: Core.Registries.CountryRegistry.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Registries.CountryRegistry.Count*
+- uid: Core.Registries.CountryRegistry.#ctor(Core.Registries.GameRegistries)
+  commentId: M:Core.Registries.CountryRegistry.#ctor(Core.Registries.GameRegistries)
+  id: '#ctor(Core.Registries.GameRegistries)'
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: CountryRegistry(GameRegistries)
+  nameWithType: CountryRegistry.CountryRegistry(GameRegistries)
+  fullName: Core.Registries.CountryRegistry.CountryRegistry(Core.Registries.GameRegistries)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public CountryRegistry(GameRegistries gameRegistries)
+    parameters:
+    - id: gameRegistries
+      type: Core.Registries.GameRegistries
+    content.vb: Public Sub New(gameRegistries As GameRegistries)
+  overload: Core.Registries.CountryRegistry.#ctor*
+  nameWithType.vb: CountryRegistry.New(GameRegistries)
+  fullName.vb: Core.Registries.CountryRegistry.New(Core.Registries.GameRegistries)
+  name.vb: New(GameRegistries)
+- uid: Core.Registries.CountryRegistry.Register(System.String,Core.Registries.CountryData)
+  commentId: M:Core.Registries.CountryRegistry.Register(System.String,Core.Registries.CountryData)
+  id: Register(System.String,Core.Registries.CountryData)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Register(string, CountryData)
+  nameWithType: CountryRegistry.Register(string, CountryData)
+  fullName: Core.Registries.CountryRegistry.Register(string, Core.Registries.CountryData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Register
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Register a country with its 3-letter tag
+  example: []
+  syntax:
+    content: public ushort Register(string tag, CountryData country)
+    parameters:
+    - id: tag
+      type: System.String
+    - id: country
+      type: Core.Registries.CountryData
+    return:
+      type: System.UInt16
+    content.vb: Public Function Register(tag As String, country As CountryData) As UShort
+  overload: Core.Registries.CountryRegistry.Register*
+  nameWithType.vb: CountryRegistry.Register(String, CountryData)
+  fullName.vb: Core.Registries.CountryRegistry.Register(String, Core.Registries.CountryData)
+  name.vb: Register(String, CountryData)
+- uid: Core.Registries.CountryRegistry.Get(System.UInt16)
+  commentId: M:Core.Registries.CountryRegistry.Get(System.UInt16)
+  id: Get(System.UInt16)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Get(ushort)
+  nameWithType: CountryRegistry.Get(ushort)
+  fullName: Core.Registries.CountryRegistry.Get(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get country by numeric ID (O(1) array access)
+  example: []
+  syntax:
+    content: public CountryData Get(ushort id)
+    parameters:
+    - id: id
+      type: System.UInt16
+    return:
+      type: Core.Registries.CountryData
+    content.vb: Public Function [Get](id As UShort) As CountryData
+  overload: Core.Registries.CountryRegistry.Get*
+  nameWithType.vb: CountryRegistry.Get(UShort)
+  fullName.vb: Core.Registries.CountryRegistry.Get(UShort)
+  name.vb: Get(UShort)
+- uid: Core.Registries.CountryRegistry.Get(System.String)
+  commentId: M:Core.Registries.CountryRegistry.Get(System.String)
+  id: Get(System.String)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Get(string)
+  nameWithType: CountryRegistry.Get(string)
+  fullName: Core.Registries.CountryRegistry.Get(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get country by 3-letter tag (O(1) hash lookup)
+  example: []
+  syntax:
+    content: public CountryData Get(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: Core.Registries.CountryData
+    content.vb: Public Function [Get](tag As String) As CountryData
+  overload: Core.Registries.CountryRegistry.Get*
+  nameWithType.vb: CountryRegistry.Get(String)
+  fullName.vb: Core.Registries.CountryRegistry.Get(String)
+  name.vb: Get(String)
+- uid: Core.Registries.CountryRegistry.GetId(System.String)
+  commentId: M:Core.Registries.CountryRegistry.GetId(System.String)
+  id: GetId(System.String)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetId(string)
+  nameWithType: CountryRegistry.GetId(string)
+  fullName: Core.Registries.CountryRegistry.GetId(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetId
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get country ID by tag
+  example: []
+  syntax:
+    content: public ushort GetId(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetId(tag As String) As UShort
+  overload: Core.Registries.CountryRegistry.GetId*
+  nameWithType.vb: CountryRegistry.GetId(String)
+  fullName.vb: Core.Registries.CountryRegistry.GetId(String)
+  name.vb: GetId(String)
+- uid: Core.Registries.CountryRegistry.TryGet(System.String,Core.Registries.CountryData@)
+  commentId: M:Core.Registries.CountryRegistry.TryGet(System.String,Core.Registries.CountryData@)
+  id: TryGet(System.String,Core.Registries.CountryData@)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: TryGet(string, out CountryData)
+  nameWithType: CountryRegistry.TryGet(string, out CountryData)
+  fullName: Core.Registries.CountryRegistry.TryGet(string, out Core.Registries.CountryData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGet
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Try get country by tag
+  example: []
+  syntax:
+    content: public bool TryGet(string tag, out CountryData country)
+    parameters:
+    - id: tag
+      type: System.String
+    - id: country
+      type: Core.Registries.CountryData
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGet(tag As String, country As CountryData) As Boolean
+  overload: Core.Registries.CountryRegistry.TryGet*
+  nameWithType.vb: CountryRegistry.TryGet(String, CountryData)
+  fullName.vb: Core.Registries.CountryRegistry.TryGet(String, Core.Registries.CountryData)
+  name.vb: TryGet(String, CountryData)
+- uid: Core.Registries.CountryRegistry.TryGetId(System.String,System.UInt16@)
+  commentId: M:Core.Registries.CountryRegistry.TryGetId(System.String,System.UInt16@)
+  id: TryGetId(System.String,System.UInt16@)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: TryGetId(string, out ushort)
+  nameWithType: CountryRegistry.TryGetId(string, out ushort)
+  fullName: Core.Registries.CountryRegistry.TryGetId(string, out ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetId
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 121
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Try get country ID by tag
+  example: []
+  syntax:
+    content: public bool TryGetId(string tag, out ushort id)
+    parameters:
+    - id: tag
+      type: System.String
+    - id: id
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetId(tag As String, id As UShort) As Boolean
+  overload: Core.Registries.CountryRegistry.TryGetId*
+  nameWithType.vb: CountryRegistry.TryGetId(String, UShort)
+  fullName.vb: Core.Registries.CountryRegistry.TryGetId(String, UShort)
+  name.vb: TryGetId(String, UShort)
+- uid: Core.Registries.CountryRegistry.Exists(System.String)
+  commentId: M:Core.Registries.CountryRegistry.Exists(System.String)
+  id: Exists(System.String)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Exists(string)
+  nameWithType: CountryRegistry.Exists(string)
+  fullName: Core.Registries.CountryRegistry.Exists(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Check if country exists
+  example: []
+  syntax:
+    content: public bool Exists(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(tag As String) As Boolean
+  overload: Core.Registries.CountryRegistry.Exists*
+  nameWithType.vb: CountryRegistry.Exists(String)
+  fullName.vb: Core.Registries.CountryRegistry.Exists(String)
+  name.vb: Exists(String)
+- uid: Core.Registries.CountryRegistry.Exists(System.UInt16)
+  commentId: M:Core.Registries.CountryRegistry.Exists(System.UInt16)
+  id: Exists(System.UInt16)
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: Exists(ushort)
+  nameWithType: CountryRegistry.Exists(ushort)
+  fullName: Core.Registries.CountryRegistry.Exists(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Check if country ID exists
+  example: []
+  syntax:
+    content: public bool Exists(ushort id)
+    parameters:
+    - id: id
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(id As UShort) As Boolean
+  overload: Core.Registries.CountryRegistry.Exists*
+  nameWithType.vb: CountryRegistry.Exists(UShort)
+  fullName.vb: Core.Registries.CountryRegistry.Exists(UShort)
+  name.vb: Exists(UShort)
+- uid: Core.Registries.CountryRegistry.GetAll
+  commentId: M:Core.Registries.CountryRegistry.GetAll
+  id: GetAll
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAll()
+  nameWithType: CountryRegistry.GetAll()
+  fullName: Core.Registries.CountryRegistry.GetAll()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAll
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 150
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get all countries
+  example: []
+  syntax:
+    content: public IEnumerable<CountryData> GetAll()
+    return:
+      type: System.Collections.Generic.IEnumerable{Core.Registries.CountryData}
+    content.vb: Public Function GetAll() As IEnumerable(Of CountryData)
+  overload: Core.Registries.CountryRegistry.GetAll*
+- uid: Core.Registries.CountryRegistry.GetAllIds
+  commentId: M:Core.Registries.CountryRegistry.GetAllIds
+  id: GetAllIds
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAllIds()
+  nameWithType: CountryRegistry.GetAllIds()
+  fullName: Core.Registries.CountryRegistry.GetAllIds()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllIds
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 158
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get all valid country IDs
+  example: []
+  syntax:
+    content: public IEnumerable<ushort> GetAllIds()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    content.vb: Public Function GetAllIds() As IEnumerable(Of UShort)
+  overload: Core.Registries.CountryRegistry.GetAllIds*
+- uid: Core.Registries.CountryRegistry.GetAllTags
+  commentId: M:Core.Registries.CountryRegistry.GetAllTags
+  id: GetAllTags
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAllTags()
+  nameWithType: CountryRegistry.GetAllTags()
+  fullName: Core.Registries.CountryRegistry.GetAllTags()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllTags
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 170
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get all country tags
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAllTags()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAllTags() As IEnumerable(Of String)
+  overload: Core.Registries.CountryRegistry.GetAllTags*
+- uid: Core.Registries.CountryRegistry.GetDiagnostics
+  commentId: M:Core.Registries.CountryRegistry.GetDiagnostics
+  id: GetDiagnostics
+  parent: Core.Registries.CountryRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDiagnostics()
+  nameWithType: CountryRegistry.GetDiagnostics()
+  fullName: Core.Registries.CountryRegistry.GetDiagnostics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/CountryRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDiagnostics
+    path: Scripts/Core/Registries/CountryRegistry.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get diagnostic information
+  example: []
+  syntax:
+    content: public string GetDiagnostics()
+    return:
+      type: System.String
+    content.vb: Public Function GetDiagnostics() As String
+  overload: Core.Registries.CountryRegistry.GetDiagnostics*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.CountryRegistry.TypeName*
+  commentId: Overload:Core.Registries.CountryRegistry.TypeName
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_TypeName
+  name: TypeName
+  nameWithType: CountryRegistry.TypeName
+  fullName: Core.Registries.CountryRegistry.TypeName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.CountryRegistry.Count*
+  commentId: Overload:Core.Registries.CountryRegistry.Count
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_Count
+  name: Count
+  nameWithType: CountryRegistry.Count
+  fullName: Core.Registries.CountryRegistry.Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Registries.CountryRegistry.#ctor*
+  commentId: Overload:Core.Registries.CountryRegistry.#ctor
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry__ctor_Core_Registries_GameRegistries_
+  name: CountryRegistry
+  nameWithType: CountryRegistry.CountryRegistry
+  fullName: Core.Registries.CountryRegistry.CountryRegistry
+  nameWithType.vb: CountryRegistry.New
+  fullName.vb: Core.Registries.CountryRegistry.New
+  name.vb: New
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries.CountryRegistry.Register*
+  commentId: Overload:Core.Registries.CountryRegistry.Register
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_Register_System_String_Core_Registries_CountryData_
+  name: Register
+  nameWithType: CountryRegistry.Register
+  fullName: Core.Registries.CountryRegistry.Register
+- uid: Core.Registries.CountryData
+  commentId: T:Core.Registries.CountryData
+  parent: Core.Registries
+  href: Core.Registries.CountryData.html
+  name: CountryData
+  nameWithType: CountryData
+  fullName: Core.Registries.CountryData
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Registries.CountryRegistry.Get*
+  commentId: Overload:Core.Registries.CountryRegistry.Get
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_Get_System_UInt16_
+  name: Get
+  nameWithType: CountryRegistry.Get
+  fullName: Core.Registries.CountryRegistry.Get
+- uid: Core.Registries.CountryRegistry.GetId*
+  commentId: Overload:Core.Registries.CountryRegistry.GetId
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_GetId_System_String_
+  name: GetId
+  nameWithType: CountryRegistry.GetId
+  fullName: Core.Registries.CountryRegistry.GetId
+- uid: Core.Registries.CountryRegistry.TryGet*
+  commentId: Overload:Core.Registries.CountryRegistry.TryGet
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_TryGet_System_String_Core_Registries_CountryData__
+  name: TryGet
+  nameWithType: CountryRegistry.TryGet
+  fullName: Core.Registries.CountryRegistry.TryGet
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Registries.CountryRegistry.TryGetId*
+  commentId: Overload:Core.Registries.CountryRegistry.TryGetId
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_TryGetId_System_String_System_UInt16__
+  name: TryGetId
+  nameWithType: CountryRegistry.TryGetId
+  fullName: Core.Registries.CountryRegistry.TryGetId
+- uid: Core.Registries.CountryRegistry.Exists*
+  commentId: Overload:Core.Registries.CountryRegistry.Exists
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_Exists_System_String_
+  name: Exists
+  nameWithType: CountryRegistry.Exists
+  fullName: Core.Registries.CountryRegistry.Exists
+- uid: Core.Registries.CountryRegistry.GetAll*
+  commentId: Overload:Core.Registries.CountryRegistry.GetAll
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_GetAll
+  name: GetAll
+  nameWithType: CountryRegistry.GetAll
+  fullName: Core.Registries.CountryRegistry.GetAll
+- uid: System.Collections.Generic.IEnumerable{Core.Registries.CountryData}
+  commentId: T:System.Collections.Generic.IEnumerable{Core.Registries.CountryData}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Core.Registries.CountryData.html
+  name: IEnumerable<CountryData>
+  nameWithType: IEnumerable<CountryData>
+  fullName: System.Collections.Generic.IEnumerable<Core.Registries.CountryData>
+  nameWithType.vb: IEnumerable(Of CountryData)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Core.Registries.CountryData)
+  name.vb: IEnumerable(Of CountryData)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: Core.Registries.CountryData
+    name: CountryData
+    href: Core.Registries.CountryData.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.CountryData
+    name: CountryData
+    href: Core.Registries.CountryData.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Registries.CountryRegistry.GetAllIds*
+  commentId: Overload:Core.Registries.CountryRegistry.GetAllIds
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_GetAllIds
+  name: GetAllIds
+  nameWithType: CountryRegistry.GetAllIds
+  fullName: Core.Registries.CountryRegistry.GetAllIds
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.CountryRegistry.GetAllTags*
+  commentId: Overload:Core.Registries.CountryRegistry.GetAllTags
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_GetAllTags
+  name: GetAllTags
+  nameWithType: CountryRegistry.GetAllTags
+  fullName: Core.Registries.CountryRegistry.GetAllTags
+- uid: System.Collections.Generic.IEnumerable{System.String}
+  commentId: T:System.Collections.Generic.IEnumerable{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<string>
+  nameWithType: IEnumerable<string>
+  fullName: System.Collections.Generic.IEnumerable<string>
+  nameWithType.vb: IEnumerable(Of String)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of String)
+  name.vb: IEnumerable(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.CountryRegistry.GetDiagnostics*
+  commentId: Overload:Core.Registries.CountryRegistry.GetDiagnostics
+  href: Core.Registries.CountryRegistry.html#Core_Registries_CountryRegistry_GetDiagnostics
+  name: GetDiagnostics
+  nameWithType: CountryRegistry.GetDiagnostics
+  fullName: Core.Registries.CountryRegistry.GetDiagnostics

@@ -1,0 +1,623 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceData
+  commentId: T:Map.Province.ProvinceData
+  id: ProvinceData
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceData.CalculateBounds(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  - Map.Province.ProvinceData.CalculateCenterPoint(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  - Map.Province.ProvinceData.boundsMax
+  - Map.Province.ProvinceData.boundsMin
+  - Map.Province.ProvinceData.centerPoint
+  - Map.Province.ProvinceData.displayColor
+  - Map.Province.ProvinceData.flags
+  - Map.Province.ProvinceData.id
+  - Map.Province.ProvinceData.identifierColor
+  - Map.Province.ProvinceData.ownerCountryID
+  - Map.Province.ProvinceData.pixelCount
+  langs:
+  - csharp
+  - vb
+  name: ProvinceData
+  nameWithType: ProvinceData
+  fullName: Map.Province.ProvinceData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceData
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Optimized province data structure for texture-based rendering system
+
+    Designed for performance with 10,000+ provinces
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct ProvinceData
+    content.vb: >-
+      <Serializable>
+
+      Public Structure ProvinceData
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Map.Province.ProvinceData.id
+  commentId: F:Map.Province.ProvinceData.id
+  id: id
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: id
+  nameWithType: ProvinceData.id
+  fullName: Map.Province.ProvinceData.id
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: id
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort id
+    return:
+      type: System.UInt16
+    content.vb: Public id As UShort
+- uid: Map.Province.ProvinceData.ownerCountryID
+  commentId: F:Map.Province.ProvinceData.ownerCountryID
+  id: ownerCountryID
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: ownerCountryID
+  nameWithType: ProvinceData.ownerCountryID
+  fullName: Map.Province.ProvinceData.ownerCountryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ownerCountryID
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort ownerCountryID
+    return:
+      type: System.UInt16
+    content.vb: Public ownerCountryID As UShort
+- uid: Map.Province.ProvinceData.identifierColor
+  commentId: F:Map.Province.ProvinceData.identifierColor
+  id: identifierColor
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: identifierColor
+  nameWithType: ProvinceData.identifierColor
+  fullName: Map.Province.ProvinceData.identifierColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: identifierColor
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public Color32 identifierColor
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public identifierColor As Color32
+- uid: Map.Province.ProvinceData.displayColor
+  commentId: F:Map.Province.ProvinceData.displayColor
+  id: displayColor
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: displayColor
+  nameWithType: ProvinceData.displayColor
+  fullName: Map.Province.ProvinceData.displayColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: displayColor
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public Color32 displayColor
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public displayColor As Color32
+- uid: Map.Province.ProvinceData.centerPoint
+  commentId: F:Map.Province.ProvinceData.centerPoint
+  id: centerPoint
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: centerPoint
+  nameWithType: ProvinceData.centerPoint
+  fullName: Map.Province.ProvinceData.centerPoint
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: centerPoint
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float2 centerPoint
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public centerPoint As float2
+- uid: Map.Province.ProvinceData.pixelCount
+  commentId: F:Map.Province.ProvinceData.pixelCount
+  id: pixelCount
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: pixelCount
+  nameWithType: ProvinceData.pixelCount
+  fullName: Map.Province.ProvinceData.pixelCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: pixelCount
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int pixelCount
+    return:
+      type: System.Int32
+    content.vb: Public pixelCount As Integer
+- uid: Map.Province.ProvinceData.boundsMin
+  commentId: F:Map.Province.ProvinceData.boundsMin
+  id: boundsMin
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: boundsMin
+  nameWithType: ProvinceData.boundsMin
+  fullName: Map.Province.ProvinceData.boundsMin
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: boundsMin
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float2 boundsMin
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public boundsMin As float2
+- uid: Map.Province.ProvinceData.boundsMax
+  commentId: F:Map.Province.ProvinceData.boundsMax
+  id: boundsMax
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: boundsMax
+  nameWithType: ProvinceData.boundsMax
+  fullName: Map.Province.ProvinceData.boundsMax
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: boundsMax
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float2 boundsMax
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public boundsMax As float2
+- uid: Map.Province.ProvinceData.flags
+  commentId: F:Map.Province.ProvinceData.flags
+  id: flags
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: flags
+  nameWithType: ProvinceData.flags
+  fullName: Map.Province.ProvinceData.flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: flags
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ProvinceFlags flags
+    return:
+      type: Map.Province.ProvinceFlags
+    content.vb: Public flags As ProvinceFlags
+- uid: Map.Province.ProvinceData.CalculateCenterPoint(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  commentId: M:Map.Province.ProvinceData.CalculateCenterPoint(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  id: CalculateCenterPoint(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: CalculateCenterPoint(NativeArray<int2>)
+  nameWithType: ProvinceData.CalculateCenterPoint(NativeArray<int2>)
+  fullName: Map.Province.ProvinceData.CalculateCenterPoint(Unity.Collections.NativeArray<Unity.Mathematics.int2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateCenterPoint
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Calculate center point from pixel list
+  example: []
+  syntax:
+    content: public static float2 CalculateCenterPoint(NativeArray<int2> pixels)
+    parameters:
+    - id: pixels
+      type: Unity.Collections.NativeArray{Unity.Mathematics.int2}
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public Shared Function CalculateCenterPoint(pixels As NativeArray(Of int2)) As float2
+  overload: Map.Province.ProvinceData.CalculateCenterPoint*
+  nameWithType.vb: ProvinceData.CalculateCenterPoint(NativeArray(Of int2))
+  fullName.vb: Map.Province.ProvinceData.CalculateCenterPoint(Unity.Collections.NativeArray(Of Unity.Mathematics.int2))
+  name.vb: CalculateCenterPoint(NativeArray(Of int2))
+- uid: Map.Province.ProvinceData.CalculateBounds(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  commentId: M:Map.Province.ProvinceData.CalculateBounds(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  id: CalculateBounds(Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  parent: Map.Province.ProvinceData
+  langs:
+  - csharp
+  - vb
+  name: CalculateBounds(NativeArray<int2>)
+  nameWithType: ProvinceData.CalculateBounds(NativeArray<int2>)
+  fullName: Map.Province.ProvinceData.CalculateBounds(Unity.Collections.NativeArray<Unity.Mathematics.int2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateBounds
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Calculate bounding rectangle from pixels
+  example: []
+  syntax:
+    content: public static (float2 min, float2 max) CalculateBounds(NativeArray<int2> pixels)
+    parameters:
+    - id: pixels
+      type: Unity.Collections.NativeArray{Unity.Mathematics.int2}
+    return:
+      type: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}
+    content.vb: Public Shared Function CalculateBounds(pixels As NativeArray(Of int2)) As (min As float2, max As float2)
+  overload: Map.Province.ProvinceData.CalculateBounds*
+  nameWithType.vb: ProvinceData.CalculateBounds(NativeArray(Of int2))
+  fullName.vb: Map.Province.ProvinceData.CalculateBounds(Unity.Collections.NativeArray(Of Unity.Mathematics.int2))
+  name.vb: CalculateBounds(NativeArray(Of int2))
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Unity.Mathematics.float2
+  commentId: T:Unity.Mathematics.float2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: float2
+  nameWithType: float2
+  fullName: Unity.Mathematics.float2
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceFlags
+  commentId: T:Map.Province.ProvinceFlags
+  parent: Map.Province
+  href: Map.Province.ProvinceFlags.html
+  name: ProvinceFlags
+  nameWithType: ProvinceFlags
+  fullName: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceData.CalculateCenterPoint*
+  commentId: Overload:Map.Province.ProvinceData.CalculateCenterPoint
+  href: Map.Province.ProvinceData.html#Map_Province_ProvinceData_CalculateCenterPoint_Unity_Collections_NativeArray_Unity_Mathematics_int2__
+  name: CalculateCenterPoint
+  nameWithType: ProvinceData.CalculateCenterPoint
+  fullName: Map.Province.ProvinceData.CalculateCenterPoint
+- uid: Unity.Collections.NativeArray{Unity.Mathematics.int2}
+  commentId: T:Unity.Collections.NativeArray{Unity.Mathematics.int2}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int2>
+  nameWithType: NativeArray<int2>
+  fullName: Unity.Collections.NativeArray<Unity.Mathematics.int2>
+  nameWithType.vb: NativeArray(Of int2)
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Mathematics.int2)
+  name.vb: NativeArray(Of int2)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Mathematics.int2
+    name: int2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Mathematics.int2
+    name: int2
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Province.ProvinceData.CalculateBounds*
+  commentId: Overload:Map.Province.ProvinceData.CalculateBounds
+  href: Map.Province.ProvinceData.html#Map_Province_ProvinceData_CalculateBounds_Unity_Collections_NativeArray_Unity_Mathematics_int2__
+  name: CalculateBounds
+  nameWithType: ProvinceData.CalculateBounds
+  fullName: Map.Province.ProvinceData.CalculateBounds
+- uid: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}
+  commentId: T:System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (float2 min, float2 max)
+  nameWithType: (float2 min, float2 max)
+  fullName: (Unity.Mathematics.float2 min, Unity.Mathematics.float2 max)
+  nameWithType.vb: (min As float2, max As float2)
+  fullName.vb: (min As Unity.Mathematics.float2, max As Unity.Mathematics.float2)
+  name.vb: (min As float2, max As float2)
+  spec.csharp:
+  - name: (
+  - uid: Unity.Mathematics.float2
+    name: float2
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}.min
+    name: min
+  - name: ','
+  - name: " "
+  - uid: Unity.Mathematics.float2
+    name: float2
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}.max
+    name: max
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}.min
+    name: min
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Unity.Mathematics.float2
+    name: float2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{Unity.Mathematics.float2,Unity.Mathematics.float2}.max
+    name: max
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Unity.Mathematics.float2
+    name: float2
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )

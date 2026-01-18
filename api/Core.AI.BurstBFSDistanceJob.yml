@@ -1,0 +1,549 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.BurstBFSDistanceJob
+  commentId: T:Core.AI.BurstBFSDistanceJob
+  id: BurstBFSDistanceJob
+  parent: Core.AI
+  children:
+  - Core.AI.BurstBFSDistanceJob.Execute
+  - Core.AI.BurstBFSDistanceJob.adjacencyData
+  - Core.AI.BurstBFSDistanceJob.bfsQueue
+  - Core.AI.BurstBFSDistanceJob.countryDistances
+  - Core.AI.BurstBFSDistanceJob.maxDistance
+  - Core.AI.BurstBFSDistanceJob.playerCountryID
+  - Core.AI.BurstBFSDistanceJob.playerProvinces
+  - Core.AI.BurstBFSDistanceJob.provinceData
+  - Core.AI.BurstBFSDistanceJob.provinceDistances
+  langs:
+  - csharp
+  - vb
+  name: BurstBFSDistanceJob
+  nameWithType: BurstBFSDistanceJob
+  fullName: Core.AI.BurstBFSDistanceJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BurstBFSDistanceJob
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Burst-compiled BFS job for distance calculation.
+
+    Traverses the province adjacency graph from player provinces.
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile]
+
+      public struct BurstBFSDistanceJob
+    content.vb: >-
+      <BurstCompile>
+
+      Public Structure BurstBFSDistanceJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+- uid: Core.AI.BurstBFSDistanceJob.playerCountryID
+  commentId: F:Core.AI.BurstBFSDistanceJob.playerCountryID
+  id: playerCountryID
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: playerCountryID
+  nameWithType: BurstBFSDistanceJob.playerCountryID
+  fullName: Core.AI.BurstBFSDistanceJob.playerCountryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: playerCountryID
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public ushort playerCountryID
+    return:
+      type: System.UInt16
+    content.vb: Public playerCountryID As UShort
+- uid: Core.AI.BurstBFSDistanceJob.playerProvinces
+  commentId: F:Core.AI.BurstBFSDistanceJob.playerProvinces
+  id: playerProvinces
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: playerProvinces
+  nameWithType: BurstBFSDistanceJob.playerProvinces
+  fullName: Core.AI.BurstBFSDistanceJob.playerProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: playerProvinces
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 182
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeArray<ushort> playerProvinces
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public playerProvinces As NativeArray(Of UShort)
+- uid: Core.AI.BurstBFSDistanceJob.provinceData
+  commentId: F:Core.AI.BurstBFSDistanceJob.provinceData
+  id: provinceData
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: provinceData
+  nameWithType: BurstBFSDistanceJob.provinceData
+  fullName: Core.AI.BurstBFSDistanceJob.provinceData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceData
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 183
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeProvinceData provinceData
+    return:
+      type: Core.Systems.NativeProvinceData
+    content.vb: Public provinceData As NativeProvinceData
+- uid: Core.AI.BurstBFSDistanceJob.adjacencyData
+  commentId: F:Core.AI.BurstBFSDistanceJob.adjacencyData
+  id: adjacencyData
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: adjacencyData
+  nameWithType: BurstBFSDistanceJob.adjacencyData
+  fullName: Core.AI.BurstBFSDistanceJob.adjacencyData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: adjacencyData
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeAdjacencyData adjacencyData
+    return:
+      type: Core.Systems.NativeAdjacencyData
+    content.vb: Public adjacencyData As NativeAdjacencyData
+- uid: Core.AI.BurstBFSDistanceJob.provinceDistances
+  commentId: F:Core.AI.BurstBFSDistanceJob.provinceDistances
+  id: provinceDistances
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: provinceDistances
+  nameWithType: BurstBFSDistanceJob.provinceDistances
+  fullName: Core.AI.BurstBFSDistanceJob.provinceDistances
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceDistances
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 186
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeArray<byte> provinceDistances
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public provinceDistances As NativeArray(Of Byte)
+- uid: Core.AI.BurstBFSDistanceJob.countryDistances
+  commentId: F:Core.AI.BurstBFSDistanceJob.countryDistances
+  id: countryDistances
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: countryDistances
+  nameWithType: BurstBFSDistanceJob.countryDistances
+  fullName: Core.AI.BurstBFSDistanceJob.countryDistances
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: countryDistances
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 187
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeArray<byte> countryDistances
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public countryDistances As NativeArray(Of Byte)
+- uid: Core.AI.BurstBFSDistanceJob.bfsQueue
+  commentId: F:Core.AI.BurstBFSDistanceJob.bfsQueue
+  id: bfsQueue
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: bfsQueue
+  nameWithType: BurstBFSDistanceJob.bfsQueue
+  fullName: Core.AI.BurstBFSDistanceJob.bfsQueue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: bfsQueue
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public NativeList<ushort> bfsQueue
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public bfsQueue As NativeList(Of UShort)
+- uid: Core.AI.BurstBFSDistanceJob.maxDistance
+  commentId: F:Core.AI.BurstBFSDistanceJob.maxDistance
+  id: maxDistance
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: maxDistance
+  nameWithType: BurstBFSDistanceJob.maxDistance
+  fullName: Core.AI.BurstBFSDistanceJob.maxDistance
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: maxDistance
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 189
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public byte maxDistance
+    return:
+      type: System.Byte
+    content.vb: Public maxDistance As Byte
+- uid: Core.AI.BurstBFSDistanceJob.Execute
+  commentId: M:Core.AI.BurstBFSDistanceJob.Execute
+  id: Execute
+  parent: Core.AI.BurstBFSDistanceJob
+  langs:
+  - csharp
+  - vb
+  name: Execute()
+  nameWithType: BurstBFSDistanceJob.Execute()
+  fullName: Core.AI.BurstBFSDistanceJob.Execute()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIDistanceCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/AI/AIDistanceCalculator.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: <p>Implement this method to perform work on a worker thread.</p>
+  example: []
+  syntax:
+    content: public void Execute()
+    content.vb: Public Sub Execute()
+  overload: Core.AI.BurstBFSDistanceJob.Execute*
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Systems.NativeProvinceData
+  commentId: T:Core.Systems.NativeProvinceData
+  parent: Core.Systems
+  href: Core.Systems.NativeProvinceData.html
+  name: NativeProvinceData
+  nameWithType: NativeProvinceData
+  fullName: Core.Systems.NativeProvinceData
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Systems.NativeAdjacencyData
+  commentId: T:Core.Systems.NativeAdjacencyData
+  parent: Core.Systems
+  href: Core.Systems.NativeAdjacencyData.html
+  name: NativeAdjacencyData
+  nameWithType: NativeAdjacencyData
+  fullName: Core.Systems.NativeAdjacencyData
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.AI.BurstBFSDistanceJob.Execute*
+  commentId: Overload:Core.AI.BurstBFSDistanceJob.Execute
+  href: Core.AI.BurstBFSDistanceJob.html#Core_AI_BurstBFSDistanceJob_Execute
+  name: Execute
+  nameWithType: BurstBFSDistanceJob.Execute
+  fullName: Core.AI.BurstBFSDistanceJob.Execute

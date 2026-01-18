@@ -1,0 +1,303 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  id: Map.Loading
+  children:
+  - Map.Loading.DetailTextureArrayLoader
+  - Map.Loading.IMapDataProvider
+  - Map.Loading.MapDataLoader
+  - Map.Loading.NoiseTextureGenerator
+  - Map.Loading.ProvinceMapLoader
+  - Map.Loading.ProvinceMapLoader.LoadResult
+  - Map.Loading.ProvinceMapLoader.ProvincePixel
+  - Map.Loading.ProvinceMapProcessor
+  - Map.Loading.ProvinceMapProcessor.BMPData
+  - Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  - Map.Loading.ProvinceMapProcessor.ProcessingProgress
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  - Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  - Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  - Map.Loading.TerrainTypeTextureGenerator
+  langs:
+  - csharp
+  - vb
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Loading.MapDataLoader
+  commentId: T:Map.Loading.MapDataLoader
+  parent: Map.Loading
+  href: Map.Loading.MapDataLoader.html
+  name: MapDataLoader
+  nameWithType: MapDataLoader
+  fullName: Map.Loading.MapDataLoader
+- uid: Map.Loading.DetailTextureArrayLoader
+  commentId: T:Map.Loading.DetailTextureArrayLoader
+  href: Map.Loading.DetailTextureArrayLoader.html
+  name: DetailTextureArrayLoader
+  nameWithType: DetailTextureArrayLoader
+  fullName: Map.Loading.DetailTextureArrayLoader
+- uid: Map.Loading.ProvinceMapProcessor
+  commentId: T:Map.Loading.ProvinceMapProcessor
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor
+  nameWithType: ProvinceMapProcessor
+  fullName: Map.Loading.ProvinceMapProcessor
+- uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProcessingProgress
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProcessingProgress
+  nameWithType: ProvinceMapProcessor.ProcessingProgress
+  fullName: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+    name: ProcessingProgress
+    href: Map.Loading.ProvinceMapProcessor.ProcessingProgress.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+    name: ProcessingProgress
+    href: Map.Loading.ProvinceMapProcessor.ProcessingProgress.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceMapResult
+  nameWithType: ProvinceMapProcessor.ProvinceMapResult
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMapResult.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPData
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPData
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.BMPData
+  nameWithType: ProvinceMapProcessor.BMPData
+  fullName: Map.Loading.ProvinceMapProcessor.BMPData
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: BMPData
+    href: Map.Loading.ProvinceMapProcessor.BMPData.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.BMPPixelDataWrapper
+  nameWithType: ProvinceMapProcessor.BMPPixelDataWrapper
+  fullName: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    name: BMPPixelDataWrapper
+    href: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    name: BMPPixelDataWrapper
+    href: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceMappings
+  nameWithType: ProvinceMapProcessor.ProvinceMappings
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    name: ProvinceMappings
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMappings.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    name: ProvinceMappings
+    href: Map.Loading.ProvinceMapProcessor.ProvinceMappings.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceDefinitions
+  nameWithType: ProvinceMapProcessor.ProvinceDefinitions
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    name: ProvinceDefinitions
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    name: ProvinceDefinitions
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions.html
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  href: Map.Loading.ProvinceMapProcessor.html
+  name: ProvinceMapProcessor.ProvinceDefinition
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+    name: ProvinceDefinition
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    href: Map.Loading.ProvinceMapProcessor.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+    name: ProvinceDefinition
+    href: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.html
+- uid: Map.Loading.IMapDataProvider
+  commentId: T:Map.Loading.IMapDataProvider
+  parent: Map.Loading
+  href: Map.Loading.IMapDataProvider.html
+  name: IMapDataProvider
+  nameWithType: IMapDataProvider
+  fullName: Map.Loading.IMapDataProvider
+- uid: Map.Loading.ProvinceMapLoader
+  commentId: T:Map.Loading.ProvinceMapLoader
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader
+  nameWithType: ProvinceMapLoader
+  fullName: Map.Loading.ProvinceMapLoader
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: Map.Loading.ProvinceMapLoader.ProvincePixel
+  commentId: T:Map.Loading.ProvinceMapLoader.ProvincePixel
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.ProvincePixel
+  nameWithType: ProvinceMapLoader.ProvincePixel
+  fullName: Map.Loading.ProvinceMapLoader.ProvincePixel
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.ProvincePixel
+    name: ProvincePixel
+    href: Map.Loading.ProvinceMapLoader.ProvincePixel.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.ProvincePixel
+    name: ProvincePixel
+    href: Map.Loading.ProvinceMapLoader.ProvincePixel.html
+- uid: Map.Loading.NoiseTextureGenerator
+  commentId: T:Map.Loading.NoiseTextureGenerator
+  href: Map.Loading.NoiseTextureGenerator.html
+  name: NoiseTextureGenerator
+  nameWithType: NoiseTextureGenerator
+  fullName: Map.Loading.NoiseTextureGenerator
+- uid: Map.Loading.TerrainTypeTextureGenerator
+  commentId: T:Map.Loading.TerrainTypeTextureGenerator
+  href: Map.Loading.TerrainTypeTextureGenerator.html
+  name: TerrainTypeTextureGenerator
+  nameWithType: TerrainTypeTextureGenerator
+  fullName: Map.Loading.TerrainTypeTextureGenerator
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html

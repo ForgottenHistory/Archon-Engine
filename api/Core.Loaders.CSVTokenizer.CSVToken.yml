@@ -1,0 +1,351 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVTokenizer.CSVToken
+  commentId: T:Core.Loaders.CSVTokenizer.CSVToken
+  id: CSVTokenizer.CSVToken
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVTokenizer.CSVToken.Column
+  - Core.Loaders.CSVTokenizer.CSVToken.Create(Core.Loaders.CSVTokenizer.CSVTokenType,Unity.Collections.NativeSlice{System.Byte},System.Int32,System.Int32)
+  - Core.Loaders.CSVTokenizer.CSVToken.Data
+  - Core.Loaders.CSVTokenizer.CSVToken.Row
+  - Core.Loaders.CSVTokenizer.CSVToken.Type
+  langs:
+  - csharp
+  - vb
+  name: CSVTokenizer.CSVToken
+  nameWithType: CSVTokenizer.CSVToken
+  fullName: Core.Loaders.CSVTokenizer.CSVToken
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVToken
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: A single CSV token
+  example: []
+  syntax:
+    content: public struct CSVTokenizer.CSVToken
+    content.vb: Public Structure CSVTokenizer.CSVToken
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Type
+  commentId: F:Core.Loaders.CSVTokenizer.CSVToken.Type
+  id: Type
+  parent: Core.Loaders.CSVTokenizer.CSVToken
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: CSVTokenizer.CSVToken.Type
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public CSVTokenizer.CSVTokenType Type
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+    content.vb: Public Type As CSVTokenizer.CSVTokenType
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Data
+  commentId: F:Core.Loaders.CSVTokenizer.CSVToken.Data
+  id: Data
+  parent: Core.Loaders.CSVTokenizer.CSVToken
+  langs:
+  - csharp
+  - vb
+  name: Data
+  nameWithType: CSVTokenizer.CSVToken.Data
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Data
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Data
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeSlice<byte> Data
+    return:
+      type: Unity.Collections.NativeSlice{System.Byte}
+    content.vb: Public Data As NativeSlice(Of Byte)
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Row
+  commentId: F:Core.Loaders.CSVTokenizer.CSVToken.Row
+  id: Row
+  parent: Core.Loaders.CSVTokenizer.CSVToken
+  langs:
+  - csharp
+  - vb
+  name: Row
+  nameWithType: CSVTokenizer.CSVToken.Row
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Row
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Row
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int Row
+    return:
+      type: System.Int32
+    content.vb: Public Row As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Column
+  commentId: F:Core.Loaders.CSVTokenizer.CSVToken.Column
+  id: Column
+  parent: Core.Loaders.CSVTokenizer.CSVToken
+  langs:
+  - csharp
+  - vb
+  name: Column
+  nameWithType: CSVTokenizer.CSVToken.Column
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Column
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Column
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int Column
+    return:
+      type: System.Int32
+    content.vb: Public Column As Integer
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Create(Core.Loaders.CSVTokenizer.CSVTokenType,Unity.Collections.NativeSlice{System.Byte},System.Int32,System.Int32)
+  commentId: M:Core.Loaders.CSVTokenizer.CSVToken.Create(Core.Loaders.CSVTokenizer.CSVTokenType,Unity.Collections.NativeSlice{System.Byte},System.Int32,System.Int32)
+  id: Create(Core.Loaders.CSVTokenizer.CSVTokenType,Unity.Collections.NativeSlice{System.Byte},System.Int32,System.Int32)
+  parent: Core.Loaders.CSVTokenizer.CSVToken
+  langs:
+  - csharp
+  - vb
+  name: Create(CSVTokenType, NativeSlice<byte>, int, int)
+  nameWithType: CSVTokenizer.CSVToken.Create(CSVTokenizer.CSVTokenType, NativeSlice<byte>, int, int)
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Create(Core.Loaders.CSVTokenizer.CSVTokenType, Unity.Collections.NativeSlice<byte>, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static CSVTokenizer.CSVToken Create(CSVTokenizer.CSVTokenType type, NativeSlice<byte> data, int row, int column)
+    parameters:
+    - id: type
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+    - id: data
+      type: Unity.Collections.NativeSlice{System.Byte}
+    - id: row
+      type: System.Int32
+    - id: column
+      type: System.Int32
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVToken
+    content.vb: Public Shared Function Create(type As CSVTokenizer.CSVTokenType, data As NativeSlice(Of Byte), row As Integer, column As Integer) As CSVTokenizer.CSVToken
+  overload: Core.Loaders.CSVTokenizer.CSVToken.Create*
+  nameWithType.vb: CSVTokenizer.CSVToken.Create(CSVTokenizer.CSVTokenType, NativeSlice(Of Byte), Integer, Integer)
+  fullName.vb: Core.Loaders.CSVTokenizer.CSVToken.Create(Core.Loaders.CSVTokenizer.CSVTokenType, Unity.Collections.NativeSlice(Of Byte), Integer, Integer)
+  name.vb: Create(CSVTokenType, NativeSlice(Of Byte), Integer, Integer)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenType
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVTokenType
+  nameWithType: CSVTokenizer.CSVTokenType
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html
+- uid: Unity.Collections.NativeSlice{System.Byte}
+  commentId: T:Unity.Collections.NativeSlice{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  name: NativeSlice<byte>
+  nameWithType: NativeSlice<byte>
+  fullName: Unity.Collections.NativeSlice<byte>
+  nameWithType.vb: NativeSlice(Of Byte)
+  fullName.vb: Unity.Collections.NativeSlice(Of Byte)
+  name.vb: NativeSlice(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.CSVTokenizer.CSVToken.Create*
+  commentId: Overload:Core.Loaders.CSVTokenizer.CSVToken.Create
+  href: Core.Loaders.CSVTokenizer.CSVToken.html#Core_Loaders_CSVTokenizer_CSVToken_Create_Core_Loaders_CSVTokenizer_CSVTokenType_Unity_Collections_NativeSlice_System_Byte__System_Int32_System_Int32_
+  name: Create
+  nameWithType: CSVTokenizer.CSVToken.Create
+  fullName: Core.Loaders.CSVTokenizer.CSVToken.Create
+- uid: Core.Loaders.CSVTokenizer.CSVToken
+  commentId: T:Core.Loaders.CSVTokenizer.CSVToken
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVToken
+  nameWithType: CSVTokenizer.CSVToken
+  fullName: Core.Loaders.CSVTokenizer.CSVToken
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVToken
+    name: CSVToken
+    href: Core.Loaders.CSVTokenizer.CSVToken.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVToken
+    name: CSVToken
+    href: Core.Loaders.CSVTokenizer.CSVToken.html

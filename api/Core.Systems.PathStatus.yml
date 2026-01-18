@@ -1,0 +1,263 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.PathStatus
+  commentId: T:Core.Systems.PathStatus
+  id: PathStatus
+  parent: Core.Systems
+  children:
+  - Core.Systems.PathStatus.Found
+  - Core.Systems.PathStatus.InvalidGoal
+  - Core.Systems.PathStatus.InvalidStart
+  - Core.Systems.PathStatus.NotFound
+  - Core.Systems.PathStatus.NotInitialized
+  - Core.Systems.PathStatus.Timeout
+  - Core.Systems.PathStatus.TooLong
+  langs:
+  - csharp
+  - vb
+  name: PathStatus
+  nameWithType: PathStatus
+  fullName: Core.Systems.PathStatus
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathStatus
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Status codes for pathfinding results.
+  example: []
+  syntax:
+    content: public enum PathStatus
+    content.vb: Public Enum PathStatus
+- uid: Core.Systems.PathStatus.Found
+  commentId: F:Core.Systems.PathStatus.Found
+  id: Found
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: Found
+  nameWithType: PathStatus.Found
+  fullName: Core.Systems.PathStatus.Found
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Found
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Path found successfully
+  example: []
+  syntax:
+    content: Found = 0
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.NotFound
+  commentId: F:Core.Systems.PathStatus.NotFound
+  id: NotFound
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: NotFound
+  nameWithType: PathStatus.NotFound
+  fullName: Core.Systems.PathStatus.NotFound
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NotFound
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: No path exists between start and goal
+  example: []
+  syntax:
+    content: NotFound = 1
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.InvalidStart
+  commentId: F:Core.Systems.PathStatus.InvalidStart
+  id: InvalidStart
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: InvalidStart
+  nameWithType: PathStatus.InvalidStart
+  fullName: Core.Systems.PathStatus.InvalidStart
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidStart
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 194
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Start province is invalid
+  example: []
+  syntax:
+    content: InvalidStart = 2
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.InvalidGoal
+  commentId: F:Core.Systems.PathStatus.InvalidGoal
+  id: InvalidGoal
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: InvalidGoal
+  nameWithType: PathStatus.InvalidGoal
+  fullName: Core.Systems.PathStatus.InvalidGoal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidGoal
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Goal province is invalid
+  example: []
+  syntax:
+    content: InvalidGoal = 3
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.TooLong
+  commentId: F:Core.Systems.PathStatus.TooLong
+  id: TooLong
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: TooLong
+  nameWithType: PathStatus.TooLong
+  fullName: Core.Systems.PathStatus.TooLong
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TooLong
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Path exceeds maximum length
+  example: []
+  syntax:
+    content: TooLong = 4
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.NotInitialized
+  commentId: F:Core.Systems.PathStatus.NotInitialized
+  id: NotInitialized
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: NotInitialized
+  nameWithType: PathStatus.NotInitialized
+  fullName: Core.Systems.PathStatus.NotInitialized
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NotInitialized
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: System not initialized
+  example: []
+  syntax:
+    content: NotInitialized = 5
+    return:
+      type: Core.Systems.PathStatus
+- uid: Core.Systems.PathStatus.Timeout
+  commentId: F:Core.Systems.PathStatus.Timeout
+  id: Timeout
+  parent: Core.Systems.PathStatus
+  langs:
+  - csharp
+  - vb
+  name: Timeout
+  nameWithType: PathStatus.Timeout
+  fullName: Core.Systems.PathStatus.Timeout
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Timeout
+    path: Scripts/Core/Systems/Pathfinding/PathOptions.cs
+    startLine: 206
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Search timeout exceeded
+  example: []
+  syntax:
+    content: Timeout = 6
+    return:
+      type: Core.Systems.PathStatus
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Systems.PathStatus
+  commentId: T:Core.Systems.PathStatus
+  parent: Core.Systems
+  href: Core.Systems.PathStatus.html
+  name: PathStatus
+  nameWithType: PathStatus
+  fullName: Core.Systems.PathStatus

@@ -1,0 +1,320 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVParser.CSVRow
+  commentId: T:Core.Loaders.CSVParser.CSVRow
+  id: CSVParser.CSVRow
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVParser.CSVRow.Create(System.Int32,Unity.Collections.Allocator)
+  - Core.Loaders.CSVParser.CSVRow.Dispose
+  - Core.Loaders.CSVParser.CSVRow.FieldCount
+  - Core.Loaders.CSVParser.CSVRow.Fields
+  langs:
+  - csharp
+  - vb
+  name: CSVParser.CSVRow
+  nameWithType: CSVParser.CSVRow
+  fullName: Core.Loaders.CSVParser.CSVRow
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVRow
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: A single CSV row
+  example: []
+  syntax:
+    content: public struct CSVParser.CSVRow
+    content.vb: Public Structure CSVParser.CSVRow
+- uid: Core.Loaders.CSVParser.CSVRow.Fields
+  commentId: F:Core.Loaders.CSVParser.CSVRow.Fields
+  id: Fields
+  parent: Core.Loaders.CSVParser.CSVRow
+  langs:
+  - csharp
+  - vb
+  name: Fields
+  nameWithType: CSVParser.CSVRow.Fields
+  fullName: Core.Loaders.CSVParser.CSVRow.Fields
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Fields
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 55
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public NativeArray<NativeSlice<byte>> Fields
+    return:
+      type: Unity.Collections.NativeArray{Unity.Collections.NativeSlice{System.Byte}}
+    content.vb: Public Fields As NativeArray(Of NativeSlice(Of Byte))
+- uid: Core.Loaders.CSVParser.CSVRow.FieldCount
+  commentId: F:Core.Loaders.CSVParser.CSVRow.FieldCount
+  id: FieldCount
+  parent: Core.Loaders.CSVParser.CSVRow
+  langs:
+  - csharp
+  - vb
+  name: FieldCount
+  nameWithType: CSVParser.CSVRow.FieldCount
+  fullName: Core.Loaders.CSVParser.CSVRow.FieldCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FieldCount
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int FieldCount
+    return:
+      type: System.Int32
+    content.vb: Public FieldCount As Integer
+- uid: Core.Loaders.CSVParser.CSVRow.Dispose
+  commentId: M:Core.Loaders.CSVParser.CSVRow.Dispose
+  id: Dispose
+  parent: Core.Loaders.CSVParser.CSVRow
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CSVParser.CSVRow.Dispose()
+  fullName: Core.Loaders.CSVParser.CSVRow.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Loaders.CSVParser.CSVRow.Dispose*
+- uid: Core.Loaders.CSVParser.CSVRow.Create(System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Loaders.CSVParser.CSVRow.Create(System.Int32,Unity.Collections.Allocator)
+  id: Create(System.Int32,Unity.Collections.Allocator)
+  parent: Core.Loaders.CSVParser.CSVRow
+  langs:
+  - csharp
+  - vb
+  name: Create(int, Allocator)
+  nameWithType: CSVParser.CSVRow.Create(int, Allocator)
+  fullName: Core.Loaders.CSVParser.CSVRow.Create(int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 63
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public static CSVParser.CSVRow Create(int columnCount, Allocator allocator)
+    parameters:
+    - id: columnCount
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Loaders.CSVParser.CSVRow
+    content.vb: Public Shared Function Create(columnCount As Integer, allocator As Allocator) As CSVParser.CSVRow
+  overload: Core.Loaders.CSVParser.CSVRow.Create*
+  nameWithType.vb: CSVParser.CSVRow.Create(Integer, Allocator)
+  fullName.vb: Core.Loaders.CSVParser.CSVRow.Create(Integer, Unity.Collections.Allocator)
+  name.vb: Create(Integer, Allocator)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: Unity.Collections.NativeArray{Unity.Collections.NativeSlice{System.Byte}}
+  commentId: T:Unity.Collections.NativeArray{Unity.Collections.NativeSlice{System.Byte}}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<NativeSlice<byte>>
+  nameWithType: NativeArray<NativeSlice<byte>>
+  fullName: Unity.Collections.NativeArray<Unity.Collections.NativeSlice<byte>>
+  nameWithType.vb: NativeArray(Of NativeSlice(Of Byte))
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Collections.NativeSlice(Of Byte))
+  name.vb: NativeArray(Of NativeSlice(Of Byte))
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.CSVParser.CSVRow.Dispose*
+  commentId: Overload:Core.Loaders.CSVParser.CSVRow.Dispose
+  href: Core.Loaders.CSVParser.CSVRow.html#Core_Loaders_CSVParser_CSVRow_Dispose
+  name: Dispose
+  nameWithType: CSVParser.CSVRow.Dispose
+  fullName: Core.Loaders.CSVParser.CSVRow.Dispose
+- uid: Core.Loaders.CSVParser.CSVRow.Create*
+  commentId: Overload:Core.Loaders.CSVParser.CSVRow.Create
+  href: Core.Loaders.CSVParser.CSVRow.html#Core_Loaders_CSVParser_CSVRow_Create_System_Int32_Unity_Collections_Allocator_
+  name: Create
+  nameWithType: CSVParser.CSVRow.Create
+  fullName: Core.Loaders.CSVParser.CSVRow.Create
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Loaders.CSVParser.CSVRow
+  commentId: T:Core.Loaders.CSVParser.CSVRow
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVRow
+  nameWithType: CSVParser.CSVRow
+  fullName: Core.Loaders.CSVParser.CSVRow
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html

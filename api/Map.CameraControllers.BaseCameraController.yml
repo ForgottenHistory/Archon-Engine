@@ -1,0 +1,1852 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.CameraControllers.BaseCameraController
+  commentId: T:Map.CameraControllers.BaseCameraController
+  id: BaseCameraController
+  parent: Map.CameraControllers
+  children:
+  - Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  - Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  - Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  - Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  - Map.CameraControllers.BaseCameraController.GetCameraBounds
+  - Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  - Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  - Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  - Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  - Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  - Map.CameraControllers.BaseCameraController.Initialize
+  - Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  - Map.CameraControllers.BaseCameraController.SetupCamera
+  - Map.CameraControllers.BaseCameraController.actualMapHeight
+  - Map.CameraControllers.BaseCameraController.actualMapWidth
+  - Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  - Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  - Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  - Map.CameraControllers.BaseCameraController.currentZoom
+  - Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  - Map.CameraControllers.BaseCameraController.dragSpeed
+  - Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  - Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  - Map.CameraControllers.BaseCameraController.enableArrowKeys
+  - Map.CameraControllers.BaseCameraController.enableDragScroll
+  - Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  - Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  - Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  - Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  - Map.CameraControllers.BaseCameraController.isInitialized
+  - Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  - Map.CameraControllers.BaseCameraController.mapCamera
+  - Map.CameraControllers.BaseCameraController.mapMaterial
+  - Map.CameraControllers.BaseCameraController.mapPlane
+  - Map.CameraControllers.BaseCameraController.mapWorldHeight
+  - Map.CameraControllers.BaseCameraController.mapWorldWidth
+  - Map.CameraControllers.BaseCameraController.maxZoom
+  - Map.CameraControllers.BaseCameraController.minZoom
+  - Map.CameraControllers.BaseCameraController.positionSmoothTime
+  - Map.CameraControllers.BaseCameraController.positionVelocity
+  - Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  - Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  - Map.CameraControllers.BaseCameraController.targetPosition
+  - Map.CameraControllers.BaseCameraController.targetZoom
+  - Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  - Map.CameraControllers.BaseCameraController.zoomSpeed
+  - Map.CameraControllers.BaseCameraController.zoomToCursor
+  - Map.CameraControllers.BaseCameraController.zoomVelocity
+  langs:
+  - csharp
+  - vb
+  name: BaseCameraController
+  nameWithType: BaseCameraController
+  fullName: Map.CameraControllers.BaseCameraController
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BaseCameraController
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: >-
+    ENGINE LAYER: Base class for grand strategy camera controllers
+
+    Provides shared functionality: pan, drag, edge scroll, wrapping, smooth movement
+
+    Derived classes implement specific projection modes (orthographic vs perspective)
+  example: []
+  syntax:
+    content: 'public abstract class BaseCameraController : MonoBehaviour'
+    content.vb: Public MustInherit Class BaseCameraController Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  derivedClasses:
+  - Map.CameraControllers.OrthographicCameraController
+  - Map.CameraControllers.PerspectiveCameraController
+- uid: Map.CameraControllers.BaseCameraController.mapPlane
+  commentId: F:Map.CameraControllers.BaseCameraController.mapPlane
+  id: mapPlane
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: mapPlane
+  nameWithType: BaseCameraController.mapPlane
+  fullName: Map.CameraControllers.BaseCameraController.mapPlane
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: mapPlane
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Map References")]
+
+      public GameObject mapPlane
+    return:
+      type: UnityEngine.GameObject
+    content.vb: >-
+      <Header("Map References")>
+
+      Public mapPlane As GameObject
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Map References
+- uid: Map.CameraControllers.BaseCameraController.mapWorldWidth
+  commentId: F:Map.CameraControllers.BaseCameraController.mapWorldWidth
+  id: mapWorldWidth
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: mapWorldWidth
+  nameWithType: BaseCameraController.mapWorldWidth
+  fullName: Map.CameraControllers.BaseCameraController.mapWorldWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: mapWorldWidth
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float mapWorldWidth
+    return:
+      type: System.Single
+    content.vb: Public mapWorldWidth As Single
+- uid: Map.CameraControllers.BaseCameraController.mapWorldHeight
+  commentId: F:Map.CameraControllers.BaseCameraController.mapWorldHeight
+  id: mapWorldHeight
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: mapWorldHeight
+  nameWithType: BaseCameraController.mapWorldHeight
+  fullName: Map.CameraControllers.BaseCameraController.mapWorldHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: mapWorldHeight
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float mapWorldHeight
+    return:
+      type: System.Single
+    content.vb: Public mapWorldHeight As Single
+- uid: Map.CameraControllers.BaseCameraController.mapCamera
+  commentId: F:Map.CameraControllers.BaseCameraController.mapCamera
+  id: mapCamera
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: mapCamera
+  nameWithType: BaseCameraController.mapCamera
+  fullName: Map.CameraControllers.BaseCameraController.mapCamera
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: mapCamera
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Camera Settings")]
+
+      public Camera mapCamera
+    return:
+      type: UnityEngine.Camera
+    content.vb: >-
+      <Header("Camera Settings")>
+
+      Public mapCamera As Camera
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Camera Settings
+- uid: Map.CameraControllers.BaseCameraController.minZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.minZoom
+  id: minZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: minZoom
+  nameWithType: BaseCameraController.minZoom
+  fullName: Map.CameraControllers.BaseCameraController.minZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: minZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float minZoom
+    return:
+      type: System.Single
+    content.vb: Public minZoom As Single
+- uid: Map.CameraControllers.BaseCameraController.maxZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.maxZoom
+  id: maxZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: maxZoom
+  nameWithType: BaseCameraController.maxZoom
+  fullName: Map.CameraControllers.BaseCameraController.maxZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: maxZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float maxZoom
+    return:
+      type: System.Single
+    content.vb: Public maxZoom As Single
+- uid: Map.CameraControllers.BaseCameraController.zoomSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomSpeed
+  id: zoomSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: zoomSpeed
+  nameWithType: BaseCameraController.zoomSpeed
+  fullName: Map.CameraControllers.BaseCameraController.zoomSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: zoomSpeed
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float zoomSpeed
+    return:
+      type: System.Single
+    content.vb: Public zoomSpeed As Single
+- uid: Map.CameraControllers.BaseCameraController.currentZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.currentZoom
+  id: currentZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: currentZoom
+  nameWithType: BaseCameraController.currentZoom
+  fullName: Map.CameraControllers.BaseCameraController.currentZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: currentZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float currentZoom
+    return:
+      type: System.Single
+    content.vb: Public currentZoom As Single
+- uid: Map.CameraControllers.BaseCameraController.dragSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.dragSpeed
+  id: dragSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: dragSpeed
+  nameWithType: BaseCameraController.dragSpeed
+  fullName: Map.CameraControllers.BaseCameraController.dragSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: dragSpeed
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Scrolling Settings")]
+
+      public float dragSpeed
+    return:
+      type: System.Single
+    content.vb: >-
+      <Header("Scrolling Settings")>
+
+      Public dragSpeed As Single
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Scrolling Settings
+- uid: Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  id: edgeScrollSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: edgeScrollSpeed
+  nameWithType: BaseCameraController.edgeScrollSpeed
+  fullName: Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: edgeScrollSpeed
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float edgeScrollSpeed
+    return:
+      type: System.Single
+    content.vb: Public edgeScrollSpeed As Single
+- uid: Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  commentId: F:Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  id: edgeScrollBorder
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: edgeScrollBorder
+  nameWithType: BaseCameraController.edgeScrollBorder
+  fullName: Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: edgeScrollBorder
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float edgeScrollBorder
+    return:
+      type: System.Single
+    content.vb: Public edgeScrollBorder As Single
+- uid: Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  id: arrowKeySpeed
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: arrowKeySpeed
+  nameWithType: BaseCameraController.arrowKeySpeed
+  fullName: Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: arrowKeySpeed
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public float arrowKeySpeed
+    return:
+      type: System.Single
+    content.vb: Public arrowKeySpeed As Single
+- uid: Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  commentId: F:Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  id: enableEdgeScroll
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: enableEdgeScroll
+  nameWithType: BaseCameraController.enableEdgeScroll
+  fullName: Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableEdgeScroll
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public bool enableEdgeScroll
+    return:
+      type: System.Boolean
+    content.vb: Public enableEdgeScroll As Boolean
+- uid: Map.CameraControllers.BaseCameraController.enableDragScroll
+  commentId: F:Map.CameraControllers.BaseCameraController.enableDragScroll
+  id: enableDragScroll
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: enableDragScroll
+  nameWithType: BaseCameraController.enableDragScroll
+  fullName: Map.CameraControllers.BaseCameraController.enableDragScroll
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableDragScroll
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public bool enableDragScroll
+    return:
+      type: System.Boolean
+    content.vb: Public enableDragScroll As Boolean
+- uid: Map.CameraControllers.BaseCameraController.enableArrowKeys
+  commentId: F:Map.CameraControllers.BaseCameraController.enableArrowKeys
+  id: enableArrowKeys
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: enableArrowKeys
+  nameWithType: BaseCameraController.enableArrowKeys
+  fullName: Map.CameraControllers.BaseCameraController.enableArrowKeys
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableArrowKeys
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public bool enableArrowKeys
+    return:
+      type: System.Boolean
+    content.vb: Public enableArrowKeys As Boolean
+- uid: Map.CameraControllers.BaseCameraController.positionSmoothTime
+  commentId: F:Map.CameraControllers.BaseCameraController.positionSmoothTime
+  id: positionSmoothTime
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: positionSmoothTime
+  nameWithType: BaseCameraController.positionSmoothTime
+  fullName: Map.CameraControllers.BaseCameraController.positionSmoothTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: positionSmoothTime
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Smooth Movement")]
+
+      [Tooltip("Smoothing for camera position (0 = instant, higher = smoother)")]
+
+      [Range(0, 0.5)]
+
+      public float positionSmoothTime
+    return:
+      type: System.Single
+    content.vb: >-
+      <Header("Smooth Movement")>
+
+      <Tooltip("Smoothing for camera position (0 = instant, higher = smoother)")>
+
+      <Range(0, 0.5)>
+
+      Public positionSmoothTime As Single
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Smooth Movement
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Smoothing for camera position (0 = instant, higher = smoother)
+  - type: UnityEngine.RangeAttribute
+    ctor: UnityEngine.RangeAttribute.#ctor(System.Single,System.Single)
+    arguments:
+    - type: System.Single
+      value: 0
+    - type: System.Single
+      value: 0.5
+- uid: Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  id: zoomSmoothTime
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: zoomSmoothTime
+  nameWithType: BaseCameraController.zoomSmoothTime
+  fullName: Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: zoomSmoothTime
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Tooltip("Smoothing for zoom transitions (0 = instant, higher = smoother)")]
+
+      [Range(0, 0.5)]
+
+      public float zoomSmoothTime
+    return:
+      type: System.Single
+    content.vb: >-
+      <Tooltip("Smoothing for zoom transitions (0 = instant, higher = smoother)")>
+
+      <Range(0, 0.5)>
+
+      Public zoomSmoothTime As Single
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Smoothing for zoom transitions (0 = instant, higher = smoother)
+  - type: UnityEngine.RangeAttribute
+    ctor: UnityEngine.RangeAttribute.#ctor(System.Single,System.Single)
+    arguments:
+    - type: System.Single
+      value: 0
+    - type: System.Single
+      value: 0.5
+- uid: Map.CameraControllers.BaseCameraController.zoomToCursor
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomToCursor
+  id: zoomToCursor
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: zoomToCursor
+  nameWithType: BaseCameraController.zoomToCursor
+  fullName: Map.CameraControllers.BaseCameraController.zoomToCursor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: zoomToCursor
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Tooltip("Enable zoom-to-cursor (zoom toward mouse position instead of screen center)")]
+
+      public bool zoomToCursor
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable zoom-to-cursor (zoom toward mouse position instead of screen center)")>
+
+      Public zoomToCursor As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable zoom-to-cursor (zoom toward mouse position instead of screen center)
+- uid: Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  id: scaleSpeedWithZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: scaleSpeedWithZoom
+  nameWithType: BaseCameraController.scaleSpeedWithZoom
+  fullName: Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: scaleSpeedWithZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Tooltip("Scale movement speed with zoom level (faster when zoomed out)")]
+
+      public bool scaleSpeedWithZoom
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Scale movement speed with zoom level (faster when zoomed out)")>
+
+      Public scaleSpeedWithZoom As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Scale movement speed with zoom level (faster when zoomed out)
+- uid: Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  commentId: F:Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  id: enableHorizontalWrapping
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: enableHorizontalWrapping
+  nameWithType: BaseCameraController.enableHorizontalWrapping
+  fullName: Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableHorizontalWrapping
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Wrapping")]
+
+      public bool enableHorizontalWrapping
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Wrapping")>
+
+      Public enableHorizontalWrapping As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Wrapping
+- uid: Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  commentId: F:Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  id: clampVerticalMovement
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: clampVerticalMovement
+  nameWithType: BaseCameraController.clampVerticalMovement
+  fullName: Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: clampVerticalMovement
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public bool clampVerticalMovement
+    return:
+      type: System.Boolean
+    content.vb: Public clampVerticalMovement As Boolean
+- uid: Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  id: hideUnitsAboveZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: hideUnitsAboveZoom
+  nameWithType: BaseCameraController.hideUnitsAboveZoom
+  fullName: Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hideUnitsAboveZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Unit Visibility")]
+
+      [Tooltip("Hide unit visuals when zoomed out above this level")]
+
+      public float hideUnitsAboveZoom
+    return:
+      type: System.Single
+    content.vb: >-
+      <Header("Unit Visibility")>
+
+      <Tooltip("Hide unit visuals when zoomed out above this level")>
+
+      Public hideUnitsAboveZoom As Single
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Unit Visibility
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Hide unit visuals when zoomed out above this level
+- uid: Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  id: disableFogOfWarAboveZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: disableFogOfWarAboveZoom
+  nameWithType: BaseCameraController.disableFogOfWarAboveZoom
+  fullName: Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: disableFogOfWarAboveZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Fog of War")]
+
+      [Tooltip("Disable fog of war when zoomed out above this level (0 = always enabled)")]
+
+      public float disableFogOfWarAboveZoom
+    return:
+      type: System.Single
+    content.vb: >-
+      <Header("Fog of War")>
+
+      <Tooltip("Disable fog of war when zoomed out above this level (0 = always enabled)")>
+
+      Public disableFogOfWarAboveZoom As Single
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Fog of War
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Disable fog of war when zoomed out above this level (0 = always enabled)
+- uid: Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  commentId: F:Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  id: fogOfWarFadeTime
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: fogOfWarFadeTime
+  nameWithType: BaseCameraController.fogOfWarFadeTime
+  fullName: Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: fogOfWarFadeTime
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Tooltip("Fade transition time when enabling/disabling fog of war (0 = instant)")]
+
+      [Range(0, 2)]
+
+      public float fogOfWarFadeTime
+    return:
+      type: System.Single
+    content.vb: >-
+      <Tooltip("Fade transition time when enabling/disabling fog of war (0 = instant)")>
+
+      <Range(0, 2)>
+
+      Public fogOfWarFadeTime As Single
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Fade transition time when enabling/disabling fog of war (0 = instant)
+  - type: UnityEngine.RangeAttribute
+    ctor: UnityEngine.RangeAttribute.#ctor(System.Single,System.Single)
+    arguments:
+    - type: System.Single
+      value: 0
+    - type: System.Single
+      value: 2
+- uid: Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  commentId: F:Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  id: labelSwitchZoomThreshold
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: labelSwitchZoomThreshold
+  nameWithType: BaseCameraController.labelSwitchZoomThreshold
+  fullName: Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: labelSwitchZoomThreshold
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 64
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: >-
+      [Header("Map Labels")]
+
+      [Tooltip("Threshold for switching between province/country labels")]
+
+      public float labelSwitchZoomThreshold
+    return:
+      type: System.Single
+    content.vb: >-
+      <Header("Map Labels")>
+
+      <Tooltip("Threshold for switching between province/country labels")>
+
+      Public labelSwitchZoomThreshold As Single
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Map Labels
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Threshold for switching between province/country labels
+- uid: Map.CameraControllers.BaseCameraController.mapMaterial
+  commentId: F:Map.CameraControllers.BaseCameraController.mapMaterial
+  id: mapMaterial
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: mapMaterial
+  nameWithType: BaseCameraController.mapMaterial
+  fullName: Map.CameraControllers.BaseCameraController.mapMaterial
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: mapMaterial
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 67
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected Material mapMaterial
+    return:
+      type: UnityEngine.Material
+    content.vb: Protected mapMaterial As Material
+- uid: Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  commentId: F:Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  id: currentFogOfWarDisable
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: currentFogOfWarDisable
+  nameWithType: BaseCameraController.currentFogOfWarDisable
+  fullName: Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: currentFogOfWarDisable
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 68
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float currentFogOfWarDisable
+    return:
+      type: System.Single
+    content.vb: Protected currentFogOfWarDisable As Single
+- uid: Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  commentId: F:Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  id: targetFogOfWarDisable
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: targetFogOfWarDisable
+  nameWithType: BaseCameraController.targetFogOfWarDisable
+  fullName: Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: targetFogOfWarDisable
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float targetFogOfWarDisable
+    return:
+      type: System.Single
+    content.vb: Protected targetFogOfWarDisable As Single
+- uid: Map.CameraControllers.BaseCameraController.actualMapWidth
+  commentId: F:Map.CameraControllers.BaseCameraController.actualMapWidth
+  id: actualMapWidth
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: actualMapWidth
+  nameWithType: BaseCameraController.actualMapWidth
+  fullName: Map.CameraControllers.BaseCameraController.actualMapWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: actualMapWidth
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 76
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float actualMapWidth
+    return:
+      type: System.Single
+    content.vb: Protected actualMapWidth As Single
+- uid: Map.CameraControllers.BaseCameraController.actualMapHeight
+  commentId: F:Map.CameraControllers.BaseCameraController.actualMapHeight
+  id: actualMapHeight
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: actualMapHeight
+  nameWithType: BaseCameraController.actualMapHeight
+  fullName: Map.CameraControllers.BaseCameraController.actualMapHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: actualMapHeight
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 77
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float actualMapHeight
+    return:
+      type: System.Single
+    content.vb: Protected actualMapHeight As Single
+- uid: Map.CameraControllers.BaseCameraController.isInitialized
+  commentId: F:Map.CameraControllers.BaseCameraController.isInitialized
+  id: isInitialized
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: isInitialized
+  nameWithType: BaseCameraController.isInitialized
+  fullName: Map.CameraControllers.BaseCameraController.isInitialized
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: isInitialized
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected bool isInitialized
+    return:
+      type: System.Boolean
+    content.vb: Protected isInitialized As Boolean
+- uid: Map.CameraControllers.BaseCameraController.targetPosition
+  commentId: F:Map.CameraControllers.BaseCameraController.targetPosition
+  id: targetPosition
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: targetPosition
+  nameWithType: BaseCameraController.targetPosition
+  fullName: Map.CameraControllers.BaseCameraController.targetPosition
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: targetPosition
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected Vector3 targetPosition
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected targetPosition As Vector3
+- uid: Map.CameraControllers.BaseCameraController.positionVelocity
+  commentId: F:Map.CameraControllers.BaseCameraController.positionVelocity
+  id: positionVelocity
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: positionVelocity
+  nameWithType: BaseCameraController.positionVelocity
+  fullName: Map.CameraControllers.BaseCameraController.positionVelocity
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: positionVelocity
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 82
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected Vector3 positionVelocity
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected positionVelocity As Vector3
+- uid: Map.CameraControllers.BaseCameraController.targetZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.targetZoom
+  id: targetZoom
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: targetZoom
+  nameWithType: BaseCameraController.targetZoom
+  fullName: Map.CameraControllers.BaseCameraController.targetZoom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: targetZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 83
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float targetZoom
+    return:
+      type: System.Single
+    content.vb: Protected targetZoom As Single
+- uid: Map.CameraControllers.BaseCameraController.zoomVelocity
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomVelocity
+  id: zoomVelocity
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: zoomVelocity
+  nameWithType: BaseCameraController.zoomVelocity
+  fullName: Map.CameraControllers.BaseCameraController.zoomVelocity
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: zoomVelocity
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected float zoomVelocity
+    return:
+      type: System.Single
+    content.vb: Protected zoomVelocity As Single
+- uid: Map.CameraControllers.BaseCameraController.Initialize
+  commentId: M:Map.CameraControllers.BaseCameraController.Initialize
+  id: Initialize
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: BaseCameraController.Initialize()
+  fullName: Map.CameraControllers.BaseCameraController.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public virtual void Initialize()
+    content.vb: Public Overridable Sub Initialize()
+  overload: Map.CameraControllers.BaseCameraController.Initialize*
+- uid: Map.CameraControllers.BaseCameraController.SetupCamera
+  commentId: M:Map.CameraControllers.BaseCameraController.SetupCamera
+  id: SetupCamera
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: SetupCamera()
+  nameWithType: BaseCameraController.SetupCamera()
+  fullName: Map.CameraControllers.BaseCameraController.SetupCamera()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetupCamera
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 127
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Setup camera - derived classes override to set projection mode
+  example: []
+  syntax:
+    content: protected virtual void SetupCamera()
+    content.vb: Protected Overridable Sub SetupCamera()
+  overload: Map.CameraControllers.BaseCameraController.SetupCamera*
+- uid: Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  commentId: M:Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  id: ApplySmoothMovement
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: ApplySmoothMovement()
+  nameWithType: BaseCameraController.ApplySmoothMovement()
+  fullName: Map.CameraControllers.BaseCameraController.ApplySmoothMovement()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplySmoothMovement
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 316
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: >-
+    Apply smooth damping to camera position and zoom
+
+    Derived classes override to handle zoom application differently
+  example: []
+  syntax:
+    content: protected virtual void ApplySmoothMovement()
+    content.vb: Protected Overridable Sub ApplySmoothMovement()
+  overload: Map.CameraControllers.BaseCameraController.ApplySmoothMovement*
+- uid: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  commentId: M:Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  id: ClampVerticalPosition
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: ClampVerticalPosition()
+  nameWithType: BaseCameraController.ClampVerticalPosition()
+  fullName: Map.CameraControllers.BaseCameraController.ClampVerticalPosition()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClampVerticalPosition
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 401
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: protected virtual void ClampVerticalPosition()
+    content.vb: Protected Overridable Sub ClampVerticalPosition()
+  overload: Map.CameraControllers.BaseCameraController.ClampVerticalPosition*
+- uid: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  id: CenterCameraOn(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: CenterCameraOn(Vector3)
+  nameWithType: BaseCameraController.CenterCameraOn(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterCameraOn
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 422
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public void CenterCameraOn(Vector3 worldPosition)
+    parameters:
+    - id: worldPosition
+      type: UnityEngine.Vector3
+    content.vb: Public Sub CenterCameraOn(worldPosition As Vector3)
+  overload: Map.CameraControllers.BaseCameraController.CenterCameraOn*
+- uid: Map.CameraControllers.BaseCameraController.GetCameraBounds
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraBounds
+  id: GetCameraBounds
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraBounds()
+  nameWithType: BaseCameraController.GetCameraBounds()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraBounds()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraBounds
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 428
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  syntax:
+    content: public Bounds GetCameraBounds()
+    return:
+      type: UnityEngine.Bounds
+    content.vb: Public Function GetCameraBounds() As Bounds
+  overload: Map.CameraControllers.BaseCameraController.GetCameraBounds*
+- uid: Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  commentId: M:Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  id: ApplyZoom(System.Single)
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: ApplyZoom(float)
+  nameWithType: BaseCameraController.ApplyZoom(float)
+  fullName: Map.CameraControllers.BaseCameraController.ApplyZoom(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyZoom
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 439
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Apply zoom value to camera (orthographic size vs perspective distance/angle)
+  example: []
+  syntax:
+    content: protected abstract void ApplyZoom(float zoom)
+    parameters:
+    - id: zoom
+      type: System.Single
+    content.vb: Protected MustOverride Sub ApplyZoom(zoom As Single)
+  overload: Map.CameraControllers.BaseCameraController.ApplyZoom*
+  nameWithType.vb: BaseCameraController.ApplyZoom(Single)
+  fullName.vb: Map.CameraControllers.BaseCameraController.ApplyZoom(Single)
+  name.vb: ApplyZoom(Single)
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  id: GetCameraViewHeight
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraViewHeight()
+  nameWithType: BaseCameraController.GetCameraViewHeight()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewHeight()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraViewHeight
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 444
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get camera view height in world units
+  example: []
+  syntax:
+    content: protected abstract float GetCameraViewHeight()
+    return:
+      type: System.Single
+    content.vb: Protected MustOverride Function GetCameraViewHeight() As Single
+  overload: Map.CameraControllers.BaseCameraController.GetCameraViewHeight*
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  id: GetCameraViewWidth
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraViewWidth()
+  nameWithType: BaseCameraController.GetCameraViewWidth()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewWidth()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraViewWidth
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 449
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get camera view width in world units
+  example: []
+  syntax:
+    content: protected abstract float GetCameraViewWidth()
+    return:
+      type: System.Single
+    content.vb: Protected MustOverride Function GetCameraViewWidth() As Single
+  overload: Map.CameraControllers.BaseCameraController.GetCameraViewWidth*
+- uid: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  id: GetWorldPositionAtMouse(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetWorldPositionAtMouse(Vector3)
+  nameWithType: BaseCameraController.GetWorldPositionAtMouse(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetWorldPositionAtMouse
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 454
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get world position at mouse cursor
+  example: []
+  syntax:
+    content: protected abstract Vector3 GetWorldPositionAtMouse(Vector3 mouseScreenPos)
+    parameters:
+    - id: mouseScreenPos
+      type: UnityEngine.Vector3
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected MustOverride Function GetWorldPositionAtMouse(mouseScreenPos As Vector3) As Vector3
+  overload: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse*
+- uid: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  id: GetCameraFocusPoint
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraFocusPoint()
+  nameWithType: BaseCameraController.GetCameraFocusPoint()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraFocusPoint
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 459
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: 'Get camera focus point (orthographic: camera position, perspective: raycast to ground)'
+  example: []
+  syntax:
+    content: protected abstract Vector3 GetCameraFocusPoint()
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected MustOverride Function GetCameraFocusPoint() As Vector3
+  overload: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint*
+- uid: Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  commentId: M:Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  id: GetZoomRatio(System.Single,System.Single)
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetZoomRatio(float, float)
+  nameWithType: BaseCameraController.GetZoomRatio(float, float)
+  fullName: Map.CameraControllers.BaseCameraController.GetZoomRatio(float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetZoomRatio
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 464
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get zoom ratio between two zoom levels (for zoom-to-cursor)
+  example: []
+  syntax:
+    content: protected abstract float GetZoomRatio(float newZoom, float oldZoom)
+    parameters:
+    - id: newZoom
+      type: System.Single
+    - id: oldZoom
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Protected MustOverride Function GetZoomRatio(newZoom As Single, oldZoom As Single) As Single
+  overload: Map.CameraControllers.BaseCameraController.GetZoomRatio*
+  nameWithType.vb: BaseCameraController.GetZoomRatio(Single, Single)
+  fullName.vb: Map.CameraControllers.BaseCameraController.GetZoomRatio(Single, Single)
+  name.vb: GetZoomRatio(Single, Single)
+- uid: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  id: ScreenToWorldDelta(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  langs:
+  - csharp
+  - vb
+  name: ScreenToWorldDelta(Vector3)
+  nameWithType: BaseCameraController.ScreenToWorldDelta(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/BaseCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScreenToWorldDelta
+    path: Scripts/Map/Camera/BaseCameraController.cs
+    startLine: 469
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Convert screen space delta to world space delta (for dragging)
+  example: []
+  syntax:
+    content: protected abstract Vector3 ScreenToWorldDelta(Vector3 screenDelta)
+    parameters:
+    - id: screenDelta
+      type: UnityEngine.Vector3
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected MustOverride Function ScreenToWorldDelta(screenDelta As Vector3) As Vector3
+  overload: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta*
+references:
+- uid: Map.CameraControllers
+  commentId: N:Map.CameraControllers
+  href: Map.html
+  name: Map.CameraControllers
+  nameWithType: Map.CameraControllers
+  fullName: Map.CameraControllers
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: UnityEngine.GameObject
+  commentId: T:UnityEngine.GameObject
+  parent: UnityEngine
+  isExternal: true
+  name: GameObject
+  nameWithType: GameObject
+  fullName: UnityEngine.GameObject
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: UnityEngine.Camera
+  commentId: T:UnityEngine.Camera
+  parent: UnityEngine
+  isExternal: true
+  name: Camera
+  nameWithType: Camera
+  fullName: UnityEngine.Camera
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: Map.CameraControllers.BaseCameraController.Initialize*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.Initialize
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_Initialize
+  name: Initialize
+  nameWithType: BaseCameraController.Initialize
+  fullName: Map.CameraControllers.BaseCameraController.Initialize
+- uid: Map.CameraControllers.BaseCameraController.SetupCamera*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.SetupCamera
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_SetupCamera
+  name: SetupCamera
+  nameWithType: BaseCameraController.SetupCamera
+  fullName: Map.CameraControllers.BaseCameraController.SetupCamera
+- uid: Map.CameraControllers.BaseCameraController.ApplySmoothMovement*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplySmoothMovement
+  name: ApplySmoothMovement
+  nameWithType: BaseCameraController.ApplySmoothMovement
+  fullName: Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+- uid: Map.CameraControllers.BaseCameraController.ClampVerticalPosition*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ClampVerticalPosition
+  name: ClampVerticalPosition
+  nameWithType: BaseCameraController.ClampVerticalPosition
+  fullName: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+- uid: Map.CameraControllers.BaseCameraController.CenterCameraOn*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.CenterCameraOn
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_CenterCameraOn_UnityEngine_Vector3_
+  name: CenterCameraOn
+  nameWithType: BaseCameraController.CenterCameraOn
+  fullName: Map.CameraControllers.BaseCameraController.CenterCameraOn
+- uid: Map.CameraControllers.BaseCameraController.GetCameraBounds*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetCameraBounds
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraBounds
+  name: GetCameraBounds
+  nameWithType: BaseCameraController.GetCameraBounds
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraBounds
+- uid: UnityEngine.Bounds
+  commentId: T:UnityEngine.Bounds
+  parent: UnityEngine
+  isExternal: true
+  name: Bounds
+  nameWithType: Bounds
+  fullName: UnityEngine.Bounds
+- uid: Map.CameraControllers.BaseCameraController.ApplyZoom*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.ApplyZoom
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplyZoom_System_Single_
+  name: ApplyZoom
+  nameWithType: BaseCameraController.ApplyZoom
+  fullName: Map.CameraControllers.BaseCameraController.ApplyZoom
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewHeight*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewHeight
+  name: GetCameraViewHeight
+  nameWithType: BaseCameraController.GetCameraViewHeight
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewWidth*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewWidth
+  name: GetCameraViewWidth
+  nameWithType: BaseCameraController.GetCameraViewWidth
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+- uid: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetWorldPositionAtMouse_UnityEngine_Vector3_
+  name: GetWorldPositionAtMouse
+  nameWithType: BaseCameraController.GetWorldPositionAtMouse
+  fullName: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse
+- uid: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraFocusPoint
+  name: GetCameraFocusPoint
+  nameWithType: BaseCameraController.GetCameraFocusPoint
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+- uid: Map.CameraControllers.BaseCameraController.GetZoomRatio*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.GetZoomRatio
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetZoomRatio_System_Single_System_Single_
+  name: GetZoomRatio
+  nameWithType: BaseCameraController.GetZoomRatio
+  fullName: Map.CameraControllers.BaseCameraController.GetZoomRatio
+- uid: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta*
+  commentId: Overload:Map.CameraControllers.BaseCameraController.ScreenToWorldDelta
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ScreenToWorldDelta_UnityEngine_Vector3_
+  name: ScreenToWorldDelta
+  nameWithType: BaseCameraController.ScreenToWorldDelta
+  fullName: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta

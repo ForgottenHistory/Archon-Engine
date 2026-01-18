@@ -1,0 +1,412 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CountryHotData
+  commentId: T:Core.Data.CountryHotData
+  id: CountryHotData
+  parent: Core.Data
+  children:
+  - Core.Data.CountryHotData.Color
+  - Core.Data.CountryHotData.GetFlag(System.Int32)
+  - Core.Data.CountryHotData.SetColor(UnityEngine.Color32)
+  - Core.Data.CountryHotData.SetFlag(System.Int32,System.Boolean)
+  - Core.Data.CountryHotData.colorRGBA
+  - Core.Data.CountryHotData.flags
+  - Core.Data.CountryHotData.graphicalCultureId
+  - Core.Data.CountryHotData.tagHash
+  langs:
+  - csharp
+  - vb
+  name: CountryHotData
+  nameWithType: CountryHotData
+  fullName: Core.Data.CountryHotData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryHotData
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Country data following dual-layer architecture principles
+
+    Hot data: Frequently accessed, performance-critical (8 bytes)
+
+    Cold data: Rarely accessed, can be loaded on-demand
+
+
+    ENGINE layer - generic country data only.
+
+    Game-specific data should be stored via customData dictionary in CountryColdData.
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct CountryHotData
+    content.vb: >-
+      <Serializable>
+
+      Public Structure CountryHotData
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.CountryHotData.tagHash
+  commentId: F:Core.Data.CountryHotData.tagHash
+  id: tagHash
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: tagHash
+  nameWithType: CountryHotData.tagHash
+  fullName: Core.Data.CountryHotData.tagHash
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tagHash
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort tagHash
+    return:
+      type: System.UInt16
+    content.vb: Public tagHash As UShort
+- uid: Core.Data.CountryHotData.colorRGBA
+  commentId: F:Core.Data.CountryHotData.colorRGBA
+  id: colorRGBA
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: colorRGBA
+  nameWithType: CountryHotData.colorRGBA
+  fullName: Core.Data.CountryHotData.colorRGBA
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: colorRGBA
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public uint colorRGBA
+    return:
+      type: System.UInt32
+    content.vb: Public colorRGBA As UInteger
+- uid: Core.Data.CountryHotData.graphicalCultureId
+  commentId: F:Core.Data.CountryHotData.graphicalCultureId
+  id: graphicalCultureId
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: graphicalCultureId
+  nameWithType: CountryHotData.graphicalCultureId
+  fullName: Core.Data.CountryHotData.graphicalCultureId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: graphicalCultureId
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte graphicalCultureId
+    return:
+      type: System.Byte
+    content.vb: Public graphicalCultureId As Byte
+- uid: Core.Data.CountryHotData.flags
+  commentId: F:Core.Data.CountryHotData.flags
+  id: flags
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: flags
+  nameWithType: CountryHotData.flags
+  fullName: Core.Data.CountryHotData.flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: flags
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte flags
+    return:
+      type: System.Byte
+    content.vb: Public flags As Byte
+- uid: Core.Data.CountryHotData.GetFlag(System.Int32)
+  commentId: M:Core.Data.CountryHotData.GetFlag(System.Int32)
+  id: GetFlag(System.Int32)
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: GetFlag(int)
+  nameWithType: CountryHotData.GetFlag(int)
+  fullName: Core.Data.CountryHotData.GetFlag(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFlag
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool GetFlag(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function GetFlag(index As Integer) As Boolean
+  overload: Core.Data.CountryHotData.GetFlag*
+  nameWithType.vb: CountryHotData.GetFlag(Integer)
+  fullName.vb: Core.Data.CountryHotData.GetFlag(Integer)
+  name.vb: GetFlag(Integer)
+- uid: Core.Data.CountryHotData.SetFlag(System.Int32,System.Boolean)
+  commentId: M:Core.Data.CountryHotData.SetFlag(System.Int32,System.Boolean)
+  id: SetFlag(System.Int32,System.Boolean)
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: SetFlag(int, bool)
+  nameWithType: CountryHotData.SetFlag(int, bool)
+  fullName: Core.Data.CountryHotData.SetFlag(int, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetFlag
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void SetFlag(int index, bool value)
+    parameters:
+    - id: index
+      type: System.Int32
+    - id: value
+      type: System.Boolean
+    content.vb: Public Sub SetFlag(index As Integer, value As Boolean)
+  overload: Core.Data.CountryHotData.SetFlag*
+  nameWithType.vb: CountryHotData.SetFlag(Integer, Boolean)
+  fullName.vb: Core.Data.CountryHotData.SetFlag(Integer, Boolean)
+  name.vb: SetFlag(Integer, Boolean)
+- uid: Core.Data.CountryHotData.Color
+  commentId: P:Core.Data.CountryHotData.Color
+  id: Color
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: CountryHotData.Color
+  fullName: Core.Data.CountryHotData.Color
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Color
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Convert packed RGBA color to Color32 for rendering
+  example: []
+  syntax:
+    content: public Color32 Color { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public ReadOnly Property Color As Color32
+  overload: Core.Data.CountryHotData.Color*
+- uid: Core.Data.CountryHotData.SetColor(UnityEngine.Color32)
+  commentId: M:Core.Data.CountryHotData.SetColor(UnityEngine.Color32)
+  id: SetColor(UnityEngine.Color32)
+  parent: Core.Data.CountryHotData
+  langs:
+  - csharp
+  - vb
+  name: SetColor(Color32)
+  nameWithType: CountryHotData.SetColor(Color32)
+  fullName: Core.Data.CountryHotData.SetColor(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetColor
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Set color from Color32
+  example: []
+  syntax:
+    content: public void SetColor(Color32 color)
+    parameters:
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetColor(color As Color32)
+  overload: Core.Data.CountryHotData.SetColor*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Data.CountryHotData.GetFlag*
+  commentId: Overload:Core.Data.CountryHotData.GetFlag
+  href: Core.Data.CountryHotData.html#Core_Data_CountryHotData_GetFlag_System_Int32_
+  name: GetFlag
+  nameWithType: CountryHotData.GetFlag
+  fullName: Core.Data.CountryHotData.GetFlag
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.CountryHotData.SetFlag*
+  commentId: Overload:Core.Data.CountryHotData.SetFlag
+  href: Core.Data.CountryHotData.html#Core_Data_CountryHotData_SetFlag_System_Int32_System_Boolean_
+  name: SetFlag
+  nameWithType: CountryHotData.SetFlag
+  fullName: Core.Data.CountryHotData.SetFlag
+- uid: Core.Data.CountryHotData.Color*
+  commentId: Overload:Core.Data.CountryHotData.Color
+  href: Core.Data.CountryHotData.html#Core_Data_CountryHotData_Color
+  name: Color
+  nameWithType: CountryHotData.Color
+  fullName: Core.Data.CountryHotData.Color
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Data.CountryHotData.SetColor*
+  commentId: Overload:Core.Data.CountryHotData.SetColor
+  href: Core.Data.CountryHotData.html#Core_Data_CountryHotData_SetColor_UnityEngine_Color32_
+  name: SetColor
+  nameWithType: CountryHotData.SetColor
+  fullName: Core.Data.CountryHotData.SetColor

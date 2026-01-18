@@ -1,0 +1,193 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.HistoryEventType
+  commentId: T:Core.Data.HistoryEventType
+  id: HistoryEventType
+  parent: Core.Data
+  children:
+  - Core.Data.HistoryEventType.BuildingConstruction
+  - Core.Data.HistoryEventType.CultureChange
+  - Core.Data.HistoryEventType.DevelopmentChange
+  - Core.Data.HistoryEventType.OwnershipChange
+  - Core.Data.HistoryEventType.ReligionChange
+  langs:
+  - csharp
+  - vb
+  name: HistoryEventType
+  nameWithType: HistoryEventType
+  fullName: Core.Data.HistoryEventType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HistoryEventType
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 296
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: 'public enum HistoryEventType : byte'
+    content.vb: Public Enum HistoryEventType As Byte
+- uid: Core.Data.HistoryEventType.OwnershipChange
+  commentId: F:Core.Data.HistoryEventType.OwnershipChange
+  id: OwnershipChange
+  parent: Core.Data.HistoryEventType
+  langs:
+  - csharp
+  - vb
+  name: OwnershipChange
+  nameWithType: HistoryEventType.OwnershipChange
+  fullName: Core.Data.HistoryEventType.OwnershipChange
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnershipChange
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 298
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: OwnershipChange = 1
+    return:
+      type: Core.Data.HistoryEventType
+- uid: Core.Data.HistoryEventType.DevelopmentChange
+  commentId: F:Core.Data.HistoryEventType.DevelopmentChange
+  id: DevelopmentChange
+  parent: Core.Data.HistoryEventType
+  langs:
+  - csharp
+  - vb
+  name: DevelopmentChange
+  nameWithType: HistoryEventType.DevelopmentChange
+  fullName: Core.Data.HistoryEventType.DevelopmentChange
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DevelopmentChange
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 299
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: DevelopmentChange = 2
+    return:
+      type: Core.Data.HistoryEventType
+- uid: Core.Data.HistoryEventType.CultureChange
+  commentId: F:Core.Data.HistoryEventType.CultureChange
+  id: CultureChange
+  parent: Core.Data.HistoryEventType
+  langs:
+  - csharp
+  - vb
+  name: CultureChange
+  nameWithType: HistoryEventType.CultureChange
+  fullName: Core.Data.HistoryEventType.CultureChange
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CultureChange
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 300
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: CultureChange = 3
+    return:
+      type: Core.Data.HistoryEventType
+- uid: Core.Data.HistoryEventType.ReligionChange
+  commentId: F:Core.Data.HistoryEventType.ReligionChange
+  id: ReligionChange
+  parent: Core.Data.HistoryEventType
+  langs:
+  - csharp
+  - vb
+  name: ReligionChange
+  nameWithType: HistoryEventType.ReligionChange
+  fullName: Core.Data.HistoryEventType.ReligionChange
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReligionChange
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 301
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: ReligionChange = 4
+    return:
+      type: Core.Data.HistoryEventType
+- uid: Core.Data.HistoryEventType.BuildingConstruction
+  commentId: F:Core.Data.HistoryEventType.BuildingConstruction
+  id: BuildingConstruction
+  parent: Core.Data.HistoryEventType
+  langs:
+  - csharp
+  - vb
+  name: BuildingConstruction
+  nameWithType: HistoryEventType.BuildingConstruction
+  fullName: Core.Data.HistoryEventType.BuildingConstruction
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingConstruction
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 302
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: BuildingConstruction = 5
+    return:
+      type: Core.Data.HistoryEventType
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Data.HistoryEventType
+  commentId: T:Core.Data.HistoryEventType
+  parent: Core.Data
+  href: Core.Data.HistoryEventType.html
+  name: HistoryEventType
+  nameWithType: HistoryEventType
+  fullName: Core.Data.HistoryEventType

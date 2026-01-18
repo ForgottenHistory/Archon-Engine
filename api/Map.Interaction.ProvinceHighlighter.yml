@@ -1,0 +1,661 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Interaction.ProvinceHighlighter
+  commentId: T:Map.Interaction.ProvinceHighlighter
+  id: ProvinceHighlighter
+  parent: Map.Interaction
+  children:
+  - Map.Interaction.ProvinceHighlighter.ClearHighlight
+  - Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer(System.String)
+  - Map.Interaction.ProvinceHighlighter.GetHighlightedProvince
+  - Map.Interaction.ProvinceHighlighter.HighlightCountry(System.UInt16,UnityEngine.Color)
+  - Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color)
+  - Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Interaction.ProvinceHighlighter.HighlightMode)
+  - Map.Interaction.ProvinceHighlighter.Initialize(Map.Rendering.MapTextureManager)
+  - Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted(System.UInt16)
+  - Map.Interaction.ProvinceHighlighter.SetBorderThickness(System.Single)
+  - Map.Interaction.ProvinceHighlighter.SetHighlightMode(Map.Interaction.ProvinceHighlighter.HighlightMode)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHighlighter
+  nameWithType: ProvinceHighlighter
+  fullName: Map.Interaction.ProvinceHighlighter
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceHighlighter
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: >-
+    GPU-based province highlighting system (ENGINE LAYER - mechanism)
+
+    Provides capability to highlight provinces with configurable visual styles
+
+    Game layer decides WHICH provinces to highlight and WHEN
+  example: []
+  syntax:
+    content: 'public class ProvinceHighlighter : MonoBehaviour'
+    content.vb: Public Class ProvinceHighlighter Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Interaction.ProvinceHighlighter.Initialize(Map.Rendering.MapTextureManager)
+  commentId: M:Map.Interaction.ProvinceHighlighter.Initialize(Map.Rendering.MapTextureManager)
+  id: Initialize(Map.Rendering.MapTextureManager)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager)
+  nameWithType: ProvinceHighlighter.Initialize(MapTextureManager)
+  fullName: Map.Interaction.ProvinceHighlighter.Initialize(Map.Rendering.MapTextureManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Set the texture manager reference
+  example: []
+  syntax:
+    content: public void Initialize(MapTextureManager manager)
+    parameters:
+    - id: manager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub Initialize(manager As MapTextureManager)
+  overload: Map.Interaction.ProvinceHighlighter.Initialize*
+- uid: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer(System.String)
+  commentId: M:Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer(System.String)
+  id: GetActiveHighlightRenderer(System.String)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: GetActiveHighlightRenderer(string)
+  nameWithType: ProvinceHighlighter.GetActiveHighlightRenderer(string)
+  fullName: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetActiveHighlightRenderer
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 146
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get the active highlight renderer from registry.
+  example: []
+  syntax:
+    content: public IHighlightRenderer GetActiveHighlightRenderer(string rendererId = null)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.Highlight.IHighlightRenderer
+    content.vb: Public Function GetActiveHighlightRenderer(rendererId As String = Nothing) As IHighlightRenderer
+  overload: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer*
+  nameWithType.vb: ProvinceHighlighter.GetActiveHighlightRenderer(String)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer(String)
+  name.vb: GetActiveHighlightRenderer(String)
+- uid: Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Interaction.ProvinceHighlighter.HighlightMode)
+  commentId: M:Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Interaction.ProvinceHighlighter.HighlightMode)
+  id: HighlightProvince(System.UInt16,UnityEngine.Color,Map.Interaction.ProvinceHighlighter.HighlightMode)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: HighlightProvince(ushort, Color, HighlightMode)
+  nameWithType: ProvinceHighlighter.HighlightProvince(ushort, Color, ProvinceHighlighter.HighlightMode)
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightProvince(ushort, UnityEngine.Color, Map.Interaction.ProvinceHighlighter.HighlightMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightProvince
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 161
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: >-
+    Highlight a province with specified color and mode
+
+    ENGINE LAYER API - Game layer calls this to highlight provinces
+  example: []
+  syntax:
+    content: public void HighlightProvince(ushort provinceID, Color color, ProvinceHighlighter.HighlightMode mode)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+      description: Province to highlight (0 = clear)
+    - id: color
+      type: UnityEngine.Color
+      description: Highlight color (use alpha for transparency)
+    - id: mode
+      type: Map.Interaction.ProvinceHighlighter.HighlightMode
+      description: Fill entire province or borders only
+    content.vb: Public Sub HighlightProvince(provinceID As UShort, color As Color, mode As ProvinceHighlighter.HighlightMode)
+  overload: Map.Interaction.ProvinceHighlighter.HighlightProvince*
+  nameWithType.vb: ProvinceHighlighter.HighlightProvince(UShort, Color, ProvinceHighlighter.HighlightMode)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.HighlightProvince(UShort, UnityEngine.Color, Map.Interaction.ProvinceHighlighter.HighlightMode)
+  name.vb: HighlightProvince(UShort, Color, HighlightMode)
+- uid: Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color)
+  commentId: M:Map.Interaction.ProvinceHighlighter.HighlightProvince(System.UInt16,UnityEngine.Color)
+  id: HighlightProvince(System.UInt16,UnityEngine.Color)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: HighlightProvince(ushort, Color)
+  nameWithType: ProvinceHighlighter.HighlightProvince(ushort, Color)
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightProvince(ushort, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightProvince
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 226
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Highlight a province using current mode (convenience overload)
+  example: []
+  syntax:
+    content: public void HighlightProvince(ushort provinceID, Color color)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: color
+      type: UnityEngine.Color
+    content.vb: Public Sub HighlightProvince(provinceID As UShort, color As Color)
+  overload: Map.Interaction.ProvinceHighlighter.HighlightProvince*
+  nameWithType.vb: ProvinceHighlighter.HighlightProvince(UShort, Color)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.HighlightProvince(UShort, UnityEngine.Color)
+  name.vb: HighlightProvince(UShort, Color)
+- uid: Map.Interaction.ProvinceHighlighter.HighlightCountry(System.UInt16,UnityEngine.Color)
+  commentId: M:Map.Interaction.ProvinceHighlighter.HighlightCountry(System.UInt16,UnityEngine.Color)
+  id: HighlightCountry(System.UInt16,UnityEngine.Color)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: HighlightCountry(ushort, Color)
+  nameWithType: ProvinceHighlighter.HighlightCountry(ushort, Color)
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightCountry(ushort, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightCountry
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 237
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: >-
+    Highlight all provinces owned by a specific country
+
+    ENGINE LAYER API - Game layer calls this for country selection or diplomatic views
+  example: []
+  syntax:
+    content: public void HighlightCountry(ushort countryID, Color color)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+      description: Country ID to highlight (owner ID from ProvinceOwnerTexture)
+    - id: color
+      type: UnityEngine.Color
+      description: Highlight color (use alpha for transparency)
+    content.vb: Public Sub HighlightCountry(countryID As UShort, color As Color)
+  overload: Map.Interaction.ProvinceHighlighter.HighlightCountry*
+  nameWithType.vb: ProvinceHighlighter.HighlightCountry(UShort, Color)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.HighlightCountry(UShort, UnityEngine.Color)
+  name.vb: HighlightCountry(UShort, Color)
+- uid: Map.Interaction.ProvinceHighlighter.ClearHighlight
+  commentId: M:Map.Interaction.ProvinceHighlighter.ClearHighlight
+  id: ClearHighlight
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: ClearHighlight()
+  nameWithType: ProvinceHighlighter.ClearHighlight()
+  fullName: Map.Interaction.ProvinceHighlighter.ClearHighlight()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearHighlight
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 293
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Clear all province highlights
+  example: []
+  syntax:
+    content: public void ClearHighlight()
+    content.vb: Public Sub ClearHighlight()
+  overload: Map.Interaction.ProvinceHighlighter.ClearHighlight*
+- uid: Map.Interaction.ProvinceHighlighter.SetHighlightMode(Map.Interaction.ProvinceHighlighter.HighlightMode)
+  commentId: M:Map.Interaction.ProvinceHighlighter.SetHighlightMode(Map.Interaction.ProvinceHighlighter.HighlightMode)
+  id: SetHighlightMode(Map.Interaction.ProvinceHighlighter.HighlightMode)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: SetHighlightMode(HighlightMode)
+  nameWithType: ProvinceHighlighter.SetHighlightMode(ProvinceHighlighter.HighlightMode)
+  fullName: Map.Interaction.ProvinceHighlighter.SetHighlightMode(Map.Interaction.ProvinceHighlighter.HighlightMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetHighlightMode
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 325
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Set highlight mode (fill vs border only)
+  example: []
+  syntax:
+    content: public void SetHighlightMode(ProvinceHighlighter.HighlightMode mode)
+    parameters:
+    - id: mode
+      type: Map.Interaction.ProvinceHighlighter.HighlightMode
+    content.vb: Public Sub SetHighlightMode(mode As ProvinceHighlighter.HighlightMode)
+  overload: Map.Interaction.ProvinceHighlighter.SetHighlightMode*
+- uid: Map.Interaction.ProvinceHighlighter.SetBorderThickness(System.Single)
+  commentId: M:Map.Interaction.ProvinceHighlighter.SetBorderThickness(System.Single)
+  id: SetBorderThickness(System.Single)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: SetBorderThickness(float)
+  nameWithType: ProvinceHighlighter.SetBorderThickness(float)
+  fullName: Map.Interaction.ProvinceHighlighter.SetBorderThickness(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderThickness
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 339
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Set border thickness for BorderOnly mode
+  example: []
+  syntax:
+    content: public void SetBorderThickness(float thickness)
+    parameters:
+    - id: thickness
+      type: System.Single
+    content.vb: Public Sub SetBorderThickness(thickness As Single)
+  overload: Map.Interaction.ProvinceHighlighter.SetBorderThickness*
+  nameWithType.vb: ProvinceHighlighter.SetBorderThickness(Single)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.SetBorderThickness(Single)
+  name.vb: SetBorderThickness(Single)
+- uid: Map.Interaction.ProvinceHighlighter.GetHighlightedProvince
+  commentId: M:Map.Interaction.ProvinceHighlighter.GetHighlightedProvince
+  id: GetHighlightedProvince
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: GetHighlightedProvince()
+  nameWithType: ProvinceHighlighter.GetHighlightedProvince()
+  fullName: Map.Interaction.ProvinceHighlighter.GetHighlightedProvince()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHighlightedProvince
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 353
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get the currently highlighted province ID
+  example: []
+  syntax:
+    content: public ushort GetHighlightedProvince()
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetHighlightedProvince() As UShort
+  overload: Map.Interaction.ProvinceHighlighter.GetHighlightedProvince*
+- uid: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted(System.UInt16)
+  commentId: M:Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted(System.UInt16)
+  id: IsProvinceHighlighted(System.UInt16)
+  parent: Map.Interaction.ProvinceHighlighter
+  langs:
+  - csharp
+  - vb
+  name: IsProvinceHighlighted(ushort)
+  nameWithType: ProvinceHighlighter.IsProvinceHighlighted(ushort)
+  fullName: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsProvinceHighlighted
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 358
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Check if a province is currently highlighted
+  example: []
+  syntax:
+    content: public bool IsProvinceHighlighted(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsProvinceHighlighted(provinceID As UShort) As Boolean
+  overload: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted*
+  nameWithType.vb: ProvinceHighlighter.IsProvinceHighlighted(UShort)
+  fullName.vb: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted(UShort)
+  name.vb: IsProvinceHighlighted(UShort)
+references:
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  href: Map.html
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Interaction.ProvinceHighlighter.Initialize*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.Initialize
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_Initialize_Map_Rendering_MapTextureManager_
+  name: Initialize
+  nameWithType: ProvinceHighlighter.Initialize
+  fullName: Map.Interaction.ProvinceHighlighter.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_GetActiveHighlightRenderer_System_String_
+  name: GetActiveHighlightRenderer
+  nameWithType: ProvinceHighlighter.GetActiveHighlightRenderer
+  fullName: Map.Interaction.ProvinceHighlighter.GetActiveHighlightRenderer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Highlight.IHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.IHighlightRenderer
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.IHighlightRenderer.html
+  name: IHighlightRenderer
+  nameWithType: IHighlightRenderer
+  fullName: Map.Rendering.Highlight.IHighlightRenderer
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: Map.Interaction.ProvinceHighlighter.HighlightProvince*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.HighlightProvince
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_HighlightProvince_System_UInt16_UnityEngine_Color_Map_Interaction_ProvinceHighlighter_HighlightMode_
+  name: HighlightProvince
+  nameWithType: ProvinceHighlighter.HighlightProvince
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+  commentId: T:Map.Interaction.ProvinceHighlighter.HighlightMode
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceHighlighter.html
+  name: ProvinceHighlighter.HighlightMode
+  nameWithType: ProvinceHighlighter.HighlightMode
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode
+  spec.csharp:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html
+  spec.vb:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html
+- uid: Map.Interaction.ProvinceHighlighter.HighlightCountry*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.HighlightCountry
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_HighlightCountry_System_UInt16_UnityEngine_Color_
+  name: HighlightCountry
+  nameWithType: ProvinceHighlighter.HighlightCountry
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightCountry
+- uid: Map.Interaction.ProvinceHighlighter.ClearHighlight*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.ClearHighlight
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_ClearHighlight
+  name: ClearHighlight
+  nameWithType: ProvinceHighlighter.ClearHighlight
+  fullName: Map.Interaction.ProvinceHighlighter.ClearHighlight
+- uid: Map.Interaction.ProvinceHighlighter.SetHighlightMode*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.SetHighlightMode
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_SetHighlightMode_Map_Interaction_ProvinceHighlighter_HighlightMode_
+  name: SetHighlightMode
+  nameWithType: ProvinceHighlighter.SetHighlightMode
+  fullName: Map.Interaction.ProvinceHighlighter.SetHighlightMode
+- uid: Map.Interaction.ProvinceHighlighter.SetBorderThickness*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.SetBorderThickness
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_SetBorderThickness_System_Single_
+  name: SetBorderThickness
+  nameWithType: ProvinceHighlighter.SetBorderThickness
+  fullName: Map.Interaction.ProvinceHighlighter.SetBorderThickness
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Interaction.ProvinceHighlighter.GetHighlightedProvince*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.GetHighlightedProvince
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_GetHighlightedProvince
+  name: GetHighlightedProvince
+  nameWithType: ProvinceHighlighter.GetHighlightedProvince
+  fullName: Map.Interaction.ProvinceHighlighter.GetHighlightedProvince
+- uid: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted*
+  commentId: Overload:Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted
+  href: Map.Interaction.ProvinceHighlighter.html#Map_Interaction_ProvinceHighlighter_IsProvinceHighlighted_System_UInt16_
+  name: IsProvinceHighlighted
+  nameWithType: ProvinceHighlighter.IsProvinceHighlighted
+  fullName: Map.Interaction.ProvinceHighlighter.IsProvinceHighlighted
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

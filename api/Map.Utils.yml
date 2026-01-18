@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Utils
+  commentId: N:Map.Utils
+  id: Map.Utils
+  children:
+  - Map.Utils.ProvinceCenterLookup
+  langs:
+  - csharp
+  - vb
+  name: Map.Utils
+  nameWithType: Map.Utils
+  fullName: Map.Utils
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Utils.ProvinceCenterLookup
+  commentId: T:Map.Utils.ProvinceCenterLookup
+  parent: Map.Utils
+  href: Map.Utils.ProvinceCenterLookup.html
+  name: ProvinceCenterLookup
+  nameWithType: ProvinceCenterLookup
+  fullName: Map.Utils.ProvinceCenterLookup
+- uid: Map.Utils
+  commentId: N:Map.Utils
+  href: Map.html
+  name: Map.Utils
+  nameWithType: Map.Utils
+  fullName: Map.Utils
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Utils
+    name: Utils
+    href: Map.Utils.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Utils
+    name: Utils
+    href: Map.Utils.html

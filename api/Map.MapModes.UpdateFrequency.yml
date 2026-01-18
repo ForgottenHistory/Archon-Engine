@@ -1,0 +1,249 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  id: UpdateFrequency
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.UpdateFrequency.Daily
+  - Map.MapModes.UpdateFrequency.Monthly
+  - Map.MapModes.UpdateFrequency.Never
+  - Map.MapModes.UpdateFrequency.PerConquest
+  - Map.MapModes.UpdateFrequency.RealTime
+  - Map.MapModes.UpdateFrequency.Weekly
+  - Map.MapModes.UpdateFrequency.Yearly
+  langs:
+  - csharp
+  - vb
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateFrequency
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 97
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: How frequently a map mode's textures need updating
+  example: []
+  syntax:
+    content: public enum UpdateFrequency
+    content.vb: Public Enum UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.Never
+  commentId: F:Map.MapModes.UpdateFrequency.Never
+  id: Never
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Never
+  nameWithType: UpdateFrequency.Never
+  fullName: Map.MapModes.UpdateFrequency.Never
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Never
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Never = 0
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.Yearly
+  commentId: F:Map.MapModes.UpdateFrequency.Yearly
+  id: Yearly
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Yearly
+  nameWithType: UpdateFrequency.Yearly
+  fullName: Map.MapModes.UpdateFrequency.Yearly
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Yearly
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Yearly = 1
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.Monthly
+  commentId: F:Map.MapModes.UpdateFrequency.Monthly
+  id: Monthly
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Monthly
+  nameWithType: UpdateFrequency.Monthly
+  fullName: Map.MapModes.UpdateFrequency.Monthly
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Monthly
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 101
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Monthly = 2
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.Weekly
+  commentId: F:Map.MapModes.UpdateFrequency.Weekly
+  id: Weekly
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Weekly
+  nameWithType: UpdateFrequency.Weekly
+  fullName: Map.MapModes.UpdateFrequency.Weekly
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Weekly
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 102
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Weekly = 3
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.Daily
+  commentId: F:Map.MapModes.UpdateFrequency.Daily
+  id: Daily
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Daily
+  nameWithType: UpdateFrequency.Daily
+  fullName: Map.MapModes.UpdateFrequency.Daily
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Daily
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Daily = 4
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.PerConquest
+  commentId: F:Map.MapModes.UpdateFrequency.PerConquest
+  id: PerConquest
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: PerConquest
+  nameWithType: UpdateFrequency.PerConquest
+  fullName: Map.MapModes.UpdateFrequency.PerConquest
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PerConquest
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 104
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: PerConquest = 5
+    return:
+      type: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.UpdateFrequency.RealTime
+  commentId: F:Map.MapModes.UpdateFrequency.RealTime
+  id: RealTime
+  parent: Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: RealTime
+  nameWithType: UpdateFrequency.RealTime
+  fullName: Map.MapModes.UpdateFrequency.RealTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RealTime
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 105
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: RealTime = 6
+    return:
+      type: Map.MapModes.UpdateFrequency
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency

@@ -1,0 +1,160 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.ModifierWithKey
+  commentId: T:Core.Diplomacy.ModifierWithKey
+  id: ModifierWithKey
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.ModifierWithKey.modifier
+  - Core.Diplomacy.ModifierWithKey.relationshipKey
+  langs:
+  - csharp
+  - vb
+  name: ModifierWithKey
+  nameWithType: ModifierWithKey
+  fullName: Core.Diplomacy.ModifierWithKey
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierWithKey
+    path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Opinion modifier tagged with its relationship key
+
+
+    ARCHITECTURE:
+
+    - Enables flat storage without range tracking
+
+    - allModifiers = NativeList{ModifierWithKey} (all modifiers from all relationships)
+
+    - GetOpinion filters by relationshipKey
+
+    - Burst job processes entire array in parallel
+
+
+    DETERMINISM:
+
+    - Insertion order preserved (append-only)
+
+    - Decay marks modifiers for removal (parallel read-only)
+
+    - Compaction rebuilds array sequentially (deterministic)
+
+
+    Memory: ~32 bytes per modifier (8 bytes key + 24 bytes modifier)
+  example: []
+  syntax:
+    content: public struct ModifierWithKey
+    content.vb: Public Structure ModifierWithKey
+- uid: Core.Diplomacy.ModifierWithKey.relationshipKey
+  commentId: F:Core.Diplomacy.ModifierWithKey.relationshipKey
+  id: relationshipKey
+  parent: Core.Diplomacy.ModifierWithKey
+  langs:
+  - csharp
+  - vb
+  name: relationshipKey
+  nameWithType: ModifierWithKey.relationshipKey
+  fullName: Core.Diplomacy.ModifierWithKey.relationshipKey
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: relationshipKey
+    path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Relationship key (packed country pair)
+  example: []
+  syntax:
+    content: public ulong relationshipKey
+    return:
+      type: System.UInt64
+    content.vb: Public relationshipKey As ULong
+- uid: Core.Diplomacy.ModifierWithKey.modifier
+  commentId: F:Core.Diplomacy.ModifierWithKey.modifier
+  id: modifier
+  parent: Core.Diplomacy.ModifierWithKey
+  langs:
+  - csharp
+  - vb
+  name: modifier
+  nameWithType: ModifierWithKey.modifier
+  fullName: Core.Diplomacy.ModifierWithKey.modifier
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: modifier
+    path: Scripts/Core/Diplomacy/ModifierWithKey.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: The opinion modifier
+  example: []
+  syntax:
+    content: public OpinionModifier modifier
+    return:
+      type: Core.Diplomacy.OpinionModifier
+    content.vb: Public modifier As OpinionModifier
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.OpinionModifier
+  commentId: T:Core.Diplomacy.OpinionModifier
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.OpinionModifier.html
+  name: OpinionModifier
+  nameWithType: OpinionModifier
+  fullName: Core.Diplomacy.OpinionModifier

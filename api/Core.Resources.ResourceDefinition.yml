@@ -1,0 +1,641 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceDefinition
+  commentId: T:Core.Resources.ResourceDefinition
+  id: ResourceDefinition
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceDefinition.GetColor
+  - Core.Resources.ResourceDefinition.GetMaxValueFixed
+  - Core.Resources.ResourceDefinition.GetMinValueFixed
+  - Core.Resources.ResourceDefinition.GetStartingAmountFixed
+  - Core.Resources.ResourceDefinition.Validate(System.String@)
+  - Core.Resources.ResourceDefinition.category
+  - Core.Resources.ResourceDefinition.color
+  - Core.Resources.ResourceDefinition.description
+  - Core.Resources.ResourceDefinition.displayName
+  - Core.Resources.ResourceDefinition.icon
+  - Core.Resources.ResourceDefinition.id
+  - Core.Resources.ResourceDefinition.maxValue
+  - Core.Resources.ResourceDefinition.minValue
+  - Core.Resources.ResourceDefinition.startingAmount
+  langs:
+  - csharp
+  - vb
+  name: ResourceDefinition
+  nameWithType: ResourceDefinition
+  fullName: Core.Resources.ResourceDefinition
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceDefinition
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    ENGINE LAYER: Defines a single resource type (gold, manpower, prestige, etc.)
+
+
+    This is the data structure that represents a resource's properties.
+
+    Resources are loaded from JSON5 files and registered in ResourceRegistry.
+
+
+    Architecture:
+
+    - Engine layer provides the mechanism (ResourceDefinition + ResourceSystem)
+
+    - Game layer provides the policy (which resources exist, their properties)
+
+    - Data files define specific resources (gold, manpower, etc.)
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public class ResourceDefinition
+    content.vb: >-
+      <Serializable>
+
+      Public Class ResourceDefinition
+  inheritance:
+  - System.Object
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Resources.ResourceDefinition.id
+  commentId: F:Core.Resources.ResourceDefinition.id
+  id: id
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: id
+  nameWithType: ResourceDefinition.id
+  fullName: Core.Resources.ResourceDefinition.id
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: id
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    Unique identifier for this resource (e.g., "gold", "manpower")
+
+    Used in commands, save files, and lookups
+  example: []
+  syntax:
+    content: public string id
+    return:
+      type: System.String
+    content.vb: Public id As String
+- uid: Core.Resources.ResourceDefinition.displayName
+  commentId: F:Core.Resources.ResourceDefinition.displayName
+  id: displayName
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: displayName
+  nameWithType: ResourceDefinition.displayName
+  fullName: Core.Resources.ResourceDefinition.displayName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: displayName
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Display name for UI (e.g., "Gold", "Manpower")
+  example: []
+  syntax:
+    content: public string displayName
+    return:
+      type: System.String
+    content.vb: Public displayName As String
+- uid: Core.Resources.ResourceDefinition.icon
+  commentId: F:Core.Resources.ResourceDefinition.icon
+  id: icon
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: icon
+  nameWithType: ResourceDefinition.icon
+  fullName: Core.Resources.ResourceDefinition.icon
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: icon
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    Icon identifier for UI (e.g., "icon_gold", "icon_manpower")
+
+    Maps to sprite resources
+  example: []
+  syntax:
+    content: public string icon
+    return:
+      type: System.String
+    content.vb: Public icon As String
+- uid: Core.Resources.ResourceDefinition.startingAmount
+  commentId: F:Core.Resources.ResourceDefinition.startingAmount
+  id: startingAmount
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: startingAmount
+  nameWithType: ResourceDefinition.startingAmount
+  fullName: Core.Resources.ResourceDefinition.startingAmount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: startingAmount
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Starting amount for all countries at game start
+  example: []
+  syntax:
+    content: public float startingAmount
+    return:
+      type: System.Single
+    content.vb: Public startingAmount As Single
+- uid: Core.Resources.ResourceDefinition.minValue
+  commentId: F:Core.Resources.ResourceDefinition.minValue
+  id: minValue
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: minValue
+  nameWithType: ResourceDefinition.minValue
+  fullName: Core.Resources.ResourceDefinition.minValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: minValue
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    Minimum value this resource can have (default: 0)
+
+    Can be negative for resources like prestige
+  example: []
+  syntax:
+    content: public float minValue
+    return:
+      type: System.Single
+    content.vb: Public minValue As Single
+- uid: Core.Resources.ResourceDefinition.maxValue
+  commentId: F:Core.Resources.ResourceDefinition.maxValue
+  id: maxValue
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: maxValue
+  nameWithType: ResourceDefinition.maxValue
+  fullName: Core.Resources.ResourceDefinition.maxValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: maxValue
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    Maximum value this resource can have (default: infinity)
+
+    Use 0 for no maximum
+  example: []
+  syntax:
+    content: public float maxValue
+    return:
+      type: System.Single
+    content.vb: Public maxValue As Single
+- uid: Core.Resources.ResourceDefinition.color
+  commentId: F:Core.Resources.ResourceDefinition.color
+  id: color
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: color
+  nameWithType: ResourceDefinition.color
+  fullName: Core.Resources.ResourceDefinition.color
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: color
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: 'Color for UI display (hex format: #FFD700 for gold)'
+  example: []
+  syntax:
+    content: public string color
+    return:
+      type: System.String
+    content.vb: Public color As String
+- uid: Core.Resources.ResourceDefinition.category
+  commentId: F:Core.Resources.ResourceDefinition.category
+  id: category
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: category
+  nameWithType: ResourceDefinition.category
+  fullName: Core.Resources.ResourceDefinition.category
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: category
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: 'Optional: Category for grouping (e.g., "economic", "military", "diplomatic")'
+  example: []
+  syntax:
+    content: public string category
+    return:
+      type: System.String
+    content.vb: Public category As String
+- uid: Core.Resources.ResourceDefinition.description
+  commentId: F:Core.Resources.ResourceDefinition.description
+  id: description
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: description
+  nameWithType: ResourceDefinition.description
+  fullName: Core.Resources.ResourceDefinition.description
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: description
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: 'Optional: Tooltip description for UI'
+  example: []
+  syntax:
+    content: public string description
+    return:
+      type: System.String
+    content.vb: Public description As String
+- uid: Core.Resources.ResourceDefinition.Validate(System.String@)
+  commentId: M:Core.Resources.ResourceDefinition.Validate(System.String@)
+  id: Validate(System.String@)
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: Validate(out string)
+  nameWithType: ResourceDefinition.Validate(out string)
+  fullName: Core.Resources.ResourceDefinition.Validate(out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Validate this resource definition (called after loading from JSON5)
+  example: []
+  syntax:
+    content: public bool Validate(out string errorMessage)
+    parameters:
+    - id: errorMessage
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function Validate(errorMessage As String) As Boolean
+  overload: Core.Resources.ResourceDefinition.Validate*
+  nameWithType.vb: ResourceDefinition.Validate(String)
+  fullName.vb: Core.Resources.ResourceDefinition.Validate(String)
+  name.vb: Validate(String)
+- uid: Core.Resources.ResourceDefinition.GetStartingAmountFixed
+  commentId: M:Core.Resources.ResourceDefinition.GetStartingAmountFixed
+  id: GetStartingAmountFixed
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: GetStartingAmountFixed()
+  nameWithType: ResourceDefinition.GetStartingAmountFixed()
+  fullName: Core.Resources.ResourceDefinition.GetStartingAmountFixed()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStartingAmountFixed
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 106
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get FixedPoint64 value from float (for deterministic storage)
+  example: []
+  syntax:
+    content: public FixedPoint64 GetStartingAmountFixed()
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetStartingAmountFixed() As FixedPoint64
+  overload: Core.Resources.ResourceDefinition.GetStartingAmountFixed*
+- uid: Core.Resources.ResourceDefinition.GetMinValueFixed
+  commentId: M:Core.Resources.ResourceDefinition.GetMinValueFixed
+  id: GetMinValueFixed
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: GetMinValueFixed()
+  nameWithType: ResourceDefinition.GetMinValueFixed()
+  fullName: Core.Resources.ResourceDefinition.GetMinValueFixed()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMinValueFixed
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get FixedPoint64 min value
+  example: []
+  syntax:
+    content: public FixedPoint64 GetMinValueFixed()
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetMinValueFixed() As FixedPoint64
+  overload: Core.Resources.ResourceDefinition.GetMinValueFixed*
+- uid: Core.Resources.ResourceDefinition.GetMaxValueFixed
+  commentId: M:Core.Resources.ResourceDefinition.GetMaxValueFixed
+  id: GetMaxValueFixed
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: GetMaxValueFixed()
+  nameWithType: ResourceDefinition.GetMaxValueFixed()
+  fullName: Core.Resources.ResourceDefinition.GetMaxValueFixed()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMaxValueFixed
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 122
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get FixedPoint64 max value
+  example: []
+  syntax:
+    content: public FixedPoint64 GetMaxValueFixed()
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetMaxValueFixed() As FixedPoint64
+  overload: Core.Resources.ResourceDefinition.GetMaxValueFixed*
+- uid: Core.Resources.ResourceDefinition.GetColor
+  commentId: M:Core.Resources.ResourceDefinition.GetColor
+  id: GetColor
+  parent: Core.Resources.ResourceDefinition
+  langs:
+  - csharp
+  - vb
+  name: GetColor()
+  nameWithType: ResourceDefinition.GetColor()
+  fullName: Core.Resources.ResourceDefinition.GetColor()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColor
+    path: Scripts/Core/Resources/ResourceDefinition.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get Unity Color from hex string
+  example: []
+  syntax:
+    content: public Color GetColor()
+    return:
+      type: UnityEngine.Color
+    content.vb: Public Function GetColor() As Color
+  overload: Core.Resources.ResourceDefinition.GetColor*
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Resources.ResourceDefinition.Validate*
+  commentId: Overload:Core.Resources.ResourceDefinition.Validate
+  href: Core.Resources.ResourceDefinition.html#Core_Resources_ResourceDefinition_Validate_System_String__
+  name: Validate
+  nameWithType: ResourceDefinition.Validate
+  fullName: Core.Resources.ResourceDefinition.Validate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Resources.ResourceDefinition.GetStartingAmountFixed*
+  commentId: Overload:Core.Resources.ResourceDefinition.GetStartingAmountFixed
+  href: Core.Resources.ResourceDefinition.html#Core_Resources_ResourceDefinition_GetStartingAmountFixed
+  name: GetStartingAmountFixed
+  nameWithType: ResourceDefinition.GetStartingAmountFixed
+  fullName: Core.Resources.ResourceDefinition.GetStartingAmountFixed
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Resources.ResourceDefinition.GetMinValueFixed*
+  commentId: Overload:Core.Resources.ResourceDefinition.GetMinValueFixed
+  href: Core.Resources.ResourceDefinition.html#Core_Resources_ResourceDefinition_GetMinValueFixed
+  name: GetMinValueFixed
+  nameWithType: ResourceDefinition.GetMinValueFixed
+  fullName: Core.Resources.ResourceDefinition.GetMinValueFixed
+- uid: Core.Resources.ResourceDefinition.GetMaxValueFixed*
+  commentId: Overload:Core.Resources.ResourceDefinition.GetMaxValueFixed
+  href: Core.Resources.ResourceDefinition.html#Core_Resources_ResourceDefinition_GetMaxValueFixed
+  name: GetMaxValueFixed
+  nameWithType: ResourceDefinition.GetMaxValueFixed
+  fullName: Core.Resources.ResourceDefinition.GetMaxValueFixed
+- uid: Core.Resources.ResourceDefinition.GetColor*
+  commentId: Overload:Core.Resources.ResourceDefinition.GetColor
+  href: Core.Resources.ResourceDefinition.html#Core_Resources_ResourceDefinition_GetColor
+  name: GetColor
+  nameWithType: ResourceDefinition.GetColor
+  fullName: Core.Resources.ResourceDefinition.GetColor
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

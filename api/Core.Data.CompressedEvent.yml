@@ -1,0 +1,170 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CompressedEvent
+  commentId: T:Core.Data.CompressedEvent
+  id: CompressedEvent
+  parent: Core.Data
+  children:
+  - Core.Data.CompressedEvent.NewOwnerID
+  - Core.Data.CompressedEvent.Type
+  - Core.Data.CompressedEvent.Year
+  langs:
+  - csharp
+  - vb
+  name: CompressedEvent
+  nameWithType: CompressedEvent
+  fullName: Core.Data.CompressedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompressedEvent
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Compressed event for medium-term storage (4 bytes)
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct CompressedEvent
+    content.vb: >-
+      <Serializable>
+
+      Public Structure CompressedEvent
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.CompressedEvent.Year
+  commentId: F:Core.Data.CompressedEvent.Year
+  id: Year
+  parent: Core.Data.CompressedEvent
+  langs:
+  - csharp
+  - vb
+  name: Year
+  nameWithType: CompressedEvent.Year
+  fullName: Core.Data.CompressedEvent.Year
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Year
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 290
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort Year
+    return:
+      type: System.UInt16
+    content.vb: Public Year As UShort
+- uid: Core.Data.CompressedEvent.Type
+  commentId: F:Core.Data.CompressedEvent.Type
+  id: Type
+  parent: Core.Data.CompressedEvent
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: CompressedEvent.Type
+  fullName: Core.Data.CompressedEvent.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 291
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public HistoryEventType Type
+    return:
+      type: Core.Data.HistoryEventType
+    content.vb: Public Type As HistoryEventType
+- uid: Core.Data.CompressedEvent.NewOwnerID
+  commentId: F:Core.Data.CompressedEvent.NewOwnerID
+  id: NewOwnerID
+  parent: Core.Data.CompressedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewOwnerID
+  nameWithType: CompressedEvent.NewOwnerID
+  fullName: Core.Data.CompressedEvent.NewOwnerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewOwnerID
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 292
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort NewOwnerID
+    return:
+      type: System.UInt16
+    content.vb: Public NewOwnerID As UShort
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.HistoryEventType
+  commentId: T:Core.Data.HistoryEventType
+  parent: Core.Data
+  href: Core.Data.HistoryEventType.html
+  name: HistoryEventType
+  nameWithType: HistoryEventType
+  fullName: Core.Data.HistoryEventType

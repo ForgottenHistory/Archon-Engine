@@ -1,0 +1,101 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.SparseData
+  commentId: N:Core.Data.SparseData
+  id: Core.Data.SparseData
+  children:
+  - Core.Data.SparseData.IDefinition
+  - Core.Data.SparseData.ISparseCollection
+  - Core.Data.SparseData.SparseCollectionManager`2
+  - Core.Data.SparseData.SparseCollectionStats
+  langs:
+  - csharp
+  - vb
+  name: Core.Data.SparseData
+  nameWithType: Core.Data.SparseData
+  fullName: Core.Data.SparseData
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Data.SparseData.IDefinition
+  commentId: T:Core.Data.SparseData.IDefinition
+  href: Core.Data.SparseData.IDefinition.html
+  name: IDefinition
+  nameWithType: IDefinition
+  fullName: Core.Data.SparseData.IDefinition
+- uid: Core.Data.SparseData.SparseCollectionManager`2
+  commentId: T:Core.Data.SparseData.SparseCollectionManager`2
+  href: Core.Data.SparseData.SparseCollectionManager-2.html
+  name: SparseCollectionManager<TKey, TValue>
+  nameWithType: SparseCollectionManager<TKey, TValue>
+  fullName: Core.Data.SparseData.SparseCollectionManager<TKey, TValue>
+  nameWithType.vb: SparseCollectionManager(Of TKey, TValue)
+  fullName.vb: Core.Data.SparseData.SparseCollectionManager(Of TKey, TValue)
+  name.vb: SparseCollectionManager(Of TKey, TValue)
+  spec.csharp:
+  - uid: Core.Data.SparseData.SparseCollectionManager`2
+    name: SparseCollectionManager
+    href: Core.Data.SparseData.SparseCollectionManager-2.html
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Core.Data.SparseData.SparseCollectionManager`2
+    name: SparseCollectionManager
+    href: Core.Data.SparseData.SparseCollectionManager-2.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Data.SparseData.ISparseCollection
+  commentId: T:Core.Data.SparseData.ISparseCollection
+  parent: Core.Data.SparseData
+  href: Core.Data.SparseData.ISparseCollection.html
+  name: ISparseCollection
+  nameWithType: ISparseCollection
+  fullName: Core.Data.SparseData.ISparseCollection
+- uid: Core.Data.SparseData.SparseCollectionStats
+  commentId: T:Core.Data.SparseData.SparseCollectionStats
+  parent: Core.Data.SparseData
+  href: Core.Data.SparseData.SparseCollectionStats.html
+  name: SparseCollectionStats
+  nameWithType: SparseCollectionStats
+  fullName: Core.Data.SparseData.SparseCollectionStats
+- uid: Core.Data.SparseData
+  commentId: N:Core.Data.SparseData
+  href: Core.html
+  name: Core.Data.SparseData
+  nameWithType: Core.Data.SparseData
+  fullName: Core.Data.SparseData
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html

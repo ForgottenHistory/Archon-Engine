@@ -1,0 +1,1565 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  id: AdjacencySystem
+  parent: Core.Systems
+  children:
+  - Core.Systems.AdjacencySystem.#ctor
+  - Core.Systems.AdjacencySystem.Dispose
+  - Core.Systems.AdjacencySystem.FindBridgeProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  - Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.HashSet{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetNativeData
+  - Core.Systems.AdjacencySystem.GetNeighborCount(System.UInt16)
+  - Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.Allocator)
+  - Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  - Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16},System.Collections.Generic.List{System.UInt16})
+  - Core.Systems.AdjacencySystem.GetStatistics
+  - Core.Systems.AdjacencySystem.GetStats
+  - Core.Systems.AdjacencySystem.IsAdjacent(System.UInt16,System.UInt16)
+  - Core.Systems.AdjacencySystem.IsBridgeProvince(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  - Core.Systems.AdjacencySystem.IsInitialized
+  - Core.Systems.AdjacencySystem.ProvinceCount
+  - Core.Systems.AdjacencySystem.SetAdjacencies(System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}})
+  - Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+  langs:
+  - csharp
+  - vb
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdjacencySystem
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 83
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE LAYER: Province adjacency system
+
+
+    Stores which provinces are adjacent (share a border) for movement validation.
+
+    Populated from FastAdjacencyScanner during map initialization.
+
+
+    Architecture:
+
+    - Dictionary{ushort, HashSet{ushort}}: provinceID → set of neighbor IDs
+
+    - Bidirectional: if A is adjacent to B, then B is adjacent to A
+
+    - Read-only after initialization
+
+
+    Usage:
+
+    - Initialize with SetAdjacencies(adjacencyData)
+
+    - Query with IsAdjacent(province1, province2)
+
+    - Get all neighbors with GetNeighbors(provinceID)
+
+
+    Performance:
+
+    - IsAdjacent: O(1) HashSet lookup
+
+    - GetNeighbors: O(1) dictionary lookup
+
+    - Memory: ~6 neighbors × 13,350 provinces × 2 bytes = ~160 KB
+  example: []
+  syntax:
+    content: public class AdjacencySystem
+    content.vb: Public Class AdjacencySystem
+  inheritance:
+  - System.Object
+- uid: Core.Systems.AdjacencySystem.#ctor
+  commentId: M:Core.Systems.AdjacencySystem.#ctor
+  id: '#ctor'
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: AdjacencySystem()
+  nameWithType: AdjacencySystem.AdjacencySystem()
+  fullName: Core.Systems.AdjacencySystem.AdjacencySystem()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public AdjacencySystem()
+    content.vb: Public Sub New()
+  overload: Core.Systems.AdjacencySystem.#ctor*
+  nameWithType.vb: AdjacencySystem.New()
+  fullName.vb: Core.Systems.AdjacencySystem.New()
+  name.vb: New()
+- uid: Core.Systems.AdjacencySystem.GetNativeData
+  commentId: M:Core.Systems.AdjacencySystem.GetNativeData
+  id: GetNativeData
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNativeData()
+  nameWithType: AdjacencySystem.GetNativeData()
+  fullName: Core.Systems.AdjacencySystem.GetNativeData()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNativeData
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get read-only native adjacency data for Burst jobs.
+  example: []
+  syntax:
+    content: public NativeAdjacencyData GetNativeData()
+    return:
+      type: Core.Systems.NativeAdjacencyData
+    content.vb: Public Function GetNativeData() As NativeAdjacencyData
+  overload: Core.Systems.AdjacencySystem.GetNativeData*
+- uid: Core.Systems.AdjacencySystem.SetAdjacencies(System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}})
+  commentId: M:Core.Systems.AdjacencySystem.SetAdjacencies(System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}})
+  id: SetAdjacencies(System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: SetAdjacencies(Dictionary<int, HashSet<int>>)
+  nameWithType: AdjacencySystem.SetAdjacencies(Dictionary<int, HashSet<int>>)
+  fullName: Core.Systems.AdjacencySystem.SetAdjacencies(System.Collections.Generic.Dictionary<int, System.Collections.Generic.HashSet<int>>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetAdjacencies
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Initialize adjacency data from FastAdjacencyScanner results
+
+    Converts from Dictionary{int, HashSet{int}} to Dictionary{ushort, HashSet{ushort}}
+
+    Also builds native MultiHashMap for Burst job compatibility
+  example: []
+  syntax:
+    content: public void SetAdjacencies(Dictionary<int, HashSet<int>> scanResults)
+    parameters:
+    - id: scanResults
+      type: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+    content.vb: Public Sub SetAdjacencies(scanResults As Dictionary(Of Integer, HashSet(Of Integer)))
+  overload: Core.Systems.AdjacencySystem.SetAdjacencies*
+  nameWithType.vb: AdjacencySystem.SetAdjacencies(Dictionary(Of Integer, HashSet(Of Integer)))
+  fullName.vb: Core.Systems.AdjacencySystem.SetAdjacencies(System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.HashSet(Of Integer)))
+  name.vb: SetAdjacencies(Dictionary(Of Integer, HashSet(Of Integer)))
+- uid: Core.Systems.AdjacencySystem.Dispose
+  commentId: M:Core.Systems.AdjacencySystem.Dispose
+  id: Dispose
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: AdjacencySystem.Dispose()
+  fullName: Core.Systems.AdjacencySystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 163
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Dispose native allocations
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Systems.AdjacencySystem.Dispose*
+- uid: Core.Systems.AdjacencySystem.IsAdjacent(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.AdjacencySystem.IsAdjacent(System.UInt16,System.UInt16)
+  id: IsAdjacent(System.UInt16,System.UInt16)
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: IsAdjacent(ushort, ushort)
+  nameWithType: AdjacencySystem.IsAdjacent(ushort, ushort)
+  fullName: Core.Systems.AdjacencySystem.IsAdjacent(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsAdjacent
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 172
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Check if two provinces are adjacent (share a border)
+  example: []
+  syntax:
+    content: public bool IsAdjacent(ushort province1, ushort province2)
+    parameters:
+    - id: province1
+      type: System.UInt16
+    - id: province2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsAdjacent(province1 As UShort, province2 As UShort) As Boolean
+  overload: Core.Systems.AdjacencySystem.IsAdjacent*
+  nameWithType.vb: AdjacencySystem.IsAdjacent(UShort, UShort)
+  fullName.vb: Core.Systems.AdjacencySystem.IsAdjacent(UShort, UShort)
+  name.vb: IsAdjacent(UShort, UShort)
+- uid: Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.Allocator)
+  id: GetNeighbors(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNeighbors(ushort, Allocator)
+  nameWithType: AdjacencySystem.GetNeighbors(ushort, Allocator)
+  fullName: Core.Systems.AdjacencySystem.GetNeighbors(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get all neighbors for a province
+
+    Returns empty array if province has no neighbors or doesn't exist
+
+    Caller must dispose the returned NativeArray
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetNeighbors(ushort provinceId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetNeighbors(provinceId As UShort, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Systems.AdjacencySystem.GetNeighbors*
+  nameWithType.vb: AdjacencySystem.GetNeighbors(UShort, Allocator)
+  fullName.vb: Core.Systems.AdjacencySystem.GetNeighbors(UShort, Unity.Collections.Allocator)
+  name.vb: GetNeighbors(UShort, Allocator)
+- uid: Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.GetNeighbors(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetNeighbors(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNeighbors(ushort, NativeList<ushort>)
+  nameWithType: AdjacencySystem.GetNeighbors(ushort, NativeList<ushort>)
+  fullName: Core.Systems.AdjacencySystem.GetNeighbors(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 210
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get all neighbors for a province, filling an existing NativeList (zero allocations)
+
+    Clears the list before filling it with neighbors
+
+    Used by PathfindingSystem for allocation-free pathfinding
+  example: []
+  syntax:
+    content: public void GetNeighbors(ushort provinceId, NativeList<ushort> resultBuffer)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetNeighbors(provinceId As UShort, resultBuffer As NativeList(Of UShort))
+  overload: Core.Systems.AdjacencySystem.GetNeighbors*
+  nameWithType.vb: AdjacencySystem.GetNeighbors(UShort, NativeList(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.GetNeighbors(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetNeighbors(UShort, NativeList(Of UShort))
+- uid: Core.Systems.AdjacencySystem.GetNeighborCount(System.UInt16)
+  commentId: M:Core.Systems.AdjacencySystem.GetNeighborCount(System.UInt16)
+  id: GetNeighborCount(System.UInt16)
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborCount(ushort)
+  nameWithType: AdjacencySystem.GetNeighborCount(ushort)
+  fullName: Core.Systems.AdjacencySystem.GetNeighborCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborCount
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 228
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get neighbor count for a province
+  example: []
+  syntax:
+    content: public int GetNeighborCount(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetNeighborCount(provinceId As UShort) As Integer
+  overload: Core.Systems.AdjacencySystem.GetNeighborCount*
+  nameWithType.vb: AdjacencySystem.GetNeighborCount(UShort)
+  fullName.vb: Core.Systems.AdjacencySystem.GetNeighborCount(UShort)
+  name.vb: GetNeighborCount(UShort)
+- uid: Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  id: GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborsWhere(ushort, Func<ushort, bool>, List<ushort>)
+  nameWithType: AdjacencySystem.GetNeighborsWhere(ushort, Func<ushort, bool>, List<ushort>)
+  fullName: Core.Systems.AdjacencySystem.GetNeighborsWhere(ushort, System.Func<ushort, bool>, System.Collections.Generic.List<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborsWhere
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 245
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get neighbors that match a predicate.
+
+    Example: GetNeighborsWhere(provinceId, id =&gt; provinceSystem.GetOwner(id) == enemyCountry)
+  example: []
+  syntax:
+    content: public void GetNeighborsWhere(ushort provinceId, Func<ushort, bool> predicate, List<ushort> resultBuffer)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+      description: Province to get neighbors for
+    - id: predicate
+      type: System.Func{System.UInt16,System.Boolean}
+      description: Filter function - returns true for neighbors to include
+    - id: resultBuffer
+      type: System.Collections.Generic.List{System.UInt16}
+      description: Pre-allocated list to fill (cleared before use)
+    content.vb: Public Sub GetNeighborsWhere(provinceId As UShort, predicate As Func(Of UShort, Boolean), resultBuffer As List(Of UShort))
+  overload: Core.Systems.AdjacencySystem.GetNeighborsWhere*
+  nameWithType.vb: AdjacencySystem.GetNeighborsWhere(UShort, Func(Of UShort, Boolean), List(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.GetNeighborsWhere(UShort, System.Func(Of UShort, Boolean), System.Collections.Generic.List(Of UShort))
+  name.vb: GetNeighborsWhere(UShort, Func(Of UShort, Boolean), List(Of UShort))
+- uid: Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  commentId: M:Core.Systems.AdjacencySystem.GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  id: GetNeighborsWhere(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborsWhere(ushort, Func<ushort, bool>)
+  nameWithType: AdjacencySystem.GetNeighborsWhere(ushort, Func<ushort, bool>)
+  fullName: Core.Systems.AdjacencySystem.GetNeighborsWhere(ushort, System.Func<ushort, bool>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborsWhere
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 263
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get neighbors that match a predicate (allocating version).
+
+    Prefer the buffer version for hot paths.
+  example: []
+  syntax:
+    content: public List<ushort> GetNeighborsWhere(ushort provinceId, Func<ushort, bool> predicate)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: predicate
+      type: System.Func{System.UInt16,System.Boolean}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetNeighborsWhere(provinceId As UShort, predicate As Func(Of UShort, Boolean)) As List(Of UShort)
+  overload: Core.Systems.AdjacencySystem.GetNeighborsWhere*
+  nameWithType.vb: AdjacencySystem.GetNeighborsWhere(UShort, Func(Of UShort, Boolean))
+  fullName.vb: Core.Systems.AdjacencySystem.GetNeighborsWhere(UShort, System.Func(Of UShort, Boolean))
+  name.vb: GetNeighborsWhere(UShort, Func(Of UShort, Boolean))
+- uid: Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.HashSet{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.HashSet{System.UInt16})
+  id: GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean},System.Collections.Generic.HashSet{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetConnectedRegion(ushort, Func<ushort, bool>, HashSet<ushort>)
+  nameWithType: AdjacencySystem.GetConnectedRegion(ushort, Func<ushort, bool>, HashSet<ushort>)
+  fullName: Core.Systems.AdjacencySystem.GetConnectedRegion(ushort, System.Func<ushort, bool>, System.Collections.Generic.HashSet<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConnectedRegion
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 282
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get all provinces connected to a starting province that match a predicate.
+
+    Uses BFS flood fill. Returns the connected region including the start province.
+
+
+    Example: Get all provinces owned by a country connected to capitalProvince
+      GetConnectedRegion(capital, id =&gt; provinceSystem.GetOwner(id) == countryId)
+  example: []
+  syntax:
+    content: public void GetConnectedRegion(ushort startProvince, Func<ushort, bool> predicate, HashSet<ushort> resultBuffer)
+    parameters:
+    - id: startProvince
+      type: System.UInt16
+      description: Starting province for flood fill
+    - id: predicate
+      type: System.Func{System.UInt16,System.Boolean}
+      description: Filter - only provinces passing this are included and traversed
+    - id: resultBuffer
+      type: System.Collections.Generic.HashSet{System.UInt16}
+      description: Pre-allocated set to fill (cleared before use)
+    content.vb: Public Sub GetConnectedRegion(startProvince As UShort, predicate As Func(Of UShort, Boolean), resultBuffer As HashSet(Of UShort))
+  overload: Core.Systems.AdjacencySystem.GetConnectedRegion*
+  nameWithType.vb: AdjacencySystem.GetConnectedRegion(UShort, Func(Of UShort, Boolean), HashSet(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.GetConnectedRegion(UShort, System.Func(Of UShort, Boolean), System.Collections.Generic.HashSet(Of UShort))
+  name.vb: GetConnectedRegion(UShort, Func(Of UShort, Boolean), HashSet(Of UShort))
+- uid: Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  commentId: M:Core.Systems.AdjacencySystem.GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  id: GetConnectedRegion(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetConnectedRegion(ushort, Func<ushort, bool>)
+  nameWithType: AdjacencySystem.GetConnectedRegion(ushort, Func<ushort, bool>)
+  fullName: Core.Systems.AdjacencySystem.GetConnectedRegion(ushort, System.Func<ushort, bool>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConnectedRegion
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get all provinces connected to a starting province (allocating version).
+  example: []
+  syntax:
+    content: public HashSet<ushort> GetConnectedRegion(ushort startProvince, Func<ushort, bool> predicate)
+    parameters:
+    - id: startProvince
+      type: System.UInt16
+    - id: predicate
+      type: System.Func{System.UInt16,System.Boolean}
+    return:
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    content.vb: Public Function GetConnectedRegion(startProvince As UShort, predicate As Func(Of UShort, Boolean)) As HashSet(Of UShort)
+  overload: Core.Systems.AdjacencySystem.GetConnectedRegion*
+  nameWithType.vb: AdjacencySystem.GetConnectedRegion(UShort, Func(Of UShort, Boolean))
+  fullName.vb: Core.Systems.AdjacencySystem.GetConnectedRegion(UShort, System.Func(Of UShort, Boolean))
+  name.vb: GetConnectedRegion(UShort, Func(Of UShort, Boolean))
+- uid: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16},System.Collections.Generic.List{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16},System.Collections.Generic.List{System.UInt16})
+  id: GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16},System.Collections.Generic.List{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetSharedBorderProvinces(IEnumerable<ushort>, HashSet<ushort>, List<ushort>)
+  nameWithType: AdjacencySystem.GetSharedBorderProvinces(IEnumerable<ushort>, HashSet<ushort>, List<ushort>)
+  fullName: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable<ushort>, System.Collections.Generic.HashSet<ushort>, System.Collections.Generic.List<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSharedBorderProvinces
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 338
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get provinces where two countries share a border.
+
+    Returns provinces from country1 that are adjacent to any province in country2.
+
+
+    Example: Find where France borders Germany
+      GetSharedBorderProvinces(frenchProvinces, germanProvinces, borderBuffer)
+  example: []
+  syntax:
+    content: public void GetSharedBorderProvinces(IEnumerable<ushort> ownedProvinces, HashSet<ushort> foreignProvinces, List<ushort> resultBuffer)
+    parameters:
+    - id: ownedProvinces
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+      description: Provinces belonging to first country
+    - id: foreignProvinces
+      type: System.Collections.Generic.HashSet{System.UInt16}
+      description: Provinces belonging to second country
+    - id: resultBuffer
+      type: System.Collections.Generic.List{System.UInt16}
+      description: Pre-allocated list to fill with border provinces from ownedProvinces
+    content.vb: Public Sub GetSharedBorderProvinces(ownedProvinces As IEnumerable(Of UShort), foreignProvinces As HashSet(Of UShort), resultBuffer As List(Of UShort))
+  overload: Core.Systems.AdjacencySystem.GetSharedBorderProvinces*
+  nameWithType.vb: AdjacencySystem.GetSharedBorderProvinces(IEnumerable(Of UShort), HashSet(Of UShort), List(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable(Of UShort), System.Collections.Generic.HashSet(Of UShort), System.Collections.Generic.List(Of UShort))
+  name.vb: GetSharedBorderProvinces(IEnumerable(Of UShort), HashSet(Of UShort), List(Of UShort))
+- uid: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16})
+  id: GetSharedBorderProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Collections.Generic.HashSet{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetSharedBorderProvinces(IEnumerable<ushort>, HashSet<ushort>)
+  nameWithType: AdjacencySystem.GetSharedBorderProvinces(IEnumerable<ushort>, HashSet<ushort>)
+  fullName: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable<ushort>, System.Collections.Generic.HashSet<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSharedBorderProvinces
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 364
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get provinces where two countries share a border (allocating version).
+  example: []
+  syntax:
+    content: public List<ushort> GetSharedBorderProvinces(IEnumerable<ushort> ownedProvinces, HashSet<ushort> foreignProvinces)
+    parameters:
+    - id: ownedProvinces
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    - id: foreignProvinces
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetSharedBorderProvinces(ownedProvinces As IEnumerable(Of UShort), foreignProvinces As HashSet(Of UShort)) As List(Of UShort)
+  overload: Core.Systems.AdjacencySystem.GetSharedBorderProvinces*
+  nameWithType.vb: AdjacencySystem.GetSharedBorderProvinces(IEnumerable(Of UShort), HashSet(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.GetSharedBorderProvinces(System.Collections.Generic.IEnumerable(Of UShort), System.Collections.Generic.HashSet(Of UShort))
+  name.vb: GetSharedBorderProvinces(IEnumerable(Of UShort), HashSet(Of UShort))
+- uid: Core.Systems.AdjacencySystem.IsBridgeProvince(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  commentId: M:Core.Systems.AdjacencySystem.IsBridgeProvince(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  id: IsBridgeProvince(System.UInt16,System.Func{System.UInt16,System.Boolean})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: IsBridgeProvince(ushort, Func<ushort, bool>)
+  nameWithType: AdjacencySystem.IsBridgeProvince(ushort, Func<ushort, bool>)
+  fullName: Core.Systems.AdjacencySystem.IsBridgeProvince(ushort, System.Func<ushort, bool>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsBridgeProvince
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 385
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Check if a province is a "bridge" - removing it would disconnect the region.
+
+
+    A bridge province has the property that the region becomes disconnected
+
+    if it's removed. Useful for strategic AI (critical choke points).
+
+
+    Algorithm: Check if any two neighbors of the province can still reach
+
+    each other without going through this province.
+  example: []
+  syntax:
+    content: public bool IsBridgeProvince(ushort province, Func<ushort, bool> regionPredicate)
+    parameters:
+    - id: province
+      type: System.UInt16
+      description: Province to check
+    - id: regionPredicate
+      type: System.Func{System.UInt16,System.Boolean}
+      description: Predicate defining the region (e.g., same owner)
+    return:
+      type: System.Boolean
+      description: True if removing this province would disconnect the region
+    content.vb: Public Function IsBridgeProvince(province As UShort, regionPredicate As Func(Of UShort, Boolean)) As Boolean
+  overload: Core.Systems.AdjacencySystem.IsBridgeProvince*
+  nameWithType.vb: AdjacencySystem.IsBridgeProvince(UShort, Func(Of UShort, Boolean))
+  fullName.vb: Core.Systems.AdjacencySystem.IsBridgeProvince(UShort, System.Func(Of UShort, Boolean))
+  name.vb: IsBridgeProvince(UShort, Func(Of UShort, Boolean))
+- uid: Core.Systems.AdjacencySystem.FindBridgeProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  commentId: M:Core.Systems.AdjacencySystem.FindBridgeProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  id: FindBridgeProvinces(System.Collections.Generic.IEnumerable{System.UInt16},System.Func{System.UInt16,System.Boolean},System.Collections.Generic.List{System.UInt16})
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: FindBridgeProvinces(IEnumerable<ushort>, Func<ushort, bool>, List<ushort>)
+  nameWithType: AdjacencySystem.FindBridgeProvinces(IEnumerable<ushort>, Func<ushort, bool>, List<ushort>)
+  fullName: Core.Systems.AdjacencySystem.FindBridgeProvinces(System.Collections.Generic.IEnumerable<ushort>, System.Func<ushort, bool>, System.Collections.Generic.List<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindBridgeProvinces
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 427
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Find all bridge provinces within a region.
+
+    These are strategic choke points where losing control would split territory.
+  example: []
+  syntax:
+    content: public void FindBridgeProvinces(IEnumerable<ushort> regionProvinces, Func<ushort, bool> regionPredicate, List<ushort> resultBuffer)
+    parameters:
+    - id: regionProvinces
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+      description: Set of provinces to check
+    - id: regionPredicate
+      type: System.Func{System.UInt16,System.Boolean}
+      description: Predicate defining what's in the region
+    - id: resultBuffer
+      type: System.Collections.Generic.List{System.UInt16}
+      description: Pre-allocated list to fill with bridge provinces
+    content.vb: Public Sub FindBridgeProvinces(regionProvinces As IEnumerable(Of UShort), regionPredicate As Func(Of UShort, Boolean), resultBuffer As List(Of UShort))
+  overload: Core.Systems.AdjacencySystem.FindBridgeProvinces*
+  nameWithType.vb: AdjacencySystem.FindBridgeProvinces(IEnumerable(Of UShort), Func(Of UShort, Boolean), List(Of UShort))
+  fullName.vb: Core.Systems.AdjacencySystem.FindBridgeProvinces(System.Collections.Generic.IEnumerable(Of UShort), System.Func(Of UShort, Boolean), System.Collections.Generic.List(Of UShort))
+  name.vb: FindBridgeProvinces(IEnumerable(Of UShort), Func(Of UShort, Boolean), List(Of UShort))
+- uid: Core.Systems.AdjacencySystem.GetStats
+  commentId: M:Core.Systems.AdjacencySystem.GetStats
+  id: GetStats
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetStats()
+  nameWithType: AdjacencySystem.GetStats()
+  fullName: Core.Systems.AdjacencySystem.GetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStats
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 446
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get queryable adjacency statistics.
+  example: []
+  syntax:
+    content: public AdjacencyStats GetStats()
+    return:
+      type: Core.Systems.AdjacencyStats
+    content.vb: Public Function GetStats() As AdjacencyStats
+  overload: Core.Systems.AdjacencySystem.GetStats*
+- uid: Core.Systems.AdjacencySystem.IsInitialized
+  commentId: P:Core.Systems.AdjacencySystem.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: AdjacencySystem.IsInitialized
+  fullName: Core.Systems.AdjacencySystem.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 485
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Check if system is initialized
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Systems.AdjacencySystem.IsInitialized*
+- uid: Core.Systems.AdjacencySystem.ProvinceCount
+  commentId: P:Core.Systems.AdjacencySystem.ProvinceCount
+  id: ProvinceCount
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: AdjacencySystem.ProvinceCount
+  fullName: Core.Systems.AdjacencySystem.ProvinceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 490
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get total province count
+  example: []
+  syntax:
+    content: public int ProvinceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ProvinceCount As Integer
+  overload: Core.Systems.AdjacencySystem.ProvinceCount*
+- uid: Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+  commentId: P:Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+  id: TotalAdjacencyPairs
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: TotalAdjacencyPairs
+  nameWithType: AdjacencySystem.TotalAdjacencyPairs
+  fullName: Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalAdjacencyPairs
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 495
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get total adjacency pair count
+  example: []
+  syntax:
+    content: public int TotalAdjacencyPairs { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalAdjacencyPairs As Integer
+  overload: Core.Systems.AdjacencySystem.TotalAdjacencyPairs*
+- uid: Core.Systems.AdjacencySystem.GetStatistics
+  commentId: M:Core.Systems.AdjacencySystem.GetStatistics
+  id: GetStatistics
+  parent: Core.Systems.AdjacencySystem
+  langs:
+  - csharp
+  - vb
+  name: GetStatistics()
+  nameWithType: AdjacencySystem.GetStatistics()
+  fullName: Core.Systems.AdjacencySystem.GetStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStatistics
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 501
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get adjacency statistics for debugging (string format).
+
+    Prefer GetStats() for programmatic access.
+  example: []
+  syntax:
+    content: public string GetStatistics()
+    return:
+      type: System.String
+    content.vb: Public Function GetStatistics() As String
+  overload: Core.Systems.AdjacencySystem.GetStatistics*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.AdjacencySystem.#ctor*
+  commentId: Overload:Core.Systems.AdjacencySystem.#ctor
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem__ctor
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem.AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem.AdjacencySystem
+  nameWithType.vb: AdjacencySystem.New
+  fullName.vb: Core.Systems.AdjacencySystem.New
+  name.vb: New
+- uid: Core.Systems.AdjacencySystem.GetNativeData*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetNativeData
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetNativeData
+  name: GetNativeData
+  nameWithType: AdjacencySystem.GetNativeData
+  fullName: Core.Systems.AdjacencySystem.GetNativeData
+- uid: Core.Systems.NativeAdjacencyData
+  commentId: T:Core.Systems.NativeAdjacencyData
+  parent: Core.Systems
+  href: Core.Systems.NativeAdjacencyData.html
+  name: NativeAdjacencyData
+  nameWithType: NativeAdjacencyData
+  fullName: Core.Systems.NativeAdjacencyData
+- uid: Core.Systems.AdjacencySystem.SetAdjacencies*
+  commentId: Overload:Core.Systems.AdjacencySystem.SetAdjacencies
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_SetAdjacencies_System_Collections_Generic_Dictionary_System_Int32_System_Collections_Generic_HashSet_System_Int32___
+  name: SetAdjacencies
+  nameWithType: AdjacencySystem.SetAdjacencies
+  fullName: Core.Systems.AdjacencySystem.SetAdjacencies
+- uid: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  commentId: T:System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<int, HashSet<int>>
+  nameWithType: Dictionary<int, HashSet<int>>
+  fullName: System.Collections.Generic.Dictionary<int, System.Collections.Generic.HashSet<int>>
+  nameWithType.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  fullName.vb: System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.HashSet(Of Integer))
+  name.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Systems.AdjacencySystem.Dispose*
+  commentId: Overload:Core.Systems.AdjacencySystem.Dispose
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_Dispose
+  name: Dispose
+  nameWithType: AdjacencySystem.Dispose
+  fullName: Core.Systems.AdjacencySystem.Dispose
+- uid: Core.Systems.AdjacencySystem.IsAdjacent*
+  commentId: Overload:Core.Systems.AdjacencySystem.IsAdjacent
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_IsAdjacent_System_UInt16_System_UInt16_
+  name: IsAdjacent
+  nameWithType: AdjacencySystem.IsAdjacent
+  fullName: Core.Systems.AdjacencySystem.IsAdjacent
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.AdjacencySystem.GetNeighbors*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetNeighbors
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetNeighbors_System_UInt16_Unity_Collections_Allocator_
+  name: GetNeighbors
+  nameWithType: AdjacencySystem.GetNeighbors
+  fullName: Core.Systems.AdjacencySystem.GetNeighbors
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.AdjacencySystem.GetNeighborCount*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetNeighborCount
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetNeighborCount_System_UInt16_
+  name: GetNeighborCount
+  nameWithType: AdjacencySystem.GetNeighborCount
+  fullName: Core.Systems.AdjacencySystem.GetNeighborCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.AdjacencySystem.GetNeighborsWhere*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetNeighborsWhere
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetNeighborsWhere_System_UInt16_System_Func_System_UInt16_System_Boolean__System_Collections_Generic_List_System_UInt16__
+  name: GetNeighborsWhere
+  nameWithType: AdjacencySystem.GetNeighborsWhere
+  fullName: Core.Systems.AdjacencySystem.GetNeighborsWhere
+- uid: System.Func{System.UInt16,System.Boolean}
+  commentId: T:System.Func{System.UInt16,System.Boolean}
+  parent: System
+  definition: System.Func`2
+  name: Func<ushort, bool>
+  nameWithType: Func<ushort, bool>
+  fullName: System.Func<ushort, bool>
+  nameWithType.vb: Func(Of UShort, Boolean)
+  fullName.vb: System.Func(Of UShort, Boolean)
+  name.vb: Func(Of UShort, Boolean)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.AdjacencySystem.GetConnectedRegion*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetConnectedRegion
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetConnectedRegion_System_UInt16_System_Func_System_UInt16_System_Boolean__System_Collections_Generic_HashSet_System_UInt16__
+  name: GetConnectedRegion
+  nameWithType: AdjacencySystem.GetConnectedRegion
+  fullName: Core.Systems.AdjacencySystem.GetConnectedRegion
+- uid: System.Collections.Generic.HashSet{System.UInt16}
+  commentId: T:System.Collections.Generic.HashSet{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<ushort>
+  nameWithType: HashSet<ushort>
+  fullName: System.Collections.Generic.HashSet<ushort>
+  nameWithType.vb: HashSet(Of UShort)
+  fullName.vb: System.Collections.Generic.HashSet(Of UShort)
+  name.vb: HashSet(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.AdjacencySystem.GetSharedBorderProvinces*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetSharedBorderProvinces
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetSharedBorderProvinces_System_Collections_Generic_IEnumerable_System_UInt16__System_Collections_Generic_HashSet_System_UInt16__System_Collections_Generic_List_System_UInt16__
+  name: GetSharedBorderProvinces
+  nameWithType: AdjacencySystem.GetSharedBorderProvinces
+  fullName: Core.Systems.AdjacencySystem.GetSharedBorderProvinces
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.AdjacencySystem.IsBridgeProvince*
+  commentId: Overload:Core.Systems.AdjacencySystem.IsBridgeProvince
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_IsBridgeProvince_System_UInt16_System_Func_System_UInt16_System_Boolean__
+  name: IsBridgeProvince
+  nameWithType: AdjacencySystem.IsBridgeProvince
+  fullName: Core.Systems.AdjacencySystem.IsBridgeProvince
+- uid: Core.Systems.AdjacencySystem.FindBridgeProvinces*
+  commentId: Overload:Core.Systems.AdjacencySystem.FindBridgeProvinces
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_FindBridgeProvinces_System_Collections_Generic_IEnumerable_System_UInt16__System_Func_System_UInt16_System_Boolean__System_Collections_Generic_List_System_UInt16__
+  name: FindBridgeProvinces
+  nameWithType: AdjacencySystem.FindBridgeProvinces
+  fullName: Core.Systems.AdjacencySystem.FindBridgeProvinces
+- uid: Core.Systems.AdjacencySystem.GetStats*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetStats
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetStats
+  name: GetStats
+  nameWithType: AdjacencySystem.GetStats
+  fullName: Core.Systems.AdjacencySystem.GetStats
+- uid: Core.Systems.AdjacencyStats
+  commentId: T:Core.Systems.AdjacencyStats
+  parent: Core.Systems
+  href: Core.Systems.AdjacencyStats.html
+  name: AdjacencyStats
+  nameWithType: AdjacencyStats
+  fullName: Core.Systems.AdjacencyStats
+- uid: Core.Systems.AdjacencySystem.IsInitialized*
+  commentId: Overload:Core.Systems.AdjacencySystem.IsInitialized
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_IsInitialized
+  name: IsInitialized
+  nameWithType: AdjacencySystem.IsInitialized
+  fullName: Core.Systems.AdjacencySystem.IsInitialized
+- uid: Core.Systems.AdjacencySystem.ProvinceCount*
+  commentId: Overload:Core.Systems.AdjacencySystem.ProvinceCount
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_ProvinceCount
+  name: ProvinceCount
+  nameWithType: AdjacencySystem.ProvinceCount
+  fullName: Core.Systems.AdjacencySystem.ProvinceCount
+- uid: Core.Systems.AdjacencySystem.TotalAdjacencyPairs*
+  commentId: Overload:Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_TotalAdjacencyPairs
+  name: TotalAdjacencyPairs
+  nameWithType: AdjacencySystem.TotalAdjacencyPairs
+  fullName: Core.Systems.AdjacencySystem.TotalAdjacencyPairs
+- uid: Core.Systems.AdjacencySystem.GetStatistics*
+  commentId: Overload:Core.Systems.AdjacencySystem.GetStatistics
+  href: Core.Systems.AdjacencySystem.html#Core_Systems_AdjacencySystem_GetStatistics
+  name: GetStatistics
+  nameWithType: AdjacencySystem.GetStatistics
+  fullName: Core.Systems.AdjacencySystem.GetStatistics
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

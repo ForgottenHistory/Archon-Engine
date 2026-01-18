@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyStats
+  commentId: T:Core.Diplomacy.DiplomacyStats
+  id: DiplomacyStats
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyStats.relationshipCount
+  - Core.Diplomacy.DiplomacyStats.totalModifiers
+  - Core.Diplomacy.DiplomacyStats.warCount
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyStats
+  nameWithType: DiplomacyStats
+  fullName: Core.Diplomacy.DiplomacyStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyStats
+    path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+    startLine: 285
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Statistics for debugging and validation
+  example: []
+  syntax:
+    content: public struct DiplomacyStats
+    content.vb: Public Structure DiplomacyStats
+- uid: Core.Diplomacy.DiplomacyStats.relationshipCount
+  commentId: F:Core.Diplomacy.DiplomacyStats.relationshipCount
+  id: relationshipCount
+  parent: Core.Diplomacy.DiplomacyStats
+  langs:
+  - csharp
+  - vb
+  name: relationshipCount
+  nameWithType: DiplomacyStats.relationshipCount
+  fullName: Core.Diplomacy.DiplomacyStats.relationshipCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: relationshipCount
+    path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public int relationshipCount
+    return:
+      type: System.Int32
+    content.vb: Public relationshipCount As Integer
+- uid: Core.Diplomacy.DiplomacyStats.warCount
+  commentId: F:Core.Diplomacy.DiplomacyStats.warCount
+  id: warCount
+  parent: Core.Diplomacy.DiplomacyStats
+  langs:
+  - csharp
+  - vb
+  name: warCount
+  nameWithType: DiplomacyStats.warCount
+  fullName: Core.Diplomacy.DiplomacyStats.warCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: warCount
+    path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+    startLine: 288
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public int warCount
+    return:
+      type: System.Int32
+    content.vb: Public warCount As Integer
+- uid: Core.Diplomacy.DiplomacyStats.totalModifiers
+  commentId: F:Core.Diplomacy.DiplomacyStats.totalModifiers
+  id: totalModifiers
+  parent: Core.Diplomacy.DiplomacyStats
+  langs:
+  - csharp
+  - vb
+  name: totalModifiers
+  nameWithType: DiplomacyStats.totalModifiers
+  fullName: Core.Diplomacy.DiplomacyStats.totalModifiers
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: totalModifiers
+    path: Scripts/Core/Diplomacy/DiplomacySystem.cs
+    startLine: 289
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public int totalModifiers
+    return:
+      type: System.Int32
+    content.vb: Public totalModifiers As Integer
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

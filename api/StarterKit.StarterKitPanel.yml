@@ -1,0 +1,2122 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.StarterKitPanel
+  commentId: T:StarterKit.StarterKitPanel
+  id: StarterKitPanel
+  parent: StarterKit
+  children:
+  - StarterKit.StarterKitPanel.BackgroundButton
+  - StarterKit.StarterKitPanel.BackgroundButtonHover
+  - StarterKit.StarterKitPanel.BackgroundHeader
+  - StarterKit.StarterKitPanel.BackgroundPanel
+  - StarterKit.StarterKitPanel.BackgroundPanelLight
+  - StarterKit.StarterKitPanel.BackgroundRowAlt
+  - StarterKit.StarterKitPanel.BackgroundRowPlayer
+  - StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  - StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  - StarterKit.StarterKitPanel.CreateHeader(System.String)
+  - StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  - StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  - StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  - StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  - StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  - StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  - StarterKit.StarterKitPanel.CreateText(System.String)
+  - StarterKit.StarterKitPanel.CreateTitle(System.String)
+  - StarterKit.StarterKitPanel.FontSizeHeader
+  - StarterKit.StarterKitPanel.FontSizeLarge
+  - StarterKit.StarterKitPanel.FontSizeNormal
+  - StarterKit.StarterKitPanel.FontSizeSmall
+  - StarterKit.StarterKitPanel.GameState
+  - StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  - StarterKit.StarterKitPanel.OnDestroy
+  - StarterKit.StarterKitPanel.RadiusLg
+  - StarterKit.StarterKitPanel.RadiusMd
+  - StarterKit.StarterKitPanel.RadiusSm
+  - StarterKit.StarterKitPanel.SpacingLg
+  - StarterKit.StarterKitPanel.SpacingMd
+  - StarterKit.StarterKitPanel.SpacingSm
+  - StarterKit.StarterKitPanel.SpacingXs
+  - StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  - StarterKit.StarterKitPanel.TextGold
+  - StarterKit.StarterKitPanel.TextIncome
+  - StarterKit.StarterKitPanel.TextLabel
+  - StarterKit.StarterKitPanel.TextPrimary
+  - StarterKit.StarterKitPanel.TextSecondary
+  - StarterKit.StarterKitPanel.TextWarning
+  - StarterKit.StarterKitPanel.gameState
+  - StarterKit.StarterKitPanel.subscriptions
+  langs:
+  - csharp
+  - vb
+  name: StarterKitPanel
+  nameWithType: StarterKitPanel
+  fullName: StarterKit.StarterKitPanel
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StarterKitPanel
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Base class for StarterKit UI panels.
+
+    Extends ENGINE's BasePanel with:
+
+    - GameState reference
+
+    - EventBus subscription management (CompositeDisposable)
+
+    - USS stylesheet loading
+
+    - Common styling constants
+
+
+    Usage:
+
+    1. Inherit from StarterKitPanel
+
+    2. Override CreateUI() to build your panel
+
+    3. Call base.Initialize(gameState) to set up
+
+    4. Use Subscribe() for event subscriptions (auto-disposed)
+  example: []
+  syntax:
+    content: 'public abstract class StarterKitPanel : BasePanel'
+    content.vb: Public MustInherit Class StarterKitPanel Inherits BasePanel
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  - Core.UI.BasePanel
+  derivedClasses:
+  - StarterKit.BuildingInfoUI
+  - StarterKit.CountrySelectionUI
+  - StarterKit.DiplomacyPanel
+  - StarterKit.LedgerUI
+  - StarterKit.ProvinceInfoUI
+  - StarterKit.ResourceBarUI
+  - StarterKit.TimeUI
+  - StarterKit.ToolbarUI
+  - StarterKit.UnitInfoUI
+  inheritedMembers:
+  - Core.UI.BasePanel.uiDocument
+  - Core.UI.BasePanel.rootElement
+  - Core.UI.BasePanel.panelContainer
+  - Core.UI.BasePanel.isInitialized
+  - Core.UI.BasePanel.isVisible
+  - Core.UI.BasePanel.IsInitialized
+  - Core.UI.BasePanel.IsVisible
+  - Core.UI.BasePanel.InitializeBase
+  - Core.UI.BasePanel.CreateUI
+  - Core.UI.BasePanel.Show
+  - Core.UI.BasePanel.Hide
+  - Core.UI.BasePanel.Toggle
+  - Core.UI.BasePanel.OnShow
+  - Core.UI.BasePanel.OnHide
+  - Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  - Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  - Core.UI.BasePanel.CenterPanel
+- uid: StarterKit.StarterKitPanel.BackgroundPanel
+  commentId: F:StarterKit.StarterKitPanel.BackgroundPanel
+  id: BackgroundPanel
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundPanel
+  nameWithType: StarterKitPanel.BackgroundPanel
+  fullName: StarterKit.StarterKitPanel.BackgroundPanel
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundPanel
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 25
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundPanel
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundPanel As Color
+- uid: StarterKit.StarterKitPanel.BackgroundPanelLight
+  commentId: F:StarterKit.StarterKitPanel.BackgroundPanelLight
+  id: BackgroundPanelLight
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundPanelLight
+  nameWithType: StarterKitPanel.BackgroundPanelLight
+  fullName: StarterKit.StarterKitPanel.BackgroundPanelLight
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundPanelLight
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 26
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundPanelLight
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundPanelLight As Color
+- uid: StarterKit.StarterKitPanel.BackgroundHeader
+  commentId: F:StarterKit.StarterKitPanel.BackgroundHeader
+  id: BackgroundHeader
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundHeader
+  nameWithType: StarterKitPanel.BackgroundHeader
+  fullName: StarterKit.StarterKitPanel.BackgroundHeader
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundHeader
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 27
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundHeader
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundHeader As Color
+- uid: StarterKit.StarterKitPanel.BackgroundRowAlt
+  commentId: F:StarterKit.StarterKitPanel.BackgroundRowAlt
+  id: BackgroundRowAlt
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundRowAlt
+  nameWithType: StarterKitPanel.BackgroundRowAlt
+  fullName: StarterKit.StarterKitPanel.BackgroundRowAlt
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundRowAlt
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 28
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundRowAlt
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundRowAlt As Color
+- uid: StarterKit.StarterKitPanel.BackgroundRowPlayer
+  commentId: F:StarterKit.StarterKitPanel.BackgroundRowPlayer
+  id: BackgroundRowPlayer
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundRowPlayer
+  nameWithType: StarterKitPanel.BackgroundRowPlayer
+  fullName: StarterKit.StarterKitPanel.BackgroundRowPlayer
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundRowPlayer
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 29
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundRowPlayer
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundRowPlayer As Color
+- uid: StarterKit.StarterKitPanel.BackgroundButton
+  commentId: F:StarterKit.StarterKitPanel.BackgroundButton
+  id: BackgroundButton
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundButton
+  nameWithType: StarterKitPanel.BackgroundButton
+  fullName: StarterKit.StarterKitPanel.BackgroundButton
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundButton
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 30
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundButton
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundButton As Color
+- uid: StarterKit.StarterKitPanel.BackgroundButtonHover
+  commentId: F:StarterKit.StarterKitPanel.BackgroundButtonHover
+  id: BackgroundButtonHover
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: BackgroundButtonHover
+  nameWithType: StarterKitPanel.BackgroundButtonHover
+  fullName: StarterKit.StarterKitPanel.BackgroundButtonHover
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BackgroundButtonHover
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 31
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color BackgroundButtonHover
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly BackgroundButtonHover As Color
+- uid: StarterKit.StarterKitPanel.TextPrimary
+  commentId: F:StarterKit.StarterKitPanel.TextPrimary
+  id: TextPrimary
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextPrimary
+  nameWithType: StarterKitPanel.TextPrimary
+  fullName: StarterKit.StarterKitPanel.TextPrimary
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextPrimary
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 33
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextPrimary
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextPrimary As Color
+- uid: StarterKit.StarterKitPanel.TextSecondary
+  commentId: F:StarterKit.StarterKitPanel.TextSecondary
+  id: TextSecondary
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextSecondary
+  nameWithType: StarterKitPanel.TextSecondary
+  fullName: StarterKit.StarterKitPanel.TextSecondary
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextSecondary
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 34
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextSecondary
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextSecondary As Color
+- uid: StarterKit.StarterKitPanel.TextLabel
+  commentId: F:StarterKit.StarterKitPanel.TextLabel
+  id: TextLabel
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextLabel
+  nameWithType: StarterKitPanel.TextLabel
+  fullName: StarterKit.StarterKitPanel.TextLabel
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextLabel
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 35
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextLabel
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextLabel As Color
+- uid: StarterKit.StarterKitPanel.TextGold
+  commentId: F:StarterKit.StarterKitPanel.TextGold
+  id: TextGold
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextGold
+  nameWithType: StarterKitPanel.TextGold
+  fullName: StarterKit.StarterKitPanel.TextGold
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextGold
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 36
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextGold
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextGold As Color
+- uid: StarterKit.StarterKitPanel.TextIncome
+  commentId: F:StarterKit.StarterKitPanel.TextIncome
+  id: TextIncome
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextIncome
+  nameWithType: StarterKitPanel.TextIncome
+  fullName: StarterKit.StarterKitPanel.TextIncome
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextIncome
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 37
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextIncome
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextIncome As Color
+- uid: StarterKit.StarterKitPanel.TextWarning
+  commentId: F:StarterKit.StarterKitPanel.TextWarning
+  id: TextWarning
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: TextWarning
+  nameWithType: StarterKitPanel.TextWarning
+  fullName: StarterKit.StarterKitPanel.TextWarning
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextWarning
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 38
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected static readonly Color TextWarning
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Shared ReadOnly TextWarning As Color
+- uid: StarterKit.StarterKitPanel.FontSizeNormal
+  commentId: F:StarterKit.StarterKitPanel.FontSizeNormal
+  id: FontSizeNormal
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: FontSizeNormal
+  nameWithType: StarterKitPanel.FontSizeNormal
+  fullName: StarterKit.StarterKitPanel.FontSizeNormal
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FontSizeNormal
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 40
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const int FontSizeNormal = 14
+    return:
+      type: System.Int32
+    content.vb: Protected Const FontSizeNormal As Integer = 14
+- uid: StarterKit.StarterKitPanel.FontSizeSmall
+  commentId: F:StarterKit.StarterKitPanel.FontSizeSmall
+  id: FontSizeSmall
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: FontSizeSmall
+  nameWithType: StarterKitPanel.FontSizeSmall
+  fullName: StarterKit.StarterKitPanel.FontSizeSmall
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FontSizeSmall
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 41
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const int FontSizeSmall = 12
+    return:
+      type: System.Int32
+    content.vb: Protected Const FontSizeSmall As Integer = 12
+- uid: StarterKit.StarterKitPanel.FontSizeLarge
+  commentId: F:StarterKit.StarterKitPanel.FontSizeLarge
+  id: FontSizeLarge
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: FontSizeLarge
+  nameWithType: StarterKitPanel.FontSizeLarge
+  fullName: StarterKit.StarterKitPanel.FontSizeLarge
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FontSizeLarge
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 42
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const int FontSizeLarge = 18
+    return:
+      type: System.Int32
+    content.vb: Protected Const FontSizeLarge As Integer = 18
+- uid: StarterKit.StarterKitPanel.FontSizeHeader
+  commentId: F:StarterKit.StarterKitPanel.FontSizeHeader
+  id: FontSizeHeader
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: FontSizeHeader
+  nameWithType: StarterKitPanel.FontSizeHeader
+  fullName: StarterKit.StarterKitPanel.FontSizeHeader
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FontSizeHeader
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 43
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const int FontSizeHeader = 20
+    return:
+      type: System.Int32
+    content.vb: Protected Const FontSizeHeader As Integer = 20
+- uid: StarterKit.StarterKitPanel.SpacingXs
+  commentId: F:StarterKit.StarterKitPanel.SpacingXs
+  id: SpacingXs
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: SpacingXs
+  nameWithType: StarterKitPanel.SpacingXs
+  fullName: StarterKit.StarterKitPanel.SpacingXs
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SpacingXs
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 45
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float SpacingXs = 4
+    return:
+      type: System.Single
+    content.vb: Protected Const SpacingXs As Single = 4
+- uid: StarterKit.StarterKitPanel.SpacingSm
+  commentId: F:StarterKit.StarterKitPanel.SpacingSm
+  id: SpacingSm
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: SpacingSm
+  nameWithType: StarterKitPanel.SpacingSm
+  fullName: StarterKit.StarterKitPanel.SpacingSm
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SpacingSm
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 46
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float SpacingSm = 6
+    return:
+      type: System.Single
+    content.vb: Protected Const SpacingSm As Single = 6
+- uid: StarterKit.StarterKitPanel.SpacingMd
+  commentId: F:StarterKit.StarterKitPanel.SpacingMd
+  id: SpacingMd
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: SpacingMd
+  nameWithType: StarterKitPanel.SpacingMd
+  fullName: StarterKit.StarterKitPanel.SpacingMd
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SpacingMd
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 47
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float SpacingMd = 10
+    return:
+      type: System.Single
+    content.vb: Protected Const SpacingMd As Single = 10
+- uid: StarterKit.StarterKitPanel.SpacingLg
+  commentId: F:StarterKit.StarterKitPanel.SpacingLg
+  id: SpacingLg
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: SpacingLg
+  nameWithType: StarterKitPanel.SpacingLg
+  fullName: StarterKit.StarterKitPanel.SpacingLg
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SpacingLg
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 48
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float SpacingLg = 15
+    return:
+      type: System.Single
+    content.vb: Protected Const SpacingLg As Single = 15
+- uid: StarterKit.StarterKitPanel.RadiusSm
+  commentId: F:StarterKit.StarterKitPanel.RadiusSm
+  id: RadiusSm
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: RadiusSm
+  nameWithType: StarterKitPanel.RadiusSm
+  fullName: StarterKit.StarterKitPanel.RadiusSm
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RadiusSm
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 50
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float RadiusSm = 3
+    return:
+      type: System.Single
+    content.vb: Protected Const RadiusSm As Single = 3
+- uid: StarterKit.StarterKitPanel.RadiusMd
+  commentId: F:StarterKit.StarterKitPanel.RadiusMd
+  id: RadiusMd
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: RadiusMd
+  nameWithType: StarterKitPanel.RadiusMd
+  fullName: StarterKit.StarterKitPanel.RadiusMd
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RadiusMd
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 51
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float RadiusMd = 6
+    return:
+      type: System.Single
+    content.vb: Protected Const RadiusMd As Single = 6
+- uid: StarterKit.StarterKitPanel.RadiusLg
+  commentId: F:StarterKit.StarterKitPanel.RadiusLg
+  id: RadiusLg
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: RadiusLg
+  nameWithType: StarterKitPanel.RadiusLg
+  fullName: StarterKit.StarterKitPanel.RadiusLg
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RadiusLg
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 52
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected const float RadiusLg = 8
+    return:
+      type: System.Single
+    content.vb: Protected Const RadiusLg As Single = 8
+- uid: StarterKit.StarterKitPanel.gameState
+  commentId: F:StarterKit.StarterKitPanel.gameState
+  id: gameState
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: gameState
+  nameWithType: StarterKitPanel.gameState
+  fullName: StarterKit.StarterKitPanel.gameState
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameState
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 55
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected GameState gameState
+    return:
+      type: Core.GameState
+    content.vb: Protected gameState As GameState
+- uid: StarterKit.StarterKitPanel.subscriptions
+  commentId: F:StarterKit.StarterKitPanel.subscriptions
+  id: subscriptions
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: subscriptions
+  nameWithType: StarterKitPanel.subscriptions
+  fullName: StarterKit.StarterKitPanel.subscriptions
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: subscriptions
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 56
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: protected CompositeDisposable subscriptions
+    return:
+      type: Core.Events.CompositeDisposable
+    content.vb: Protected subscriptions As CompositeDisposable
+- uid: StarterKit.StarterKitPanel.GameState
+  commentId: P:StarterKit.StarterKitPanel.GameState
+  id: GameState
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: GameState
+  nameWithType: StarterKitPanel.GameState
+  fullName: StarterKit.StarterKitPanel.GameState
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameState
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 59
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The GameState reference.
+  example: []
+  syntax:
+    content: public GameState GameState { get; }
+    parameters: []
+    return:
+      type: Core.GameState
+    content.vb: Public ReadOnly Property GameState As GameState
+  overload: StarterKit.StarterKitPanel.GameState*
+- uid: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  commentId: M:StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  id: Initialize(Core.GameState)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState)
+  nameWithType: StarterKitPanel.Initialize(GameState)
+  fullName: StarterKit.StarterKitPanel.Initialize(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 65
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Initialize the panel with GameState reference.
+
+    Call this from subclass Initialize() method.
+  example: []
+  syntax:
+    content: protected bool Initialize(GameState gameStateRef)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    return:
+      type: System.Boolean
+    content.vb: Protected Function Initialize(gameStateRef As GameState) As Boolean
+  overload: StarterKit.StarterKitPanel.Initialize*
+- uid: StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  commentId: M:StarterKit.StarterKitPanel.Subscribe``1(System.Action{``0})
+  id: Subscribe``1(System.Action{``0})
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: Subscribe<T>(Action<T>)
+  nameWithType: StarterKitPanel.Subscribe<T>(Action<T>)
+  fullName: StarterKit.StarterKitPanel.Subscribe<T>(System.Action<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Subscribe
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 91
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Subscribe to an EventBus event. Subscription is auto-disposed on OnDestroy.
+  example: []
+  syntax:
+    content: 'protected void Subscribe<T>(Action<T> handler) where T : struct, IGameEvent'
+    parameters:
+    - id: handler
+      type: System.Action{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Protected Sub Subscribe(Of T As {Structure, IGameEvent})(handler As Action(Of T))
+  overload: StarterKit.StarterKitPanel.Subscribe*
+  nameWithType.vb: StarterKitPanel.Subscribe(Of T)(Action(Of T))
+  fullName.vb: StarterKit.StarterKitPanel.Subscribe(Of T)(System.Action(Of T))
+  name.vb: Subscribe(Of T)(Action(Of T))
+- uid: StarterKit.StarterKitPanel.OnDestroy
+  commentId: M:StarterKit.StarterKitPanel.OnDestroy
+  id: OnDestroy
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: OnDestroy()
+  nameWithType: StarterKitPanel.OnDestroy()
+  fullName: StarterKit.StarterKitPanel.OnDestroy()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDestroy
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 106
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Called when the panel is destroyed. Disposes event subscriptions.
+
+    Override to add cleanup, but always call base.OnDestroy().
+  example: []
+  syntax:
+    content: protected virtual void OnDestroy()
+    content.vb: Protected Overridable Sub OnDestroy()
+  overload: StarterKit.StarterKitPanel.OnDestroy*
+- uid: StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  commentId: M:StarterKit.StarterKitPanel.CreateStyledPanel(System.String,System.Nullable{System.Single})
+  id: CreateStyledPanel(System.String,System.Nullable{System.Single})
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateStyledPanel(string, float?)
+  nameWithType: StarterKitPanel.CreateStyledPanel(string, float?)
+  fullName: StarterKit.StarterKitPanel.CreateStyledPanel(string, float?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateStyledPanel
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 116
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a styled panel container with default StarterKit styling.
+  example: []
+  syntax:
+    content: protected VisualElement CreateStyledPanel(string name, float? minWidth = null)
+    parameters:
+    - id: name
+      type: System.String
+    - id: minWidth
+      type: System.Nullable{System.Single}
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreateStyledPanel(name As String, minWidth As Single? = Nothing) As VisualElement
+  overload: StarterKit.StarterKitPanel.CreateStyledPanel*
+  nameWithType.vb: StarterKitPanel.CreateStyledPanel(String, Single?)
+  fullName.vb: StarterKit.StarterKitPanel.CreateStyledPanel(String, Single?)
+  name.vb: CreateStyledPanel(String, Single?)
+- uid: StarterKit.StarterKitPanel.CreateHeader(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateHeader(System.String)
+  id: CreateHeader(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateHeader(string)
+  nameWithType: StarterKitPanel.CreateHeader(string)
+  fullName: StarterKit.StarterKitPanel.CreateHeader(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateHeader
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 126
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a header label with default StarterKit styling.
+  example: []
+  syntax:
+    content: protected Label CreateHeader(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateHeader(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateHeader*
+  nameWithType.vb: StarterKitPanel.CreateHeader(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateHeader(String)
+  name.vb: CreateHeader(String)
+- uid: StarterKit.StarterKitPanel.CreateTitle(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateTitle(System.String)
+  id: CreateTitle(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateTitle(string)
+  nameWithType: StarterKitPanel.CreateTitle(string)
+  fullName: StarterKit.StarterKitPanel.CreateTitle(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateTitle
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 132
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a title label with default StarterKit styling.
+  example: []
+  syntax:
+    content: protected Label CreateTitle(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateTitle(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateTitle*
+  nameWithType.vb: StarterKitPanel.CreateTitle(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateTitle(String)
+  name.vb: CreateTitle(String)
+- uid: StarterKit.StarterKitPanel.CreateText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateText(System.String)
+  id: CreateText(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateText(string)
+  nameWithType: StarterKitPanel.CreateText(string)
+  fullName: StarterKit.StarterKitPanel.CreateText(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateText
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 138
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a normal text label.
+  example: []
+  syntax:
+    content: protected Label CreateText(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateText(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateText*
+  nameWithType.vb: StarterKitPanel.CreateText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateText(String)
+  name.vb: CreateText(String)
+- uid: StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateSecondaryText(System.String)
+  id: CreateSecondaryText(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateSecondaryText(string)
+  nameWithType: StarterKitPanel.CreateSecondaryText(string)
+  fullName: StarterKit.StarterKitPanel.CreateSecondaryText(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateSecondaryText
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 144
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a secondary text label.
+  example: []
+  syntax:
+    content: protected Label CreateSecondaryText(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateSecondaryText(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateSecondaryText*
+  nameWithType.vb: StarterKitPanel.CreateSecondaryText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateSecondaryText(String)
+  name.vb: CreateSecondaryText(String)
+- uid: StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateLabelText(System.String)
+  id: CreateLabelText(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateLabelText(string)
+  nameWithType: StarterKitPanel.CreateLabelText(string)
+  fullName: StarterKit.StarterKitPanel.CreateLabelText(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateLabelText
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 150
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a small label text.
+  example: []
+  syntax:
+    content: protected Label CreateLabelText(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateLabelText(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateLabelText*
+  nameWithType.vb: StarterKitPanel.CreateLabelText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateLabelText(String)
+  name.vb: CreateLabelText(String)
+- uid: StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  commentId: M:StarterKit.StarterKitPanel.CreateGoldText(System.String)
+  id: CreateGoldText(System.String)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateGoldText(string)
+  nameWithType: StarterKitPanel.CreateGoldText(string)
+  fullName: StarterKit.StarterKitPanel.CreateGoldText(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateGoldText
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 156
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a gold-colored label.
+  example: []
+  syntax:
+    content: protected Label CreateGoldText(string text)
+    parameters:
+    - id: text
+      type: System.String
+    return:
+      type: UnityEngine.UIElements.Label
+    content.vb: Protected Function CreateGoldText(text As String) As Label
+  overload: StarterKit.StarterKitPanel.CreateGoldText*
+  nameWithType.vb: StarterKitPanel.CreateGoldText(String)
+  fullName.vb: StarterKit.StarterKitPanel.CreateGoldText(String)
+  name.vb: CreateGoldText(String)
+- uid: StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  commentId: M:StarterKit.StarterKitPanel.CreateStyledButton(System.String,System.Action)
+  id: CreateStyledButton(System.String,System.Action)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateStyledButton(string, Action)
+  nameWithType: StarterKitPanel.CreateStyledButton(string, Action)
+  fullName: StarterKit.StarterKitPanel.CreateStyledButton(string, System.Action)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateStyledButton
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 162
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a styled button with default StarterKit styling.
+  example: []
+  syntax:
+    content: protected Button CreateStyledButton(string text, Action onClick)
+    parameters:
+    - id: text
+      type: System.String
+    - id: onClick
+      type: System.Action
+    return:
+      type: UnityEngine.UIElements.Button
+    content.vb: Protected Function CreateStyledButton(text As String, onClick As Action) As Button
+  overload: StarterKit.StarterKitPanel.CreateStyledButton*
+  nameWithType.vb: StarterKitPanel.CreateStyledButton(String, Action)
+  fullName.vb: StarterKit.StarterKitPanel.CreateStyledButton(String, System.Action)
+  name.vb: CreateStyledButton(String, Action)
+- uid: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  id: CreateRow(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateRow(Justify, Align)
+  nameWithType: StarterKitPanel.CreateRow(Justify, Align)
+  fullName: StarterKit.StarterKitPanel.CreateRow(UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateRow
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 171
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a row container with flex-row layout.
+  example: []
+  syntax:
+    content: protected VisualElement CreateRow(Justify justify = Justify.FlexStart, Align align = Align.Center)
+    parameters:
+    - id: justify
+      type: UnityEngine.UIElements.Justify
+    - id: align
+      type: UnityEngine.UIElements.Align
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreateRow(justify As Justify = Justify.FlexStart, align As Align = Align.Center) As VisualElement
+  overload: StarterKit.StarterKitPanel.CreateRow*
+- uid: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  commentId: M:StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  id: CreateColumn(UnityEngine.UIElements.Justify,UnityEngine.UIElements.Align)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateColumn(Justify, Align)
+  nameWithType: StarterKitPanel.CreateColumn(Justify, Align)
+  fullName: StarterKit.StarterKitPanel.CreateColumn(UnityEngine.UIElements.Justify, UnityEngine.UIElements.Align)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateColumn
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 179
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a column container with flex-column layout.
+  example: []
+  syntax:
+    content: protected VisualElement CreateColumn(Justify justify = Justify.FlexStart, Align align = Align.Stretch)
+    parameters:
+    - id: justify
+      type: UnityEngine.UIElements.Justify
+    - id: align
+      type: UnityEngine.UIElements.Align
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreateColumn(justify As Justify = Justify.FlexStart, align As Align = Align.Stretch) As VisualElement
+  overload: StarterKit.StarterKitPanel.CreateColumn*
+- uid: StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  commentId: M:StarterKit.StarterKitPanel.CreateRowEntry(System.Boolean)
+  id: CreateRowEntry(System.Boolean)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateRowEntry(bool)
+  nameWithType: StarterKitPanel.CreateRowEntry(bool)
+  fullName: StarterKit.StarterKitPanel.CreateRowEntry(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateRowEntry
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 187
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a row entry with alternating background (for lists).
+  example: []
+  syntax:
+    content: protected VisualElement CreateRowEntry(bool alternate = false)
+    parameters:
+    - id: alternate
+      type: System.Boolean
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreateRowEntry(alternate As Boolean = False) As VisualElement
+  overload: StarterKit.StarterKitPanel.CreateRowEntry*
+  nameWithType.vb: StarterKitPanel.CreateRowEntry(Boolean)
+  fullName.vb: StarterKit.StarterKitPanel.CreateRowEntry(Boolean)
+  name.vb: CreateRowEntry(Boolean)
+- uid: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  commentId: M:StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color,System.Single)
+  id: CreateColorIndicator(UnityEngine.Color,System.Single)
+  parent: StarterKit.StarterKitPanel
+  langs:
+  - csharp
+  - vb
+  name: CreateColorIndicator(Color, float)
+  nameWithType: StarterKitPanel.CreateColorIndicator(Color, float)
+  fullName: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/StarterKitPanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateColorIndicator
+    path: Scripts/StarterKit/UI/StarterKitPanel.cs
+    startLine: 199
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a color indicator box.
+  example: []
+  syntax:
+    content: protected VisualElement CreateColorIndicator(Color color, float size = 16)
+    parameters:
+    - id: color
+      type: UnityEngine.Color
+    - id: size
+      type: System.Single
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreateColorIndicator(color As Color, size As Single = 16) As VisualElement
+  overload: StarterKit.StarterKitPanel.CreateColorIndicator*
+  nameWithType.vb: StarterKitPanel.CreateColorIndicator(Color, Single)
+  fullName.vb: StarterKit.StarterKitPanel.CreateColorIndicator(UnityEngine.Color, Single)
+  name.vb: CreateColorIndicator(Color, Single)
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: Core.UI.BasePanel
+  commentId: T:Core.UI.BasePanel
+  parent: Core.UI
+  href: Core.UI.BasePanel.html
+  name: BasePanel
+  nameWithType: BasePanel
+  fullName: Core.UI.BasePanel
+- uid: Core.UI.BasePanel.uiDocument
+  commentId: F:Core.UI.BasePanel.uiDocument
+  parent: Core.UI.BasePanel
+  name: uiDocument
+  nameWithType: BasePanel.uiDocument
+  fullName: Core.UI.BasePanel.uiDocument
+- uid: Core.UI.BasePanel.rootElement
+  commentId: F:Core.UI.BasePanel.rootElement
+  parent: Core.UI.BasePanel
+  name: rootElement
+  nameWithType: BasePanel.rootElement
+  fullName: Core.UI.BasePanel.rootElement
+- uid: Core.UI.BasePanel.panelContainer
+  commentId: F:Core.UI.BasePanel.panelContainer
+  parent: Core.UI.BasePanel
+  name: panelContainer
+  nameWithType: BasePanel.panelContainer
+  fullName: Core.UI.BasePanel.panelContainer
+- uid: Core.UI.BasePanel.isInitialized
+  commentId: F:Core.UI.BasePanel.isInitialized
+  parent: Core.UI.BasePanel
+  name: isInitialized
+  nameWithType: BasePanel.isInitialized
+  fullName: Core.UI.BasePanel.isInitialized
+- uid: Core.UI.BasePanel.isVisible
+  commentId: F:Core.UI.BasePanel.isVisible
+  parent: Core.UI.BasePanel
+  name: isVisible
+  nameWithType: BasePanel.isVisible
+  fullName: Core.UI.BasePanel.isVisible
+- uid: Core.UI.BasePanel.IsInitialized
+  commentId: P:Core.UI.BasePanel.IsInitialized
+  parent: Core.UI.BasePanel
+  name: IsInitialized
+  nameWithType: BasePanel.IsInitialized
+  fullName: Core.UI.BasePanel.IsInitialized
+- uid: Core.UI.BasePanel.IsVisible
+  commentId: P:Core.UI.BasePanel.IsVisible
+  parent: Core.UI.BasePanel
+  name: IsVisible
+  nameWithType: BasePanel.IsVisible
+  fullName: Core.UI.BasePanel.IsVisible
+- uid: Core.UI.BasePanel.InitializeBase
+  commentId: M:Core.UI.BasePanel.InitializeBase
+  parent: Core.UI.BasePanel
+  name: InitializeBase()
+  nameWithType: BasePanel.InitializeBase()
+  fullName: Core.UI.BasePanel.InitializeBase()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.InitializeBase
+    name: InitializeBase
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.InitializeBase
+    name: InitializeBase
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.CreateUI
+  commentId: M:Core.UI.BasePanel.CreateUI
+  parent: Core.UI.BasePanel
+  name: CreateUI()
+  nameWithType: BasePanel.CreateUI()
+  fullName: Core.UI.BasePanel.CreateUI()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CreateUI
+    name: CreateUI
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CreateUI
+    name: CreateUI
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Show
+  commentId: M:Core.UI.BasePanel.Show
+  parent: Core.UI.BasePanel
+  name: Show()
+  nameWithType: BasePanel.Show()
+  fullName: Core.UI.BasePanel.Show()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Hide
+  commentId: M:Core.UI.BasePanel.Hide
+  parent: Core.UI.BasePanel
+  name: Hide()
+  nameWithType: BasePanel.Hide()
+  fullName: Core.UI.BasePanel.Hide()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.Toggle
+  commentId: M:Core.UI.BasePanel.Toggle
+  parent: Core.UI.BasePanel
+  name: Toggle()
+  nameWithType: BasePanel.Toggle()
+  fullName: Core.UI.BasePanel.Toggle()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Toggle
+    name: Toggle
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Toggle
+    name: Toggle
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.OnShow
+  commentId: M:Core.UI.BasePanel.OnShow
+  parent: Core.UI.BasePanel
+  name: OnShow()
+  nameWithType: BasePanel.OnShow()
+  fullName: Core.UI.BasePanel.OnShow()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.OnShow
+    name: OnShow
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.OnShow
+    name: OnShow
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.OnHide
+  commentId: M:Core.UI.BasePanel.OnHide
+  parent: Core.UI.BasePanel
+  name: OnHide()
+  nameWithType: BasePanel.OnHide()
+  fullName: Core.UI.BasePanel.OnHide()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.OnHide
+    name: OnHide
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.OnHide
+    name: OnHide
+  - name: (
+  - name: )
+- uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  commentId: M:Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  parent: Core.UI.BasePanel
+  isExternal: true
+  name: CreatePanelContainer(string, Color, float, float)
+  nameWithType: BasePanel.CreatePanelContainer(string, Color, float, float)
+  fullName: Core.UI.BasePanel.CreatePanelContainer(string, UnityEngine.Color, float, float)
+  nameWithType.vb: BasePanel.CreatePanelContainer(String, Color, Single, Single)
+  fullName.vb: Core.UI.BasePanel.CreatePanelContainer(String, UnityEngine.Color, Single, Single)
+  name.vb: CreatePanelContainer(String, Color, Single, Single)
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+    name: CreatePanelContainer
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+    name: CreatePanelContainer
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  commentId: M:Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  parent: Core.UI.BasePanel
+  isExternal: true
+  name: PositionPanel(float?, float?, float?, float?)
+  nameWithType: BasePanel.PositionPanel(float?, float?, float?, float?)
+  fullName: Core.UI.BasePanel.PositionPanel(float?, float?, float?, float?)
+  nameWithType.vb: BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  fullName.vb: Core.UI.BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  name.vb: PositionPanel(Single?, Single?, Single?, Single?)
+  spec.csharp:
+  - uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+    name: PositionPanel
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+    name: PositionPanel
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+  - name: )
+- uid: Core.UI.BasePanel.CenterPanel
+  commentId: M:Core.UI.BasePanel.CenterPanel
+  parent: Core.UI.BasePanel
+  name: CenterPanel()
+  nameWithType: BasePanel.CenterPanel()
+  fullName: Core.UI.BasePanel.CenterPanel()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.CenterPanel
+    name: CenterPanel
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.CenterPanel
+    name: CenterPanel
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.UI
+  commentId: N:Core.UI
+  href: Core.html
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Events.CompositeDisposable
+  commentId: T:Core.Events.CompositeDisposable
+  parent: Core.Events
+  href: Core.Events.CompositeDisposable.html
+  name: CompositeDisposable
+  nameWithType: CompositeDisposable
+  fullName: Core.Events.CompositeDisposable
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+- uid: StarterKit.StarterKitPanel.GameState*
+  commentId: Overload:StarterKit.StarterKitPanel.GameState
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_GameState
+  name: GameState
+  nameWithType: StarterKitPanel.GameState
+  fullName: StarterKit.StarterKitPanel.GameState
+- uid: StarterKit.StarterKitPanel.Initialize*
+  commentId: Overload:StarterKit.StarterKitPanel.Initialize
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Initialize_Core_GameState_
+  name: Initialize
+  nameWithType: StarterKitPanel.Initialize
+  fullName: StarterKit.StarterKitPanel.Initialize
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.StarterKitPanel.Subscribe*
+  commentId: Overload:StarterKit.StarterKitPanel.Subscribe
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_Subscribe__1_System_Action___0__
+  name: Subscribe
+  nameWithType: StarterKitPanel.Subscribe
+  fullName: StarterKit.StarterKitPanel.Subscribe
+- uid: System.Action{{T}}
+  commentId: T:System.Action{``0}
+  parent: System
+  definition: System.Action`1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: StarterKit.StarterKitPanel.OnDestroy*
+  commentId: Overload:StarterKit.StarterKitPanel.OnDestroy
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_OnDestroy
+  name: OnDestroy
+  nameWithType: StarterKitPanel.OnDestroy
+  fullName: StarterKit.StarterKitPanel.OnDestroy
+- uid: StarterKit.StarterKitPanel.CreateStyledPanel*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateStyledPanel
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledPanel_System_String_System_Nullable_System_Single__
+  name: CreateStyledPanel
+  nameWithType: StarterKitPanel.CreateStyledPanel
+  fullName: StarterKit.StarterKitPanel.CreateStyledPanel
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Nullable{System.Single}
+  commentId: T:System.Nullable{System.Single}
+  parent: System
+  definition: System.Nullable`1
+  name: float?
+  nameWithType: float?
+  fullName: float?
+  nameWithType.vb: Single?
+  fullName.vb: Single?
+  name.vb: Single?
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+- uid: UnityEngine.UIElements.VisualElement
+  commentId: T:UnityEngine.UIElements.VisualElement
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: VisualElement
+  nameWithType: VisualElement
+  fullName: UnityEngine.UIElements.VisualElement
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: UnityEngine.UIElements
+  commentId: N:UnityEngine.UIElements
+  isExternal: true
+  name: UnityEngine.UIElements
+  nameWithType: UnityEngine.UIElements
+  fullName: UnityEngine.UIElements
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+- uid: StarterKit.StarterKitPanel.CreateHeader*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateHeader
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateHeader_System_String_
+  name: CreateHeader
+  nameWithType: StarterKitPanel.CreateHeader
+  fullName: StarterKit.StarterKitPanel.CreateHeader
+- uid: UnityEngine.UIElements.Label
+  commentId: T:UnityEngine.UIElements.Label
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Label
+  nameWithType: Label
+  fullName: UnityEngine.UIElements.Label
+- uid: StarterKit.StarterKitPanel.CreateTitle*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateTitle
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateTitle_System_String_
+  name: CreateTitle
+  nameWithType: StarterKitPanel.CreateTitle
+  fullName: StarterKit.StarterKitPanel.CreateTitle
+- uid: StarterKit.StarterKitPanel.CreateText*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateText
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateText_System_String_
+  name: CreateText
+  nameWithType: StarterKitPanel.CreateText
+  fullName: StarterKit.StarterKitPanel.CreateText
+- uid: StarterKit.StarterKitPanel.CreateSecondaryText*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateSecondaryText
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateSecondaryText_System_String_
+  name: CreateSecondaryText
+  nameWithType: StarterKitPanel.CreateSecondaryText
+  fullName: StarterKit.StarterKitPanel.CreateSecondaryText
+- uid: StarterKit.StarterKitPanel.CreateLabelText*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateLabelText
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateLabelText_System_String_
+  name: CreateLabelText
+  nameWithType: StarterKitPanel.CreateLabelText
+  fullName: StarterKit.StarterKitPanel.CreateLabelText
+- uid: StarterKit.StarterKitPanel.CreateGoldText*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateGoldText
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateGoldText_System_String_
+  name: CreateGoldText
+  nameWithType: StarterKitPanel.CreateGoldText
+  fullName: StarterKit.StarterKitPanel.CreateGoldText
+- uid: StarterKit.StarterKitPanel.CreateStyledButton*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateStyledButton
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateStyledButton_System_String_System_Action_
+  name: CreateStyledButton
+  nameWithType: StarterKitPanel.CreateStyledButton
+  fullName: StarterKit.StarterKitPanel.CreateStyledButton
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: UnityEngine.UIElements.Button
+  commentId: T:UnityEngine.UIElements.Button
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Button
+  nameWithType: Button
+  fullName: UnityEngine.UIElements.Button
+- uid: StarterKit.StarterKitPanel.CreateRow*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateRow
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRow_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: CreateRow
+  nameWithType: StarterKitPanel.CreateRow
+  fullName: StarterKit.StarterKitPanel.CreateRow
+- uid: UnityEngine.UIElements.Justify
+  commentId: T:UnityEngine.UIElements.Justify
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Justify
+  nameWithType: Justify
+  fullName: UnityEngine.UIElements.Justify
+- uid: UnityEngine.UIElements.Align
+  commentId: T:UnityEngine.UIElements.Align
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Align
+  nameWithType: Align
+  fullName: UnityEngine.UIElements.Align
+- uid: StarterKit.StarterKitPanel.CreateColumn*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateColumn
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColumn_UnityEngine_UIElements_Justify_UnityEngine_UIElements_Align_
+  name: CreateColumn
+  nameWithType: StarterKitPanel.CreateColumn
+  fullName: StarterKit.StarterKitPanel.CreateColumn
+- uid: StarterKit.StarterKitPanel.CreateRowEntry*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateRowEntry
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateRowEntry_System_Boolean_
+  name: CreateRowEntry
+  nameWithType: StarterKitPanel.CreateRowEntry
+  fullName: StarterKit.StarterKitPanel.CreateRowEntry
+- uid: StarterKit.StarterKitPanel.CreateColorIndicator*
+  commentId: Overload:StarterKit.StarterKitPanel.CreateColorIndicator
+  href: StarterKit.StarterKitPanel.html#StarterKit_StarterKitPanel_CreateColorIndicator_UnityEngine_Color_System_Single_
+  name: CreateColorIndicator
+  nameWithType: StarterKitPanel.CreateColorIndicator
+  fullName: StarterKit.StarterKitPanel.CreateColorIndicator

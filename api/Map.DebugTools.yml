@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.DebugTools
+  commentId: N:Map.DebugTools
+  id: Map.DebugTools
+  children:
+  - Map.DebugTools.EngineDebugUI
+  langs:
+  - csharp
+  - vb
+  name: Map.DebugTools
+  nameWithType: Map.DebugTools
+  fullName: Map.DebugTools
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.DebugTools.EngineDebugUI
+  commentId: T:Map.DebugTools.EngineDebugUI
+  href: Map.DebugTools.EngineDebugUI.html
+  name: EngineDebugUI
+  nameWithType: EngineDebugUI
+  fullName: Map.DebugTools.EngineDebugUI

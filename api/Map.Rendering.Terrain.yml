@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  id: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.DefaultTerrainRenderer
+  - Map.Rendering.Terrain.ITerrainRenderer
+  - Map.Rendering.Terrain.TerrainBitmapReader
+  - Map.Rendering.Terrain.TerrainBlendMapGenerator
+  - Map.Rendering.Terrain.TerrainOverrideApplicator
+  - Map.Rendering.Terrain.TerrainRGBLookup
+  - Map.Rendering.Terrain.TerrainRendererBase
+  - Map.Rendering.Terrain.TerrainRendererContext
+  - Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Rendering.Terrain.TerrainBitmapReader
+  commentId: T:Map.Rendering.Terrain.TerrainBitmapReader
+  href: Map.Rendering.Terrain.TerrainBitmapReader.html
+  name: TerrainBitmapReader
+  nameWithType: TerrainBitmapReader
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  commentId: T:Map.Rendering.Terrain.TerrainBlendMapGenerator
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html
+  name: TerrainBlendMapGenerator
+  nameWithType: TerrainBlendMapGenerator
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator
+- uid: Map.Rendering.Terrain.TerrainRGBLookup
+  commentId: T:Map.Rendering.Terrain.TerrainRGBLookup
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html
+  name: TerrainRGBLookup
+  nameWithType: TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup
+- uid: Map.Rendering.Terrain.ITerrainRenderer
+  commentId: T:Map.Rendering.Terrain.ITerrainRenderer
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.ITerrainRenderer.html
+  name: ITerrainRenderer
+  nameWithType: ITerrainRenderer
+  fullName: Map.Rendering.Terrain.ITerrainRenderer
+- uid: Map.Rendering.Terrain.TerrainRendererContext
+  commentId: T:Map.Rendering.Terrain.TerrainRendererContext
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRendererContext.html
+  name: TerrainRendererContext
+  nameWithType: TerrainRendererContext
+  fullName: Map.Rendering.Terrain.TerrainRendererContext
+- uid: Map.Rendering.Terrain.TerrainStyleParams
+  commentId: T:Map.Rendering.Terrain.TerrainStyleParams
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainStyleParams.html
+  name: TerrainStyleParams
+  nameWithType: TerrainStyleParams
+  fullName: Map.Rendering.Terrain.TerrainStyleParams
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator
+  commentId: T:Map.Rendering.Terrain.TerrainOverrideApplicator
+  href: Map.Rendering.Terrain.TerrainOverrideApplicator.html
+  name: TerrainOverrideApplicator
+  nameWithType: TerrainOverrideApplicator
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer
+  commentId: T:Map.Rendering.Terrain.DefaultTerrainRenderer
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html
+  name: DefaultTerrainRenderer
+  nameWithType: DefaultTerrainRenderer
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer
+- uid: Map.Rendering.Terrain.TerrainRendererBase
+  commentId: T:Map.Rendering.Terrain.TerrainRendererBase
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRendererBase.html
+  name: TerrainRendererBase
+  nameWithType: TerrainRendererBase
+  fullName: Map.Rendering.Terrain.TerrainRendererBase
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html

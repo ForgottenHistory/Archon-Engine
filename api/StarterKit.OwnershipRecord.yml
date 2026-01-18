@@ -1,0 +1,209 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.OwnershipRecord
+  commentId: T:StarterKit.OwnershipRecord
+  id: OwnershipRecord
+  parent: StarterKit
+  children:
+  - StarterKit.OwnershipRecord.CountryId
+  - StarterKit.OwnershipRecord.EndDay
+  - StarterKit.OwnershipRecord.IsCurrent
+  - StarterKit.OwnershipRecord.StartDay
+  langs:
+  - csharp
+  - vb
+  name: OwnershipRecord
+  nameWithType: OwnershipRecord
+  fullName: StarterKit.OwnershipRecord
+  type: Struct
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnershipRecord
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 12
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT: Province ownership history record.
+
+    Demonstrates Pattern 4: Hot/Cold Data Separation.
+
+
+    This is COLD DATA - only accessed when viewing province details,
+
+    not every frame like ProvinceState (hot data).
+  example: []
+  syntax:
+    content: public struct OwnershipRecord
+    content.vb: Public Structure OwnershipRecord
+- uid: StarterKit.OwnershipRecord.CountryId
+  commentId: F:StarterKit.OwnershipRecord.CountryId
+  id: CountryId
+  parent: StarterKit.OwnershipRecord
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: OwnershipRecord.CountryId
+  fullName: StarterKit.OwnershipRecord.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 15
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The country that owned the province during this period.
+  example: []
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: StarterKit.OwnershipRecord.StartDay
+  commentId: F:StarterKit.OwnershipRecord.StartDay
+  id: StartDay
+  parent: StarterKit.OwnershipRecord
+  langs:
+  - csharp
+  - vb
+  name: StartDay
+  nameWithType: OwnershipRecord.StartDay
+  fullName: StarterKit.OwnershipRecord.StartDay
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartDay
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 18
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Game day when this country gained ownership.
+  example: []
+  syntax:
+    content: public int StartDay
+    return:
+      type: System.Int32
+    content.vb: Public StartDay As Integer
+- uid: StarterKit.OwnershipRecord.EndDay
+  commentId: F:StarterKit.OwnershipRecord.EndDay
+  id: EndDay
+  parent: StarterKit.OwnershipRecord
+  langs:
+  - csharp
+  - vb
+  name: EndDay
+  nameWithType: OwnershipRecord.EndDay
+  fullName: StarterKit.OwnershipRecord.EndDay
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EndDay
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 21
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Game day when ownership ended (0 = still current owner).
+  example: []
+  syntax:
+    content: public int EndDay
+    return:
+      type: System.Int32
+    content.vb: Public EndDay As Integer
+- uid: StarterKit.OwnershipRecord.IsCurrent
+  commentId: P:StarterKit.OwnershipRecord.IsCurrent
+  id: IsCurrent
+  parent: StarterKit.OwnershipRecord
+  langs:
+  - csharp
+  - vb
+  name: IsCurrent
+  nameWithType: OwnershipRecord.IsCurrent
+  fullName: StarterKit.OwnershipRecord.IsCurrent
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCurrent
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 24
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: True if this record represents the current owner.
+  example: []
+  syntax:
+    content: public bool IsCurrent { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsCurrent As Boolean
+  overload: StarterKit.OwnershipRecord.IsCurrent*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.OwnershipRecord.IsCurrent*
+  commentId: Overload:StarterKit.OwnershipRecord.IsCurrent
+  href: StarterKit.OwnershipRecord.html#StarterKit_OwnershipRecord_IsCurrent
+  name: IsCurrent
+  nameWithType: OwnershipRecord.IsCurrent
+  fullName: StarterKit.OwnershipRecord.IsCurrent
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

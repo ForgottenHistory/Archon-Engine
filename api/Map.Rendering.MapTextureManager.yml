@@ -1,0 +1,1514 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  id: MapTextureManager
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.MapTextureManager.ApplyPaletteChanges
+  - Map.Rendering.MapTextureManager.ApplyTextureChanges
+  - Map.Rendering.MapTextureManager.BindTexturesToMaterial(UnityEngine.Material)
+  - Map.Rendering.MapTextureManager.DetailIndexTexture
+  - Map.Rendering.MapTextureManager.DetailMaskTexture
+  - Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+  - Map.Rendering.MapTextureManager.DistanceFieldTexture
+  - Map.Rendering.MapTextureManager.DualBorderTexture
+  - Map.Rendering.MapTextureManager.DynamicTextures
+  - Map.Rendering.MapTextureManager.FogOfWarTexture
+  - Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap(System.Single,System.Boolean)
+  - Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture
+  - Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
+  - Map.Rendering.MapTextureManager.HeightmapTexture
+  - Map.Rendering.MapTextureManager.HighlightTexture
+  - Map.Rendering.MapTextureManager.MapHeight
+  - Map.Rendering.MapTextureManager.MapWidth
+  - Map.Rendering.MapTextureManager.NormalMapTexture
+  - Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+  - Map.Rendering.MapTextureManager.ProvinceColorPalette
+  - Map.Rendering.MapTextureManager.ProvinceColorTexture
+  - Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+  - Map.Rendering.MapTextureManager.ProvinceIDTexture
+  - Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+  - Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+  - Map.Rendering.MapTextureManager.ResizeTextures(System.Int32,System.Int32)
+  - Map.Rendering.MapTextureManager.SetBorderStyle(UnityEngine.Material,UnityEngine.Color,System.Single,UnityEngine.Color,System.Single)
+  - Map.Rendering.MapTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  - Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  - Map.Rendering.MapTextureManager.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  - Map.Rendering.MapTextureManager.SetProvinceTerrainLookup(UnityEngine.RenderTexture)
+  - Map.Rendering.MapTextureManager.SetTerrainBlendMaps(UnityEngine.RenderTexture,UnityEngine.RenderTexture)
+  - Map.Rendering.MapTextureManager.TerrainTypeTexture
+  langs:
+  - csharp
+  - vb
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapTextureManager
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Facade coordinator for all map textures
+
+    Delegates to specialized texture set managers
+
+    Provides unified API for external consumers
+  example: []
+  syntax:
+    content: 'public class MapTextureManager : MonoBehaviour'
+    content.vb: Public Class MapTextureManager Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.MapTextureManager.MapWidth
+  commentId: P:Map.Rendering.MapTextureManager.MapWidth
+  id: MapWidth
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: MapWidth
+  nameWithType: MapTextureManager.MapWidth
+  fullName: Map.Rendering.MapTextureManager.MapWidth
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapWidth
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public int MapWidth { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property MapWidth As Integer
+  overload: Map.Rendering.MapTextureManager.MapWidth*
+- uid: Map.Rendering.MapTextureManager.MapHeight
+  commentId: P:Map.Rendering.MapTextureManager.MapHeight
+  id: MapHeight
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: MapHeight
+  nameWithType: MapTextureManager.MapHeight
+  fullName: Map.Rendering.MapTextureManager.MapHeight
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapHeight
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public int MapHeight { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property MapHeight As Integer
+  overload: Map.Rendering.MapTextureManager.MapHeight*
+- uid: Map.Rendering.MapTextureManager.ProvinceIDTexture
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceIDTexture
+  id: ProvinceIDTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDTexture
+  nameWithType: MapTextureManager.ProvinceIDTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceIDTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceIDTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceIDTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.ProvinceIDTexture*
+- uid: Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+  id: ProvinceOwnerTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnerTexture
+  nameWithType: MapTextureManager.ProvinceOwnerTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnerTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceOwnerTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceOwnerTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.ProvinceOwnerTexture*
+- uid: Map.Rendering.MapTextureManager.ProvinceColorTexture
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceColorTexture
+  id: ProvinceColorTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorTexture
+  nameWithType: MapTextureManager.ProvinceColorTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceColorTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D ProvinceColorTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property ProvinceColorTexture As Texture2D
+  overload: Map.Rendering.MapTextureManager.ProvinceColorTexture*
+- uid: Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+  id: ProvinceDevelopmentTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDevelopmentTexture
+  nameWithType: MapTextureManager.ProvinceDevelopmentTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDevelopmentTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceDevelopmentTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceDevelopmentTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture*
+- uid: Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+  id: ProvinceTerrainTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTerrainTexture
+  nameWithType: MapTextureManager.ProvinceTerrainTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceTerrainTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D ProvinceTerrainTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property ProvinceTerrainTexture As Texture2D
+  overload: Map.Rendering.MapTextureManager.ProvinceTerrainTexture*
+- uid: Map.Rendering.MapTextureManager.TerrainTypeTexture
+  commentId: P:Map.Rendering.MapTextureManager.TerrainTypeTexture
+  id: TerrainTypeTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: TerrainTypeTexture
+  nameWithType: MapTextureManager.TerrainTypeTexture
+  fullName: Map.Rendering.MapTextureManager.TerrainTypeTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainTypeTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D TerrainTypeTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property TerrainTypeTexture As Texture2D
+  overload: Map.Rendering.MapTextureManager.TerrainTypeTexture*
+- uid: Map.Rendering.MapTextureManager.HeightmapTexture
+  commentId: P:Map.Rendering.MapTextureManager.HeightmapTexture
+  id: HeightmapTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: HeightmapTexture
+  nameWithType: MapTextureManager.HeightmapTexture
+  fullName: Map.Rendering.MapTextureManager.HeightmapTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightmapTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D HeightmapTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property HeightmapTexture As Texture2D
+  overload: Map.Rendering.MapTextureManager.HeightmapTexture*
+- uid: Map.Rendering.MapTextureManager.NormalMapTexture
+  commentId: P:Map.Rendering.MapTextureManager.NormalMapTexture
+  id: NormalMapTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: NormalMapTexture
+  nameWithType: MapTextureManager.NormalMapTexture
+  fullName: Map.Rendering.MapTextureManager.NormalMapTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D NormalMapTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property NormalMapTexture As Texture2D
+  overload: Map.Rendering.MapTextureManager.NormalMapTexture*
+- uid: Map.Rendering.MapTextureManager.DetailIndexTexture
+  commentId: P:Map.Rendering.MapTextureManager.DetailIndexTexture
+  id: DetailIndexTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DetailIndexTexture
+  nameWithType: MapTextureManager.DetailIndexTexture
+  fullName: Map.Rendering.MapTextureManager.DetailIndexTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetailIndexTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture DetailIndexTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property DetailIndexTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.DetailIndexTexture*
+- uid: Map.Rendering.MapTextureManager.DetailMaskTexture
+  commentId: P:Map.Rendering.MapTextureManager.DetailMaskTexture
+  id: DetailMaskTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DetailMaskTexture
+  nameWithType: MapTextureManager.DetailMaskTexture
+  fullName: Map.Rendering.MapTextureManager.DetailMaskTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetailMaskTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture DetailMaskTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property DetailMaskTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.DetailMaskTexture*
+- uid: Map.Rendering.MapTextureManager.ProvinceColorPalette
+  commentId: P:Map.Rendering.MapTextureManager.ProvinceColorPalette
+  id: ProvinceColorPalette
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorPalette
+  nameWithType: MapTextureManager.ProvinceColorPalette
+  fullName: Map.Rendering.MapTextureManager.ProvinceColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorPalette
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D ProvinceColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property ProvinceColorPalette As Texture2D
+  overload: Map.Rendering.MapTextureManager.ProvinceColorPalette*
+- uid: Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+  commentId: P:Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+  id: DistanceFieldBorderTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DistanceFieldBorderTexture
+  nameWithType: MapTextureManager.DistanceFieldBorderTexture
+  fullName: Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DistanceFieldBorderTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture DistanceFieldBorderTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property DistanceFieldBorderTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.DistanceFieldBorderTexture*
+- uid: Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+  commentId: P:Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+  id: PixelPerfectBorderTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: PixelPerfectBorderTexture
+  nameWithType: MapTextureManager.PixelPerfectBorderTexture
+  fullName: Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelPerfectBorderTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture PixelPerfectBorderTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property PixelPerfectBorderTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.PixelPerfectBorderTexture*
+- uid: Map.Rendering.MapTextureManager.DistanceFieldTexture
+  commentId: P:Map.Rendering.MapTextureManager.DistanceFieldTexture
+  id: DistanceFieldTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DistanceFieldTexture
+  nameWithType: MapTextureManager.DistanceFieldTexture
+  fullName: Map.Rendering.MapTextureManager.DistanceFieldTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DistanceFieldTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use DistanceFieldBorderTexture instead")]
+
+      public RenderTexture DistanceFieldTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: >-
+      <Obsolete("Use DistanceFieldBorderTexture instead")>
+
+      Public ReadOnly Property DistanceFieldTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.DistanceFieldTexture*
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use DistanceFieldBorderTexture instead
+- uid: Map.Rendering.MapTextureManager.DualBorderTexture
+  commentId: P:Map.Rendering.MapTextureManager.DualBorderTexture
+  id: DualBorderTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DualBorderTexture
+  nameWithType: MapTextureManager.DualBorderTexture
+  fullName: Map.Rendering.MapTextureManager.DualBorderTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DualBorderTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [Obsolete("Use PixelPerfectBorderTexture instead")]
+
+      public RenderTexture DualBorderTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: >-
+      <Obsolete("Use PixelPerfectBorderTexture instead")>
+
+      Public ReadOnly Property DualBorderTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.DualBorderTexture*
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use PixelPerfectBorderTexture instead
+- uid: Map.Rendering.MapTextureManager.HighlightTexture
+  commentId: P:Map.Rendering.MapTextureManager.HighlightTexture
+  id: HighlightTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: HighlightTexture
+  nameWithType: MapTextureManager.HighlightTexture
+  fullName: Map.Rendering.MapTextureManager.HighlightTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 52
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture HighlightTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property HighlightTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.HighlightTexture*
+- uid: Map.Rendering.MapTextureManager.FogOfWarTexture
+  commentId: P:Map.Rendering.MapTextureManager.FogOfWarTexture
+  id: FogOfWarTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: FogOfWarTexture
+  nameWithType: MapTextureManager.FogOfWarTexture
+  fullName: Map.Rendering.MapTextureManager.FogOfWarTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FogOfWarTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture FogOfWarTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property FogOfWarTexture As RenderTexture
+  overload: Map.Rendering.MapTextureManager.FogOfWarTexture*
+- uid: Map.Rendering.MapTextureManager.DynamicTextures
+  commentId: P:Map.Rendering.MapTextureManager.DynamicTextures
+  id: DynamicTextures
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: DynamicTextures
+  nameWithType: MapTextureManager.DynamicTextures
+  fullName: Map.Rendering.MapTextureManager.DynamicTextures
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DynamicTextures
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 56
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public DynamicTextureSet DynamicTextures { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.DynamicTextureSet
+    content.vb: Public ReadOnly Property DynamicTextures As DynamicTextureSet
+  overload: Map.Rendering.MapTextureManager.DynamicTextures*
+- uid: Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
+  id: GetProvinceID(System.Int32,System.Int32)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceID(int, int)
+  nameWithType: MapTextureManager.GetProvinceID(int, int)
+  fullName: Map.Rendering.MapTextureManager.GetProvinceID(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceID
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 92
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get province ID at specific coordinates using GPU readback
+
+    NOTE: Slow (GPU→CPU readback) - use sparingly for mouse picking only
+
+    Y coordinate is in OpenGL convention (0 = bottom), RenderTexture uses GPU convention (0 = top)
+  example: []
+  syntax:
+    content: public ushort GetProvinceID(int x, int y)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceID(x As Integer, y As Integer) As UShort
+  overload: Map.Rendering.MapTextureManager.GetProvinceID*
+  nameWithType.vb: MapTextureManager.GetProvinceID(Integer, Integer)
+  fullName.vb: Map.Rendering.MapTextureManager.GetProvinceID(Integer, Integer)
+  name.vb: GetProvinceID(Integer, Integer)
+- uid: Map.Rendering.MapTextureManager.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  commentId: M:Map.Rendering.MapTextureManager.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  id: SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceColor(int, int, Color32)
+  nameWithType: MapTextureManager.SetProvinceColor(int, int, Color32)
+  fullName: Map.Rendering.MapTextureManager.SetProvinceColor(int, int, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceColor
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update province color at coordinates (delegate to core textures)
+  example: []
+  syntax:
+    content: public void SetProvinceColor(int x, int y, Color32 color)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetProvinceColor(x As Integer, y As Integer, color As Color32)
+  overload: Map.Rendering.MapTextureManager.SetProvinceColor*
+  nameWithType.vb: MapTextureManager.SetProvinceColor(Integer, Integer, Color32)
+  fullName.vb: Map.Rendering.MapTextureManager.SetProvinceColor(Integer, Integer, UnityEngine.Color32)
+  name.vb: SetProvinceColor(Integer, Integer, Color32)
+- uid: Map.Rendering.MapTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  commentId: M:Map.Rendering.MapTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  id: SetPaletteColor(System.Byte,UnityEngine.Color32)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetPaletteColor(byte, Color32)
+  nameWithType: MapTextureManager.SetPaletteColor(byte, Color32)
+  fullName: Map.Rendering.MapTextureManager.SetPaletteColor(byte, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPaletteColor
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 131
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    NOTE: SetProvinceDevelopment removed - ProvinceDevelopmentTexture is now a RenderTexture
+
+    updated by GPU compute shaders. Use GradientMapMode for gradient-based colorization.
+  example: []
+  syntax:
+    content: public void SetPaletteColor(byte paletteIndex, Color32 color)
+    parameters:
+    - id: paletteIndex
+      type: System.Byte
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetPaletteColor(paletteIndex As Byte, color As Color32)
+  overload: Map.Rendering.MapTextureManager.SetPaletteColor*
+  nameWithType.vb: MapTextureManager.SetPaletteColor(Byte, Color32)
+  fullName.vb: Map.Rendering.MapTextureManager.SetPaletteColor(Byte, UnityEngine.Color32)
+  name.vb: SetPaletteColor(Byte, Color32)
+- uid: Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  commentId: M:Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  id: SetPaletteColors(UnityEngine.Color32[])
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetPaletteColors(Color32[])
+  nameWithType: MapTextureManager.SetPaletteColors(Color32[])
+  fullName: Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPaletteColors
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 139
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update all palette colors (delegate to palette manager)
+  example: []
+  syntax:
+    content: public void SetPaletteColors(Color32[] colors)
+    parameters:
+    - id: colors
+      type: UnityEngine.Color32[]
+    content.vb: Public Sub SetPaletteColors(colors As Color32())
+  overload: Map.Rendering.MapTextureManager.SetPaletteColors*
+  nameWithType.vb: MapTextureManager.SetPaletteColors(Color32())
+  fullName.vb: Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32())
+  name.vb: SetPaletteColors(Color32())
+- uid: Map.Rendering.MapTextureManager.ApplyTextureChanges
+  commentId: M:Map.Rendering.MapTextureManager.ApplyTextureChanges
+  id: ApplyTextureChanges
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ApplyTextureChanges()
+  nameWithType: MapTextureManager.ApplyTextureChanges()
+  fullName: Map.Rendering.MapTextureManager.ApplyTextureChanges()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyTextureChanges
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 147
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Apply all texture changes after batch updates
+  example: []
+  syntax:
+    content: public void ApplyTextureChanges()
+    content.vb: Public Sub ApplyTextureChanges()
+  overload: Map.Rendering.MapTextureManager.ApplyTextureChanges*
+- uid: Map.Rendering.MapTextureManager.ApplyPaletteChanges
+  commentId: M:Map.Rendering.MapTextureManager.ApplyPaletteChanges
+  id: ApplyPaletteChanges
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ApplyPaletteChanges()
+  nameWithType: MapTextureManager.ApplyPaletteChanges()
+  fullName: Map.Rendering.MapTextureManager.ApplyPaletteChanges()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyPaletteChanges
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 157
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Apply only palette changes (more efficient)
+  example: []
+  syntax:
+    content: public void ApplyPaletteChanges()
+    content.vb: Public Sub ApplyPaletteChanges()
+  overload: Map.Rendering.MapTextureManager.ApplyPaletteChanges*
+- uid: Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture
+  commentId: M:Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture
+  id: GenerateTerrainTypeTexture
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: GenerateTerrainTypeTexture()
+  nameWithType: MapTextureManager.GenerateTerrainTypeTexture()
+  fullName: Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateTerrainTypeTexture
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate terrain type texture from terrain color texture
+
+    Must be called AFTER terrain.bmp is loaded
+  example: []
+  syntax:
+    content: public void GenerateTerrainTypeTexture()
+    content.vb: Public Sub GenerateTerrainTypeTexture()
+  overload: Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture*
+- uid: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap(System.Single,System.Boolean)
+  commentId: M:Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap(System.Single,System.Boolean)
+  id: GenerateNormalMapFromHeightmap(System.Single,System.Boolean)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: GenerateNormalMapFromHeightmap(float, bool)
+  nameWithType: MapTextureManager.GenerateNormalMapFromHeightmap(float, bool)
+  fullName: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap(float, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateNormalMapFromHeightmap
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 175
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate normal map from heightmap using GPU compute shader
+
+    Must be called AFTER heightmap is loaded
+  example: []
+  syntax:
+    content: public void GenerateNormalMapFromHeightmap(float heightScale = 10, bool logProgress = false)
+    parameters:
+    - id: heightScale
+      type: System.Single
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub GenerateNormalMapFromHeightmap(heightScale As Single = 10, logProgress As Boolean = False)
+  overload: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap*
+  nameWithType.vb: MapTextureManager.GenerateNormalMapFromHeightmap(Single, Boolean)
+  fullName.vb: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap(Single, Boolean)
+  name.vb: GenerateNormalMapFromHeightmap(Single, Boolean)
+- uid: Map.Rendering.MapTextureManager.BindTexturesToMaterial(UnityEngine.Material)
+  commentId: M:Map.Rendering.MapTextureManager.BindTexturesToMaterial(UnityEngine.Material)
+  id: BindTexturesToMaterial(UnityEngine.Material)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: BindTexturesToMaterial(Material)
+  nameWithType: MapTextureManager.BindTexturesToMaterial(Material)
+  fullName: Map.Rendering.MapTextureManager.BindTexturesToMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BindTexturesToMaterial
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Bind all textures to material
+  example: []
+  syntax:
+    content: public void BindTexturesToMaterial(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Public Sub BindTexturesToMaterial(material As Material)
+  overload: Map.Rendering.MapTextureManager.BindTexturesToMaterial*
+- uid: Map.Rendering.MapTextureManager.SetBorderStyle(UnityEngine.Material,UnityEngine.Color,System.Single,UnityEngine.Color,System.Single)
+  commentId: M:Map.Rendering.MapTextureManager.SetBorderStyle(UnityEngine.Material,UnityEngine.Color,System.Single,UnityEngine.Color,System.Single)
+  id: SetBorderStyle(UnityEngine.Material,UnityEngine.Color,System.Single,UnityEngine.Color,System.Single)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetBorderStyle(Material, Color, float, Color, float)
+  nameWithType: MapTextureManager.SetBorderStyle(Material, Color, float, Color, float)
+  fullName: Map.Rendering.MapTextureManager.SetBorderStyle(UnityEngine.Material, UnityEngine.Color, float, UnityEngine.Color, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderStyle
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 204
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set border visual style (delegate to dynamic textures)
+  example: []
+  syntax:
+    content: public void SetBorderStyle(Material material, Color countryBorderColor, float countryBorderStrength, Color provinceBorderColor, float provinceBorderStrength)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: countryBorderColor
+      type: UnityEngine.Color
+    - id: countryBorderStrength
+      type: System.Single
+    - id: provinceBorderColor
+      type: UnityEngine.Color
+    - id: provinceBorderStrength
+      type: System.Single
+    content.vb: Public Sub SetBorderStyle(material As Material, countryBorderColor As Color, countryBorderStrength As Single, provinceBorderColor As Color, provinceBorderStrength As Single)
+  overload: Map.Rendering.MapTextureManager.SetBorderStyle*
+  nameWithType.vb: MapTextureManager.SetBorderStyle(Material, Color, Single, Color, Single)
+  fullName.vb: Map.Rendering.MapTextureManager.SetBorderStyle(UnityEngine.Material, UnityEngine.Color, Single, UnityEngine.Color, Single)
+  name.vb: SetBorderStyle(Material, Color, Single, Color, Single)
+- uid: Map.Rendering.MapTextureManager.SetProvinceTerrainLookup(UnityEngine.RenderTexture)
+  commentId: M:Map.Rendering.MapTextureManager.SetProvinceTerrainLookup(UnityEngine.RenderTexture)
+  id: SetProvinceTerrainLookup(UnityEngine.RenderTexture)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceTerrainLookup(RenderTexture)
+  nameWithType: MapTextureManager.SetProvinceTerrainLookup(RenderTexture)
+  fullName: Map.Rendering.MapTextureManager.SetProvinceTerrainLookup(UnityEngine.RenderTexture)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceTerrainLookup
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 214
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set province terrain lookup texture (hybrid terrain system)
+  example: []
+  syntax:
+    content: public void SetProvinceTerrainLookup(RenderTexture lookupTexture)
+    parameters:
+    - id: lookupTexture
+      type: UnityEngine.RenderTexture
+    content.vb: Public Sub SetProvinceTerrainLookup(lookupTexture As RenderTexture)
+  overload: Map.Rendering.MapTextureManager.SetProvinceTerrainLookup*
+- uid: Map.Rendering.MapTextureManager.SetTerrainBlendMaps(UnityEngine.RenderTexture,UnityEngine.RenderTexture)
+  commentId: M:Map.Rendering.MapTextureManager.SetTerrainBlendMaps(UnityEngine.RenderTexture,UnityEngine.RenderTexture)
+  id: SetTerrainBlendMaps(UnityEngine.RenderTexture,UnityEngine.RenderTexture)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetTerrainBlendMaps(RenderTexture, RenderTexture)
+  nameWithType: MapTextureManager.SetTerrainBlendMaps(RenderTexture, RenderTexture)
+  fullName: Map.Rendering.MapTextureManager.SetTerrainBlendMaps(UnityEngine.RenderTexture, UnityEngine.RenderTexture)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTerrainBlendMaps
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 222
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set terrain blend map textures (Imperator Rome-style blending)
+  example: []
+  syntax:
+    content: public void SetTerrainBlendMaps(RenderTexture indexTexture, RenderTexture maskTexture)
+    parameters:
+    - id: indexTexture
+      type: UnityEngine.RenderTexture
+    - id: maskTexture
+      type: UnityEngine.RenderTexture
+    content.vb: Public Sub SetTerrainBlendMaps(indexTexture As RenderTexture, maskTexture As RenderTexture)
+  overload: Map.Rendering.MapTextureManager.SetTerrainBlendMaps*
+- uid: Map.Rendering.MapTextureManager.ResizeTextures(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.MapTextureManager.ResizeTextures(System.Int32,System.Int32)
+  id: ResizeTextures(System.Int32,System.Int32)
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ResizeTextures(int, int)
+  nameWithType: MapTextureManager.ResizeTextures(int, int)
+  fullName: Map.Rendering.MapTextureManager.ResizeTextures(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResizeTextures
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 230
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update map dimensions and recreate textures
+  example: []
+  syntax:
+    content: public void ResizeTextures(int newWidth, int newHeight)
+    parameters:
+    - id: newWidth
+      type: System.Int32
+    - id: newHeight
+      type: System.Int32
+    content.vb: Public Sub ResizeTextures(newWidth As Integer, newHeight As Integer)
+  overload: Map.Rendering.MapTextureManager.ResizeTextures*
+  nameWithType.vb: MapTextureManager.ResizeTextures(Integer, Integer)
+  fullName.vb: Map.Rendering.MapTextureManager.ResizeTextures(Integer, Integer)
+  name.vb: ResizeTextures(Integer, Integer)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.MapTextureManager.MapWidth*
+  commentId: Overload:Map.Rendering.MapTextureManager.MapWidth
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_MapWidth
+  name: MapWidth
+  nameWithType: MapTextureManager.MapWidth
+  fullName: Map.Rendering.MapTextureManager.MapWidth
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.MapTextureManager.MapHeight*
+  commentId: Overload:Map.Rendering.MapTextureManager.MapHeight
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_MapHeight
+  name: MapHeight
+  nameWithType: MapTextureManager.MapHeight
+  fullName: Map.Rendering.MapTextureManager.MapHeight
+- uid: Map.Rendering.MapTextureManager.ProvinceIDTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceIDTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceIDTexture
+  name: ProvinceIDTexture
+  nameWithType: MapTextureManager.ProvinceIDTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceIDTexture
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: Map.Rendering.MapTextureManager.ProvinceOwnerTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceOwnerTexture
+  name: ProvinceOwnerTexture
+  nameWithType: MapTextureManager.ProvinceOwnerTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceOwnerTexture
+- uid: Map.Rendering.MapTextureManager.ProvinceColorTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceColorTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceColorTexture
+  name: ProvinceColorTexture
+  nameWithType: MapTextureManager.ProvinceColorTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceColorTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceDevelopmentTexture
+  name: ProvinceDevelopmentTexture
+  nameWithType: MapTextureManager.ProvinceDevelopmentTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceDevelopmentTexture
+- uid: Map.Rendering.MapTextureManager.ProvinceTerrainTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceTerrainTexture
+  name: ProvinceTerrainTexture
+  nameWithType: MapTextureManager.ProvinceTerrainTexture
+  fullName: Map.Rendering.MapTextureManager.ProvinceTerrainTexture
+- uid: Map.Rendering.MapTextureManager.TerrainTypeTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.TerrainTypeTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_TerrainTypeTexture
+  name: TerrainTypeTexture
+  nameWithType: MapTextureManager.TerrainTypeTexture
+  fullName: Map.Rendering.MapTextureManager.TerrainTypeTexture
+- uid: Map.Rendering.MapTextureManager.HeightmapTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.HeightmapTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_HeightmapTexture
+  name: HeightmapTexture
+  nameWithType: MapTextureManager.HeightmapTexture
+  fullName: Map.Rendering.MapTextureManager.HeightmapTexture
+- uid: Map.Rendering.MapTextureManager.NormalMapTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.NormalMapTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_NormalMapTexture
+  name: NormalMapTexture
+  nameWithType: MapTextureManager.NormalMapTexture
+  fullName: Map.Rendering.MapTextureManager.NormalMapTexture
+- uid: Map.Rendering.MapTextureManager.DetailIndexTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.DetailIndexTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DetailIndexTexture
+  name: DetailIndexTexture
+  nameWithType: MapTextureManager.DetailIndexTexture
+  fullName: Map.Rendering.MapTextureManager.DetailIndexTexture
+- uid: Map.Rendering.MapTextureManager.DetailMaskTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.DetailMaskTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DetailMaskTexture
+  name: DetailMaskTexture
+  nameWithType: MapTextureManager.DetailMaskTexture
+  fullName: Map.Rendering.MapTextureManager.DetailMaskTexture
+- uid: Map.Rendering.MapTextureManager.ProvinceColorPalette*
+  commentId: Overload:Map.Rendering.MapTextureManager.ProvinceColorPalette
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ProvinceColorPalette
+  name: ProvinceColorPalette
+  nameWithType: MapTextureManager.ProvinceColorPalette
+  fullName: Map.Rendering.MapTextureManager.ProvinceColorPalette
+- uid: Map.Rendering.MapTextureManager.DistanceFieldBorderTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DistanceFieldBorderTexture
+  name: DistanceFieldBorderTexture
+  nameWithType: MapTextureManager.DistanceFieldBorderTexture
+  fullName: Map.Rendering.MapTextureManager.DistanceFieldBorderTexture
+- uid: Map.Rendering.MapTextureManager.PixelPerfectBorderTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_PixelPerfectBorderTexture
+  name: PixelPerfectBorderTexture
+  nameWithType: MapTextureManager.PixelPerfectBorderTexture
+  fullName: Map.Rendering.MapTextureManager.PixelPerfectBorderTexture
+- uid: Map.Rendering.MapTextureManager.DistanceFieldTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.DistanceFieldTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DistanceFieldTexture
+  name: DistanceFieldTexture
+  nameWithType: MapTextureManager.DistanceFieldTexture
+  fullName: Map.Rendering.MapTextureManager.DistanceFieldTexture
+- uid: Map.Rendering.MapTextureManager.DualBorderTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.DualBorderTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DualBorderTexture
+  name: DualBorderTexture
+  nameWithType: MapTextureManager.DualBorderTexture
+  fullName: Map.Rendering.MapTextureManager.DualBorderTexture
+- uid: Map.Rendering.MapTextureManager.HighlightTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.HighlightTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_HighlightTexture
+  name: HighlightTexture
+  nameWithType: MapTextureManager.HighlightTexture
+  fullName: Map.Rendering.MapTextureManager.HighlightTexture
+- uid: Map.Rendering.MapTextureManager.FogOfWarTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.FogOfWarTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_FogOfWarTexture
+  name: FogOfWarTexture
+  nameWithType: MapTextureManager.FogOfWarTexture
+  fullName: Map.Rendering.MapTextureManager.FogOfWarTexture
+- uid: Map.Rendering.MapTextureManager.DynamicTextures*
+  commentId: Overload:Map.Rendering.MapTextureManager.DynamicTextures
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_DynamicTextures
+  name: DynamicTextures
+  nameWithType: MapTextureManager.DynamicTextures
+  fullName: Map.Rendering.MapTextureManager.DynamicTextures
+- uid: Map.Rendering.DynamicTextureSet
+  commentId: T:Map.Rendering.DynamicTextureSet
+  parent: Map.Rendering
+  href: Map.Rendering.DynamicTextureSet.html
+  name: DynamicTextureSet
+  nameWithType: DynamicTextureSet
+  fullName: Map.Rendering.DynamicTextureSet
+- uid: Map.Rendering.MapTextureManager.GetProvinceID*
+  commentId: Overload:Map.Rendering.MapTextureManager.GetProvinceID
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_GetProvinceID_System_Int32_System_Int32_
+  name: GetProvinceID
+  nameWithType: MapTextureManager.GetProvinceID
+  fullName: Map.Rendering.MapTextureManager.GetProvinceID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Rendering.MapTextureManager.SetProvinceColor*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetProvinceColor
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetProvinceColor_System_Int32_System_Int32_UnityEngine_Color32_
+  name: SetProvinceColor
+  nameWithType: MapTextureManager.SetProvinceColor
+  fullName: Map.Rendering.MapTextureManager.SetProvinceColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Map.Rendering.MapTextureManager.SetPaletteColor*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetPaletteColor
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetPaletteColor_System_Byte_UnityEngine_Color32_
+  name: SetPaletteColor
+  nameWithType: MapTextureManager.SetPaletteColor
+  fullName: Map.Rendering.MapTextureManager.SetPaletteColor
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Map.Rendering.MapTextureManager.SetPaletteColors*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetPaletteColors
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetPaletteColors_UnityEngine_Color32___
+  name: SetPaletteColors
+  nameWithType: MapTextureManager.SetPaletteColors
+  fullName: Map.Rendering.MapTextureManager.SetPaletteColors
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.MapTextureManager.ApplyTextureChanges*
+  commentId: Overload:Map.Rendering.MapTextureManager.ApplyTextureChanges
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ApplyTextureChanges
+  name: ApplyTextureChanges
+  nameWithType: MapTextureManager.ApplyTextureChanges
+  fullName: Map.Rendering.MapTextureManager.ApplyTextureChanges
+- uid: Map.Rendering.MapTextureManager.ApplyPaletteChanges*
+  commentId: Overload:Map.Rendering.MapTextureManager.ApplyPaletteChanges
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ApplyPaletteChanges
+  name: ApplyPaletteChanges
+  nameWithType: MapTextureManager.ApplyPaletteChanges
+  fullName: Map.Rendering.MapTextureManager.ApplyPaletteChanges
+- uid: Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture*
+  commentId: Overload:Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_GenerateTerrainTypeTexture
+  name: GenerateTerrainTypeTexture
+  nameWithType: MapTextureManager.GenerateTerrainTypeTexture
+  fullName: Map.Rendering.MapTextureManager.GenerateTerrainTypeTexture
+- uid: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap*
+  commentId: Overload:Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_GenerateNormalMapFromHeightmap_System_Single_System_Boolean_
+  name: GenerateNormalMapFromHeightmap
+  nameWithType: MapTextureManager.GenerateNormalMapFromHeightmap
+  fullName: Map.Rendering.MapTextureManager.GenerateNormalMapFromHeightmap
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.MapTextureManager.BindTexturesToMaterial*
+  commentId: Overload:Map.Rendering.MapTextureManager.BindTexturesToMaterial
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_BindTexturesToMaterial_UnityEngine_Material_
+  name: BindTexturesToMaterial
+  nameWithType: MapTextureManager.BindTexturesToMaterial
+  fullName: Map.Rendering.MapTextureManager.BindTexturesToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.MapTextureManager.SetBorderStyle*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetBorderStyle
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetBorderStyle_UnityEngine_Material_UnityEngine_Color_System_Single_UnityEngine_Color_System_Single_
+  name: SetBorderStyle
+  nameWithType: MapTextureManager.SetBorderStyle
+  fullName: Map.Rendering.MapTextureManager.SetBorderStyle
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: Map.Rendering.MapTextureManager.SetProvinceTerrainLookup*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetProvinceTerrainLookup
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetProvinceTerrainLookup_UnityEngine_RenderTexture_
+  name: SetProvinceTerrainLookup
+  nameWithType: MapTextureManager.SetProvinceTerrainLookup
+  fullName: Map.Rendering.MapTextureManager.SetProvinceTerrainLookup
+- uid: Map.Rendering.MapTextureManager.SetTerrainBlendMaps*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetTerrainBlendMaps
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetTerrainBlendMaps_UnityEngine_RenderTexture_UnityEngine_RenderTexture_
+  name: SetTerrainBlendMaps
+  nameWithType: MapTextureManager.SetTerrainBlendMaps
+  fullName: Map.Rendering.MapTextureManager.SetTerrainBlendMaps
+- uid: Map.Rendering.MapTextureManager.ResizeTextures*
+  commentId: Overload:Map.Rendering.MapTextureManager.ResizeTextures
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_ResizeTextures_System_Int32_System_Int32_
+  name: ResizeTextures
+  nameWithType: MapTextureManager.ResizeTextures
+  fullName: Map.Rendering.MapTextureManager.ResizeTextures

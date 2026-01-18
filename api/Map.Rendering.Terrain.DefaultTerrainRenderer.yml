@@ -1,0 +1,1012 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer
+  commentId: T:Map.Rendering.Terrain.DefaultTerrainRenderer
+  id: DefaultTerrainRenderer
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor(UnityEngine.ComputeShader)
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize
+  - Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+  langs:
+  - csharp
+  - vb
+  name: DefaultTerrainRenderer
+  nameWithType: DefaultTerrainRenderer
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefaultTerrainRenderer
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    ENGINE: Default terrain renderer using Imperator Rome-style 4-channel blending.
+
+
+    Features:
+
+    - GPU-accelerated blend map generation via compute shader
+
+    - Configurable sample radius (5x5 default) for terrain transition width
+
+    - Configurable blend sharpness (1.0 = linear, &gt;1 = sharper transitions)
+
+    - Outputs DetailIndexTexture (4 terrain indices) + DetailMaskTexture (4 blend weights)
+
+
+    Pattern 20: Pluggable Implementation (Interface + Registry)
+  example: []
+  syntax:
+    content: 'public class DefaultTerrainRenderer : TerrainRendererBase, ITerrainRenderer'
+    content.vb: Public Class DefaultTerrainRenderer Inherits TerrainRendererBase Implements ITerrainRenderer
+  inheritance:
+  - System.Object
+  - Map.Rendering.Terrain.TerrainRendererBase
+  implements:
+  - Map.Rendering.Terrain.ITerrainRenderer
+  inheritedMembers:
+  - Map.Rendering.Terrain.TerrainRendererBase.RequiresPerFrameUpdate
+  - Map.Rendering.Terrain.TerrainRendererBase.textureManager
+  - Map.Rendering.Terrain.TerrainRendererBase.context
+  - Map.Rendering.Terrain.TerrainRendererBase.isInitialized
+  - Map.Rendering.Terrain.TerrainRendererBase.sampleRadius
+  - Map.Rendering.Terrain.TerrainRendererBase.blendSharpness
+  - Map.Rendering.Terrain.TerrainRendererBase.THREAD_GROUP_SIZE
+  - Map.Rendering.Terrain.TerrainRendererBase.TerrainBrightnessID
+  - Map.Rendering.Terrain.TerrainRendererBase.TerrainSaturationID
+  - Map.Rendering.Terrain.TerrainRendererBase.DetailTilingID
+  - Map.Rendering.Terrain.TerrainRendererBase.DetailStrengthID
+  - Map.Rendering.Terrain.TerrainRendererBase.NormalMapStrengthID
+  - Map.Rendering.Terrain.TerrainRendererBase.NormalMapAmbientID
+  - Map.Rendering.Terrain.TerrainRendererBase.NormalMapHighlightID
+  - Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Terrain.TerrainRendererContext)
+  - Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Terrain.TerrainStyleParams)
+  - Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame
+  - Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius
+  - Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(System.Int32)
+  - Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness
+  - Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(System.Single)
+  - Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  - Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(System.Int32,System.Int32,System.String)
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+  commentId: P:Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: DefaultTerrainRenderer.RendererId
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Unique identifier for this renderer (e.g., "Default", "Stylized", "HighDetail")
+  example: []
+  syntax:
+    content: public override string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property RendererId As String
+  overridden: Map.Rendering.Terrain.TerrainRendererBase.RendererId
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId*
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+  commentId: P:Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: DefaultTerrainRenderer.DisplayName
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Human-readable name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.Terrain.TerrainRendererBase.DisplayName
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName*
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor
+  commentId: M:Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor
+  id: '#ctor'
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: DefaultTerrainRenderer()
+  nameWithType: DefaultTerrainRenderer.DefaultTerrainRenderer()
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.DefaultTerrainRenderer()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  syntax:
+    content: public DefaultTerrainRenderer()
+    content.vb: Public Sub New()
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor*
+  nameWithType.vb: DefaultTerrainRenderer.New()
+  fullName.vb: Map.Rendering.Terrain.DefaultTerrainRenderer.New()
+  name.vb: New()
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor(UnityEngine.ComputeShader)
+  commentId: M:Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor(UnityEngine.ComputeShader)
+  id: '#ctor(UnityEngine.ComputeShader)'
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: DefaultTerrainRenderer(ComputeShader)
+  nameWithType: DefaultTerrainRenderer.DefaultTerrainRenderer(ComputeShader)
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.DefaultTerrainRenderer(UnityEngine.ComputeShader)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  syntax:
+    content: public DefaultTerrainRenderer(ComputeShader computeShader)
+    parameters:
+    - id: computeShader
+      type: UnityEngine.ComputeShader
+    content.vb: Public Sub New(computeShader As ComputeShader)
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor*
+  nameWithType.vb: DefaultTerrainRenderer.New(ComputeShader)
+  fullName.vb: Map.Rendering.Terrain.DefaultTerrainRenderer.New(UnityEngine.ComputeShader)
+  name.vb: New(ComputeShader)
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize
+  commentId: M:Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize
+  id: OnInitialize
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: DefaultTerrainRenderer.OnInitialize()
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Override to perform implementation-specific initialization
+  example: []
+  syntax:
+    content: protected override void OnInitialize()
+    content.vb: Protected Overrides Sub OnInitialize()
+  overridden: Map.Rendering.Terrain.TerrainRendererBase.OnInitialize
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize*
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  id: GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: GenerateBlendMaps(RenderTexture, ComputeBuffer, int, int)
+  nameWithType: DefaultTerrainRenderer.GenerateBlendMaps(RenderTexture, ComputeBuffer, int, int)
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateBlendMaps
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Generate terrain blend maps (DetailIndexTexture + DetailMaskTexture)
+
+    Called after ProvinceTerrainAnalyzer completes
+  example: []
+  syntax:
+    content: public override (RenderTexture detailIndex, RenderTexture detailMask) GenerateBlendMaps(RenderTexture provinceIDTexture, ComputeBuffer provinceTerrainBuffer, int width, int height)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+      description: Province ID texture
+    - id: provinceTerrainBuffer
+      type: UnityEngine.ComputeBuffer
+      description: Province terrain buffer (terrain type per province)
+    - id: width
+      type: System.Int32
+      description: Map width
+    - id: height
+      type: System.Int32
+      description: Map height
+    return:
+      type: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+      description: Tuple of (DetailIndexTexture, DetailMaskTexture)
+    content.vb: Public Overrides Function GenerateBlendMaps(provinceIDTexture As RenderTexture, provinceTerrainBuffer As ComputeBuffer, width As Integer, height As Integer) As (detailIndex As RenderTexture, detailMask As RenderTexture)
+  overridden: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps*
+  nameWithType.vb: DefaultTerrainRenderer.GenerateBlendMaps(RenderTexture, ComputeBuffer, Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, Integer, Integer)
+  name.vb: GenerateBlendMaps(RenderTexture, ComputeBuffer, Integer, Integer)
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose
+  commentId: M:Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.Terrain.DefaultTerrainRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: DefaultTerrainRenderer.Dispose()
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Terrain/Implementations/DefaultTerrainRenderer.cs
+    startLine: 126
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Cleanup resources
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: Map.Rendering.Terrain.TerrainRendererBase.Dispose
+  overload: Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose*
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.Terrain.TerrainRendererBase
+  commentId: T:Map.Rendering.Terrain.TerrainRendererBase
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRendererBase.html
+  name: TerrainRendererBase
+  nameWithType: TerrainRendererBase
+  fullName: Map.Rendering.Terrain.TerrainRendererBase
+- uid: Map.Rendering.Terrain.ITerrainRenderer
+  commentId: T:Map.Rendering.Terrain.ITerrainRenderer
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.ITerrainRenderer.html
+  name: ITerrainRenderer
+  nameWithType: ITerrainRenderer
+  fullName: Map.Rendering.Terrain.ITerrainRenderer
+- uid: Map.Rendering.Terrain.TerrainRendererBase.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Terrain.TerrainRendererBase.RequiresPerFrameUpdate
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: TerrainRendererBase.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.RequiresPerFrameUpdate
+- uid: Map.Rendering.Terrain.TerrainRendererBase.textureManager
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.textureManager
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_textureManager
+  name: textureManager
+  nameWithType: TerrainRendererBase.textureManager
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.textureManager
+- uid: Map.Rendering.Terrain.TerrainRendererBase.context
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.context
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_context
+  name: context
+  nameWithType: TerrainRendererBase.context
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.context
+- uid: Map.Rendering.Terrain.TerrainRendererBase.isInitialized
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.isInitialized
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_isInitialized
+  name: isInitialized
+  nameWithType: TerrainRendererBase.isInitialized
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.isInitialized
+- uid: Map.Rendering.Terrain.TerrainRendererBase.sampleRadius
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.sampleRadius
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_sampleRadius
+  name: sampleRadius
+  nameWithType: TerrainRendererBase.sampleRadius
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.sampleRadius
+- uid: Map.Rendering.Terrain.TerrainRendererBase.blendSharpness
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.blendSharpness
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_blendSharpness
+  name: blendSharpness
+  nameWithType: TerrainRendererBase.blendSharpness
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.blendSharpness
+- uid: Map.Rendering.Terrain.TerrainRendererBase.THREAD_GROUP_SIZE
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.THREAD_GROUP_SIZE
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: TerrainRendererBase.THREAD_GROUP_SIZE
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.THREAD_GROUP_SIZE
+- uid: Map.Rendering.Terrain.TerrainRendererBase.TerrainBrightnessID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.TerrainBrightnessID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_TerrainBrightnessID
+  name: TerrainBrightnessID
+  nameWithType: TerrainRendererBase.TerrainBrightnessID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.TerrainBrightnessID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.TerrainSaturationID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.TerrainSaturationID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_TerrainSaturationID
+  name: TerrainSaturationID
+  nameWithType: TerrainRendererBase.TerrainSaturationID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.TerrainSaturationID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.DetailTilingID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.DetailTilingID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_DetailTilingID
+  name: DetailTilingID
+  nameWithType: TerrainRendererBase.DetailTilingID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.DetailTilingID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.DetailStrengthID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.DetailStrengthID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_DetailStrengthID
+  name: DetailStrengthID
+  nameWithType: TerrainRendererBase.DetailStrengthID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.DetailStrengthID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.NormalMapStrengthID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.NormalMapStrengthID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_NormalMapStrengthID
+  name: NormalMapStrengthID
+  nameWithType: TerrainRendererBase.NormalMapStrengthID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.NormalMapStrengthID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.NormalMapAmbientID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.NormalMapAmbientID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_NormalMapAmbientID
+  name: NormalMapAmbientID
+  nameWithType: TerrainRendererBase.NormalMapAmbientID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.NormalMapAmbientID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.NormalMapHighlightID
+  commentId: F:Map.Rendering.Terrain.TerrainRendererBase.NormalMapHighlightID
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_NormalMapHighlightID
+  name: NormalMapHighlightID
+  nameWithType: TerrainRendererBase.NormalMapHighlightID
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.NormalMapHighlightID
+- uid: Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Terrain.TerrainRendererContext)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Terrain.TerrainRendererContext)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Terrain_TerrainRendererContext_
+  name: Initialize(MapTextureManager, TerrainRendererContext)
+  nameWithType: TerrainRendererBase.Initialize(MapTextureManager, TerrainRendererContext)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.Terrain.TerrainRendererContext)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Terrain.TerrainRendererContext)
+    name: Initialize
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Terrain_TerrainRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Terrain.TerrainRendererContext
+    name: TerrainRendererContext
+    href: Map.Rendering.Terrain.TerrainRendererContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Terrain.TerrainRendererContext)
+    name: Initialize
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Terrain_TerrainRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Terrain.TerrainRendererContext
+    name: TerrainRendererContext
+    href: Map.Rendering.Terrain.TerrainRendererContext.html
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Terrain.TerrainStyleParams)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Terrain.TerrainStyleParams)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Terrain_TerrainStyleParams_
+  name: ApplyToMaterial(Material, TerrainStyleParams)
+  nameWithType: TerrainRendererBase.ApplyToMaterial(Material, TerrainStyleParams)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Terrain.TerrainStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Terrain.TerrainStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Terrain_TerrainStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Terrain.TerrainStyleParams
+    name: TerrainStyleParams
+    href: Map.Rendering.Terrain.TerrainStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Terrain.TerrainStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Terrain_TerrainStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Terrain.TerrainStyleParams
+    name: TerrainStyleParams
+    href: Map.Rendering.Terrain.TerrainStyleParams.html
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: TerrainRendererBase.OnRenderFrame()
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetSampleRadius
+  name: GetSampleRadius()
+  nameWithType: TerrainRendererBase.GetSampleRadius()
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius()
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius
+    name: GetSampleRadius
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetSampleRadius
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GetSampleRadius
+    name: GetSampleRadius
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetSampleRadius
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(System.Int32)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetSampleRadius_System_Int32_
+  name: SetSampleRadius(int)
+  nameWithType: TerrainRendererBase.SetSampleRadius(int)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(int)
+  nameWithType.vb: TerrainRendererBase.SetSampleRadius(Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(Integer)
+  name.vb: SetSampleRadius(Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(System.Int32)
+    name: SetSampleRadius
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetSampleRadius_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.SetSampleRadius(System.Int32)
+    name: SetSampleRadius
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetSampleRadius_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetBlendSharpness
+  name: GetBlendSharpness()
+  nameWithType: TerrainRendererBase.GetBlendSharpness()
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness()
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness
+    name: GetBlendSharpness
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetBlendSharpness
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GetBlendSharpness
+    name: GetBlendSharpness
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GetBlendSharpness
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(System.Single)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(System.Single)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetBlendSharpness_System_Single_
+  name: SetBlendSharpness(float)
+  nameWithType: TerrainRendererBase.SetBlendSharpness(float)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(float)
+  nameWithType.vb: TerrainRendererBase.SetBlendSharpness(Single)
+  fullName.vb: Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(Single)
+  name.vb: SetBlendSharpness(Single)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(System.Single)
+    name: SetBlendSharpness
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetBlendSharpness_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.SetBlendSharpness(System.Single)
+    name: SetBlendSharpness
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_SetBlendSharpness_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: TerrainRendererBase.CalculateThreadGroups(int, int)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: TerrainRendererBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(System.Int32,System.Int32,System.String)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(System.Int32,System.Int32,System.String)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CreateBlendMapTexture_System_Int32_System_Int32_System_String_
+  name: CreateBlendMapTexture(int, int, string)
+  nameWithType: TerrainRendererBase.CreateBlendMapTexture(int, int, string)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(int, int, string)
+  nameWithType.vb: TerrainRendererBase.CreateBlendMapTexture(Integer, Integer, String)
+  fullName.vb: Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(Integer, Integer, String)
+  name.vb: CreateBlendMapTexture(Integer, Integer, String)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(System.Int32,System.Int32,System.String)
+    name: CreateBlendMapTexture
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CreateBlendMapTexture_System_Int32_System_Int32_System_String_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.CreateBlendMapTexture(System.Int32,System.Int32,System.String)
+    name: CreateBlendMapTexture
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_CreateBlendMapTexture_System_Int32_System_Int32_System_String_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Terrain.TerrainRendererBase.RendererId
+  commentId: P:Map.Rendering.Terrain.TerrainRendererBase.RendererId
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_RendererId
+  name: RendererId
+  nameWithType: TerrainRendererBase.RendererId
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.RendererId
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer_RendererId
+  name: RendererId
+  nameWithType: DefaultTerrainRenderer.RendererId
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Terrain.TerrainRendererBase.DisplayName
+  commentId: P:Map.Rendering.Terrain.TerrainRendererBase.DisplayName
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_DisplayName
+  name: DisplayName
+  nameWithType: TerrainRendererBase.DisplayName
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.DisplayName
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer_DisplayName
+  name: DisplayName
+  nameWithType: DefaultTerrainRenderer.DisplayName
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.DisplayName
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.#ctor
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer__ctor
+  name: DefaultTerrainRenderer
+  nameWithType: DefaultTerrainRenderer.DefaultTerrainRenderer
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.DefaultTerrainRenderer
+  nameWithType.vb: DefaultTerrainRenderer.New
+  fullName.vb: Map.Rendering.Terrain.DefaultTerrainRenderer.New
+  name.vb: New
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Terrain.TerrainRendererBase.OnInitialize
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.OnInitialize
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnInitialize
+  name: OnInitialize()
+  nameWithType: TerrainRendererBase.OnInitialize()
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.OnInitialize()
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnInitialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_OnInitialize
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer_OnInitialize
+  name: OnInitialize
+  nameWithType: DefaultTerrainRenderer.OnInitialize
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.OnInitialize
+- uid: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  isExternal: true
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GenerateBlendMaps_UnityEngine_RenderTexture_UnityEngine_ComputeBuffer_System_Int32_System_Int32_
+  name: GenerateBlendMaps(RenderTexture, ComputeBuffer, int, int)
+  nameWithType: TerrainRendererBase.GenerateBlendMaps(RenderTexture, ComputeBuffer, int, int)
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, int, int)
+  nameWithType.vb: TerrainRendererBase.GenerateBlendMaps(RenderTexture, ComputeBuffer, Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture, UnityEngine.ComputeBuffer, Integer, Integer)
+  name.vb: GenerateBlendMaps(RenderTexture, ComputeBuffer, Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+    name: GenerateBlendMaps
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GenerateBlendMaps_UnityEngine_RenderTexture_UnityEngine_ComputeBuffer_System_Int32_System_Int32_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.GenerateBlendMaps(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
+    name: GenerateBlendMaps
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_GenerateBlendMaps_UnityEngine_RenderTexture_UnityEngine_ComputeBuffer_System_Int32_System_Int32_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer_GenerateBlendMaps_UnityEngine_RenderTexture_UnityEngine_ComputeBuffer_System_Int32_System_Int32_
+  name: GenerateBlendMaps
+  nameWithType: DefaultTerrainRenderer.GenerateBlendMaps
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.GenerateBlendMaps
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: UnityEngine.ComputeBuffer
+  commentId: T:UnityEngine.ComputeBuffer
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeBuffer
+  nameWithType: ComputeBuffer
+  fullName: UnityEngine.ComputeBuffer
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+  commentId: T:System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (RenderTexture detailIndex, RenderTexture detailMask)
+  nameWithType: (RenderTexture detailIndex, RenderTexture detailMask)
+  fullName: (UnityEngine.RenderTexture detailIndex, UnityEngine.RenderTexture detailMask)
+  nameWithType.vb: (detailIndex As RenderTexture, detailMask As RenderTexture)
+  fullName.vb: (detailIndex As UnityEngine.RenderTexture, detailMask As UnityEngine.RenderTexture)
+  name.vb: (detailIndex As RenderTexture, detailMask As RenderTexture)
+  spec.csharp:
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailIndex
+    name: detailIndex
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailMask
+    name: detailMask
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailIndex
+    name: detailIndex
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.RenderTexture,UnityEngine.RenderTexture}.detailMask
+    name: detailMask
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRendererBase.Dispose
+  commentId: M:Map.Rendering.Terrain.TerrainRendererBase.Dispose
+  parent: Map.Rendering.Terrain.TerrainRendererBase
+  href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Dispose
+  name: Dispose()
+  nameWithType: TerrainRendererBase.Dispose()
+  fullName: Map.Rendering.Terrain.TerrainRendererBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Terrain.TerrainRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Terrain.TerrainRendererBase.html#Map_Rendering_Terrain_TerrainRendererBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose*
+  commentId: Overload:Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose
+  href: Map.Rendering.Terrain.DefaultTerrainRenderer.html#Map_Rendering_Terrain_DefaultTerrainRenderer_Dispose
+  name: Dispose
+  nameWithType: DefaultTerrainRenderer.Dispose
+  fullName: Map.Rendering.Terrain.DefaultTerrainRenderer.Dispose

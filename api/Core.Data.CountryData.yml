@@ -1,0 +1,648 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CountryData
+  commentId: T:Core.Data.CountryData
+  id: CountryData
+  parent: Core.Data
+  children:
+  - Core.Data.CountryData.#ctor
+  - Core.Data.CountryData.#ctor(Core.Data.CountryHotData,Core.Data.CountryColdData)
+  - Core.Data.CountryData.Color
+  - Core.Data.CountryData.CreateHotData(Core.Data.CountryColdData,System.Byte,System.Byte)
+  - Core.Data.CountryData.DisplayName
+  - Core.Data.CountryData.GraphicalCultureId
+  - Core.Data.CountryData.Tag
+  - Core.Data.CountryData.ToString
+  - Core.Data.CountryData.Validate(System.Collections.Generic.List{System.String}@)
+  - Core.Data.CountryData.coldData
+  - Core.Data.CountryData.hotData
+  langs:
+  - csharp
+  - vb
+  name: CountryData
+  nameWithType: CountryData
+  fullName: Core.Data.CountryData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryData
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 150
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Complete country data combining hot and cold data
+
+    Used for runtime access with performance considerations
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public class CountryData
+    content.vb: >-
+      <Serializable>
+
+      Public Class CountryData
+  inheritance:
+  - System.Object
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.CountryData.hotData
+  commentId: F:Core.Data.CountryData.hotData
+  id: hotData
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: hotData
+  nameWithType: CountryData.hotData
+  fullName: Core.Data.CountryData.hotData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hotData
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 153
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryHotData hotData
+    return:
+      type: Core.Data.CountryHotData
+    content.vb: Public hotData As CountryHotData
+- uid: Core.Data.CountryData.coldData
+  commentId: F:Core.Data.CountryData.coldData
+  id: coldData
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: coldData
+  nameWithType: CountryData.coldData
+  fullName: Core.Data.CountryData.coldData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: coldData
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 154
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryColdData coldData
+    return:
+      type: Core.Data.CountryColdData
+    content.vb: Public coldData As CountryColdData
+- uid: Core.Data.CountryData.#ctor
+  commentId: M:Core.Data.CountryData.#ctor
+  id: '#ctor'
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: CountryData()
+  nameWithType: CountryData.CountryData()
+  fullName: Core.Data.CountryData.CountryData()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 156
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryData()
+    content.vb: Public Sub New()
+  overload: Core.Data.CountryData.#ctor*
+  nameWithType.vb: CountryData.New()
+  fullName.vb: Core.Data.CountryData.New()
+  name.vb: New()
+- uid: Core.Data.CountryData.#ctor(Core.Data.CountryHotData,Core.Data.CountryColdData)
+  commentId: M:Core.Data.CountryData.#ctor(Core.Data.CountryHotData,Core.Data.CountryColdData)
+  id: '#ctor(Core.Data.CountryHotData,Core.Data.CountryColdData)'
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: CountryData(CountryHotData, CountryColdData)
+  nameWithType: CountryData.CountryData(CountryHotData, CountryColdData)
+  fullName: Core.Data.CountryData.CountryData(Core.Data.CountryHotData, Core.Data.CountryColdData)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 161
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CountryData(CountryHotData hot, CountryColdData cold)
+    parameters:
+    - id: hot
+      type: Core.Data.CountryHotData
+    - id: cold
+      type: Core.Data.CountryColdData
+    content.vb: Public Sub New(hot As CountryHotData, cold As CountryColdData)
+  overload: Core.Data.CountryData.#ctor*
+  nameWithType.vb: CountryData.New(CountryHotData, CountryColdData)
+  fullName.vb: Core.Data.CountryData.New(Core.Data.CountryHotData, Core.Data.CountryColdData)
+  name.vb: New(CountryHotData, CountryColdData)
+- uid: Core.Data.CountryData.Tag
+  commentId: P:Core.Data.CountryData.Tag
+  id: Tag
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: CountryData.Tag
+  fullName: Core.Data.CountryData.Tag
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tag
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string Tag { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Tag As String
+  overload: Core.Data.CountryData.Tag*
+- uid: Core.Data.CountryData.DisplayName
+  commentId: P:Core.Data.CountryData.DisplayName
+  id: DisplayName
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: CountryData.DisplayName
+  fullName: Core.Data.CountryData.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 169
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property DisplayName As String
+  overload: Core.Data.CountryData.DisplayName*
+- uid: Core.Data.CountryData.Color
+  commentId: P:Core.Data.CountryData.Color
+  id: Color
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: CountryData.Color
+  fullName: Core.Data.CountryData.Color
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Color
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 170
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Color32 Color { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public ReadOnly Property Color As Color32
+  overload: Core.Data.CountryData.Color*
+- uid: Core.Data.CountryData.GraphicalCultureId
+  commentId: P:Core.Data.CountryData.GraphicalCultureId
+  id: GraphicalCultureId
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: GraphicalCultureId
+  nameWithType: CountryData.GraphicalCultureId
+  fullName: Core.Data.CountryData.GraphicalCultureId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GraphicalCultureId
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte GraphicalCultureId { get; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: Public ReadOnly Property GraphicalCultureId As Byte
+  overload: Core.Data.CountryData.GraphicalCultureId*
+- uid: Core.Data.CountryData.CreateHotData(Core.Data.CountryColdData,System.Byte,System.Byte)
+  commentId: M:Core.Data.CountryData.CreateHotData(Core.Data.CountryColdData,System.Byte,System.Byte)
+  id: CreateHotData(Core.Data.CountryColdData,System.Byte,System.Byte)
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: CreateHotData(CountryColdData, byte, byte)
+  nameWithType: CountryData.CreateHotData(CountryColdData, byte, byte)
+  fullName: Core.Data.CountryData.CreateHotData(Core.Data.CountryColdData, byte, byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateHotData
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 176
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create hot data from cold data for performance optimization
+  example: []
+  syntax:
+    content: public static CountryHotData CreateHotData(CountryColdData coldData, byte graphicalCultureId, byte flags = 0)
+    parameters:
+    - id: coldData
+      type: Core.Data.CountryColdData
+    - id: graphicalCultureId
+      type: System.Byte
+    - id: flags
+      type: System.Byte
+    return:
+      type: Core.Data.CountryHotData
+    content.vb: Public Shared Function CreateHotData(coldData As CountryColdData, graphicalCultureId As Byte, flags As Byte = 0) As CountryHotData
+  overload: Core.Data.CountryData.CreateHotData*
+  nameWithType.vb: CountryData.CreateHotData(CountryColdData, Byte, Byte)
+  fullName.vb: Core.Data.CountryData.CreateHotData(Core.Data.CountryColdData, Byte, Byte)
+  name.vb: CreateHotData(CountryColdData, Byte, Byte)
+- uid: Core.Data.CountryData.Validate(System.Collections.Generic.List{System.String}@)
+  commentId: M:Core.Data.CountryData.Validate(System.Collections.Generic.List{System.String}@)
+  id: Validate(System.Collections.Generic.List{System.String}@)
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: Validate(out List<string>)
+  nameWithType: CountryData.Validate(out List<string>)
+  fullName: Core.Data.CountryData.Validate(out System.Collections.Generic.List<string>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 227
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Validate that the country data is consistent and complete
+  example: []
+  syntax:
+    content: public bool Validate(out List<string> validationErrors)
+    parameters:
+    - id: validationErrors
+      type: System.Collections.Generic.List{System.String}
+    return:
+      type: System.Boolean
+    content.vb: Public Function Validate(validationErrors As List(Of String)) As Boolean
+  overload: Core.Data.CountryData.Validate*
+  nameWithType.vb: CountryData.Validate(List(Of String))
+  fullName.vb: Core.Data.CountryData.Validate(System.Collections.Generic.List(Of String))
+  name.vb: Validate(List(Of String))
+- uid: Core.Data.CountryData.ToString
+  commentId: M:Core.Data.CountryData.ToString
+  id: ToString
+  parent: Core.Data.CountryData
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: CountryData.ToString()
+  fullName: Core.Data.CountryData.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/CountryData.cs
+    startLine: 261
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: Core.Data.CountryData.ToString*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.CountryHotData
+  commentId: T:Core.Data.CountryHotData
+  parent: Core.Data
+  href: Core.Data.CountryHotData.html
+  name: CountryHotData
+  nameWithType: CountryHotData
+  fullName: Core.Data.CountryHotData
+- uid: Core.Data.CountryColdData
+  commentId: T:Core.Data.CountryColdData
+  parent: Core.Data
+  href: Core.Data.CountryColdData.html
+  name: CountryColdData
+  nameWithType: CountryColdData
+  fullName: Core.Data.CountryColdData
+- uid: Core.Data.CountryData.#ctor*
+  commentId: Overload:Core.Data.CountryData.#ctor
+  href: Core.Data.CountryData.html#Core_Data_CountryData__ctor
+  name: CountryData
+  nameWithType: CountryData.CountryData
+  fullName: Core.Data.CountryData.CountryData
+  nameWithType.vb: CountryData.New
+  fullName.vb: Core.Data.CountryData.New
+  name.vb: New
+- uid: Core.Data.CountryData.Tag*
+  commentId: Overload:Core.Data.CountryData.Tag
+  href: Core.Data.CountryData.html#Core_Data_CountryData_Tag
+  name: Tag
+  nameWithType: CountryData.Tag
+  fullName: Core.Data.CountryData.Tag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.CountryData.DisplayName*
+  commentId: Overload:Core.Data.CountryData.DisplayName
+  href: Core.Data.CountryData.html#Core_Data_CountryData_DisplayName
+  name: DisplayName
+  nameWithType: CountryData.DisplayName
+  fullName: Core.Data.CountryData.DisplayName
+- uid: Core.Data.CountryData.Color*
+  commentId: Overload:Core.Data.CountryData.Color
+  href: Core.Data.CountryData.html#Core_Data_CountryData_Color
+  name: Color
+  nameWithType: CountryData.Color
+  fullName: Core.Data.CountryData.Color
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Data.CountryData.GraphicalCultureId*
+  commentId: Overload:Core.Data.CountryData.GraphicalCultureId
+  href: Core.Data.CountryData.html#Core_Data_CountryData_GraphicalCultureId
+  name: GraphicalCultureId
+  nameWithType: CountryData.GraphicalCultureId
+  fullName: Core.Data.CountryData.GraphicalCultureId
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Data.CountryData.CreateHotData*
+  commentId: Overload:Core.Data.CountryData.CreateHotData
+  href: Core.Data.CountryData.html#Core_Data_CountryData_CreateHotData_Core_Data_CountryColdData_System_Byte_System_Byte_
+  name: CreateHotData
+  nameWithType: CountryData.CreateHotData
+  fullName: Core.Data.CountryData.CreateHotData
+- uid: Core.Data.CountryData.Validate*
+  commentId: Overload:Core.Data.CountryData.Validate
+  href: Core.Data.CountryData.html#Core_Data_CountryData_Validate_System_Collections_Generic_List_System_String___
+  name: Validate
+  nameWithType: CountryData.Validate
+  fullName: Core.Data.CountryData.Validate
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.CountryData.ToString*
+  commentId: Overload:Core.Data.CountryData.ToString
+  href: Core.Data.CountryData.html#Core_Data_CountryData_ToString
+  name: ToString
+  nameWithType: CountryData.ToString
+  fullName: Core.Data.CountryData.ToString

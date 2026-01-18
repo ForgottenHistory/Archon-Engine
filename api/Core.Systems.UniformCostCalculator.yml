@@ -1,0 +1,462 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.UniformCostCalculator
+  commentId: T:Core.Systems.UniformCostCalculator
+  id: UniformCostCalculator
+  parent: Core.Systems
+  children:
+  - Core.Systems.UniformCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  - Core.Systems.UniformCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  - Core.Systems.UniformCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  - Core.Systems.UniformCostCalculator.Instance
+  langs:
+  - csharp
+  - vb
+  name: UniformCostCalculator
+  nameWithType: UniformCostCalculator
+  fullName: Core.Systems.UniformCostCalculator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UniformCostCalculator
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Default cost calculator - all provinces cost 1.
+
+    Use when no terrain or ownership modifiers needed.
+  example: []
+  syntax:
+    content: 'public class UniformCostCalculator : IMovementCostCalculator'
+    content.vb: Public Class UniformCostCalculator Implements IMovementCostCalculator
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Systems.IMovementCostCalculator
+- uid: Core.Systems.UniformCostCalculator.Instance
+  commentId: F:Core.Systems.UniformCostCalculator.Instance
+  id: Instance
+  parent: Core.Systems.UniformCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: UniformCostCalculator.Instance
+  fullName: Core.Systems.UniformCostCalculator.Instance
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Instance
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 96
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public static readonly UniformCostCalculator Instance
+    return:
+      type: Core.Systems.UniformCostCalculator
+    content.vb: Public Shared ReadOnly Instance As UniformCostCalculator
+- uid: Core.Systems.UniformCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.UniformCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  id: GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.UniformCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetMovementCost(ushort, ushort, PathContext)
+  nameWithType: UniformCostCalculator.GetMovementCost(ushort, ushort, PathContext)
+  fullName: Core.Systems.UniformCostCalculator.GetMovementCost(ushort, ushort, Core.Systems.PathContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMovementCost
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get movement cost from one province to an adjacent province.
+
+    Higher cost = less desirable path.
+
+    Return FixedPoint64.MaxValue to indicate impassable.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetMovementCost(ushort fromProvinceId, ushort toProvinceId, PathContext context)
+    parameters:
+    - id: fromProvinceId
+      type: System.UInt16
+      description: Source province
+    - id: toProvinceId
+      type: System.UInt16
+      description: Destination province (adjacent to source)
+    - id: context
+      type: Core.Systems.PathContext
+      description: Optional context (unit owner, unit type, etc.)
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetMovementCost(fromProvinceId As UShort, toProvinceId As UShort, context As PathContext) As FixedPoint64
+  overload: Core.Systems.UniformCostCalculator.GetMovementCost*
+  implements:
+  - Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  nameWithType.vb: UniformCostCalculator.GetMovementCost(UShort, UShort, PathContext)
+  fullName.vb: Core.Systems.UniformCostCalculator.GetMovementCost(UShort, UShort, Core.Systems.PathContext)
+  name.vb: GetMovementCost(UShort, UShort, PathContext)
+- uid: Core.Systems.UniformCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.UniformCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  id: CanTraverse(System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.UniformCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: CanTraverse(ushort, PathContext)
+  nameWithType: UniformCostCalculator.CanTraverse(ushort, PathContext)
+  fullName: Core.Systems.UniformCostCalculator.CanTraverse(ushort, Core.Systems.PathContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanTraverse
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Check if a province can be traversed at all.
+
+    Called before GetMovementCost - return false to skip entirely.
+  example: []
+  syntax:
+    content: public bool CanTraverse(ushort provinceId, PathContext context)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: context
+      type: Core.Systems.PathContext
+    return:
+      type: System.Boolean
+    content.vb: Public Function CanTraverse(provinceId As UShort, context As PathContext) As Boolean
+  overload: Core.Systems.UniformCostCalculator.CanTraverse*
+  implements:
+  - Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  nameWithType.vb: UniformCostCalculator.CanTraverse(UShort, PathContext)
+  fullName.vb: Core.Systems.UniformCostCalculator.CanTraverse(UShort, Core.Systems.PathContext)
+  name.vb: CanTraverse(UShort, PathContext)
+- uid: Core.Systems.UniformCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.UniformCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  id: GetHeuristic(System.UInt16,System.UInt16)
+  parent: Core.Systems.UniformCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetHeuristic(ushort, ushort)
+  nameWithType: UniformCostCalculator.GetHeuristic(ushort, ushort)
+  fullName: Core.Systems.UniformCostCalculator.GetHeuristic(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHeuristic
+    path: Scripts/Core/Systems/Pathfinding/IMovementCostCalculator.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get heuristic estimate from province to goal (for A*).
+
+    Must be admissible (never overestimate actual cost).
+
+    Default: return FixedPoint64.One (safe but slow).
+
+    Better: return distance-based estimate if coordinates available.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetHeuristic(ushort fromProvinceId, ushort goalProvinceId)
+    parameters:
+    - id: fromProvinceId
+      type: System.UInt16
+    - id: goalProvinceId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetHeuristic(fromProvinceId As UShort, goalProvinceId As UShort) As FixedPoint64
+  overload: Core.Systems.UniformCostCalculator.GetHeuristic*
+  implements:
+  - Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  nameWithType.vb: UniformCostCalculator.GetHeuristic(UShort, UShort)
+  fullName.vb: Core.Systems.UniformCostCalculator.GetHeuristic(UShort, UShort)
+  name.vb: GetHeuristic(UShort, UShort)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Systems.IMovementCostCalculator
+  commentId: T:Core.Systems.IMovementCostCalculator
+  parent: Core.Systems
+  href: Core.Systems.IMovementCostCalculator.html
+  name: IMovementCostCalculator
+  nameWithType: IMovementCostCalculator
+  fullName: Core.Systems.IMovementCostCalculator
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.UniformCostCalculator
+  commentId: T:Core.Systems.UniformCostCalculator
+  parent: Core.Systems
+  href: Core.Systems.UniformCostCalculator.html
+  name: UniformCostCalculator
+  nameWithType: UniformCostCalculator
+  fullName: Core.Systems.UniformCostCalculator
+- uid: Core.Systems.UniformCostCalculator.GetMovementCost*
+  commentId: Overload:Core.Systems.UniformCostCalculator.GetMovementCost
+  href: Core.Systems.UniformCostCalculator.html#Core_Systems_UniformCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  name: GetMovementCost
+  nameWithType: UniformCostCalculator.GetMovementCost
+  fullName: Core.Systems.UniformCostCalculator.GetMovementCost
+- uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  name: GetMovementCost(ushort, ushort, PathContext)
+  nameWithType: IMovementCostCalculator.GetMovementCost(ushort, ushort, PathContext)
+  fullName: Core.Systems.IMovementCostCalculator.GetMovementCost(ushort, ushort, Core.Systems.PathContext)
+  nameWithType.vb: IMovementCostCalculator.GetMovementCost(UShort, UShort, PathContext)
+  fullName.vb: Core.Systems.IMovementCostCalculator.GetMovementCost(UShort, UShort, Core.Systems.PathContext)
+  name.vb: GetMovementCost(UShort, UShort, PathContext)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+    name: GetMovementCost
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+    name: GetMovementCost
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Systems.PathContext
+  commentId: T:Core.Systems.PathContext
+  parent: Core.Systems
+  href: Core.Systems.PathContext.html
+  name: PathContext
+  nameWithType: PathContext
+  fullName: Core.Systems.PathContext
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.UniformCostCalculator.CanTraverse*
+  commentId: Overload:Core.Systems.UniformCostCalculator.CanTraverse
+  href: Core.Systems.UniformCostCalculator.html#Core_Systems_UniformCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  name: CanTraverse
+  nameWithType: UniformCostCalculator.CanTraverse
+  fullName: Core.Systems.UniformCostCalculator.CanTraverse
+- uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  name: CanTraverse(ushort, PathContext)
+  nameWithType: IMovementCostCalculator.CanTraverse(ushort, PathContext)
+  fullName: Core.Systems.IMovementCostCalculator.CanTraverse(ushort, Core.Systems.PathContext)
+  nameWithType.vb: IMovementCostCalculator.CanTraverse(UShort, PathContext)
+  fullName.vb: Core.Systems.IMovementCostCalculator.CanTraverse(UShort, Core.Systems.PathContext)
+  name.vb: CanTraverse(UShort, PathContext)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+    name: CanTraverse
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+    name: CanTraverse
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.UniformCostCalculator.GetHeuristic*
+  commentId: Overload:Core.Systems.UniformCostCalculator.GetHeuristic
+  href: Core.Systems.UniformCostCalculator.html#Core_Systems_UniformCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  name: GetHeuristic
+  nameWithType: UniformCostCalculator.GetHeuristic
+  fullName: Core.Systems.UniformCostCalculator.GetHeuristic
+- uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  name: GetHeuristic(ushort, ushort)
+  nameWithType: IMovementCostCalculator.GetHeuristic(ushort, ushort)
+  fullName: Core.Systems.IMovementCostCalculator.GetHeuristic(ushort, ushort)
+  nameWithType.vb: IMovementCostCalculator.GetHeuristic(UShort, UShort)
+  fullName.vb: Core.Systems.IMovementCostCalculator.GetHeuristic(UShort, UShort)
+  name.vb: GetHeuristic(UShort, UShort)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+    name: GetHeuristic
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+    name: GetHeuristic
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )

@@ -1,0 +1,263 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  id: ModifierSource.SourceType
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierSource.SourceType.Building
+  - Core.Modifiers.ModifierSource.SourceType.Custom
+  - Core.Modifiers.ModifierSource.SourceType.Event
+  - Core.Modifiers.ModifierSource.SourceType.Government
+  - Core.Modifiers.ModifierSource.SourceType.Policy
+  - Core.Modifiers.ModifierSource.SourceType.Technology
+  - Core.Modifiers.ModifierSource.SourceType.Trait
+  langs:
+  - csharp
+  - vb
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SourceType
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: 'public enum ModifierSource.SourceType : byte'
+    content.vb: Public Enum ModifierSource.SourceType As Byte
+- uid: Core.Modifiers.ModifierSource.SourceType.Building
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Building
+  id: Building
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Building
+  nameWithType: ModifierSource.SourceType.Building
+  fullName: Core.Modifiers.ModifierSource.SourceType.Building
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Building
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Building = 0
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Technology
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Technology
+  id: Technology
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Technology
+  nameWithType: ModifierSource.SourceType.Technology
+  fullName: Core.Modifiers.ModifierSource.SourceType.Technology
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Technology
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Technology = 1
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Event
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Event
+  id: Event
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Event
+  nameWithType: ModifierSource.SourceType.Event
+  fullName: Core.Modifiers.ModifierSource.SourceType.Event
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Event
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Event = 2
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Government
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Government
+  id: Government
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Government
+  nameWithType: ModifierSource.SourceType.Government
+  fullName: Core.Modifiers.ModifierSource.SourceType.Government
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Government
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Government = 3
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Trait
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Trait
+  id: Trait
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Trait
+  nameWithType: ModifierSource.SourceType.Trait
+  fullName: Core.Modifiers.ModifierSource.SourceType.Trait
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Trait
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Trait = 4
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Policy
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Policy
+  id: Policy
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Policy
+  nameWithType: ModifierSource.SourceType.Policy
+  fullName: Core.Modifiers.ModifierSource.SourceType.Policy
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Policy
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Policy = 5
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+- uid: Core.Modifiers.ModifierSource.SourceType.Custom
+  commentId: F:Core.Modifiers.ModifierSource.SourceType.Custom
+  id: Custom
+  parent: Core.Modifiers.ModifierSource.SourceType
+  langs:
+  - csharp
+  - vb
+  name: Custom
+  nameWithType: ModifierSource.SourceType.Custom
+  fullName: Core.Modifiers.ModifierSource.SourceType.Custom
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSource.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Custom
+    path: Scripts/Core/Modifiers/ModifierSource.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Custom = 255
+    return:
+      type: Core.Modifiers.ModifierSource.SourceType
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.Modifiers.ModifierSource.SourceType
+  commentId: T:Core.Modifiers.ModifierSource.SourceType
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSource.html
+  name: ModifierSource.SourceType
+  nameWithType: ModifierSource.SourceType
+  fullName: Core.Modifiers.ModifierSource.SourceType
+  spec.csharp:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html
+  spec.vb:
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    href: Core.Modifiers.ModifierSource.html
+  - name: .
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: SourceType
+    href: Core.Modifiers.ModifierSource.SourceType.html

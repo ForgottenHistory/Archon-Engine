@@ -1,0 +1,360 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandMetadataAttribute
+  commentId: T:Core.Commands.CommandMetadataAttribute
+  id: CommandMetadataAttribute
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandMetadataAttribute.#ctor(System.String)
+  - Core.Commands.CommandMetadataAttribute.Aliases
+  - Core.Commands.CommandMetadataAttribute.CommandName
+  - Core.Commands.CommandMetadataAttribute.Description
+  - Core.Commands.CommandMetadataAttribute.Examples
+  - Core.Commands.CommandMetadataAttribute.Usage
+  langs:
+  - csharp
+  - vb
+  name: CommandMetadataAttribute
+  nameWithType: CommandMetadataAttribute
+  fullName: Core.Commands.CommandMetadataAttribute
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandMetadataAttribute
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Attribute to define command metadata for auto-registration and help generation.
+
+    Apply to ICommandFactory implementations for automatic discovery.
+  example: []
+  syntax:
+    content: >-
+      [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+
+      public class CommandMetadataAttribute : Attribute
+    content.vb: >-
+      <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False)>
+
+      Public Class CommandMetadataAttribute Inherits Attribute
+  inheritance:
+  - System.Object
+  - System.Attribute
+  attributes:
+  - type: System.AttributeUsageAttribute
+    ctor: System.AttributeUsageAttribute.#ctor(System.AttributeTargets)
+    arguments:
+    - type: System.AttributeTargets
+      value: 4
+    namedArguments:
+    - name: AllowMultiple
+      type: System.Boolean
+      value: false
+- uid: Core.Commands.CommandMetadataAttribute.CommandName
+  commentId: P:Core.Commands.CommandMetadataAttribute.CommandName
+  id: CommandName
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: CommandName
+  nameWithType: CommandMetadataAttribute.CommandName
+  fullName: Core.Commands.CommandMetadataAttribute.CommandName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandName
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Primary command name (e.g., "add_gold")
+  example: []
+  syntax:
+    content: public string CommandName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property CommandName As String
+  overload: Core.Commands.CommandMetadataAttribute.CommandName*
+- uid: Core.Commands.CommandMetadataAttribute.Aliases
+  commentId: P:Core.Commands.CommandMetadataAttribute.Aliases
+  id: Aliases
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: Aliases
+  nameWithType: CommandMetadataAttribute.Aliases
+  fullName: Core.Commands.CommandMetadataAttribute.Aliases
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Aliases
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Aliases for the command (e.g., ["gold", "ag"])
+  example: []
+  syntax:
+    content: public string[] Aliases { get; set; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: Public Property Aliases As String()
+  overload: Core.Commands.CommandMetadataAttribute.Aliases*
+- uid: Core.Commands.CommandMetadataAttribute.Description
+  commentId: P:Core.Commands.CommandMetadataAttribute.Description
+  id: Description
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: CommandMetadataAttribute.Description
+  fullName: Core.Commands.CommandMetadataAttribute.Description
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Description
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Description of what the command does
+  example: []
+  syntax:
+    content: public string Description { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Description As String
+  overload: Core.Commands.CommandMetadataAttribute.Description*
+- uid: Core.Commands.CommandMetadataAttribute.Usage
+  commentId: P:Core.Commands.CommandMetadataAttribute.Usage
+  id: Usage
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: Usage
+  nameWithType: CommandMetadataAttribute.Usage
+  fullName: Core.Commands.CommandMetadataAttribute.Usage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Usage
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Usage example showing command syntax.
+  example: []
+  syntax:
+    content: public string Usage { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Usage As String
+  overload: Core.Commands.CommandMetadataAttribute.Usage*
+- uid: Core.Commands.CommandMetadataAttribute.Examples
+  commentId: P:Core.Commands.CommandMetadataAttribute.Examples
+  id: Examples
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: Examples
+  nameWithType: CommandMetadataAttribute.Examples
+  fullName: Core.Commands.CommandMetadataAttribute.Examples
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Examples
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Example invocations (e.g., "add_gold 100", "add_gold -50 5")
+  example: []
+  syntax:
+    content: public string[] Examples { get; set; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: Public Property Examples As String()
+  overload: Core.Commands.CommandMetadataAttribute.Examples*
+- uid: Core.Commands.CommandMetadataAttribute.#ctor(System.String)
+  commentId: M:Core.Commands.CommandMetadataAttribute.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Core.Commands.CommandMetadataAttribute
+  langs:
+  - csharp
+  - vb
+  name: CommandMetadataAttribute(string)
+  nameWithType: CommandMetadataAttribute.CommandMetadataAttribute(string)
+  fullName: Core.Commands.CommandMetadataAttribute.CommandMetadataAttribute(string)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandMetadataAttribute.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandMetadataAttribute(string commandName)
+    parameters:
+    - id: commandName
+      type: System.String
+    content.vb: Public Sub New(commandName As String)
+  overload: Core.Commands.CommandMetadataAttribute.#ctor*
+  nameWithType.vb: CommandMetadataAttribute.New(String)
+  fullName.vb: Core.Commands.CommandMetadataAttribute.New(String)
+  name.vb: New(String)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Attribute
+  commentId: T:System.Attribute
+  parent: System
+  isExternal: true
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandMetadataAttribute.CommandName*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.CommandName
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute_CommandName
+  name: CommandName
+  nameWithType: CommandMetadataAttribute.CommandName
+  fullName: Core.Commands.CommandMetadataAttribute.CommandName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.CommandMetadataAttribute.Aliases*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.Aliases
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute_Aliases
+  name: Aliases
+  nameWithType: CommandMetadataAttribute.Aliases
+  fullName: Core.Commands.CommandMetadataAttribute.Aliases
+- uid: System.String[]
+  isExternal: true
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.CommandMetadataAttribute.Description*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.Description
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute_Description
+  name: Description
+  nameWithType: CommandMetadataAttribute.Description
+  fullName: Core.Commands.CommandMetadataAttribute.Description
+- uid: Core.Commands.CommandMetadataAttribute.Usage*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.Usage
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute_Usage
+  name: Usage
+  nameWithType: CommandMetadataAttribute.Usage
+  fullName: Core.Commands.CommandMetadataAttribute.Usage
+- uid: Core.Commands.CommandMetadataAttribute.Examples*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.Examples
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute_Examples
+  name: Examples
+  nameWithType: CommandMetadataAttribute.Examples
+  fullName: Core.Commands.CommandMetadataAttribute.Examples
+- uid: Core.Commands.CommandMetadataAttribute.#ctor*
+  commentId: Overload:Core.Commands.CommandMetadataAttribute.#ctor
+  href: Core.Commands.CommandMetadataAttribute.html#Core_Commands_CommandMetadataAttribute__ctor_System_String_
+  name: CommandMetadataAttribute
+  nameWithType: CommandMetadataAttribute.CommandMetadataAttribute
+  fullName: Core.Commands.CommandMetadataAttribute.CommandMetadataAttribute
+  nameWithType.vb: CommandMetadataAttribute.New
+  fullName.vb: Core.Commands.CommandMetadataAttribute.New
+  name.vb: New

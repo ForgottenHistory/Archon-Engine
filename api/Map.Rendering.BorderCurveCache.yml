@@ -1,0 +1,942 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderCurveCache
+  commentId: T:Map.Rendering.BorderCurveCache
+  id: BorderCurveCache
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderCurveCache.#ctor
+  - Map.Rendering.BorderCurveCache.BorderCount
+  - Map.Rendering.BorderCurveCache.Clear
+  - Map.Rendering.BorderCurveCache.GetAllBorderStyles
+  - Map.Rendering.BorderCurveCache.GetAllBordersForRendering
+  - Map.Rendering.BorderCurveCache.GetPolyline(System.UInt16,System.UInt16)
+  - Map.Rendering.BorderCurveCache.GetStyle(System.UInt16,System.UInt16)
+  - Map.Rendering.BorderCurveCache.Initialize(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}})
+  - Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles(System.UInt16,System.UInt16,System.Func{System.UInt16,System.UInt16},System.Func{System.UInt16,UnityEngine.Color})
+  langs:
+  - csharp
+  - vb
+  name: BorderCurveCache
+  nameWithType: BorderCurveCache
+  fullName: Map.Rendering.BorderCurveCache
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderCurveCache
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 56
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Caches pre-computed smooth border polylines and their runtime styles
+
+    Separates static geometry (expensive to compute) from dynamic appearance (cheap to update)
+
+
+    Pattern: Static Geometry + Dynamic Appearance
+
+    - Smooth polylines (RDP + Chaikin) computed once at map load
+
+    - Styles updated at runtime when ownership changes
+  example: []
+  syntax:
+    content: public class BorderCurveCache
+    content.vb: Public Class BorderCurveCache
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.BorderCurveCache.BorderCount
+  commentId: P:Map.Rendering.BorderCurveCache.BorderCount
+  id: BorderCount
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: BorderCount
+  nameWithType: BorderCurveCache.BorderCount
+  fullName: Map.Rendering.BorderCurveCache.BorderCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderCount
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 67
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public int BorderCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property BorderCount As Integer
+  overload: Map.Rendering.BorderCurveCache.BorderCount*
+- uid: Map.Rendering.BorderCurveCache.#ctor
+  commentId: M:Map.Rendering.BorderCurveCache.#ctor
+  id: '#ctor'
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: BorderCurveCache()
+  nameWithType: BorderCurveCache.BorderCurveCache()
+  fullName: Map.Rendering.BorderCurveCache.BorderCurveCache()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public BorderCurveCache()
+    content.vb: Public Sub New()
+  overload: Map.Rendering.BorderCurveCache.#ctor*
+  nameWithType.vb: BorderCurveCache.New()
+  fullName.vb: Map.Rendering.BorderCurveCache.New()
+  name.vb: New()
+- uid: Map.Rendering.BorderCurveCache.Initialize(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}})
+  commentId: M:Map.Rendering.BorderCurveCache.Initialize(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}})
+  id: Initialize(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}})
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: Initialize(Dictionary<(ushort, ushort), List<Vector2>>)
+  nameWithType: BorderCurveCache.Initialize(Dictionary<(ushort, ushort), List<Vector2>>)
+  fullName: Map.Rendering.BorderCurveCache.Initialize(System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 79
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize cache with pre-computed smooth polylines (Chaikin smoothed)
+  example: []
+  syntax:
+    content: public void Initialize(Dictionary<(ushort, ushort), List<Vector2>> polylines)
+    parameters:
+    - id: polylines
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+    content.vb: Public Sub Initialize(polylines As Dictionary(Of (UShort, UShort), List(Of Vector2)))
+  overload: Map.Rendering.BorderCurveCache.Initialize*
+  nameWithType.vb: BorderCurveCache.Initialize(Dictionary(Of (UShort, UShort), List(Of Vector2)))
+  fullName.vb: Map.Rendering.BorderCurveCache.Initialize(System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2)))
+  name.vb: Initialize(Dictionary(Of (UShort, UShort), List(Of Vector2)))
+- uid: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles(System.UInt16,System.UInt16,System.Func{System.UInt16,System.UInt16},System.Func{System.UInt16,UnityEngine.Color})
+  commentId: M:Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles(System.UInt16,System.UInt16,System.Func{System.UInt16,System.UInt16},System.Func{System.UInt16,UnityEngine.Color})
+  id: UpdateProvinceBorderStyles(System.UInt16,System.UInt16,System.Func{System.UInt16,System.UInt16},System.Func{System.UInt16,UnityEngine.Color})
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: UpdateProvinceBorderStyles(ushort, ushort, Func<ushort, ushort>, Func<ushort, Color>)
+  nameWithType: BorderCurveCache.UpdateProvinceBorderStyles(ushort, ushort, Func<ushort, ushort>, Func<ushort, Color>)
+  fullName: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles(ushort, ushort, System.Func<ushort, ushort>, System.Func<ushort, UnityEngine.Color>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateProvinceBorderStyles
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 114
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Update border styles for a province when its ownership changes
+
+    Only updates style flags - geometry remains unchanged
+  example: []
+  syntax:
+    content: public void UpdateProvinceBorderStyles(ushort provinceID, ushort newOwner, Func<ushort, ushort> getOwner, Func<ushort, Color> getCountryColor)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: newOwner
+      type: System.UInt16
+    - id: getOwner
+      type: System.Func{System.UInt16,System.UInt16}
+    - id: getCountryColor
+      type: System.Func{System.UInt16,UnityEngine.Color}
+    content.vb: Public Sub UpdateProvinceBorderStyles(provinceID As UShort, newOwner As UShort, getOwner As Func(Of UShort, UShort), getCountryColor As Func(Of UShort, Color))
+  overload: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles*
+  nameWithType.vb: BorderCurveCache.UpdateProvinceBorderStyles(UShort, UShort, Func(Of UShort, UShort), Func(Of UShort, Color))
+  fullName.vb: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles(UShort, UShort, System.Func(Of UShort, UShort), System.Func(Of UShort, UnityEngine.Color))
+  name.vb: UpdateProvinceBorderStyles(UShort, UShort, Func(Of UShort, UShort), Func(Of UShort, Color))
+- uid: Map.Rendering.BorderCurveCache.GetAllBordersForRendering
+  commentId: M:Map.Rendering.BorderCurveCache.GetAllBordersForRendering
+  id: GetAllBordersForRendering
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: GetAllBordersForRendering()
+  nameWithType: BorderCurveCache.GetAllBordersForRendering()
+  fullName: Map.Rendering.BorderCurveCache.GetAllBordersForRendering()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllBordersForRendering
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 160
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get all borders for rendering
+
+    Returns enumerable of (polyline, style) pairs
+  example: []
+  syntax:
+    content: public IEnumerable<(List<Vector2> polyline, BorderStyle style)> GetAllBordersForRendering()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}}
+    content.vb: Public Function GetAllBordersForRendering() As IEnumerable(Of (polyline As List(Of Vector2), style As BorderStyle))
+  overload: Map.Rendering.BorderCurveCache.GetAllBordersForRendering*
+- uid: Map.Rendering.BorderCurveCache.GetPolyline(System.UInt16,System.UInt16)
+  commentId: M:Map.Rendering.BorderCurveCache.GetPolyline(System.UInt16,System.UInt16)
+  id: GetPolyline(System.UInt16,System.UInt16)
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: GetPolyline(ushort, ushort)
+  nameWithType: BorderCurveCache.GetPolyline(ushort, ushort)
+  fullName: Map.Rendering.BorderCurveCache.GetPolyline(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPolyline
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 177
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get smooth polyline for a specific border
+  example: []
+  syntax:
+    content: public List<Vector2> GetPolyline(ushort provinceA, ushort provinceB)
+    parameters:
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    content.vb: Public Function GetPolyline(provinceA As UShort, provinceB As UShort) As List(Of Vector2)
+  overload: Map.Rendering.BorderCurveCache.GetPolyline*
+  nameWithType.vb: BorderCurveCache.GetPolyline(UShort, UShort)
+  fullName.vb: Map.Rendering.BorderCurveCache.GetPolyline(UShort, UShort)
+  name.vb: GetPolyline(UShort, UShort)
+- uid: Map.Rendering.BorderCurveCache.GetStyle(System.UInt16,System.UInt16)
+  commentId: M:Map.Rendering.BorderCurveCache.GetStyle(System.UInt16,System.UInt16)
+  id: GetStyle(System.UInt16,System.UInt16)
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: GetStyle(ushort, ushort)
+  nameWithType: BorderCurveCache.GetStyle(ushort, ushort)
+  fullName: Map.Rendering.BorderCurveCache.GetStyle(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStyle
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 189
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get style for a specific border
+  example: []
+  syntax:
+    content: public BorderStyle GetStyle(ushort provinceA, ushort provinceB)
+    parameters:
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    return:
+      type: Map.Rendering.BorderStyle
+    content.vb: Public Function GetStyle(provinceA As UShort, provinceB As UShort) As BorderStyle
+  overload: Map.Rendering.BorderCurveCache.GetStyle*
+  nameWithType.vb: BorderCurveCache.GetStyle(UShort, UShort)
+  fullName.vb: Map.Rendering.BorderCurveCache.GetStyle(UShort, UShort)
+  name.vb: GetStyle(UShort, UShort)
+- uid: Map.Rendering.BorderCurveCache.GetAllBorderStyles
+  commentId: M:Map.Rendering.BorderCurveCache.GetAllBorderStyles
+  id: GetAllBorderStyles
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: GetAllBorderStyles()
+  nameWithType: BorderCurveCache.GetAllBorderStyles()
+  fullName: Map.Rendering.BorderCurveCache.GetAllBorderStyles()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllBorderStyles
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 203
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all border styles (for debugging/statistics)
+  example: []
+  syntax:
+    content: public IEnumerable<((ushort, ushort) key, BorderStyle style)> GetAllBorderStyles()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}}
+    content.vb: Public Function GetAllBorderStyles() As IEnumerable(Of (key As (UShort, UShort), style As BorderStyle))
+  overload: Map.Rendering.BorderCurveCache.GetAllBorderStyles*
+- uid: Map.Rendering.BorderCurveCache.Clear
+  commentId: M:Map.Rendering.BorderCurveCache.Clear
+  id: Clear
+  parent: Map.Rendering.BorderCurveCache
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: BorderCurveCache.Clear()
+  fullName: Map.Rendering.BorderCurveCache.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 214
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Clear all cached data
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Map.Rendering.BorderCurveCache.Clear*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.BorderCurveCache.BorderCount*
+  commentId: Overload:Map.Rendering.BorderCurveCache.BorderCount
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_BorderCount
+  name: BorderCount
+  nameWithType: BorderCurveCache.BorderCount
+  fullName: Map.Rendering.BorderCurveCache.BorderCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.BorderCurveCache.#ctor*
+  commentId: Overload:Map.Rendering.BorderCurveCache.#ctor
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache__ctor
+  name: BorderCurveCache
+  nameWithType: BorderCurveCache.BorderCurveCache
+  fullName: Map.Rendering.BorderCurveCache.BorderCurveCache
+  nameWithType.vb: BorderCurveCache.New
+  fullName.vb: Map.Rendering.BorderCurveCache.New
+  name.vb: New
+- uid: Map.Rendering.BorderCurveCache.Initialize*
+  commentId: Overload:Map.Rendering.BorderCurveCache.Initialize
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_Initialize_System_Collections_Generic_Dictionary_System_ValueTuple_System_UInt16_System_UInt16__System_Collections_Generic_List_UnityEngine_Vector2___
+  name: Initialize
+  nameWithType: BorderCurveCache.Initialize
+  fullName: Map.Rendering.BorderCurveCache.Initialize
+- uid: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<(ushort, ushort), List<Vector2>>
+  nameWithType: Dictionary<(ushort, ushort), List<Vector2>>
+  fullName: System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>
+  nameWithType.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  fullName.vb: System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles*
+  commentId: Overload:Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_UpdateProvinceBorderStyles_System_UInt16_System_UInt16_System_Func_System_UInt16_System_UInt16__System_Func_System_UInt16_UnityEngine_Color__
+  name: UpdateProvinceBorderStyles
+  nameWithType: BorderCurveCache.UpdateProvinceBorderStyles
+  fullName: Map.Rendering.BorderCurveCache.UpdateProvinceBorderStyles
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Func{System.UInt16,System.UInt16}
+  commentId: T:System.Func{System.UInt16,System.UInt16}
+  parent: System
+  definition: System.Func`2
+  name: Func<ushort, ushort>
+  nameWithType: Func<ushort, ushort>
+  fullName: System.Func<ushort, ushort>
+  nameWithType.vb: Func(Of UShort, UShort)
+  fullName.vb: System.Func(Of UShort, UShort)
+  name.vb: Func(Of UShort, UShort)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Func{System.UInt16,UnityEngine.Color}
+  commentId: T:System.Func{System.UInt16,UnityEngine.Color}
+  parent: System
+  definition: System.Func`2
+  name: Func<ushort, Color>
+  nameWithType: Func<ushort, Color>
+  fullName: System.Func<ushort, UnityEngine.Color>
+  nameWithType.vb: Func(Of UShort, Color)
+  fullName.vb: System.Func(Of UShort, UnityEngine.Color)
+  name.vb: Func(Of UShort, Color)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Map.Rendering.BorderCurveCache.GetAllBordersForRendering*
+  commentId: Overload:Map.Rendering.BorderCurveCache.GetAllBordersForRendering
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_GetAllBordersForRendering
+  name: GetAllBordersForRendering
+  nameWithType: BorderCurveCache.GetAllBordersForRendering
+  fullName: Map.Rendering.BorderCurveCache.GetAllBordersForRendering
+- uid: System.Collections.Generic.IEnumerable{System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}}
+  commentId: T:System.Collections.Generic.IEnumerable{System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Map.Rendering.BorderStyle.html
+  name: IEnumerable<(List<Vector2> polyline, BorderStyle style)>
+  nameWithType: IEnumerable<(List<Vector2> polyline, BorderStyle style)>
+  fullName: System.Collections.Generic.IEnumerable<(System.Collections.Generic.List<UnityEngine.Vector2> polyline, Map.Rendering.BorderStyle style)>
+  nameWithType.vb: IEnumerable(Of (polyline As List(Of Vector2), style As BorderStyle))
+  fullName.vb: System.Collections.Generic.IEnumerable(Of (polyline As System.Collections.Generic.List(Of UnityEngine.Vector2), style As Map.Rendering.BorderStyle))
+  name.vb: IEnumerable(Of (polyline As List(Of Vector2), style As BorderStyle))
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: " "
+  - uid: System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}.polyline
+    name: polyline
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.BorderStyle
+    name: BorderStyle
+    href: Map.Rendering.BorderStyle.html
+  - name: " "
+  - uid: System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}.style
+    name: style
+  - name: )
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}.polyline
+    name: polyline
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Collections.Generic.List{UnityEngine.Vector2},Map.Rendering.BorderStyle}.style
+    name: style
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Map.Rendering.BorderStyle
+    name: BorderStyle
+    href: Map.Rendering.BorderStyle.html
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Rendering.BorderCurveCache.GetPolyline*
+  commentId: Overload:Map.Rendering.BorderCurveCache.GetPolyline
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_GetPolyline_System_UInt16_System_UInt16_
+  name: GetPolyline
+  nameWithType: BorderCurveCache.GetPolyline
+  fullName: Map.Rendering.BorderCurveCache.GetPolyline
+- uid: System.Collections.Generic.List{UnityEngine.Vector2}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2>
+  nameWithType: List<Vector2>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2>
+  nameWithType.vb: List(Of Vector2)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2)
+  name.vb: List(Of Vector2)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Rendering.BorderCurveCache.GetStyle*
+  commentId: Overload:Map.Rendering.BorderCurveCache.GetStyle
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_GetStyle_System_UInt16_System_UInt16_
+  name: GetStyle
+  nameWithType: BorderCurveCache.GetStyle
+  fullName: Map.Rendering.BorderCurveCache.GetStyle
+- uid: Map.Rendering.BorderStyle
+  commentId: T:Map.Rendering.BorderStyle
+  parent: Map.Rendering
+  href: Map.Rendering.BorderStyle.html
+  name: BorderStyle
+  nameWithType: BorderStyle
+  fullName: Map.Rendering.BorderStyle
+- uid: Map.Rendering.BorderCurveCache.GetAllBorderStyles*
+  commentId: Overload:Map.Rendering.BorderCurveCache.GetAllBorderStyles
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_GetAllBorderStyles
+  name: GetAllBorderStyles
+  nameWithType: BorderCurveCache.GetAllBorderStyles
+  fullName: Map.Rendering.BorderCurveCache.GetAllBorderStyles
+- uid: System.Collections.Generic.IEnumerable{System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}}
+  commentId: T:System.Collections.Generic.IEnumerable{System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Map.Rendering.BorderStyle.html
+  name: IEnumerable<((ushort, ushort) key, BorderStyle style)>
+  nameWithType: IEnumerable<((ushort, ushort) key, BorderStyle style)>
+  fullName: System.Collections.Generic.IEnumerable<((ushort, ushort) key, Map.Rendering.BorderStyle style)>
+  nameWithType.vb: IEnumerable(Of (key As (UShort, UShort), style As BorderStyle))
+  fullName.vb: System.Collections.Generic.IEnumerable(Of (key As (UShort, UShort), style As Map.Rendering.BorderStyle))
+  name.vb: IEnumerable(Of (key As (UShort, UShort), style As BorderStyle))
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: (
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  - name: " "
+  - uid: System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}.key
+    name: key
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.BorderStyle
+    name: BorderStyle
+    href: Map.Rendering.BorderStyle.html
+  - name: " "
+  - uid: System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}.style
+    name: style
+  - name: )
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}.key
+    name: key
+  - name: " "
+  - name: As
+  - name: " "
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.ValueTuple{System.UInt16,System.UInt16},Map.Rendering.BorderStyle}.style
+    name: style
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Map.Rendering.BorderStyle
+    name: BorderStyle
+    href: Map.Rendering.BorderStyle.html
+  - name: )
+  - name: )
+- uid: Map.Rendering.BorderCurveCache.Clear*
+  commentId: Overload:Map.Rendering.BorderCurveCache.Clear
+  href: Map.Rendering.BorderCurveCache.html#Map_Rendering_BorderCurveCache_Clear
+  name: Clear
+  nameWithType: BorderCurveCache.Clear
+  fullName: Map.Rendering.BorderCurveCache.Clear

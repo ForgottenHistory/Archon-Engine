@@ -1,0 +1,461 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderShaderManager
+  commentId: T:Map.Rendering.Border.BorderShaderManager
+  id: BorderShaderManager
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderShaderManager.#ctor(System.Boolean)
+  - Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+  - Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+  - Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+  - Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+  - Map.Rendering.Border.BorderShaderManager.InitializeKernels(UnityEngine.ComputeShader,UnityEngine.ComputeShader,UnityEngine.ComputeShader)
+  - Map.Rendering.Border.BorderShaderManager.IsInitialized
+  - Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode(Map.Rendering.BorderRenderingMode)
+  langs:
+  - csharp
+  - vb
+  name: BorderShaderManager
+  nameWithType: BorderShaderManager
+  fullName: Map.Rendering.Border.BorderShaderManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderShaderManager
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Manages compute shader loading and kernel initialization for border rendering
+
+    Extracted from BorderComputeDispatcher for single responsibility
+
+
+    Responsibilities:
+
+    - Lazy loading of compute shaders (BorderDetection, BorderCurveRasterizer, BorderSDF)
+
+    - Kernel index caching
+
+    - Shader validation and error reporting
+  example: []
+  syntax:
+    content: public class BorderShaderManager
+    content.vb: Public Class BorderShaderManager
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+  commentId: P:Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+  id: BorderDetectionShader
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: BorderDetectionShader
+  nameWithType: BorderShaderManager.BorderDetectionShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDetectionShader
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ComputeShader BorderDetectionShader { get; }
+    parameters: []
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public ReadOnly Property BorderDetectionShader As ComputeShader
+  overload: Map.Rendering.Border.BorderShaderManager.BorderDetectionShader*
+- uid: Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+  commentId: P:Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+  id: BorderCurveRasterizerShader
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: BorderCurveRasterizerShader
+  nameWithType: BorderShaderManager.BorderCurveRasterizerShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderCurveRasterizerShader
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ComputeShader BorderCurveRasterizerShader { get; }
+    parameters: []
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public ReadOnly Property BorderCurveRasterizerShader As ComputeShader
+  overload: Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader*
+- uid: Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+  commentId: P:Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+  id: BorderSDFShader
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: BorderSDFShader
+  nameWithType: BorderShaderManager.BorderSDFShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderSDFShader
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public ComputeShader BorderSDFShader { get; }
+    parameters: []
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public ReadOnly Property BorderSDFShader As ComputeShader
+  overload: Map.Rendering.Border.BorderShaderManager.BorderSDFShader*
+- uid: Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+  commentId: P:Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+  id: DetectDualBordersKernel
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: DetectDualBordersKernel
+  nameWithType: BorderShaderManager.DetectDualBordersKernel
+  fullName: Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectDualBordersKernel
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public int DetectDualBordersKernel { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property DetectDualBordersKernel As Integer
+  overload: Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel*
+- uid: Map.Rendering.Border.BorderShaderManager.#ctor(System.Boolean)
+  commentId: M:Map.Rendering.Border.BorderShaderManager.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: BorderShaderManager(bool)
+  nameWithType: BorderShaderManager.BorderShaderManager(bool)
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderShaderManager(bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderShaderManager(bool enablePerformanceLogging = false)
+    parameters:
+    - id: enablePerformanceLogging
+      type: System.Boolean
+    content.vb: Public Sub New(enablePerformanceLogging As Boolean = False)
+  overload: Map.Rendering.Border.BorderShaderManager.#ctor*
+  nameWithType.vb: BorderShaderManager.New(Boolean)
+  fullName.vb: Map.Rendering.Border.BorderShaderManager.New(Boolean)
+  name.vb: New(Boolean)
+- uid: Map.Rendering.Border.BorderShaderManager.InitializeKernels(UnityEngine.ComputeShader,UnityEngine.ComputeShader,UnityEngine.ComputeShader)
+  commentId: M:Map.Rendering.Border.BorderShaderManager.InitializeKernels(UnityEngine.ComputeShader,UnityEngine.ComputeShader,UnityEngine.ComputeShader)
+  id: InitializeKernels(UnityEngine.ComputeShader,UnityEngine.ComputeShader,UnityEngine.ComputeShader)
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: InitializeKernels(ComputeShader, ComputeShader, ComputeShader)
+  nameWithType: BorderShaderManager.InitializeKernels(ComputeShader, ComputeShader, ComputeShader)
+  fullName: Map.Rendering.Border.BorderShaderManager.InitializeKernels(UnityEngine.ComputeShader, UnityEngine.ComputeShader, UnityEngine.ComputeShader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeKernels
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Initialize compute shader kernels
+
+    Lazy-loads shaders if not already assigned
+  example: []
+  syntax:
+    content: public void InitializeKernels(ComputeShader borderDetection = null, ComputeShader borderCurveRasterizer = null, ComputeShader borderSDF = null)
+    parameters:
+    - id: borderDetection
+      type: UnityEngine.ComputeShader
+    - id: borderCurveRasterizer
+      type: UnityEngine.ComputeShader
+    - id: borderSDF
+      type: UnityEngine.ComputeShader
+    content.vb: Public Sub InitializeKernels(borderDetection As ComputeShader = Nothing, borderCurveRasterizer As ComputeShader = Nothing, borderSDF As ComputeShader = Nothing)
+  overload: Map.Rendering.Border.BorderShaderManager.InitializeKernels*
+- uid: Map.Rendering.Border.BorderShaderManager.IsInitialized
+  commentId: M:Map.Rendering.Border.BorderShaderManager.IsInitialized
+  id: IsInitialized
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized()
+  nameWithType: BorderShaderManager.IsInitialized()
+  fullName: Map.Rendering.Border.BorderShaderManager.IsInitialized()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 121
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Check if shader manager is properly initialized
+  example: []
+  syntax:
+    content: public bool IsInitialized()
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsInitialized() As Boolean
+  overload: Map.Rendering.Border.BorderShaderManager.IsInitialized*
+- uid: Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode(Map.Rendering.BorderRenderingMode)
+  commentId: M:Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode(Map.Rendering.BorderRenderingMode)
+  id: SupportsRenderingMode(Map.Rendering.BorderRenderingMode)
+  parent: Map.Rendering.Border.BorderShaderManager
+  langs:
+  - csharp
+  - vb
+  name: SupportsRenderingMode(BorderRenderingMode)
+  nameWithType: BorderShaderManager.SupportsRenderingMode(BorderRenderingMode)
+  fullName: Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode(Map.Rendering.BorderRenderingMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SupportsRenderingMode
+    path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
+    startLine: 129
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Check if specific rendering mode is supported (has required shaders)
+  example: []
+  syntax:
+    content: public bool SupportsRenderingMode(BorderRenderingMode mode)
+    parameters:
+    - id: mode
+      type: Map.Rendering.BorderRenderingMode
+    return:
+      type: System.Boolean
+    content.vb: Public Function SupportsRenderingMode(mode As BorderRenderingMode) As Boolean
+  overload: Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode*
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderShaderManager.BorderDetectionShader*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_BorderDetectionShader
+  name: BorderDetectionShader
+  nameWithType: BorderShaderManager.BorderDetectionShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderDetectionShader
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_BorderCurveRasterizerShader
+  name: BorderCurveRasterizerShader
+  nameWithType: BorderShaderManager.BorderCurveRasterizerShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderCurveRasterizerShader
+- uid: Map.Rendering.Border.BorderShaderManager.BorderSDFShader*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_BorderSDFShader
+  name: BorderSDFShader
+  nameWithType: BorderShaderManager.BorderSDFShader
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderSDFShader
+- uid: Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_DetectDualBordersKernel
+  name: DetectDualBordersKernel
+  nameWithType: BorderShaderManager.DetectDualBordersKernel
+  fullName: Map.Rendering.Border.BorderShaderManager.DetectDualBordersKernel
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.Border.BorderShaderManager.#ctor*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.#ctor
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager__ctor_System_Boolean_
+  name: BorderShaderManager
+  nameWithType: BorderShaderManager.BorderShaderManager
+  fullName: Map.Rendering.Border.BorderShaderManager.BorderShaderManager
+  nameWithType.vb: BorderShaderManager.New
+  fullName.vb: Map.Rendering.Border.BorderShaderManager.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.BorderShaderManager.InitializeKernels*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.InitializeKernels
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_InitializeKernels_UnityEngine_ComputeShader_UnityEngine_ComputeShader_UnityEngine_ComputeShader_
+  name: InitializeKernels
+  nameWithType: BorderShaderManager.InitializeKernels
+  fullName: Map.Rendering.Border.BorderShaderManager.InitializeKernels
+- uid: Map.Rendering.Border.BorderShaderManager.IsInitialized*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.IsInitialized
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_IsInitialized
+  name: IsInitialized
+  nameWithType: BorderShaderManager.IsInitialized
+  fullName: Map.Rendering.Border.BorderShaderManager.IsInitialized
+- uid: Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode*
+  commentId: Overload:Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode
+  href: Map.Rendering.Border.BorderShaderManager.html#Map_Rendering_Border_BorderShaderManager_SupportsRenderingMode_Map_Rendering_BorderRenderingMode_
+  name: SupportsRenderingMode
+  nameWithType: BorderShaderManager.SupportsRenderingMode
+  fullName: Map.Rendering.Border.BorderShaderManager.SupportsRenderingMode
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderRenderingMode.html
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html

@@ -1,0 +1,300 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  commentId: T:Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  id: ProvinceNeighborDetector.ProvinceBounds
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.Max
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.Min
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.ProvinceID
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+  langs:
+  - csharp
+  - vb
+  name: ProvinceNeighborDetector.ProvinceBounds
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBounds
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 55
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Province bounding rectangle
+  example: []
+  syntax:
+    content: public struct ProvinceNeighborDetector.ProvinceBounds
+    content.vb: Public Structure ProvinceNeighborDetector.ProvinceBounds
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.ProvinceID
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceBounds.ProvinceID
+  id: ProvinceID
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.ProvinceID
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Min
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Min
+  id: Min
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Min
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Min
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Min
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Min
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 58
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Min
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Min As int2
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Max
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Max
+  id: Max
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Max
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Max
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Max
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Max
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Max
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Max As int2
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+  commentId: P:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+  id: Size
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Size
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Size
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Size
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Size { get; }
+    parameters: []
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public ReadOnly Property Size As int2
+  overload: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size*
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+  commentId: P:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+  id: Area
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Area
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Area
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Area
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int Area { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Area As Integer
+  overload: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area*
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center
+  commentId: P:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center
+  id: Center
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Center
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Center
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Center
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 62
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int2 Center { get; }
+    parameters: []
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public ReadOnly Property Center As int2
+  overload: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Mathematics.int2
+  commentId: T:Unity.Mathematics.int2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: int2
+  nameWithType: int2
+  fullName: Unity.Mathematics.int2
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+  href: Map.Province.ProvinceNeighborDetector.ProvinceBounds.html#Map_Province_ProvinceNeighborDetector_ProvinceBounds_Size
+  name: Size
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Size
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Size
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+  href: Map.Province.ProvinceNeighborDetector.ProvinceBounds.html#Map_Province_ProvinceNeighborDetector_ProvinceBounds_Area
+  name: Area
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Area
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Area
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center
+  href: Map.Province.ProvinceNeighborDetector.ProvinceBounds.html#Map_Province_ProvinceNeighborDetector_ProvinceBounds_Center
+  name: Center
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds.Center
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds.Center

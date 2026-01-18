@@ -1,0 +1,236 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.CountryColorChangedEvent
+  commentId: T:Core.Systems.CountryColorChangedEvent
+  id: CountryColorChangedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.CountryColorChangedEvent.CountryId
+  - Core.Systems.CountryColorChangedEvent.NewColor
+  - Core.Systems.CountryColorChangedEvent.OldColor
+  - Core.Systems.CountryColorChangedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: CountryColorChangedEvent
+  nameWithType: CountryColorChangedEvent
+  fullName: Core.Systems.CountryColorChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryColorChangedEvent
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: 'public struct CountryColorChangedEvent : IGameEvent'
+    content.vb: Public Structure CountryColorChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.CountryColorChangedEvent.CountryId
+  commentId: F:Core.Systems.CountryColorChangedEvent.CountryId
+  id: CountryId
+  parent: Core.Systems.CountryColorChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: CountryColorChangedEvent.CountryId
+  fullName: Core.Systems.CountryColorChangedEvent.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: Core.Systems.CountryColorChangedEvent.OldColor
+  commentId: F:Core.Systems.CountryColorChangedEvent.OldColor
+  id: OldColor
+  parent: Core.Systems.CountryColorChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldColor
+  nameWithType: CountryColorChangedEvent.OldColor
+  fullName: Core.Systems.CountryColorChangedEvent.OldColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldColor
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public Color32 OldColor
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public OldColor As Color32
+- uid: Core.Systems.CountryColorChangedEvent.NewColor
+  commentId: F:Core.Systems.CountryColorChangedEvent.NewColor
+  id: NewColor
+  parent: Core.Systems.CountryColorChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewColor
+  nameWithType: CountryColorChangedEvent.NewColor
+  fullName: Core.Systems.CountryColorChangedEvent.NewColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewColor
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public Color32 NewColor
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public NewColor As Color32
+- uid: Core.Systems.CountryColorChangedEvent.TimeStamp
+  commentId: P:Core.Systems.CountryColorChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.CountryColorChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: CountryColorChangedEvent.TimeStamp
+  fullName: Core.Systems.CountryColorChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.CountryColorChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Systems.CountryColorChangedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.CountryColorChangedEvent.TimeStamp
+  href: Core.Systems.CountryColorChangedEvent.html#Core_Systems_CountryColorChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: CountryColorChangedEvent.TimeStamp
+  fullName: Core.Systems.CountryColorChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

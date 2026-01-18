@@ -1,0 +1,753 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.TerrainMovementCostCalculator
+  commentId: T:Core.Systems.TerrainMovementCostCalculator
+  id: TerrainMovementCostCalculator
+  parent: Core.Systems
+  children:
+  - Core.Systems.TerrainMovementCostCalculator.#ctor(Core.Systems.ProvinceSystem,Core.Registries.Registry{Core.Registries.TerrainData})
+  - Core.Systems.TerrainMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  - Core.Systems.TerrainMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  - Core.Systems.TerrainMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  - Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain(System.UInt16)
+  - Core.Systems.TerrainMovementCostCalculator.GetTerrainCost(System.UInt16)
+  - Core.Systems.TerrainMovementCostCalculator.IsProvinceWater(System.UInt16)
+  - Core.Systems.TerrainMovementCostCalculator.IsTerrainWater(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: TerrainMovementCostCalculator
+  nameWithType: TerrainMovementCostCalculator
+  fullName: Core.Systems.TerrainMovementCostCalculator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainMovementCostCalculator
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE LAYER: Movement cost calculator based on terrain types.
+
+
+    Provides MECHANISM only - looks up terrain costs from registry.
+
+    Does NOT decide what's passable (that's GAME layer policy).
+
+
+    Usage:
+      // ENGINE: Just terrain costs, everything passable
+      var calculator = new TerrainMovementCostCalculator(provinceSystem, terrainRegistry);
+
+      // GAME: Wrap with game-specific traversability rules
+      var gameCalculator = new LandUnitCostCalculator(calculator); // blocks water
+      var navalCalculator = new NavalUnitCostCalculator(calculator); // blocks land
+
+    GAME layer implements IMovementCostCalculator with:
+
+    - Unit type checks (land/naval/amphibious)
+
+    - Ownership penalties (enemy territory)
+
+    - Supply/attrition considerations
+  example: []
+  syntax:
+    content: 'public class TerrainMovementCostCalculator : IMovementCostCalculator'
+    content.vb: Public Class TerrainMovementCostCalculator Implements IMovementCostCalculator
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Systems.IMovementCostCalculator
+- uid: Core.Systems.TerrainMovementCostCalculator.#ctor(Core.Systems.ProvinceSystem,Core.Registries.Registry{Core.Registries.TerrainData})
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.#ctor(Core.Systems.ProvinceSystem,Core.Registries.Registry{Core.Registries.TerrainData})
+  id: '#ctor(Core.Systems.ProvinceSystem,Core.Registries.Registry{Core.Registries.TerrainData})'
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: TerrainMovementCostCalculator(ProvinceSystem, Registry<TerrainData>)
+  nameWithType: TerrainMovementCostCalculator.TerrainMovementCostCalculator(ProvinceSystem, Registry<TerrainData>)
+  fullName: Core.Systems.TerrainMovementCostCalculator.TerrainMovementCostCalculator(Core.Systems.ProvinceSystem, Core.Registries.Registry<Core.Registries.TerrainData>)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public TerrainMovementCostCalculator(ProvinceSystem provinceSystem, Registry<TerrainData> terrainRegistry)
+    parameters:
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: terrainRegistry
+      type: Core.Registries.Registry{Core.Registries.TerrainData}
+    content.vb: Public Sub New(provinceSystem As ProvinceSystem, terrainRegistry As Registry(Of TerrainData))
+  overload: Core.Systems.TerrainMovementCostCalculator.#ctor*
+  nameWithType.vb: TerrainMovementCostCalculator.New(ProvinceSystem, Registry(Of TerrainData))
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.New(Core.Systems.ProvinceSystem, Core.Registries.Registry(Of Core.Registries.TerrainData))
+  name.vb: New(ProvinceSystem, Registry(Of TerrainData))
+- uid: Core.Systems.TerrainMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  id: GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetMovementCost(ushort, ushort, PathContext)
+  nameWithType: TerrainMovementCostCalculator.GetMovementCost(ushort, ushort, PathContext)
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetMovementCost(ushort, ushort, Core.Systems.PathContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMovementCost
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get movement cost based on destination terrain.
+
+    Cost is determined by the terrain of the province being entered.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetMovementCost(ushort fromProvinceId, ushort toProvinceId, PathContext context)
+    parameters:
+    - id: fromProvinceId
+      type: System.UInt16
+    - id: toProvinceId
+      type: System.UInt16
+    - id: context
+      type: Core.Systems.PathContext
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetMovementCost(fromProvinceId As UShort, toProvinceId As UShort, context As PathContext) As FixedPoint64
+  overload: Core.Systems.TerrainMovementCostCalculator.GetMovementCost*
+  implements:
+  - Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  nameWithType.vb: TerrainMovementCostCalculator.GetMovementCost(UShort, UShort, PathContext)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.GetMovementCost(UShort, UShort, Core.Systems.PathContext)
+  name.vb: GetMovementCost(UShort, UShort, PathContext)
+- uid: Core.Systems.TerrainMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  id: CanTraverse(System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: CanTraverse(ushort, PathContext)
+  nameWithType: TerrainMovementCostCalculator.CanTraverse(ushort, PathContext)
+  fullName: Core.Systems.TerrainMovementCostCalculator.CanTraverse(ushort, Core.Systems.PathContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanTraverse
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    ENGINE: All provinces are traversable.
+
+    GAME layer wraps this and adds policy (water/land restrictions, etc.)
+  example: []
+  syntax:
+    content: public bool CanTraverse(ushort provinceId, PathContext context)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: context
+      type: Core.Systems.PathContext
+    return:
+      type: System.Boolean
+    content.vb: Public Function CanTraverse(provinceId As UShort, context As PathContext) As Boolean
+  overload: Core.Systems.TerrainMovementCostCalculator.CanTraverse*
+  implements:
+  - Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  nameWithType.vb: TerrainMovementCostCalculator.CanTraverse(UShort, PathContext)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.CanTraverse(UShort, Core.Systems.PathContext)
+  name.vb: CanTraverse(UShort, PathContext)
+- uid: Core.Systems.TerrainMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  id: GetHeuristic(System.UInt16,System.UInt16)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetHeuristic(ushort, ushort)
+  nameWithType: TerrainMovementCostCalculator.GetHeuristic(ushort, ushort)
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetHeuristic(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHeuristic
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get heuristic estimate (for A*).
+
+    Returns zero (Dijkstra) - safe but not optimal.
+
+    GAME layer can provide distance-based heuristics if coordinates available.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetHeuristic(ushort fromProvinceId, ushort goalProvinceId)
+    parameters:
+    - id: fromProvinceId
+      type: System.UInt16
+    - id: goalProvinceId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetHeuristic(fromProvinceId As UShort, goalProvinceId As UShort) As FixedPoint64
+  overload: Core.Systems.TerrainMovementCostCalculator.GetHeuristic*
+  implements:
+  - Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  nameWithType.vb: TerrainMovementCostCalculator.GetHeuristic(UShort, UShort)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.GetHeuristic(UShort, UShort)
+  name.vb: GetHeuristic(UShort, UShort)
+- uid: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost(System.UInt16)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.GetTerrainCost(System.UInt16)
+  id: GetTerrainCost(System.UInt16)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetTerrainCost(ushort)
+  nameWithType: TerrainMovementCostCalculator.GetTerrainCost(ushort)
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrainCost
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get the movement cost for a specific terrain type.
+
+    Useful for GAME layer wrappers that need raw terrain costs.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetTerrainCost(ushort terrainId)
+    parameters:
+    - id: terrainId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetTerrainCost(terrainId As UShort) As FixedPoint64
+  overload: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost*
+  nameWithType.vb: TerrainMovementCostCalculator.GetTerrainCost(UShort)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost(UShort)
+  name.vb: GetTerrainCost(UShort)
+- uid: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain(System.UInt16)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain(System.UInt16)
+  id: GetProvinceTerrain(System.UInt16)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTerrain(ushort)
+  nameWithType: TerrainMovementCostCalculator.GetProvinceTerrain(ushort)
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTerrain
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get terrain ID for a province.
+
+    Useful for GAME layer to make policy decisions.
+  example: []
+  syntax:
+    content: public ushort GetProvinceTerrain(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceTerrain(provinceId As UShort) As UShort
+  overload: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain*
+  nameWithType.vb: TerrainMovementCostCalculator.GetProvinceTerrain(UShort)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain(UShort)
+  name.vb: GetProvinceTerrain(UShort)
+- uid: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater(System.UInt16)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.IsTerrainWater(System.UInt16)
+  id: IsTerrainWater(System.UInt16)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: IsTerrainWater(ushort)
+  nameWithType: TerrainMovementCostCalculator.IsTerrainWater(ushort)
+  fullName: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsTerrainWater
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 129
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Check if a terrain type is water.
+
+    Useful for GAME layer to implement land/naval unit restrictions.
+  example: []
+  syntax:
+    content: public bool IsTerrainWater(ushort terrainId)
+    parameters:
+    - id: terrainId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsTerrainWater(terrainId As UShort) As Boolean
+  overload: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater*
+  nameWithType.vb: TerrainMovementCostCalculator.IsTerrainWater(UShort)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater(UShort)
+  name.vb: IsTerrainWater(UShort)
+- uid: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater(System.UInt16)
+  commentId: M:Core.Systems.TerrainMovementCostCalculator.IsProvinceWater(System.UInt16)
+  id: IsProvinceWater(System.UInt16)
+  parent: Core.Systems.TerrainMovementCostCalculator
+  langs:
+  - csharp
+  - vb
+  name: IsProvinceWater(ushort)
+  nameWithType: TerrainMovementCostCalculator.IsProvinceWater(ushort)
+  fullName: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsProvinceWater
+    path: Scripts/Core/Systems/Pathfinding/TerrainMovementCostCalculator.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Check if a province is water terrain.
+
+    Convenience method combining GetProvinceTerrain and IsTerrainWater.
+  example: []
+  syntax:
+    content: public bool IsProvinceWater(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsProvinceWater(provinceId As UShort) As Boolean
+  overload: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater*
+  nameWithType.vb: TerrainMovementCostCalculator.IsProvinceWater(UShort)
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater(UShort)
+  name.vb: IsProvinceWater(UShort)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Systems.IMovementCostCalculator
+  commentId: T:Core.Systems.IMovementCostCalculator
+  parent: Core.Systems
+  href: Core.Systems.IMovementCostCalculator.html
+  name: IMovementCostCalculator
+  nameWithType: IMovementCostCalculator
+  fullName: Core.Systems.IMovementCostCalculator
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.TerrainMovementCostCalculator.#ctor*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.#ctor
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator__ctor_Core_Systems_ProvinceSystem_Core_Registries_Registry_Core_Registries_TerrainData__
+  name: TerrainMovementCostCalculator
+  nameWithType: TerrainMovementCostCalculator.TerrainMovementCostCalculator
+  fullName: Core.Systems.TerrainMovementCostCalculator.TerrainMovementCostCalculator
+  nameWithType.vb: TerrainMovementCostCalculator.New
+  fullName.vb: Core.Systems.TerrainMovementCostCalculator.New
+  name.vb: New
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Registries.Registry{Core.Registries.TerrainData}
+  commentId: T:Core.Registries.Registry{Core.Registries.TerrainData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<TerrainData>
+  nameWithType: Registry<TerrainData>
+  fullName: Core.Registries.Registry<Core.Registries.TerrainData>
+  nameWithType.vb: Registry(Of TerrainData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.TerrainData)
+  name.vb: Registry(Of TerrainData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: )
+- uid: Core.Registries.Registry`1
+  commentId: T:Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<T>
+  nameWithType: Registry<T>
+  fullName: Core.Registries.Registry<T>
+  nameWithType.vb: Registry(Of T)
+  fullName.vb: Core.Registries.Registry(Of T)
+  name.vb: Registry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: Core.Systems.TerrainMovementCostCalculator.GetMovementCost*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.GetMovementCost
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  name: GetMovementCost
+  nameWithType: TerrainMovementCostCalculator.GetMovementCost
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetMovementCost
+- uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  name: GetMovementCost(ushort, ushort, PathContext)
+  nameWithType: IMovementCostCalculator.GetMovementCost(ushort, ushort, PathContext)
+  fullName: Core.Systems.IMovementCostCalculator.GetMovementCost(ushort, ushort, Core.Systems.PathContext)
+  nameWithType.vb: IMovementCostCalculator.GetMovementCost(UShort, UShort, PathContext)
+  fullName.vb: Core.Systems.IMovementCostCalculator.GetMovementCost(UShort, UShort, Core.Systems.PathContext)
+  name.vb: GetMovementCost(UShort, UShort, PathContext)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+    name: GetMovementCost
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.GetMovementCost(System.UInt16,System.UInt16,Core.Systems.PathContext)
+    name: GetMovementCost
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetMovementCost_System_UInt16_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Systems.PathContext
+  commentId: T:Core.Systems.PathContext
+  parent: Core.Systems
+  href: Core.Systems.PathContext.html
+  name: PathContext
+  nameWithType: PathContext
+  fullName: Core.Systems.PathContext
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.TerrainMovementCostCalculator.CanTraverse*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.CanTraverse
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  name: CanTraverse
+  nameWithType: TerrainMovementCostCalculator.CanTraverse
+  fullName: Core.Systems.TerrainMovementCostCalculator.CanTraverse
+- uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  commentId: M:Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  name: CanTraverse(ushort, PathContext)
+  nameWithType: IMovementCostCalculator.CanTraverse(ushort, PathContext)
+  fullName: Core.Systems.IMovementCostCalculator.CanTraverse(ushort, Core.Systems.PathContext)
+  nameWithType.vb: IMovementCostCalculator.CanTraverse(UShort, PathContext)
+  fullName.vb: Core.Systems.IMovementCostCalculator.CanTraverse(UShort, Core.Systems.PathContext)
+  name.vb: CanTraverse(UShort, PathContext)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+    name: CanTraverse
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.CanTraverse(System.UInt16,Core.Systems.PathContext)
+    name: CanTraverse
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_CanTraverse_System_UInt16_Core_Systems_PathContext_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    href: Core.Systems.PathContext.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.TerrainMovementCostCalculator.GetHeuristic*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.GetHeuristic
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  name: GetHeuristic
+  nameWithType: TerrainMovementCostCalculator.GetHeuristic
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetHeuristic
+- uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+  parent: Core.Systems.IMovementCostCalculator
+  isExternal: true
+  href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  name: GetHeuristic(ushort, ushort)
+  nameWithType: IMovementCostCalculator.GetHeuristic(ushort, ushort)
+  fullName: Core.Systems.IMovementCostCalculator.GetHeuristic(ushort, ushort)
+  nameWithType.vb: IMovementCostCalculator.GetHeuristic(UShort, UShort)
+  fullName.vb: Core.Systems.IMovementCostCalculator.GetHeuristic(UShort, UShort)
+  name.vb: GetHeuristic(UShort, UShort)
+  spec.csharp:
+  - uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+    name: GetHeuristic
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Systems.IMovementCostCalculator.GetHeuristic(System.UInt16,System.UInt16)
+    name: GetHeuristic
+    href: Core.Systems.IMovementCostCalculator.html#Core_Systems_IMovementCostCalculator_GetHeuristic_System_UInt16_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.GetTerrainCost
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_GetTerrainCost_System_UInt16_
+  name: GetTerrainCost
+  nameWithType: TerrainMovementCostCalculator.GetTerrainCost
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetTerrainCost
+- uid: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_GetProvinceTerrain_System_UInt16_
+  name: GetProvinceTerrain
+  nameWithType: TerrainMovementCostCalculator.GetProvinceTerrain
+  fullName: Core.Systems.TerrainMovementCostCalculator.GetProvinceTerrain
+- uid: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.IsTerrainWater
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_IsTerrainWater_System_UInt16_
+  name: IsTerrainWater
+  nameWithType: TerrainMovementCostCalculator.IsTerrainWater
+  fullName: Core.Systems.TerrainMovementCostCalculator.IsTerrainWater
+- uid: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater*
+  commentId: Overload:Core.Systems.TerrainMovementCostCalculator.IsProvinceWater
+  href: Core.Systems.TerrainMovementCostCalculator.html#Core_Systems_TerrainMovementCostCalculator_IsProvinceWater_System_UInt16_
+  name: IsProvinceWater
+  nameWithType: TerrainMovementCostCalculator.IsProvinceWater
+  fullName: Core.Systems.TerrainMovementCostCalculator.IsProvinceWater

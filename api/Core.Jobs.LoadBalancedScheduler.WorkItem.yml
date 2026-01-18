@@ -1,0 +1,128 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+  commentId: T:Core.Jobs.LoadBalancedScheduler.WorkItem
+  id: LoadBalancedScheduler.WorkItem
+  parent: Core.Jobs
+  children:
+  - Core.Jobs.LoadBalancedScheduler.WorkItem.estimatedCost
+  - Core.Jobs.LoadBalancedScheduler.WorkItem.index
+  langs:
+  - csharp
+  - vb
+  name: LoadBalancedScheduler.WorkItem
+  nameWithType: LoadBalancedScheduler.WorkItem
+  fullName: Core.Jobs.LoadBalancedScheduler.WorkItem
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WorkItem
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    Work item with cost estimation
+
+    Generic - can represent provinces, countries, fleets, anything
+  example: []
+  syntax:
+    content: public struct LoadBalancedScheduler.WorkItem
+    content.vb: Public Structure LoadBalancedScheduler.WorkItem
+- uid: Core.Jobs.LoadBalancedScheduler.WorkItem.index
+  commentId: F:Core.Jobs.LoadBalancedScheduler.WorkItem.index
+  id: index
+  parent: Core.Jobs.LoadBalancedScheduler.WorkItem
+  langs:
+  - csharp
+  - vb
+  name: index
+  nameWithType: LoadBalancedScheduler.WorkItem.index
+  fullName: Core.Jobs.LoadBalancedScheduler.WorkItem.index
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: index
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public int index
+    return:
+      type: System.Int32
+    content.vb: Public index As Integer
+- uid: Core.Jobs.LoadBalancedScheduler.WorkItem.estimatedCost
+  commentId: F:Core.Jobs.LoadBalancedScheduler.WorkItem.estimatedCost
+  id: estimatedCost
+  parent: Core.Jobs.LoadBalancedScheduler.WorkItem
+  langs:
+  - csharp
+  - vb
+  name: estimatedCost
+  nameWithType: LoadBalancedScheduler.WorkItem.estimatedCost
+  fullName: Core.Jobs.LoadBalancedScheduler.WorkItem.estimatedCost
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: estimatedCost
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public int estimatedCost
+    return:
+      type: System.Int32
+    content.vb: Public estimatedCost As Integer
+references:
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  href: Core.html
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

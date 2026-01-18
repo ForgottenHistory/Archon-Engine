@@ -1,0 +1,255 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ProvinceBounds
+  commentId: T:Map.Loading.Images.ProvinceBounds
+  id: ProvinceBounds
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ProvinceBounds.MaxX
+  - Map.Loading.Images.ProvinceBounds.MaxY
+  - Map.Loading.Images.ProvinceBounds.MinX
+  - Map.Loading.Images.ProvinceBounds.MinY
+  - Map.Loading.Images.ProvinceBounds.SumX
+  - Map.Loading.Images.ProvinceBounds.SumY
+  langs:
+  - csharp
+  - vb
+  name: ProvinceBounds
+  nameWithType: ProvinceBounds
+  fullName: Map.Loading.Images.ProvinceBounds
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBounds
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Bounding box data for a province
+  example: []
+  syntax:
+    content: public struct ProvinceBounds
+    content.vb: Public Structure ProvinceBounds
+- uid: Map.Loading.Images.ProvinceBounds.MinX
+  commentId: F:Map.Loading.Images.ProvinceBounds.MinX
+  id: MinX
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MinX
+  nameWithType: ProvinceBounds.MinX
+  fullName: Map.Loading.Images.ProvinceBounds.MinX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinX
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MinX
+    return:
+      type: System.Int32
+    content.vb: Public MinX As Integer
+- uid: Map.Loading.Images.ProvinceBounds.MinY
+  commentId: F:Map.Loading.Images.ProvinceBounds.MinY
+  id: MinY
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MinY
+  nameWithType: ProvinceBounds.MinY
+  fullName: Map.Loading.Images.ProvinceBounds.MinY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinY
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MinY
+    return:
+      type: System.Int32
+    content.vb: Public MinY As Integer
+- uid: Map.Loading.Images.ProvinceBounds.MaxX
+  commentId: F:Map.Loading.Images.ProvinceBounds.MaxX
+  id: MaxX
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MaxX
+  nameWithType: ProvinceBounds.MaxX
+  fullName: Map.Loading.Images.ProvinceBounds.MaxX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxX
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MaxX
+    return:
+      type: System.Int32
+    content.vb: Public MaxX As Integer
+- uid: Map.Loading.Images.ProvinceBounds.MaxY
+  commentId: F:Map.Loading.Images.ProvinceBounds.MaxY
+  id: MaxY
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MaxY
+  nameWithType: ProvinceBounds.MaxY
+  fullName: Map.Loading.Images.ProvinceBounds.MaxY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxY
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MaxY
+    return:
+      type: System.Int32
+    content.vb: Public MaxY As Integer
+- uid: Map.Loading.Images.ProvinceBounds.SumX
+  commentId: F:Map.Loading.Images.ProvinceBounds.SumX
+  id: SumX
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: SumX
+  nameWithType: ProvinceBounds.SumX
+  fullName: Map.Loading.Images.ProvinceBounds.SumX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SumX
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 184
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public long SumX
+    return:
+      type: System.Int64
+    content.vb: Public SumX As Long
+- uid: Map.Loading.Images.ProvinceBounds.SumY
+  commentId: F:Map.Loading.Images.ProvinceBounds.SumY
+  id: SumY
+  parent: Map.Loading.Images.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: SumY
+  nameWithType: ProvinceBounds.SumY
+  fullName: Map.Loading.Images.ProvinceBounds.SumY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SumY
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 184
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public long SumY
+    return:
+      type: System.Int64
+    content.vb: Public SumY As Long
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long

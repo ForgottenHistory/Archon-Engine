@@ -1,0 +1,364 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderPolylineSimplifier
+  commentId: T:Map.Rendering.Border.BorderPolylineSimplifier
+  id: BorderPolylineSimplifier
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  - Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve(System.Collections.Generic.List{UnityEngine.Vector2},System.Int32,System.Boolean)
+  - Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  langs:
+  - csharp
+  - vb
+  name: BorderPolylineSimplifier
+  nameWithType: BorderPolylineSimplifier
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderPolylineSimplifier
+    path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Utilities for simplifying and smoothing polylines
+
+    Extracted from BorderCurveExtractor for single responsibility
+
+
+    Methods:
+
+    - SimplifyPolyline: Ramer-Douglas-Peucker algorithm to reduce vertex count
+
+    - SmoothCurve: Chaikin subdivision smoothing algorithm
+
+    - TessellatePolyline: Subdivide long segments for dense vertex coverage
+  example: []
+  syntax:
+    content: public static class BorderPolylineSimplifier
+    content.vb: Public Module BorderPolylineSimplifier
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  commentId: M:Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  id: SimplifyPolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  parent: Map.Rendering.Border.BorderPolylineSimplifier
+  langs:
+  - csharp
+  - vb
+  name: SimplifyPolyline(List<Vector2>, float)
+  nameWithType: BorderPolylineSimplifier.SimplifyPolyline(List<Vector2>, float)
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline(System.Collections.Generic.List<UnityEngine.Vector2>, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SimplifyPolyline
+    path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Simplify polyline using Ramer-Douglas-Peucker algorithm
+
+    Reduces pixel-perfect staircase to longer line segments that Chaikin can smooth
+  example: []
+  syntax:
+    content: public static List<Vector2> SimplifyPolyline(List<Vector2> points, float epsilon)
+    parameters:
+    - id: points
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Input polyline points
+    - id: epsilon
+      type: System.Single
+      description: Maximum distance from line for point to be removed
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Simplified polyline with fewer points
+    content.vb: Public Shared Function SimplifyPolyline(points As List(Of Vector2), epsilon As Single) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline*
+  nameWithType.vb: BorderPolylineSimplifier.SimplifyPolyline(List(Of Vector2), Single)
+  fullName.vb: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline(System.Collections.Generic.List(Of UnityEngine.Vector2), Single)
+  name.vb: SimplifyPolyline(List(Of Vector2), Single)
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve(System.Collections.Generic.List{UnityEngine.Vector2},System.Int32,System.Boolean)
+  commentId: M:Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve(System.Collections.Generic.List{UnityEngine.Vector2},System.Int32,System.Boolean)
+  id: SmoothCurve(System.Collections.Generic.List{UnityEngine.Vector2},System.Int32,System.Boolean)
+  parent: Map.Rendering.Border.BorderPolylineSimplifier
+  langs:
+  - csharp
+  - vb
+  name: SmoothCurve(List<Vector2>, int, bool)
+  nameWithType: BorderPolylineSimplifier.SmoothCurve(List<Vector2>, int, bool)
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve(System.Collections.Generic.List<UnityEngine.Vector2>, int, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SmoothCurve
+    path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+    startLine: 74
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Smooth polyline using Chaikin subdivision algorithm
+
+    Preserves original endpoints to maintain junction connections
+  example: []
+  syntax:
+    content: public static List<Vector2> SmoothCurve(List<Vector2> points, int iterations, bool enableDebugLog = false)
+    parameters:
+    - id: points
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Input polyline points
+    - id: iterations
+      type: System.Int32
+      description: Number of smoothing iterations (more = smoother)
+    - id: enableDebugLog
+      type: System.Boolean
+      description: Log smoothing progress
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Smoothed polyline with more points
+    content.vb: Public Shared Function SmoothCurve(points As List(Of Vector2), iterations As Integer, enableDebugLog As Boolean = False) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve*
+  nameWithType.vb: BorderPolylineSimplifier.SmoothCurve(List(Of Vector2), Integer, Boolean)
+  fullName.vb: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve(System.Collections.Generic.List(Of UnityEngine.Vector2), Integer, Boolean)
+  name.vb: SmoothCurve(List(Of Vector2), Integer, Boolean)
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  commentId: M:Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  id: TessellatePolyline(System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  parent: Map.Rendering.Border.BorderPolylineSimplifier
+  langs:
+  - csharp
+  - vb
+  name: TessellatePolyline(List<Vector2>, float)
+  nameWithType: BorderPolylineSimplifier.TessellatePolyline(List<Vector2>, float)
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline(System.Collections.Generic.List<UnityEngine.Vector2>, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TessellatePolyline
+    path: Scripts/Map/Rendering/Border/BorderPolylineSimplifier.cs
+    startLine: 147
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Tessellate polyline to ensure dense vertex coverage (Paradox approach)
+
+    Subdivides any segment longer than maxSegmentLength to create smooth rendering
+
+    Target: 0.5 pixel spacing = ~2 vertices per pixel for ultra-smooth borders
+  example: []
+  syntax:
+    content: public static List<Vector2> TessellatePolyline(List<Vector2> points, float maxSegmentLength)
+    parameters:
+    - id: points
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Input polyline points
+    - id: maxSegmentLength
+      type: System.Single
+      description: Maximum allowed segment length before subdivision
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+      description: Tessellated polyline with denser vertex coverage
+    content.vb: Public Shared Function TessellatePolyline(points As List(Of Vector2), maxSegmentLength As Single) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline*
+  nameWithType.vb: BorderPolylineSimplifier.TessellatePolyline(List(Of Vector2), Single)
+  fullName.vb: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline(System.Collections.Generic.List(Of UnityEngine.Vector2), Single)
+  name.vb: TessellatePolyline(List(Of Vector2), Single)
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline*
+  commentId: Overload:Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline
+  href: Map.Rendering.Border.BorderPolylineSimplifier.html#Map_Rendering_Border_BorderPolylineSimplifier_SimplifyPolyline_System_Collections_Generic_List_UnityEngine_Vector2__System_Single_
+  name: SimplifyPolyline
+  nameWithType: BorderPolylineSimplifier.SimplifyPolyline
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.SimplifyPolyline
+- uid: System.Collections.Generic.List{UnityEngine.Vector2}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2>
+  nameWithType: List<Vector2>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2>
+  nameWithType.vb: List(Of Vector2)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2)
+  name.vb: List(Of Vector2)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve*
+  commentId: Overload:Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve
+  href: Map.Rendering.Border.BorderPolylineSimplifier.html#Map_Rendering_Border_BorderPolylineSimplifier_SmoothCurve_System_Collections_Generic_List_UnityEngine_Vector2__System_Int32_System_Boolean_
+  name: SmoothCurve
+  nameWithType: BorderPolylineSimplifier.SmoothCurve
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.SmoothCurve
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline*
+  commentId: Overload:Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline
+  href: Map.Rendering.Border.BorderPolylineSimplifier.html#Map_Rendering_Border_BorderPolylineSimplifier_TessellatePolyline_System_Collections_Generic_List_UnityEngine_Vector2__System_Single_
+  name: TessellatePolyline
+  nameWithType: BorderPolylineSimplifier.TessellatePolyline
+  fullName: Map.Rendering.Border.BorderPolylineSimplifier.TessellatePolyline

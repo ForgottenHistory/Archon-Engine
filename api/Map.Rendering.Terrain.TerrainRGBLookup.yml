@@ -1,0 +1,619 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainRGBLookup
+  commentId: T:Map.Rendering.Terrain.TerrainRGBLookup
+  id: TerrainRGBLookup
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary
+  - Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount
+  - Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex(System.Byte,System.Byte,System.Byte)
+  - Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName(System.UInt32)
+  - Map.Rendering.Terrain.TerrainRGBLookup.Initialize(System.String,System.Boolean)
+  - Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized
+  - Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt16)
+  - Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt32)
+  langs:
+  - csharp
+  - vb
+  name: TerrainRGBLookup
+  nameWithType: TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainRGBLookup
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    ENGINE: Loads terrain.json5 and provides fast RGB → Terrain Type Index lookups.
+
+    Uses terrain.json5 as single source of truth (same as TerrainLoader and TerrainColorMapper).
+
+    Terrain type indices are determined by ORDER in terrain.json5 categories section.
+  example: []
+  syntax:
+    content: public class TerrainRGBLookup
+    content.vb: Public Class TerrainRGBLookup
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.Initialize(System.String,System.Boolean)
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.Initialize(System.String,System.Boolean)
+  id: Initialize(System.String,System.Boolean)
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: Initialize(string, bool)
+  nameWithType: TerrainRGBLookup.Initialize(string, bool)
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.Initialize(string, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Load terrain.json5 and build lookup tables.
+
+    Uses same file and parsing as TerrainLoader to guarantee identical index assignment.
+  example: []
+  syntax:
+    content: public bool Initialize(string dataDirectory = null, bool logProgress = true)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    - id: logProgress
+      type: System.Boolean
+    return:
+      type: System.Boolean
+    content.vb: Public Function Initialize(dataDirectory As String = Nothing, logProgress As Boolean = True) As Boolean
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.Initialize*
+  nameWithType.vb: TerrainRGBLookup.Initialize(String, Boolean)
+  fullName.vb: Map.Rendering.Terrain.TerrainRGBLookup.Initialize(String, Boolean)
+  name.vb: Initialize(String, Boolean)
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex(System.Byte,System.Byte,System.Byte)
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex(System.Byte,System.Byte,System.Byte)
+  id: GetTerrainTypeIndex(System.Byte,System.Byte,System.Byte)
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: GetTerrainTypeIndex(byte, byte, byte)
+  nameWithType: TerrainRGBLookup.GetTerrainTypeIndex(byte, byte, byte)
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex(byte, byte, byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrainTypeIndex
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 144
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Get terrain type index for given RGB color
+
+    Returns 0 (default terrain) if color not found
+  example: []
+  syntax:
+    content: public uint GetTerrainTypeIndex(byte r, byte g, byte b)
+    parameters:
+    - id: r
+      type: System.Byte
+    - id: g
+      type: System.Byte
+    - id: b
+      type: System.Byte
+    return:
+      type: System.UInt32
+    content.vb: Public Function GetTerrainTypeIndex(r As Byte, g As Byte, b As Byte) As UInteger
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex*
+  nameWithType.vb: TerrainRGBLookup.GetTerrainTypeIndex(Byte, Byte, Byte)
+  fullName.vb: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex(Byte, Byte, Byte)
+  name.vb: GetTerrainTypeIndex(Byte, Byte, Byte)
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName(System.UInt32)
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName(System.UInt32)
+  id: GetTerrainTypeName(System.UInt32)
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: GetTerrainTypeName(uint)
+  nameWithType: TerrainRGBLookup.GetTerrainTypeName(uint)
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName(uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrainTypeName
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 163
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Get terrain type name for given index (for debugging)
+  example: []
+  syntax:
+    content: public string GetTerrainTypeName(uint index)
+    parameters:
+    - id: index
+      type: System.UInt32
+    return:
+      type: System.String
+    content.vb: Public Function GetTerrainTypeName(index As UInteger) As String
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName*
+  nameWithType.vb: TerrainRGBLookup.GetTerrainTypeName(UInteger)
+  fullName.vb: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName(UInteger)
+  name.vb: GetTerrainTypeName(UInteger)
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount
+  id: GetTerrainCount
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: GetTerrainCount()
+  nameWithType: TerrainRGBLookup.GetTerrainCount()
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrainCount
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Get total number of terrain types defined
+  example: []
+  syntax:
+    content: public uint GetTerrainCount()
+    return:
+      type: System.UInt32
+    content.vb: Public Function GetTerrainCount() As UInteger
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount*
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt32)
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt32)
+  id: IsTerrainOwnable(System.UInt32)
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: IsTerrainOwnable(uint)
+  nameWithType: TerrainRGBLookup.IsTerrainOwnable(uint)
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsTerrainOwnable
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 195
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Check if terrain type is ownable (can be colonized/owned)
+
+    Returns true by default if terrain index not found
+  example: []
+  syntax:
+    content: public bool IsTerrainOwnable(uint terrainIndex)
+    parameters:
+    - id: terrainIndex
+      type: System.UInt32
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsTerrainOwnable(terrainIndex As UInteger) As Boolean
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable*
+  nameWithType.vb: TerrainRGBLookup.IsTerrainOwnable(UInteger)
+  fullName.vb: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(UInteger)
+  name.vb: IsTerrainOwnable(UInteger)
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt16)
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(System.UInt16)
+  id: IsTerrainOwnable(System.UInt16)
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: IsTerrainOwnable(ushort)
+  nameWithType: TerrainRGBLookup.IsTerrainOwnable(ushort)
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsTerrainOwnable
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 213
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Check if terrain type is ownable by ushort terrain ID
+  example: []
+  syntax:
+    content: public bool IsTerrainOwnable(ushort terrainIndex)
+    parameters:
+    - id: terrainIndex
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsTerrainOwnable(terrainIndex As UShort) As Boolean
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable*
+  nameWithType.vb: TerrainRGBLookup.IsTerrainOwnable(UShort)
+  fullName.vb: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable(UShort)
+  name.vb: IsTerrainOwnable(UShort)
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary
+  commentId: M:Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary
+  id: GetRGBToTerrainDictionary
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: GetRGBToTerrainDictionary()
+  nameWithType: TerrainRGBLookup.GetRGBToTerrainDictionary()
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRGBToTerrainDictionary
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 221
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Get the RGB→Terrain dictionary (for bulk operations)
+  example: []
+  syntax:
+    content: public Dictionary<(byte r, byte g, byte b), uint> GetRGBToTerrainDictionary()
+    return:
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.Byte,System.Byte,System.Byte},System.UInt32}
+    content.vb: Public Function GetRGBToTerrainDictionary() As Dictionary(Of (r As Byte, g As Byte, b As Byte), UInteger)
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary*
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized
+  commentId: P:Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized
+  id: IsInitialized
+  parent: Map.Rendering.Terrain.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: TerrainRGBLookup.IsInitialized
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/Rendering/Terrain/TerrainRGBLookup.cs
+    startLine: 235
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Check if lookup is initialized
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized*
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.Initialize*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.Initialize
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_Initialize_System_String_System_Boolean_
+  name: Initialize
+  nameWithType: TerrainRGBLookup.Initialize
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.Initialize
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_GetTerrainTypeIndex_System_Byte_System_Byte_System_Byte_
+  name: GetTerrainTypeIndex
+  nameWithType: TerrainRGBLookup.GetTerrainTypeIndex
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeIndex
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_GetTerrainTypeName_System_UInt32_
+  name: GetTerrainTypeName
+  nameWithType: TerrainRGBLookup.GetTerrainTypeName
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainTypeName
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_GetTerrainCount
+  name: GetTerrainCount
+  nameWithType: TerrainRGBLookup.GetTerrainCount
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetTerrainCount
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_IsTerrainOwnable_System_UInt32_
+  name: IsTerrainOwnable
+  nameWithType: TerrainRGBLookup.IsTerrainOwnable
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.IsTerrainOwnable
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_GetRGBToTerrainDictionary
+  name: GetRGBToTerrainDictionary
+  nameWithType: TerrainRGBLookup.GetRGBToTerrainDictionary
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.GetRGBToTerrainDictionary
+- uid: System.Collections.Generic.Dictionary{System.ValueTuple{System.Byte,System.Byte,System.Byte},System.UInt32}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueTuple{System.Byte,System.Byte,System.Byte},System.UInt32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<(byte r, byte g, byte b), uint>
+  nameWithType: Dictionary<(byte r, byte g, byte b), uint>
+  fullName: System.Collections.Generic.Dictionary<(byte r, byte g, byte b), uint>
+  nameWithType.vb: Dictionary(Of (r As Byte, g As Byte, b As Byte), UInteger)
+  fullName.vb: System.Collections.Generic.Dictionary(Of (r As Byte, g As Byte, b As Byte), UInteger)
+  name.vb: Dictionary(Of (r As Byte, g As Byte, b As Byte), UInteger)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.r
+    name: r
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.g
+    name: g
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.b
+    name: b
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.r
+    name: r
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.g
+    name: g
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Byte,System.Byte,System.Byte}.b
+    name: b
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized*
+  commentId: Overload:Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html#Map_Rendering_Terrain_TerrainRGBLookup_IsInitialized
+  name: IsInitialized
+  nameWithType: TerrainRGBLookup.IsInitialized
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup.IsInitialized

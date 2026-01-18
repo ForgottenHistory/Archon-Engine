@@ -1,0 +1,168 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.ErrorSeverity
+  commentId: T:Core.Localization.ErrorSeverity
+  id: ErrorSeverity
+  parent: Core.Localization
+  children:
+  - Core.Localization.ErrorSeverity.Critical
+  - Core.Localization.ErrorSeverity.Error
+  - Core.Localization.ErrorSeverity.Info
+  - Core.Localization.ErrorSeverity.Warning
+  langs:
+  - csharp
+  - vb
+  name: ErrorSeverity
+  nameWithType: ErrorSeverity
+  fullName: Core.Localization.ErrorSeverity
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorSeverity
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Error severity levels
+  example: []
+  syntax:
+    content: 'public enum ErrorSeverity : byte'
+    content.vb: Public Enum ErrorSeverity As Byte
+- uid: Core.Localization.ErrorSeverity.Info
+  commentId: F:Core.Localization.ErrorSeverity.Info
+  id: Info
+  parent: Core.Localization.ErrorSeverity
+  langs:
+  - csharp
+  - vb
+  name: Info
+  nameWithType: ErrorSeverity.Info
+  fullName: Core.Localization.ErrorSeverity.Info
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Info
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Info = 0
+    return:
+      type: Core.Localization.ErrorSeverity
+- uid: Core.Localization.ErrorSeverity.Warning
+  commentId: F:Core.Localization.ErrorSeverity.Warning
+  id: Warning
+  parent: Core.Localization.ErrorSeverity
+  langs:
+  - csharp
+  - vb
+  name: Warning
+  nameWithType: ErrorSeverity.Warning
+  fullName: Core.Localization.ErrorSeverity.Warning
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Warning
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Warning = 1
+    return:
+      type: Core.Localization.ErrorSeverity
+- uid: Core.Localization.ErrorSeverity.Error
+  commentId: F:Core.Localization.ErrorSeverity.Error
+  id: Error
+  parent: Core.Localization.ErrorSeverity
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: ErrorSeverity.Error
+  fullName: Core.Localization.ErrorSeverity.Error
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Error
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Error = 2
+    return:
+      type: Core.Localization.ErrorSeverity
+- uid: Core.Localization.ErrorSeverity.Critical
+  commentId: F:Core.Localization.ErrorSeverity.Critical
+  id: Critical
+  parent: Core.Localization.ErrorSeverity
+  langs:
+  - csharp
+  - vb
+  name: Critical
+  nameWithType: ErrorSeverity.Critical
+  fullName: Core.Localization.ErrorSeverity.Critical
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Critical
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: Critical = 3
+    return:
+      type: Core.Localization.ErrorSeverity
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Core.Localization.ErrorSeverity
+  commentId: T:Core.Localization.ErrorSeverity
+  parent: Core.Localization
+  href: Core.Localization.ErrorSeverity.html
+  name: ErrorSeverity
+  nameWithType: ErrorSeverity
+  fullName: Core.Localization.ErrorSeverity

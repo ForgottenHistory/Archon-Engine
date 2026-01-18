@@ -1,0 +1,857 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SaveManager
+  commentId: T:Core.SaveLoad.SaveManager
+  id: SaveManager
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SaveManager.DeleteSave(System.String)
+  - Core.SaveLoad.SaveManager.GetSaveFileNames
+  - Core.SaveLoad.SaveManager.LoadGame(System.String)
+  - Core.SaveLoad.SaveManager.OnDeserializePlayerState
+  - Core.SaveLoad.SaveManager.OnPostLoadFinalize
+  - Core.SaveLoad.SaveManager.OnSerializePlayerState
+  - Core.SaveLoad.SaveManager.QuickLoad
+  - Core.SaveLoad.SaveManager.QuickSave
+  - Core.SaveLoad.SaveManager.SaveGame(System.String)
+  - Core.SaveLoad.SaveManager.enableHotkeys
+  - Core.SaveLoad.SaveManager.logSaveLoadOperations
+  - Core.SaveLoad.SaveManager.quickLoadKey
+  - Core.SaveLoad.SaveManager.quickSaveKey
+  - Core.SaveLoad.SaveManager.saveFileExtension
+  langs:
+  - csharp
+  - vb
+  name: SaveManager
+  nameWithType: SaveManager
+  fullName: Core.SaveLoad.SaveManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveManager
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Orchestrates save/load operations across all systems
+
+
+    Responsibilities:
+
+    - Coordinate OnSave/OnLoad calls to all systems (via SystemRegistry)
+
+    - Serialize/deserialize SaveGameData to disk (binary format)
+
+    - Manage save file paths and naming
+
+    - Atomic writes (temp file → rename to prevent corruption)
+
+    - Version compatibility checks
+
+
+    Architecture:
+
+    - Pure orchestrator, doesn't own game state
+
+    - Systems serialize their own data via OnSave/OnLoad
+
+    - Dependency order handled by SystemRegistry
+
+    - GAME layer hooks OnPostLoadFinalize for game-specific finalization
+
+
+    Usage:
+
+    saveManager.SaveGame("my_save");
+
+    saveManager.LoadGame("my_save");
+
+    saveManager.QuickSave();
+  example: []
+  syntax:
+    content: 'public class SaveManager : MonoBehaviour'
+    content.vb: Public Class SaveManager Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.SaveLoad.SaveManager.saveFileExtension
+  commentId: F:Core.SaveLoad.SaveManager.saveFileExtension
+  id: saveFileExtension
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: saveFileExtension
+  nameWithType: SaveManager.saveFileExtension
+  fullName: Core.SaveLoad.SaveManager.saveFileExtension
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveFileExtension
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: >-
+      [Header("Configuration")]
+
+      [Tooltip("Save file extension (without dot)")]
+
+      public string saveFileExtension
+    return:
+      type: System.String
+    content.vb: >-
+      <Header("Configuration")>
+
+      <Tooltip("Save file extension (without dot)")>
+
+      Public saveFileExtension As String
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Configuration
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Save file extension (without dot)
+- uid: Core.SaveLoad.SaveManager.logSaveLoadOperations
+  commentId: F:Core.SaveLoad.SaveManager.logSaveLoadOperations
+  id: logSaveLoadOperations
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: logSaveLoadOperations
+  nameWithType: SaveManager.logSaveLoadOperations
+  fullName: Core.SaveLoad.SaveManager.logSaveLoadOperations
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: logSaveLoadOperations
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: >-
+      [Tooltip("Enable debug logging for save/load operations")]
+
+      public bool logSaveLoadOperations
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable debug logging for save/load operations")>
+
+      Public logSaveLoadOperations As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable debug logging for save/load operations
+- uid: Core.SaveLoad.SaveManager.quickSaveKey
+  commentId: F:Core.SaveLoad.SaveManager.quickSaveKey
+  id: quickSaveKey
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: quickSaveKey
+  nameWithType: SaveManager.quickSaveKey
+  fullName: Core.SaveLoad.SaveManager.quickSaveKey
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: quickSaveKey
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: >-
+      [Header("Hotkeys")]
+
+      [Tooltip("Key for quick save")]
+
+      public KeyCode quickSaveKey
+    return:
+      type: UnityEngine.KeyCode
+    content.vb: >-
+      <Header("Hotkeys")>
+
+      <Tooltip("Key for quick save")>
+
+      Public quickSaveKey As KeyCode
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Hotkeys
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Key for quick save
+- uid: Core.SaveLoad.SaveManager.quickLoadKey
+  commentId: F:Core.SaveLoad.SaveManager.quickLoadKey
+  id: quickLoadKey
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: quickLoadKey
+  nameWithType: SaveManager.quickLoadKey
+  fullName: Core.SaveLoad.SaveManager.quickLoadKey
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: quickLoadKey
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: >-
+      [Tooltip("Key for quick load")]
+
+      public KeyCode quickLoadKey
+    return:
+      type: UnityEngine.KeyCode
+    content.vb: >-
+      <Tooltip("Key for quick load")>
+
+      Public quickLoadKey As KeyCode
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Key for quick load
+- uid: Core.SaveLoad.SaveManager.enableHotkeys
+  commentId: F:Core.SaveLoad.SaveManager.enableHotkeys
+  id: enableHotkeys
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: enableHotkeys
+  nameWithType: SaveManager.enableHotkeys
+  fullName: Core.SaveLoad.SaveManager.enableHotkeys
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: enableHotkeys
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: >-
+      [Tooltip("Enable hotkey handling (disable if using custom input system)")]
+
+      public bool enableHotkeys
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable hotkey handling (disable if using custom input system)")>
+
+      Public enableHotkeys As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable hotkey handling (disable if using custom input system)
+- uid: Core.SaveLoad.SaveManager.OnPostLoadFinalize
+  commentId: F:Core.SaveLoad.SaveManager.OnPostLoadFinalize
+  id: OnPostLoadFinalize
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: OnPostLoadFinalize
+  nameWithType: SaveManager.OnPostLoadFinalize
+  fullName: Core.SaveLoad.SaveManager.OnPostLoadFinalize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnPostLoadFinalize
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public Action OnPostLoadFinalize
+    return:
+      type: System.Action
+    content.vb: Public OnPostLoadFinalize As Action
+- uid: Core.SaveLoad.SaveManager.OnSerializePlayerState
+  commentId: F:Core.SaveLoad.SaveManager.OnSerializePlayerState
+  id: OnSerializePlayerState
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: OnSerializePlayerState
+  nameWithType: SaveManager.OnSerializePlayerState
+  fullName: Core.SaveLoad.SaveManager.OnSerializePlayerState
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSerializePlayerState
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public Func<byte[]> OnSerializePlayerState
+    return:
+      type: System.Func{System.Byte[]}
+    content.vb: Public OnSerializePlayerState As Func(Of Byte())
+- uid: Core.SaveLoad.SaveManager.OnDeserializePlayerState
+  commentId: F:Core.SaveLoad.SaveManager.OnDeserializePlayerState
+  id: OnDeserializePlayerState
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: OnDeserializePlayerState
+  nameWithType: SaveManager.OnDeserializePlayerState
+  fullName: Core.SaveLoad.SaveManager.OnDeserializePlayerState
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDeserializePlayerState
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 63
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public Action<byte[]> OnDeserializePlayerState
+    return:
+      type: System.Action{System.Byte[]}
+    content.vb: Public OnDeserializePlayerState As Action(Of Byte())
+- uid: Core.SaveLoad.SaveManager.SaveGame(System.String)
+  commentId: M:Core.SaveLoad.SaveManager.SaveGame(System.String)
+  id: SaveGame(System.String)
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: SaveGame(string)
+  nameWithType: SaveManager.SaveGame(string)
+  fullName: Core.SaveLoad.SaveManager.SaveGame(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveGame
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 118
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Save game to file
+  example: []
+  syntax:
+    content: public bool SaveGame(string saveName)
+    parameters:
+    - id: saveName
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function SaveGame(saveName As String) As Boolean
+  overload: Core.SaveLoad.SaveManager.SaveGame*
+  nameWithType.vb: SaveManager.SaveGame(String)
+  fullName.vb: Core.SaveLoad.SaveManager.SaveGame(String)
+  name.vb: SaveGame(String)
+- uid: Core.SaveLoad.SaveManager.LoadGame(System.String)
+  commentId: M:Core.SaveLoad.SaveManager.LoadGame(System.String)
+  id: LoadGame(System.String)
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: LoadGame(string)
+  nameWithType: SaveManager.LoadGame(string)
+  fullName: Core.SaveLoad.SaveManager.LoadGame(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadGame
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 205
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Load game from file
+  example: []
+  syntax:
+    content: public bool LoadGame(string saveName)
+    parameters:
+    - id: saveName
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function LoadGame(saveName As String) As Boolean
+  overload: Core.SaveLoad.SaveManager.LoadGame*
+  nameWithType.vb: SaveManager.LoadGame(String)
+  fullName.vb: Core.SaveLoad.SaveManager.LoadGame(String)
+  name.vb: LoadGame(String)
+- uid: Core.SaveLoad.SaveManager.QuickSave
+  commentId: M:Core.SaveLoad.SaveManager.QuickSave
+  id: QuickSave
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: QuickSave()
+  nameWithType: SaveManager.QuickSave()
+  fullName: Core.SaveLoad.SaveManager.QuickSave()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: QuickSave
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 266
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Quick save (F5 hotkey) - saves to "quicksave.sav"
+  example: []
+  syntax:
+    content: public bool QuickSave()
+    return:
+      type: System.Boolean
+    content.vb: Public Function QuickSave() As Boolean
+  overload: Core.SaveLoad.SaveManager.QuickSave*
+- uid: Core.SaveLoad.SaveManager.QuickLoad
+  commentId: M:Core.SaveLoad.SaveManager.QuickLoad
+  id: QuickLoad
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: QuickLoad()
+  nameWithType: SaveManager.QuickLoad()
+  fullName: Core.SaveLoad.SaveManager.QuickLoad()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: QuickLoad
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 274
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Quick load (F9 hotkey) - loads from "quicksave.sav"
+  example: []
+  syntax:
+    content: public bool QuickLoad()
+    return:
+      type: System.Boolean
+    content.vb: Public Function QuickLoad() As Boolean
+  overload: Core.SaveLoad.SaveManager.QuickLoad*
+- uid: Core.SaveLoad.SaveManager.GetSaveFileNames
+  commentId: M:Core.SaveLoad.SaveManager.GetSaveFileNames
+  id: GetSaveFileNames
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: GetSaveFileNames()
+  nameWithType: SaveManager.GetSaveFileNames()
+  fullName: Core.SaveLoad.SaveManager.GetSaveFileNames()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSaveFileNames
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 282
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Get list of all save files
+  example: []
+  syntax:
+    content: public string[] GetSaveFileNames()
+    return:
+      type: System.String[]
+    content.vb: Public Function GetSaveFileNames() As String()
+  overload: Core.SaveLoad.SaveManager.GetSaveFileNames*
+- uid: Core.SaveLoad.SaveManager.DeleteSave(System.String)
+  commentId: M:Core.SaveLoad.SaveManager.DeleteSave(System.String)
+  id: DeleteSave(System.String)
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: DeleteSave(string)
+  nameWithType: SaveManager.DeleteSave(string)
+  fullName: Core.SaveLoad.SaveManager.DeleteSave(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeleteSave
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 303
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Delete save file
+  example: []
+  syntax:
+    content: public bool DeleteSave(string saveName)
+    parameters:
+    - id: saveName
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function DeleteSave(saveName As String) As Boolean
+  overload: Core.SaveLoad.SaveManager.DeleteSave*
+  nameWithType.vb: SaveManager.DeleteSave(String)
+  fullName.vb: Core.SaveLoad.SaveManager.DeleteSave(String)
+  name.vb: DeleteSave(String)
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine.KeyCode
+  commentId: T:UnityEngine.KeyCode
+  parent: UnityEngine
+  isExternal: true
+  name: KeyCode
+  nameWithType: KeyCode
+  fullName: UnityEngine.KeyCode
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: System.Func{System.Byte[]}
+  commentId: T:System.Func{System.Byte[]}
+  parent: System
+  definition: System.Func`1
+  name: Func<byte[]>
+  nameWithType: Func<byte[]>
+  fullName: System.Func<byte[]>
+  nameWithType.vb: Func(Of Byte())
+  fullName.vb: System.Func(Of Byte())
+  name.vb: Func(Of Byte())
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Action{System.Byte[]}
+  commentId: T:System.Action{System.Byte[]}
+  parent: System
+  definition: System.Action`1
+  name: Action<byte[]>
+  nameWithType: Action<byte[]>
+  fullName: System.Action<byte[]>
+  nameWithType.vb: Action(Of Byte())
+  fullName.vb: System.Action(Of Byte())
+  name.vb: Action(Of Byte())
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.SaveLoad.SaveManager.SaveGame*
+  commentId: Overload:Core.SaveLoad.SaveManager.SaveGame
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_SaveGame_System_String_
+  name: SaveGame
+  nameWithType: SaveManager.SaveGame
+  fullName: Core.SaveLoad.SaveManager.SaveGame
+- uid: Core.SaveLoad.SaveManager.LoadGame*
+  commentId: Overload:Core.SaveLoad.SaveManager.LoadGame
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_LoadGame_System_String_
+  name: LoadGame
+  nameWithType: SaveManager.LoadGame
+  fullName: Core.SaveLoad.SaveManager.LoadGame
+- uid: Core.SaveLoad.SaveManager.QuickSave*
+  commentId: Overload:Core.SaveLoad.SaveManager.QuickSave
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_QuickSave
+  name: QuickSave
+  nameWithType: SaveManager.QuickSave
+  fullName: Core.SaveLoad.SaveManager.QuickSave
+- uid: Core.SaveLoad.SaveManager.QuickLoad*
+  commentId: Overload:Core.SaveLoad.SaveManager.QuickLoad
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_QuickLoad
+  name: QuickLoad
+  nameWithType: SaveManager.QuickLoad
+  fullName: Core.SaveLoad.SaveManager.QuickLoad
+- uid: Core.SaveLoad.SaveManager.GetSaveFileNames*
+  commentId: Overload:Core.SaveLoad.SaveManager.GetSaveFileNames
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_GetSaveFileNames
+  name: GetSaveFileNames
+  nameWithType: SaveManager.GetSaveFileNames
+  fullName: Core.SaveLoad.SaveManager.GetSaveFileNames
+- uid: System.String[]
+  isExternal: true
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.SaveLoad.SaveManager.DeleteSave*
+  commentId: Overload:Core.SaveLoad.SaveManager.DeleteSave
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_DeleteSave_System_String_
+  name: DeleteSave
+  nameWithType: SaveManager.DeleteSave
+  fullName: Core.SaveLoad.SaveManager.DeleteSave

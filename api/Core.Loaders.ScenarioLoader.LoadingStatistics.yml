@@ -1,0 +1,304 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics
+  commentId: T:Core.Loaders.ScenarioLoader.LoadingStatistics
+  id: ScenarioLoader.LoadingStatistics
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.LoadingStatistics.CountriesProcessed
+  - Core.Loaders.ScenarioLoader.LoadingStatistics.LoadingTimeMs
+  - Core.Loaders.ScenarioLoader.LoadingStatistics.ProvincesProcessed
+  - Core.Loaders.ScenarioLoader.LoadingStatistics.RelationsProcessed
+  - Core.Loaders.ScenarioLoader.LoadingStatistics.Warnings
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.LoadingStatistics
+  nameWithType: ScenarioLoader.LoadingStatistics
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingStatistics
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Loading statistics
+  example: []
+  syntax:
+    content: public struct ScenarioLoader.LoadingStatistics
+    content.vb: Public Structure ScenarioLoader.LoadingStatistics
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics.ProvincesProcessed
+  commentId: F:Core.Loaders.ScenarioLoader.LoadingStatistics.ProvincesProcessed
+  id: ProvincesProcessed
+  parent: Core.Loaders.ScenarioLoader.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: ProvincesProcessed
+  nameWithType: ScenarioLoader.LoadingStatistics.ProvincesProcessed
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics.ProvincesProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesProcessed
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 122
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int ProvincesProcessed
+    return:
+      type: System.Int32
+    content.vb: Public ProvincesProcessed As Integer
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics.CountriesProcessed
+  commentId: F:Core.Loaders.ScenarioLoader.LoadingStatistics.CountriesProcessed
+  id: CountriesProcessed
+  parent: Core.Loaders.ScenarioLoader.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: CountriesProcessed
+  nameWithType: ScenarioLoader.LoadingStatistics.CountriesProcessed
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics.CountriesProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountriesProcessed
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 123
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int CountriesProcessed
+    return:
+      type: System.Int32
+    content.vb: Public CountriesProcessed As Integer
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics.RelationsProcessed
+  commentId: F:Core.Loaders.ScenarioLoader.LoadingStatistics.RelationsProcessed
+  id: RelationsProcessed
+  parent: Core.Loaders.ScenarioLoader.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: RelationsProcessed
+  nameWithType: ScenarioLoader.LoadingStatistics.RelationsProcessed
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics.RelationsProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RelationsProcessed
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public int RelationsProcessed
+    return:
+      type: System.Int32
+    content.vb: Public RelationsProcessed As Integer
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics.LoadingTimeMs
+  commentId: F:Core.Loaders.ScenarioLoader.LoadingStatistics.LoadingTimeMs
+  id: LoadingTimeMs
+  parent: Core.Loaders.ScenarioLoader.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: LoadingTimeMs
+  nameWithType: ScenarioLoader.LoadingStatistics.LoadingTimeMs
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics.LoadingTimeMs
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingTimeMs
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 125
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public float LoadingTimeMs
+    return:
+      type: System.Single
+    content.vb: Public LoadingTimeMs As Single
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics.Warnings
+  commentId: F:Core.Loaders.ScenarioLoader.LoadingStatistics.Warnings
+  id: Warnings
+  parent: Core.Loaders.ScenarioLoader.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: Warnings
+  nameWithType: ScenarioLoader.LoadingStatistics.Warnings
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics.Warnings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Warnings
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public List<string> Warnings
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Warnings As List(Of String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true

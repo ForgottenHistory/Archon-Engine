@@ -1,0 +1,205 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.ReadOnlyDrawer
+  commentId: T:Core.ReadOnlyDrawer
+  id: ReadOnlyDrawer
+  parent: Core
+  children:
+  - Core.ReadOnlyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  langs:
+  - csharp
+  - vb
+  name: ReadOnlyDrawer
+  nameWithType: ReadOnlyDrawer
+  fullName: Core.ReadOnlyDrawer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadOnlyDrawer
+    path: Scripts/Core/GameState.cs
+    startLine: 403
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [CustomPropertyDrawer(typeof(ReadOnlyAttribute))]
+
+      public class ReadOnlyDrawer : PropertyDrawer
+    content.vb: >-
+      <CustomPropertyDrawer(GetType(ReadOnlyAttribute))>
+
+      Public Class ReadOnlyDrawer Inherits PropertyDrawer
+  inheritance:
+  - System.Object
+  - UnityEditor.GUIDrawer
+  - UnityEditor.PropertyDrawer
+  attributes:
+  - type: UnityEditor.CustomPropertyDrawer
+    ctor: UnityEditor.CustomPropertyDrawer.#ctor(System.Type)
+    arguments:
+    - type: System.Type
+      value: Core.ReadOnlyAttribute
+- uid: Core.ReadOnlyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  commentId: M:Core.ReadOnlyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  id: OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  parent: Core.ReadOnlyDrawer
+  langs:
+  - csharp
+  - vb
+  name: OnGUI(Rect, SerializedProperty, GUIContent)
+  nameWithType: ReadOnlyDrawer.OnGUI(Rect, SerializedProperty, GUIContent)
+  fullName: Core.ReadOnlyDrawer.OnGUI(UnityEngine.Rect, UnityEditor.SerializedProperty, UnityEngine.GUIContent)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnGUI
+    path: Scripts/Core/GameState.cs
+    startLine: 406
+  assemblies:
+  - Core
+  namespace: Core
+  summary: <p>Override this method to make your own IMGUI based GUI for the property.</p>
+  example: []
+  syntax:
+    content: public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+    parameters:
+    - id: position
+      type: UnityEngine.Rect
+      description: Rectangle on the screen to use for the property GUI.
+    - id: property
+      type: UnityEditor.SerializedProperty
+      description: The SerializedProperty to make the custom GUI for.
+    - id: label
+      type: UnityEngine.GUIContent
+      description: The label of this property.
+    content.vb: Public Overrides Sub OnGUI(position As Rect, [property] As SerializedProperty, label As GUIContent)
+  overridden: UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  overload: Core.ReadOnlyDrawer.OnGUI*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEditor.GUIDrawer
+  commentId: T:UnityEditor.GUIDrawer
+  parent: UnityEditor
+  isExternal: true
+  name: GUIDrawer
+  nameWithType: GUIDrawer
+  fullName: UnityEditor.GUIDrawer
+- uid: UnityEditor.PropertyDrawer
+  commentId: T:UnityEditor.PropertyDrawer
+  parent: UnityEditor
+  isExternal: true
+  name: PropertyDrawer
+  nameWithType: PropertyDrawer
+  fullName: UnityEditor.PropertyDrawer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEditor
+  commentId: N:UnityEditor
+  isExternal: true
+  name: UnityEditor
+  nameWithType: UnityEditor
+  fullName: UnityEditor
+- uid: UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  commentId: M:UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+  parent: UnityEditor.PropertyDrawer
+  isExternal: true
+  name: OnGUI(Rect, SerializedProperty, GUIContent)
+  nameWithType: PropertyDrawer.OnGUI(Rect, SerializedProperty, GUIContent)
+  fullName: UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect, UnityEditor.SerializedProperty, UnityEngine.GUIContent)
+  spec.csharp:
+  - uid: UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+    name: OnGUI
+    isExternal: true
+  - name: (
+  - uid: UnityEngine.Rect
+    name: Rect
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEditor.SerializedProperty
+    name: SerializedProperty
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.GUIContent
+    name: GUIContent
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: UnityEditor.PropertyDrawer.OnGUI(UnityEngine.Rect,UnityEditor.SerializedProperty,UnityEngine.GUIContent)
+    name: OnGUI
+    isExternal: true
+  - name: (
+  - uid: UnityEngine.Rect
+    name: Rect
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEditor.SerializedProperty
+    name: SerializedProperty
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.GUIContent
+    name: GUIContent
+    isExternal: true
+  - name: )
+- uid: Core.ReadOnlyDrawer.OnGUI*
+  commentId: Overload:Core.ReadOnlyDrawer.OnGUI
+  href: Core.ReadOnlyDrawer.html#Core_ReadOnlyDrawer_OnGUI_UnityEngine_Rect_UnityEditor_SerializedProperty_UnityEngine_GUIContent_
+  name: OnGUI
+  nameWithType: ReadOnlyDrawer.OnGUI
+  fullName: Core.ReadOnlyDrawer.OnGUI
+- uid: UnityEngine.Rect
+  commentId: T:UnityEngine.Rect
+  parent: UnityEngine
+  isExternal: true
+  name: Rect
+  nameWithType: Rect
+  fullName: UnityEngine.Rect
+- uid: UnityEditor.SerializedProperty
+  commentId: T:UnityEditor.SerializedProperty
+  parent: UnityEditor
+  isExternal: true
+  name: SerializedProperty
+  nameWithType: SerializedProperty
+  fullName: UnityEditor.SerializedProperty
+- uid: UnityEngine.GUIContent
+  commentId: T:UnityEngine.GUIContent
+  parent: UnityEngine
+  isExternal: true
+  name: GUIContent
+  nameWithType: GUIContent
+  fullName: UnityEngine.GUIContent
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

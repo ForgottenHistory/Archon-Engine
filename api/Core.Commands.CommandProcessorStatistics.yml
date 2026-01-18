@@ -1,0 +1,320 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandProcessorStatistics
+  commentId: T:Core.Commands.CommandProcessorStatistics
+  id: CommandProcessorStatistics
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandProcessorStatistics.CommandsExecuted
+  - Core.Commands.CommandProcessorStatistics.CommandsRejected
+  - Core.Commands.CommandProcessorStatistics.CurrentTick
+  - Core.Commands.CommandProcessorStatistics.ExecutionHistorySize
+  - Core.Commands.CommandProcessorStatistics.PendingCommands
+  - Core.Commands.CommandProcessorStatistics.ToString
+  - Core.Commands.CommandProcessorStatistics.ValidationFailures
+  langs:
+  - csharp
+  - vb
+  name: CommandProcessorStatistics
+  nameWithType: CommandProcessorStatistics
+  fullName: Core.Commands.CommandProcessorStatistics
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandProcessorStatistics
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 311
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Command processor statistics
+  example: []
+  syntax:
+    content: public struct CommandProcessorStatistics
+    content.vb: Public Structure CommandProcessorStatistics
+- uid: Core.Commands.CommandProcessorStatistics.CurrentTick
+  commentId: F:Core.Commands.CommandProcessorStatistics.CurrentTick
+  id: CurrentTick
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: CurrentTick
+  nameWithType: CommandProcessorStatistics.CurrentTick
+  fullName: Core.Commands.CommandProcessorStatistics.CurrentTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentTick
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint CurrentTick
+    return:
+      type: System.UInt32
+    content.vb: Public CurrentTick As UInteger
+- uid: Core.Commands.CommandProcessorStatistics.PendingCommands
+  commentId: F:Core.Commands.CommandProcessorStatistics.PendingCommands
+  id: PendingCommands
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: PendingCommands
+  nameWithType: CommandProcessorStatistics.PendingCommands
+  fullName: Core.Commands.CommandProcessorStatistics.PendingCommands
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PendingCommands
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 314
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int PendingCommands
+    return:
+      type: System.Int32
+    content.vb: Public PendingCommands As Integer
+- uid: Core.Commands.CommandProcessorStatistics.CommandsExecuted
+  commentId: F:Core.Commands.CommandProcessorStatistics.CommandsExecuted
+  id: CommandsExecuted
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: CommandsExecuted
+  nameWithType: CommandProcessorStatistics.CommandsExecuted
+  fullName: Core.Commands.CommandProcessorStatistics.CommandsExecuted
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandsExecuted
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 315
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int CommandsExecuted
+    return:
+      type: System.Int32
+    content.vb: Public CommandsExecuted As Integer
+- uid: Core.Commands.CommandProcessorStatistics.CommandsRejected
+  commentId: F:Core.Commands.CommandProcessorStatistics.CommandsRejected
+  id: CommandsRejected
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: CommandsRejected
+  nameWithType: CommandProcessorStatistics.CommandsRejected
+  fullName: Core.Commands.CommandProcessorStatistics.CommandsRejected
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandsRejected
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 316
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int CommandsRejected
+    return:
+      type: System.Int32
+    content.vb: Public CommandsRejected As Integer
+- uid: Core.Commands.CommandProcessorStatistics.ValidationFailures
+  commentId: F:Core.Commands.CommandProcessorStatistics.ValidationFailures
+  id: ValidationFailures
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: ValidationFailures
+  nameWithType: CommandProcessorStatistics.ValidationFailures
+  fullName: Core.Commands.CommandProcessorStatistics.ValidationFailures
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationFailures
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 317
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int ValidationFailures
+    return:
+      type: System.Int32
+    content.vb: Public ValidationFailures As Integer
+- uid: Core.Commands.CommandProcessorStatistics.ExecutionHistorySize
+  commentId: F:Core.Commands.CommandProcessorStatistics.ExecutionHistorySize
+  id: ExecutionHistorySize
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: ExecutionHistorySize
+  nameWithType: CommandProcessorStatistics.ExecutionHistorySize
+  fullName: Core.Commands.CommandProcessorStatistics.ExecutionHistorySize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExecutionHistorySize
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 318
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int ExecutionHistorySize
+    return:
+      type: System.Int32
+    content.vb: Public ExecutionHistorySize As Integer
+- uid: Core.Commands.CommandProcessorStatistics.ToString
+  commentId: M:Core.Commands.CommandProcessorStatistics.ToString
+  id: ToString
+  parent: Core.Commands.CommandProcessorStatistics
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: CommandProcessorStatistics.ToString()
+  fullName: Core.Commands.CommandProcessorStatistics.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 320
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Commands.CommandProcessorStatistics.ToString*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.CommandProcessorStatistics.ToString*
+  commentId: Overload:Core.Commands.CommandProcessorStatistics.ToString
+  href: Core.Commands.CommandProcessorStatistics.html#Core_Commands_CommandProcessorStatistics_ToString
+  name: ToString
+  nameWithType: CommandProcessorStatistics.ToString
+  fullName: Core.Commands.CommandProcessorStatistics.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

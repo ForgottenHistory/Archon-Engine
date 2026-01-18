@@ -1,0 +1,245 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Compositing.BlendMode
+  commentId: T:Map.Rendering.Compositing.BlendMode
+  id: BlendMode
+  parent: Map.Rendering.Compositing
+  children:
+  - Map.Rendering.Compositing.BlendMode.Additive
+  - Map.Rendering.Compositing.BlendMode.Multiply
+  - Map.Rendering.Compositing.BlendMode.Normal
+  - Map.Rendering.Compositing.BlendMode.Overlay
+  - Map.Rendering.Compositing.BlendMode.Screen
+  - Map.Rendering.Compositing.BlendMode.SoftLight
+  langs:
+  - csharp
+  - vb
+  name: BlendMode
+  nameWithType: BlendMode
+  fullName: Map.Rendering.Compositing.BlendMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BlendMode
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 163
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: >-
+    Blend modes for layer compositing.
+
+    Matches shader implementation.
+  example: []
+  syntax:
+    content: public enum BlendMode
+    content.vb: Public Enum BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.Normal
+  commentId: F:Map.Rendering.Compositing.BlendMode.Normal
+  id: Normal
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: Normal
+  nameWithType: BlendMode.Normal
+  fullName: Map.Rendering.Compositing.BlendMode.Normal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Normal
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Normal alpha blending (lerp)
+  example: []
+  syntax:
+    content: Normal = 0
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.Multiply
+  commentId: F:Map.Rendering.Compositing.BlendMode.Multiply
+  id: Multiply
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: Multiply
+  nameWithType: BlendMode.Multiply
+  fullName: Map.Rendering.Compositing.BlendMode.Multiply
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Multiply
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 169
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Multiply blend (darkens)
+  example: []
+  syntax:
+    content: Multiply = 1
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.Screen
+  commentId: F:Map.Rendering.Compositing.BlendMode.Screen
+  id: Screen
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: Screen
+  nameWithType: BlendMode.Screen
+  fullName: Map.Rendering.Compositing.BlendMode.Screen
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Screen
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 172
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Screen blend (lightens)
+  example: []
+  syntax:
+    content: Screen = 2
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.Overlay
+  commentId: F:Map.Rendering.Compositing.BlendMode.Overlay
+  id: Overlay
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: Overlay
+  nameWithType: BlendMode.Overlay
+  fullName: Map.Rendering.Compositing.BlendMode.Overlay
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Overlay
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 175
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Overlay blend (contrast)
+  example: []
+  syntax:
+    content: Overlay = 3
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.Additive
+  commentId: F:Map.Rendering.Compositing.BlendMode.Additive
+  id: Additive
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: Additive
+  nameWithType: BlendMode.Additive
+  fullName: Map.Rendering.Compositing.BlendMode.Additive
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Additive
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 178
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Additive blend
+  example: []
+  syntax:
+    content: Additive = 4
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing.BlendMode.SoftLight
+  commentId: F:Map.Rendering.Compositing.BlendMode.SoftLight
+  id: SoftLight
+  parent: Map.Rendering.Compositing.BlendMode
+  langs:
+  - csharp
+  - vb
+  name: SoftLight
+  nameWithType: BlendMode.SoftLight
+  fullName: Map.Rendering.Compositing.BlendMode.SoftLight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SoftLight
+    path: Scripts/Map/Rendering/Compositing/IShaderCompositor.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Soft light blend
+  example: []
+  syntax:
+    content: SoftLight = 5
+    return:
+      type: Map.Rendering.Compositing.BlendMode
+references:
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+- uid: Map.Rendering.Compositing.BlendMode
+  commentId: T:Map.Rendering.Compositing.BlendMode
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.BlendMode.html
+  name: BlendMode
+  nameWithType: BlendMode
+  fullName: Map.Rendering.Compositing.BlendMode

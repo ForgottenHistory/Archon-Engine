@@ -1,0 +1,220 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult
+  commentId: T:Core.Localization.StringReplacementSystem.ReplacementResult
+  id: StringReplacementSystem.ReplacementResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.StringReplacementSystem.ReplacementResult.IsSuccess
+  - Core.Localization.StringReplacementSystem.ReplacementResult.ProcessedString
+  - Core.Localization.StringReplacementSystem.ReplacementResult.ReplacementsMade
+  - Core.Localization.StringReplacementSystem.ReplacementResult.UnresolvedReferences
+  langs:
+  - csharp
+  - vb
+  name: StringReplacementSystem.ReplacementResult
+  nameWithType: StringReplacementSystem.ReplacementResult
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReplacementResult
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Result of string replacement operation
+  example: []
+  syntax:
+    content: public struct StringReplacementSystem.ReplacementResult
+    content.vb: Public Structure StringReplacementSystem.ReplacementResult
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult.ProcessedString
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementResult.ProcessedString
+  id: ProcessedString
+  parent: Core.Localization.StringReplacementSystem.ReplacementResult
+  langs:
+  - csharp
+  - vb
+  name: ProcessedString
+  nameWithType: StringReplacementSystem.ReplacementResult.ProcessedString
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult.ProcessedString
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProcessedString
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString512Bytes ProcessedString
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public ProcessedString As FixedString512Bytes
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult.ReplacementsMade
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementResult.ReplacementsMade
+  id: ReplacementsMade
+  parent: Core.Localization.StringReplacementSystem.ReplacementResult
+  langs:
+  - csharp
+  - vb
+  name: ReplacementsMade
+  nameWithType: StringReplacementSystem.ReplacementResult.ReplacementsMade
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult.ReplacementsMade
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReplacementsMade
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int ReplacementsMade
+    return:
+      type: System.Int32
+    content.vb: Public ReplacementsMade As Integer
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult.UnresolvedReferences
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementResult.UnresolvedReferences
+  id: UnresolvedReferences
+  parent: Core.Localization.StringReplacementSystem.ReplacementResult
+  langs:
+  - csharp
+  - vb
+  name: UnresolvedReferences
+  nameWithType: StringReplacementSystem.ReplacementResult.UnresolvedReferences
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult.UnresolvedReferences
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnresolvedReferences
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int UnresolvedReferences
+    return:
+      type: System.Int32
+    content.vb: Public UnresolvedReferences As Integer
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult.IsSuccess
+  commentId: F:Core.Localization.StringReplacementSystem.ReplacementResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.StringReplacementSystem.ReplacementResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: StringReplacementSystem.ReplacementResult.IsSuccess
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/StringReplacementSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/StringReplacementSystem.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

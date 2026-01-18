@@ -1,0 +1,849 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SerializationHelper
+  commentId: T:Core.SaveLoad.SerializationHelper
+  id: SerializationHelper
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SerializationHelper.ReadFixedPoint64(System.IO.BinaryReader)
+  - Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array(System.IO.BinaryReader)
+  - Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.Allocator)
+  - Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.NativeArray{``0})
+  - Core.SaveLoad.SerializationHelper.ReadSparseUShortArray(System.IO.BinaryReader)
+  - Core.SaveLoad.SerializationHelper.ReadString(System.IO.BinaryReader)
+  - Core.SaveLoad.SerializationHelper.ReadUShortArray(System.IO.BinaryReader)
+  - Core.SaveLoad.SerializationHelper.WriteFixedPoint64(System.IO.BinaryWriter,Core.Data.FixedPoint64)
+  - Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array(System.IO.BinaryWriter,Core.Data.FixedPoint64[])
+  - Core.SaveLoad.SerializationHelper.WriteNativeArray``1(System.IO.BinaryWriter,Unity.Collections.NativeArray{``0})
+  - Core.SaveLoad.SerializationHelper.WriteSparseUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  - Core.SaveLoad.SerializationHelper.WriteString(System.IO.BinaryWriter,System.String)
+  - Core.SaveLoad.SerializationHelper.WriteUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  langs:
+  - csharp
+  - vb
+  name: SerializationHelper
+  nameWithType: SerializationHelper
+  fullName: Core.SaveLoad.SerializationHelper
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SerializationHelper
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Low-level binary serialization utilities
+
+
+    Principles:
+
+    - Deterministic serialization (same data = same bytes)
+
+    - Platform-independent (works on Windows/Mac/Linux)
+
+    - Efficient binary format (no JSON/XML overhead)
+
+    - Type-safe helpers for common patterns
+
+
+    Handles:
+
+    - FixedPoint64 (as long RawValue for determinism)
+
+    - NativeArray (raw memory copy)
+
+    - Primitives (int, ushort, string, etc.)
+
+    - Arrays of primitives
+  example: []
+  syntax:
+    content: public static class SerializationHelper
+    content.vb: Public Module SerializationHelper
+  inheritance:
+  - System.Object
+- uid: Core.SaveLoad.SerializationHelper.WriteFixedPoint64(System.IO.BinaryWriter,Core.Data.FixedPoint64)
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteFixedPoint64(System.IO.BinaryWriter,Core.Data.FixedPoint64)
+  id: WriteFixedPoint64(System.IO.BinaryWriter,Core.Data.FixedPoint64)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteFixedPoint64(BinaryWriter, FixedPoint64)
+  nameWithType: SerializationHelper.WriteFixedPoint64(BinaryWriter, FixedPoint64)
+  fullName: Core.SaveLoad.SerializationHelper.WriteFixedPoint64(System.IO.BinaryWriter, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteFixedPoint64
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Serialize FixedPoint64 as deterministic long value
+  example: []
+  syntax:
+    content: public static void WriteFixedPoint64(BinaryWriter writer, FixedPoint64 value)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: value
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Sub WriteFixedPoint64(writer As BinaryWriter, value As FixedPoint64)
+  overload: Core.SaveLoad.SerializationHelper.WriteFixedPoint64*
+- uid: Core.SaveLoad.SerializationHelper.ReadFixedPoint64(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadFixedPoint64(System.IO.BinaryReader)
+  id: ReadFixedPoint64(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadFixedPoint64(BinaryReader)
+  nameWithType: SerializationHelper.ReadFixedPoint64(BinaryReader)
+  fullName: Core.SaveLoad.SerializationHelper.ReadFixedPoint64(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadFixedPoint64
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Deserialize FixedPoint64 from long value
+  example: []
+  syntax:
+    content: public static FixedPoint64 ReadFixedPoint64(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function ReadFixedPoint64(reader As BinaryReader) As FixedPoint64
+  overload: Core.SaveLoad.SerializationHelper.ReadFixedPoint64*
+- uid: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array(System.IO.BinaryWriter,Core.Data.FixedPoint64[])
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array(System.IO.BinaryWriter,Core.Data.FixedPoint64[])
+  id: WriteFixedPoint64Array(System.IO.BinaryWriter,Core.Data.FixedPoint64[])
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteFixedPoint64Array(BinaryWriter, FixedPoint64[])
+  nameWithType: SerializationHelper.WriteFixedPoint64Array(BinaryWriter, FixedPoint64[])
+  fullName: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array(System.IO.BinaryWriter, Core.Data.FixedPoint64[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteFixedPoint64Array
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Serialize array of FixedPoint64 values
+  example: []
+  syntax:
+    content: public static void WriteFixedPoint64Array(BinaryWriter writer, FixedPoint64[] values)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: values
+      type: Core.Data.FixedPoint64[]
+    content.vb: Public Shared Sub WriteFixedPoint64Array(writer As BinaryWriter, values As FixedPoint64())
+  overload: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array*
+  nameWithType.vb: SerializationHelper.WriteFixedPoint64Array(BinaryWriter, FixedPoint64())
+  fullName.vb: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array(System.IO.BinaryWriter, Core.Data.FixedPoint64())
+  name.vb: WriteFixedPoint64Array(BinaryWriter, FixedPoint64())
+- uid: Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array(System.IO.BinaryReader)
+  id: ReadFixedPoint64Array(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadFixedPoint64Array(BinaryReader)
+  nameWithType: SerializationHelper.ReadFixedPoint64Array(BinaryReader)
+  fullName: Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadFixedPoint64Array
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Deserialize array of FixedPoint64 values
+  example: []
+  syntax:
+    content: public static FixedPoint64[] ReadFixedPoint64Array(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: Core.Data.FixedPoint64[]
+    content.vb: Public Shared Function ReadFixedPoint64Array(reader As BinaryReader) As FixedPoint64()
+  overload: Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array*
+- uid: Core.SaveLoad.SerializationHelper.WriteNativeArray``1(System.IO.BinaryWriter,Unity.Collections.NativeArray{``0})
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteNativeArray``1(System.IO.BinaryWriter,Unity.Collections.NativeArray{``0})
+  id: WriteNativeArray``1(System.IO.BinaryWriter,Unity.Collections.NativeArray{``0})
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteNativeArray<T>(BinaryWriter, NativeArray<T>)
+  nameWithType: SerializationHelper.WriteNativeArray<T>(BinaryWriter, NativeArray<T>)
+  fullName: Core.SaveLoad.SerializationHelper.WriteNativeArray<T>(System.IO.BinaryWriter, Unity.Collections.NativeArray<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteNativeArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Serialize NativeArray as raw bytes (fastest, deterministic)
+
+    IMPORTANT: Only works for blittable structs (no managed references)
+  example: []
+  syntax:
+    content: 'public static void WriteNativeArray<T>(BinaryWriter writer, NativeArray<T> array) where T : struct'
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: array
+      type: Unity.Collections.NativeArray{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Public Shared Sub WriteNativeArray(Of T As Structure)(writer As BinaryWriter, array As NativeArray(Of T))
+  overload: Core.SaveLoad.SerializationHelper.WriteNativeArray*
+  nameWithType.vb: SerializationHelper.WriteNativeArray(Of T)(BinaryWriter, NativeArray(Of T))
+  fullName.vb: Core.SaveLoad.SerializationHelper.WriteNativeArray(Of T)(System.IO.BinaryWriter, Unity.Collections.NativeArray(Of T))
+  name.vb: WriteNativeArray(Of T)(BinaryWriter, NativeArray(Of T))
+- uid: Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.Allocator)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.Allocator)
+  id: ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.Allocator)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadNativeArray<T>(BinaryReader, Allocator)
+  nameWithType: SerializationHelper.ReadNativeArray<T>(BinaryReader, Allocator)
+  fullName: Core.SaveLoad.SerializationHelper.ReadNativeArray<T>(System.IO.BinaryReader, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadNativeArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Deserialize NativeArray from raw bytes
+
+    Allocates new NativeArray - caller must dispose
+  example: []
+  syntax:
+    content: 'public static NativeArray<T> ReadNativeArray<T>(BinaryReader reader, Allocator allocator) where T : struct'
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    - id: allocator
+      type: Unity.Collections.Allocator
+    typeParameters:
+    - id: T
+    return:
+      type: Unity.Collections.NativeArray{{T}}
+    content.vb: Public Shared Function ReadNativeArray(Of T As Structure)(reader As BinaryReader, allocator As Allocator) As NativeArray(Of T)
+  overload: Core.SaveLoad.SerializationHelper.ReadNativeArray*
+  nameWithType.vb: SerializationHelper.ReadNativeArray(Of T)(BinaryReader, Allocator)
+  fullName.vb: Core.SaveLoad.SerializationHelper.ReadNativeArray(Of T)(System.IO.BinaryReader, Unity.Collections.Allocator)
+  name.vb: ReadNativeArray(Of T)(BinaryReader, Allocator)
+- uid: Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.NativeArray{``0})
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.NativeArray{``0})
+  id: ReadNativeArray``1(System.IO.BinaryReader,Unity.Collections.NativeArray{``0})
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadNativeArray<T>(BinaryReader, NativeArray<T>)
+  nameWithType: SerializationHelper.ReadNativeArray<T>(BinaryReader, NativeArray<T>)
+  fullName: Core.SaveLoad.SerializationHelper.ReadNativeArray<T>(System.IO.BinaryReader, Unity.Collections.NativeArray<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadNativeArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Deserialize NativeArray from raw bytes into existing array (in-place)
+
+    Does NOT allocate - reads into provided array
+
+    Useful for restoring double-buffered arrays without reallocation
+  example: []
+  syntax:
+    content: 'public static void ReadNativeArray<T>(BinaryReader reader, NativeArray<T> destinationArray) where T : struct'
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    - id: destinationArray
+      type: Unity.Collections.NativeArray{{T}}
+    typeParameters:
+    - id: T
+    content.vb: Public Shared Sub ReadNativeArray(Of T As Structure)(reader As BinaryReader, destinationArray As NativeArray(Of T))
+  overload: Core.SaveLoad.SerializationHelper.ReadNativeArray*
+  nameWithType.vb: SerializationHelper.ReadNativeArray(Of T)(BinaryReader, NativeArray(Of T))
+  fullName.vb: Core.SaveLoad.SerializationHelper.ReadNativeArray(Of T)(System.IO.BinaryReader, Unity.Collections.NativeArray(Of T))
+  name.vb: ReadNativeArray(Of T)(BinaryReader, NativeArray(Of T))
+- uid: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteSparseUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  id: WriteSparseUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteSparseUShortArray(BinaryWriter, ushort[])
+  nameWithType: SerializationHelper.WriteSparseUShortArray(BinaryWriter, ushort[])
+  fullName: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray(System.IO.BinaryWriter, ushort[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteSparseUShortArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 190
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Write sparse ushort array (only non-zero values)
+
+    Format: count, [index, value] pairs
+
+    Efficient for arrays where most values are 0
+  example: []
+  syntax:
+    content: public static void WriteSparseUShortArray(BinaryWriter writer, ushort[] array)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: array
+      type: System.UInt16[]
+    content.vb: Public Shared Sub WriteSparseUShortArray(writer As BinaryWriter, array As UShort())
+  overload: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray*
+  nameWithType.vb: SerializationHelper.WriteSparseUShortArray(BinaryWriter, UShort())
+  fullName.vb: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray(System.IO.BinaryWriter, UShort())
+  name.vb: WriteSparseUShortArray(BinaryWriter, UShort())
+- uid: Core.SaveLoad.SerializationHelper.ReadSparseUShortArray(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadSparseUShortArray(System.IO.BinaryReader)
+  id: ReadSparseUShortArray(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadSparseUShortArray(BinaryReader)
+  nameWithType: SerializationHelper.ReadSparseUShortArray(BinaryReader)
+  fullName: Core.SaveLoad.SerializationHelper.ReadSparseUShortArray(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadSparseUShortArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 218
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Read sparse ushort array
+  example: []
+  syntax:
+    content: public static ushort[] ReadSparseUShortArray(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: System.UInt16[]
+    content.vb: Public Shared Function ReadSparseUShortArray(reader As BinaryReader) As UShort()
+  overload: Core.SaveLoad.SerializationHelper.ReadSparseUShortArray*
+- uid: Core.SaveLoad.SerializationHelper.WriteString(System.IO.BinaryWriter,System.String)
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteString(System.IO.BinaryWriter,System.String)
+  id: WriteString(System.IO.BinaryWriter,System.String)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteString(BinaryWriter, string)
+  nameWithType: SerializationHelper.WriteString(BinaryWriter, string)
+  fullName: Core.SaveLoad.SerializationHelper.WriteString(System.IO.BinaryWriter, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteString
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 243
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Write string with length prefix (null-safe)
+  example: []
+  syntax:
+    content: public static void WriteString(BinaryWriter writer, string value)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: value
+      type: System.String
+    content.vb: Public Shared Sub WriteString(writer As BinaryWriter, value As String)
+  overload: Core.SaveLoad.SerializationHelper.WriteString*
+  nameWithType.vb: SerializationHelper.WriteString(BinaryWriter, String)
+  fullName.vb: Core.SaveLoad.SerializationHelper.WriteString(System.IO.BinaryWriter, String)
+  name.vb: WriteString(BinaryWriter, String)
+- uid: Core.SaveLoad.SerializationHelper.ReadString(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadString(System.IO.BinaryReader)
+  id: ReadString(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadString(BinaryReader)
+  nameWithType: SerializationHelper.ReadString(BinaryReader)
+  fullName: Core.SaveLoad.SerializationHelper.ReadString(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadString
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 262
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Read string with length prefix (null-safe)
+  example: []
+  syntax:
+    content: public static string ReadString(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: System.String
+    content.vb: Public Shared Function ReadString(reader As BinaryReader) As String
+  overload: Core.SaveLoad.SerializationHelper.ReadString*
+- uid: Core.SaveLoad.SerializationHelper.WriteUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  commentId: M:Core.SaveLoad.SerializationHelper.WriteUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  id: WriteUShortArray(System.IO.BinaryWriter,System.UInt16[])
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: WriteUShortArray(BinaryWriter, ushort[])
+  nameWithType: SerializationHelper.WriteUShortArray(BinaryWriter, ushort[])
+  fullName: Core.SaveLoad.SerializationHelper.WriteUShortArray(System.IO.BinaryWriter, ushort[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteUShortArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 278
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Write ushort array with length prefix
+  example: []
+  syntax:
+    content: public static void WriteUShortArray(BinaryWriter writer, ushort[] array)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: array
+      type: System.UInt16[]
+    content.vb: Public Shared Sub WriteUShortArray(writer As BinaryWriter, array As UShort())
+  overload: Core.SaveLoad.SerializationHelper.WriteUShortArray*
+  nameWithType.vb: SerializationHelper.WriteUShortArray(BinaryWriter, UShort())
+  fullName.vb: Core.SaveLoad.SerializationHelper.WriteUShortArray(System.IO.BinaryWriter, UShort())
+  name.vb: WriteUShortArray(BinaryWriter, UShort())
+- uid: Core.SaveLoad.SerializationHelper.ReadUShortArray(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SerializationHelper.ReadUShortArray(System.IO.BinaryReader)
+  id: ReadUShortArray(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SerializationHelper
+  langs:
+  - csharp
+  - vb
+  name: ReadUShortArray(BinaryReader)
+  nameWithType: SerializationHelper.ReadUShortArray(BinaryReader)
+  fullName: Core.SaveLoad.SerializationHelper.ReadUShortArray(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SerializationHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadUShortArray
+    path: Scripts/Core/SaveLoad/SerializationHelper.cs
+    startLine: 290
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Read ushort array with length prefix
+  example: []
+  syntax:
+    content: public static ushort[] ReadUShortArray(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: System.UInt16[]
+    content.vb: Public Shared Function ReadUShortArray(reader As BinaryReader) As UShort()
+  overload: Core.SaveLoad.SerializationHelper.ReadUShortArray*
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.SaveLoad.SerializationHelper.WriteFixedPoint64*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteFixedPoint64
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteFixedPoint64_System_IO_BinaryWriter_Core_Data_FixedPoint64_
+  name: WriteFixedPoint64
+  nameWithType: SerializationHelper.WriteFixedPoint64
+  fullName: Core.SaveLoad.SerializationHelper.WriteFixedPoint64
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.SaveLoad.SerializationHelper.ReadFixedPoint64*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadFixedPoint64
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadFixedPoint64_System_IO_BinaryReader_
+  name: ReadFixedPoint64
+  nameWithType: SerializationHelper.ReadFixedPoint64
+  fullName: Core.SaveLoad.SerializationHelper.ReadFixedPoint64
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteFixedPoint64Array_System_IO_BinaryWriter_Core_Data_FixedPoint64___
+  name: WriteFixedPoint64Array
+  nameWithType: SerializationHelper.WriteFixedPoint64Array
+  fullName: Core.SaveLoad.SerializationHelper.WriteFixedPoint64Array
+- uid: Core.Data.FixedPoint64[]
+  isExternal: true
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64[]
+  nameWithType: FixedPoint64[]
+  fullName: Core.Data.FixedPoint64[]
+  nameWithType.vb: FixedPoint64()
+  fullName.vb: Core.Data.FixedPoint64()
+  name.vb: FixedPoint64()
+  spec.csharp:
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: (
+  - name: )
+- uid: Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadFixedPoint64Array_System_IO_BinaryReader_
+  name: ReadFixedPoint64Array
+  nameWithType: SerializationHelper.ReadFixedPoint64Array
+  fullName: Core.SaveLoad.SerializationHelper.ReadFixedPoint64Array
+- uid: Core.SaveLoad.SerializationHelper.WriteNativeArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteNativeArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteNativeArray__1_System_IO_BinaryWriter_Unity_Collections_NativeArray___0__
+  name: WriteNativeArray
+  nameWithType: SerializationHelper.WriteNativeArray
+  fullName: Core.SaveLoad.SerializationHelper.WriteNativeArray
+- uid: Unity.Collections.NativeArray{{T}}
+  commentId: T:Unity.Collections.NativeArray{``0}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.SaveLoad.SerializationHelper.ReadNativeArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadNativeArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadNativeArray__1_System_IO_BinaryReader_Unity_Collections_Allocator_
+  name: ReadNativeArray
+  nameWithType: SerializationHelper.ReadNativeArray
+  fullName: Core.SaveLoad.SerializationHelper.ReadNativeArray
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteSparseUShortArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteSparseUShortArray_System_IO_BinaryWriter_System_UInt16___
+  name: WriteSparseUShortArray
+  nameWithType: SerializationHelper.WriteSparseUShortArray
+  fullName: Core.SaveLoad.SerializationHelper.WriteSparseUShortArray
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.SaveLoad.SerializationHelper.ReadSparseUShortArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadSparseUShortArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadSparseUShortArray_System_IO_BinaryReader_
+  name: ReadSparseUShortArray
+  nameWithType: SerializationHelper.ReadSparseUShortArray
+  fullName: Core.SaveLoad.SerializationHelper.ReadSparseUShortArray
+- uid: Core.SaveLoad.SerializationHelper.WriteString*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteString
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteString_System_IO_BinaryWriter_System_String_
+  name: WriteString
+  nameWithType: SerializationHelper.WriteString
+  fullName: Core.SaveLoad.SerializationHelper.WriteString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.SaveLoad.SerializationHelper.ReadString*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadString
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadString_System_IO_BinaryReader_
+  name: ReadString
+  nameWithType: SerializationHelper.ReadString
+  fullName: Core.SaveLoad.SerializationHelper.ReadString
+- uid: Core.SaveLoad.SerializationHelper.WriteUShortArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.WriteUShortArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_WriteUShortArray_System_IO_BinaryWriter_System_UInt16___
+  name: WriteUShortArray
+  nameWithType: SerializationHelper.WriteUShortArray
+  fullName: Core.SaveLoad.SerializationHelper.WriteUShortArray
+- uid: Core.SaveLoad.SerializationHelper.ReadUShortArray*
+  commentId: Overload:Core.SaveLoad.SerializationHelper.ReadUShortArray
+  href: Core.SaveLoad.SerializationHelper.html#Core_SaveLoad_SerializationHelper_ReadUShortArray_System_IO_BinaryReader_
+  name: ReadUShortArray
+  nameWithType: SerializationHelper.ReadUShortArray
+  fullName: Core.SaveLoad.SerializationHelper.ReadUShortArray

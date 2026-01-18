@@ -1,0 +1,189 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.GoalEvaluation
+  commentId: T:Core.AI.GoalEvaluation
+  id: GoalEvaluation
+  parent: Core.AI
+  children:
+  - Core.AI.GoalEvaluation.#ctor(Core.AI.AIGoal,Core.Data.FixedPoint64)
+  - Core.AI.GoalEvaluation.Goal
+  - Core.AI.GoalEvaluation.Score
+  langs:
+  - csharp
+  - vb
+  name: GoalEvaluation
+  nameWithType: GoalEvaluation
+  fullName: Core.AI.GoalEvaluation
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GoalEvaluation
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Goal with its evaluated score.
+  example: []
+  syntax:
+    content: public readonly struct GoalEvaluation
+    content.vb: Public Structure GoalEvaluation
+- uid: Core.AI.GoalEvaluation.Goal
+  commentId: F:Core.AI.GoalEvaluation.Goal
+  id: Goal
+  parent: Core.AI.GoalEvaluation
+  langs:
+  - csharp
+  - vb
+  name: Goal
+  nameWithType: GoalEvaluation.Goal
+  fullName: Core.AI.GoalEvaluation.Goal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Goal
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public readonly AIGoal Goal
+    return:
+      type: Core.AI.AIGoal
+    content.vb: Public ReadOnly Goal As AIGoal
+- uid: Core.AI.GoalEvaluation.Score
+  commentId: F:Core.AI.GoalEvaluation.Score
+  id: Score
+  parent: Core.AI.GoalEvaluation
+  langs:
+  - csharp
+  - vb
+  name: Score
+  nameWithType: GoalEvaluation.Score
+  fullName: Core.AI.GoalEvaluation.Score
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Score
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public readonly FixedPoint64 Score
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public ReadOnly Score As FixedPoint64
+- uid: Core.AI.GoalEvaluation.#ctor(Core.AI.AIGoal,Core.Data.FixedPoint64)
+  commentId: M:Core.AI.GoalEvaluation.#ctor(Core.AI.AIGoal,Core.Data.FixedPoint64)
+  id: '#ctor(Core.AI.AIGoal,Core.Data.FixedPoint64)'
+  parent: Core.AI.GoalEvaluation
+  langs:
+  - csharp
+  - vb
+  name: GoalEvaluation(AIGoal, FixedPoint64)
+  nameWithType: GoalEvaluation.GoalEvaluation(AIGoal, FixedPoint64)
+  fullName: Core.AI.GoalEvaluation.GoalEvaluation(Core.AI.AIGoal, Core.Data.FixedPoint64)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public GoalEvaluation(AIGoal goal, FixedPoint64 score)
+    parameters:
+    - id: goal
+      type: Core.AI.AIGoal
+    - id: score
+      type: Core.Data.FixedPoint64
+    content.vb: Public Sub New(goal As AIGoal, score As FixedPoint64)
+  overload: Core.AI.GoalEvaluation.#ctor*
+  nameWithType.vb: GoalEvaluation.New(AIGoal, FixedPoint64)
+  fullName.vb: Core.AI.GoalEvaluation.New(Core.AI.AIGoal, Core.Data.FixedPoint64)
+  name.vb: New(AIGoal, FixedPoint64)
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: Core.AI.AIGoal
+  commentId: T:Core.AI.AIGoal
+  parent: Core.AI
+  href: Core.AI.AIGoal.html
+  name: AIGoal
+  nameWithType: AIGoal
+  fullName: Core.AI.AIGoal
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.AI.GoalEvaluation.#ctor*
+  commentId: Overload:Core.AI.GoalEvaluation.#ctor
+  href: Core.AI.GoalEvaluation.html#Core_AI_GoalEvaluation__ctor_Core_AI_AIGoal_Core_Data_FixedPoint64_
+  name: GoalEvaluation
+  nameWithType: GoalEvaluation.GoalEvaluation
+  fullName: Core.AI.GoalEvaluation.GoalEvaluation
+  nameWithType.vb: GoalEvaluation.New
+  fullName.vb: Core.AI.GoalEvaluation.New
+  name.vb: New

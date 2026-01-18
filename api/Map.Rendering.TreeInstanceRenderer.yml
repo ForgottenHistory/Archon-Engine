@@ -1,0 +1,319 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.TreeInstanceRenderer
+  commentId: T:Map.Rendering.TreeInstanceRenderer
+  id: TreeInstanceRenderer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.TreeInstanceRenderer.SetEnabled(System.Boolean)
+  - Map.Rendering.TreeInstanceRenderer.SetRenderBounds(UnityEngine.Bounds)
+  - Map.Rendering.TreeInstanceRenderer.SetTreeData(UnityEngine.ComputeBuffer,UnityEngine.ComputeBuffer,System.Int32,System.Single,System.Single)
+  langs:
+  - csharp
+  - vb
+  name: TreeInstanceRenderer
+  nameWithType: TreeInstanceRenderer
+  fullName: Map.Rendering.TreeInstanceRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TreeInstanceRenderer
+    path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    GPU-driven tree rendering using DrawMeshInstancedIndirect.
+
+
+    Architecture:
+
+    - Renders trees from GPU buffer (no CPU array transfer)
+
+    - Single draw call for all trees (millions possible)
+
+    - Receives transform matrices from TreeInstanceGenerator
+
+    - Fully GPU-driven (instance count read from buffer)
+
+
+    Performance:
+
+    - Zero CPU overhead per frame
+
+    - GPU reads instance count and matrices directly
+
+    - Frustum culling handled by GPU
+
+    - Supports shadows and LOD
+
+
+    Usage:
+
+    - Call SetTreeData() to bind matrix buffer
+
+    - Update() automatically renders each frame
+  example: []
+  syntax:
+    content: 'public class TreeInstanceRenderer : MonoBehaviour'
+    content.vb: Public Class TreeInstanceRenderer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.TreeInstanceRenderer.SetTreeData(UnityEngine.ComputeBuffer,UnityEngine.ComputeBuffer,System.Int32,System.Single,System.Single)
+  commentId: M:Map.Rendering.TreeInstanceRenderer.SetTreeData(UnityEngine.ComputeBuffer,UnityEngine.ComputeBuffer,System.Int32,System.Single,System.Single)
+  id: SetTreeData(UnityEngine.ComputeBuffer,UnityEngine.ComputeBuffer,System.Int32,System.Single,System.Single)
+  parent: Map.Rendering.TreeInstanceRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetTreeData(ComputeBuffer, ComputeBuffer, int, float, float)
+  nameWithType: TreeInstanceRenderer.SetTreeData(ComputeBuffer, ComputeBuffer, int, float, float)
+  fullName: Map.Rendering.TreeInstanceRenderer.SetTreeData(UnityEngine.ComputeBuffer, UnityEngine.ComputeBuffer, int, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTreeData
+    path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+    startLine: 65
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Set tree rendering data from generator.
+
+    Must be called after TreeInstanceGenerator.GenerateTrees()
+  example: []
+  syntax:
+    content: public void SetTreeData(ComputeBuffer matrixBuffer, ComputeBuffer countBuffer, int maxTrees, float mapWidth, float mapHeight)
+    parameters:
+    - id: matrixBuffer
+      type: UnityEngine.ComputeBuffer
+      description: Tree transform matrices
+    - id: countBuffer
+      type: UnityEngine.ComputeBuffer
+      description: Tree count (for indirect args)
+    - id: maxTrees
+      type: System.Int32
+      description: Maximum tree count (buffer capacity)
+    - id: mapWidth
+      type: System.Single
+      description: Map width for bounds calculation
+    - id: mapHeight
+      type: System.Single
+      description: Map height for bounds calculation
+    content.vb: Public Sub SetTreeData(matrixBuffer As ComputeBuffer, countBuffer As ComputeBuffer, maxTrees As Integer, mapWidth As Single, mapHeight As Single)
+  overload: Map.Rendering.TreeInstanceRenderer.SetTreeData*
+  nameWithType.vb: TreeInstanceRenderer.SetTreeData(ComputeBuffer, ComputeBuffer, Integer, Single, Single)
+  fullName.vb: Map.Rendering.TreeInstanceRenderer.SetTreeData(UnityEngine.ComputeBuffer, UnityEngine.ComputeBuffer, Integer, Single, Single)
+  name.vb: SetTreeData(ComputeBuffer, ComputeBuffer, Integer, Single, Single)
+- uid: Map.Rendering.TreeInstanceRenderer.SetRenderBounds(UnityEngine.Bounds)
+  commentId: M:Map.Rendering.TreeInstanceRenderer.SetRenderBounds(UnityEngine.Bounds)
+  id: SetRenderBounds(UnityEngine.Bounds)
+  parent: Map.Rendering.TreeInstanceRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetRenderBounds(Bounds)
+  nameWithType: TreeInstanceRenderer.SetRenderBounds(Bounds)
+  fullName: Map.Rendering.TreeInstanceRenderer.SetRenderBounds(UnityEngine.Bounds)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetRenderBounds
+    path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update rendering bounds if needed (e.g., camera moved far from map)
+  example: []
+  syntax:
+    content: public void SetRenderBounds(Bounds bounds)
+    parameters:
+    - id: bounds
+      type: UnityEngine.Bounds
+    content.vb: Public Sub SetRenderBounds(bounds As Bounds)
+  overload: Map.Rendering.TreeInstanceRenderer.SetRenderBounds*
+- uid: Map.Rendering.TreeInstanceRenderer.SetEnabled(System.Boolean)
+  commentId: M:Map.Rendering.TreeInstanceRenderer.SetEnabled(System.Boolean)
+  id: SetEnabled(System.Boolean)
+  parent: Map.Rendering.TreeInstanceRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetEnabled(bool)
+  nameWithType: TreeInstanceRenderer.SetEnabled(bool)
+  fullName: Map.Rendering.TreeInstanceRenderer.SetEnabled(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetEnabled
+    path: Scripts/Map/Rendering/TreeInstanceRenderer.cs
+    startLine: 189
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Enable/disable tree rendering
+  example: []
+  syntax:
+    content: public void SetEnabled(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: Public Sub SetEnabled(enabled As Boolean)
+  overload: Map.Rendering.TreeInstanceRenderer.SetEnabled*
+  nameWithType.vb: TreeInstanceRenderer.SetEnabled(Boolean)
+  fullName.vb: Map.Rendering.TreeInstanceRenderer.SetEnabled(Boolean)
+  name.vb: SetEnabled(Boolean)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.TreeInstanceRenderer.SetTreeData*
+  commentId: Overload:Map.Rendering.TreeInstanceRenderer.SetTreeData
+  href: Map.Rendering.TreeInstanceRenderer.html#Map_Rendering_TreeInstanceRenderer_SetTreeData_UnityEngine_ComputeBuffer_UnityEngine_ComputeBuffer_System_Int32_System_Single_System_Single_
+  name: SetTreeData
+  nameWithType: TreeInstanceRenderer.SetTreeData
+  fullName: Map.Rendering.TreeInstanceRenderer.SetTreeData
+- uid: UnityEngine.ComputeBuffer
+  commentId: T:UnityEngine.ComputeBuffer
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeBuffer
+  nameWithType: ComputeBuffer
+  fullName: UnityEngine.ComputeBuffer
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.TreeInstanceRenderer.SetRenderBounds*
+  commentId: Overload:Map.Rendering.TreeInstanceRenderer.SetRenderBounds
+  href: Map.Rendering.TreeInstanceRenderer.html#Map_Rendering_TreeInstanceRenderer_SetRenderBounds_UnityEngine_Bounds_
+  name: SetRenderBounds
+  nameWithType: TreeInstanceRenderer.SetRenderBounds
+  fullName: Map.Rendering.TreeInstanceRenderer.SetRenderBounds
+- uid: UnityEngine.Bounds
+  commentId: T:UnityEngine.Bounds
+  parent: UnityEngine
+  isExternal: true
+  name: Bounds
+  nameWithType: Bounds
+  fullName: UnityEngine.Bounds
+- uid: Map.Rendering.TreeInstanceRenderer.SetEnabled*
+  commentId: Overload:Map.Rendering.TreeInstanceRenderer.SetEnabled
+  href: Map.Rendering.TreeInstanceRenderer.html#Map_Rendering_TreeInstanceRenderer_SetEnabled_System_Boolean_
+  name: SetEnabled
+  nameWithType: TreeInstanceRenderer.SetEnabled
+  fullName: Map.Rendering.TreeInstanceRenderer.SetEnabled
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

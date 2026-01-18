@@ -1,0 +1,888 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  commentId: T:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  id: DefaultFogOfWarRenderer
+  parent: Map.Rendering.FogOfWar
+  children:
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor(UnityEngine.ComputeShader)
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+  - Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility
+  langs:
+  - csharp
+  - vb
+  name: DefaultFogOfWarRenderer
+  nameWithType: DefaultFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefaultFogOfWarRenderer
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: >-
+    ENGINE: Default fog of war renderer using GPU compute shader.
+
+
+    Features:
+
+    - GPU-accelerated fog texture generation via compute shader
+
+    - Three visibility states: unexplored (0.0), explored (0.5), visible (1.0)
+
+    - Owned provinces and adjacents marked as visible
+
+    - Previous visible areas demoted to explored when lost
+
+
+    Pattern 20: Pluggable Implementation (Interface + Registry)
+  example: []
+  syntax:
+    content: 'public class DefaultFogOfWarRenderer : FogOfWarRendererBase, IFogOfWarRenderer'
+    content.vb: Public Class DefaultFogOfWarRenderer Inherits FogOfWarRendererBase Implements IFogOfWarRenderer
+  inheritance:
+  - System.Object
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase
+  implements:
+  - Map.Rendering.FogOfWar.IFogOfWarRenderer
+  inheritedMembers:
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.RequiresPerFrameUpdate
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.textureManager
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.context
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.isInitialized
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.fogEnabled
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.playerCountryID
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.provinceVisibility
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.THREAD_GROUP_SIZE
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_UNEXPLORED
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_EXPLORED
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_VISIBLE
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.IsEnabled
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.FogOfWar.FogOfWarRendererContext)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(System.UInt16)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(System.UInt16)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(System.Boolean)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.FogOfWar.FogOfWarStyleParams)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(System.UInt16)
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry
+  - Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+  commentId: P:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: DefaultFogOfWarRenderer.RendererId
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Unique identifier for this renderer (e.g., "Default", "Stylized", "Minimal")
+  example: []
+  syntax:
+    content: public override string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property RendererId As String
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.RendererId
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId*
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+  commentId: P:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: DefaultFogOfWarRenderer.DisplayName
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Human-readable name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.DisplayName
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName*
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor
+  id: '#ctor'
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: DefaultFogOfWarRenderer()
+  nameWithType: DefaultFogOfWarRenderer.DefaultFogOfWarRenderer()
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DefaultFogOfWarRenderer()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  syntax:
+    content: public DefaultFogOfWarRenderer()
+    content.vb: Public Sub New()
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor*
+  nameWithType.vb: DefaultFogOfWarRenderer.New()
+  fullName.vb: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.New()
+  name.vb: New()
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor(UnityEngine.ComputeShader)
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor(UnityEngine.ComputeShader)
+  id: '#ctor(UnityEngine.ComputeShader)'
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: DefaultFogOfWarRenderer(ComputeShader)
+  nameWithType: DefaultFogOfWarRenderer.DefaultFogOfWarRenderer(ComputeShader)
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DefaultFogOfWarRenderer(UnityEngine.ComputeShader)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  syntax:
+    content: public DefaultFogOfWarRenderer(ComputeShader computeShader)
+    parameters:
+    - id: computeShader
+      type: UnityEngine.ComputeShader
+    content.vb: Public Sub New(computeShader As ComputeShader)
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor*
+  nameWithType.vb: DefaultFogOfWarRenderer.New(ComputeShader)
+  fullName.vb: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.New(UnityEngine.ComputeShader)
+  name.vb: New(ComputeShader)
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize
+  id: OnInitialize
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: DefaultFogOfWarRenderer.OnInitialize()
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Override to perform implementation-specific initialization
+  example: []
+  syntax:
+    content: protected override void OnInitialize()
+    content.vb: Protected Overrides Sub OnInitialize()
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize*
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility
+  id: UpdateVisibility
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: UpdateVisibility()
+  nameWithType: DefaultFogOfWarRenderer.UpdateVisibility()
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateVisibility
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 64
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Update visibility state based on current ownership
+  example: []
+  syntax:
+    content: public override void UpdateVisibility()
+    content.vb: Public Overrides Sub UpdateVisibility()
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility*
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged
+  id: OnVisibilityChanged
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnVisibilityChanged()
+  nameWithType: DefaultFogOfWarRenderer.OnVisibilityChanged()
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnVisibilityChanged
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Called when visibility state changes - override to update textures
+  example: []
+  syntax:
+    content: protected override void OnVisibilityChanged()
+    content.vb: Protected Overrides Sub OnVisibilityChanged()
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged*
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose
+  commentId: M:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: DefaultFogOfWarRenderer.Dispose()
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/FogOfWar/Implementations/DefaultFogOfWarRenderer.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Cleanup resources
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose
+  overload: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose*
+references:
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarRendererBase
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html
+  name: FogOfWarRendererBase
+  nameWithType: FogOfWarRendererBase
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase
+- uid: Map.Rendering.FogOfWar.IFogOfWarRenderer
+  commentId: T:Map.Rendering.FogOfWar.IFogOfWarRenderer
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.IFogOfWarRenderer.html
+  name: IFogOfWarRenderer
+  nameWithType: IFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.IFogOfWarRenderer
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.FogOfWar.FogOfWarRendererBase.RequiresPerFrameUpdate
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: FogOfWarRendererBase.RequiresPerFrameUpdate
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.RequiresPerFrameUpdate
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.textureManager
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.textureManager
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_textureManager
+  name: textureManager
+  nameWithType: FogOfWarRendererBase.textureManager
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.textureManager
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.context
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.context
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_context
+  name: context
+  nameWithType: FogOfWarRendererBase.context
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.context
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.isInitialized
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.isInitialized
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_isInitialized
+  name: isInitialized
+  nameWithType: FogOfWarRendererBase.isInitialized
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.isInitialized
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.fogEnabled
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.fogEnabled
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_fogEnabled
+  name: fogEnabled
+  nameWithType: FogOfWarRendererBase.fogEnabled
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.fogEnabled
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.playerCountryID
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.playerCountryID
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_playerCountryID
+  name: playerCountryID
+  nameWithType: FogOfWarRendererBase.playerCountryID
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.playerCountryID
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.provinceVisibility
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.provinceVisibility
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_provinceVisibility
+  name: provinceVisibility
+  nameWithType: FogOfWarRendererBase.provinceVisibility
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.provinceVisibility
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.THREAD_GROUP_SIZE
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.THREAD_GROUP_SIZE
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: FogOfWarRendererBase.THREAD_GROUP_SIZE
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.THREAD_GROUP_SIZE
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_UNEXPLORED
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_UNEXPLORED
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_VISIBILITY_UNEXPLORED
+  name: VISIBILITY_UNEXPLORED
+  nameWithType: FogOfWarRendererBase.VISIBILITY_UNEXPLORED
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_UNEXPLORED
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_EXPLORED
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_EXPLORED
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_VISIBILITY_EXPLORED
+  name: VISIBILITY_EXPLORED
+  nameWithType: FogOfWarRendererBase.VISIBILITY_EXPLORED
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_EXPLORED
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_VISIBLE
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_VISIBLE
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_VISIBILITY_VISIBLE
+  name: VISIBILITY_VISIBLE
+  nameWithType: FogOfWarRendererBase.VISIBILITY_VISIBLE
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.VISIBILITY_VISIBLE
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.IsEnabled
+  commentId: P:Map.Rendering.FogOfWar.FogOfWarRendererBase.IsEnabled
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_IsEnabled
+  name: IsEnabled
+  nameWithType: FogOfWarRendererBase.IsEnabled
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.IsEnabled
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.FogOfWar.FogOfWarRendererContext)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.FogOfWar.FogOfWarRendererContext)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_FogOfWar_FogOfWarRendererContext_
+  name: Initialize(MapTextureManager, FogOfWarRendererContext)
+  nameWithType: FogOfWarRendererBase.Initialize(MapTextureManager, FogOfWarRendererContext)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.FogOfWar.FogOfWarRendererContext)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.FogOfWar.FogOfWarRendererContext)
+    name: Initialize
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_FogOfWar_FogOfWarRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererContext
+    name: FogOfWarRendererContext
+    href: Map.Rendering.FogOfWar.FogOfWarRendererContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.FogOfWar.FogOfWarRendererContext)
+    name: Initialize
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_FogOfWar_FogOfWarRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererContext
+    name: FogOfWarRendererContext
+    href: Map.Rendering.FogOfWar.FogOfWarRendererContext.html
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(System.UInt16)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(System.UInt16)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetPlayerCountry_System_UInt16_
+  name: SetPlayerCountry(ushort)
+  nameWithType: FogOfWarRendererBase.SetPlayerCountry(ushort)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(ushort)
+  nameWithType.vb: FogOfWarRendererBase.SetPlayerCountry(UShort)
+  fullName.vb: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(UShort)
+  name.vb: SetPlayerCountry(UShort)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(System.UInt16)
+    name: SetPlayerCountry
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetPlayerCountry_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetPlayerCountry(System.UInt16)
+    name: SetPlayerCountry
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetPlayerCountry_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(System.UInt16)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(System.UInt16)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_RevealProvince_System_UInt16_
+  name: RevealProvince(ushort)
+  nameWithType: FogOfWarRendererBase.RevealProvince(ushort)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(ushort)
+  nameWithType.vb: FogOfWarRendererBase.RevealProvince(UShort)
+  fullName.vb: Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(UShort)
+  name.vb: RevealProvince(UShort)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(System.UInt16)
+    name: RevealProvince
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_RevealProvince_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.RevealProvince(System.UInt16)
+    name: RevealProvince
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_RevealProvince_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(System.Boolean)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(System.Boolean)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetEnabled_System_Boolean_
+  name: SetEnabled(bool)
+  nameWithType: FogOfWarRendererBase.SetEnabled(bool)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(bool)
+  nameWithType.vb: FogOfWarRendererBase.SetEnabled(Boolean)
+  fullName.vb: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(Boolean)
+  name.vb: SetEnabled(Boolean)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(System.Boolean)
+    name: SetEnabled
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetEnabled_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.SetEnabled(System.Boolean)
+    name: SetEnabled
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_SetEnabled_System_Boolean_
+  - name: (
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.FogOfWar.FogOfWarStyleParams)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.FogOfWar.FogOfWarStyleParams)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_FogOfWar_FogOfWarStyleParams_
+  name: ApplyToMaterial(Material, FogOfWarStyleParams)
+  nameWithType: FogOfWarRendererBase.ApplyToMaterial(Material, FogOfWarStyleParams)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material, Map.Rendering.FogOfWar.FogOfWarStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.FogOfWar.FogOfWarStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_FogOfWar_FogOfWarStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+    name: FogOfWarStyleParams
+    href: Map.Rendering.FogOfWar.FogOfWarStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.FogOfWar.FogOfWarStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_FogOfWar_FogOfWarStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+    name: FogOfWarStyleParams
+    href: Map.Rendering.FogOfWar.FogOfWarStyleParams.html
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: FogOfWarRendererBase.OnRenderFrame()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(System.UInt16)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(System.UInt16)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetProvinceVisibility_System_UInt16_
+  name: GetProvinceVisibility(ushort)
+  nameWithType: FogOfWarRendererBase.GetProvinceVisibility(ushort)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(ushort)
+  nameWithType.vb: FogOfWarRendererBase.GetProvinceVisibility(UShort)
+  fullName.vb: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(UShort)
+  name.vb: GetProvinceVisibility(UShort)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(System.UInt16)
+    name: GetProvinceVisibility
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetProvinceVisibility_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetProvinceVisibility(System.UInt16)
+    name: GetProvinceVisibility
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetProvinceVisibility_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetPlayerCountry
+  name: GetPlayerCountry()
+  nameWithType: FogOfWarRendererBase.GetPlayerCountry()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry
+    name: GetPlayerCountry
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetPlayerCountry
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.GetPlayerCountry
+    name: GetPlayerCountry
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_GetPlayerCountry
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  isExternal: true
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: FogOfWarRendererBase.CalculateThreadGroups(int, int)
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: FogOfWarRendererBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.RendererId
+  commentId: P:Map.Rendering.FogOfWar.FogOfWarRendererBase.RendererId
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_RendererId
+  name: RendererId
+  nameWithType: FogOfWarRendererBase.RendererId
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.RendererId
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_RendererId
+  name: RendererId
+  nameWithType: DefaultFogOfWarRenderer.RendererId
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.DisplayName
+  commentId: P:Map.Rendering.FogOfWar.FogOfWarRendererBase.DisplayName
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_DisplayName
+  name: DisplayName
+  nameWithType: FogOfWarRendererBase.DisplayName
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.DisplayName
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_DisplayName
+  name: DisplayName
+  nameWithType: DefaultFogOfWarRenderer.DisplayName
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DisplayName
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.#ctor
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer__ctor
+  name: DefaultFogOfWarRenderer
+  nameWithType: DefaultFogOfWarRenderer.DefaultFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.DefaultFogOfWarRenderer
+  nameWithType.vb: DefaultFogOfWarRenderer.New
+  fullName.vb: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.New
+  name.vb: New
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnInitialize
+  name: OnInitialize()
+  nameWithType: FogOfWarRendererBase.OnInitialize()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnInitialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnInitialize
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_OnInitialize
+  name: OnInitialize
+  nameWithType: DefaultFogOfWarRenderer.OnInitialize
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnInitialize
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_UpdateVisibility
+  name: UpdateVisibility()
+  nameWithType: FogOfWarRendererBase.UpdateVisibility()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility
+    name: UpdateVisibility
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_UpdateVisibility
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.UpdateVisibility
+    name: UpdateVisibility
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_UpdateVisibility
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_UpdateVisibility
+  name: UpdateVisibility
+  nameWithType: DefaultFogOfWarRenderer.UpdateVisibility
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.UpdateVisibility
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnVisibilityChanged
+  name: OnVisibilityChanged()
+  nameWithType: FogOfWarRendererBase.OnVisibilityChanged()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged
+    name: OnVisibilityChanged
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnVisibilityChanged
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.OnVisibilityChanged
+    name: OnVisibilityChanged
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_OnVisibilityChanged
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_OnVisibilityChanged
+  name: OnVisibilityChanged
+  nameWithType: DefaultFogOfWarRenderer.OnVisibilityChanged
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.OnVisibilityChanged
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererBase
+  href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Dispose
+  name: Dispose()
+  nameWithType: FogOfWarRendererBase.Dispose()
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.FogOfWar.FogOfWarRendererBase.html#Map_Rendering_FogOfWar_FogOfWarRendererBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose*
+  commentId: Overload:Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose
+  href: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.html#Map_Rendering_FogOfWar_DefaultFogOfWarRenderer_Dispose
+  name: Dispose
+  nameWithType: DefaultFogOfWarRenderer.Dispose
+  fullName: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer.Dispose

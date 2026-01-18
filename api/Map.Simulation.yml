@@ -1,0 +1,147 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  id: Map.Simulation
+  children:
+  - Map.Simulation.ChecksumComparison
+  - Map.Simulation.SimulationMapLoader
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds
+  - Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  - Map.Simulation.SimulationMapLoader.SimulationMapData
+  - Map.Simulation.StateChecksum
+  - Map.Simulation.StateValidationResult
+  - Map.Simulation.StateValidator
+  langs:
+  - csharp
+  - vb
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Simulation.StateValidator
+  commentId: T:Map.Simulation.StateValidator
+  href: Map.Simulation.StateValidator.html
+  name: StateValidator
+  nameWithType: StateValidator
+  fullName: Map.Simulation.StateValidator
+- uid: Map.Simulation.StateChecksum
+  commentId: T:Map.Simulation.StateChecksum
+  parent: Map.Simulation
+  href: Map.Simulation.StateChecksum.html
+  name: StateChecksum
+  nameWithType: StateChecksum
+  fullName: Map.Simulation.StateChecksum
+- uid: Map.Simulation.ChecksumComparison
+  commentId: T:Map.Simulation.ChecksumComparison
+  parent: Map.Simulation
+  href: Map.Simulation.ChecksumComparison.html
+  name: ChecksumComparison
+  nameWithType: ChecksumComparison
+  fullName: Map.Simulation.ChecksumComparison
+- uid: Map.Simulation.StateValidationResult
+  commentId: T:Map.Simulation.StateValidationResult
+  parent: Map.Simulation
+  href: Map.Simulation.StateValidationResult.html
+  name: StateValidationResult
+  nameWithType: StateValidationResult
+  fullName: Map.Simulation.StateValidationResult
+- uid: Map.Simulation.SimulationMapLoader
+  commentId: T:Map.Simulation.SimulationMapLoader
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader
+  nameWithType: SimulationMapLoader
+  fullName: Map.Simulation.SimulationMapLoader
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  commentId: T:Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  parent: Map.Simulation
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader.SimulationLoadResult
+  nameWithType: SimulationMapLoader.SimulationLoadResult
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  spec.csharp:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    name: SimulationLoadResult
+    href: Map.Simulation.SimulationMapLoader.SimulationLoadResult.html
+  spec.vb:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    name: SimulationLoadResult
+    href: Map.Simulation.SimulationMapLoader.SimulationLoadResult.html
+- uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+  commentId: T:Map.Simulation.SimulationMapLoader.SimulationMapData
+  parent: Map.Simulation
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader.SimulationMapData
+  nameWithType: SimulationMapLoader.SimulationMapData
+  fullName: Map.Simulation.SimulationMapLoader.SimulationMapData
+  spec.csharp:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+    name: SimulationMapData
+    href: Map.Simulation.SimulationMapLoader.SimulationMapData.html
+  spec.vb:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+    name: SimulationMapData
+    href: Map.Simulation.SimulationMapLoader.SimulationMapData.html
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  commentId: T:Map.Simulation.SimulationMapLoader.ProvinceBounds
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader.ProvinceBounds
+  nameWithType: SimulationMapLoader.ProvinceBounds
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  spec.csharp:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Simulation.SimulationMapLoader.ProvinceBounds.html
+  spec.vb:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Simulation.SimulationMapLoader.ProvinceBounds.html
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  href: Map.html
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html

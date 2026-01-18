@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Setup
+  commentId: N:Map.Setup
+  id: Map.Setup
+  children:
+  - Map.Setup.MapRendererSetup
+  langs:
+  - csharp
+  - vb
+  name: Map.Setup
+  nameWithType: Map.Setup
+  fullName: Map.Setup
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Setup.MapRendererSetup
+  commentId: T:Map.Setup.MapRendererSetup
+  href: Map.Setup.MapRendererSetup.html
+  name: MapRendererSetup
+  nameWithType: MapRendererSetup
+  fullName: Map.Setup.MapRendererSetup

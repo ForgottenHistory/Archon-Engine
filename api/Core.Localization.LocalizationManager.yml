@@ -1,0 +1,764 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.LocalizationManager
+  commentId: T:Core.Localization.LocalizationManager
+  id: LocalizationManager
+  parent: Core.Localization
+  children:
+  - Core.Localization.LocalizationManager.AvailableLanguages
+  - Core.Localization.LocalizationManager.ClearCache
+  - Core.Localization.LocalizationManager.CurrentLanguage
+  - Core.Localization.LocalizationManager.Get(System.String)
+  - Core.Localization.LocalizationManager.Get(System.String,System.ValueTuple{System.String,System.String}[])
+  - Core.Localization.LocalizationManager.GetStatistics
+  - Core.Localization.LocalizationManager.HasKey(System.String)
+  - Core.Localization.LocalizationManager.Initialize(System.String,System.String)
+  - Core.Localization.LocalizationManager.IsInitialized
+  - Core.Localization.LocalizationManager.SetLanguage(System.String)
+  - Core.Localization.LocalizationManager.Shutdown
+  langs:
+  - csharp
+  - vb
+  name: LocalizationManager
+  nameWithType: LocalizationManager
+  fullName: Core.Localization.LocalizationManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalizationManager
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    High-level facade for the localization system.
+
+    Provides simple API for getting localized strings.
+
+
+    Usage:
+      LocalizationManager.Initialize("path/to/localisation");
+      string name = LocalizationManager.Get("PROV123");  // "Province Name"
+      string country = LocalizationManager.Get("RED");    // "Red Empire"
+  example: []
+  syntax:
+    content: public static class LocalizationManager
+    content.vb: Public Module LocalizationManager
+  inheritance:
+  - System.Object
+- uid: Core.Localization.LocalizationManager.IsInitialized
+  commentId: P:Core.Localization.LocalizationManager.IsInitialized
+  id: IsInitialized
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: LocalizationManager.IsInitialized
+  fullName: Core.Localization.LocalizationManager.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Whether the localization system is initialized
+  example: []
+  syntax:
+    content: public static bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsInitialized As Boolean
+  overload: Core.Localization.LocalizationManager.IsInitialized*
+- uid: Core.Localization.LocalizationManager.CurrentLanguage
+  commentId: P:Core.Localization.LocalizationManager.CurrentLanguage
+  id: CurrentLanguage
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentLanguage
+  nameWithType: LocalizationManager.CurrentLanguage
+  fullName: Core.Localization.LocalizationManager.CurrentLanguage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentLanguage
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Current active language
+  example: []
+  syntax:
+    content: public static string CurrentLanguage { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Shared ReadOnly Property CurrentLanguage As String
+  overload: Core.Localization.LocalizationManager.CurrentLanguage*
+- uid: Core.Localization.LocalizationManager.AvailableLanguages
+  commentId: P:Core.Localization.LocalizationManager.AvailableLanguages
+  id: AvailableLanguages
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: AvailableLanguages
+  nameWithType: LocalizationManager.AvailableLanguages
+  fullName: Core.Localization.LocalizationManager.AvailableLanguages
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AvailableLanguages
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Available languages after loading
+  example: []
+  syntax:
+    content: public static IReadOnlyList<string> AvailableLanguages { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{System.String}
+    content.vb: Public Shared ReadOnly Property AvailableLanguages As IReadOnlyList(Of String)
+  overload: Core.Localization.LocalizationManager.AvailableLanguages*
+- uid: Core.Localization.LocalizationManager.Initialize(System.String,System.String)
+  commentId: M:Core.Localization.LocalizationManager.Initialize(System.String,System.String)
+  id: Initialize(System.String,System.String)
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: Initialize(string, string)
+  nameWithType: LocalizationManager.Initialize(string, string)
+  fullName: Core.Localization.LocalizationManager.Initialize(string, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Initialize the localization system by loading all language files from a directory
+  example: []
+  syntax:
+    content: public static void Initialize(string localisationPath, string defaultLanguage = "english")
+    parameters:
+    - id: localisationPath
+      type: System.String
+      description: Path to localisation folder (contains language subfolders)
+    - id: defaultLanguage
+      type: System.String
+      description: Default language to use (e.g., "english")
+    content.vb: Public Shared Sub Initialize(localisationPath As String, defaultLanguage As String = "english")
+  overload: Core.Localization.LocalizationManager.Initialize*
+  nameWithType.vb: LocalizationManager.Initialize(String, String)
+  fullName.vb: Core.Localization.LocalizationManager.Initialize(String, String)
+  name.vb: Initialize(String, String)
+- uid: Core.Localization.LocalizationManager.Get(System.String)
+  commentId: M:Core.Localization.LocalizationManager.Get(System.String)
+  id: Get(System.String)
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: Get(string)
+  nameWithType: LocalizationManager.Get(string)
+  fullName: Core.Localization.LocalizationManager.Get(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get a localized string by key
+  example: []
+  syntax:
+    content: public static string Get(string key)
+    parameters:
+    - id: key
+      type: System.String
+      description: The localization key (e.g., "PROV123", "RED", "UI_OK")
+    return:
+      type: System.String
+      description: Localized string, or the key itself if not found
+    content.vb: Public Shared Function [Get](key As String) As String
+  overload: Core.Localization.LocalizationManager.Get*
+  nameWithType.vb: LocalizationManager.Get(String)
+  fullName.vb: Core.Localization.LocalizationManager.Get(String)
+  name.vb: Get(String)
+- uid: Core.Localization.LocalizationManager.Get(System.String,System.ValueTuple{System.String,System.String}[])
+  commentId: M:Core.Localization.LocalizationManager.Get(System.String,System.ValueTuple{System.String,System.String}[])
+  id: Get(System.String,System.ValueTuple{System.String,System.String}[])
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: Get(string, params (string key, string value)[])
+  nameWithType: LocalizationManager.Get(string, params (string key, string value)[])
+  fullName: Core.Localization.LocalizationManager.Get(string, params (string key, string value)[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 176
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get a localized string with parameter substitution
+  example: []
+  syntax:
+    content: public static string Get(string key, params (string key, string value)[] parameters)
+    parameters:
+    - id: key
+      type: System.String
+      description: The localization key
+    - id: parameters
+      type: System.ValueTuple{System.String,System.String}[]
+      description: Parameters to substitute (key-value pairs)
+    return:
+      type: System.String
+      description: Localized string with parameters replaced
+    content.vb: Public Shared Function [Get](key As String, ParamArray parameters As (key As String, value As String)()) As String
+  overload: Core.Localization.LocalizationManager.Get*
+  nameWithType.vb: LocalizationManager.Get(String, ParamArray (key As String, value As String)())
+  fullName.vb: Core.Localization.LocalizationManager.Get(String, ParamArray (key As String, value As String)())
+  name.vb: Get(String, ParamArray (key As String, value As String)())
+- uid: Core.Localization.LocalizationManager.HasKey(System.String)
+  commentId: M:Core.Localization.LocalizationManager.HasKey(System.String)
+  id: HasKey(System.String)
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: HasKey(string)
+  nameWithType: LocalizationManager.HasKey(string)
+  fullName: Core.Localization.LocalizationManager.HasKey(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasKey
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Check if a localization key exists
+  example: []
+  syntax:
+    content: public static bool HasKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasKey(key As String) As Boolean
+  overload: Core.Localization.LocalizationManager.HasKey*
+  nameWithType.vb: LocalizationManager.HasKey(String)
+  fullName.vb: Core.Localization.LocalizationManager.HasKey(String)
+  name.vb: HasKey(String)
+- uid: Core.Localization.LocalizationManager.SetLanguage(System.String)
+  commentId: M:Core.Localization.LocalizationManager.SetLanguage(System.String)
+  id: SetLanguage(System.String)
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: SetLanguage(string)
+  nameWithType: LocalizationManager.SetLanguage(string)
+  fullName: Core.Localization.LocalizationManager.SetLanguage(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetLanguage
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 220
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Change the current language
+  example: []
+  syntax:
+    content: public static void SetLanguage(string language)
+    parameters:
+    - id: language
+      type: System.String
+      description: Language code (e.g., "english", "french", "german")
+    content.vb: Public Shared Sub SetLanguage(language As String)
+  overload: Core.Localization.LocalizationManager.SetLanguage*
+  nameWithType.vb: LocalizationManager.SetLanguage(String)
+  fullName.vb: Core.Localization.LocalizationManager.SetLanguage(String)
+  name.vb: SetLanguage(String)
+- uid: Core.Localization.LocalizationManager.ClearCache
+  commentId: M:Core.Localization.LocalizationManager.ClearCache
+  id: ClearCache
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: ClearCache()
+  nameWithType: LocalizationManager.ClearCache()
+  fullName: Core.Localization.LocalizationManager.ClearCache()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearCache
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 251
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Clear the string cache (call after dynamic content changes)
+  example: []
+  syntax:
+    content: public static void ClearCache()
+    content.vb: Public Shared Sub ClearCache()
+  overload: Core.Localization.LocalizationManager.ClearCache*
+- uid: Core.Localization.LocalizationManager.Shutdown
+  commentId: M:Core.Localization.LocalizationManager.Shutdown
+  id: Shutdown
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: Shutdown()
+  nameWithType: LocalizationManager.Shutdown()
+  fullName: Core.Localization.LocalizationManager.Shutdown()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Shutdown
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 259
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Shutdown and release all resources
+  example: []
+  syntax:
+    content: public static void Shutdown()
+    content.vb: Public Shared Sub Shutdown()
+  overload: Core.Localization.LocalizationManager.Shutdown*
+- uid: Core.Localization.LocalizationManager.GetStatistics
+  commentId: M:Core.Localization.LocalizationManager.GetStatistics
+  id: GetStatistics
+  parent: Core.Localization.LocalizationManager
+  langs:
+  - csharp
+  - vb
+  name: GetStatistics()
+  nameWithType: LocalizationManager.GetStatistics()
+  fullName: Core.Localization.LocalizationManager.GetStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStatistics
+    path: Scripts/Core/Localization/LocalizationManager.cs
+    startLine: 352
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get statistics about loaded localization data
+  example: []
+  syntax:
+    content: public static (int languages, int totalEntries, float completeness) GetStatistics()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int32,System.Single}
+    content.vb: Public Shared Function GetStatistics() As (languages As Integer, totalEntries As Integer, completeness As Single)
+  overload: Core.Localization.LocalizationManager.GetStatistics*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.LocalizationManager.IsInitialized*
+  commentId: Overload:Core.Localization.LocalizationManager.IsInitialized
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_IsInitialized
+  name: IsInitialized
+  nameWithType: LocalizationManager.IsInitialized
+  fullName: Core.Localization.LocalizationManager.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Localization.LocalizationManager.CurrentLanguage*
+  commentId: Overload:Core.Localization.LocalizationManager.CurrentLanguage
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_CurrentLanguage
+  name: CurrentLanguage
+  nameWithType: LocalizationManager.CurrentLanguage
+  fullName: Core.Localization.LocalizationManager.CurrentLanguage
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Localization.LocalizationManager.AvailableLanguages*
+  commentId: Overload:Core.Localization.LocalizationManager.AvailableLanguages
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_AvailableLanguages
+  name: AvailableLanguages
+  nameWithType: LocalizationManager.AvailableLanguages
+  fullName: Core.Localization.LocalizationManager.AvailableLanguages
+- uid: System.Collections.Generic.IReadOnlyList{System.String}
+  commentId: T:System.Collections.Generic.IReadOnlyList{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  name: IReadOnlyList<string>
+  nameWithType: IReadOnlyList<string>
+  fullName: System.Collections.Generic.IReadOnlyList<string>
+  nameWithType.vb: IReadOnlyList(Of String)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of String)
+  name.vb: IReadOnlyList(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Localization.LocalizationManager.Initialize*
+  commentId: Overload:Core.Localization.LocalizationManager.Initialize
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_Initialize_System_String_System_String_
+  name: Initialize
+  nameWithType: LocalizationManager.Initialize
+  fullName: Core.Localization.LocalizationManager.Initialize
+- uid: Core.Localization.LocalizationManager.Get*
+  commentId: Overload:Core.Localization.LocalizationManager.Get
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_Get_System_String_
+  name: Get
+  nameWithType: LocalizationManager.Get
+  fullName: Core.Localization.LocalizationManager.Get
+- uid: System.ValueTuple{System.String,System.String}[]
+  isExternal: true
+  name: (string key, string value)[]
+  nameWithType: (string key, string value)[]
+  fullName: (string key, string value)[]
+  nameWithType.vb: (key As String, value As String)()
+  fullName.vb: (key As String, value As String)()
+  name.vb: (key As String, value As String)()
+  spec.csharp:
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.String}.key
+    name: key
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.String}.value
+    name: value
+  - name: )
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.String,System.String}.key
+    name: key
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.String}.value
+    name: value
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+  - name: (
+  - name: )
+- uid: Core.Localization.LocalizationManager.HasKey*
+  commentId: Overload:Core.Localization.LocalizationManager.HasKey
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_HasKey_System_String_
+  name: HasKey
+  nameWithType: LocalizationManager.HasKey
+  fullName: Core.Localization.LocalizationManager.HasKey
+- uid: Core.Localization.LocalizationManager.SetLanguage*
+  commentId: Overload:Core.Localization.LocalizationManager.SetLanguage
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_SetLanguage_System_String_
+  name: SetLanguage
+  nameWithType: LocalizationManager.SetLanguage
+  fullName: Core.Localization.LocalizationManager.SetLanguage
+- uid: Core.Localization.LocalizationManager.ClearCache*
+  commentId: Overload:Core.Localization.LocalizationManager.ClearCache
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_ClearCache
+  name: ClearCache
+  nameWithType: LocalizationManager.ClearCache
+  fullName: Core.Localization.LocalizationManager.ClearCache
+- uid: Core.Localization.LocalizationManager.Shutdown*
+  commentId: Overload:Core.Localization.LocalizationManager.Shutdown
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_Shutdown
+  name: Shutdown
+  nameWithType: LocalizationManager.Shutdown
+  fullName: Core.Localization.LocalizationManager.Shutdown
+- uid: Core.Localization.LocalizationManager.GetStatistics*
+  commentId: Overload:Core.Localization.LocalizationManager.GetStatistics
+  href: Core.Localization.LocalizationManager.html#Core_Localization_LocalizationManager_GetStatistics
+  name: GetStatistics
+  nameWithType: LocalizationManager.GetStatistics
+  fullName: Core.Localization.LocalizationManager.GetStatistics
+- uid: System.ValueTuple{System.Int32,System.Int32,System.Single}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32,System.Single}
+  parent: System
+  definition: System.ValueTuple`3
+  name: (int languages, int totalEntries, float completeness)
+  nameWithType: (int languages, int totalEntries, float completeness)
+  fullName: (int languages, int totalEntries, float completeness)
+  nameWithType.vb: (languages As Integer, totalEntries As Integer, completeness As Single)
+  fullName.vb: (languages As Integer, totalEntries As Integer, completeness As Single)
+  name.vb: (languages As Integer, totalEntries As Integer, completeness As Single)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.languages
+    name: languages
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.totalEntries
+    name: totalEntries
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.completeness
+    name: completeness
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.languages
+    name: languages
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.totalEntries
+    name: totalEntries
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Single}.completeness
+    name: completeness
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`3
+  commentId: T:System.ValueTuple`3
+  name: (T1, T2, T3)
+  nameWithType: (T1, T2, T3)
+  fullName: (T1, T2, T3)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )

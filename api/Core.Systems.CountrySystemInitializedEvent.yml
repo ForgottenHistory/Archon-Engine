@@ -1,0 +1,172 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.CountrySystemInitializedEvent
+  commentId: T:Core.Systems.CountrySystemInitializedEvent
+  id: CountrySystemInitializedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.CountrySystemInitializedEvent.CountryCount
+  - Core.Systems.CountrySystemInitializedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: CountrySystemInitializedEvent
+  nameWithType: CountrySystemInitializedEvent
+  fullName: Core.Systems.CountrySystemInitializedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySystemInitializedEvent
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Country-related events for EventBus
+
+    Extracted from CountrySystem.cs for better organization
+  example: []
+  syntax:
+    content: 'public struct CountrySystemInitializedEvent : IGameEvent'
+    content.vb: Public Structure CountrySystemInitializedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.CountrySystemInitializedEvent.CountryCount
+  commentId: F:Core.Systems.CountrySystemInitializedEvent.CountryCount
+  id: CountryCount
+  parent: Core.Systems.CountrySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryCount
+  nameWithType: CountrySystemInitializedEvent.CountryCount
+  fullName: Core.Systems.CountrySystemInitializedEvent.CountryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryCount
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CountryCount
+    return:
+      type: System.Int32
+    content.vb: Public CountryCount As Integer
+- uid: Core.Systems.CountrySystemInitializedEvent.TimeStamp
+  commentId: P:Core.Systems.CountrySystemInitializedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.CountrySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: CountrySystemInitializedEvent.TimeStamp
+  fullName: Core.Systems.CountrySystemInitializedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Country/CountryEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Systems/Country/CountryEvents.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.CountrySystemInitializedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.CountrySystemInitializedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.CountrySystemInitializedEvent.TimeStamp
+  href: Core.Systems.CountrySystemInitializedEvent.html#Core_Systems_CountrySystemInitializedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: CountrySystemInitializedEvent.TimeStamp
+  fullName: Core.Systems.CountrySystemInitializedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

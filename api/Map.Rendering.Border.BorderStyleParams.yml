@@ -1,0 +1,403 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderStyleParams
+  commentId: T:Map.Rendering.Border.BorderStyleParams
+  id: BorderStyleParams
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderStyleParams.CountryBorderColor
+  - Map.Rendering.Border.BorderStyleParams.CountryBorderStrength
+  - Map.Rendering.Border.BorderStyleParams.EdgeSmoothness
+  - Map.Rendering.Border.BorderStyleParams.EdgeWidth
+  - Map.Rendering.Border.BorderStyleParams.GradientWidth
+  - Map.Rendering.Border.BorderStyleParams.PixelPerfectAntiAliasing
+  - Map.Rendering.Border.BorderStyleParams.PixelPerfectCountryThickness
+  - Map.Rendering.Border.BorderStyleParams.PixelPerfectProvinceThickness
+  - Map.Rendering.Border.BorderStyleParams.ProvinceBorderColor
+  - Map.Rendering.Border.BorderStyleParams.ProvinceBorderStrength
+  langs:
+  - csharp
+  - vb
+  name: BorderStyleParams
+  nameWithType: BorderStyleParams
+  fullName: Map.Rendering.Border.BorderStyleParams
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderStyleParams
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Style parameters from VisualStyleConfiguration.
+
+    Passed to ApplyToMaterial for visual customization.
+  example: []
+  syntax:
+    content: public struct BorderStyleParams
+    content.vb: Public Structure BorderStyleParams
+- uid: Map.Rendering.Border.BorderStyleParams.CountryBorderColor
+  commentId: F:Map.Rendering.Border.BorderStyleParams.CountryBorderColor
+  id: CountryBorderColor
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: CountryBorderColor
+  nameWithType: BorderStyleParams.CountryBorderColor
+  fullName: Map.Rendering.Border.BorderStyleParams.CountryBorderColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryBorderColor
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 94
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Color of borders between countries.
+  example: []
+  syntax:
+    content: public Color CountryBorderColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public CountryBorderColor As Color
+- uid: Map.Rendering.Border.BorderStyleParams.ProvinceBorderColor
+  commentId: F:Map.Rendering.Border.BorderStyleParams.ProvinceBorderColor
+  id: ProvinceBorderColor
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: ProvinceBorderColor
+  nameWithType: BorderStyleParams.ProvinceBorderColor
+  fullName: Map.Rendering.Border.BorderStyleParams.ProvinceBorderColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBorderColor
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 97
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Color of borders between provinces within the same country.
+  example: []
+  syntax:
+    content: public Color ProvinceBorderColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public ProvinceBorderColor As Color
+- uid: Map.Rendering.Border.BorderStyleParams.CountryBorderStrength
+  commentId: F:Map.Rendering.Border.BorderStyleParams.CountryBorderStrength
+  id: CountryBorderStrength
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: CountryBorderStrength
+  nameWithType: BorderStyleParams.CountryBorderStrength
+  fullName: Map.Rendering.Border.BorderStyleParams.CountryBorderStrength
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryBorderStrength
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Visibility strength of country borders (0 = hidden, 1 = full).
+  example: []
+  syntax:
+    content: public float CountryBorderStrength
+    return:
+      type: System.Single
+    content.vb: Public CountryBorderStrength As Single
+- uid: Map.Rendering.Border.BorderStyleParams.ProvinceBorderStrength
+  commentId: F:Map.Rendering.Border.BorderStyleParams.ProvinceBorderStrength
+  id: ProvinceBorderStrength
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: ProvinceBorderStrength
+  nameWithType: BorderStyleParams.ProvinceBorderStrength
+  fullName: Map.Rendering.Border.BorderStyleParams.ProvinceBorderStrength
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBorderStrength
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Visibility strength of province borders (0 = hidden, 1 = full).
+  example: []
+  syntax:
+    content: public float ProvinceBorderStrength
+    return:
+      type: System.Single
+    content.vb: Public ProvinceBorderStrength As Single
+- uid: Map.Rendering.Border.BorderStyleParams.PixelPerfectCountryThickness
+  commentId: F:Map.Rendering.Border.BorderStyleParams.PixelPerfectCountryThickness
+  id: PixelPerfectCountryThickness
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: PixelPerfectCountryThickness
+  nameWithType: BorderStyleParams.PixelPerfectCountryThickness
+  fullName: Map.Rendering.Border.BorderStyleParams.PixelPerfectCountryThickness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelPerfectCountryThickness
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 108
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Country border thickness in pixels (PixelPerfect mode only).
+  example: []
+  syntax:
+    content: public int PixelPerfectCountryThickness
+    return:
+      type: System.Int32
+    content.vb: Public PixelPerfectCountryThickness As Integer
+- uid: Map.Rendering.Border.BorderStyleParams.PixelPerfectProvinceThickness
+  commentId: F:Map.Rendering.Border.BorderStyleParams.PixelPerfectProvinceThickness
+  id: PixelPerfectProvinceThickness
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: PixelPerfectProvinceThickness
+  nameWithType: BorderStyleParams.PixelPerfectProvinceThickness
+  fullName: Map.Rendering.Border.BorderStyleParams.PixelPerfectProvinceThickness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelPerfectProvinceThickness
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 111
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Province border thickness in pixels (PixelPerfect mode only).
+  example: []
+  syntax:
+    content: public int PixelPerfectProvinceThickness
+    return:
+      type: System.Int32
+    content.vb: Public PixelPerfectProvinceThickness As Integer
+- uid: Map.Rendering.Border.BorderStyleParams.PixelPerfectAntiAliasing
+  commentId: F:Map.Rendering.Border.BorderStyleParams.PixelPerfectAntiAliasing
+  id: PixelPerfectAntiAliasing
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: PixelPerfectAntiAliasing
+  nameWithType: BorderStyleParams.PixelPerfectAntiAliasing
+  fullName: Map.Rendering.Border.BorderStyleParams.PixelPerfectAntiAliasing
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelPerfectAntiAliasing
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 114
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Anti-aliasing gradient width (PixelPerfect mode only).
+  example: []
+  syntax:
+    content: public float PixelPerfectAntiAliasing
+    return:
+      type: System.Single
+    content.vb: Public PixelPerfectAntiAliasing As Single
+- uid: Map.Rendering.Border.BorderStyleParams.EdgeWidth
+  commentId: F:Map.Rendering.Border.BorderStyleParams.EdgeWidth
+  id: EdgeWidth
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: EdgeWidth
+  nameWithType: BorderStyleParams.EdgeWidth
+  fullName: Map.Rendering.Border.BorderStyleParams.EdgeWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EdgeWidth
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 119
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Sharp edge width in pixels (DistanceField mode only).
+  example: []
+  syntax:
+    content: public float EdgeWidth
+    return:
+      type: System.Single
+    content.vb: Public EdgeWidth As Single
+- uid: Map.Rendering.Border.BorderStyleParams.GradientWidth
+  commentId: F:Map.Rendering.Border.BorderStyleParams.GradientWidth
+  id: GradientWidth
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: GradientWidth
+  nameWithType: BorderStyleParams.GradientWidth
+  fullName: Map.Rendering.Border.BorderStyleParams.GradientWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GradientWidth
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 122
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Soft gradient falloff distance (DistanceField mode only).
+  example: []
+  syntax:
+    content: public float GradientWidth
+    return:
+      type: System.Single
+    content.vb: Public GradientWidth As Single
+- uid: Map.Rendering.Border.BorderStyleParams.EdgeSmoothness
+  commentId: F:Map.Rendering.Border.BorderStyleParams.EdgeSmoothness
+  id: EdgeSmoothness
+  parent: Map.Rendering.Border.BorderStyleParams
+  langs:
+  - csharp
+  - vb
+  name: EdgeSmoothness
+  nameWithType: BorderStyleParams.EdgeSmoothness
+  fullName: Map.Rendering.Border.BorderStyleParams.EdgeSmoothness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EdgeSmoothness
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 125
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Anti-aliasing smoothness factor (DistanceField mode only).
+  example: []
+  syntax:
+    content: public float EdgeSmoothness
+    return:
+      type: System.Single
+    content.vb: Public EdgeSmoothness As Single
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

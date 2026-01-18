@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  commentId: T:Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  id: MultiLanguageExtractor.MultiLanguageResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.AvailableLanguages
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.DefaultLanguage
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.IsSuccess
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.LanguageData
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult.TotalEntries
+  langs:
+  - csharp
+  - vb
+  name: MultiLanguageExtractor.MultiLanguageResult
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MultiLanguageResult
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Container for multiple language results
+  example: []
+  syntax:
+    content: public struct MultiLanguageExtractor.MultiLanguageResult
+    content.vb: Public Structure MultiLanguageExtractor.MultiLanguageResult
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.LanguageData
+  commentId: F:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.LanguageData
+  id: LanguageData
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: LanguageData
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.LanguageData
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.LanguageData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LanguageData
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeHashMap<FixedString64Bytes, YAMLParser.YAMLParseResult> LanguageData
+    return:
+      type: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Core.Localization.YAMLParser.YAMLParseResult}
+    content.vb: Public LanguageData As NativeHashMap(Of FixedString64Bytes, YAMLParser.YAMLParseResult)
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.AvailableLanguages
+  commentId: F:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.AvailableLanguages
+  id: AvailableLanguages
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: AvailableLanguages
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.AvailableLanguages
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.AvailableLanguages
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AvailableLanguages
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public NativeList<FixedString64Bytes> AvailableLanguages
+    return:
+      type: Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+    content.vb: Public AvailableLanguages As NativeList(Of FixedString64Bytes)
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.DefaultLanguage
+  commentId: F:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.DefaultLanguage
+  id: DefaultLanguage
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: DefaultLanguage
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.DefaultLanguage
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.DefaultLanguage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefaultLanguage
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString64Bytes DefaultLanguage
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public DefaultLanguage As FixedString64Bytes
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.TotalEntries
+  commentId: F:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.TotalEntries
+  id: TotalEntries
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: TotalEntries
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.TotalEntries
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.TotalEntries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalEntries
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int TotalEntries
+    return:
+      type: System.Int32
+    content.vb: Public TotalEntries As Integer
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.IsSuccess
+  commentId: F:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.IsSuccess
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose
+  commentId: M:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose
+  id: Dispose
+  parent: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.Dispose()
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Localization/MultiLanguageExtractor.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose*
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Core.Localization.YAMLParser.YAMLParseResult}
+  commentId: T:Unity.Collections.NativeHashMap{Unity.Collections.FixedString64Bytes,Core.Localization.YAMLParser.YAMLParseResult}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  href: Core.Localization.YAMLParser.html
+  name: NativeHashMap<FixedString64Bytes, YAMLParser.YAMLParseResult>
+  nameWithType: NativeHashMap<FixedString64Bytes, YAMLParser.YAMLParseResult>
+  fullName: Unity.Collections.NativeHashMap<Unity.Collections.FixedString64Bytes, Core.Localization.YAMLParser.YAMLParseResult>
+  nameWithType.vb: NativeHashMap(Of FixedString64Bytes, YAMLParser.YAMLParseResult)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Unity.Collections.FixedString64Bytes, Core.Localization.YAMLParser.YAMLParseResult)
+  name.vb: NativeHashMap(Of FixedString64Bytes, YAMLParser.YAMLParseResult)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Localization.YAMLParser
+    name: YAMLParser
+    href: Core.Localization.YAMLParser.html
+  - name: .
+  - uid: Core.Localization.YAMLParser.YAMLParseResult
+    name: YAMLParseResult
+    href: Core.Localization.YAMLParser.YAMLParseResult.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Localization.YAMLParser
+    name: YAMLParser
+    href: Core.Localization.YAMLParser.html
+  - name: .
+  - uid: Core.Localization.YAMLParser.YAMLParseResult
+    name: YAMLParseResult
+    href: Core.Localization.YAMLParser.YAMLParseResult.html
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+  commentId: T:Unity.Collections.NativeList{Unity.Collections.FixedString64Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<FixedString64Bytes>
+  nameWithType: NativeList<FixedString64Bytes>
+  fullName: Unity.Collections.NativeList<Unity.Collections.FixedString64Bytes>
+  nameWithType.vb: NativeList(Of FixedString64Bytes)
+  fullName.vb: Unity.Collections.NativeList(Of Unity.Collections.FixedString64Bytes)
+  name.vb: NativeList(Of FixedString64Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose*
+  commentId: Overload:Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose
+  href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html#Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Dispose
+  name: Dispose
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult.Dispose
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.Dispose

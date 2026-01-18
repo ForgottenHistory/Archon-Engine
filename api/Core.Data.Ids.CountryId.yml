@@ -1,0 +1,686 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.Ids.CountryId
+  commentId: T:Core.Data.Ids.CountryId
+  id: CountryId
+  parent: Core.Data.Ids
+  children:
+  - Core.Data.Ids.CountryId.#ctor(System.UInt16)
+  - Core.Data.Ids.CountryId.Equals(Core.Data.Ids.CountryId)
+  - Core.Data.Ids.CountryId.Equals(System.Object)
+  - Core.Data.Ids.CountryId.GetHashCode
+  - Core.Data.Ids.CountryId.IsValid
+  - Core.Data.Ids.CountryId.None
+  - Core.Data.Ids.CountryId.ToString
+  - Core.Data.Ids.CountryId.Value
+  - Core.Data.Ids.CountryId.op_Equality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  - Core.Data.Ids.CountryId.op_Implicit(Core.Data.Ids.CountryId)~System.UInt16
+  - Core.Data.Ids.CountryId.op_Implicit(System.UInt16)~Core.Data.Ids.CountryId
+  - Core.Data.Ids.CountryId.op_Inequality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: CountryId
+  fullName: Core.Data.Ids.CountryId
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: >-
+    Type-safe country identifier
+
+    Prevents mixing up country IDs with other entity IDs at compile time
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public readonly struct CountryId
+    content.vb: >-
+      <Serializable>
+
+      Public Structure CountryId
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.Ids.CountryId.Value
+  commentId: F:Core.Data.Ids.CountryId.Value
+  id: Value
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: CountryId.Value
+  fullName: Core.Data.Ids.CountryId.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public readonly ushort Value
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly Value As UShort
+- uid: Core.Data.Ids.CountryId.#ctor(System.UInt16)
+  commentId: M:Core.Data.Ids.CountryId.#ctor(System.UInt16)
+  id: '#ctor(System.UInt16)'
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: CountryId(ushort)
+  nameWithType: CountryId.CountryId(ushort)
+  fullName: Core.Data.Ids.CountryId.CountryId(ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public CountryId(ushort value)
+    parameters:
+    - id: value
+      type: System.UInt16
+    content.vb: Public Sub New(value As UShort)
+  overload: Core.Data.Ids.CountryId.#ctor*
+  nameWithType.vb: CountryId.New(UShort)
+  fullName.vb: Core.Data.Ids.CountryId.New(UShort)
+  name.vb: New(UShort)
+- uid: Core.Data.Ids.CountryId.None
+  commentId: F:Core.Data.Ids.CountryId.None
+  id: None
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: CountryId.None
+  fullName: Core.Data.Ids.CountryId.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Special constant for no country/unowned
+  example: []
+  syntax:
+    content: public static readonly CountryId None
+    return:
+      type: Core.Data.Ids.CountryId
+    content.vb: Public Shared ReadOnly None As CountryId
+- uid: Core.Data.Ids.CountryId.IsValid
+  commentId: P:Core.Data.Ids.CountryId.IsValid
+  id: IsValid
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: CountryId.IsValid
+  fullName: Core.Data.Ids.CountryId.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Check if this is a valid country ID (not none/zero)
+  example: []
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Core.Data.Ids.CountryId.IsValid*
+- uid: Core.Data.Ids.CountryId.Equals(Core.Data.Ids.CountryId)
+  commentId: M:Core.Data.Ids.CountryId.Equals(Core.Data.Ids.CountryId)
+  id: Equals(Core.Data.Ids.CountryId)
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: Equals(CountryId)
+  nameWithType: CountryId.Equals(CountryId)
+  fullName: Core.Data.Ids.CountryId.Equals(Core.Data.Ids.CountryId)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public bool Equals(CountryId other)
+    parameters:
+    - id: other
+      type: Core.Data.Ids.CountryId
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As CountryId) As Boolean
+  overload: Core.Data.Ids.CountryId.Equals*
+- uid: Core.Data.Ids.CountryId.Equals(System.Object)
+  commentId: M:Core.Data.Ids.CountryId.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: CountryId.Equals(object)
+  fullName: Core.Data.Ids.CountryId.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.Ids.CountryId.Equals*
+  nameWithType.vb: CountryId.Equals(Object)
+  fullName.vb: Core.Data.Ids.CountryId.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.Ids.CountryId.GetHashCode
+  commentId: M:Core.Data.Ids.CountryId.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: CountryId.GetHashCode()
+  fullName: Core.Data.Ids.CountryId.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.Ids.CountryId.GetHashCode*
+- uid: Core.Data.Ids.CountryId.op_Equality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  commentId: M:Core.Data.Ids.CountryId.op_Equality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  id: op_Equality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: operator ==(CountryId, CountryId)
+  nameWithType: CountryId.operator ==(CountryId, CountryId)
+  fullName: Core.Data.Ids.CountryId.operator ==(Core.Data.Ids.CountryId, Core.Data.Ids.CountryId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator ==(CountryId left, CountryId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.CountryId
+    - id: right
+      type: Core.Data.Ids.CountryId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As CountryId, right As CountryId) As Boolean
+  overload: Core.Data.Ids.CountryId.op_Equality*
+  nameWithType.vb: CountryId.=(CountryId, CountryId)
+  fullName.vb: Core.Data.Ids.CountryId.=(Core.Data.Ids.CountryId, Core.Data.Ids.CountryId)
+  name.vb: =(CountryId, CountryId)
+- uid: Core.Data.Ids.CountryId.op_Inequality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  commentId: M:Core.Data.Ids.CountryId.op_Inequality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  id: op_Inequality(Core.Data.Ids.CountryId,Core.Data.Ids.CountryId)
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: operator !=(CountryId, CountryId)
+  nameWithType: CountryId.operator !=(CountryId, CountryId)
+  fullName: Core.Data.Ids.CountryId.operator !=(Core.Data.Ids.CountryId, Core.Data.Ids.CountryId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator !=(CountryId left, CountryId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.CountryId
+    - id: right
+      type: Core.Data.Ids.CountryId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As CountryId, right As CountryId) As Boolean
+  overload: Core.Data.Ids.CountryId.op_Inequality*
+  nameWithType.vb: CountryId.<>(CountryId, CountryId)
+  fullName.vb: Core.Data.Ids.CountryId.<>(Core.Data.Ids.CountryId, Core.Data.Ids.CountryId)
+  name.vb: <>(CountryId, CountryId)
+- uid: Core.Data.Ids.CountryId.op_Implicit(Core.Data.Ids.CountryId)~System.UInt16
+  commentId: M:Core.Data.Ids.CountryId.op_Implicit(Core.Data.Ids.CountryId)~System.UInt16
+  id: op_Implicit(Core.Data.Ids.CountryId)~System.UInt16
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator ushort(CountryId)
+  nameWithType: CountryId.implicit operator ushort(CountryId)
+  fullName: Core.Data.Ids.CountryId.implicit operator ushort(Core.Data.Ids.CountryId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator ushort(CountryId id)
+    parameters:
+    - id: id
+      type: Core.Data.Ids.CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public Shared Widening Operator CType(id As CountryId) As UShort
+  overload: Core.Data.Ids.CountryId.op_Implicit*
+  nameWithType.vb: CountryId.CType(CountryId)
+  fullName.vb: Core.Data.Ids.CountryId.CType(Core.Data.Ids.CountryId)
+  name.vb: CType(CountryId)
+- uid: Core.Data.Ids.CountryId.op_Implicit(System.UInt16)~Core.Data.Ids.CountryId
+  commentId: M:Core.Data.Ids.CountryId.op_Implicit(System.UInt16)~Core.Data.Ids.CountryId
+  id: op_Implicit(System.UInt16)~Core.Data.Ids.CountryId
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator CountryId(ushort)
+  nameWithType: CountryId.implicit operator CountryId(ushort)
+  fullName: Core.Data.Ids.CountryId.implicit operator Core.Data.Ids.CountryId(ushort)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator CountryId(ushort value)
+    parameters:
+    - id: value
+      type: System.UInt16
+    return:
+      type: Core.Data.Ids.CountryId
+    content.vb: Public Shared Widening Operator CType(value As UShort) As CountryId
+  overload: Core.Data.Ids.CountryId.op_Implicit*
+  nameWithType.vb: CountryId.CType(UShort)
+  fullName.vb: Core.Data.Ids.CountryId.CType(UShort)
+  name.vb: CType(UShort)
+- uid: Core.Data.Ids.CountryId.ToString
+  commentId: M:Core.Data.Ids.CountryId.ToString
+  id: ToString
+  parent: Core.Data.Ids.CountryId
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: CountryId.ToString()
+  fullName: Core.Data.Ids.CountryId.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/CountryId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/Ids/CountryId.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.Ids.CountryId.ToString*
+references:
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.Ids.CountryId.#ctor*
+  commentId: Overload:Core.Data.Ids.CountryId.#ctor
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId__ctor_System_UInt16_
+  name: CountryId
+  nameWithType: CountryId.CountryId
+  fullName: Core.Data.Ids.CountryId.CountryId
+  nameWithType.vb: CountryId.New
+  fullName.vb: Core.Data.Ids.CountryId.New
+  name.vb: New
+- uid: Core.Data.Ids.CountryId
+  commentId: T:Core.Data.Ids.CountryId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.CountryId.html
+  name: CountryId
+  nameWithType: CountryId
+  fullName: Core.Data.Ids.CountryId
+- uid: Core.Data.Ids.CountryId.IsValid*
+  commentId: Overload:Core.Data.Ids.CountryId.IsValid
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_IsValid
+  name: IsValid
+  nameWithType: CountryId.IsValid
+  fullName: Core.Data.Ids.CountryId.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.Ids.CountryId.Equals*
+  commentId: Overload:Core.Data.Ids.CountryId.Equals
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_Equals_Core_Data_Ids_CountryId_
+  name: Equals
+  nameWithType: CountryId.Equals
+  fullName: Core.Data.Ids.CountryId.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.CountryId.GetHashCode*
+  commentId: Overload:Core.Data.Ids.CountryId.GetHashCode
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_GetHashCode
+  name: GetHashCode
+  nameWithType: CountryId.GetHashCode
+  fullName: Core.Data.Ids.CountryId.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.Ids.CountryId.op_Equality*
+  commentId: Overload:Core.Data.Ids.CountryId.op_Equality
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_op_Equality_Core_Data_Ids_CountryId_Core_Data_Ids_CountryId_
+  name: operator ==
+  nameWithType: CountryId.operator ==
+  fullName: Core.Data.Ids.CountryId.operator ==
+  nameWithType.vb: CountryId.=
+  fullName.vb: Core.Data.Ids.CountryId.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.CountryId.op_Equality*
+    name: ==
+    href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_op_Equality_Core_Data_Ids_CountryId_Core_Data_Ids_CountryId_
+- uid: Core.Data.Ids.CountryId.op_Inequality*
+  commentId: Overload:Core.Data.Ids.CountryId.op_Inequality
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_op_Inequality_Core_Data_Ids_CountryId_Core_Data_Ids_CountryId_
+  name: operator !=
+  nameWithType: CountryId.operator !=
+  fullName: Core.Data.Ids.CountryId.operator !=
+  nameWithType.vb: CountryId.<>
+  fullName.vb: Core.Data.Ids.CountryId.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.CountryId.op_Inequality*
+    name: '!='
+    href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_op_Inequality_Core_Data_Ids_CountryId_Core_Data_Ids_CountryId_
+- uid: Core.Data.Ids.CountryId.op_Implicit*
+  commentId: Overload:Core.Data.Ids.CountryId.op_Implicit
+  name: implicit operator
+  nameWithType: CountryId.implicit operator
+  fullName: Core.Data.Ids.CountryId.implicit operator
+  nameWithType.vb: CountryId.CType
+  fullName.vb: Core.Data.Ids.CountryId.CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.CountryId.ToString*
+  commentId: Overload:Core.Data.Ids.CountryId.ToString
+  href: Core.Data.Ids.CountryId.html#Core_Data_Ids_CountryId_ToString
+  name: ToString
+  nameWithType: CountryId.ToString
+  fullName: Core.Data.Ids.CountryId.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

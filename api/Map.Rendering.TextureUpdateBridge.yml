@@ -1,0 +1,227 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.TextureUpdateBridge
+  commentId: T:Map.Rendering.TextureUpdateBridge
+  id: TextureUpdateBridge
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.TextureUpdateBridge.ForceUpdate
+  - Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+  langs:
+  - csharp
+  - vb
+  name: TextureUpdateBridge
+  nameWithType: TextureUpdateBridge
+  fullName: Map.Rendering.TextureUpdateBridge
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextureUpdateBridge
+    path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Simple bridge component that listens to province change events
+
+    and updates textures via MapTexturePopulator
+
+    Replaces the complex SimulationTextureUpdater with a lightweight event-driven approach
+  example: []
+  syntax:
+    content: 'public class TextureUpdateBridge : MonoBehaviour'
+    content.vb: Public Class TextureUpdateBridge Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+  commentId: M:Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+  id: Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+  parent: Map.Rendering.TextureUpdateBridge
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping)
+  nameWithType: TextureUpdateBridge.Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping)
+  fullName: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState, Map.Rendering.MapTextureManager, Map.Rendering.MapTexturePopulator, Map.Rendering.ProvinceMapping)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize the bridge with required components
+  example: []
+  syntax:
+    content: public void Initialize(GameState gameState, MapTextureManager textureManager, MapTexturePopulator texturePopulator, ProvinceMapping provinceMapping)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    - id: texturePopulator
+      type: Map.Rendering.MapTexturePopulator
+    - id: provinceMapping
+      type: Map.Rendering.ProvinceMapping
+    content.vb: Public Sub Initialize(gameState As GameState, textureManager As MapTextureManager, texturePopulator As MapTexturePopulator, provinceMapping As ProvinceMapping)
+  overload: Map.Rendering.TextureUpdateBridge.Initialize*
+- uid: Map.Rendering.TextureUpdateBridge.ForceUpdate
+  commentId: M:Map.Rendering.TextureUpdateBridge.ForceUpdate
+  id: ForceUpdate
+  parent: Map.Rendering.TextureUpdateBridge
+  langs:
+  - csharp
+  - vb
+  name: ForceUpdate()
+  nameWithType: TextureUpdateBridge.ForceUpdate()
+  fullName: Map.Rendering.TextureUpdateBridge.ForceUpdate()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceUpdate
+    path: Scripts/Map/Rendering/TextureUpdateBridge.cs
+    startLine: 136
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Force immediate update of all pending changes
+  example: []
+  syntax:
+    content: public void ForceUpdate()
+    content.vb: Public Sub ForceUpdate()
+  overload: Map.Rendering.TextureUpdateBridge.ForceUpdate*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.TextureUpdateBridge.Initialize*
+  commentId: Overload:Map.Rendering.TextureUpdateBridge.Initialize
+  href: Map.Rendering.TextureUpdateBridge.html#Map_Rendering_TextureUpdateBridge_Initialize_Core_GameState_Map_Rendering_MapTextureManager_Map_Rendering_MapTexturePopulator_Map_Rendering_ProvinceMapping_
+  name: Initialize
+  nameWithType: TextureUpdateBridge.Initialize
+  fullName: Map.Rendering.TextureUpdateBridge.Initialize
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.MapTexturePopulator
+  commentId: T:Map.Rendering.MapTexturePopulator
+  parent: Map.Rendering
+  href: Map.Rendering.MapTexturePopulator.html
+  name: MapTexturePopulator
+  nameWithType: MapTexturePopulator
+  fullName: Map.Rendering.MapTexturePopulator
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Map.Rendering.TextureUpdateBridge.ForceUpdate*
+  commentId: Overload:Map.Rendering.TextureUpdateBridge.ForceUpdate
+  href: Map.Rendering.TextureUpdateBridge.html#Map_Rendering_TextureUpdateBridge_ForceUpdate
+  name: ForceUpdate
+  nameWithType: TextureUpdateBridge.ForceUpdate
+  fullName: Map.Rendering.TextureUpdateBridge.ForceUpdate

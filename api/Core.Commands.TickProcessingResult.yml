@@ -1,0 +1,332 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.TickProcessingResult
+  commentId: T:Core.Commands.TickProcessingResult
+  id: TickProcessingResult
+  parent: Core.Commands
+  children:
+  - Core.Commands.TickProcessingResult.AffectedProvinces
+  - Core.Commands.TickProcessingResult.CommandsExecuted
+  - Core.Commands.TickProcessingResult.CommandsProcessed
+  - Core.Commands.TickProcessingResult.CommandsRejected
+  - Core.Commands.TickProcessingResult.FinalStateChecksum
+  - Core.Commands.TickProcessingResult.Tick
+  langs:
+  - csharp
+  - vb
+  name: TickProcessingResult
+  nameWithType: TickProcessingResult
+  fullName: Core.Commands.TickProcessingResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TickProcessingResult
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 286
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Result of tick processing
+  example: []
+  syntax:
+    content: public struct TickProcessingResult
+    content.vb: Public Structure TickProcessingResult
+- uid: Core.Commands.TickProcessingResult.Tick
+  commentId: F:Core.Commands.TickProcessingResult.Tick
+  id: Tick
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: Tick
+  nameWithType: TickProcessingResult.Tick
+  fullName: Core.Commands.TickProcessingResult.Tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tick
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 288
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Tick
+    return:
+      type: System.UInt32
+    content.vb: Public Tick As UInteger
+- uid: Core.Commands.TickProcessingResult.CommandsProcessed
+  commentId: F:Core.Commands.TickProcessingResult.CommandsProcessed
+  id: CommandsProcessed
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: CommandsProcessed
+  nameWithType: TickProcessingResult.CommandsProcessed
+  fullName: Core.Commands.TickProcessingResult.CommandsProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandsProcessed
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 289
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int CommandsProcessed
+    return:
+      type: System.Int32
+    content.vb: Public CommandsProcessed As Integer
+- uid: Core.Commands.TickProcessingResult.CommandsExecuted
+  commentId: F:Core.Commands.TickProcessingResult.CommandsExecuted
+  id: CommandsExecuted
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: CommandsExecuted
+  nameWithType: TickProcessingResult.CommandsExecuted
+  fullName: Core.Commands.TickProcessingResult.CommandsExecuted
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandsExecuted
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 290
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int CommandsExecuted
+    return:
+      type: System.Int32
+    content.vb: Public CommandsExecuted As Integer
+- uid: Core.Commands.TickProcessingResult.CommandsRejected
+  commentId: F:Core.Commands.TickProcessingResult.CommandsRejected
+  id: CommandsRejected
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: CommandsRejected
+  nameWithType: TickProcessingResult.CommandsRejected
+  fullName: Core.Commands.TickProcessingResult.CommandsRejected
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandsRejected
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 291
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int CommandsRejected
+    return:
+      type: System.Int32
+    content.vb: Public CommandsRejected As Integer
+- uid: Core.Commands.TickProcessingResult.AffectedProvinces
+  commentId: F:Core.Commands.TickProcessingResult.AffectedProvinces
+  id: AffectedProvinces
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: AffectedProvinces
+  nameWithType: TickProcessingResult.AffectedProvinces
+  fullName: Core.Commands.TickProcessingResult.AffectedProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AffectedProvinces
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 292
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public List<ushort> AffectedProvinces
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public AffectedProvinces As List(Of UShort)
+- uid: Core.Commands.TickProcessingResult.FinalStateChecksum
+  commentId: F:Core.Commands.TickProcessingResult.FinalStateChecksum
+  id: FinalStateChecksum
+  parent: Core.Commands.TickProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: FinalStateChecksum
+  nameWithType: TickProcessingResult.FinalStateChecksum
+  fullName: Core.Commands.TickProcessingResult.FinalStateChecksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FinalStateChecksum
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 293
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint FinalStateChecksum
+    return:
+      type: System.UInt32
+    content.vb: Public FinalStateChecksum As UInteger
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true

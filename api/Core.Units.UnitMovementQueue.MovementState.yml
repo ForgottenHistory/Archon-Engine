@@ -1,0 +1,287 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitMovementQueue.MovementState
+  commentId: T:Core.Units.UnitMovementQueue.MovementState
+  id: UnitMovementQueue.MovementState
+  parent: Core.Units
+  children:
+  - Core.Units.UnitMovementQueue.MovementState.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Units.UnitMovementQueue.MovementState.GetProgress
+  - Core.Units.UnitMovementQueue.MovementState.daysRemaining
+  - Core.Units.UnitMovementQueue.MovementState.destinationProvinceID
+  - Core.Units.UnitMovementQueue.MovementState.originProvinceID
+  - Core.Units.UnitMovementQueue.MovementState.totalDays
+  langs:
+  - csharp
+  - vb
+  name: UnitMovementQueue.MovementState
+  nameWithType: UnitMovementQueue.MovementState
+  fullName: Core.Units.UnitMovementQueue.MovementState
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MovementState
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: State for a unit currently in transit
+  example: []
+  syntax:
+    content: public struct UnitMovementQueue.MovementState
+    content.vb: Public Structure UnitMovementQueue.MovementState
+- uid: Core.Units.UnitMovementQueue.MovementState.originProvinceID
+  commentId: F:Core.Units.UnitMovementQueue.MovementState.originProvinceID
+  id: originProvinceID
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: originProvinceID
+  nameWithType: UnitMovementQueue.MovementState.originProvinceID
+  fullName: Core.Units.UnitMovementQueue.MovementState.originProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: originProvinceID
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort originProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public originProvinceID As UShort
+- uid: Core.Units.UnitMovementQueue.MovementState.destinationProvinceID
+  commentId: F:Core.Units.UnitMovementQueue.MovementState.destinationProvinceID
+  id: destinationProvinceID
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: destinationProvinceID
+  nameWithType: UnitMovementQueue.MovementState.destinationProvinceID
+  fullName: Core.Units.UnitMovementQueue.MovementState.destinationProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: destinationProvinceID
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort destinationProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public destinationProvinceID As UShort
+- uid: Core.Units.UnitMovementQueue.MovementState.daysRemaining
+  commentId: F:Core.Units.UnitMovementQueue.MovementState.daysRemaining
+  id: daysRemaining
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: daysRemaining
+  nameWithType: UnitMovementQueue.MovementState.daysRemaining
+  fullName: Core.Units.UnitMovementQueue.MovementState.daysRemaining
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: daysRemaining
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public int daysRemaining
+    return:
+      type: System.Int32
+    content.vb: Public daysRemaining As Integer
+- uid: Core.Units.UnitMovementQueue.MovementState.totalDays
+  commentId: F:Core.Units.UnitMovementQueue.MovementState.totalDays
+  id: totalDays
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: totalDays
+  nameWithType: UnitMovementQueue.MovementState.totalDays
+  fullName: Core.Units.UnitMovementQueue.MovementState.totalDays
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: totalDays
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public int totalDays
+    return:
+      type: System.Int32
+    content.vb: Public totalDays As Integer
+- uid: Core.Units.UnitMovementQueue.MovementState.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Units.UnitMovementQueue.MovementState.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: MovementState(ushort, ushort, int)
+  nameWithType: UnitMovementQueue.MovementState.MovementState(ushort, ushort, int)
+  fullName: Core.Units.UnitMovementQueue.MovementState.MovementState(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public MovementState(ushort origin, ushort destination, int days)
+    parameters:
+    - id: origin
+      type: System.UInt16
+    - id: destination
+      type: System.UInt16
+    - id: days
+      type: System.Int32
+    content.vb: Public Sub New(origin As UShort, destination As UShort, days As Integer)
+  overload: Core.Units.UnitMovementQueue.MovementState.#ctor*
+  nameWithType.vb: UnitMovementQueue.MovementState.New(UShort, UShort, Integer)
+  fullName.vb: Core.Units.UnitMovementQueue.MovementState.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+- uid: Core.Units.UnitMovementQueue.MovementState.GetProgress
+  commentId: M:Core.Units.UnitMovementQueue.MovementState.GetProgress
+  id: GetProgress
+  parent: Core.Units.UnitMovementQueue.MovementState
+  langs:
+  - csharp
+  - vb
+  name: GetProgress()
+  nameWithType: UnitMovementQueue.MovementState.GetProgress()
+  fullName: Core.Units.UnitMovementQueue.MovementState.GetProgress()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitMovementQueue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProgress
+    path: Scripts/Core/Units/UnitMovementQueue.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Get movement progress as 0-1 value
+
+    This is presentation-only (for UI progress bars), doesn't need FixedPoint64 determinism
+  example: []
+  syntax:
+    content: public float GetProgress()
+    return:
+      type: System.Single
+    content.vb: Public Function GetProgress() As Single
+  overload: Core.Units.UnitMovementQueue.MovementState.GetProgress*
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Units.UnitMovementQueue.MovementState.#ctor*
+  commentId: Overload:Core.Units.UnitMovementQueue.MovementState.#ctor
+  href: Core.Units.UnitMovementQueue.MovementState.html#Core_Units_UnitMovementQueue_MovementState__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: MovementState
+  nameWithType: UnitMovementQueue.MovementState.MovementState
+  fullName: Core.Units.UnitMovementQueue.MovementState.MovementState
+  nameWithType.vb: UnitMovementQueue.MovementState.New
+  fullName.vb: Core.Units.UnitMovementQueue.MovementState.New
+  name.vb: New
+- uid: Core.Units.UnitMovementQueue.MovementState.GetProgress*
+  commentId: Overload:Core.Units.UnitMovementQueue.MovementState.GetProgress
+  href: Core.Units.UnitMovementQueue.MovementState.html#Core_Units_UnitMovementQueue_MovementState_GetProgress
+  name: GetProgress
+  nameWithType: UnitMovementQueue.MovementState.GetProgress
+  fullName: Core.Units.UnitMovementQueue.MovementState.GetProgress
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

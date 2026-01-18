@@ -1,0 +1,244 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent
+  commentId: T:Core.Diplomacy.DiplomacySystemInitializedEvent
+  id: DiplomacySystemInitializedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor(System.Int32,System.Int32)
+  - Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+  - Core.Diplomacy.DiplomacySystemInitializedEvent.countryCount
+  - Core.Diplomacy.DiplomacySystemInitializedEvent.relationshipCount
+  langs:
+  - csharp
+  - vb
+  name: DiplomacySystemInitializedEvent
+  nameWithType: DiplomacySystemInitializedEvent
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacySystemInitializedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Emitted when DiplomacySystem initializes
+
+    Used by UI and AI to know when diplomatic queries are available
+  example: []
+  syntax:
+    content: 'public struct DiplomacySystemInitializedEvent : IGameEvent'
+    content.vb: Public Structure DiplomacySystemInitializedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.countryCount
+  commentId: F:Core.Diplomacy.DiplomacySystemInitializedEvent.countryCount
+  id: countryCount
+  parent: Core.Diplomacy.DiplomacySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: countryCount
+  nameWithType: DiplomacySystemInitializedEvent.countryCount
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.countryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: countryCount
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 93
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int countryCount
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly countryCount As Integer
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.relationshipCount
+  commentId: F:Core.Diplomacy.DiplomacySystemInitializedEvent.relationshipCount
+  id: relationshipCount
+  parent: Core.Diplomacy.DiplomacySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: relationshipCount
+  nameWithType: DiplomacySystemInitializedEvent.relationshipCount
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.relationshipCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: relationshipCount
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int relationshipCount
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly relationshipCount As Integer
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.DiplomacySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: DiplomacySystemInitializedEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor(System.Int32,System.Int32)
+  commentId: M:Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor(System.Int32,System.Int32)
+  id: '#ctor(System.Int32,System.Int32)'
+  parent: Core.Diplomacy.DiplomacySystemInitializedEvent
+  langs:
+  - csharp
+  - vb
+  name: DiplomacySystemInitializedEvent(int, int)
+  nameWithType: DiplomacySystemInitializedEvent.DiplomacySystemInitializedEvent(int, int)
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.DiplomacySystemInitializedEvent(int, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public DiplomacySystemInitializedEvent(int countries, int relationships)
+    parameters:
+    - id: countries
+      type: System.Int32
+    - id: relationships
+      type: System.Int32
+    content.vb: Public Sub New(countries As Integer, relationships As Integer)
+  overload: Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor*
+  nameWithType.vb: DiplomacySystemInitializedEvent.New(Integer, Integer)
+  fullName.vb: Core.Diplomacy.DiplomacySystemInitializedEvent.New(Integer, Integer)
+  name.vb: New(Integer, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+  href: Core.Diplomacy.DiplomacySystemInitializedEvent.html#Core_Diplomacy_DiplomacySystemInitializedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: DiplomacySystemInitializedEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.DiplomacySystemInitializedEvent.#ctor
+  href: Core.Diplomacy.DiplomacySystemInitializedEvent.html#Core_Diplomacy_DiplomacySystemInitializedEvent__ctor_System_Int32_System_Int32_
+  name: DiplomacySystemInitializedEvent
+  nameWithType: DiplomacySystemInitializedEvent.DiplomacySystemInitializedEvent
+  fullName: Core.Diplomacy.DiplomacySystemInitializedEvent.DiplomacySystemInitializedEvent
+  nameWithType.vb: DiplomacySystemInitializedEvent.New
+  fullName.vb: Core.Diplomacy.DiplomacySystemInitializedEvent.New
+  name.vb: New

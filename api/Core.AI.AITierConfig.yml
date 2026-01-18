@@ -1,0 +1,194 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AITierConfig
+  commentId: T:Core.AI.AITierConfig
+  id: AITierConfig
+  parent: Core.AI
+  children:
+  - Core.AI.AITierConfig.#ctor(System.Byte,System.UInt16)
+  - Core.AI.AITierConfig.intervalHours
+  - Core.AI.AITierConfig.maxDistance
+  langs:
+  - csharp
+  - vb
+  name: AITierConfig
+  nameWithType: AITierConfig
+  fullName: Core.AI.AITierConfig
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AITierConfig
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 6
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Configuration for a single AI priority tier.
+
+    Countries are assigned to tiers based on distance from player.
+  example: []
+  syntax:
+    content: public struct AITierConfig
+    content.vb: Public Structure AITierConfig
+- uid: Core.AI.AITierConfig.maxDistance
+  commentId: F:Core.AI.AITierConfig.maxDistance
+  id: maxDistance
+  parent: Core.AI.AITierConfig
+  langs:
+  - csharp
+  - vb
+  name: maxDistance
+  nameWithType: AITierConfig.maxDistance
+  fullName: Core.AI.AITierConfig.maxDistance
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: maxDistance
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Maximum distance (in province hops) for this tier.
+
+    Countries at distance at or below maxDistance are assigned to this tier.
+
+    Use 255 for "everything else" tier.
+  example: []
+  syntax:
+    content: public byte maxDistance
+    return:
+      type: System.Byte
+    content.vb: Public maxDistance As Byte
+- uid: Core.AI.AITierConfig.intervalHours
+  commentId: F:Core.AI.AITierConfig.intervalHours
+  id: intervalHours
+  parent: Core.AI.AITierConfig
+  langs:
+  - csharp
+  - vb
+  name: intervalHours
+  nameWithType: AITierConfig.intervalHours
+  fullName: Core.AI.AITierConfig.intervalHours
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: intervalHours
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    How often to process AI in this tier (in game hours).
+
+    Lower = more frequent processing.
+  example: []
+  syntax:
+    content: public ushort intervalHours
+    return:
+      type: System.UInt16
+    content.vb: Public intervalHours As UShort
+- uid: Core.AI.AITierConfig.#ctor(System.Byte,System.UInt16)
+  commentId: M:Core.AI.AITierConfig.#ctor(System.Byte,System.UInt16)
+  id: '#ctor(System.Byte,System.UInt16)'
+  parent: Core.AI.AITierConfig
+  langs:
+  - csharp
+  - vb
+  name: AITierConfig(byte, ushort)
+  nameWithType: AITierConfig.AITierConfig(byte, ushort)
+  fullName: Core.AI.AITierConfig.AITierConfig(byte, ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AITierConfig(byte maxDistance, ushort intervalHours)
+    parameters:
+    - id: maxDistance
+      type: System.Byte
+    - id: intervalHours
+      type: System.UInt16
+    content.vb: Public Sub New(maxDistance As Byte, intervalHours As UShort)
+  overload: Core.AI.AITierConfig.#ctor*
+  nameWithType.vb: AITierConfig.New(Byte, UShort)
+  fullName.vb: Core.AI.AITierConfig.New(Byte, UShort)
+  name.vb: New(Byte, UShort)
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.AI.AITierConfig.#ctor*
+  commentId: Overload:Core.AI.AITierConfig.#ctor
+  href: Core.AI.AITierConfig.html#Core_AI_AITierConfig__ctor_System_Byte_System_UInt16_
+  name: AITierConfig
+  nameWithType: AITierConfig.AITierConfig
+  fullName: Core.AI.AITierConfig.AITierConfig
+  nameWithType.vb: AITierConfig.New
+  fullName.vb: Core.AI.AITierConfig.New
+  name.vb: New

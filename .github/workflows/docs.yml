@@ -4,9 +4,11 @@ on:
   push:
     branches: [main]
     paths:
-      - 'Scripts/**'
+      - 'api/**'           # Pre-generated API metadata
       - 'Docs/**'
       - 'docfx.json'
+      - 'toc.yml'
+      - 'index.md'
       - '.github/workflows/docs.yml'
   workflow_dispatch:  # Allow manual trigger
 
@@ -35,7 +37,7 @@ jobs:
         run: dotnet tool install -g docfx
 
       - name: Build Documentation
-        run: docfx docfx.json
+        run: docfx build docfx.json  # Build only - API metadata is pre-committed
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

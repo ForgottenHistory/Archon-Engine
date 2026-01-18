@@ -1,0 +1,404 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIState
+  commentId: T:Core.AI.AIState
+  id: AIState
+  parent: Core.AI
+  children:
+  - Core.AI.AIState.Create(System.UInt16,System.Boolean)
+  - Core.AI.AIState.Create(System.UInt16,System.Byte,System.Boolean)
+  - Core.AI.AIState.IsActive
+  - Core.AI.AIState.activeGoalID
+  - Core.AI.AIState.countryID
+  - Core.AI.AIState.flags
+  - Core.AI.AIState.lastProcessedHour
+  - Core.AI.AIState.tier
+  langs:
+  - csharp
+  - vb
+  name: AIState
+  nameWithType: AIState
+  fullName: Core.AI.AIState
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIState
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Hot AI state data for a single country (8 bytes, blittable).
+
+    Stored in flat NativeArray for cache-friendly access.
+
+
+    Memory: 300 countries × 8 bytes = 2.4 KB
+
+
+    Design: Minimal hot data only. Cold data (personality, caches) goes in separate structure.
+  example: []
+  syntax:
+    content: public struct AIState
+    content.vb: Public Structure AIState
+- uid: Core.AI.AIState.countryID
+  commentId: F:Core.AI.AIState.countryID
+  id: countryID
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: countryID
+  nameWithType: AIState.countryID
+  fullName: Core.AI.AIState.countryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: countryID
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Country ID this AI controls (ushort = 2 bytes)
+  example: []
+  syntax:
+    content: public ushort countryID
+    return:
+      type: System.UInt16
+    content.vb: Public countryID As UShort
+- uid: Core.AI.AIState.tier
+  commentId: F:Core.AI.AIState.tier
+  id: tier
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: tier
+  nameWithType: AIState.tier
+  fullName: Core.AI.AIState.tier
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tier
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Priority tier based on distance from player (0 = closest, higher = farther).
+
+    Determines processing frequency via AISchedulingConfig.
+
+    (byte = 1 byte)
+  example: []
+  syntax:
+    content: public byte tier
+    return:
+      type: System.Byte
+    content.vb: Public tier As Byte
+- uid: Core.AI.AIState.flags
+  commentId: F:Core.AI.AIState.flags
+  id: flags
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: flags
+  nameWithType: AIState.flags
+  fullName: Core.AI.AIState.flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: flags
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    AI behavior flags (byte = 1 byte)
+
+    Bit 0: IsActive (1 = AI enabled, 0 = player-controlled or disabled)
+
+    Bit 1-7: Reserved for future use
+  example: []
+  syntax:
+    content: public byte flags
+    return:
+      type: System.Byte
+    content.vb: Public flags As Byte
+- uid: Core.AI.AIState.activeGoalID
+  commentId: F:Core.AI.AIState.activeGoalID
+  id: activeGoalID
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: activeGoalID
+  nameWithType: AIState.activeGoalID
+  fullName: Core.AI.AIState.activeGoalID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: activeGoalID
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Current active goal ID (0 = no goal)
+
+    Index into AIGoalRegistry.
+
+    (ushort = 2 bytes)
+  example: []
+  syntax:
+    content: public ushort activeGoalID
+    return:
+      type: System.UInt16
+    content.vb: Public activeGoalID As UShort
+- uid: Core.AI.AIState.lastProcessedHour
+  commentId: F:Core.AI.AIState.lastProcessedHour
+  id: lastProcessedHour
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: lastProcessedHour
+  nameWithType: AIState.lastProcessedHour
+  fullName: Core.AI.AIState.lastProcessedHour
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: lastProcessedHour
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Hour-of-year when this AI was last processed (0-8639).
+
+    Used to determine if enough time has passed based on tier interval.
+
+    360 days × 24 hours = 8640 hours per year, wraps around.
+
+    (ushort = 2 bytes)
+  example: []
+  syntax:
+    content: public ushort lastProcessedHour
+    return:
+      type: System.UInt16
+    content.vb: Public lastProcessedHour As UShort
+- uid: Core.AI.AIState.IsActive
+  commentId: P:Core.AI.AIState.IsActive
+  id: IsActive
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: IsActive
+  nameWithType: AIState.IsActive
+  fullName: Core.AI.AIState.IsActive
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsActive
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Is this AI currently active?
+  example: []
+  syntax:
+    content: public bool IsActive { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsActive As Boolean
+  overload: Core.AI.AIState.IsActive*
+- uid: Core.AI.AIState.Create(System.UInt16,System.Boolean)
+  commentId: M:Core.AI.AIState.Create(System.UInt16,System.Boolean)
+  id: Create(System.UInt16,System.Boolean)
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: Create(ushort, bool)
+  nameWithType: AIState.Create(ushort, bool)
+  fullName: Core.AI.AIState.Create(ushort, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Create new AI state for a country.
+
+    Tier 255 = unassigned (will be set by AIDistanceCalculator).
+  example: []
+  syntax:
+    content: public static AIState Create(ushort countryID, bool isActive = true)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: isActive
+      type: System.Boolean
+    return:
+      type: Core.AI.AIState
+    content.vb: Public Shared Function Create(countryID As UShort, isActive As Boolean = True) As AIState
+  overload: Core.AI.AIState.Create*
+  nameWithType.vb: AIState.Create(UShort, Boolean)
+  fullName.vb: Core.AI.AIState.Create(UShort, Boolean)
+  name.vb: Create(UShort, Boolean)
+- uid: Core.AI.AIState.Create(System.UInt16,System.Byte,System.Boolean)
+  commentId: M:Core.AI.AIState.Create(System.UInt16,System.Byte,System.Boolean)
+  id: Create(System.UInt16,System.Byte,System.Boolean)
+  parent: Core.AI.AIState
+  langs:
+  - csharp
+  - vb
+  name: Create(ushort, byte, bool)
+  nameWithType: AIState.Create(ushort, byte, bool)
+  fullName: Core.AI.AIState.Create(ushort, byte, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/AI/AIState.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Create new AI state with explicit tier.
+  example: []
+  syntax:
+    content: public static AIState Create(ushort countryID, byte tier, bool isActive = true)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: tier
+      type: System.Byte
+    - id: isActive
+      type: System.Boolean
+    return:
+      type: Core.AI.AIState
+    content.vb: Public Shared Function Create(countryID As UShort, tier As Byte, isActive As Boolean = True) As AIState
+  overload: Core.AI.AIState.Create*
+  nameWithType.vb: AIState.Create(UShort, Byte, Boolean)
+  fullName.vb: Core.AI.AIState.Create(UShort, Byte, Boolean)
+  name.vb: Create(UShort, Byte, Boolean)
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.AI.AIState.IsActive*
+  commentId: Overload:Core.AI.AIState.IsActive
+  href: Core.AI.AIState.html#Core_AI_AIState_IsActive
+  name: IsActive
+  nameWithType: AIState.IsActive
+  fullName: Core.AI.AIState.IsActive
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.AI.AIState.Create*
+  commentId: Overload:Core.AI.AIState.Create
+  href: Core.AI.AIState.html#Core_AI_AIState_Create_System_UInt16_System_Boolean_
+  name: Create
+  nameWithType: AIState.Create
+  fullName: Core.AI.AIState.Create
+- uid: Core.AI.AIState
+  commentId: T:Core.AI.AIState
+  parent: Core.AI
+  href: Core.AI.AIState.html
+  name: AIState
+  nameWithType: AIState
+  fullName: Core.AI.AIState

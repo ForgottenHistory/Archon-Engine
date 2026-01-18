@@ -1,0 +1,686 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.Ids.BuildingId
+  commentId: T:Core.Data.Ids.BuildingId
+  id: BuildingId
+  parent: Core.Data.Ids
+  children:
+  - Core.Data.Ids.BuildingId.#ctor(System.UInt16)
+  - Core.Data.Ids.BuildingId.Equals(Core.Data.Ids.BuildingId)
+  - Core.Data.Ids.BuildingId.Equals(System.Object)
+  - Core.Data.Ids.BuildingId.GetHashCode
+  - Core.Data.Ids.BuildingId.IsValid
+  - Core.Data.Ids.BuildingId.None
+  - Core.Data.Ids.BuildingId.ToString
+  - Core.Data.Ids.BuildingId.Value
+  - Core.Data.Ids.BuildingId.op_Equality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  - Core.Data.Ids.BuildingId.op_Implicit(Core.Data.Ids.BuildingId)~System.UInt16
+  - Core.Data.Ids.BuildingId.op_Implicit(System.UInt16)~Core.Data.Ids.BuildingId
+  - Core.Data.Ids.BuildingId.op_Inequality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  langs:
+  - csharp
+  - vb
+  name: BuildingId
+  nameWithType: BuildingId
+  fullName: Core.Data.Ids.BuildingId
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingId
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: >-
+    Type-safe building identifier
+
+    Prevents mixing up building IDs with other entity IDs at compile time
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public readonly struct BuildingId
+    content.vb: >-
+      <Serializable>
+
+      Public Structure BuildingId
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.Ids.BuildingId.Value
+  commentId: F:Core.Data.Ids.BuildingId.Value
+  id: Value
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: BuildingId.Value
+  fullName: Core.Data.Ids.BuildingId.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public readonly ushort Value
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly Value As UShort
+- uid: Core.Data.Ids.BuildingId.#ctor(System.UInt16)
+  commentId: M:Core.Data.Ids.BuildingId.#ctor(System.UInt16)
+  id: '#ctor(System.UInt16)'
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: BuildingId(ushort)
+  nameWithType: BuildingId.BuildingId(ushort)
+  fullName: Core.Data.Ids.BuildingId.BuildingId(ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public BuildingId(ushort value)
+    parameters:
+    - id: value
+      type: System.UInt16
+    content.vb: Public Sub New(value As UShort)
+  overload: Core.Data.Ids.BuildingId.#ctor*
+  nameWithType.vb: BuildingId.New(UShort)
+  fullName.vb: Core.Data.Ids.BuildingId.New(UShort)
+  name.vb: New(UShort)
+- uid: Core.Data.Ids.BuildingId.None
+  commentId: F:Core.Data.Ids.BuildingId.None
+  id: None
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: BuildingId.None
+  fullName: Core.Data.Ids.BuildingId.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Special constant for no building/empty slot
+  example: []
+  syntax:
+    content: public static readonly BuildingId None
+    return:
+      type: Core.Data.Ids.BuildingId
+    content.vb: Public Shared ReadOnly None As BuildingId
+- uid: Core.Data.Ids.BuildingId.IsValid
+  commentId: P:Core.Data.Ids.BuildingId.IsValid
+  id: IsValid
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: BuildingId.IsValid
+  fullName: Core.Data.Ids.BuildingId.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Check if this is a valid building ID (not none/zero)
+  example: []
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Core.Data.Ids.BuildingId.IsValid*
+- uid: Core.Data.Ids.BuildingId.Equals(Core.Data.Ids.BuildingId)
+  commentId: M:Core.Data.Ids.BuildingId.Equals(Core.Data.Ids.BuildingId)
+  id: Equals(Core.Data.Ids.BuildingId)
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: Equals(BuildingId)
+  nameWithType: BuildingId.Equals(BuildingId)
+  fullName: Core.Data.Ids.BuildingId.Equals(Core.Data.Ids.BuildingId)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public bool Equals(BuildingId other)
+    parameters:
+    - id: other
+      type: Core.Data.Ids.BuildingId
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As BuildingId) As Boolean
+  overload: Core.Data.Ids.BuildingId.Equals*
+- uid: Core.Data.Ids.BuildingId.Equals(System.Object)
+  commentId: M:Core.Data.Ids.BuildingId.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: BuildingId.Equals(object)
+  fullName: Core.Data.Ids.BuildingId.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.Ids.BuildingId.Equals*
+  nameWithType.vb: BuildingId.Equals(Object)
+  fullName.vb: Core.Data.Ids.BuildingId.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.Ids.BuildingId.GetHashCode
+  commentId: M:Core.Data.Ids.BuildingId.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: BuildingId.GetHashCode()
+  fullName: Core.Data.Ids.BuildingId.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.Ids.BuildingId.GetHashCode*
+- uid: Core.Data.Ids.BuildingId.op_Equality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  commentId: M:Core.Data.Ids.BuildingId.op_Equality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  id: op_Equality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: operator ==(BuildingId, BuildingId)
+  nameWithType: BuildingId.operator ==(BuildingId, BuildingId)
+  fullName: Core.Data.Ids.BuildingId.operator ==(Core.Data.Ids.BuildingId, Core.Data.Ids.BuildingId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator ==(BuildingId left, BuildingId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.BuildingId
+    - id: right
+      type: Core.Data.Ids.BuildingId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As BuildingId, right As BuildingId) As Boolean
+  overload: Core.Data.Ids.BuildingId.op_Equality*
+  nameWithType.vb: BuildingId.=(BuildingId, BuildingId)
+  fullName.vb: Core.Data.Ids.BuildingId.=(Core.Data.Ids.BuildingId, Core.Data.Ids.BuildingId)
+  name.vb: =(BuildingId, BuildingId)
+- uid: Core.Data.Ids.BuildingId.op_Inequality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  commentId: M:Core.Data.Ids.BuildingId.op_Inequality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  id: op_Inequality(Core.Data.Ids.BuildingId,Core.Data.Ids.BuildingId)
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: operator !=(BuildingId, BuildingId)
+  nameWithType: BuildingId.operator !=(BuildingId, BuildingId)
+  fullName: Core.Data.Ids.BuildingId.operator !=(Core.Data.Ids.BuildingId, Core.Data.Ids.BuildingId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator !=(BuildingId left, BuildingId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.BuildingId
+    - id: right
+      type: Core.Data.Ids.BuildingId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As BuildingId, right As BuildingId) As Boolean
+  overload: Core.Data.Ids.BuildingId.op_Inequality*
+  nameWithType.vb: BuildingId.<>(BuildingId, BuildingId)
+  fullName.vb: Core.Data.Ids.BuildingId.<>(Core.Data.Ids.BuildingId, Core.Data.Ids.BuildingId)
+  name.vb: <>(BuildingId, BuildingId)
+- uid: Core.Data.Ids.BuildingId.op_Implicit(Core.Data.Ids.BuildingId)~System.UInt16
+  commentId: M:Core.Data.Ids.BuildingId.op_Implicit(Core.Data.Ids.BuildingId)~System.UInt16
+  id: op_Implicit(Core.Data.Ids.BuildingId)~System.UInt16
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator ushort(BuildingId)
+  nameWithType: BuildingId.implicit operator ushort(BuildingId)
+  fullName: Core.Data.Ids.BuildingId.implicit operator ushort(Core.Data.Ids.BuildingId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator ushort(BuildingId id)
+    parameters:
+    - id: id
+      type: Core.Data.Ids.BuildingId
+    return:
+      type: System.UInt16
+    content.vb: Public Shared Widening Operator CType(id As BuildingId) As UShort
+  overload: Core.Data.Ids.BuildingId.op_Implicit*
+  nameWithType.vb: BuildingId.CType(BuildingId)
+  fullName.vb: Core.Data.Ids.BuildingId.CType(Core.Data.Ids.BuildingId)
+  name.vb: CType(BuildingId)
+- uid: Core.Data.Ids.BuildingId.op_Implicit(System.UInt16)~Core.Data.Ids.BuildingId
+  commentId: M:Core.Data.Ids.BuildingId.op_Implicit(System.UInt16)~Core.Data.Ids.BuildingId
+  id: op_Implicit(System.UInt16)~Core.Data.Ids.BuildingId
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator BuildingId(ushort)
+  nameWithType: BuildingId.implicit operator BuildingId(ushort)
+  fullName: Core.Data.Ids.BuildingId.implicit operator Core.Data.Ids.BuildingId(ushort)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator BuildingId(ushort value)
+    parameters:
+    - id: value
+      type: System.UInt16
+    return:
+      type: Core.Data.Ids.BuildingId
+    content.vb: Public Shared Widening Operator CType(value As UShort) As BuildingId
+  overload: Core.Data.Ids.BuildingId.op_Implicit*
+  nameWithType.vb: BuildingId.CType(UShort)
+  fullName.vb: Core.Data.Ids.BuildingId.CType(UShort)
+  name.vb: CType(UShort)
+- uid: Core.Data.Ids.BuildingId.ToString
+  commentId: M:Core.Data.Ids.BuildingId.ToString
+  id: ToString
+  parent: Core.Data.Ids.BuildingId
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: BuildingId.ToString()
+  fullName: Core.Data.Ids.BuildingId.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/BuildingId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/Ids/BuildingId.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.Ids.BuildingId.ToString*
+references:
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.Ids.BuildingId.#ctor*
+  commentId: Overload:Core.Data.Ids.BuildingId.#ctor
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId__ctor_System_UInt16_
+  name: BuildingId
+  nameWithType: BuildingId.BuildingId
+  fullName: Core.Data.Ids.BuildingId.BuildingId
+  nameWithType.vb: BuildingId.New
+  fullName.vb: Core.Data.Ids.BuildingId.New
+  name.vb: New
+- uid: Core.Data.Ids.BuildingId
+  commentId: T:Core.Data.Ids.BuildingId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.BuildingId.html
+  name: BuildingId
+  nameWithType: BuildingId
+  fullName: Core.Data.Ids.BuildingId
+- uid: Core.Data.Ids.BuildingId.IsValid*
+  commentId: Overload:Core.Data.Ids.BuildingId.IsValid
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_IsValid
+  name: IsValid
+  nameWithType: BuildingId.IsValid
+  fullName: Core.Data.Ids.BuildingId.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.Ids.BuildingId.Equals*
+  commentId: Overload:Core.Data.Ids.BuildingId.Equals
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_Equals_Core_Data_Ids_BuildingId_
+  name: Equals
+  nameWithType: BuildingId.Equals
+  fullName: Core.Data.Ids.BuildingId.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.BuildingId.GetHashCode*
+  commentId: Overload:Core.Data.Ids.BuildingId.GetHashCode
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_GetHashCode
+  name: GetHashCode
+  nameWithType: BuildingId.GetHashCode
+  fullName: Core.Data.Ids.BuildingId.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.Ids.BuildingId.op_Equality*
+  commentId: Overload:Core.Data.Ids.BuildingId.op_Equality
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_op_Equality_Core_Data_Ids_BuildingId_Core_Data_Ids_BuildingId_
+  name: operator ==
+  nameWithType: BuildingId.operator ==
+  fullName: Core.Data.Ids.BuildingId.operator ==
+  nameWithType.vb: BuildingId.=
+  fullName.vb: Core.Data.Ids.BuildingId.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.BuildingId.op_Equality*
+    name: ==
+    href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_op_Equality_Core_Data_Ids_BuildingId_Core_Data_Ids_BuildingId_
+- uid: Core.Data.Ids.BuildingId.op_Inequality*
+  commentId: Overload:Core.Data.Ids.BuildingId.op_Inequality
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_op_Inequality_Core_Data_Ids_BuildingId_Core_Data_Ids_BuildingId_
+  name: operator !=
+  nameWithType: BuildingId.operator !=
+  fullName: Core.Data.Ids.BuildingId.operator !=
+  nameWithType.vb: BuildingId.<>
+  fullName.vb: Core.Data.Ids.BuildingId.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.BuildingId.op_Inequality*
+    name: '!='
+    href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_op_Inequality_Core_Data_Ids_BuildingId_Core_Data_Ids_BuildingId_
+- uid: Core.Data.Ids.BuildingId.op_Implicit*
+  commentId: Overload:Core.Data.Ids.BuildingId.op_Implicit
+  name: implicit operator
+  nameWithType: BuildingId.implicit operator
+  fullName: Core.Data.Ids.BuildingId.implicit operator
+  nameWithType.vb: BuildingId.CType
+  fullName.vb: Core.Data.Ids.BuildingId.CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.BuildingId.ToString*
+  commentId: Overload:Core.Data.Ids.BuildingId.ToString
+  href: Core.Data.Ids.BuildingId.html#Core_Data_Ids_BuildingId_ToString
+  name: ToString
+  nameWithType: BuildingId.ToString
+  fullName: Core.Data.Ids.BuildingId.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

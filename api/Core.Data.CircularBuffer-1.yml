@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CircularBuffer`1
+  commentId: T:Core.Data.CircularBuffer`1
+  id: CircularBuffer`1
+  parent: Core.Data
+  children:
+  - Core.Data.CircularBuffer`1.#ctor(System.Int32)
+  - Core.Data.CircularBuffer`1.Add(`0)
+  - Core.Data.CircularBuffer`1.Capacity
+  - Core.Data.CircularBuffer`1.Clear
+  - Core.Data.CircularBuffer`1.Count
+  - Core.Data.CircularBuffer`1.Items
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Core.Data.CircularBuffer<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CircularBuffer
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 174
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Fixed-size circular buffer to prevent unbounded memory growth
+  example: []
+  syntax:
+    content: public class CircularBuffer<T>
+    typeParameters:
+    - id: T
+    content.vb: Public Class CircularBuffer(Of T)
+  inheritance:
+  - System.Object
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Core.Data.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+- uid: Core.Data.CircularBuffer`1.Count
+  commentId: P:Core.Data.CircularBuffer`1.Count
+  id: Count
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Core.Data.CircularBuffer<T>.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Data.CircularBuffer`1.Count*
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Core.Data.CircularBuffer(Of T).Count
+- uid: Core.Data.CircularBuffer`1.Capacity
+  commentId: P:Core.Data.CircularBuffer`1.Capacity
+  id: Capacity
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Core.Data.CircularBuffer<T>.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 182
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Core.Data.CircularBuffer`1.Capacity*
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Core.Data.CircularBuffer(Of T).Capacity
+- uid: Core.Data.CircularBuffer`1.Items
+  commentId: P:Core.Data.CircularBuffer`1.Items
+  id: Items
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Items
+  nameWithType: CircularBuffer<T>.Items
+  fullName: Core.Data.CircularBuffer<T>.Items
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Items
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 183
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public IReadOnlyList<T> Items { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{{T}}
+    content.vb: Public ReadOnly Property Items As IReadOnlyList(Of T)
+  overload: Core.Data.CircularBuffer`1.Items*
+  nameWithType.vb: CircularBuffer(Of T).Items
+  fullName.vb: Core.Data.CircularBuffer(Of T).Items
+- uid: Core.Data.CircularBuffer`1.#ctor(System.Int32)
+  commentId: M:Core.Data.CircularBuffer`1.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer(int)
+  nameWithType: CircularBuffer<T>.CircularBuffer(int)
+  fullName: Core.Data.CircularBuffer<T>.CircularBuffer(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CircularBuffer(int capacity)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer)
+  overload: Core.Data.CircularBuffer`1.#ctor*
+  nameWithType.vb: CircularBuffer(Of T).New(Integer)
+  fullName.vb: Core.Data.CircularBuffer(Of T).New(Integer)
+  name.vb: New(Integer)
+- uid: Core.Data.CircularBuffer`1.Add(`0)
+  commentId: M:Core.Data.CircularBuffer`1.Add(`0)
+  id: Add(`0)
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Add(T)
+  nameWithType: CircularBuffer<T>.Add(T)
+  fullName: Core.Data.CircularBuffer<T>.Add(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void Add(T item)
+    parameters:
+    - id: item
+      type: '{T}'
+    content.vb: Public Sub Add(item As T)
+  overload: Core.Data.CircularBuffer`1.Add*
+  nameWithType.vb: CircularBuffer(Of T).Add(T)
+  fullName.vb: Core.Data.CircularBuffer(Of T).Add(T)
+- uid: Core.Data.CircularBuffer`1.Clear
+  commentId: M:Core.Data.CircularBuffer`1.Clear
+  id: Clear
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: CircularBuffer<T>.Clear()
+  fullName: Core.Data.CircularBuffer<T>.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 202
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Data.CircularBuffer`1.Clear*
+  nameWithType.vb: CircularBuffer(Of T).Clear()
+  fullName.vb: Core.Data.CircularBuffer(Of T).Clear()
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.CircularBuffer`1.Count*
+  commentId: Overload:Core.Data.CircularBuffer`1.Count
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Count
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Core.Data.CircularBuffer<T>.Count
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Core.Data.CircularBuffer(Of T).Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.CircularBuffer`1.Capacity*
+  commentId: Overload:Core.Data.CircularBuffer`1.Capacity
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Capacity
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Core.Data.CircularBuffer<T>.Capacity
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Core.Data.CircularBuffer(Of T).Capacity
+- uid: Core.Data.CircularBuffer`1.Items*
+  commentId: Overload:Core.Data.CircularBuffer`1.Items
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Items
+  name: Items
+  nameWithType: CircularBuffer<T>.Items
+  fullName: Core.Data.CircularBuffer<T>.Items
+  nameWithType.vb: CircularBuffer(Of T).Items
+  fullName.vb: Core.Data.CircularBuffer(Of T).Items
+- uid: System.Collections.Generic.IReadOnlyList{{T}}
+  commentId: T:System.Collections.Generic.IReadOnlyList{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Data.CircularBuffer`1.#ctor*
+  commentId: Overload:Core.Data.CircularBuffer`1.#ctor
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1__ctor_System_Int32_
+  name: CircularBuffer
+  nameWithType: CircularBuffer<T>.CircularBuffer
+  fullName: Core.Data.CircularBuffer<T>.CircularBuffer
+  nameWithType.vb: CircularBuffer(Of T).New
+  fullName.vb: Core.Data.CircularBuffer(Of T).New
+  name.vb: New
+- uid: Core.Data.CircularBuffer`1.Add*
+  commentId: Overload:Core.Data.CircularBuffer`1.Add
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Add__0_
+  name: Add
+  nameWithType: CircularBuffer<T>.Add
+  fullName: Core.Data.CircularBuffer<T>.Add
+  nameWithType.vb: CircularBuffer(Of T).Add
+  fullName.vb: Core.Data.CircularBuffer(Of T).Add
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Data.CircularBuffer`1.Clear*
+  commentId: Overload:Core.Data.CircularBuffer`1.Clear
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Clear
+  name: Clear
+  nameWithType: CircularBuffer<T>.Clear
+  fullName: Core.Data.CircularBuffer<T>.Clear
+  nameWithType.vb: CircularBuffer(Of T).Clear
+  fullName.vb: Core.Data.CircularBuffer(Of T).Clear

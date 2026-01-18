@@ -1,0 +1,313 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceFlags
+  commentId: T:Map.Province.ProvinceFlags
+  id: ProvinceFlags
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceFlags.HasReligiousCenter
+  - Map.Province.ProvinceFlags.IsBorderProvince
+  - Map.Province.ProvinceFlags.IsCapital
+  - Map.Province.ProvinceFlags.IsCoastal
+  - Map.Province.ProvinceFlags.IsImpassable
+  - Map.Province.ProvinceFlags.IsOccupied
+  - Map.Province.ProvinceFlags.IsSelected
+  - Map.Province.ProvinceFlags.IsTradeCenter
+  - Map.Province.ProvinceFlags.None
+  langs:
+  - csharp
+  - vb
+  name: ProvinceFlags
+  nameWithType: ProvinceFlags
+  fullName: Map.Province.ProvinceFlags
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceFlags
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 75
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Packed flags for province properties
+  example: []
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum ProvinceFlags : byte
+    content.vb: >-
+      <Flags>
+
+      Public Enum ProvinceFlags As Byte
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Map.Province.ProvinceFlags.None
+  commentId: F:Map.Province.ProvinceFlags.None
+  id: None
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: ProvinceFlags.None
+  fullName: Map.Province.ProvinceFlags.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: None = 0
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsCoastal
+  commentId: F:Map.Province.ProvinceFlags.IsCoastal
+  id: IsCoastal
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsCoastal
+  nameWithType: ProvinceFlags.IsCoastal
+  fullName: Map.Province.ProvinceFlags.IsCoastal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCoastal
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 79
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsCoastal = 1
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsImpassable
+  commentId: F:Map.Province.ProvinceFlags.IsImpassable
+  id: IsImpassable
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsImpassable
+  nameWithType: ProvinceFlags.IsImpassable
+  fullName: Map.Province.ProvinceFlags.IsImpassable
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsImpassable
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 80
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsImpassable = 2
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsCapital
+  commentId: F:Map.Province.ProvinceFlags.IsCapital
+  id: IsCapital
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsCapital
+  nameWithType: ProvinceFlags.IsCapital
+  fullName: Map.Province.ProvinceFlags.IsCapital
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCapital
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsCapital = 4
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsOccupied
+  commentId: F:Map.Province.ProvinceFlags.IsOccupied
+  id: IsOccupied
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsOccupied
+  nameWithType: ProvinceFlags.IsOccupied
+  fullName: Map.Province.ProvinceFlags.IsOccupied
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOccupied
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 82
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsOccupied = 8
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.HasReligiousCenter
+  commentId: F:Map.Province.ProvinceFlags.HasReligiousCenter
+  id: HasReligiousCenter
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: HasReligiousCenter
+  nameWithType: ProvinceFlags.HasReligiousCenter
+  fullName: Map.Province.ProvinceFlags.HasReligiousCenter
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasReligiousCenter
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 83
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: HasReligiousCenter = 16
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsTradeCenter
+  commentId: F:Map.Province.ProvinceFlags.IsTradeCenter
+  id: IsTradeCenter
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsTradeCenter
+  nameWithType: ProvinceFlags.IsTradeCenter
+  fullName: Map.Province.ProvinceFlags.IsTradeCenter
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsTradeCenter
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsTradeCenter = 32
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsBorderProvince
+  commentId: F:Map.Province.ProvinceFlags.IsBorderProvince
+  id: IsBorderProvince
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsBorderProvince
+  nameWithType: ProvinceFlags.IsBorderProvince
+  fullName: Map.Province.ProvinceFlags.IsBorderProvince
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsBorderProvince
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 85
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsBorderProvince = 64
+    return:
+      type: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceFlags.IsSelected
+  commentId: F:Map.Province.ProvinceFlags.IsSelected
+  id: IsSelected
+  parent: Map.Province.ProvinceFlags
+  langs:
+  - csharp
+  - vb
+  name: IsSelected
+  nameWithType: ProvinceFlags.IsSelected
+  fullName: Map.Province.ProvinceFlags.IsSelected
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSelected
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: IsSelected = 128
+    return:
+      type: Map.Province.ProvinceFlags
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Map.Province.ProvinceFlags
+  commentId: T:Map.Province.ProvinceFlags
+  parent: Map.Province
+  href: Map.Province.ProvinceFlags.html
+  name: ProvinceFlags
+  nameWithType: ProvinceFlags
+  fullName: Map.Province.ProvinceFlags

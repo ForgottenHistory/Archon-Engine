@@ -1,0 +1,1659 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  id: GameState
+  parent: Core
+  children:
+  - Core.GameState.Adjacencies
+  - Core.GameState.Countries
+  - Core.GameState.CountryQueries
+  - Core.GameState.Diplomacy
+  - Core.GameState.EventBus
+  - Core.GameState.GetAllRegisteredGameSystems
+  - Core.GameState.GetCountryColor(System.UInt16)
+  - Core.GameState.GetCountryProvinces(System.UInt16)
+  - Core.GameState.GetGameSystem``1
+  - Core.GameState.GetProvinceOwner(System.UInt16)
+  - Core.GameState.HasGameSystem``1
+  - Core.GameState.InitializeSystems
+  - Core.GameState.Instance
+  - Core.GameState.IsInitialized
+  - Core.GameState.IsLoading
+  - Core.GameState.LoadingProgress
+  - Core.GameState.Modifiers
+  - Core.GameState.Pathfinding
+  - Core.GameState.ProvinceQueries
+  - Core.GameState.Provinces
+  - Core.GameState.RegisterGameSystem``1(``0)
+  - Core.GameState.Registries
+  - Core.GameState.Resources
+  - Core.GameState.SetRegistries(Core.Registries.GameRegistries)
+  - Core.GameState.Time
+  - Core.GameState.TryExecuteCommand``1(``0)
+  - Core.GameState.TryExecuteCommand``1(``0,System.String@)
+  - Core.GameState.Units
+  langs:
+  - csharp
+  - vb
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameState
+    path: Scripts/Core/GameState.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Central hub for all game data access - follows hub-and-spoke architecture
+
+    Provides unified access to all game systems without owning the data
+
+    Performance: All queries should be &lt;0.01ms, zero allocations during gameplay
+
+
+    ARCHITECTURE: Engine-Game Separation
+
+    - Core systems (Provinces, Countries, Time) are owned by Engine
+
+    - Game layer systems (Economy, Buildings, etc.) register themselves via RegisterGameSystem
+
+    - Engine provides mechanism (registration), Game provides policy (specific systems)
+  example: []
+  syntax:
+    content: 'public class GameState : MonoBehaviour'
+    content.vb: Public Class GameState Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.GameState.Provinces
+  commentId: P:Core.GameState.Provinces
+  id: Provinces
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Provinces
+  nameWithType: GameState.Provinces
+  fullName: Core.GameState.Provinces
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Provinces
+    path: Scripts/Core/GameState.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public ProvinceSystem Provinces { get; }
+    parameters: []
+    return:
+      type: Core.Systems.ProvinceSystem
+    content.vb: Public Property Provinces As ProvinceSystem
+  overload: Core.GameState.Provinces*
+- uid: Core.GameState.Countries
+  commentId: P:Core.GameState.Countries
+  id: Countries
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Countries
+  nameWithType: GameState.Countries
+  fullName: Core.GameState.Countries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Countries
+    path: Scripts/Core/GameState.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public CountrySystem Countries { get; }
+    parameters: []
+    return:
+      type: Core.Systems.CountrySystem
+    content.vb: Public Property Countries As CountrySystem
+  overload: Core.GameState.Countries*
+- uid: Core.GameState.Time
+  commentId: P:Core.GameState.Time
+  id: Time
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Time
+  nameWithType: GameState.Time
+  fullName: Core.GameState.Time
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Time
+    path: Scripts/Core/GameState.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public TimeManager Time { get; }
+    parameters: []
+    return:
+      type: Core.Systems.TimeManager
+    content.vb: Public Property Time As TimeManager
+  overload: Core.GameState.Time*
+- uid: Core.GameState.Modifiers
+  commentId: P:Core.GameState.Modifiers
+  id: Modifiers
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: GameState.Modifiers
+  fullName: Core.GameState.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Modifiers
+    path: Scripts/Core/GameState.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public ModifierSystem Modifiers { get; }
+    parameters: []
+    return:
+      type: Core.Modifiers.ModifierSystem
+    content.vb: Public Property Modifiers As ModifierSystem
+  overload: Core.GameState.Modifiers*
+- uid: Core.GameState.Resources
+  commentId: P:Core.GameState.Resources
+  id: Resources
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Resources
+  nameWithType: GameState.Resources
+  fullName: Core.GameState.Resources
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Resources
+    path: Scripts/Core/GameState.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public ResourceSystem Resources { get; }
+    parameters: []
+    return:
+      type: Core.Resources.ResourceSystem
+    content.vb: Public Property Resources As ResourceSystem
+  overload: Core.GameState.Resources*
+- uid: Core.GameState.Units
+  commentId: P:Core.GameState.Units
+  id: Units
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Units
+  nameWithType: GameState.Units
+  fullName: Core.GameState.Units
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Units
+    path: Scripts/Core/GameState.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public UnitSystem Units { get; }
+    parameters: []
+    return:
+      type: Core.Units.UnitSystem
+    content.vb: Public Property Units As UnitSystem
+  overload: Core.GameState.Units*
+- uid: Core.GameState.Adjacencies
+  commentId: P:Core.GameState.Adjacencies
+  id: Adjacencies
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Adjacencies
+  nameWithType: GameState.Adjacencies
+  fullName: Core.GameState.Adjacencies
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Adjacencies
+    path: Scripts/Core/GameState.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public AdjacencySystem Adjacencies { get; }
+    parameters: []
+    return:
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Property Adjacencies As AdjacencySystem
+  overload: Core.GameState.Adjacencies*
+- uid: Core.GameState.Pathfinding
+  commentId: P:Core.GameState.Pathfinding
+  id: Pathfinding
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Pathfinding
+  nameWithType: GameState.Pathfinding
+  fullName: Core.GameState.Pathfinding
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Pathfinding
+    path: Scripts/Core/GameState.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public PathfindingSystem Pathfinding { get; }
+    parameters: []
+    return:
+      type: Core.Systems.PathfindingSystem
+    content.vb: Public Property Pathfinding As PathfindingSystem
+  overload: Core.GameState.Pathfinding*
+- uid: Core.GameState.Diplomacy
+  commentId: P:Core.GameState.Diplomacy
+  id: Diplomacy
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Diplomacy
+  nameWithType: GameState.Diplomacy
+  fullName: Core.GameState.Diplomacy
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Diplomacy
+    path: Scripts/Core/GameState.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public DiplomacySystem Diplomacy { get; }
+    parameters: []
+    return:
+      type: Core.Diplomacy.DiplomacySystem
+    content.vb: Public Property Diplomacy As DiplomacySystem
+  overload: Core.GameState.Diplomacy*
+- uid: Core.GameState.ProvinceQueries
+  commentId: P:Core.GameState.ProvinceQueries
+  id: ProvinceQueries
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: ProvinceQueries
+  nameWithType: GameState.ProvinceQueries
+  fullName: Core.GameState.ProvinceQueries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceQueries
+    path: Scripts/Core/GameState.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public ProvinceQueries ProvinceQueries { get; }
+    parameters: []
+    return:
+      type: Core.Queries.ProvinceQueries
+    content.vb: Public Property ProvinceQueries As ProvinceQueries
+  overload: Core.GameState.ProvinceQueries*
+- uid: Core.GameState.CountryQueries
+  commentId: P:Core.GameState.CountryQueries
+  id: CountryQueries
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: CountryQueries
+  nameWithType: GameState.CountryQueries
+  fullName: Core.GameState.CountryQueries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryQueries
+    path: Scripts/Core/GameState.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public CountryQueries CountryQueries { get; }
+    parameters: []
+    return:
+      type: Core.Queries.CountryQueries
+    content.vb: Public Property CountryQueries As CountryQueries
+  overload: Core.GameState.CountryQueries*
+- uid: Core.GameState.Registries
+  commentId: P:Core.GameState.Registries
+  id: Registries
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Registries
+  nameWithType: GameState.Registries
+  fullName: Core.GameState.Registries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Registries
+    path: Scripts/Core/GameState.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public GameRegistries Registries { get; }
+    parameters: []
+    return:
+      type: Core.Registries.GameRegistries
+    content.vb: Public Property Registries As GameRegistries
+  overload: Core.GameState.Registries*
+- uid: Core.GameState.EventBus
+  commentId: P:Core.GameState.EventBus
+  id: EventBus
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: EventBus
+  nameWithType: GameState.EventBus
+  fullName: Core.GameState.EventBus
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EventBus
+    path: Scripts/Core/GameState.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public EventBus EventBus { get; }
+    parameters: []
+    return:
+      type: Core.EventBus
+    content.vb: Public Property EventBus As EventBus
+  overload: Core.GameState.EventBus*
+- uid: Core.GameState.IsInitialized
+  commentId: P:Core.GameState.IsInitialized
+  id: IsInitialized
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: GameState.IsInitialized
+  fullName: Core.GameState.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/GameState.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsInitialized As Boolean
+  overload: Core.GameState.IsInitialized*
+- uid: Core.GameState.IsLoading
+  commentId: P:Core.GameState.IsLoading
+  id: IsLoading
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: IsLoading
+  nameWithType: GameState.IsLoading
+  fullName: Core.GameState.IsLoading
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsLoading
+    path: Scripts/Core/GameState.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool IsLoading { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsLoading As Boolean
+  overload: Core.GameState.IsLoading*
+- uid: Core.GameState.LoadingProgress
+  commentId: P:Core.GameState.LoadingProgress
+  id: LoadingProgress
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: LoadingProgress
+  nameWithType: GameState.LoadingProgress
+  fullName: Core.GameState.LoadingProgress
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingProgress
+    path: Scripts/Core/GameState.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public float LoadingProgress { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property LoadingProgress As Single
+  overload: Core.GameState.LoadingProgress*
+- uid: Core.GameState.Instance
+  commentId: P:Core.GameState.Instance
+  id: Instance
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: GameState.Instance
+  fullName: Core.GameState.Instance
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Instance
+    path: Scripts/Core/GameState.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Singleton access for global game state
+  example: []
+  syntax:
+    content: public static GameState Instance { get; }
+    parameters: []
+    return:
+      type: Core.GameState
+    content.vb: Public Shared Property Instance As GameState
+  overload: Core.GameState.Instance*
+- uid: Core.GameState.SetRegistries(Core.Registries.GameRegistries)
+  commentId: M:Core.GameState.SetRegistries(Core.Registries.GameRegistries)
+  id: SetRegistries(Core.Registries.GameRegistries)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: SetRegistries(GameRegistries)
+  nameWithType: GameState.SetRegistries(GameRegistries)
+  fullName: Core.GameState.SetRegistries(Core.Registries.GameRegistries)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetRegistries
+    path: Scripts/Core/GameState.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Set game registries (called by EngineInitializer during loading)
+  example: []
+  syntax:
+    content: public void SetRegistries(GameRegistries registries)
+    parameters:
+    - id: registries
+      type: Core.Registries.GameRegistries
+    content.vb: Public Sub SetRegistries(registries As GameRegistries)
+  overload: Core.GameState.SetRegistries*
+- uid: Core.GameState.RegisterGameSystem``1(``0)
+  commentId: M:Core.GameState.RegisterGameSystem``1(``0)
+  id: RegisterGameSystem``1(``0)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: RegisterGameSystem<T>(T)
+  nameWithType: GameState.RegisterGameSystem<T>(T)
+  fullName: Core.GameState.RegisterGameSystem<T>(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterGameSystem
+    path: Scripts/Core/GameState.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Register a Game layer system for command access
+
+    ARCHITECTURE: Engine provides mechanism (registration), Game provides policy (specific systems)
+
+    Engine doesn't know about EconomySystem, BuildingSystem, etc. - they register themselves
+  example: []
+  syntax:
+    content: 'public void RegisterGameSystem<T>(T system) where T : class'
+    parameters:
+    - id: system
+      type: '{T}'
+    typeParameters:
+    - id: T
+    content.vb: Public Sub RegisterGameSystem(Of T As Class)(system As T)
+  overload: Core.GameState.RegisterGameSystem*
+  nameWithType.vb: GameState.RegisterGameSystem(Of T)(T)
+  fullName.vb: Core.GameState.RegisterGameSystem(Of T)(T)
+  name.vb: RegisterGameSystem(Of T)(T)
+- uid: Core.GameState.GetGameSystem``1
+  commentId: M:Core.GameState.GetGameSystem``1
+  id: GetGameSystem``1
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: GetGameSystem<T>()
+  nameWithType: GameState.GetGameSystem<T>()
+  fullName: Core.GameState.GetGameSystem<T>()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGameSystem
+    path: Scripts/Core/GameState.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Get a registered Game layer system for command execution
+
+    Returns null if system not registered (allows graceful degradation)
+  example: []
+  syntax:
+    content: 'public T GetGameSystem<T>() where T : class'
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function GetGameSystem(Of T As Class)() As T
+  overload: Core.GameState.GetGameSystem*
+  nameWithType.vb: GameState.GetGameSystem(Of T)()
+  fullName.vb: Core.GameState.GetGameSystem(Of T)()
+  name.vb: GetGameSystem(Of T)()
+- uid: Core.GameState.HasGameSystem``1
+  commentId: M:Core.GameState.HasGameSystem``1
+  id: HasGameSystem``1
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: HasGameSystem<T>()
+  nameWithType: GameState.HasGameSystem<T>()
+  fullName: Core.GameState.HasGameSystem<T>()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasGameSystem
+    path: Scripts/Core/GameState.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Check if a Game layer system is registered
+  example: []
+  syntax:
+    content: 'public bool HasGameSystem<T>() where T : class'
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasGameSystem(Of T As Class)() As Boolean
+  overload: Core.GameState.HasGameSystem*
+  nameWithType.vb: GameState.HasGameSystem(Of T)()
+  fullName.vb: Core.GameState.HasGameSystem(Of T)()
+  name.vb: HasGameSystem(Of T)()
+- uid: Core.GameState.GetAllRegisteredGameSystems
+  commentId: M:Core.GameState.GetAllRegisteredGameSystems
+  id: GetAllRegisteredGameSystems
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: GetAllRegisteredGameSystems()
+  nameWithType: GameState.GetAllRegisteredGameSystems()
+  fullName: Core.GameState.GetAllRegisteredGameSystems()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllRegisteredGameSystems
+    path: Scripts/Core/GameState.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Get all registered Game layer systems (for save/load)
+
+    Returns only systems that inherit from GameSystem
+  example: []
+  syntax:
+    content: public IEnumerable<GameSystem> GetAllRegisteredGameSystems()
+    return:
+      type: System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+    content.vb: Public Function GetAllRegisteredGameSystems() As IEnumerable(Of GameSystem)
+  overload: Core.GameState.GetAllRegisteredGameSystems*
+- uid: Core.GameState.InitializeSystems
+  commentId: M:Core.GameState.InitializeSystems
+  id: InitializeSystems
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: InitializeSystems()
+  nameWithType: GameState.InitializeSystems()
+  fullName: Core.GameState.InitializeSystems()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeSystems
+    path: Scripts/Core/GameState.cs
+    startLine: 156
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Initialize all core systems in correct dependency order
+  example: []
+  syntax:
+    content: public void InitializeSystems()
+    content.vb: Public Sub InitializeSystems()
+  overload: Core.GameState.InitializeSystems*
+- uid: Core.GameState.TryExecuteCommand``1(``0)
+  commentId: M:Core.GameState.TryExecuteCommand``1(``0)
+  id: TryExecuteCommand``1(``0)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: TryExecuteCommand<T>(T)
+  nameWithType: GameState.TryExecuteCommand<T>(T)
+  fullName: Core.GameState.TryExecuteCommand<T>(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryExecuteCommand
+    path: Scripts/Core/GameState.cs
+    startLine: 215
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    Unified command execution - all game state changes go through here
+
+    Provides validation, event emission, and multiplayer sync
+  example: []
+  syntax:
+    content: 'public bool TryExecuteCommand<T>(T command) where T : ICommand'
+    parameters:
+    - id: command
+      type: '{T}'
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryExecuteCommand(Of T As ICommand)(command As T) As Boolean
+  overload: Core.GameState.TryExecuteCommand*
+  nameWithType.vb: GameState.TryExecuteCommand(Of T)(T)
+  fullName.vb: Core.GameState.TryExecuteCommand(Of T)(T)
+  name.vb: TryExecuteCommand(Of T)(T)
+- uid: Core.GameState.TryExecuteCommand``1(``0,System.String@)
+  commentId: M:Core.GameState.TryExecuteCommand``1(``0,System.String@)
+  id: TryExecuteCommand``1(``0,System.String@)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: TryExecuteCommand<T>(T, out string)
+  nameWithType: GameState.TryExecuteCommand<T>(T, out string)
+  fullName: Core.GameState.TryExecuteCommand<T>(T, out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryExecuteCommand
+    path: Scripts/Core/GameState.cs
+    startLine: 223
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Execute a command with detailed result message (for console/UI feedback)
+  example: []
+  syntax:
+    content: 'public bool TryExecuteCommand<T>(T command, out string resultMessage) where T : ICommand'
+    parameters:
+    - id: command
+      type: '{T}'
+    - id: resultMessage
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryExecuteCommand(Of T As ICommand)(command As T, resultMessage As String) As Boolean
+  overload: Core.GameState.TryExecuteCommand*
+  nameWithType.vb: GameState.TryExecuteCommand(Of T)(T, String)
+  fullName.vb: Core.GameState.TryExecuteCommand(Of T)(T, String)
+  name.vb: TryExecuteCommand(Of T)(T, String)
+- uid: Core.GameState.GetProvinceOwner(System.UInt16)
+  commentId: M:Core.GameState.GetProvinceOwner(System.UInt16)
+  id: GetProvinceOwner(System.UInt16)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceOwner(ushort)
+  nameWithType: GameState.GetProvinceOwner(ushort)
+  fullName: Core.GameState.GetProvinceOwner(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceOwner
+    path: Scripts/Core/GameState.cs
+    startLine: 298
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Get basic province information - most common query
+  example: []
+  syntax:
+    content: public ushort GetProvinceOwner(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceOwner(provinceId As UShort) As UShort
+  overload: Core.GameState.GetProvinceOwner*
+  nameWithType.vb: GameState.GetProvinceOwner(UShort)
+  fullName.vb: Core.GameState.GetProvinceOwner(UShort)
+  name.vb: GetProvinceOwner(UShort)
+- uid: Core.GameState.GetCountryColor(System.UInt16)
+  commentId: M:Core.GameState.GetCountryColor(System.UInt16)
+  id: GetCountryColor(System.UInt16)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: GetCountryColor(ushort)
+  nameWithType: GameState.GetCountryColor(ushort)
+  fullName: Core.GameState.GetCountryColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryColor
+    path: Scripts/Core/GameState.cs
+    startLine: 306
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Get basic country information - most common query
+  example: []
+  syntax:
+    content: public Color32 GetCountryColor(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetCountryColor(countryId As UShort) As Color32
+  overload: Core.GameState.GetCountryColor*
+  nameWithType.vb: GameState.GetCountryColor(UShort)
+  fullName.vb: Core.GameState.GetCountryColor(UShort)
+  name.vb: GetCountryColor(UShort)
+- uid: Core.GameState.GetCountryProvinces(System.UInt16)
+  commentId: M:Core.GameState.GetCountryProvinces(System.UInt16)
+  id: GetCountryProvinces(System.UInt16)
+  parent: Core.GameState
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinces(ushort)
+  nameWithType: GameState.GetCountryProvinces(ushort)
+  fullName: Core.GameState.GetCountryProvinces(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinces
+    path: Scripts/Core/GameState.cs
+    startLine: 314
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Complex cross-system query - get all provinces owned by a country
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetCountryProvinces(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetCountryProvinces(countryId As UShort) As NativeArray(Of UShort)
+  overload: Core.GameState.GetCountryProvinces*
+  nameWithType.vb: GameState.GetCountryProvinces(UShort)
+  fullName.vb: Core.GameState.GetCountryProvinces(UShort)
+  name.vb: GetCountryProvinces(UShort)
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.GameState.Provinces*
+  commentId: Overload:Core.GameState.Provinces
+  href: Core.GameState.html#Core_GameState_Provinces
+  name: Provinces
+  nameWithType: GameState.Provinces
+  fullName: Core.GameState.Provinces
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.GameState.Countries*
+  commentId: Overload:Core.GameState.Countries
+  href: Core.GameState.html#Core_GameState_Countries
+  name: Countries
+  nameWithType: GameState.Countries
+  fullName: Core.GameState.Countries
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.GameState.Time*
+  commentId: Overload:Core.GameState.Time
+  href: Core.GameState.html#Core_GameState_Time
+  name: Time
+  nameWithType: GameState.Time
+  fullName: Core.GameState.Time
+- uid: Core.Systems.TimeManager
+  commentId: T:Core.Systems.TimeManager
+  parent: Core.Systems
+  href: Core.Systems.TimeManager.html
+  name: TimeManager
+  nameWithType: TimeManager
+  fullName: Core.Systems.TimeManager
+- uid: Core.GameState.Modifiers*
+  commentId: Overload:Core.GameState.Modifiers
+  href: Core.GameState.html#Core_GameState_Modifiers
+  name: Modifiers
+  nameWithType: GameState.Modifiers
+  fullName: Core.GameState.Modifiers
+- uid: Core.Modifiers.ModifierSystem
+  commentId: T:Core.Modifiers.ModifierSystem
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSystem.html
+  name: ModifierSystem
+  nameWithType: ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.GameState.Resources*
+  commentId: Overload:Core.GameState.Resources
+  href: Core.GameState.html#Core_GameState_Resources
+  name: Resources
+  nameWithType: GameState.Resources
+  fullName: Core.GameState.Resources
+- uid: Core.Resources.ResourceSystem
+  commentId: T:Core.Resources.ResourceSystem
+  parent: Core.Resources
+  href: Core.Resources.ResourceSystem.html
+  name: ResourceSystem
+  nameWithType: ResourceSystem
+  fullName: Core.Resources.ResourceSystem
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.GameState.Units*
+  commentId: Overload:Core.GameState.Units
+  href: Core.GameState.html#Core_GameState_Units
+  name: Units
+  nameWithType: GameState.Units
+  fullName: Core.GameState.Units
+- uid: Core.Units.UnitSystem
+  commentId: T:Core.Units.UnitSystem
+  parent: Core.Units
+  href: Core.Units.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: Core.Units.UnitSystem
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.GameState.Adjacencies*
+  commentId: Overload:Core.GameState.Adjacencies
+  href: Core.GameState.html#Core_GameState_Adjacencies
+  name: Adjacencies
+  nameWithType: GameState.Adjacencies
+  fullName: Core.GameState.Adjacencies
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.GameState.Pathfinding*
+  commentId: Overload:Core.GameState.Pathfinding
+  href: Core.GameState.html#Core_GameState_Pathfinding
+  name: Pathfinding
+  nameWithType: GameState.Pathfinding
+  fullName: Core.GameState.Pathfinding
+- uid: Core.Systems.PathfindingSystem
+  commentId: T:Core.Systems.PathfindingSystem
+  parent: Core.Systems
+  href: Core.Systems.PathfindingSystem.html
+  name: PathfindingSystem
+  nameWithType: PathfindingSystem
+  fullName: Core.Systems.PathfindingSystem
+- uid: Core.GameState.Diplomacy*
+  commentId: Overload:Core.GameState.Diplomacy
+  href: Core.GameState.html#Core_GameState_Diplomacy
+  name: Diplomacy
+  nameWithType: GameState.Diplomacy
+  fullName: Core.GameState.Diplomacy
+- uid: Core.Diplomacy.DiplomacySystem
+  commentId: T:Core.Diplomacy.DiplomacySystem
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.DiplomacySystem.html
+  name: DiplomacySystem
+  nameWithType: DiplomacySystem
+  fullName: Core.Diplomacy.DiplomacySystem
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.GameState.ProvinceQueries*
+  commentId: Overload:Core.GameState.ProvinceQueries
+  href: Core.GameState.html#Core_GameState_ProvinceQueries
+  name: ProvinceQueries
+  nameWithType: GameState.ProvinceQueries
+  fullName: Core.GameState.ProvinceQueries
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: Core.GameState.CountryQueries*
+  commentId: Overload:Core.GameState.CountryQueries
+  href: Core.GameState.html#Core_GameState_CountryQueries
+  name: CountryQueries
+  nameWithType: GameState.CountryQueries
+  fullName: Core.GameState.CountryQueries
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  parent: Core.Queries
+  href: Core.Queries.CountryQueries.html
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+- uid: Core.GameState.Registries*
+  commentId: Overload:Core.GameState.Registries
+  href: Core.GameState.html#Core_GameState_Registries
+  name: Registries
+  nameWithType: GameState.Registries
+  fullName: Core.GameState.Registries
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: Core.GameState.EventBus*
+  commentId: Overload:Core.GameState.EventBus
+  href: Core.GameState.html#Core_GameState_EventBus
+  name: EventBus
+  nameWithType: GameState.EventBus
+  fullName: Core.GameState.EventBus
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core.GameState.IsInitialized*
+  commentId: Overload:Core.GameState.IsInitialized
+  href: Core.GameState.html#Core_GameState_IsInitialized
+  name: IsInitialized
+  nameWithType: GameState.IsInitialized
+  fullName: Core.GameState.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.GameState.IsLoading*
+  commentId: Overload:Core.GameState.IsLoading
+  href: Core.GameState.html#Core_GameState_IsLoading
+  name: IsLoading
+  nameWithType: GameState.IsLoading
+  fullName: Core.GameState.IsLoading
+- uid: Core.GameState.LoadingProgress*
+  commentId: Overload:Core.GameState.LoadingProgress
+  href: Core.GameState.html#Core_GameState_LoadingProgress
+  name: LoadingProgress
+  nameWithType: GameState.LoadingProgress
+  fullName: Core.GameState.LoadingProgress
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.GameState.Instance*
+  commentId: Overload:Core.GameState.Instance
+  href: Core.GameState.html#Core_GameState_Instance
+  name: Instance
+  nameWithType: GameState.Instance
+  fullName: Core.GameState.Instance
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.GameState.SetRegistries*
+  commentId: Overload:Core.GameState.SetRegistries
+  href: Core.GameState.html#Core_GameState_SetRegistries_Core_Registries_GameRegistries_
+  name: SetRegistries
+  nameWithType: GameState.SetRegistries
+  fullName: Core.GameState.SetRegistries
+- uid: Core.GameState.RegisterGameSystem*
+  commentId: Overload:Core.GameState.RegisterGameSystem
+  href: Core.GameState.html#Core_GameState_RegisterGameSystem__1___0_
+  name: RegisterGameSystem
+  nameWithType: GameState.RegisterGameSystem
+  fullName: Core.GameState.RegisterGameSystem
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.GameState.GetGameSystem*
+  commentId: Overload:Core.GameState.GetGameSystem
+  href: Core.GameState.html#Core_GameState_GetGameSystem__1
+  name: GetGameSystem
+  nameWithType: GameState.GetGameSystem
+  fullName: Core.GameState.GetGameSystem
+- uid: Core.GameState.HasGameSystem*
+  commentId: Overload:Core.GameState.HasGameSystem
+  href: Core.GameState.html#Core_GameState_HasGameSystem__1
+  name: HasGameSystem
+  nameWithType: GameState.HasGameSystem
+  fullName: Core.GameState.HasGameSystem
+- uid: Core.GameState.GetAllRegisteredGameSystems*
+  commentId: Overload:Core.GameState.GetAllRegisteredGameSystems
+  href: Core.GameState.html#Core_GameState_GetAllRegisteredGameSystems
+  name: GetAllRegisteredGameSystems
+  nameWithType: GameState.GetAllRegisteredGameSystems
+  fullName: Core.GameState.GetAllRegisteredGameSystems
+- uid: System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+  commentId: T:System.Collections.Generic.IEnumerable{Core.Systems.GameSystem}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Core.Systems.GameSystem.html
+  name: IEnumerable<GameSystem>
+  nameWithType: IEnumerable<GameSystem>
+  fullName: System.Collections.Generic.IEnumerable<Core.Systems.GameSystem>
+  nameWithType.vb: IEnumerable(Of GameSystem)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Core.Systems.GameSystem)
+  name.vb: IEnumerable(Of GameSystem)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: Core.Systems.GameSystem
+    name: GameSystem
+    href: Core.Systems.GameSystem.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Systems.GameSystem
+    name: GameSystem
+    href: Core.Systems.GameSystem.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.GameState.InitializeSystems*
+  commentId: Overload:Core.GameState.InitializeSystems
+  href: Core.GameState.html#Core_GameState_InitializeSystems
+  name: InitializeSystems
+  nameWithType: GameState.InitializeSystems
+  fullName: Core.GameState.InitializeSystems
+- uid: Core.GameState.TryExecuteCommand*
+  commentId: Overload:Core.GameState.TryExecuteCommand
+  href: Core.GameState.html#Core_GameState_TryExecuteCommand__1___0_
+  name: TryExecuteCommand
+  nameWithType: GameState.TryExecuteCommand
+  fullName: Core.GameState.TryExecuteCommand
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.GameState.GetProvinceOwner*
+  commentId: Overload:Core.GameState.GetProvinceOwner
+  href: Core.GameState.html#Core_GameState_GetProvinceOwner_System_UInt16_
+  name: GetProvinceOwner
+  nameWithType: GameState.GetProvinceOwner
+  fullName: Core.GameState.GetProvinceOwner
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.GameState.GetCountryColor*
+  commentId: Overload:Core.GameState.GetCountryColor
+  href: Core.GameState.html#Core_GameState_GetCountryColor_System_UInt16_
+  name: GetCountryColor
+  nameWithType: GameState.GetCountryColor
+  fullName: Core.GameState.GetCountryColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Core.GameState.GetCountryProvinces*
+  commentId: Overload:Core.GameState.GetCountryProvinces
+  href: Core.GameState.html#Core_GameState_GetCountryProvinces_System_UInt16_
+  name: GetCountryProvinces
+  nameWithType: GameState.GetCountryProvinces
+  fullName: Core.GameState.GetCountryProvinces
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true

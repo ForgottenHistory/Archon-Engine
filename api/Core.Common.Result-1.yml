@@ -1,0 +1,1046 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Common.Result`1
+  commentId: T:Core.Common.Result`1
+  id: Result`1
+  parent: Core.Common
+  children:
+  - Core.Common.Result`1.Error
+  - Core.Common.Result`1.Failure(System.String)
+  - Core.Common.Result`1.GetValueOrDefault(`0)
+  - Core.Common.Result`1.IsFailure
+  - Core.Common.Result`1.IsSuccess
+  - Core.Common.Result`1.Map``1(System.Func{`0,``0})
+  - Core.Common.Result`1.OnFailure(System.Action{System.String})
+  - Core.Common.Result`1.OnSuccess(System.Action{`0})
+  - Core.Common.Result`1.Success(`0)
+  - Core.Common.Result`1.Then``1(System.Func{`0,Core.Common.Result{``0}})
+  - Core.Common.Result`1.ToResult
+  - Core.Common.Result`1.ToString
+  - Core.Common.Result`1.TryGetValue(`0@)
+  - Core.Common.Result`1.Value
+  - Core.Common.Result`1.op_Implicit(Core.Common.Result{`0})~System.Boolean
+  langs:
+  - csharp
+  - vb
+  name: Result<T>
+  nameWithType: Result<T>
+  fullName: Core.Common.Result<T>
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Result
+    path: Scripts/Core/Common/Result.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: >-
+    Result type that carries a value on success.
+
+    Use for operations that return a value or fail.
+  remarks: >-
+    Access Value only after checking IsSuccess.
+
+    For reference types, Value is default(T) on failure.
+  example: []
+  syntax:
+    content: public readonly struct Result<T>
+    typeParameters:
+    - id: T
+      description: Type of the success value.
+    content.vb: Public Structure Result(Of T)
+  nameWithType.vb: Result(Of T)
+  fullName.vb: Core.Common.Result(Of T)
+  name.vb: Result(Of T)
+- uid: Core.Common.Result`1.IsSuccess
+  commentId: P:Core.Common.Result`1.IsSuccess
+  id: IsSuccess
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: Result<T>.IsSuccess
+  fullName: Core.Common.Result<T>.IsSuccess
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Common/Result.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: True if the operation succeeded.
+  example: []
+  syntax:
+    content: public bool IsSuccess { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsSuccess As Boolean
+  overload: Core.Common.Result`1.IsSuccess*
+  nameWithType.vb: Result(Of T).IsSuccess
+  fullName.vb: Core.Common.Result(Of T).IsSuccess
+- uid: Core.Common.Result`1.Value
+  commentId: P:Core.Common.Result`1.Value
+  id: Value
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: Result<T>.Value
+  fullName: Core.Common.Result<T>.Value
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Common/Result.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: The result value. Only valid when IsSuccess is true.
+  example: []
+  syntax:
+    content: public T Value { get; }
+    parameters: []
+    return:
+      type: '{T}'
+    content.vb: Public ReadOnly Property Value As T
+  overload: Core.Common.Result`1.Value*
+  nameWithType.vb: Result(Of T).Value
+  fullName.vb: Core.Common.Result(Of T).Value
+- uid: Core.Common.Result`1.Error
+  commentId: P:Core.Common.Result`1.Error
+  id: Error
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: Result<T>.Error
+  fullName: Core.Common.Result<T>.Error
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Error
+    path: Scripts/Core/Common/Result.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Error message if failed, null if successful.
+  example: []
+  syntax:
+    content: public string Error { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property [Error] As String
+  overload: Core.Common.Result`1.Error*
+  nameWithType.vb: Result(Of T).Error
+  fullName.vb: Core.Common.Result(Of T).Error
+- uid: Core.Common.Result`1.IsFailure
+  commentId: P:Core.Common.Result`1.IsFailure
+  id: IsFailure
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: IsFailure
+  nameWithType: Result<T>.IsFailure
+  fullName: Core.Common.Result<T>.IsFailure
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsFailure
+    path: Scripts/Core/Common/Result.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: True if the operation failed.
+  example: []
+  syntax:
+    content: public bool IsFailure { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsFailure As Boolean
+  overload: Core.Common.Result`1.IsFailure*
+  nameWithType.vb: Result(Of T).IsFailure
+  fullName.vb: Core.Common.Result(Of T).IsFailure
+- uid: Core.Common.Result`1.Success(`0)
+  commentId: M:Core.Common.Result`1.Success(`0)
+  id: Success(`0)
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Success(T)
+  nameWithType: Result<T>.Success(T)
+  fullName: Core.Common.Result<T>.Success(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Common/Result.cs
+    startLine: 118
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Creates a successful result with a value.
+  example: []
+  syntax:
+    content: public static Result<T> Success(T value)
+    parameters:
+    - id: value
+      type: '{T}'
+      description: The success value.
+    return:
+      type: Core.Common.Result`1
+    content.vb: Public Shared Function Success(value As T) As Result(Of T)
+  overload: Core.Common.Result`1.Success*
+  nameWithType.vb: Result(Of T).Success(T)
+  fullName.vb: Core.Common.Result(Of T).Success(T)
+- uid: Core.Common.Result`1.Failure(System.String)
+  commentId: M:Core.Common.Result`1.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: Result<T>.Failure(string)
+  fullName: Core.Common.Result<T>.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Common/Result.cs
+    startLine: 123
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Creates a failed result with an error message.
+  example: []
+  syntax:
+    content: public static Result<T> Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+      description: Description of what went wrong.
+    return:
+      type: Core.Common.Result`1
+    content.vb: Public Shared Function Failure([error] As String) As Result(Of T)
+  overload: Core.Common.Result`1.Failure*
+  nameWithType.vb: Result(Of T).Failure(String)
+  fullName.vb: Core.Common.Result(Of T).Failure(String)
+  name.vb: Failure(String)
+- uid: Core.Common.Result`1.op_Implicit(Core.Common.Result{`0})~System.Boolean
+  commentId: M:Core.Common.Result`1.op_Implicit(Core.Common.Result{`0})~System.Boolean
+  id: op_Implicit(Core.Common.Result{`0})~System.Boolean
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: implicit operator bool(Result<T>)
+  nameWithType: Result<T>.implicit operator bool(Result<T>)
+  fullName: Core.Common.Result<T>.implicit operator bool(Core.Common.Result<T>)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Common/Result.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Implicit conversion to bool for convenient if-checks.
+  example: []
+  syntax:
+    content: public static implicit operator bool(Result<T> result)
+    parameters:
+    - id: result
+      type: Core.Common.Result`1
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Widening Operator CType(result As Result(Of T)) As Boolean
+  overload: Core.Common.Result`1.op_Implicit*
+  nameWithType.vb: Result(Of T).CType(Result(Of T))
+  fullName.vb: Core.Common.Result(Of T).CType(Core.Common.Result(Of T))
+  name.vb: CType(Result(Of T))
+- uid: Core.Common.Result`1.GetValueOrDefault(`0)
+  commentId: M:Core.Common.Result`1.GetValueOrDefault(`0)
+  id: GetValueOrDefault(`0)
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: GetValueOrDefault(T)
+  nameWithType: Result<T>.GetValueOrDefault(T)
+  fullName: Core.Common.Result<T>.GetValueOrDefault(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValueOrDefault
+    path: Scripts/Core/Common/Result.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Gets the value or returns a default if failed.
+  example: []
+  syntax:
+    content: public T GetValueOrDefault(T defaultValue = default)
+    parameters:
+    - id: defaultValue
+      type: '{T}'
+    return:
+      type: '{T}'
+    content.vb: Public Function GetValueOrDefault(defaultValue As T = Nothing) As T
+  overload: Core.Common.Result`1.GetValueOrDefault*
+  nameWithType.vb: Result(Of T).GetValueOrDefault(T)
+  fullName.vb: Core.Common.Result(Of T).GetValueOrDefault(T)
+- uid: Core.Common.Result`1.TryGetValue(`0@)
+  commentId: M:Core.Common.Result`1.TryGetValue(`0@)
+  id: TryGetValue(`0@)
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: TryGetValue(out T)
+  nameWithType: Result<T>.TryGetValue(out T)
+  fullName: Core.Common.Result<T>.TryGetValue(out T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetValue
+    path: Scripts/Core/Common/Result.cs
+    startLine: 139
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Tries to get the value, returning false if failed.
+  example: []
+  syntax:
+    content: public bool TryGetValue(out T value)
+    parameters:
+    - id: value
+      type: '{T}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetValue(value As T) As Boolean
+  overload: Core.Common.Result`1.TryGetValue*
+  nameWithType.vb: Result(Of T).TryGetValue(T)
+  fullName.vb: Core.Common.Result(Of T).TryGetValue(T)
+  name.vb: TryGetValue(T)
+- uid: Core.Common.Result`1.Map``1(System.Func{`0,``0})
+  commentId: M:Core.Common.Result`1.Map``1(System.Func{`0,``0})
+  id: Map``1(System.Func{`0,``0})
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Map<TNew>(Func<T, TNew>)
+  nameWithType: Result<T>.Map<TNew>(Func<T, TNew>)
+  fullName: Core.Common.Result<T>.Map<TNew>(System.Func<T, TNew>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Map
+    path: Scripts/Core/Common/Result.cs
+    startLine: 150
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: >-
+    Transforms the success value using the provided function.
+
+    Returns failure unchanged.
+  example: []
+  syntax:
+    content: public Result<TNew> Map<TNew>(Func<T, TNew> mapper)
+    parameters:
+    - id: mapper
+      type: System.Func{{T},{TNew}}
+    typeParameters:
+    - id: TNew
+    return:
+      type: Core.Common.Result{{TNew}}
+    content.vb: Public Function Map(Of TNew)(mapper As Func(Of T, TNew)) As Result(Of TNew)
+  overload: Core.Common.Result`1.Map*
+  nameWithType.vb: Result(Of T).Map(Of TNew)(Func(Of T, TNew))
+  fullName.vb: Core.Common.Result(Of T).Map(Of TNew)(System.Func(Of T, TNew))
+  name.vb: Map(Of TNew)(Func(Of T, TNew))
+- uid: Core.Common.Result`1.Then``1(System.Func{`0,Core.Common.Result{``0}})
+  commentId: M:Core.Common.Result`1.Then``1(System.Func{`0,Core.Common.Result{``0}})
+  id: Then``1(System.Func{`0,Core.Common.Result{``0}})
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: Then<TNew>(Func<T, Result<TNew>>)
+  nameWithType: Result<T>.Then<TNew>(Func<T, Result<TNew>>)
+  fullName: Core.Common.Result<T>.Then<TNew>(System.Func<T, Core.Common.Result<TNew>>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Then
+    path: Scripts/Core/Common/Result.cs
+    startLine: 162
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: >-
+    Chains another operation that returns a Result.
+
+    Only executes if this result is successful.
+  example: []
+  syntax:
+    content: public Result<TNew> Then<TNew>(Func<T, Result<TNew>> next)
+    parameters:
+    - id: next
+      type: System.Func{{T},Core.Common.Result{{TNew}}}
+    typeParameters:
+    - id: TNew
+    return:
+      type: Core.Common.Result{{TNew}}
+    content.vb: Public Function [Then](Of TNew)([next] As Func(Of T, Result(Of TNew))) As Result(Of TNew)
+  overload: Core.Common.Result`1.Then*
+  nameWithType.vb: Result(Of T).Then(Of TNew)(Func(Of T, Result(Of TNew)))
+  fullName.vb: Core.Common.Result(Of T).Then(Of TNew)(System.Func(Of T, Core.Common.Result(Of TNew)))
+  name.vb: Then(Of TNew)(Func(Of T, Result(Of TNew)))
+- uid: Core.Common.Result`1.OnSuccess(System.Action{`0})
+  commentId: M:Core.Common.Result`1.OnSuccess(System.Action{`0})
+  id: OnSuccess(System.Action{`0})
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: OnSuccess(Action<T>)
+  nameWithType: Result<T>.OnSuccess(Action<T>)
+  fullName: Core.Common.Result<T>.OnSuccess(System.Action<T>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSuccess
+    path: Scripts/Core/Common/Result.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Executes an action with the value if successful.
+  example: []
+  syntax:
+    content: public Result<T> OnSuccess(Action<T> action)
+    parameters:
+    - id: action
+      type: System.Action{{T}}
+    return:
+      type: Core.Common.Result`1
+    content.vb: Public Function OnSuccess(action As Action(Of T)) As Result(Of T)
+  overload: Core.Common.Result`1.OnSuccess*
+  nameWithType.vb: Result(Of T).OnSuccess(Action(Of T))
+  fullName.vb: Core.Common.Result(Of T).OnSuccess(System.Action(Of T))
+  name.vb: OnSuccess(Action(Of T))
+- uid: Core.Common.Result`1.OnFailure(System.Action{System.String})
+  commentId: M:Core.Common.Result`1.OnFailure(System.Action{System.String})
+  id: OnFailure(System.Action{System.String})
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: OnFailure(Action<string>)
+  nameWithType: Result<T>.OnFailure(Action<string>)
+  fullName: Core.Common.Result<T>.OnFailure(System.Action<string>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnFailure
+    path: Scripts/Core/Common/Result.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Executes an action if the result is a failure.
+  example: []
+  syntax:
+    content: public Result<T> OnFailure(Action<string> action)
+    parameters:
+    - id: action
+      type: System.Action{System.String}
+    return:
+      type: Core.Common.Result`1
+    content.vb: Public Function OnFailure(action As Action(Of String)) As Result(Of T)
+  overload: Core.Common.Result`1.OnFailure*
+  nameWithType.vb: Result(Of T).OnFailure(Action(Of String))
+  fullName.vb: Core.Common.Result(Of T).OnFailure(System.Action(Of String))
+  name.vb: OnFailure(Action(Of String))
+- uid: Core.Common.Result`1.ToResult
+  commentId: M:Core.Common.Result`1.ToResult
+  id: ToResult
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: ToResult()
+  nameWithType: Result<T>.ToResult()
+  fullName: Core.Common.Result<T>.ToResult()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToResult
+    path: Scripts/Core/Common/Result.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Converts to a non-generic Result, discarding the value.
+  example: []
+  syntax:
+    content: public Result ToResult()
+    return:
+      type: Core.Common.Result
+    content.vb: Public Function ToResult() As Result
+  overload: Core.Common.Result`1.ToResult*
+  nameWithType.vb: Result(Of T).ToResult()
+  fullName.vb: Core.Common.Result(Of T).ToResult()
+- uid: Core.Common.Result`1.ToString
+  commentId: M:Core.Common.Result`1.ToString
+  id: ToString
+  parent: Core.Common.Result`1
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: Result<T>.ToString()
+  fullName: Core.Common.Result<T>.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/Result.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Common/Result.cs
+    startLine: 194
+  assemblies:
+  - Core
+  namespace: Core.Common
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Common.Result`1.ToString*
+  nameWithType.vb: Result(Of T).ToString()
+  fullName.vb: Core.Common.Result(Of T).ToString()
+references:
+- uid: Core.Common
+  commentId: N:Core.Common
+  href: Core.html
+  name: Core.Common
+  nameWithType: Core.Common
+  fullName: Core.Common
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+- uid: Core.Common.Result`1.IsSuccess*
+  commentId: Overload:Core.Common.Result`1.IsSuccess
+  href: Core.Common.Result-1.html#Core_Common_Result_1_IsSuccess
+  name: IsSuccess
+  nameWithType: Result<T>.IsSuccess
+  fullName: Core.Common.Result<T>.IsSuccess
+  nameWithType.vb: Result(Of T).IsSuccess
+  fullName.vb: Core.Common.Result(Of T).IsSuccess
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Common.Result`1.Value*
+  commentId: Overload:Core.Common.Result`1.Value
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Value
+  name: Value
+  nameWithType: Result<T>.Value
+  fullName: Core.Common.Result<T>.Value
+  nameWithType.vb: Result(Of T).Value
+  fullName.vb: Core.Common.Result(Of T).Value
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Common.Result`1.Error*
+  commentId: Overload:Core.Common.Result`1.Error
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Error
+  name: Error
+  nameWithType: Result<T>.Error
+  fullName: Core.Common.Result<T>.Error
+  nameWithType.vb: Result(Of T).Error
+  fullName.vb: Core.Common.Result(Of T).Error
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Common.Result`1.IsFailure*
+  commentId: Overload:Core.Common.Result`1.IsFailure
+  href: Core.Common.Result-1.html#Core_Common_Result_1_IsFailure
+  name: IsFailure
+  nameWithType: Result<T>.IsFailure
+  fullName: Core.Common.Result<T>.IsFailure
+  nameWithType.vb: Result(Of T).IsFailure
+  fullName.vb: Core.Common.Result(Of T).IsFailure
+- uid: Core.Common.Result`1.Success*
+  commentId: Overload:Core.Common.Result`1.Success
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Success__0_
+  name: Success
+  nameWithType: Result<T>.Success
+  fullName: Core.Common.Result<T>.Success
+  nameWithType.vb: Result(Of T).Success
+  fullName.vb: Core.Common.Result(Of T).Success
+- uid: Core.Common.Result`1
+  commentId: T:Core.Common.Result`1
+  parent: Core.Common
+  href: Core.Common.Result-1.html
+  name: Result<T>
+  nameWithType: Result<T>
+  fullName: Core.Common.Result<T>
+  nameWithType.vb: Result(Of T)
+  fullName.vb: Core.Common.Result(Of T)
+  name.vb: Result(Of T)
+  spec.csharp:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Common.Result`1.Failure*
+  commentId: Overload:Core.Common.Result`1.Failure
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Failure_System_String_
+  name: Failure
+  nameWithType: Result<T>.Failure
+  fullName: Core.Common.Result<T>.Failure
+  nameWithType.vb: Result(Of T).Failure
+  fullName.vb: Core.Common.Result(Of T).Failure
+- uid: Core.Common.Result`1.op_Implicit*
+  commentId: Overload:Core.Common.Result`1.op_Implicit
+  name: implicit operator
+  nameWithType: Result<T>.implicit operator
+  fullName: Core.Common.Result<T>.implicit operator
+  nameWithType.vb: Result(Of T).CType
+  fullName.vb: Core.Common.Result(Of T).CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator
+- uid: Core.Common.Result`1.GetValueOrDefault*
+  commentId: Overload:Core.Common.Result`1.GetValueOrDefault
+  href: Core.Common.Result-1.html#Core_Common_Result_1_GetValueOrDefault__0_
+  name: GetValueOrDefault
+  nameWithType: Result<T>.GetValueOrDefault
+  fullName: Core.Common.Result<T>.GetValueOrDefault
+  nameWithType.vb: Result(Of T).GetValueOrDefault
+  fullName.vb: Core.Common.Result(Of T).GetValueOrDefault
+- uid: Core.Common.Result`1.TryGetValue*
+  commentId: Overload:Core.Common.Result`1.TryGetValue
+  href: Core.Common.Result-1.html#Core_Common_Result_1_TryGetValue__0__
+  name: TryGetValue
+  nameWithType: Result<T>.TryGetValue
+  fullName: Core.Common.Result<T>.TryGetValue
+  nameWithType.vb: Result(Of T).TryGetValue
+  fullName.vb: Core.Common.Result(Of T).TryGetValue
+- uid: Core.Common.Result`1.Map*
+  commentId: Overload:Core.Common.Result`1.Map
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Map__1_System_Func__0___0__
+  name: Map
+  nameWithType: Result<T>.Map
+  fullName: Core.Common.Result<T>.Map
+  nameWithType.vb: Result(Of T).Map
+  fullName.vb: Core.Common.Result(Of T).Map
+- uid: System.Func{{T},{TNew}}
+  commentId: T:System.Func{`0,``0}
+  parent: System
+  definition: System.Func`2
+  name: Func<T, TNew>
+  nameWithType: Func<T, TNew>
+  fullName: System.Func<T, TNew>
+  nameWithType.vb: Func(Of T, TNew)
+  fullName.vb: System.Func(Of T, TNew)
+  name.vb: Func(Of T, TNew)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TNew
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TNew
+  - name: )
+- uid: Core.Common.Result{{TNew}}
+  commentId: T:Core.Common.Result{``0}
+  parent: Core.Common
+  definition: Core.Common.Result`1
+  href: Core.Common.Result-1.html
+  name: Result<TNew>
+  nameWithType: Result<TNew>
+  fullName: Core.Common.Result<TNew>
+  nameWithType.vb: Result(Of TNew)
+  fullName.vb: Core.Common.Result(Of TNew)
+  name.vb: Result(Of TNew)
+  spec.csharp:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: TNew
+  - name: '>'
+  spec.vb:
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNew
+  - name: )
+- uid: System.Func`2
+  commentId: T:System.Func`2
+  isExternal: true
+  name: Func<T, TResult>
+  nameWithType: Func<T, TResult>
+  fullName: System.Func<T, TResult>
+  nameWithType.vb: Func(Of T, TResult)
+  fullName.vb: System.Func(Of T, TResult)
+  name.vb: Func(Of T, TResult)
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: Core.Common.Result`1.Then*
+  commentId: Overload:Core.Common.Result`1.Then
+  href: Core.Common.Result-1.html#Core_Common_Result_1_Then__1_System_Func__0_Core_Common_Result___0___
+  name: Then
+  nameWithType: Result<T>.Then
+  fullName: Core.Common.Result<T>.Then
+  nameWithType.vb: Result(Of T).Then
+  fullName.vb: Core.Common.Result(Of T).Then
+- uid: System.Func{{T},Core.Common.Result{{TNew}}}
+  commentId: T:System.Func{`0,Core.Common.Result{``0}}
+  parent: System
+  definition: System.Func`2
+  href: Core.Common.Result-1.html
+  name: Func<T, Result<TNew>>
+  nameWithType: Func<T, Result<TNew>>
+  fullName: System.Func<T, Core.Common.Result<TNew>>
+  nameWithType.vb: Func(Of T, Result(Of TNew))
+  fullName.vb: System.Func(Of T, Core.Common.Result(Of TNew))
+  name.vb: Func(Of T, Result(Of TNew))
+  spec.csharp:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: <
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: <
+  - name: TNew
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`2
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: ','
+  - name: " "
+  - uid: Core.Common.Result`1
+    name: Result
+    href: Core.Common.Result-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TNew
+  - name: )
+  - name: )
+- uid: Core.Common.Result`1.OnSuccess*
+  commentId: Overload:Core.Common.Result`1.OnSuccess
+  href: Core.Common.Result-1.html#Core_Common_Result_1_OnSuccess_System_Action__0__
+  name: OnSuccess
+  nameWithType: Result<T>.OnSuccess
+  fullName: Core.Common.Result<T>.OnSuccess
+  nameWithType.vb: Result(Of T).OnSuccess
+  fullName.vb: Core.Common.Result(Of T).OnSuccess
+- uid: System.Action{{T}}
+  commentId: T:System.Action{``0}
+  parent: System
+  definition: System.Action`1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Common.Result`1.OnFailure*
+  commentId: Overload:Core.Common.Result`1.OnFailure
+  href: Core.Common.Result-1.html#Core_Common_Result_1_OnFailure_System_Action_System_String__
+  name: OnFailure
+  nameWithType: Result<T>.OnFailure
+  fullName: Core.Common.Result<T>.OnFailure
+  nameWithType.vb: Result(Of T).OnFailure
+  fullName.vb: Core.Common.Result(Of T).OnFailure
+- uid: System.Action{System.String}
+  commentId: T:System.Action{System.String}
+  parent: System
+  definition: System.Action`1
+  name: Action<string>
+  nameWithType: Action<string>
+  fullName: System.Action<string>
+  nameWithType.vb: Action(Of String)
+  fullName.vb: System.Action(Of String)
+  name.vb: Action(Of String)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Common.Result`1.ToResult*
+  commentId: Overload:Core.Common.Result`1.ToResult
+  href: Core.Common.Result-1.html#Core_Common_Result_1_ToResult
+  name: ToResult
+  nameWithType: Result<T>.ToResult
+  fullName: Core.Common.Result<T>.ToResult
+  nameWithType.vb: Result(Of T).ToResult
+  fullName.vb: Core.Common.Result(Of T).ToResult
+- uid: Core.Common.Result
+  commentId: T:Core.Common.Result
+  parent: Core.Common
+  href: Core.Common.Result.html
+  name: Result
+  nameWithType: Result
+  fullName: Core.Common.Result
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Common.Result`1.ToString*
+  commentId: Overload:Core.Common.Result`1.ToString
+  href: Core.Common.Result-1.html#Core_Common_Result_1_ToString
+  name: ToString
+  nameWithType: Result<T>.ToString
+  fullName: Core.Common.Result<T>.ToString
+  nameWithType.vb: Result(Of T).ToString
+  fullName.vb: Core.Common.Result(Of T).ToString
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

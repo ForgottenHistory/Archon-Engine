@@ -1,0 +1,78 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  id: Core.Data.Ids
+  children:
+  - Core.Data.Ids.BuildingId
+  - Core.Data.Ids.CountryId
+  - Core.Data.Ids.ProvinceId
+  - Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Data.Ids.CountryId
+  commentId: T:Core.Data.Ids.CountryId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.CountryId.html
+  name: CountryId
+  nameWithType: CountryId
+  fullName: Core.Data.Ids.CountryId
+- uid: Core.Data.Ids.BuildingId
+  commentId: T:Core.Data.Ids.BuildingId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.BuildingId.html
+  name: BuildingId
+  nameWithType: BuildingId
+  fullName: Core.Data.Ids.BuildingId
+- uid: Core.Data.Ids.ProvinceId
+  commentId: T:Core.Data.Ids.ProvinceId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.ProvinceId.html
+  name: ProvinceId
+  nameWithType: ProvinceId
+  fullName: Core.Data.Ids.ProvinceId
+- uid: Core.Data.Ids.TerrainId
+  commentId: T:Core.Data.Ids.TerrainId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.TerrainId.html
+  name: TerrainId
+  nameWithType: TerrainId
+  fullName: Core.Data.Ids.TerrainId
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html

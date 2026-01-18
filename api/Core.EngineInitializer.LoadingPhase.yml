@@ -1,0 +1,355 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.EngineInitializer.LoadingPhase
+  commentId: T:Core.EngineInitializer.LoadingPhase
+  id: EngineInitializer.LoadingPhase
+  parent: Core
+  children:
+  - Core.EngineInitializer.LoadingPhase.Complete
+  - Core.EngineInitializer.LoadingPhase.Error
+  - Core.EngineInitializer.LoadingPhase.InitializingCore
+  - Core.EngineInitializer.LoadingPhase.InitializingSystems
+  - Core.EngineInitializer.LoadingPhase.LinkingReferences
+  - Core.EngineInitializer.LoadingPhase.LoadingCountries
+  - Core.EngineInitializer.LoadingPhase.LoadingProvinces
+  - Core.EngineInitializer.LoadingPhase.LoadingScenario
+  - Core.EngineInitializer.LoadingPhase.LoadingStaticData
+  - Core.EngineInitializer.LoadingPhase.NotStarted
+  - Core.EngineInitializer.LoadingPhase.WarmingCaches
+  langs:
+  - csharp
+  - vb
+  name: EngineInitializer.LoadingPhase
+  nameWithType: EngineInitializer.LoadingPhase
+  fullName: Core.EngineInitializer.LoadingPhase
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingPhase
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public enum EngineInitializer.LoadingPhase
+    content.vb: Public Enum EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.NotStarted
+  commentId: F:Core.EngineInitializer.LoadingPhase.NotStarted
+  id: NotStarted
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: NotStarted
+  nameWithType: EngineInitializer.LoadingPhase.NotStarted
+  fullName: Core.EngineInitializer.LoadingPhase.NotStarted
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NotStarted
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: NotStarted = 0
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.InitializingCore
+  commentId: F:Core.EngineInitializer.LoadingPhase.InitializingCore
+  id: InitializingCore
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: InitializingCore
+  nameWithType: EngineInitializer.LoadingPhase.InitializingCore
+  fullName: Core.EngineInitializer.LoadingPhase.InitializingCore
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializingCore
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: InitializingCore = 1
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.LoadingStaticData
+  commentId: F:Core.EngineInitializer.LoadingPhase.LoadingStaticData
+  id: LoadingStaticData
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: LoadingStaticData
+  nameWithType: EngineInitializer.LoadingPhase.LoadingStaticData
+  fullName: Core.EngineInitializer.LoadingPhase.LoadingStaticData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingStaticData
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: LoadingStaticData = 2
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.LoadingProvinces
+  commentId: F:Core.EngineInitializer.LoadingPhase.LoadingProvinces
+  id: LoadingProvinces
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: LoadingProvinces
+  nameWithType: EngineInitializer.LoadingPhase.LoadingProvinces
+  fullName: Core.EngineInitializer.LoadingPhase.LoadingProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingProvinces
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: LoadingProvinces = 3
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.LoadingCountries
+  commentId: F:Core.EngineInitializer.LoadingPhase.LoadingCountries
+  id: LoadingCountries
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: LoadingCountries
+  nameWithType: EngineInitializer.LoadingPhase.LoadingCountries
+  fullName: Core.EngineInitializer.LoadingPhase.LoadingCountries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingCountries
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: LoadingCountries = 4
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.LinkingReferences
+  commentId: F:Core.EngineInitializer.LoadingPhase.LinkingReferences
+  id: LinkingReferences
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: LinkingReferences
+  nameWithType: EngineInitializer.LoadingPhase.LinkingReferences
+  fullName: Core.EngineInitializer.LoadingPhase.LinkingReferences
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LinkingReferences
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: LinkingReferences = 5
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.LoadingScenario
+  commentId: F:Core.EngineInitializer.LoadingPhase.LoadingScenario
+  id: LoadingScenario
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: LoadingScenario
+  nameWithType: EngineInitializer.LoadingPhase.LoadingScenario
+  fullName: Core.EngineInitializer.LoadingPhase.LoadingScenario
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingScenario
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: LoadingScenario = 6
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.InitializingSystems
+  commentId: F:Core.EngineInitializer.LoadingPhase.InitializingSystems
+  id: InitializingSystems
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: InitializingSystems
+  nameWithType: EngineInitializer.LoadingPhase.InitializingSystems
+  fullName: Core.EngineInitializer.LoadingPhase.InitializingSystems
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializingSystems
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: InitializingSystems = 7
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.WarmingCaches
+  commentId: F:Core.EngineInitializer.LoadingPhase.WarmingCaches
+  id: WarmingCaches
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: WarmingCaches
+  nameWithType: EngineInitializer.LoadingPhase.WarmingCaches
+  fullName: Core.EngineInitializer.LoadingPhase.WarmingCaches
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WarmingCaches
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: WarmingCaches = 8
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.Complete
+  commentId: F:Core.EngineInitializer.LoadingPhase.Complete
+  id: Complete
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: Complete
+  nameWithType: EngineInitializer.LoadingPhase.Complete
+  fullName: Core.EngineInitializer.LoadingPhase.Complete
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Complete
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Complete = 9
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+- uid: Core.EngineInitializer.LoadingPhase.Error
+  commentId: F:Core.EngineInitializer.LoadingPhase.Error
+  id: Error
+  parent: Core.EngineInitializer.LoadingPhase
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: EngineInitializer.LoadingPhase.Error
+  fullName: Core.EngineInitializer.LoadingPhase.Error
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Error
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Error = 10
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.EngineInitializer.LoadingPhase
+  commentId: T:Core.EngineInitializer.LoadingPhase
+  parent: Core
+  href: Core.EngineInitializer.html
+  name: EngineInitializer.LoadingPhase
+  nameWithType: EngineInitializer.LoadingPhase
+  fullName: Core.EngineInitializer.LoadingPhase
+  spec.csharp:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+  spec.vb:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html

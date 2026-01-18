@@ -1,0 +1,675 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.DynamicKeyResolver
+  commentId: T:Core.Localization.DynamicKeyResolver
+  id: DynamicKeyResolver
+  parent: Core.Localization
+  children:
+  - Core.Localization.DynamicKeyResolver.AddKeyMapping(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString128Bytes,Unity.Collections.FixedString128Bytes)
+  - Core.Localization.DynamicKeyResolver.AddVariable(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes)
+  - Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys(Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  - Core.Localization.DynamicKeyResolver.CreateContext(System.Int32,Unity.Collections.Allocator)
+  - Core.Localization.DynamicKeyResolver.CreatePattern(Unity.Collections.FixedString128Bytes,Unity.Collections.Allocator)
+  - Core.Localization.DynamicKeyResolver.ResolveDynamicKey(Unity.Collections.FixedString128Bytes,Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  - Core.Localization.DynamicKeyResolver.ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern,Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  langs:
+  - csharp
+  - vb
+  name: DynamicKeyResolver
+  nameWithType: DynamicKeyResolver
+  fullName: Core.Localization.DynamicKeyResolver
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DynamicKeyResolver
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    Dynamic key resolution system for complex localization scenarios
+
+    Supports runtime key generation, context-dependent lookups, and key inheritance
+  example: []
+  syntax:
+    content: public static class DynamicKeyResolver
+    content.vb: Public Module DynamicKeyResolver
+  inheritance:
+  - System.Object
+- uid: Core.Localization.DynamicKeyResolver.CreateContext(System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.DynamicKeyResolver.CreateContext(System.Int32,Unity.Collections.Allocator)
+  id: CreateContext(System.Int32,Unity.Collections.Allocator)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: CreateContext(int, Allocator)
+  nameWithType: DynamicKeyResolver.CreateContext(int, Allocator)
+  fullName: Core.Localization.DynamicKeyResolver.CreateContext(int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateContext
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 69
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Create resolution context
+  example: []
+  syntax:
+    content: public static DynamicKeyResolver.ResolutionContext CreateContext(int expectedVariables, Allocator allocator)
+    parameters:
+    - id: expectedVariables
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    content.vb: Public Shared Function CreateContext(expectedVariables As Integer, allocator As Allocator) As DynamicKeyResolver.ResolutionContext
+  overload: Core.Localization.DynamicKeyResolver.CreateContext*
+  nameWithType.vb: DynamicKeyResolver.CreateContext(Integer, Allocator)
+  fullName.vb: Core.Localization.DynamicKeyResolver.CreateContext(Integer, Unity.Collections.Allocator)
+  name.vb: CreateContext(Integer, Allocator)
+- uid: Core.Localization.DynamicKeyResolver.AddVariable(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes)
+  commentId: M:Core.Localization.DynamicKeyResolver.AddVariable(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes)
+  id: AddVariable(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString64Bytes,Unity.Collections.FixedString512Bytes)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: AddVariable(ref ResolutionContext, FixedString64Bytes, FixedString512Bytes)
+  nameWithType: DynamicKeyResolver.AddVariable(ref DynamicKeyResolver.ResolutionContext, FixedString64Bytes, FixedString512Bytes)
+  fullName: Core.Localization.DynamicKeyResolver.AddVariable(ref Core.Localization.DynamicKeyResolver.ResolutionContext, Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString512Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddVariable
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Add variable to resolution context
+  example: []
+  syntax:
+    content: public static void AddVariable(ref DynamicKeyResolver.ResolutionContext context, FixedString64Bytes name, FixedString512Bytes value)
+    parameters:
+    - id: context
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    - id: name
+      type: Unity.Collections.FixedString64Bytes
+    - id: value
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public Shared Sub AddVariable(context As DynamicKeyResolver.ResolutionContext, name As FixedString64Bytes, value As FixedString512Bytes)
+  overload: Core.Localization.DynamicKeyResolver.AddVariable*
+  nameWithType.vb: DynamicKeyResolver.AddVariable(DynamicKeyResolver.ResolutionContext, FixedString64Bytes, FixedString512Bytes)
+  fullName.vb: Core.Localization.DynamicKeyResolver.AddVariable(Core.Localization.DynamicKeyResolver.ResolutionContext, Unity.Collections.FixedString64Bytes, Unity.Collections.FixedString512Bytes)
+  name.vb: AddVariable(ResolutionContext, FixedString64Bytes, FixedString512Bytes)
+- uid: Core.Localization.DynamicKeyResolver.AddKeyMapping(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString128Bytes,Unity.Collections.FixedString128Bytes)
+  commentId: M:Core.Localization.DynamicKeyResolver.AddKeyMapping(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString128Bytes,Unity.Collections.FixedString128Bytes)
+  id: AddKeyMapping(Core.Localization.DynamicKeyResolver.ResolutionContext@,Unity.Collections.FixedString128Bytes,Unity.Collections.FixedString128Bytes)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: AddKeyMapping(ref ResolutionContext, FixedString128Bytes, FixedString128Bytes)
+  nameWithType: DynamicKeyResolver.AddKeyMapping(ref DynamicKeyResolver.ResolutionContext, FixedString128Bytes, FixedString128Bytes)
+  fullName: Core.Localization.DynamicKeyResolver.AddKeyMapping(ref Core.Localization.DynamicKeyResolver.ResolutionContext, Unity.Collections.FixedString128Bytes, Unity.Collections.FixedString128Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddKeyMapping
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Add key mapping for redirection
+  example: []
+  syntax:
+    content: public static void AddKeyMapping(ref DynamicKeyResolver.ResolutionContext context, FixedString128Bytes sourceKey, FixedString128Bytes targetKey)
+    parameters:
+    - id: context
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    - id: sourceKey
+      type: Unity.Collections.FixedString128Bytes
+    - id: targetKey
+      type: Unity.Collections.FixedString128Bytes
+    content.vb: Public Shared Sub AddKeyMapping(context As DynamicKeyResolver.ResolutionContext, sourceKey As FixedString128Bytes, targetKey As FixedString128Bytes)
+  overload: Core.Localization.DynamicKeyResolver.AddKeyMapping*
+  nameWithType.vb: DynamicKeyResolver.AddKeyMapping(DynamicKeyResolver.ResolutionContext, FixedString128Bytes, FixedString128Bytes)
+  fullName.vb: Core.Localization.DynamicKeyResolver.AddKeyMapping(Core.Localization.DynamicKeyResolver.ResolutionContext, Unity.Collections.FixedString128Bytes, Unity.Collections.FixedString128Bytes)
+  name.vb: AddKeyMapping(ResolutionContext, FixedString128Bytes, FixedString128Bytes)
+- uid: Core.Localization.DynamicKeyResolver.ResolveDynamicKey(Unity.Collections.FixedString128Bytes,Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  commentId: M:Core.Localization.DynamicKeyResolver.ResolveDynamicKey(Unity.Collections.FixedString128Bytes,Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  id: ResolveDynamicKey(Unity.Collections.FixedString128Bytes,Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: ResolveDynamicKey(FixedString128Bytes, ResolutionContext, MultiLanguageResult, FixedString64Bytes)
+  nameWithType: DynamicKeyResolver.ResolveDynamicKey(FixedString128Bytes, DynamicKeyResolver.ResolutionContext, MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes)
+  fullName: Core.Localization.DynamicKeyResolver.ResolveDynamicKey(Unity.Collections.FixedString128Bytes, Core.Localization.DynamicKeyResolver.ResolutionContext, Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolveDynamicKey
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 111
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Resolve dynamic key with full context support
+  example: []
+  syntax:
+    content: public static DynamicKeyResolver.ResolutionResult ResolveDynamicKey(FixedString128Bytes keyPattern, DynamicKeyResolver.ResolutionContext context, MultiLanguageExtractor.MultiLanguageResult multiLangResult, FixedString64Bytes preferredLanguage)
+    parameters:
+    - id: keyPattern
+      type: Unity.Collections.FixedString128Bytes
+    - id: context
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: preferredLanguage
+      type: Unity.Collections.FixedString64Bytes
+    return:
+      type: Core.Localization.DynamicKeyResolver.ResolutionResult
+    content.vb: Public Shared Function ResolveDynamicKey(keyPattern As FixedString128Bytes, context As DynamicKeyResolver.ResolutionContext, multiLangResult As MultiLanguageExtractor.MultiLanguageResult, preferredLanguage As FixedString64Bytes) As DynamicKeyResolver.ResolutionResult
+  overload: Core.Localization.DynamicKeyResolver.ResolveDynamicKey*
+- uid: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys(Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys(Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  id: BatchResolveDynamicKeys(Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: BatchResolveDynamicKeys(NativeArray<FixedString128Bytes>, ResolutionContext, MultiLanguageResult, FixedString64Bytes, Allocator)
+  nameWithType: DynamicKeyResolver.BatchResolveDynamicKeys(NativeArray<FixedString128Bytes>, DynamicKeyResolver.ResolutionContext, MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes, Allocator)
+  fullName: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys(Unity.Collections.NativeArray<Unity.Collections.FixedString128Bytes>, Core.Localization.DynamicKeyResolver.ResolutionContext, Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BatchResolveDynamicKeys
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Batch resolve multiple keys efficiently
+  example: []
+  syntax:
+    content: public static NativeArray<DynamicKeyResolver.ResolutionResult> BatchResolveDynamicKeys(NativeArray<FixedString128Bytes> keyPatterns, DynamicKeyResolver.ResolutionContext context, MultiLanguageExtractor.MultiLanguageResult multiLangResult, FixedString64Bytes preferredLanguage, Allocator allocator)
+    parameters:
+    - id: keyPatterns
+      type: Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes}
+    - id: context
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: preferredLanguage
+      type: Unity.Collections.FixedString64Bytes
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{Core.Localization.DynamicKeyResolver.ResolutionResult}
+    content.vb: Public Shared Function BatchResolveDynamicKeys(keyPatterns As NativeArray(Of FixedString128Bytes), context As DynamicKeyResolver.ResolutionContext, multiLangResult As MultiLanguageExtractor.MultiLanguageResult, preferredLanguage As FixedString64Bytes, allocator As Allocator) As NativeArray(Of DynamicKeyResolver.ResolutionResult)
+  overload: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys*
+  nameWithType.vb: DynamicKeyResolver.BatchResolveDynamicKeys(NativeArray(Of FixedString128Bytes), DynamicKeyResolver.ResolutionContext, MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes, Allocator)
+  fullName.vb: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys(Unity.Collections.NativeArray(Of Unity.Collections.FixedString128Bytes), Core.Localization.DynamicKeyResolver.ResolutionContext, Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes, Unity.Collections.Allocator)
+  name.vb: BatchResolveDynamicKeys(NativeArray(Of FixedString128Bytes), ResolutionContext, MultiLanguageResult, FixedString64Bytes, Allocator)
+- uid: Core.Localization.DynamicKeyResolver.CreatePattern(Unity.Collections.FixedString128Bytes,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.DynamicKeyResolver.CreatePattern(Unity.Collections.FixedString128Bytes,Unity.Collections.Allocator)
+  id: CreatePattern(Unity.Collections.FixedString128Bytes,Unity.Collections.Allocator)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: CreatePattern(FixedString128Bytes, Allocator)
+  nameWithType: DynamicKeyResolver.CreatePattern(FixedString128Bytes, Allocator)
+  fullName: Core.Localization.DynamicKeyResolver.CreatePattern(Unity.Collections.FixedString128Bytes, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreatePattern
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 218
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Create dynamic key pattern for reusable complex resolution
+  example: []
+  syntax:
+    content: public static DynamicKeyResolver.DynamicKeyPattern CreatePattern(FixedString128Bytes patternString, Allocator allocator)
+    parameters:
+    - id: patternString
+      type: Unity.Collections.FixedString128Bytes
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    content.vb: Public Shared Function CreatePattern(patternString As FixedString128Bytes, allocator As Allocator) As DynamicKeyResolver.DynamicKeyPattern
+  overload: Core.Localization.DynamicKeyResolver.CreatePattern*
+- uid: Core.Localization.DynamicKeyResolver.ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern,Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  commentId: M:Core.Localization.DynamicKeyResolver.ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern,Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  id: ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern,Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes},Core.Localization.DynamicKeyResolver.ResolutionContext,Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Unity.Collections.FixedString64Bytes)
+  parent: Core.Localization.DynamicKeyResolver
+  langs:
+  - csharp
+  - vb
+  name: ResolveWithPattern(DynamicKeyPattern, NativeArray<FixedString512Bytes>, ResolutionContext, MultiLanguageResult, FixedString64Bytes)
+  nameWithType: DynamicKeyResolver.ResolveWithPattern(DynamicKeyResolver.DynamicKeyPattern, NativeArray<FixedString512Bytes>, DynamicKeyResolver.ResolutionContext, MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes)
+  fullName: Core.Localization.DynamicKeyResolver.ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern, Unity.Collections.NativeArray<Unity.Collections.FixedString512Bytes>, Core.Localization.DynamicKeyResolver.ResolutionContext, Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolveWithPattern
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 242
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Resolve using a prepared pattern
+  example: []
+  syntax:
+    content: public static DynamicKeyResolver.ResolutionResult ResolveWithPattern(DynamicKeyResolver.DynamicKeyPattern pattern, NativeArray<FixedString512Bytes> variableValues, DynamicKeyResolver.ResolutionContext context, MultiLanguageExtractor.MultiLanguageResult multiLangResult, FixedString64Bytes preferredLanguage)
+    parameters:
+    - id: pattern
+      type: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    - id: variableValues
+      type: Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes}
+    - id: context
+      type: Core.Localization.DynamicKeyResolver.ResolutionContext
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: preferredLanguage
+      type: Unity.Collections.FixedString64Bytes
+    return:
+      type: Core.Localization.DynamicKeyResolver.ResolutionResult
+    content.vb: Public Shared Function ResolveWithPattern(pattern As DynamicKeyResolver.DynamicKeyPattern, variableValues As NativeArray(Of FixedString512Bytes), context As DynamicKeyResolver.ResolutionContext, multiLangResult As MultiLanguageExtractor.MultiLanguageResult, preferredLanguage As FixedString64Bytes) As DynamicKeyResolver.ResolutionResult
+  overload: Core.Localization.DynamicKeyResolver.ResolveWithPattern*
+  nameWithType.vb: DynamicKeyResolver.ResolveWithPattern(DynamicKeyResolver.DynamicKeyPattern, NativeArray(Of FixedString512Bytes), DynamicKeyResolver.ResolutionContext, MultiLanguageExtractor.MultiLanguageResult, FixedString64Bytes)
+  fullName.vb: Core.Localization.DynamicKeyResolver.ResolveWithPattern(Core.Localization.DynamicKeyResolver.DynamicKeyPattern, Unity.Collections.NativeArray(Of Unity.Collections.FixedString512Bytes), Core.Localization.DynamicKeyResolver.ResolutionContext, Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Unity.Collections.FixedString64Bytes)
+  name.vb: ResolveWithPattern(DynamicKeyPattern, NativeArray(Of FixedString512Bytes), ResolutionContext, MultiLanguageResult, FixedString64Bytes)
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.DynamicKeyResolver.CreateContext*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.CreateContext
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_CreateContext_System_Int32_Unity_Collections_Allocator_
+  name: CreateContext
+  nameWithType: DynamicKeyResolver.CreateContext
+  fullName: Core.Localization.DynamicKeyResolver.CreateContext
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+  commentId: T:Core.Localization.DynamicKeyResolver.ResolutionContext
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.ResolutionContext
+  nameWithType: DynamicKeyResolver.ResolutionContext
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionContext
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+    name: ResolutionContext
+    href: Core.Localization.DynamicKeyResolver.ResolutionContext.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+    name: ResolutionContext
+    href: Core.Localization.DynamicKeyResolver.ResolutionContext.html
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Localization.DynamicKeyResolver.AddVariable*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.AddVariable
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_AddVariable_Core_Localization_DynamicKeyResolver_ResolutionContext__Unity_Collections_FixedString64Bytes_Unity_Collections_FixedString512Bytes_
+  name: AddVariable
+  nameWithType: DynamicKeyResolver.AddVariable
+  fullName: Core.Localization.DynamicKeyResolver.AddVariable
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Core.Localization.DynamicKeyResolver.AddKeyMapping*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.AddKeyMapping
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_AddKeyMapping_Core_Localization_DynamicKeyResolver_ResolutionContext__Unity_Collections_FixedString128Bytes_Unity_Collections_FixedString128Bytes_
+  name: AddKeyMapping
+  nameWithType: DynamicKeyResolver.AddKeyMapping
+  fullName: Core.Localization.DynamicKeyResolver.AddKeyMapping
+- uid: Unity.Collections.FixedString128Bytes
+  commentId: T:Unity.Collections.FixedString128Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString128Bytes
+  nameWithType: FixedString128Bytes
+  fullName: Unity.Collections.FixedString128Bytes
+- uid: Core.Localization.DynamicKeyResolver.ResolveDynamicKey*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.ResolveDynamicKey
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_ResolveDynamicKey_Unity_Collections_FixedString128Bytes_Core_Localization_DynamicKeyResolver_ResolutionContext_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Unity_Collections_FixedString64Bytes_
+  name: ResolveDynamicKey
+  nameWithType: DynamicKeyResolver.ResolveDynamicKey
+  fullName: Core.Localization.DynamicKeyResolver.ResolveDynamicKey
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  commentId: T:Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  parent: Core.Localization
+  href: Core.Localization.MultiLanguageExtractor.html
+  name: MultiLanguageExtractor.MultiLanguageResult
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  spec.csharp:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+  spec.vb:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+  commentId: T:Core.Localization.DynamicKeyResolver.ResolutionResult
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.ResolutionResult
+  nameWithType: DynamicKeyResolver.ResolutionResult
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+- uid: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_BatchResolveDynamicKeys_Unity_Collections_NativeArray_Unity_Collections_FixedString128Bytes__Core_Localization_DynamicKeyResolver_ResolutionContext_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Unity_Collections_FixedString64Bytes_Unity_Collections_Allocator_
+  name: BatchResolveDynamicKeys
+  nameWithType: DynamicKeyResolver.BatchResolveDynamicKeys
+  fullName: Core.Localization.DynamicKeyResolver.BatchResolveDynamicKeys
+- uid: Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes}
+  commentId: T:Unity.Collections.NativeArray{Unity.Collections.FixedString128Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<FixedString128Bytes>
+  nameWithType: NativeArray<FixedString128Bytes>
+  fullName: Unity.Collections.NativeArray<Unity.Collections.FixedString128Bytes>
+  nameWithType.vb: NativeArray(Of FixedString128Bytes)
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Collections.FixedString128Bytes)
+  name.vb: NativeArray(Of FixedString128Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString128Bytes
+    name: FixedString128Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString128Bytes
+    name: FixedString128Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray{Core.Localization.DynamicKeyResolver.ResolutionResult}
+  commentId: T:Unity.Collections.NativeArray{Core.Localization.DynamicKeyResolver.ResolutionResult}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Localization.DynamicKeyResolver.html
+  name: NativeArray<DynamicKeyResolver.ResolutionResult>
+  nameWithType: NativeArray<DynamicKeyResolver.ResolutionResult>
+  fullName: Unity.Collections.NativeArray<Core.Localization.DynamicKeyResolver.ResolutionResult>
+  nameWithType.vb: NativeArray(Of DynamicKeyResolver.ResolutionResult)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Localization.DynamicKeyResolver.ResolutionResult)
+  name.vb: NativeArray(Of DynamicKeyResolver.ResolutionResult)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Localization.DynamicKeyResolver.CreatePattern*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.CreatePattern
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_CreatePattern_Unity_Collections_FixedString128Bytes_Unity_Collections_Allocator_
+  name: CreatePattern
+  nameWithType: DynamicKeyResolver.CreatePattern
+  fullName: Core.Localization.DynamicKeyResolver.CreatePattern
+- uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  commentId: T:Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.DynamicKeyPattern
+  nameWithType: DynamicKeyResolver.DynamicKeyPattern
+  fullName: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    name: DynamicKeyPattern
+    href: Core.Localization.DynamicKeyResolver.DynamicKeyPattern.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    name: DynamicKeyPattern
+    href: Core.Localization.DynamicKeyResolver.DynamicKeyPattern.html
+- uid: Core.Localization.DynamicKeyResolver.ResolveWithPattern*
+  commentId: Overload:Core.Localization.DynamicKeyResolver.ResolveWithPattern
+  href: Core.Localization.DynamicKeyResolver.html#Core_Localization_DynamicKeyResolver_ResolveWithPattern_Core_Localization_DynamicKeyResolver_DynamicKeyPattern_Unity_Collections_NativeArray_Unity_Collections_FixedString512Bytes__Core_Localization_DynamicKeyResolver_ResolutionContext_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Unity_Collections_FixedString64Bytes_
+  name: ResolveWithPattern
+  nameWithType: DynamicKeyResolver.ResolveWithPattern
+  fullName: Core.Localization.DynamicKeyResolver.ResolveWithPattern
+- uid: Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes}
+  commentId: T:Unity.Collections.NativeArray{Unity.Collections.FixedString512Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<FixedString512Bytes>
+  nameWithType: NativeArray<FixedString512Bytes>
+  fullName: Unity.Collections.NativeArray<Unity.Collections.FixedString512Bytes>
+  nameWithType.vb: NativeArray(Of FixedString512Bytes)
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Collections.FixedString512Bytes)
+  name.vb: NativeArray(Of FixedString512Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString512Bytes
+    name: FixedString512Bytes
+    isExternal: true
+  - name: )

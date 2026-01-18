@@ -1,0 +1,187 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.ModifierEntry
+  commentId: T:Core.Diplomacy.ModifierEntry
+  id: ModifierEntry
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.ModifierEntry.coldDataIndex
+  - Core.Diplomacy.ModifierEntry.modifier
+  - Core.Diplomacy.ModifierEntry.relationshipKey
+  langs:
+  - csharp
+  - vb
+  name: ModifierEntry
+  nameWithType: ModifierEntry
+  fullName: Core.Diplomacy.ModifierEntry
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierEntry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierEntry
+    path: Scripts/Core/Diplomacy/ModifierEntry.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Single modifier entry in the flattened modifier array
+
+    Stores both the modifier data AND which relationship it belongs to
+
+
+    This enables Burst-compiled parallel processing of ALL modifiers at once
+
+    instead of iterating relationships sequentially
+  example: []
+  syntax:
+    content: public struct ModifierEntry
+    content.vb: Public Structure ModifierEntry
+- uid: Core.Diplomacy.ModifierEntry.relationshipKey
+  commentId: F:Core.Diplomacy.ModifierEntry.relationshipKey
+  id: relationshipKey
+  parent: Core.Diplomacy.ModifierEntry
+  langs:
+  - csharp
+  - vb
+  name: relationshipKey
+  nameWithType: ModifierEntry.relationshipKey
+  fullName: Core.Diplomacy.ModifierEntry.relationshipKey
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierEntry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: relationshipKey
+    path: Scripts/Core/Diplomacy/ModifierEntry.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Relationship key (packed country pair)
+  example: []
+  syntax:
+    content: public ulong relationshipKey
+    return:
+      type: System.UInt64
+    content.vb: Public relationshipKey As ULong
+- uid: Core.Diplomacy.ModifierEntry.modifier
+  commentId: F:Core.Diplomacy.ModifierEntry.modifier
+  id: modifier
+  parent: Core.Diplomacy.ModifierEntry
+  langs:
+  - csharp
+  - vb
+  name: modifier
+  nameWithType: ModifierEntry.modifier
+  fullName: Core.Diplomacy.ModifierEntry.modifier
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierEntry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: modifier
+    path: Scripts/Core/Diplomacy/ModifierEntry.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: The opinion modifier data
+  example: []
+  syntax:
+    content: public OpinionModifier modifier
+    return:
+      type: Core.Diplomacy.OpinionModifier
+    content.vb: Public modifier As OpinionModifier
+- uid: Core.Diplomacy.ModifierEntry.coldDataIndex
+  commentId: F:Core.Diplomacy.ModifierEntry.coldDataIndex
+  id: coldDataIndex
+  parent: Core.Diplomacy.ModifierEntry
+  langs:
+  - csharp
+  - vb
+  name: coldDataIndex
+  nameWithType: ModifierEntry.coldDataIndex
+  fullName: Core.Diplomacy.ModifierEntry.coldDataIndex
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierEntry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: coldDataIndex
+    path: Scripts/Core/Diplomacy/ModifierEntry.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Index in coldDataStorage for this relationship
+
+    Used to mark relationships as empty after decay
+  example: []
+  syntax:
+    content: public int coldDataIndex
+    return:
+      type: System.Int32
+    content.vb: Public coldDataIndex As Integer
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.OpinionModifier
+  commentId: T:Core.Diplomacy.OpinionModifier
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.OpinionModifier.html
+  name: OpinionModifier
+  nameWithType: OpinionModifier
+  fullName: Core.Diplomacy.OpinionModifier
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

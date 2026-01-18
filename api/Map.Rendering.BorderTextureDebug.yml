@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderTextureDebug
+  commentId: T:Map.Rendering.BorderTextureDebug
+  id: BorderTextureDebug
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture
+  langs:
+  - csharp
+  - vb
+  name: BorderTextureDebug
+  nameWithType: BorderTextureDebug
+  fullName: Map.Rendering.BorderTextureDebug
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderTextureDebug.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderTextureDebug
+    path: Scripts/Map/Rendering/Border/BorderTextureDebug.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static class BorderTextureDebug
+    content.vb: Public Module BorderTextureDebug
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture
+  commentId: M:Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture
+  id: SaveDistanceFieldTexture
+  parent: Map.Rendering.BorderTextureDebug
+  langs:
+  - csharp
+  - vb
+  name: SaveDistanceFieldTexture()
+  nameWithType: BorderTextureDebug.SaveDistanceFieldTexture()
+  fullName: Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderTextureDebug.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveDistanceFieldTexture
+    path: Scripts/Map/Rendering/Border/BorderTextureDebug.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [MenuItem("Tools/Save DistanceField Texture to PNG")]
+
+      public static void SaveDistanceFieldTexture()
+    content.vb: >-
+      <MenuItem("Tools/Save DistanceField Texture to PNG")>
+
+      Public Shared Sub SaveDistanceFieldTexture()
+  overload: Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture*
+  attributes:
+  - type: UnityEditor.MenuItem
+    ctor: UnityEditor.MenuItem.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Tools/Save DistanceField Texture to PNG
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture*
+  commentId: Overload:Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture
+  href: Map.Rendering.BorderTextureDebug.html#Map_Rendering_BorderTextureDebug_SaveDistanceFieldTexture
+  name: SaveDistanceFieldTexture
+  nameWithType: BorderTextureDebug.SaveDistanceFieldTexture
+  fullName: Map.Rendering.BorderTextureDebug.SaveDistanceFieldTexture

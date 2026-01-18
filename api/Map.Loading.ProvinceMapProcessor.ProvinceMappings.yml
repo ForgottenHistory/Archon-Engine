@@ -1,0 +1,235 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  id: ProvinceMapProcessor.ProvinceMappings
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.ProvinceMappings.ColorToProvinceID
+  - Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose
+  - Map.Loading.ProvinceMapProcessor.ProvinceMappings.ProvinceIDToColor
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.ProvinceMappings
+  nameWithType: ProvinceMapProcessor.ProvinceMappings
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMappings
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 140
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Province color-to-ID mappings
+  example: []
+  syntax:
+    content: public struct ProvinceMapProcessor.ProvinceMappings
+    content.vb: Public Structure ProvinceMapProcessor.ProvinceMappings
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings.ColorToProvinceID
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMappings.ColorToProvinceID
+  id: ColorToProvinceID
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  langs:
+  - csharp
+  - vb
+  name: ColorToProvinceID
+  nameWithType: ProvinceMapProcessor.ProvinceMappings.ColorToProvinceID
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings.ColorToProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorToProvinceID
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 142
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public NativeHashMap<int, int> ColorToProvinceID
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: Public ColorToProvinceID As NativeHashMap(Of Integer, Integer)
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings.ProvinceIDToColor
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceMappings.ProvinceIDToColor
+  id: ProvinceIDToColor
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDToColor
+  nameWithType: ProvinceMapProcessor.ProvinceMappings.ProvinceIDToColor
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings.ProvinceIDToColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDToColor
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 143
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public NativeHashMap<int, int> ProvinceIDToColor
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: Public ProvinceIDToColor As NativeHashMap(Of Integer, Integer)
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose
+  commentId: M:Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose
+  id: Dispose
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMapProcessor.ProvinceMappings.Dispose()
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose*
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<int, int>
+  nameWithType: NativeHashMap<int, int>
+  fullName: Unity.Collections.NativeHashMap<int, int>
+  nameWithType.vb: NativeHashMap(Of Integer, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Integer, Integer)
+  name.vb: NativeHashMap(Of Integer, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose
+  href: Map.Loading.ProvinceMapProcessor.ProvinceMappings.html#Map_Loading_ProvinceMapProcessor_ProvinceMappings_Dispose
+  name: Dispose
+  nameWithType: ProvinceMapProcessor.ProvinceMappings.Dispose
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceMappings.Dispose

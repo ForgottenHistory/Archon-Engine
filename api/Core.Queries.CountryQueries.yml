@@ -1,0 +1,1361 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  id: CountryQueries
+  parent: Core.Queries
+  children:
+  - Core.Queries.CountryQueries.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.Queries.CountryQueries.ClearCache
+  - Core.Queries.CountryQueries.CompareProvinceCount(System.UInt16,System.UInt16)
+  - Core.Queries.CountryQueries.Exists(System.UInt16)
+  - Core.Queries.CountryQueries.GetAllCountryIds(Unity.Collections.Allocator)
+  - Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Core.Queries.CountryQueries.GetBorderingCountryCount(System.UInt16)
+  - Core.Queries.CountryQueries.GetColdData(System.UInt16)
+  - Core.Queries.CountryQueries.GetColor(System.UInt16)
+  - Core.Queries.CountryQueries.GetCountryStatistics
+  - Core.Queries.CountryQueries.GetGraphicalCulture(System.UInt16)
+  - Core.Queries.CountryQueries.GetHotData(System.UInt16)
+  - Core.Queries.CountryQueries.GetIdFromTag(System.String)
+  - Core.Queries.CountryQueries.GetLandProvinceCount(System.UInt16)
+  - Core.Queries.CountryQueries.GetProvinceCount(System.UInt16)
+  - Core.Queries.CountryQueries.GetProvinces(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.CountryQueries.GetTag(System.UInt16)
+  - Core.Queries.CountryQueries.GetTotalCountryCount
+  - Core.Queries.CountryQueries.HasFlag(System.UInt16,System.Byte)
+  - Core.Queries.CountryQueries.InvalidateCache(System.UInt16)
+  - Core.Queries.CountryQueries.SharesBorder(System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryQueries
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    High-performance country data access layer
+
+    Provides optimized queries for country/nation information
+
+    Performance: All basic queries &lt;0.01ms, cached complex queries
+  example: []
+  syntax:
+    content: public class CountryQueries
+    content.vb: Public Class CountryQueries
+  inheritance:
+  - System.Object
+- uid: Core.Queries.CountryQueries.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Queries.CountryQueries.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: '#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)'
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: CountryQueries(CountrySystem, ProvinceSystem, AdjacencySystem)
+  nameWithType: CountryQueries.CountryQueries(CountrySystem, ProvinceSystem, AdjacencySystem)
+  fullName: Core.Queries.CountryQueries.CountryQueries(Core.Systems.CountrySystem, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public CountryQueries(CountrySystem countrySystem, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
+    parameters:
+    - id: countrySystem
+      type: Core.Systems.CountrySystem
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Sub New(countrySystem As CountrySystem, provinceSystem As ProvinceSystem, adjacencySystem As AdjacencySystem)
+  overload: Core.Queries.CountryQueries.#ctor*
+  nameWithType.vb: CountryQueries.New(CountrySystem, ProvinceSystem, AdjacencySystem)
+  fullName.vb: Core.Queries.CountryQueries.New(Core.Systems.CountrySystem, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  name.vb: New(CountrySystem, ProvinceSystem, AdjacencySystem)
+- uid: Core.Queries.CountryQueries.GetColor(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetColor(System.UInt16)
+  id: GetColor(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetColor(ushort)
+  nameWithType: CountryQueries.GetColor(ushort)
+  fullName: Core.Queries.CountryQueries.GetColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColor
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get country color - most common query (must be ultra-fast)
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public Color32 GetColor(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetColor(countryId As UShort) As Color32
+  overload: Core.Queries.CountryQueries.GetColor*
+  nameWithType.vb: CountryQueries.GetColor(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetColor(UShort)
+  name.vb: GetColor(UShort)
+- uid: Core.Queries.CountryQueries.GetTag(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetTag(System.UInt16)
+  id: GetTag(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetTag(ushort)
+  nameWithType: CountryQueries.GetTag(ushort)
+  fullName: Core.Queries.CountryQueries.GetTag(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTag
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get country tag (3-letter code like "ENG", "FRA")
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public string GetTag(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.String
+    content.vb: Public Function GetTag(countryId As UShort) As String
+  overload: Core.Queries.CountryQueries.GetTag*
+  nameWithType.vb: CountryQueries.GetTag(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetTag(UShort)
+  name.vb: GetTag(UShort)
+- uid: Core.Queries.CountryQueries.GetIdFromTag(System.String)
+  commentId: M:Core.Queries.CountryQueries.GetIdFromTag(System.String)
+  id: GetIdFromTag(System.String)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetIdFromTag(string)
+  nameWithType: CountryQueries.GetIdFromTag(string)
+  fullName: Core.Queries.CountryQueries.GetIdFromTag(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetIdFromTag
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get country ID from tag
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public ushort GetIdFromTag(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetIdFromTag(tag As String) As UShort
+  overload: Core.Queries.CountryQueries.GetIdFromTag*
+  nameWithType.vb: CountryQueries.GetIdFromTag(String)
+  fullName.vb: Core.Queries.CountryQueries.GetIdFromTag(String)
+  name.vb: GetIdFromTag(String)
+- uid: Core.Queries.CountryQueries.GetGraphicalCulture(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetGraphicalCulture(System.UInt16)
+  id: GetGraphicalCulture(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetGraphicalCulture(ushort)
+  nameWithType: CountryQueries.GetGraphicalCulture(ushort)
+  fullName: Core.Queries.CountryQueries.GetGraphicalCulture(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGraphicalCulture
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get graphical culture ID for unit graphics
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public byte GetGraphicalCulture(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetGraphicalCulture(countryId As UShort) As Byte
+  overload: Core.Queries.CountryQueries.GetGraphicalCulture*
+  nameWithType.vb: CountryQueries.GetGraphicalCulture(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetGraphicalCulture(UShort)
+  name.vb: GetGraphicalCulture(UShort)
+- uid: Core.Queries.CountryQueries.GetHotData(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetHotData(System.UInt16)
+  id: GetHotData(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetHotData(ushort)
+  nameWithType: CountryQueries.GetHotData(ushort)
+  fullName: Core.Queries.CountryQueries.GetHotData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHotData
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get complete country hot data (8-byte struct)
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public CountryHotData GetHotData(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.CountryHotData
+    content.vb: Public Function GetHotData(countryId As UShort) As CountryHotData
+  overload: Core.Queries.CountryQueries.GetHotData*
+  nameWithType.vb: CountryQueries.GetHotData(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetHotData(UShort)
+  name.vb: GetHotData(UShort)
+- uid: Core.Queries.CountryQueries.GetColdData(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetColdData(System.UInt16)
+  id: GetColdData(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetColdData(ushort)
+  nameWithType: CountryQueries.GetColdData(ushort)
+  fullName: Core.Queries.CountryQueries.GetColdData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColdData
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get country cold data (detailed information, lazy-loaded)
+
+    Performance target: &lt;0.1ms if cached, variable if loading
+  example: []
+  syntax:
+    content: public CountryColdData GetColdData(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.CountryColdData
+    content.vb: Public Function GetColdData(countryId As UShort) As CountryColdData
+  overload: Core.Queries.CountryQueries.GetColdData*
+  nameWithType.vb: CountryQueries.GetColdData(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetColdData(UShort)
+  name.vb: GetColdData(UShort)
+- uid: Core.Queries.CountryQueries.Exists(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.Exists(System.UInt16)
+  id: Exists(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: Exists(ushort)
+  nameWithType: CountryQueries.Exists(ushort)
+  fullName: Core.Queries.CountryQueries.Exists(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if country exists
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public bool Exists(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(countryId As UShort) As Boolean
+  overload: Core.Queries.CountryQueries.Exists*
+  nameWithType.vb: CountryQueries.Exists(UShort)
+  fullName.vb: Core.Queries.CountryQueries.Exists(UShort)
+  name.vb: Exists(UShort)
+- uid: Core.Queries.CountryQueries.HasFlag(System.UInt16,System.Byte)
+  commentId: M:Core.Queries.CountryQueries.HasFlag(System.UInt16,System.Byte)
+  id: HasFlag(System.UInt16,System.Byte)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: HasFlag(ushort, byte)
+  nameWithType: CountryQueries.HasFlag(ushort, byte)
+  fullName: Core.Queries.CountryQueries.HasFlag(ushort, byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasFlag
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if country has specific flag/feature
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public bool HasFlag(ushort countryId, byte flag)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: flag
+      type: System.Byte
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasFlag(countryId As UShort, flag As Byte) As Boolean
+  overload: Core.Queries.CountryQueries.HasFlag*
+  nameWithType.vb: CountryQueries.HasFlag(UShort, Byte)
+  fullName.vb: Core.Queries.CountryQueries.HasFlag(UShort, Byte)
+  name.vb: HasFlag(UShort, Byte)
+- uid: Core.Queries.CountryQueries.GetProvinceCount(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetProvinceCount(System.UInt16)
+  id: GetProvinceCount(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceCount(ushort)
+  nameWithType: CountryQueries.GetProvinceCount(ushort)
+  fullName: Core.Queries.CountryQueries.GetProvinceCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceCount
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 125
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get number of provinces owned by this country
+
+    Performance target: &lt;0.01ms if cached, &lt;5ms if calculating
+  example: []
+  syntax:
+    content: public int GetProvinceCount(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetProvinceCount(countryId As UShort) As Integer
+  overload: Core.Queries.CountryQueries.GetProvinceCount*
+  nameWithType.vb: CountryQueries.GetProvinceCount(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetProvinceCount(UShort)
+  name.vb: GetProvinceCount(UShort)
+- uid: Core.Queries.CountryQueries.GetProvinces(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.CountryQueries.GetProvinces(System.UInt16,Unity.Collections.Allocator)
+  id: GetProvinces(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinces(ushort, Allocator)
+  nameWithType: CountryQueries.GetProvinces(ushort, Allocator)
+  fullName: Core.Queries.CountryQueries.GetProvinces(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinces
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 149
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get provinces owned by this country
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetProvinces(countryId As UShort, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.CountryQueries.GetProvinces*
+  nameWithType.vb: CountryQueries.GetProvinces(UShort, Allocator)
+  fullName.vb: Core.Queries.CountryQueries.GetProvinces(UShort, Unity.Collections.Allocator)
+  name.vb: GetProvinces(UShort, Allocator)
+- uid: Core.Queries.CountryQueries.GetLandProvinceCount(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetLandProvinceCount(System.UInt16)
+  id: GetLandProvinceCount(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetLandProvinceCount(ushort)
+  nameWithType: CountryQueries.GetLandProvinceCount(ushort)
+  fullName: Core.Queries.CountryQueries.GetLandProvinceCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLandProvinceCount
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 162
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get total land area (non-ocean provinces) owned by this country
+
+    Performance target: &lt;0.01ms if cached, &lt;5ms if calculating
+  example: []
+  syntax:
+    content: public int GetLandProvinceCount(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetLandProvinceCount(countryId As UShort) As Integer
+  overload: Core.Queries.CountryQueries.GetLandProvinceCount*
+  nameWithType.vb: CountryQueries.GetLandProvinceCount(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetLandProvinceCount(UShort)
+  name.vb: GetLandProvinceCount(UShort)
+- uid: Core.Queries.CountryQueries.SharesBorder(System.UInt16,System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.SharesBorder(System.UInt16,System.UInt16)
+  id: SharesBorder(System.UInt16,System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: SharesBorder(ushort, ushort)
+  nameWithType: CountryQueries.SharesBorder(ushort, ushort)
+  fullName: Core.Queries.CountryQueries.SharesBorder(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SharesBorder
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 199
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if two countries share any border provinces.
+
+    Uses AdjacencySystem to check if any province of country1 is adjacent to any province of country2.
+
+    Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 10ms.
+  example: []
+  syntax:
+    content: public bool SharesBorder(ushort countryId1, ushort countryId2)
+    parameters:
+    - id: countryId1
+      type: System.UInt16
+    - id: countryId2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function SharesBorder(countryId1 As UShort, countryId2 As UShort) As Boolean
+  overload: Core.Queries.CountryQueries.SharesBorder*
+  nameWithType.vb: CountryQueries.SharesBorder(UShort, UShort)
+  fullName.vb: Core.Queries.CountryQueries.SharesBorder(UShort, UShort)
+  name.vb: SharesBorder(UShort, UShort)
+- uid: Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.Allocator)
+  id: GetBorderingCountries(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetBorderingCountries(ushort, Allocator)
+  nameWithType: CountryQueries.GetBorderingCountries(ushort, Allocator)
+  fullName: Core.Queries.CountryQueries.GetBorderingCountries(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBorderingCountries
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 240
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all countries that share a border with the specified country.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 15ms.
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetBorderingCountries(ushort countryId, Allocator allocator)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetBorderingCountries(countryId As UShort, allocator As Allocator) As NativeList(Of UShort)
+  overload: Core.Queries.CountryQueries.GetBorderingCountries*
+  nameWithType.vb: CountryQueries.GetBorderingCountries(UShort, Allocator)
+  fullName.vb: Core.Queries.CountryQueries.GetBorderingCountries(UShort, Unity.Collections.Allocator)
+  name.vb: GetBorderingCountries(UShort, Allocator)
+- uid: Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetBorderingCountries(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetBorderingCountries(ushort, NativeList<ushort>)
+  nameWithType: CountryQueries.GetBorderingCountries(ushort, NativeList<ushort>)
+  fullName: Core.Queries.CountryQueries.GetBorderingCountries(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBorderingCountries
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 252
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all countries that share a border with the specified country.
+
+    Zero-allocation variant - fills existing buffer.
+
+    Performance target: O(P × N) where P = provinces, N = ~6 neighbors. Target: less than 15ms.
+  example: []
+  syntax:
+    content: public void GetBorderingCountries(ushort countryId, NativeList<ushort> resultBuffer)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetBorderingCountries(countryId As UShort, resultBuffer As NativeList(Of UShort))
+  overload: Core.Queries.CountryQueries.GetBorderingCountries*
+  nameWithType.vb: CountryQueries.GetBorderingCountries(UShort, NativeList(Of UShort))
+  fullName.vb: Core.Queries.CountryQueries.GetBorderingCountries(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetBorderingCountries(UShort, NativeList(Of UShort))
+- uid: Core.Queries.CountryQueries.GetBorderingCountryCount(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.GetBorderingCountryCount(System.UInt16)
+  id: GetBorderingCountryCount(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetBorderingCountryCount(ushort)
+  nameWithType: CountryQueries.GetBorderingCountryCount(ushort)
+  fullName: Core.Queries.CountryQueries.GetBorderingCountryCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBorderingCountryCount
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 302
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get the number of countries that share a border with the specified country.
+
+    Performance target: less than 15ms.
+  example: []
+  syntax:
+    content: public int GetBorderingCountryCount(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetBorderingCountryCount(countryId As UShort) As Integer
+  overload: Core.Queries.CountryQueries.GetBorderingCountryCount*
+  nameWithType.vb: CountryQueries.GetBorderingCountryCount(UShort)
+  fullName.vb: Core.Queries.CountryQueries.GetBorderingCountryCount(UShort)
+  name.vb: GetBorderingCountryCount(UShort)
+- uid: Core.Queries.CountryQueries.CompareProvinceCount(System.UInt16,System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.CompareProvinceCount(System.UInt16,System.UInt16)
+  id: CompareProvinceCount(System.UInt16,System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: CompareProvinceCount(ushort, ushort)
+  nameWithType: CountryQueries.CompareProvinceCount(ushort, ushort)
+  fullName: Core.Queries.CountryQueries.CompareProvinceCount(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompareProvinceCount
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 316
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Compare two countries by province count
+
+    Performance target: &lt;0.1ms
+  example: []
+  syntax:
+    content: public int CompareProvinceCount(ushort countryId1, ushort countryId2)
+    parameters:
+    - id: countryId1
+      type: System.UInt16
+    - id: countryId2
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function CompareProvinceCount(countryId1 As UShort, countryId2 As UShort) As Integer
+  overload: Core.Queries.CountryQueries.CompareProvinceCount*
+  nameWithType.vb: CountryQueries.CompareProvinceCount(UShort, UShort)
+  fullName.vb: Core.Queries.CountryQueries.CompareProvinceCount(UShort, UShort)
+  name.vb: CompareProvinceCount(UShort, UShort)
+- uid: Core.Queries.CountryQueries.GetAllCountryIds(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.CountryQueries.GetAllCountryIds(Unity.Collections.Allocator)
+  id: GetAllCountryIds(Unity.Collections.Allocator)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetAllCountryIds(Allocator)
+  nameWithType: CountryQueries.GetAllCountryIds(Allocator)
+  fullName: Core.Queries.CountryQueries.GetAllCountryIds(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllCountryIds
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 333
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all active country IDs
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;1ms
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetAllCountryIds(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.CountryQueries.GetAllCountryIds*
+- uid: Core.Queries.CountryQueries.GetTotalCountryCount
+  commentId: M:Core.Queries.CountryQueries.GetTotalCountryCount
+  id: GetTotalCountryCount
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetTotalCountryCount()
+  nameWithType: CountryQueries.GetTotalCountryCount()
+  fullName: Core.Queries.CountryQueries.GetTotalCountryCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTotalCountryCount
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 342
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get total number of countries in the system
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public int GetTotalCountryCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetTotalCountryCount() As Integer
+  overload: Core.Queries.CountryQueries.GetTotalCountryCount*
+- uid: Core.Queries.CountryQueries.GetCountryStatistics
+  commentId: M:Core.Queries.CountryQueries.GetCountryStatistics
+  id: GetCountryStatistics
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: GetCountryStatistics()
+  nameWithType: CountryQueries.GetCountryStatistics()
+  fullName: Core.Queries.CountryQueries.GetCountryStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryStatistics
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 356
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get country statistics for debugging/UI (engine-only data - no game-specific fields)
+
+    Performance target: &lt;50ms for 256 countries
+
+    Note: Development statistics removed (game-specific). Use HegemonCountryQueries for game stats.
+  example: []
+  syntax:
+    content: public CountryStatistics GetCountryStatistics()
+    return:
+      type: Core.Queries.CountryStatistics
+    content.vb: Public Function GetCountryStatistics() As CountryStatistics
+  overload: Core.Queries.CountryQueries.GetCountryStatistics*
+- uid: Core.Queries.CountryQueries.InvalidateCache(System.UInt16)
+  commentId: M:Core.Queries.CountryQueries.InvalidateCache(System.UInt16)
+  id: InvalidateCache(System.UInt16)
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCache(ushort)
+  nameWithType: CountryQueries.InvalidateCache(ushort)
+  fullName: Core.Queries.CountryQueries.InvalidateCache(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateCache
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 422
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Clear cache for a specific country (call when country data changes)
+  example: []
+  syntax:
+    content: public void InvalidateCache(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    content.vb: Public Sub InvalidateCache(countryId As UShort)
+  overload: Core.Queries.CountryQueries.InvalidateCache*
+  nameWithType.vb: CountryQueries.InvalidateCache(UShort)
+  fullName.vb: Core.Queries.CountryQueries.InvalidateCache(UShort)
+  name.vb: InvalidateCache(UShort)
+- uid: Core.Queries.CountryQueries.ClearCache
+  commentId: M:Core.Queries.CountryQueries.ClearCache
+  id: ClearCache
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: ClearCache()
+  nameWithType: CountryQueries.ClearCache()
+  fullName: Core.Queries.CountryQueries.ClearCache()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearCache
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 430
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Clear all cached data
+  example: []
+  syntax:
+    content: public void ClearCache()
+    content.vb: Public Sub ClearCache()
+  overload: Core.Queries.CountryQueries.ClearCache*
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Queries.CountryQueries.#ctor*
+  commentId: Overload:Core.Queries.CountryQueries.#ctor
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries__ctor_Core_Systems_CountrySystem_Core_Systems_ProvinceSystem_Core_Systems_AdjacencySystem_
+  name: CountryQueries
+  nameWithType: CountryQueries.CountryQueries
+  fullName: Core.Queries.CountryQueries.CountryQueries
+  nameWithType.vb: CountryQueries.New
+  fullName.vb: Core.Queries.CountryQueries.New
+  name.vb: New
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Queries.CountryQueries.GetColor*
+  commentId: Overload:Core.Queries.CountryQueries.GetColor
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetColor_System_UInt16_
+  name: GetColor
+  nameWithType: CountryQueries.GetColor
+  fullName: Core.Queries.CountryQueries.GetColor
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Queries.CountryQueries.GetTag*
+  commentId: Overload:Core.Queries.CountryQueries.GetTag
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetTag_System_UInt16_
+  name: GetTag
+  nameWithType: CountryQueries.GetTag
+  fullName: Core.Queries.CountryQueries.GetTag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Queries.CountryQueries.GetIdFromTag*
+  commentId: Overload:Core.Queries.CountryQueries.GetIdFromTag
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetIdFromTag_System_String_
+  name: GetIdFromTag
+  nameWithType: CountryQueries.GetIdFromTag
+  fullName: Core.Queries.CountryQueries.GetIdFromTag
+- uid: Core.Queries.CountryQueries.GetGraphicalCulture*
+  commentId: Overload:Core.Queries.CountryQueries.GetGraphicalCulture
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetGraphicalCulture_System_UInt16_
+  name: GetGraphicalCulture
+  nameWithType: CountryQueries.GetGraphicalCulture
+  fullName: Core.Queries.CountryQueries.GetGraphicalCulture
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Queries.CountryQueries.GetHotData*
+  commentId: Overload:Core.Queries.CountryQueries.GetHotData
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetHotData_System_UInt16_
+  name: GetHotData
+  nameWithType: CountryQueries.GetHotData
+  fullName: Core.Queries.CountryQueries.GetHotData
+- uid: Core.Data.CountryHotData
+  commentId: T:Core.Data.CountryHotData
+  parent: Core.Data
+  href: Core.Data.CountryHotData.html
+  name: CountryHotData
+  nameWithType: CountryHotData
+  fullName: Core.Data.CountryHotData
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Queries.CountryQueries.GetColdData*
+  commentId: Overload:Core.Queries.CountryQueries.GetColdData
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetColdData_System_UInt16_
+  name: GetColdData
+  nameWithType: CountryQueries.GetColdData
+  fullName: Core.Queries.CountryQueries.GetColdData
+- uid: Core.Data.CountryColdData
+  commentId: T:Core.Data.CountryColdData
+  parent: Core.Data
+  href: Core.Data.CountryColdData.html
+  name: CountryColdData
+  nameWithType: CountryColdData
+  fullName: Core.Data.CountryColdData
+- uid: Core.Queries.CountryQueries.Exists*
+  commentId: Overload:Core.Queries.CountryQueries.Exists
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_Exists_System_UInt16_
+  name: Exists
+  nameWithType: CountryQueries.Exists
+  fullName: Core.Queries.CountryQueries.Exists
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Queries.CountryQueries.HasFlag*
+  commentId: Overload:Core.Queries.CountryQueries.HasFlag
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_HasFlag_System_UInt16_System_Byte_
+  name: HasFlag
+  nameWithType: CountryQueries.HasFlag
+  fullName: Core.Queries.CountryQueries.HasFlag
+- uid: Core.Queries.CountryQueries.GetProvinceCount*
+  commentId: Overload:Core.Queries.CountryQueries.GetProvinceCount
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetProvinceCount_System_UInt16_
+  name: GetProvinceCount
+  nameWithType: CountryQueries.GetProvinceCount
+  fullName: Core.Queries.CountryQueries.GetProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Queries.CountryQueries.GetProvinces*
+  commentId: Overload:Core.Queries.CountryQueries.GetProvinces
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetProvinces_System_UInt16_Unity_Collections_Allocator_
+  name: GetProvinces
+  nameWithType: CountryQueries.GetProvinces
+  fullName: Core.Queries.CountryQueries.GetProvinces
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Queries.CountryQueries.GetLandProvinceCount*
+  commentId: Overload:Core.Queries.CountryQueries.GetLandProvinceCount
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetLandProvinceCount_System_UInt16_
+  name: GetLandProvinceCount
+  nameWithType: CountryQueries.GetLandProvinceCount
+  fullName: Core.Queries.CountryQueries.GetLandProvinceCount
+- uid: Core.Queries.CountryQueries.SharesBorder*
+  commentId: Overload:Core.Queries.CountryQueries.SharesBorder
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_SharesBorder_System_UInt16_System_UInt16_
+  name: SharesBorder
+  nameWithType: CountryQueries.SharesBorder
+  fullName: Core.Queries.CountryQueries.SharesBorder
+- uid: Core.Queries.CountryQueries.GetBorderingCountries*
+  commentId: Overload:Core.Queries.CountryQueries.GetBorderingCountries
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetBorderingCountries_System_UInt16_Unity_Collections_Allocator_
+  name: GetBorderingCountries
+  nameWithType: CountryQueries.GetBorderingCountries
+  fullName: Core.Queries.CountryQueries.GetBorderingCountries
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Queries.CountryQueries.GetBorderingCountryCount*
+  commentId: Overload:Core.Queries.CountryQueries.GetBorderingCountryCount
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetBorderingCountryCount_System_UInt16_
+  name: GetBorderingCountryCount
+  nameWithType: CountryQueries.GetBorderingCountryCount
+  fullName: Core.Queries.CountryQueries.GetBorderingCountryCount
+- uid: Core.Queries.CountryQueries.CompareProvinceCount*
+  commentId: Overload:Core.Queries.CountryQueries.CompareProvinceCount
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_CompareProvinceCount_System_UInt16_System_UInt16_
+  name: CompareProvinceCount
+  nameWithType: CountryQueries.CompareProvinceCount
+  fullName: Core.Queries.CountryQueries.CompareProvinceCount
+- uid: Core.Queries.CountryQueries.GetAllCountryIds*
+  commentId: Overload:Core.Queries.CountryQueries.GetAllCountryIds
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetAllCountryIds_Unity_Collections_Allocator_
+  name: GetAllCountryIds
+  nameWithType: CountryQueries.GetAllCountryIds
+  fullName: Core.Queries.CountryQueries.GetAllCountryIds
+- uid: Core.Queries.CountryQueries.GetTotalCountryCount*
+  commentId: Overload:Core.Queries.CountryQueries.GetTotalCountryCount
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetTotalCountryCount
+  name: GetTotalCountryCount
+  nameWithType: CountryQueries.GetTotalCountryCount
+  fullName: Core.Queries.CountryQueries.GetTotalCountryCount
+- uid: Core.Queries.CountryQueries.GetCountryStatistics*
+  commentId: Overload:Core.Queries.CountryQueries.GetCountryStatistics
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_GetCountryStatistics
+  name: GetCountryStatistics
+  nameWithType: CountryQueries.GetCountryStatistics
+  fullName: Core.Queries.CountryQueries.GetCountryStatistics
+- uid: Core.Queries.CountryStatistics
+  commentId: T:Core.Queries.CountryStatistics
+  parent: Core.Queries
+  href: Core.Queries.CountryStatistics.html
+  name: CountryStatistics
+  nameWithType: CountryStatistics
+  fullName: Core.Queries.CountryStatistics
+- uid: Core.Queries.CountryQueries.InvalidateCache*
+  commentId: Overload:Core.Queries.CountryQueries.InvalidateCache
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_InvalidateCache_System_UInt16_
+  name: InvalidateCache
+  nameWithType: CountryQueries.InvalidateCache
+  fullName: Core.Queries.CountryQueries.InvalidateCache
+- uid: Core.Queries.CountryQueries.ClearCache*
+  commentId: Overload:Core.Queries.CountryQueries.ClearCache
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_ClearCache
+  name: ClearCache
+  nameWithType: CountryQueries.ClearCache
+  fullName: Core.Queries.CountryQueries.ClearCache

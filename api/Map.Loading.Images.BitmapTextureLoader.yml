@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BitmapTextureLoader
+  commentId: T:Map.Loading.Images.BitmapTextureLoader
+  id: BitmapTextureLoader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync(UnityEngine.Texture2D)
+  - Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName
+  - Map.Loading.Images.BitmapTextureLoader.GetLoaderName
+  - Map.Loading.Images.BitmapTextureLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  - Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync(System.String)
+  - Map.Loading.Images.BitmapTextureLoader.PopulateTexture(Map.Loading.Images.BMPLoadResult)
+  - Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials
+  - Map.Loading.Images.BitmapTextureLoader.bmpLoader
+  - Map.Loading.Images.BitmapTextureLoader.logProgress
+  - Map.Loading.Images.BitmapTextureLoader.textureManager
+  langs:
+  - csharp
+  - vb
+  name: BitmapTextureLoader
+  nameWithType: BitmapTextureLoader
+  fullName: Map.Loading.Images.BitmapTextureLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BitmapTextureLoader
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Abstract base class for loading and populating textures from bitmap files
+
+    Provides common infrastructure for terrain, heightmap, and normal map loading
+
+    Eliminates code duplication across specialized bitmap loaders
+  example: []
+  syntax:
+    content: public abstract class BitmapTextureLoader
+    content.vb: Public MustInherit Class BitmapTextureLoader
+  inheritance:
+  - System.Object
+- uid: Map.Loading.Images.BitmapTextureLoader.bmpLoader
+  commentId: F:Map.Loading.Images.BitmapTextureLoader.bmpLoader
+  id: bmpLoader
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: bmpLoader
+  nameWithType: BitmapTextureLoader.bmpLoader
+  fullName: Map.Loading.Images.BitmapTextureLoader.bmpLoader
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: bmpLoader
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: protected JobifiedBMPLoader bmpLoader
+    return:
+      type: Map.Loading.Images.JobifiedBMPLoader
+    content.vb: Protected bmpLoader As JobifiedBMPLoader
+- uid: Map.Loading.Images.BitmapTextureLoader.textureManager
+  commentId: F:Map.Loading.Images.BitmapTextureLoader.textureManager
+  id: textureManager
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: textureManager
+  nameWithType: BitmapTextureLoader.textureManager
+  fullName: Map.Loading.Images.BitmapTextureLoader.textureManager
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: textureManager
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: protected MapTextureManager textureManager
+    return:
+      type: Map.Rendering.MapTextureManager
+    content.vb: Protected textureManager As MapTextureManager
+- uid: Map.Loading.Images.BitmapTextureLoader.logProgress
+  commentId: F:Map.Loading.Images.BitmapTextureLoader.logProgress
+  id: logProgress
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: logProgress
+  nameWithType: BitmapTextureLoader.logProgress
+  fullName: Map.Loading.Images.BitmapTextureLoader.logProgress
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: logProgress
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: protected bool logProgress
+    return:
+      type: System.Boolean
+    content.vb: Protected logProgress As Boolean
+- uid: Map.Loading.Images.BitmapTextureLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  id: Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager, bool)
+  nameWithType: BitmapTextureLoader.Initialize(MapTextureManager, bool)
+  fullName: Map.Loading.Images.BitmapTextureLoader.Initialize(Map.Rendering.MapTextureManager, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Initialize the bitmap loader with required dependencies
+  example: []
+  syntax:
+    content: public void Initialize(MapTextureManager textures, bool enableLogging = true)
+    parameters:
+    - id: textures
+      type: Map.Rendering.MapTextureManager
+    - id: enableLogging
+      type: System.Boolean
+    content.vb: Public Sub Initialize(textures As MapTextureManager, enableLogging As Boolean = True)
+  overload: Map.Loading.Images.BitmapTextureLoader.Initialize*
+  nameWithType.vb: BitmapTextureLoader.Initialize(MapTextureManager, Boolean)
+  fullName.vb: Map.Loading.Images.BitmapTextureLoader.Initialize(Map.Rendering.MapTextureManager, Boolean)
+  name.vb: Initialize(MapTextureManager, Boolean)
+- uid: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync(System.String)
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync(System.String)
+  id: LoadAndPopulateAsync(System.String)
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadAndPopulateAsync(string)
+  nameWithType: BitmapTextureLoader.LoadAndPopulateAsync(string)
+  fullName: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadAndPopulateAsync
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Load bitmap and populate corresponding texture
+  example: []
+  syntax:
+    content: public Task LoadAndPopulateAsync(string provincesPath)
+    parameters:
+    - id: provincesPath
+      type: System.String
+      description: Path to provinces.bmp or provinces.png (used to derive bitmap path)
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function LoadAndPopulateAsync(provincesPath As String) As Task
+  overload: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync*
+  nameWithType.vb: BitmapTextureLoader.LoadAndPopulateAsync(String)
+  fullName.vb: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync(String)
+  name.vb: LoadAndPopulateAsync(String)
+- uid: Map.Loading.Images.BitmapTextureLoader.PopulateTexture(Map.Loading.Images.BMPLoadResult)
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.PopulateTexture(Map.Loading.Images.BMPLoadResult)
+  id: PopulateTexture(Map.Loading.Images.BMPLoadResult)
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: PopulateTexture(BMPLoadResult)
+  nameWithType: BitmapTextureLoader.PopulateTexture(BMPLoadResult)
+  fullName: Map.Loading.Images.BitmapTextureLoader.PopulateTexture(Map.Loading.Images.BMPLoadResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PopulateTexture
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Populate texture with bitmap data (implemented by derived classes)
+  example: []
+  syntax:
+    content: protected abstract void PopulateTexture(BMPLoadResult bitmapData)
+    parameters:
+    - id: bitmapData
+      type: Map.Loading.Images.BMPLoadResult
+    content.vb: Protected MustOverride Sub PopulateTexture(bitmapData As BMPLoadResult)
+  overload: Map.Loading.Images.BitmapTextureLoader.PopulateTexture*
+- uid: Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName
+  id: GetBitmapFileName
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: GetBitmapFileName()
+  nameWithType: BitmapTextureLoader.GetBitmapFileName()
+  fullName: Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBitmapFileName
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 98
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get the bitmap filename (e.g., "terrain.bmp", "heightmap.bmp")
+  example: []
+  syntax:
+    content: protected abstract string GetBitmapFileName()
+    return:
+      type: System.String
+    content.vb: Protected MustOverride Function GetBitmapFileName() As String
+  overload: Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName*
+- uid: Map.Loading.Images.BitmapTextureLoader.GetLoaderName
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.GetLoaderName
+  id: GetLoaderName
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: GetLoaderName()
+  nameWithType: BitmapTextureLoader.GetLoaderName()
+  fullName: Map.Loading.Images.BitmapTextureLoader.GetLoaderName()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLoaderName
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get the loader name for logging purposes
+  example: []
+  syntax:
+    content: protected abstract string GetLoaderName()
+    return:
+      type: System.String
+    content.vb: Protected MustOverride Function GetLoaderName() As String
+  overload: Map.Loading.Images.BitmapTextureLoader.GetLoaderName*
+- uid: Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials
+  id: RebindTexturesToMaterials
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: RebindTexturesToMaterials()
+  nameWithType: BitmapTextureLoader.RebindTexturesToMaterials()
+  fullName: Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebindTexturesToMaterials
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 109
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Rebind textures to runtime materials after texture updates
+
+    Ensures all material instances have the updated textures
+  example: []
+  syntax:
+    content: protected void RebindTexturesToMaterials()
+    content.vb: Protected Sub RebindTexturesToMaterials()
+  overload: Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials*
+- uid: Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync(UnityEngine.Texture2D)
+  commentId: M:Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync(UnityEngine.Texture2D)
+  id: ApplyTextureAndSync(UnityEngine.Texture2D)
+  parent: Map.Loading.Images.BitmapTextureLoader
+  langs:
+  - csharp
+  - vb
+  name: ApplyTextureAndSync(Texture2D)
+  nameWithType: BitmapTextureLoader.ApplyTextureAndSync(Texture2D)
+  fullName: Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync(UnityEngine.Texture2D)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyTextureAndSync
+    path: Scripts/Map/Loading/Images/BitmapTextureLoader.cs
+    startLine: 151
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Apply texture changes and force GPU sync
+
+    Common pattern used by all bitmap loaders
+  example: []
+  syntax:
+    content: protected void ApplyTextureAndSync(Texture2D texture)
+    parameters:
+    - id: texture
+      type: UnityEngine.Texture2D
+    content.vb: Protected Sub ApplyTextureAndSync(texture As Texture2D)
+  overload: Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.JobifiedBMPLoader
+  commentId: T:Map.Loading.Images.JobifiedBMPLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.JobifiedBMPLoader.html
+  name: JobifiedBMPLoader
+  nameWithType: JobifiedBMPLoader
+  fullName: Map.Loading.Images.JobifiedBMPLoader
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.BitmapTextureLoader.Initialize*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.Initialize
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  name: Initialize
+  nameWithType: BitmapTextureLoader.Initialize
+  fullName: Map.Loading.Images.BitmapTextureLoader.Initialize
+- uid: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_LoadAndPopulateAsync_System_String_
+  name: LoadAndPopulateAsync
+  nameWithType: BitmapTextureLoader.LoadAndPopulateAsync
+  fullName: Map.Loading.Images.BitmapTextureLoader.LoadAndPopulateAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+- uid: Map.Loading.Images.BitmapTextureLoader.PopulateTexture*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.PopulateTexture
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_PopulateTexture_Map_Loading_Images_BMPLoadResult_
+  name: PopulateTexture
+  nameWithType: BitmapTextureLoader.PopulateTexture
+  fullName: Map.Loading.Images.BitmapTextureLoader.PopulateTexture
+- uid: Map.Loading.Images.BMPLoadResult
+  commentId: T:Map.Loading.Images.BMPLoadResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPLoadResult.html
+  name: BMPLoadResult
+  nameWithType: BMPLoadResult
+  fullName: Map.Loading.Images.BMPLoadResult
+- uid: Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_GetBitmapFileName
+  name: GetBitmapFileName
+  nameWithType: BitmapTextureLoader.GetBitmapFileName
+  fullName: Map.Loading.Images.BitmapTextureLoader.GetBitmapFileName
+- uid: Map.Loading.Images.BitmapTextureLoader.GetLoaderName*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.GetLoaderName
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_GetLoaderName
+  name: GetLoaderName
+  nameWithType: BitmapTextureLoader.GetLoaderName
+  fullName: Map.Loading.Images.BitmapTextureLoader.GetLoaderName
+- uid: Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_RebindTexturesToMaterials
+  name: RebindTexturesToMaterials
+  nameWithType: BitmapTextureLoader.RebindTexturesToMaterials
+  fullName: Map.Loading.Images.BitmapTextureLoader.RebindTexturesToMaterials
+- uid: Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync*
+  commentId: Overload:Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync
+  href: Map.Loading.Images.BitmapTextureLoader.html#Map_Loading_Images_BitmapTextureLoader_ApplyTextureAndSync_UnityEngine_Texture2D_
+  name: ApplyTextureAndSync
+  nameWithType: BitmapTextureLoader.ApplyTextureAndSync
+  fullName: Map.Loading.Images.BitmapTextureLoader.ApplyTextureAndSync
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

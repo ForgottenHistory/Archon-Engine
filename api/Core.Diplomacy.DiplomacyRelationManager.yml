@@ -1,0 +1,890 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyRelationManager
+  commentId: T:Core.Diplomacy.DiplomacyRelationManager
+  id: DiplomacyRelationManager
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier(System.UInt16,System.UInt16,Core.Diplomacy.OpinionModifier,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyRelationManager.DEFAULT_BASE_OPINION
+  - Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyRelationManager.GetOpinion(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyRelationManager.MAX_OPINION
+  - Core.Diplomacy.DiplomacyRelationManager.MIN_OPINION
+  - Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier(System.UInt16,System.UInt16,System.UInt16,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyRelationManager
+  nameWithType: DiplomacyRelationManager
+  fullName: Core.Diplomacy.DiplomacyRelationManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyRelationManager
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Manages opinion calculations and modifiers for diplomatic relations
+
+
+    RESPONSIBILITY:
+
+    - Opinion queries (GetOpinion, GetBaseOpinion)
+
+    - Opinion filtering (GetCountriesWithOpinionAbove/Below)
+
+    - Opinion modifier management (Add/Remove)
+
+
+    PATTERN: Stateless manager (receives data references from DiplomacySystem)
+
+    - Does NOT own NativeCollections (passed as parameters)
+
+    - Pure methods for opinion calculations
+
+    - Zero allocations in hot paths
+
+
+    PERFORMANCE:
+
+    - GetOpinion: O(1) cache lookup + O(m) modifier scan (m = modifiers per relationship, ~10)
+
+    - GetBaseOpinion: O(1) dictionary lookup
+
+    - AddOpinionModifier: O(1) append to flat array
+  example: []
+  syntax:
+    content: public static class DiplomacyRelationManager
+    content.vb: Public Module DiplomacyRelationManager
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacyRelationManager.MIN_OPINION
+  commentId: F:Core.Diplomacy.DiplomacyRelationManager.MIN_OPINION
+  id: MIN_OPINION
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: MIN_OPINION
+  nameWithType: DiplomacyRelationManager.MIN_OPINION
+  fullName: Core.Diplomacy.DiplomacyRelationManager.MIN_OPINION
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MIN_OPINION
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public static readonly FixedPoint64 MIN_OPINION
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly MIN_OPINION As FixedPoint64
+- uid: Core.Diplomacy.DiplomacyRelationManager.MAX_OPINION
+  commentId: F:Core.Diplomacy.DiplomacyRelationManager.MAX_OPINION
+  id: MAX_OPINION
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: MAX_OPINION
+  nameWithType: DiplomacyRelationManager.MAX_OPINION
+  fullName: Core.Diplomacy.DiplomacyRelationManager.MAX_OPINION
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MAX_OPINION
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public static readonly FixedPoint64 MAX_OPINION
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly MAX_OPINION As FixedPoint64
+- uid: Core.Diplomacy.DiplomacyRelationManager.DEFAULT_BASE_OPINION
+  commentId: F:Core.Diplomacy.DiplomacyRelationManager.DEFAULT_BASE_OPINION
+  id: DEFAULT_BASE_OPINION
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: DEFAULT_BASE_OPINION
+  nameWithType: DiplomacyRelationManager.DEFAULT_BASE_OPINION
+  fullName: Core.Diplomacy.DiplomacyRelationManager.DEFAULT_BASE_OPINION
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DEFAULT_BASE_OPINION
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public static readonly FixedPoint64 DEFAULT_BASE_OPINION
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly DEFAULT_BASE_OPINION As FixedPoint64
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetOpinion(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.GetOpinion(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: GetOpinion(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: GetOpinion(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyRelationManager.GetOpinion(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetOpinion(ushort, ushort, int, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOpinion
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get total opinion between two countries (base + modifiers)
+
+    Returns 0 if no relationship exists (neutral)
+
+    Clamped to [-200, +200]
+  example: []
+  syntax:
+    content: public static FixedPoint64 GetOpinion(ushort country1, ushort country2, int currentTick, NativeParallelHashMap<ulong, RelationData> relations, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: currentTick
+      type: System.Int32
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function GetOpinion(country1 As UShort, country2 As UShort, currentTick As Integer, relations As NativeParallelHashMap(Of ULong, RelationData), allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer)) As FixedPoint64
+  overload: Core.Diplomacy.DiplomacyRelationManager.GetOpinion*
+  nameWithType.vb: DiplomacyRelationManager.GetOpinion(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.GetOpinion(UShort, UShort, Integer, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: GetOpinion(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GetBaseOpinion(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: GetBaseOpinion(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyRelationManager.GetBaseOpinion(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBaseOpinion
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get base opinion (without modifiers)
+
+    Used for debugging and UI details
+  example: []
+  syntax:
+    content: public static FixedPoint64 GetBaseOpinion(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function GetBaseOpinion(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As FixedPoint64
+  overload: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion*
+  nameWithType.vb: DiplomacyRelationManager.GetBaseOpinion(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GetBaseOpinion(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: SetBaseOpinion(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: SetBaseOpinion(ushort, ushort, FixedPoint64, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyRelationManager.SetBaseOpinion(ushort, ushort, FixedPoint64, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion(ushort, ushort, Core.Data.FixedPoint64, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBaseOpinion
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 92
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Set base opinion between two countries
+
+    Creates relationship if it doesn't exist
+  example: []
+  syntax:
+    content: public static void SetBaseOpinion(ushort country1, ushort country2, FixedPoint64 baseOpinion, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: baseOpinion
+      type: Core.Data.FixedPoint64
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub SetBaseOpinion(country1 As UShort, country2 As UShort, baseOpinion As FixedPoint64, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion*
+  nameWithType.vb: DiplomacyRelationManager.SetBaseOpinion(UShort, UShort, FixedPoint64, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion(UShort, UShort, Core.Data.FixedPoint64, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: SetBaseOpinion(UShort, UShort, FixedPoint64, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: GetCountriesWithOpinionAbove(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: GetCountriesWithOpinionAbove(ushort, FixedPoint64, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyRelationManager.GetCountriesWithOpinionAbove(ushort, FixedPoint64, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove(ushort, Core.Data.FixedPoint64, int, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountriesWithOpinionAbove
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all countries with opinion above threshold
+
+    Used by AI for finding potential allies
+  example: []
+  syntax:
+    content: public static List<ushort> GetCountriesWithOpinionAbove(ushort countryID, FixedPoint64 threshold, int currentTick, NativeParallelHashMap<ulong, RelationData> relations, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: threshold
+      type: Core.Data.FixedPoint64
+    - id: currentTick
+      type: System.Int32
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetCountriesWithOpinionAbove(countryID As UShort, threshold As FixedPoint64, currentTick As Integer, relations As NativeParallelHashMap(Of ULong, RelationData), allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove*
+  nameWithType.vb: DiplomacyRelationManager.GetCountriesWithOpinionAbove(UShort, FixedPoint64, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove(UShort, Core.Data.FixedPoint64, Integer, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: GetCountriesWithOpinionAbove(UShort, FixedPoint64, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: GetCountriesWithOpinionBelow(System.UInt16,Core.Data.FixedPoint64,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: GetCountriesWithOpinionBelow(ushort, FixedPoint64, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyRelationManager.GetCountriesWithOpinionBelow(ushort, FixedPoint64, int, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow(ushort, Core.Data.FixedPoint64, int, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountriesWithOpinionBelow
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 153
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all countries with opinion below threshold
+
+    Used by AI for finding war targets
+  example: []
+  syntax:
+    content: public static List<ushort> GetCountriesWithOpinionBelow(ushort countryID, FixedPoint64 threshold, int currentTick, NativeParallelHashMap<ulong, RelationData> relations, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: threshold
+      type: Core.Data.FixedPoint64
+    - id: currentTick
+      type: System.Int32
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetCountriesWithOpinionBelow(countryID As UShort, threshold As FixedPoint64, currentTick As Integer, relations As NativeParallelHashMap(Of ULong, RelationData), allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow*
+  nameWithType.vb: DiplomacyRelationManager.GetCountriesWithOpinionBelow(UShort, FixedPoint64, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow(UShort, Core.Data.FixedPoint64, Integer, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: GetCountriesWithOpinionBelow(UShort, FixedPoint64, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+- uid: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier(System.UInt16,System.UInt16,Core.Diplomacy.OpinionModifier,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier(System.UInt16,System.UInt16,Core.Diplomacy.OpinionModifier,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: AddOpinionModifier(System.UInt16,System.UInt16,Core.Diplomacy.OpinionModifier,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: AddOpinionModifier(ushort, ushort, OpinionModifier, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyRelationManager.AddOpinionModifier(ushort, ushort, OpinionModifier, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier(ushort, ushort, Core.Diplomacy.OpinionModifier, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddOpinionModifier
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Add opinion modifier to a relationship
+
+    Modifiers decay over time and affect GetOpinion()
+  example: []
+  syntax:
+    content: public static void AddOpinionModifier(ushort country1, ushort country2, OpinionModifier modifier, NativeParallelHashMap<ulong, RelationData> relations, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: modifier
+      type: Core.Diplomacy.OpinionModifier
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    content.vb: Public Shared Sub AddOpinionModifier(country1 As UShort, country2 As UShort, modifier As OpinionModifier, relations As NativeParallelHashMap(Of ULong, RelationData), allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer))
+  overload: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier*
+  nameWithType.vb: DiplomacyRelationManager.AddOpinionModifier(UShort, UShort, OpinionModifier, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier(UShort, UShort, Core.Diplomacy.OpinionModifier, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: AddOpinionModifier(UShort, UShort, OpinionModifier, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+- uid: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier(System.UInt16,System.UInt16,System.UInt16,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier(System.UInt16,System.UInt16,System.UInt16,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: RemoveOpinionModifier(System.UInt16,System.UInt16,System.UInt16,Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacyRelationManager
+  langs:
+  - csharp
+  - vb
+  name: RemoveOpinionModifier(ushort, ushort, ushort, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacyRelationManager.RemoveOpinionModifier(ushort, ushort, ushort, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier(ushort, ushort, ushort, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveOpinionModifier
+    path: Scripts/Core/Diplomacy/DiplomacyRelationManager.cs
+    startLine: 225
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Remove all opinion modifiers of a specific type from a relationship
+
+    Uses RemoveAtSwapBack for O(1) removal (order not guaranteed)
+  example: []
+  syntax:
+    content: public static void RemoveOpinionModifier(ushort country1, ushort country2, ushort modifierTypeID, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: modifierTypeID
+      type: System.UInt16
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    content.vb: Public Shared Sub RemoveOpinionModifier(country1 As UShort, country2 As UShort, modifierTypeID As UShort, allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer))
+  overload: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier*
+  nameWithType.vb: DiplomacyRelationManager.RemoveOpinionModifier(UShort, UShort, UShort, NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier(UShort, UShort, UShort, Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: RemoveOpinionModifier(UShort, UShort, UShort, NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetOpinion*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.GetOpinion
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_GetOpinion_System_UInt16_System_UInt16_System_Int32_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: GetOpinion
+  nameWithType: DiplomacyRelationManager.GetOpinion
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetOpinion
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  href: Core.Diplomacy.RelationData.html
+  name: NativeParallelHashMap<ulong, RelationData>
+  nameWithType: NativeParallelHashMap<ulong, RelationData>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, RelationData)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData)
+  name.vb: NativeParallelHashMap(Of ULong, RelationData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: )
+- uid: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  commentId: T:Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Core.Diplomacy.ModifierWithKey.html
+  name: NativeList<ModifierWithKey>
+  nameWithType: NativeList<ModifierWithKey>
+  fullName: Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>
+  nameWithType.vb: NativeList(Of ModifierWithKey)
+  fullName.vb: Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey)
+  name.vb: NativeList(Of ModifierWithKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: )
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  name: NativeParallelHashMap<ulong, int>
+  nameWithType: NativeParallelHashMap<ulong, int>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, int>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, Integer)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Integer)
+  name.vb: NativeParallelHashMap(Of ULong, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeParallelHashMap`2
+  commentId: T:Unity.Collections.NativeParallelHashMap`2
+  isExternal: true
+  name: NativeParallelHashMap<TKey, TValue>
+  nameWithType: NativeParallelHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of TKey, TValue)
+  name.vb: NativeParallelHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_GetBaseOpinion_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GetBaseOpinion
+  nameWithType: DiplomacyRelationManager.GetBaseOpinion
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetBaseOpinion
+- uid: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_SetBaseOpinion_System_UInt16_System_UInt16_Core_Data_FixedPoint64_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: SetBaseOpinion
+  nameWithType: DiplomacyRelationManager.SetBaseOpinion
+  fullName: Core.Diplomacy.DiplomacyRelationManager.SetBaseOpinion
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_GetCountriesWithOpinionAbove_System_UInt16_Core_Data_FixedPoint64_System_Int32_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: GetCountriesWithOpinionAbove
+  nameWithType: DiplomacyRelationManager.GetCountriesWithOpinionAbove
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionAbove
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_GetCountriesWithOpinionBelow_System_UInt16_Core_Data_FixedPoint64_System_Int32_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: GetCountriesWithOpinionBelow
+  nameWithType: DiplomacyRelationManager.GetCountriesWithOpinionBelow
+  fullName: Core.Diplomacy.DiplomacyRelationManager.GetCountriesWithOpinionBelow
+- uid: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_AddOpinionModifier_System_UInt16_System_UInt16_Core_Diplomacy_OpinionModifier_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: AddOpinionModifier
+  nameWithType: DiplomacyRelationManager.AddOpinionModifier
+  fullName: Core.Diplomacy.DiplomacyRelationManager.AddOpinionModifier
+- uid: Core.Diplomacy.OpinionModifier
+  commentId: T:Core.Diplomacy.OpinionModifier
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.OpinionModifier.html
+  name: OpinionModifier
+  nameWithType: OpinionModifier
+  fullName: Core.Diplomacy.OpinionModifier
+- uid: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier*
+  commentId: Overload:Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier
+  href: Core.Diplomacy.DiplomacyRelationManager.html#Core_Diplomacy_DiplomacyRelationManager_RemoveOpinionModifier_System_UInt16_System_UInt16_System_UInt16_Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: RemoveOpinionModifier
+  nameWithType: DiplomacyRelationManager.RemoveOpinionModifier
+  fullName: Core.Diplomacy.DiplomacyRelationManager.RemoveOpinionModifier

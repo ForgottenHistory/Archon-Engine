@@ -1,0 +1,117 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Events.SubscriptionToken`1
+  commentId: T:Core.Events.SubscriptionToken`1
+  id: SubscriptionToken`1
+  parent: Core.Events
+  children:
+  - Core.Events.SubscriptionToken`1.Dispose
+  langs:
+  - csharp
+  - vb
+  name: SubscriptionToken<T>
+  nameWithType: SubscriptionToken<T>
+  fullName: Core.Events.SubscriptionToken<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Events/SubscriptionToken.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SubscriptionToken
+    path: Scripts/Core/Events/SubscriptionToken.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core.Events
+  summary: >-
+    Disposable token representing an event subscription.
+
+    Dispose to unsubscribe from the event.
+  example: []
+  syntax:
+    content: 'public sealed class SubscriptionToken<T> where T : struct, IGameEvent'
+    typeParameters:
+    - id: T
+    content.vb: Public NotInheritable Class SubscriptionToken(Of T As {Structure, IGameEvent})
+  inheritance:
+  - System.Object
+  nameWithType.vb: SubscriptionToken(Of T)
+  fullName.vb: Core.Events.SubscriptionToken(Of T)
+  name.vb: SubscriptionToken(Of T)
+- uid: Core.Events.SubscriptionToken`1.Dispose
+  commentId: M:Core.Events.SubscriptionToken`1.Dispose
+  id: Dispose
+  parent: Core.Events.SubscriptionToken`1
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: SubscriptionToken<T>.Dispose()
+  fullName: Core.Events.SubscriptionToken<T>.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Events/SubscriptionToken.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Events/SubscriptionToken.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Events
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Events.SubscriptionToken`1.Dispose*
+  nameWithType.vb: SubscriptionToken(Of T).Dispose()
+  fullName.vb: Core.Events.SubscriptionToken(Of T).Dispose()
+references:
+- uid: Core.Events
+  commentId: N:Core.Events
+  href: Core.html
+  name: Core.Events
+  nameWithType: Core.Events
+  fullName: Core.Events
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Events
+    name: Events
+    href: Core.Events.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Events.SubscriptionToken`1.Dispose*
+  commentId: Overload:Core.Events.SubscriptionToken`1.Dispose
+  href: Core.Events.SubscriptionToken-1.html#Core_Events_SubscriptionToken_1_Dispose
+  name: Dispose
+  nameWithType: SubscriptionToken<T>.Dispose
+  fullName: Core.Events.SubscriptionToken<T>.Dispose
+  nameWithType.vb: SubscriptionToken(Of T).Dispose
+  fullName.vb: Core.Events.SubscriptionToken(Of T).Dispose

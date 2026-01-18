@@ -1,0 +1,416 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.BatchHeader
+  commentId: T:Core.Commands.BatchHeader
+  id: BatchHeader
+  parent: Core.Commands
+  children:
+  - Core.Commands.BatchHeader.Checksum
+  - Core.Commands.BatchHeader.CommandCount
+  - Core.Commands.BatchHeader.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.BatchHeader.PlayerID
+  - Core.Commands.BatchHeader.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.BatchHeader.SizeInBytes
+  - Core.Commands.BatchHeader.Tick
+  - Core.Commands.BatchHeader.TotalSize
+  langs:
+  - csharp
+  - vb
+  name: BatchHeader
+  nameWithType: BatchHeader
+  fullName: Core.Commands.BatchHeader
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BatchHeader
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 230
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Header for command batches - fixed 12 bytes
+  example: []
+  syntax:
+    content: public struct BatchHeader
+    content.vb: Public Structure BatchHeader
+- uid: Core.Commands.BatchHeader.CommandCount
+  commentId: F:Core.Commands.BatchHeader.CommandCount
+  id: CommandCount
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: CommandCount
+  nameWithType: BatchHeader.CommandCount
+  fullName: Core.Commands.BatchHeader.CommandCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandCount
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 232
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort CommandCount
+    return:
+      type: System.UInt16
+    content.vb: Public CommandCount As UShort
+- uid: Core.Commands.BatchHeader.Tick
+  commentId: F:Core.Commands.BatchHeader.Tick
+  id: Tick
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: Tick
+  nameWithType: BatchHeader.Tick
+  fullName: Core.Commands.BatchHeader.Tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tick
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Tick
+    return:
+      type: System.UInt32
+    content.vb: Public Tick As UInteger
+- uid: Core.Commands.BatchHeader.PlayerID
+  commentId: F:Core.Commands.BatchHeader.PlayerID
+  id: PlayerID
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: PlayerID
+  nameWithType: BatchHeader.PlayerID
+  fullName: Core.Commands.BatchHeader.PlayerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerID
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 234
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort PlayerID
+    return:
+      type: System.UInt16
+    content.vb: Public PlayerID As UShort
+- uid: Core.Commands.BatchHeader.TotalSize
+  commentId: F:Core.Commands.BatchHeader.TotalSize
+  id: TotalSize
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: TotalSize
+  nameWithType: BatchHeader.TotalSize
+  fullName: Core.Commands.BatchHeader.TotalSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalSize
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 235
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort TotalSize
+    return:
+      type: System.UInt16
+    content.vb: Public TotalSize As UShort
+- uid: Core.Commands.BatchHeader.Checksum
+  commentId: F:Core.Commands.BatchHeader.Checksum
+  id: Checksum
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: Checksum
+  nameWithType: BatchHeader.Checksum
+  fullName: Core.Commands.BatchHeader.Checksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Checksum
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 236
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Checksum
+    return:
+      type: System.UInt32
+    content.vb: Public Checksum As UInteger
+- uid: Core.Commands.BatchHeader.SizeInBytes
+  commentId: F:Core.Commands.BatchHeader.SizeInBytes
+  id: SizeInBytes
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: SizeInBytes
+  nameWithType: BatchHeader.SizeInBytes
+  fullName: Core.Commands.BatchHeader.SizeInBytes
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SizeInBytes
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 238
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const int SizeInBytes = 14
+    return:
+      type: System.Int32
+    content.vb: Public Const SizeInBytes As Integer = 14
+- uid: Core.Commands.BatchHeader.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.BatchHeader.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: Serialize(NativeArray<byte>, int)
+  nameWithType: BatchHeader.Serialize(NativeArray<byte>, int)
+  fullName: Core.Commands.BatchHeader.Serialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 240
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public void Serialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: offset
+      type: System.Int32
+    content.vb: Public Sub Serialize(buffer As NativeArray(Of Byte), offset As Integer)
+  overload: Core.Commands.BatchHeader.Serialize*
+  nameWithType.vb: BatchHeader.Serialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.BatchHeader.Serialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Serialize(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.BatchHeader.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.BatchHeader.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.BatchHeader
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(NativeArray<byte>, int)
+  nameWithType: BatchHeader.Deserialize(NativeArray<byte>, int)
+  fullName: Core.Commands.BatchHeader.Deserialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 277
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public void Deserialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: offset
+      type: System.Int32
+    content.vb: Public Sub Deserialize(buffer As NativeArray(Of Byte), offset As Integer)
+  overload: Core.Commands.BatchHeader.Deserialize*
+  nameWithType.vb: BatchHeader.Deserialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.BatchHeader.Deserialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Deserialize(NativeArray(Of Byte), Integer)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.BatchHeader.Serialize*
+  commentId: Overload:Core.Commands.BatchHeader.Serialize
+  href: Core.Commands.BatchHeader.html#Core_Commands_BatchHeader_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Serialize
+  nameWithType: BatchHeader.Serialize
+  fullName: Core.Commands.BatchHeader.Serialize
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Commands.BatchHeader.Deserialize*
+  commentId: Overload:Core.Commands.BatchHeader.Deserialize
+  href: Core.Commands.BatchHeader.html#Core_Commands_BatchHeader_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Deserialize
+  nameWithType: BatchHeader.Deserialize
+  fullName: Core.Commands.BatchHeader.Deserialize

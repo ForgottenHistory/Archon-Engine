@@ -1,0 +1,227 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackResult
+  id: LocalizationFallbackChain.FallbackResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.LocalizationFallbackChain.FallbackResult.FallbackLevel
+  - Core.Localization.LocalizationFallbackChain.FallbackResult.IsSuccess
+  - Core.Localization.LocalizationFallbackChain.FallbackResult.ResolvedLanguage
+  - Core.Localization.LocalizationFallbackChain.FallbackResult.Value
+  langs:
+  - csharp
+  - vb
+  name: LocalizationFallbackChain.FallbackResult
+  nameWithType: LocalizationFallbackChain.FallbackResult
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FallbackResult
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Result of fallback chain resolution
+  example: []
+  syntax:
+    content: public struct LocalizationFallbackChain.FallbackResult
+    content.vb: Public Structure LocalizationFallbackChain.FallbackResult
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult.Value
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackResult.Value
+  id: Value
+  parent: Core.Localization.LocalizationFallbackChain.FallbackResult
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: LocalizationFallbackChain.FallbackResult.Value
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString512Bytes Value
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public Value As FixedString512Bytes
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult.ResolvedLanguage
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackResult.ResolvedLanguage
+  id: ResolvedLanguage
+  parent: Core.Localization.LocalizationFallbackChain.FallbackResult
+  langs:
+  - csharp
+  - vb
+  name: ResolvedLanguage
+  nameWithType: LocalizationFallbackChain.FallbackResult.ResolvedLanguage
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult.ResolvedLanguage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolvedLanguage
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString64Bytes ResolvedLanguage
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public ResolvedLanguage As FixedString64Bytes
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult.FallbackLevel
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackResult.FallbackLevel
+  id: FallbackLevel
+  parent: Core.Localization.LocalizationFallbackChain.FallbackResult
+  langs:
+  - csharp
+  - vb
+  name: FallbackLevel
+  nameWithType: LocalizationFallbackChain.FallbackResult.FallbackLevel
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult.FallbackLevel
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FallbackLevel
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int FallbackLevel
+    return:
+      type: System.Int32
+    content.vb: Public FallbackLevel As Integer
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult.IsSuccess
+  commentId: F:Core.Localization.LocalizationFallbackChain.FallbackResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.LocalizationFallbackChain.FallbackResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: LocalizationFallbackChain.FallbackResult.IsSuccess
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

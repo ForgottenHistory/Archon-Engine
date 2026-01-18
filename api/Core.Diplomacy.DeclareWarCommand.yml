@@ -1,0 +1,1026 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DeclareWarCommand
+  commentId: T:Core.Diplomacy.DeclareWarCommand
+  id: DeclareWarCommand
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DeclareWarCommand.AttackerID
+  - Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+  - Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+  - Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+  - Core.Diplomacy.DeclareWarCommand.DefenderID
+  - Core.Diplomacy.DeclareWarCommand.Deserialize(System.IO.BinaryReader)
+  - Core.Diplomacy.DeclareWarCommand.Execute(Core.GameState)
+  - Core.Diplomacy.DeclareWarCommand.GetSuccessMessage(Core.GameState)
+  - Core.Diplomacy.DeclareWarCommand.GetValidationError(Core.GameState)
+  - Core.Diplomacy.DeclareWarCommand.Priority
+  - Core.Diplomacy.DeclareWarCommand.Serialize(System.IO.BinaryWriter)
+  - Core.Diplomacy.DeclareWarCommand.Undo(Core.GameState)
+  - Core.Diplomacy.DeclareWarCommand.Validate(Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: DeclareWarCommand
+  nameWithType: DeclareWarCommand
+  fullName: Core.Diplomacy.DeclareWarCommand
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeclareWarCommand
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Command to declare war between two countries
+
+
+    Validation:
+
+    - Both countries exist
+
+    - Not already at war
+
+    - Not the same country
+
+
+    Execution:
+
+    - Set war state in DiplomacySystem
+
+    - Add "Declared War" opinion modifier
+
+    - Emit DiplomacyWarDeclaredEvent
+  example: []
+  syntax:
+    content: 'public class DeclareWarCommand : BaseCommand, ICommand'
+    content.vb: Public Class DeclareWarCommand Inherits BaseCommand Implements ICommand
+  inheritance:
+  - System.Object
+  - Core.Commands.BaseCommand
+  implements:
+  - Core.Commands.ICommand
+  inheritedMembers:
+  - Core.Commands.BaseCommand.CommandId
+  - Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.LogExecution(System.String)
+- uid: Core.Diplomacy.DeclareWarCommand.AttackerID
+  commentId: P:Core.Diplomacy.DeclareWarCommand.AttackerID
+  id: AttackerID
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: AttackerID
+  nameWithType: DeclareWarCommand.AttackerID
+  fullName: Core.Diplomacy.DeclareWarCommand.AttackerID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AttackerID
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public ushort AttackerID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property AttackerID As UShort
+  overload: Core.Diplomacy.DeclareWarCommand.AttackerID*
+- uid: Core.Diplomacy.DeclareWarCommand.DefenderID
+  commentId: P:Core.Diplomacy.DeclareWarCommand.DefenderID
+  id: DefenderID
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: DefenderID
+  nameWithType: DeclareWarCommand.DefenderID
+  fullName: Core.Diplomacy.DeclareWarCommand.DefenderID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefenderID
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public ushort DefenderID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property DefenderID As UShort
+  overload: Core.Diplomacy.DeclareWarCommand.DefenderID*
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+  commentId: P:Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+  id: DeclaredWarModifierType
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: DeclaredWarModifierType
+  nameWithType: DeclareWarCommand.DeclaredWarModifierType
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeclaredWarModifierType
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public ushort DeclaredWarModifierType { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property DeclaredWarModifierType As UShort
+  overload: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType*
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+  commentId: P:Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+  id: DeclaredWarModifierValue
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: DeclaredWarModifierValue
+  nameWithType: DeclareWarCommand.DeclaredWarModifierValue
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeclaredWarModifierValue
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public FixedPoint64 DeclaredWarModifierValue { get; set; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Property DeclaredWarModifierValue As FixedPoint64
+  overload: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue*
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+  commentId: P:Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+  id: DeclaredWarDecayTicks
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: DeclaredWarDecayTicks
+  nameWithType: DeclareWarCommand.DeclaredWarDecayTicks
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeclaredWarDecayTicks
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public int DeclaredWarDecayTicks { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property DeclaredWarDecayTicks As Integer
+  overload: Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks*
+- uid: Core.Diplomacy.DeclareWarCommand.Priority
+  commentId: P:Core.Diplomacy.DeclareWarCommand.Priority
+  id: Priority
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Priority
+  nameWithType: DeclareWarCommand.Priority
+  fullName: Core.Diplomacy.DeclareWarCommand.Priority
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Priority
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get command priority for execution ordering
+
+    Higher priority commands execute first
+  example: []
+  syntax:
+    content: public override int Priority { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Overrides ReadOnly Property Priority As Integer
+  overridden: Core.Commands.BaseCommand.Priority
+  overload: Core.Diplomacy.DeclareWarCommand.Priority*
+- uid: Core.Diplomacy.DeclareWarCommand.Validate(Core.GameState)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.Validate(Core.GameState)
+  id: Validate(Core.GameState)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Validate(GameState)
+  nameWithType: DeclareWarCommand.Validate(GameState)
+  fullName: Core.Diplomacy.DeclareWarCommand.Validate(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Validate that this command can be executed in the current game state.
+
+    Should be fast and have no side effects.
+  example: []
+  syntax:
+    content: public override bool Validate(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Current game state for validation
+    return:
+      type: System.Boolean
+      description: True if command can be executed
+    content.vb: Public Overrides Function Validate(gameState As GameState) As Boolean
+  overridden: Core.Commands.BaseCommand.Validate(Core.GameState)
+  overload: Core.Diplomacy.DeclareWarCommand.Validate*
+- uid: Core.Diplomacy.DeclareWarCommand.GetValidationError(Core.GameState)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.GetValidationError(Core.GameState)
+  id: GetValidationError(Core.GameState)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: GetValidationError(GameState)
+  nameWithType: DeclareWarCommand.GetValidationError(GameState)
+  fullName: Core.Diplomacy.DeclareWarCommand.GetValidationError(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValidationError
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 92
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get user-friendly validation error message (called by GameState)
+  example: []
+  syntax:
+    content: public string GetValidationError(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Public Function GetValidationError(gameState As GameState) As String
+  overload: Core.Diplomacy.DeclareWarCommand.GetValidationError*
+- uid: Core.Diplomacy.DeclareWarCommand.GetSuccessMessage(Core.GameState)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.GetSuccessMessage(Core.GameState)
+  id: GetSuccessMessage(Core.GameState)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: GetSuccessMessage(GameState)
+  nameWithType: DeclareWarCommand.GetSuccessMessage(GameState)
+  fullName: Core.Diplomacy.DeclareWarCommand.GetSuccessMessage(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSuccessMessage
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get user-friendly success message (called by GameState)
+  example: []
+  syntax:
+    content: public string GetSuccessMessage(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Public Function GetSuccessMessage(gameState As GameState) As String
+  overload: Core.Diplomacy.DeclareWarCommand.GetSuccessMessage*
+- uid: Core.Diplomacy.DeclareWarCommand.Execute(Core.GameState)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.Execute(Core.GameState)
+  id: Execute(Core.GameState)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute(GameState)
+  nameWithType: DeclareWarCommand.Execute(GameState)
+  fullName: Core.Diplomacy.DeclareWarCommand.Execute(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Execute the command and modify game state
+
+    Should emit appropriate events for other systems to react
+
+    Must be deterministic for multiplayer compatibility
+  example: []
+  syntax:
+    content: public override void Execute(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Game state to modify
+    content.vb: Public Overrides Sub Execute(gameState As GameState)
+  overridden: Core.Commands.BaseCommand.Execute(Core.GameState)
+  overload: Core.Diplomacy.DeclareWarCommand.Execute*
+- uid: Core.Diplomacy.DeclareWarCommand.Undo(Core.GameState)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.Undo(Core.GameState)
+  id: Undo(Core.GameState)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Undo(GameState)
+  nameWithType: DeclareWarCommand.Undo(GameState)
+  fullName: Core.Diplomacy.DeclareWarCommand.Undo(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Undo
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Undo the command - restore previous state
+
+    Required for replay systems and error recovery
+  example: []
+  syntax:
+    content: public override void Undo(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Game state to restore
+    content.vb: Public Overrides Sub Undo(gameState As GameState)
+  overridden: Core.Commands.BaseCommand.Undo(Core.GameState)
+  overload: Core.Diplomacy.DeclareWarCommand.Undo*
+- uid: Core.Diplomacy.DeclareWarCommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.Serialize(System.IO.BinaryWriter)
+  id: Serialize(System.IO.BinaryWriter)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Serialize(BinaryWriter)
+  nameWithType: DeclareWarCommand.Serialize(BinaryWriter)
+  fullName: Core.Diplomacy.DeclareWarCommand.Serialize(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Serialize command data to binary writer
+
+    Used for save/load and command logging
+
+    Must be deterministic - same command = same bytes
+  example: []
+  syntax:
+    content: public override void Serialize(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+      description: Binary writer to serialize to
+    content.vb: Public Overrides Sub Serialize(writer As BinaryWriter)
+  overridden: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  overload: Core.Diplomacy.DeclareWarCommand.Serialize*
+- uid: Core.Diplomacy.DeclareWarCommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Diplomacy.DeclareWarCommand.Deserialize(System.IO.BinaryReader)
+  id: Deserialize(System.IO.BinaryReader)
+  parent: Core.Diplomacy.DeclareWarCommand
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(BinaryReader)
+  nameWithType: DeclareWarCommand.Deserialize(BinaryReader)
+  fullName: Core.Diplomacy.DeclareWarCommand.Deserialize(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Diplomacy/DiplomacyCommands.cs
+    startLine: 144
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Deserialize command data from binary reader
+
+    Used for save/load and command replay
+
+    Must reconstruct identical command state
+  example: []
+  syntax:
+    content: public override void Deserialize(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+      description: Binary reader to deserialize from
+    content.vb: Public Overrides Sub Deserialize(reader As BinaryReader)
+  overridden: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  overload: Core.Diplomacy.DeclareWarCommand.Deserialize*
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Commands.BaseCommand
+  commentId: T:Core.Commands.BaseCommand
+  parent: Core.Commands
+  href: Core.Commands.BaseCommand.html
+  name: BaseCommand
+  nameWithType: BaseCommand
+  fullName: Core.Commands.BaseCommand
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: Core.Commands.BaseCommand.CommandId
+  commentId: P:Core.Commands.BaseCommand.CommandId
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_CommandId
+  name: CommandId
+  nameWithType: BaseCommand.CommandId
+  fullName: Core.Commands.BaseCommand.CommandId
+- uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  name: ValidateProvinceId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateProvinceId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateProvinceId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, UShort)
+  name.vb: ValidateProvinceId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  name: ValidateCountryId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateCountryId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateCountryId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, UShort)
+  name.vb: ValidateCountryId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.LogExecution(System.String)
+  commentId: M:Core.Commands.BaseCommand.LogExecution(System.String)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  name: LogExecution(string)
+  nameWithType: BaseCommand.LogExecution(string)
+  fullName: Core.Commands.BaseCommand.LogExecution(string)
+  nameWithType.vb: BaseCommand.LogExecution(String)
+  fullName.vb: Core.Commands.BaseCommand.LogExecution(String)
+  name.vb: LogExecution(String)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Diplomacy.DeclareWarCommand.AttackerID*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.AttackerID
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_AttackerID
+  name: AttackerID
+  nameWithType: DeclareWarCommand.AttackerID
+  fullName: Core.Diplomacy.DeclareWarCommand.AttackerID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Diplomacy.DeclareWarCommand.DefenderID*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.DefenderID
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_DefenderID
+  name: DefenderID
+  nameWithType: DeclareWarCommand.DefenderID
+  fullName: Core.Diplomacy.DeclareWarCommand.DefenderID
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_DeclaredWarModifierType
+  name: DeclaredWarModifierType
+  nameWithType: DeclareWarCommand.DeclaredWarModifierType
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierType
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_DeclaredWarModifierValue
+  name: DeclaredWarModifierValue
+  nameWithType: DeclareWarCommand.DeclaredWarModifierValue
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarModifierValue
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_DeclaredWarDecayTicks
+  name: DeclaredWarDecayTicks
+  nameWithType: DeclareWarCommand.DeclaredWarDecayTicks
+  fullName: Core.Diplomacy.DeclareWarCommand.DeclaredWarDecayTicks
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.BaseCommand.Priority
+  commentId: P:Core.Commands.BaseCommand.Priority
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Priority
+  name: Priority
+  nameWithType: BaseCommand.Priority
+  fullName: Core.Commands.BaseCommand.Priority
+- uid: Core.Diplomacy.DeclareWarCommand.Priority*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Priority
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Priority
+  name: Priority
+  nameWithType: DeclareWarCommand.Priority
+  fullName: Core.Diplomacy.DeclareWarCommand.Priority
+- uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Validate(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  name: Validate(GameState)
+  nameWithType: BaseCommand.Validate(GameState)
+  fullName: Core.Commands.BaseCommand.Validate(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.DeclareWarCommand.Validate*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Validate
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Validate_Core_GameState_
+  name: Validate
+  nameWithType: DeclareWarCommand.Validate
+  fullName: Core.Diplomacy.DeclareWarCommand.Validate
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Diplomacy.DeclareWarCommand.GetValidationError*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.GetValidationError
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_GetValidationError_Core_GameState_
+  name: GetValidationError
+  nameWithType: DeclareWarCommand.GetValidationError
+  fullName: Core.Diplomacy.DeclareWarCommand.GetValidationError
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Diplomacy.DeclareWarCommand.GetSuccessMessage*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.GetSuccessMessage
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_GetSuccessMessage_Core_GameState_
+  name: GetSuccessMessage
+  nameWithType: DeclareWarCommand.GetSuccessMessage
+  fullName: Core.Diplomacy.DeclareWarCommand.GetSuccessMessage
+- uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Execute(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  name: Execute(GameState)
+  nameWithType: BaseCommand.Execute(GameState)
+  fullName: Core.Commands.BaseCommand.Execute(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.DeclareWarCommand.Execute*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Execute
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Execute_Core_GameState_
+  name: Execute
+  nameWithType: DeclareWarCommand.Execute
+  fullName: Core.Diplomacy.DeclareWarCommand.Execute
+- uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Undo(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  name: Undo(GameState)
+  nameWithType: BaseCommand.Undo(GameState)
+  fullName: Core.Commands.BaseCommand.Undo(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.DeclareWarCommand.Undo*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Undo
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Undo_Core_GameState_
+  name: Undo
+  nameWithType: DeclareWarCommand.Undo
+  fullName: Core.Diplomacy.DeclareWarCommand.Undo
+- uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  name: Serialize(BinaryWriter)
+  nameWithType: BaseCommand.Serialize(BinaryWriter)
+  fullName: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+- uid: Core.Diplomacy.DeclareWarCommand.Serialize*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Serialize
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Serialize_System_IO_BinaryWriter_
+  name: Serialize
+  nameWithType: DeclareWarCommand.Serialize
+  fullName: Core.Diplomacy.DeclareWarCommand.Serialize
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  name: Deserialize(BinaryReader)
+  nameWithType: BaseCommand.Deserialize(BinaryReader)
+  fullName: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+- uid: Core.Diplomacy.DeclareWarCommand.Deserialize*
+  commentId: Overload:Core.Diplomacy.DeclareWarCommand.Deserialize
+  href: Core.Diplomacy.DeclareWarCommand.html#Core_Diplomacy_DeclareWarCommand_Deserialize_System_IO_BinaryReader_
+  name: Deserialize
+  nameWithType: DeclareWarCommand.Deserialize
+  fullName: Core.Diplomacy.DeclareWarCommand.Deserialize
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader

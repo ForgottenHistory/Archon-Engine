@@ -1,0 +1,285 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.YAMLTokenizer
+  commentId: T:Core.Localization.YAMLTokenizer
+  id: YAMLTokenizer
+  parent: Core.Localization
+  children:
+  - Core.Localization.YAMLTokenizer.TokenizeYAML(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken})
+  langs:
+  - csharp
+  - vb
+  name: YAMLTokenizer
+  nameWithType: YAMLTokenizer
+  fullName: Core.Localization.YAMLTokenizer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YAMLTokenizer
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    High-performance YAML tokenizer for Paradox localization files
+
+    Handles YAML format natively without preprocessing
+
+    Updated: Selective Burst compilation for compatible functions
+  example: []
+  syntax:
+    content: public static class YAMLTokenizer
+    content.vb: Public Module YAMLTokenizer
+  inheritance:
+  - System.Object
+- uid: Core.Localization.YAMLTokenizer.TokenizeYAML(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken})
+  commentId: M:Core.Localization.YAMLTokenizer.TokenizeYAML(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken})
+  id: TokenizeYAML(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken})
+  parent: Core.Localization.YAMLTokenizer
+  langs:
+  - csharp
+  - vb
+  name: TokenizeYAML(NativeSlice<byte>, NativeList<YAMLToken>)
+  nameWithType: YAMLTokenizer.TokenizeYAML(NativeSlice<byte>, NativeList<YAMLTokenizer.YAMLToken>)
+  fullName: Core.Localization.YAMLTokenizer.TokenizeYAML(Unity.Collections.NativeSlice<byte>, Unity.Collections.NativeList<Core.Localization.YAMLTokenizer.YAMLToken>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TokenizeYAML
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Tokenize YAML data into tokens (public wrapper)
+  example: []
+  syntax:
+    content: public static YAMLTokenizer.YAMLTokenizeResult TokenizeYAML(NativeSlice<byte> yamlData, NativeList<YAMLTokenizer.YAMLToken> tokens)
+    parameters:
+    - id: yamlData
+      type: Unity.Collections.NativeSlice{System.Byte}
+    - id: tokens
+      type: Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken}
+    return:
+      type: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    content.vb: Public Shared Function TokenizeYAML(yamlData As NativeSlice(Of Byte), tokens As NativeList(Of YAMLTokenizer.YAMLToken)) As YAMLTokenizer.YAMLTokenizeResult
+  overload: Core.Localization.YAMLTokenizer.TokenizeYAML*
+  nameWithType.vb: YAMLTokenizer.TokenizeYAML(NativeSlice(Of Byte), NativeList(Of YAMLTokenizer.YAMLToken))
+  fullName.vb: Core.Localization.YAMLTokenizer.TokenizeYAML(Unity.Collections.NativeSlice(Of Byte), Unity.Collections.NativeList(Of Core.Localization.YAMLTokenizer.YAMLToken))
+  name.vb: TokenizeYAML(NativeSlice(Of Byte), NativeList(Of YAMLToken))
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.YAMLTokenizer.TokenizeYAML*
+  commentId: Overload:Core.Localization.YAMLTokenizer.TokenizeYAML
+  href: Core.Localization.YAMLTokenizer.html#Core_Localization_YAMLTokenizer_TokenizeYAML_Unity_Collections_NativeSlice_System_Byte__Unity_Collections_NativeList_Core_Localization_YAMLTokenizer_YAMLToken__
+  name: TokenizeYAML
+  nameWithType: YAMLTokenizer.TokenizeYAML
+  fullName: Core.Localization.YAMLTokenizer.TokenizeYAML
+- uid: Unity.Collections.NativeSlice{System.Byte}
+  commentId: T:Unity.Collections.NativeSlice{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  name: NativeSlice<byte>
+  nameWithType: NativeSlice<byte>
+  fullName: Unity.Collections.NativeSlice<byte>
+  nameWithType.vb: NativeSlice(Of Byte)
+  fullName.vb: Unity.Collections.NativeSlice(Of Byte)
+  name.vb: NativeSlice(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken}
+  commentId: T:Unity.Collections.NativeList{Core.Localization.YAMLTokenizer.YAMLToken}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Core.Localization.YAMLTokenizer.html
+  name: NativeList<YAMLTokenizer.YAMLToken>
+  nameWithType: NativeList<YAMLTokenizer.YAMLToken>
+  fullName: Unity.Collections.NativeList<Core.Localization.YAMLTokenizer.YAMLToken>
+  nameWithType.vb: NativeList(Of YAMLTokenizer.YAMLToken)
+  fullName.vb: Unity.Collections.NativeList(Of Core.Localization.YAMLTokenizer.YAMLToken)
+  name.vb: NativeList(Of YAMLTokenizer.YAMLToken)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLToken
+    name: YAMLToken
+    href: Core.Localization.YAMLTokenizer.YAMLToken.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLToken
+    name: YAMLToken
+    href: Core.Localization.YAMLTokenizer.YAMLToken.html
+  - name: )
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  parent: Core.Localization
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer.YAMLTokenizeResult
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  spec.csharp:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    name: YAMLTokenizeResult
+    href: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.html
+  spec.vb:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    name: YAMLTokenizeResult
+    href: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.html
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

@@ -1,0 +1,844 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.UI.BasePanel
+  commentId: T:Core.UI.BasePanel
+  id: BasePanel
+  parent: Core.UI
+  children:
+  - Core.UI.BasePanel.CenterPanel
+  - Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  - Core.UI.BasePanel.CreateUI
+  - Core.UI.BasePanel.Hide
+  - Core.UI.BasePanel.InitializeBase
+  - Core.UI.BasePanel.IsInitialized
+  - Core.UI.BasePanel.IsVisible
+  - Core.UI.BasePanel.OnHide
+  - Core.UI.BasePanel.OnShow
+  - Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  - Core.UI.BasePanel.Show
+  - Core.UI.BasePanel.Toggle
+  - Core.UI.BasePanel.isInitialized
+  - Core.UI.BasePanel.isVisible
+  - Core.UI.BasePanel.panelContainer
+  - Core.UI.BasePanel.rootElement
+  - Core.UI.BasePanel.uiDocument
+  langs:
+  - csharp
+  - vb
+  name: BasePanel
+  nameWithType: BasePanel
+  fullName: Core.UI.BasePanel
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BasePanel
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: >-
+    ENGINE - Base class for UI Toolkit panels.
+
+    Provides common infrastructure: UIDocument access, root element, show/hide.
+
+
+    Usage:
+
+    1. Inherit from BasePanel
+
+    2. Override CreateUI() to build your panel
+
+    3. Call Initialize() to set up the panel
+  example: []
+  syntax:
+    content: >-
+      [RequireComponent(typeof(UIDocument))]
+
+      public abstract class BasePanel : MonoBehaviour
+    content.vb: >-
+      <RequireComponent(GetType(UIDocument))>
+
+      Public MustInherit Class BasePanel Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  derivedClasses:
+  - StarterKit.StarterKitPanel
+- uid: Core.UI.BasePanel.uiDocument
+  commentId: F:Core.UI.BasePanel.uiDocument
+  id: uiDocument
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: uiDocument
+  nameWithType: BasePanel.uiDocument
+  fullName: Core.UI.BasePanel.uiDocument
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: uiDocument
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.UI
+  syntax:
+    content: protected UIDocument uiDocument
+    return:
+      type: UnityEngine.UIElements.UIDocument
+    content.vb: Protected uiDocument As UIDocument
+- uid: Core.UI.BasePanel.rootElement
+  commentId: F:Core.UI.BasePanel.rootElement
+  id: rootElement
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: rootElement
+  nameWithType: BasePanel.rootElement
+  fullName: Core.UI.BasePanel.rootElement
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: rootElement
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.UI
+  syntax:
+    content: protected VisualElement rootElement
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected rootElement As VisualElement
+- uid: Core.UI.BasePanel.panelContainer
+  commentId: F:Core.UI.BasePanel.panelContainer
+  id: panelContainer
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: panelContainer
+  nameWithType: BasePanel.panelContainer
+  fullName: Core.UI.BasePanel.panelContainer
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: panelContainer
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.UI
+  syntax:
+    content: protected VisualElement panelContainer
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected panelContainer As VisualElement
+- uid: Core.UI.BasePanel.isInitialized
+  commentId: F:Core.UI.BasePanel.isInitialized
+  id: isInitialized
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: isInitialized
+  nameWithType: BasePanel.isInitialized
+  fullName: Core.UI.BasePanel.isInitialized
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: isInitialized
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.UI
+  syntax:
+    content: protected bool isInitialized
+    return:
+      type: System.Boolean
+    content.vb: Protected isInitialized As Boolean
+- uid: Core.UI.BasePanel.isVisible
+  commentId: F:Core.UI.BasePanel.isVisible
+  id: isVisible
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: isVisible
+  nameWithType: BasePanel.isVisible
+  fullName: Core.UI.BasePanel.isVisible
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: isVisible
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.UI
+  syntax:
+    content: protected bool isVisible
+    return:
+      type: System.Boolean
+    content.vb: Protected isVisible As Boolean
+- uid: Core.UI.BasePanel.IsInitialized
+  commentId: P:Core.UI.BasePanel.IsInitialized
+  id: IsInitialized
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: BasePanel.IsInitialized
+  fullName: Core.UI.BasePanel.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: True if panel has been initialized.
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.UI.BasePanel.IsInitialized*
+- uid: Core.UI.BasePanel.IsVisible
+  commentId: P:Core.UI.BasePanel.IsVisible
+  id: IsVisible
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: IsVisible
+  nameWithType: BasePanel.IsVisible
+  fullName: Core.UI.BasePanel.IsVisible
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsVisible
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: True if panel is currently visible.
+  example: []
+  syntax:
+    content: public bool IsVisible { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsVisible As Boolean
+  overload: Core.UI.BasePanel.IsVisible*
+- uid: Core.UI.BasePanel.InitializeBase
+  commentId: M:Core.UI.BasePanel.InitializeBase
+  id: InitializeBase
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: InitializeBase()
+  nameWithType: BasePanel.InitializeBase()
+  fullName: Core.UI.BasePanel.InitializeBase()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeBase
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Initialize the panel. Call from subclass Initialize() method.
+  example: []
+  syntax:
+    content: protected bool InitializeBase()
+    return:
+      type: System.Boolean
+    content.vb: Protected Function InitializeBase() As Boolean
+  overload: Core.UI.BasePanel.InitializeBase*
+- uid: Core.UI.BasePanel.CreateUI
+  commentId: M:Core.UI.BasePanel.CreateUI
+  id: CreateUI
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: CreateUI()
+  nameWithType: BasePanel.CreateUI()
+  fullName: Core.UI.BasePanel.CreateUI()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateUI
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: >-
+    Override to create your panel's UI elements.
+
+    Set panelContainer to your main container element.
+  example: []
+  syntax:
+    content: protected abstract void CreateUI()
+    content.vb: Protected MustOverride Sub CreateUI()
+  overload: Core.UI.BasePanel.CreateUI*
+- uid: Core.UI.BasePanel.Show
+  commentId: M:Core.UI.BasePanel.Show
+  id: Show
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: Show()
+  nameWithType: BasePanel.Show()
+  fullName: Core.UI.BasePanel.Show()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Show
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Show the panel.
+  example: []
+  syntax:
+    content: public virtual void Show()
+    content.vb: Public Overridable Sub Show()
+  overload: Core.UI.BasePanel.Show*
+- uid: Core.UI.BasePanel.Hide
+  commentId: M:Core.UI.BasePanel.Hide
+  id: Hide
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: Hide()
+  nameWithType: BasePanel.Hide()
+  fullName: Core.UI.BasePanel.Hide()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hide
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Hide the panel.
+  example: []
+  syntax:
+    content: public virtual void Hide()
+    content.vb: Public Overridable Sub Hide()
+  overload: Core.UI.BasePanel.Hide*
+- uid: Core.UI.BasePanel.Toggle
+  commentId: M:Core.UI.BasePanel.Toggle
+  id: Toggle
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: Toggle()
+  nameWithType: BasePanel.Toggle()
+  fullName: Core.UI.BasePanel.Toggle()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Toggle
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Toggle panel visibility.
+  example: []
+  syntax:
+    content: public virtual void Toggle()
+    content.vb: Public Overridable Sub Toggle()
+  overload: Core.UI.BasePanel.Toggle*
+- uid: Core.UI.BasePanel.OnShow
+  commentId: M:Core.UI.BasePanel.OnShow
+  id: OnShow
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: OnShow()
+  nameWithType: BasePanel.OnShow()
+  fullName: Core.UI.BasePanel.OnShow()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnShow
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 115
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Called when panel is shown. Override for refresh logic.
+  example: []
+  syntax:
+    content: protected virtual void OnShow()
+    content.vb: Protected Overridable Sub OnShow()
+  overload: Core.UI.BasePanel.OnShow*
+- uid: Core.UI.BasePanel.OnHide
+  commentId: M:Core.UI.BasePanel.OnHide
+  id: OnHide
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: OnHide()
+  nameWithType: BasePanel.OnHide()
+  fullName: Core.UI.BasePanel.OnHide()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnHide
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Called when panel is hidden. Override for cleanup.
+  example: []
+  syntax:
+    content: protected virtual void OnHide()
+    content.vb: Protected Overridable Sub OnHide()
+  overload: Core.UI.BasePanel.OnHide*
+- uid: Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  commentId: M:Core.UI.BasePanel.CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  id: CreatePanelContainer(System.String,UnityEngine.Color,System.Single,System.Single)
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: CreatePanelContainer(string, Color, float, float)
+  nameWithType: BasePanel.CreatePanelContainer(string, Color, float, float)
+  fullName: Core.UI.BasePanel.CreatePanelContainer(string, UnityEngine.Color, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreatePanelContainer
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 125
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Create the main panel container with common styling.
+  example: []
+  syntax:
+    content: protected VisualElement CreatePanelContainer(string name, Color backgroundColor, float padding = 10, float borderRadius = 6)
+    parameters:
+    - id: name
+      type: System.String
+    - id: backgroundColor
+      type: UnityEngine.Color
+    - id: padding
+      type: System.Single
+    - id: borderRadius
+      type: System.Single
+    return:
+      type: UnityEngine.UIElements.VisualElement
+    content.vb: Protected Function CreatePanelContainer(name As String, backgroundColor As Color, padding As Single = 10, borderRadius As Single = 6) As VisualElement
+  overload: Core.UI.BasePanel.CreatePanelContainer*
+  nameWithType.vb: BasePanel.CreatePanelContainer(String, Color, Single, Single)
+  fullName.vb: Core.UI.BasePanel.CreatePanelContainer(String, UnityEngine.Color, Single, Single)
+  name.vb: CreatePanelContainer(String, Color, Single, Single)
+- uid: Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  commentId: M:Core.UI.BasePanel.PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  id: PositionPanel(System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single},System.Nullable{System.Single})
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: PositionPanel(float?, float?, float?, float?)
+  nameWithType: BasePanel.PositionPanel(float?, float?, float?, float?)
+  fullName: Core.UI.BasePanel.PositionPanel(float?, float?, float?, float?)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PositionPanel
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Position the panel absolutely.
+  example: []
+  syntax:
+    content: protected void PositionPanel(float? top = null, float? right = null, float? bottom = null, float? left = null)
+    parameters:
+    - id: top
+      type: System.Nullable{System.Single}
+    - id: right
+      type: System.Nullable{System.Single}
+    - id: bottom
+      type: System.Nullable{System.Single}
+    - id: left
+      type: System.Nullable{System.Single}
+    content.vb: Protected Sub PositionPanel(top As Single? = Nothing, right As Single? = Nothing, bottom As Single? = Nothing, left As Single? = Nothing)
+  overload: Core.UI.BasePanel.PositionPanel*
+  nameWithType.vb: BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  fullName.vb: Core.UI.BasePanel.PositionPanel(Single?, Single?, Single?, Single?)
+  name.vb: PositionPanel(Single?, Single?, Single?, Single?)
+- uid: Core.UI.BasePanel.CenterPanel
+  commentId: M:Core.UI.BasePanel.CenterPanel
+  id: CenterPanel
+  parent: Core.UI.BasePanel
+  langs:
+  - csharp
+  - vb
+  name: CenterPanel()
+  nameWithType: BasePanel.CenterPanel()
+  fullName: Core.UI.BasePanel.CenterPanel()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/UI/BasePanel.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterPanel
+    path: Scripts/Core/UI/BasePanel.cs
+    startLine: 145
+  assemblies:
+  - Core
+  namespace: Core.UI
+  summary: Center the panel on screen.
+  example: []
+  syntax:
+    content: protected void CenterPanel()
+    content.vb: Protected Sub CenterPanel()
+  overload: Core.UI.BasePanel.CenterPanel*
+references:
+- uid: Core.UI
+  commentId: N:Core.UI
+  href: Core.html
+  name: Core.UI
+  nameWithType: Core.UI
+  fullName: Core.UI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.UI
+    name: UI
+    href: Core.UI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: UnityEngine.UIElements.UIDocument
+  commentId: T:UnityEngine.UIElements.UIDocument
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: UIDocument
+  nameWithType: UIDocument
+  fullName: UnityEngine.UIElements.UIDocument
+- uid: UnityEngine.UIElements
+  commentId: N:UnityEngine.UIElements
+  isExternal: true
+  name: UnityEngine.UIElements
+  nameWithType: UnityEngine.UIElements
+  fullName: UnityEngine.UIElements
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+- uid: UnityEngine.UIElements.VisualElement
+  commentId: T:UnityEngine.UIElements.VisualElement
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: VisualElement
+  nameWithType: VisualElement
+  fullName: UnityEngine.UIElements.VisualElement
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.UI.BasePanel.IsInitialized*
+  commentId: Overload:Core.UI.BasePanel.IsInitialized
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_IsInitialized
+  name: IsInitialized
+  nameWithType: BasePanel.IsInitialized
+  fullName: Core.UI.BasePanel.IsInitialized
+- uid: Core.UI.BasePanel.IsVisible*
+  commentId: Overload:Core.UI.BasePanel.IsVisible
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_IsVisible
+  name: IsVisible
+  nameWithType: BasePanel.IsVisible
+  fullName: Core.UI.BasePanel.IsVisible
+- uid: Core.UI.BasePanel.InitializeBase*
+  commentId: Overload:Core.UI.BasePanel.InitializeBase
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_InitializeBase
+  name: InitializeBase
+  nameWithType: BasePanel.InitializeBase
+  fullName: Core.UI.BasePanel.InitializeBase
+- uid: Core.UI.BasePanel.CreateUI*
+  commentId: Overload:Core.UI.BasePanel.CreateUI
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_CreateUI
+  name: CreateUI
+  nameWithType: BasePanel.CreateUI
+  fullName: Core.UI.BasePanel.CreateUI
+- uid: Core.UI.BasePanel.Show*
+  commentId: Overload:Core.UI.BasePanel.Show
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_Show
+  name: Show
+  nameWithType: BasePanel.Show
+  fullName: Core.UI.BasePanel.Show
+- uid: Core.UI.BasePanel.Hide*
+  commentId: Overload:Core.UI.BasePanel.Hide
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_Hide
+  name: Hide
+  nameWithType: BasePanel.Hide
+  fullName: Core.UI.BasePanel.Hide
+- uid: Core.UI.BasePanel.Toggle*
+  commentId: Overload:Core.UI.BasePanel.Toggle
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_Toggle
+  name: Toggle
+  nameWithType: BasePanel.Toggle
+  fullName: Core.UI.BasePanel.Toggle
+- uid: Core.UI.BasePanel.OnShow*
+  commentId: Overload:Core.UI.BasePanel.OnShow
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_OnShow
+  name: OnShow
+  nameWithType: BasePanel.OnShow
+  fullName: Core.UI.BasePanel.OnShow
+- uid: Core.UI.BasePanel.OnHide*
+  commentId: Overload:Core.UI.BasePanel.OnHide
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_OnHide
+  name: OnHide
+  nameWithType: BasePanel.OnHide
+  fullName: Core.UI.BasePanel.OnHide
+- uid: Core.UI.BasePanel.CreatePanelContainer*
+  commentId: Overload:Core.UI.BasePanel.CreatePanelContainer
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_CreatePanelContainer_System_String_UnityEngine_Color_System_Single_System_Single_
+  name: CreatePanelContainer
+  nameWithType: BasePanel.CreatePanelContainer
+  fullName: Core.UI.BasePanel.CreatePanelContainer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.UI.BasePanel.PositionPanel*
+  commentId: Overload:Core.UI.BasePanel.PositionPanel
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_PositionPanel_System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_System_Single__System_Nullable_System_Single__
+  name: PositionPanel
+  nameWithType: BasePanel.PositionPanel
+  fullName: Core.UI.BasePanel.PositionPanel
+- uid: System.Nullable{System.Single}
+  commentId: T:System.Nullable{System.Single}
+  parent: System
+  definition: System.Nullable`1
+  name: float?
+  nameWithType: float?
+  fullName: float?
+  nameWithType.vb: Single?
+  fullName.vb: Single?
+  name.vb: Single?
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '?'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.UI.BasePanel.CenterPanel*
+  commentId: Overload:Core.UI.BasePanel.CenterPanel
+  href: Core.UI.BasePanel.html#Core_UI_BasePanel_CenterPanel
+  name: CenterPanel
+  nameWithType: BasePanel.CenterPanel
+  fullName: Core.UI.BasePanel.CenterPanel

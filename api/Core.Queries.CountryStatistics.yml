@@ -1,0 +1,262 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.CountryStatistics
+  commentId: T:Core.Queries.CountryStatistics
+  id: CountryStatistics
+  parent: Core.Queries
+  children:
+  - Core.Queries.CountryStatistics.AverageProvincesPerCountry
+  - Core.Queries.CountryStatistics.CountriesWithProvinces
+  - Core.Queries.CountryStatistics.LargestCountryId
+  - Core.Queries.CountryStatistics.LargestCountryProvinces
+  - Core.Queries.CountryStatistics.TotalCountries
+  - Core.Queries.CountryStatistics.TotalProvinces
+  langs:
+  - csharp
+  - vb
+  name: CountryStatistics
+  nameWithType: CountryStatistics
+  fullName: Core.Queries.CountryStatistics
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryStatistics
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 455
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Country statistics for debugging and UI (engine-only data)
+
+    Note: Development-related fields removed (game-specific)
+
+    Use Game/Queries/HegemonCountryQueries for game statistics
+  example: []
+  syntax:
+    content: public struct CountryStatistics
+    content.vb: Public Structure CountryStatistics
+- uid: Core.Queries.CountryStatistics.TotalCountries
+  commentId: F:Core.Queries.CountryStatistics.TotalCountries
+  id: TotalCountries
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalCountries
+  nameWithType: CountryStatistics.TotalCountries
+  fullName: Core.Queries.CountryStatistics.TotalCountries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalCountries
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 457
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int TotalCountries
+    return:
+      type: System.Int32
+    content.vb: Public TotalCountries As Integer
+- uid: Core.Queries.CountryStatistics.CountriesWithProvinces
+  commentId: F:Core.Queries.CountryStatistics.CountriesWithProvinces
+  id: CountriesWithProvinces
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: CountriesWithProvinces
+  nameWithType: CountryStatistics.CountriesWithProvinces
+  fullName: Core.Queries.CountryStatistics.CountriesWithProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountriesWithProvinces
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 458
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int CountriesWithProvinces
+    return:
+      type: System.Int32
+    content.vb: Public CountriesWithProvinces As Integer
+- uid: Core.Queries.CountryStatistics.TotalProvinces
+  commentId: F:Core.Queries.CountryStatistics.TotalProvinces
+  id: TotalProvinces
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalProvinces
+  nameWithType: CountryStatistics.TotalProvinces
+  fullName: Core.Queries.CountryStatistics.TotalProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalProvinces
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 459
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int TotalProvinces
+    return:
+      type: System.Int32
+    content.vb: Public TotalProvinces As Integer
+- uid: Core.Queries.CountryStatistics.AverageProvincesPerCountry
+  commentId: F:Core.Queries.CountryStatistics.AverageProvincesPerCountry
+  id: AverageProvincesPerCountry
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: AverageProvincesPerCountry
+  nameWithType: CountryStatistics.AverageProvincesPerCountry
+  fullName: Core.Queries.CountryStatistics.AverageProvincesPerCountry
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageProvincesPerCountry
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 460
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public float AverageProvincesPerCountry
+    return:
+      type: System.Single
+    content.vb: Public AverageProvincesPerCountry As Single
+- uid: Core.Queries.CountryStatistics.LargestCountryProvinces
+  commentId: F:Core.Queries.CountryStatistics.LargestCountryProvinces
+  id: LargestCountryProvinces
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: LargestCountryProvinces
+  nameWithType: CountryStatistics.LargestCountryProvinces
+  fullName: Core.Queries.CountryStatistics.LargestCountryProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LargestCountryProvinces
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 461
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int LargestCountryProvinces
+    return:
+      type: System.Int32
+    content.vb: Public LargestCountryProvinces As Integer
+- uid: Core.Queries.CountryStatistics.LargestCountryId
+  commentId: F:Core.Queries.CountryStatistics.LargestCountryId
+  id: LargestCountryId
+  parent: Core.Queries.CountryStatistics
+  langs:
+  - csharp
+  - vb
+  name: LargestCountryId
+  nameWithType: CountryStatistics.LargestCountryId
+  fullName: Core.Queries.CountryStatistics.LargestCountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LargestCountryId
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 462
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public ushort LargestCountryId
+    return:
+      type: System.UInt16
+    content.vb: Public LargestCountryId As UShort
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort

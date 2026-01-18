@@ -1,0 +1,375 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  commentId: T:Map.Simulation.SimulationMapLoader.ProvinceBounds
+  id: SimulationMapLoader.ProvinceBounds
+  parent: Map.Simulation
+  children:
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterX
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterY
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.Height
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxX
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxY
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.MinX
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.MinY
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.PixelCount
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.ProvinceID
+  - Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+  langs:
+  - csharp
+  - vb
+  name: SimulationMapLoader.ProvinceBounds
+  nameWithType: SimulationMapLoader.ProvinceBounds
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBounds
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  summary: Province pixel boundary information for GPU texture generation
+  example: []
+  syntax:
+    content: public struct SimulationMapLoader.ProvinceBounds
+    content.vb: Public Structure SimulationMapLoader.ProvinceBounds
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.ProvinceID
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.ProvinceID
+  id: ProvinceID
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: SimulationMapLoader.ProvinceBounds.ProvinceID
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.MinX
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.MinX
+  id: MinX
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MinX
+  nameWithType: SimulationMapLoader.ProvinceBounds.MinX
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.MinX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinX
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int MinX
+    return:
+      type: System.Int32
+    content.vb: Public MinX As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.MinY
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.MinY
+  id: MinY
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MinY
+  nameWithType: SimulationMapLoader.ProvinceBounds.MinY
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.MinY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinY
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int MinY
+    return:
+      type: System.Int32
+    content.vb: Public MinY As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxX
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxX
+  id: MaxX
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MaxX
+  nameWithType: SimulationMapLoader.ProvinceBounds.MaxX
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxX
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int MaxX
+    return:
+      type: System.Int32
+    content.vb: Public MaxX As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxY
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxY
+  id: MaxY
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: MaxY
+  nameWithType: SimulationMapLoader.ProvinceBounds.MaxY
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.MaxY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxY
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int MaxY
+    return:
+      type: System.Int32
+    content.vb: Public MaxY As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.PixelCount
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.PixelCount
+  id: PixelCount
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: PixelCount
+  nameWithType: SimulationMapLoader.ProvinceBounds.PixelCount
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.PixelCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelCount
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int PixelCount
+    return:
+      type: System.Int32
+    content.vb: Public PixelCount As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterX
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterX
+  id: CenterX
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: CenterX
+  nameWithType: SimulationMapLoader.ProvinceBounds.CenterX
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterX
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterX
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 62
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int CenterX
+    return:
+      type: System.Int32
+    content.vb: Public CenterX As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterY
+  commentId: F:Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterY
+  id: CenterY
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: CenterY
+  nameWithType: SimulationMapLoader.ProvinceBounds.CenterY
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.CenterY
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterY
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 62
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int CenterY
+    return:
+      type: System.Int32
+    content.vb: Public CenterY As Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+  commentId: P:Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+  id: Width
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: SimulationMapLoader.ProvinceBounds.Width
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 64
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int Width { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Width As Integer
+  overload: Map.Simulation.SimulationMapLoader.ProvinceBounds.Width*
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.Height
+  commentId: P:Map.Simulation.SimulationMapLoader.ProvinceBounds.Height
+  id: Height
+  parent: Map.Simulation.SimulationMapLoader.ProvinceBounds
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: SimulationMapLoader.ProvinceBounds.Height
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.Height
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 65
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public int Height { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Height As Integer
+  overload: Map.Simulation.SimulationMapLoader.ProvinceBounds.Height*
+references:
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  href: Map.html
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.Width*
+  commentId: Overload:Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+  href: Map.Simulation.SimulationMapLoader.ProvinceBounds.html#Map_Simulation_SimulationMapLoader_ProvinceBounds_Width
+  name: Width
+  nameWithType: SimulationMapLoader.ProvinceBounds.Width
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.Width
+- uid: Map.Simulation.SimulationMapLoader.ProvinceBounds.Height*
+  commentId: Overload:Map.Simulation.SimulationMapLoader.ProvinceBounds.Height
+  href: Map.Simulation.SimulationMapLoader.ProvinceBounds.html#Map_Simulation_SimulationMapLoader_ProvinceBounds_Height
+  name: Height
+  nameWithType: SimulationMapLoader.ProvinceBounds.Height
+  fullName: Map.Simulation.SimulationMapLoader.ProvinceBounds.Height

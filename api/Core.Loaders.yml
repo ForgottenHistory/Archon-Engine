@@ -1,0 +1,520 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  id: Core.Loaders
+  children:
+  - Core.Loaders.BurstCountryLoader
+  - Core.Loaders.BurstProvinceHistoryLoader
+  - Core.Loaders.CSVParser
+  - Core.Loaders.CSVParser.CSVParseResult
+  - Core.Loaders.CSVParser.CSVRow
+  - Core.Loaders.CSVTokenizer
+  - Core.Loaders.CSVTokenizer.CSVToken
+  - Core.Loaders.CSVTokenizer.CSVTokenType
+  - Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  - Core.Loaders.CountryTagLoadResult
+  - Core.Loaders.CountryTagLoader
+  - Core.Loaders.DefinitionLoader
+  - Core.Loaders.DefinitionLoader.DefinitionEntry
+  - Core.Loaders.ILoaderFactory
+  - Core.Loaders.Json5CountryConverter
+  - Core.Loaders.Json5Loader
+  - Core.Loaders.Json5ProvinceConverter
+  - Core.Loaders.LoaderContext
+  - Core.Loaders.LoaderMetadataAttribute
+  - Core.Loaders.LoaderRegistry
+  - Core.Loaders.LoaderRegistry.LoaderRegistration
+  - Core.Loaders.ManifestLoadResult
+  - Core.Loaders.ManifestLoader`1
+  - Core.Loaders.ScenarioLoader
+  - Core.Loaders.ScenarioLoader.CountrySetup
+  - Core.Loaders.ScenarioLoader.DiplomaticRelation
+  - Core.Loaders.ScenarioLoader.LoadingStatistics
+  - Core.Loaders.ScenarioLoader.ProvinceSetup
+  - Core.Loaders.ScenarioLoader.RelationType
+  - Core.Loaders.ScenarioLoader.ScenarioData
+  - Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  - Core.Loaders.TerrainLoader
+  langs:
+  - csharp
+  - vb
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Loaders.ScenarioLoader
+  commentId: T:Core.Loaders.ScenarioLoader
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader
+  nameWithType: ScenarioLoader
+  fullName: Core.Loaders.ScenarioLoader
+- uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  commentId: T:Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.ScenarioLoadResult
+  nameWithType: ScenarioLoader.ScenarioLoadResult
+  fullName: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    name: ScenarioLoadResult
+    href: Core.Loaders.ScenarioLoader.ScenarioLoadResult.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    name: ScenarioLoadResult
+    href: Core.Loaders.ScenarioLoader.ScenarioLoadResult.html
+- uid: Core.Loaders.ScenarioLoader.ScenarioData
+  commentId: T:Core.Loaders.ScenarioLoader.ScenarioData
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.ScenarioData
+  nameWithType: ScenarioLoader.ScenarioData
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioData
+    name: ScenarioData
+    href: Core.Loaders.ScenarioLoader.ScenarioData.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioData
+    name: ScenarioData
+    href: Core.Loaders.ScenarioLoader.ScenarioData.html
+- uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+  commentId: T:Core.Loaders.ScenarioLoader.ProvinceSetup
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.ProvinceSetup
+  nameWithType: ScenarioLoader.ProvinceSetup
+  fullName: Core.Loaders.ScenarioLoader.ProvinceSetup
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+    name: ProvinceSetup
+    href: Core.Loaders.ScenarioLoader.ProvinceSetup.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+    name: ProvinceSetup
+    href: Core.Loaders.ScenarioLoader.ProvinceSetup.html
+- uid: Core.Loaders.ScenarioLoader.CountrySetup
+  commentId: T:Core.Loaders.ScenarioLoader.CountrySetup
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.CountrySetup
+  nameWithType: ScenarioLoader.CountrySetup
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.CountrySetup
+    name: CountrySetup
+    href: Core.Loaders.ScenarioLoader.CountrySetup.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.CountrySetup
+    name: CountrySetup
+    href: Core.Loaders.ScenarioLoader.CountrySetup.html
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  commentId: T:Core.Loaders.ScenarioLoader.DiplomaticRelation
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.DiplomaticRelation
+  nameWithType: ScenarioLoader.DiplomaticRelation
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+    name: DiplomaticRelation
+    href: Core.Loaders.ScenarioLoader.DiplomaticRelation.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+    name: DiplomaticRelation
+    href: Core.Loaders.ScenarioLoader.DiplomaticRelation.html
+- uid: Core.Loaders.ScenarioLoader.RelationType
+  commentId: T:Core.Loaders.ScenarioLoader.RelationType
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.RelationType
+  nameWithType: ScenarioLoader.RelationType
+  fullName: Core.Loaders.ScenarioLoader.RelationType
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html
+- uid: Core.Loaders.ScenarioLoader.LoadingStatistics
+  commentId: T:Core.Loaders.ScenarioLoader.LoadingStatistics
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.LoadingStatistics
+  nameWithType: ScenarioLoader.LoadingStatistics
+  fullName: Core.Loaders.ScenarioLoader.LoadingStatistics
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.LoadingStatistics
+    name: LoadingStatistics
+    href: Core.Loaders.ScenarioLoader.LoadingStatistics.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.LoadingStatistics
+    name: LoadingStatistics
+    href: Core.Loaders.ScenarioLoader.LoadingStatistics.html
+- uid: Core.Loaders.ManifestLoader`1
+  commentId: T:Core.Loaders.ManifestLoader`1
+  href: Core.Loaders.ManifestLoader-1.html
+  name: ManifestLoader<T>
+  nameWithType: ManifestLoader<T>
+  fullName: Core.Loaders.ManifestLoader<T>
+  nameWithType.vb: ManifestLoader(Of T)
+  fullName.vb: Core.Loaders.ManifestLoader(Of T)
+  name.vb: ManifestLoader(Of T)
+  spec.csharp:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader
+    href: Core.Loaders.ManifestLoader-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Loaders.ManifestLoadResult
+  commentId: T:Core.Loaders.ManifestLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.ManifestLoadResult.html
+  name: ManifestLoadResult
+  nameWithType: ManifestLoadResult
+  fullName: Core.Loaders.ManifestLoadResult
+- uid: Core.Loaders.CSVParser
+  commentId: T:Core.Loaders.CSVParser
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser
+  nameWithType: CSVParser
+  fullName: Core.Loaders.CSVParser
+- uid: Core.Loaders.CSVParser.CSVParseResult
+  commentId: T:Core.Loaders.CSVParser.CSVParseResult
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVParseResult
+  nameWithType: CSVParser.CSVParseResult
+  fullName: Core.Loaders.CSVParser.CSVParseResult
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html
+- uid: Core.Loaders.CSVParser.CSVRow
+  commentId: T:Core.Loaders.CSVParser.CSVRow
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVRow
+  nameWithType: CSVParser.CSVRow
+  fullName: Core.Loaders.CSVParser.CSVRow
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+- uid: Core.Loaders.LoaderMetadataAttribute
+  commentId: T:Core.Loaders.LoaderMetadataAttribute
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderMetadataAttribute.html
+  name: LoaderMetadataAttribute
+  nameWithType: LoaderMetadataAttribute
+  fullName: Core.Loaders.LoaderMetadataAttribute
+- uid: Core.Loaders.BurstProvinceHistoryLoader
+  commentId: T:Core.Loaders.BurstProvinceHistoryLoader
+  href: Core.Loaders.BurstProvinceHistoryLoader.html
+  name: BurstProvinceHistoryLoader
+  nameWithType: BurstProvinceHistoryLoader
+  fullName: Core.Loaders.BurstProvinceHistoryLoader
+- uid: Core.Loaders.LoaderContext
+  commentId: T:Core.Loaders.LoaderContext
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderContext.html
+  name: LoaderContext
+  nameWithType: LoaderContext
+  fullName: Core.Loaders.LoaderContext
+- uid: Core.Loaders.LoaderRegistry
+  commentId: T:Core.Loaders.LoaderRegistry
+  href: Core.Loaders.LoaderRegistry.html
+  name: LoaderRegistry
+  nameWithType: LoaderRegistry
+  fullName: Core.Loaders.LoaderRegistry
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration
+  commentId: T:Core.Loaders.LoaderRegistry.LoaderRegistration
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderRegistry.html
+  name: LoaderRegistry.LoaderRegistration
+  nameWithType: LoaderRegistry.LoaderRegistration
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration
+  spec.csharp:
+  - uid: Core.Loaders.LoaderRegistry
+    name: LoaderRegistry
+    href: Core.Loaders.LoaderRegistry.html
+  - name: .
+  - uid: Core.Loaders.LoaderRegistry.LoaderRegistration
+    name: LoaderRegistration
+    href: Core.Loaders.LoaderRegistry.LoaderRegistration.html
+  spec.vb:
+  - uid: Core.Loaders.LoaderRegistry
+    name: LoaderRegistry
+    href: Core.Loaders.LoaderRegistry.html
+  - name: .
+  - uid: Core.Loaders.LoaderRegistry.LoaderRegistration
+    name: LoaderRegistration
+    href: Core.Loaders.LoaderRegistry.LoaderRegistration.html
+- uid: Core.Loaders.CSVTokenizer
+  commentId: T:Core.Loaders.CSVTokenizer
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer
+  nameWithType: CSVTokenizer
+  fullName: Core.Loaders.CSVTokenizer
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenType
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVTokenType
+  nameWithType: CSVTokenizer.CSVTokenType
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html
+- uid: Core.Loaders.CSVTokenizer.CSVToken
+  commentId: T:Core.Loaders.CSVTokenizer.CSVToken
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVToken
+  nameWithType: CSVTokenizer.CSVToken
+  fullName: Core.Loaders.CSVTokenizer.CSVToken
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVToken
+    name: CSVToken
+    href: Core.Loaders.CSVTokenizer.CSVToken.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVToken
+    name: CSVToken
+    href: Core.Loaders.CSVTokenizer.CSVToken.html
+- uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVTokenizeResult
+  nameWithType: CSVTokenizer.CSVTokenizeResult
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    name: CSVTokenizeResult
+    href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    name: CSVTokenizeResult
+    href: Core.Loaders.CSVTokenizer.CSVTokenizeResult.html
+- uid: Core.Loaders.Json5CountryConverter
+  commentId: T:Core.Loaders.Json5CountryConverter
+  href: Core.Loaders.Json5CountryConverter.html
+  name: Json5CountryConverter
+  nameWithType: Json5CountryConverter
+  fullName: Core.Loaders.Json5CountryConverter
+- uid: Core.Loaders.Json5ProvinceConverter
+  commentId: T:Core.Loaders.Json5ProvinceConverter
+  href: Core.Loaders.Json5ProvinceConverter.html
+  name: Json5ProvinceConverter
+  nameWithType: Json5ProvinceConverter
+  fullName: Core.Loaders.Json5ProvinceConverter
+- uid: Core.Loaders.CountryTagLoader
+  commentId: T:Core.Loaders.CountryTagLoader
+  href: Core.Loaders.CountryTagLoader.html
+  name: CountryTagLoader
+  nameWithType: CountryTagLoader
+  fullName: Core.Loaders.CountryTagLoader
+- uid: Core.Loaders.CountryTagLoadResult
+  commentId: T:Core.Loaders.CountryTagLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.CountryTagLoadResult.html
+  name: CountryTagLoadResult
+  nameWithType: CountryTagLoadResult
+  fullName: Core.Loaders.CountryTagLoadResult
+- uid: Core.Loaders.Json5Loader
+  commentId: T:Core.Loaders.Json5Loader
+  href: Core.Loaders.Json5Loader.html
+  name: Json5Loader
+  nameWithType: Json5Loader
+  fullName: Core.Loaders.Json5Loader
+- uid: Core.Loaders.TerrainLoader
+  commentId: T:Core.Loaders.TerrainLoader
+  href: Core.Loaders.TerrainLoader.html
+  name: TerrainLoader
+  nameWithType: TerrainLoader
+  fullName: Core.Loaders.TerrainLoader
+- uid: Core.Loaders.DefinitionLoader
+  commentId: T:Core.Loaders.DefinitionLoader
+  href: Core.Loaders.DefinitionLoader.html
+  name: DefinitionLoader
+  nameWithType: DefinitionLoader
+  fullName: Core.Loaders.DefinitionLoader
+- uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+  commentId: T:Core.Loaders.DefinitionLoader.DefinitionEntry
+  href: Core.Loaders.DefinitionLoader.html
+  name: DefinitionLoader.DefinitionEntry
+  nameWithType: DefinitionLoader.DefinitionEntry
+  fullName: Core.Loaders.DefinitionLoader.DefinitionEntry
+  spec.csharp:
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+  spec.vb:
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+- uid: Core.Loaders.BurstCountryLoader
+  commentId: T:Core.Loaders.BurstCountryLoader
+  href: Core.Loaders.BurstCountryLoader.html
+  name: BurstCountryLoader
+  nameWithType: BurstCountryLoader
+  fullName: Core.Loaders.BurstCountryLoader
+- uid: Core.Loaders.ILoaderFactory
+  commentId: T:Core.Loaders.ILoaderFactory
+  parent: Core.Loaders
+  href: Core.Loaders.ILoaderFactory.html
+  name: ILoaderFactory
+  nameWithType: ILoaderFactory
+  fullName: Core.Loaders.ILoaderFactory
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html

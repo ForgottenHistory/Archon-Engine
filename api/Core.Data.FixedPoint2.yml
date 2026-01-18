@@ -1,0 +1,1054 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.FixedPoint2
+  commentId: T:Core.Data.FixedPoint2
+  id: FixedPoint2
+  parent: Core.Data
+  children:
+  - Core.Data.FixedPoint2.#ctor(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  - Core.Data.FixedPoint2.Distance(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.DistanceSquared(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.Dot(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.Equals(Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.Equals(System.Object)
+  - Core.Data.FixedPoint2.GetHashCode
+  - Core.Data.FixedPoint2.Length
+  - Core.Data.FixedPoint2.LengthSquared
+  - Core.Data.FixedPoint2.Lerp(Core.Data.FixedPoint2,Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  - Core.Data.FixedPoint2.One
+  - Core.Data.FixedPoint2.ToString
+  - Core.Data.FixedPoint2.Zero
+  - Core.Data.FixedPoint2.op_Addition(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.op_Division(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  - Core.Data.FixedPoint2.op_Equality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.op_Inequality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.op_Multiply(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  - Core.Data.FixedPoint2.op_Subtraction(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  - Core.Data.FixedPoint2.x
+  - Core.Data.FixedPoint2.y
+  langs:
+  - csharp
+  - vb
+  name: FixedPoint2
+  nameWithType: FixedPoint2
+  fullName: Core.Data.FixedPoint2
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FixedPoint2
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 377
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Fixed-point 2D vector for deterministic calculations
+  example: []
+  syntax:
+    content: public struct FixedPoint2
+    content.vb: Public Structure FixedPoint2
+- uid: Core.Data.FixedPoint2.x
+  commentId: F:Core.Data.FixedPoint2.x
+  id: x
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: x
+  nameWithType: FixedPoint2.x
+  fullName: Core.Data.FixedPoint2.x
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: x
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 379
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedPoint32 x
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public x As FixedPoint32
+- uid: Core.Data.FixedPoint2.y
+  commentId: F:Core.Data.FixedPoint2.y
+  id: y
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: y
+  nameWithType: FixedPoint2.y
+  fullName: Core.Data.FixedPoint2.y
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: y
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 380
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedPoint32 y
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public y As FixedPoint32
+- uid: Core.Data.FixedPoint2.#ctor(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.FixedPoint2.#ctor(Core.Data.FixedPoint32,Core.Data.FixedPoint32)
+  id: '#ctor(Core.Data.FixedPoint32,Core.Data.FixedPoint32)'
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: FixedPoint2(FixedPoint32, FixedPoint32)
+  nameWithType: FixedPoint2.FixedPoint2(FixedPoint32, FixedPoint32)
+  fullName: Core.Data.FixedPoint2.FixedPoint2(Core.Data.FixedPoint32, Core.Data.FixedPoint32)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 382
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedPoint2(FixedPoint32 x, FixedPoint32 y)
+    parameters:
+    - id: x
+      type: Core.Data.FixedPoint32
+    - id: y
+      type: Core.Data.FixedPoint32
+    content.vb: Public Sub New(x As FixedPoint32, y As FixedPoint32)
+  overload: Core.Data.FixedPoint2.#ctor*
+  nameWithType.vb: FixedPoint2.New(FixedPoint32, FixedPoint32)
+  fullName.vb: Core.Data.FixedPoint2.New(Core.Data.FixedPoint32, Core.Data.FixedPoint32)
+  name.vb: New(FixedPoint32, FixedPoint32)
+- uid: Core.Data.FixedPoint2.Zero
+  commentId: P:Core.Data.FixedPoint2.Zero
+  id: Zero
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Zero
+  nameWithType: FixedPoint2.Zero
+  fullName: Core.Data.FixedPoint2.Zero
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Zero
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 388
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 Zero { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared ReadOnly Property Zero As FixedPoint2
+  overload: Core.Data.FixedPoint2.Zero*
+- uid: Core.Data.FixedPoint2.One
+  commentId: P:Core.Data.FixedPoint2.One
+  id: One
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: One
+  nameWithType: FixedPoint2.One
+  fullName: Core.Data.FixedPoint2.One
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: One
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 389
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 One { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared ReadOnly Property One As FixedPoint2
+  overload: Core.Data.FixedPoint2.One*
+- uid: Core.Data.FixedPoint2.LengthSquared
+  commentId: P:Core.Data.FixedPoint2.LengthSquared
+  id: LengthSquared
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: LengthSquared
+  nameWithType: FixedPoint2.LengthSquared
+  fullName: Core.Data.FixedPoint2.LengthSquared
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LengthSquared
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 391
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedPoint32 LengthSquared { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public ReadOnly Property LengthSquared As FixedPoint32
+  overload: Core.Data.FixedPoint2.LengthSquared*
+- uid: Core.Data.FixedPoint2.Length
+  commentId: P:Core.Data.FixedPoint2.Length
+  id: Length
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: FixedPoint2.Length
+  fullName: Core.Data.FixedPoint2.Length
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Length
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 393
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedPoint32 Length { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public ReadOnly Property Length As FixedPoint32
+  overload: Core.Data.FixedPoint2.Length*
+- uid: Core.Data.FixedPoint2.op_Addition(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.op_Addition(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: op_Addition(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator +(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.operator +(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.operator +(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Addition
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 395
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 operator +(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared Operator +(a As FixedPoint2, b As FixedPoint2) As FixedPoint2
+  overload: Core.Data.FixedPoint2.op_Addition*
+  nameWithType.vb: FixedPoint2.+(FixedPoint2, FixedPoint2)
+  fullName.vb: Core.Data.FixedPoint2.+(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  name.vb: +(FixedPoint2, FixedPoint2)
+- uid: Core.Data.FixedPoint2.op_Subtraction(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.op_Subtraction(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: op_Subtraction(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator -(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.operator -(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.operator -(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Subtraction
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 398
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 operator -(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared Operator -(a As FixedPoint2, b As FixedPoint2) As FixedPoint2
+  overload: Core.Data.FixedPoint2.op_Subtraction*
+  nameWithType.vb: FixedPoint2.-(FixedPoint2, FixedPoint2)
+  fullName.vb: Core.Data.FixedPoint2.-(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  name.vb: -(FixedPoint2, FixedPoint2)
+- uid: Core.Data.FixedPoint2.op_Multiply(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.FixedPoint2.op_Multiply(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  id: op_Multiply(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator *(FixedPoint2, FixedPoint32)
+  nameWithType: FixedPoint2.operator *(FixedPoint2, FixedPoint32)
+  fullName: Core.Data.FixedPoint2.operator *(Core.Data.FixedPoint2, Core.Data.FixedPoint32)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Multiply
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 401
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 operator *(FixedPoint2 a, FixedPoint32 scalar)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: scalar
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared Operator *(a As FixedPoint2, scalar As FixedPoint32) As FixedPoint2
+  overload: Core.Data.FixedPoint2.op_Multiply*
+  nameWithType.vb: FixedPoint2.*(FixedPoint2, FixedPoint32)
+  fullName.vb: Core.Data.FixedPoint2.*(Core.Data.FixedPoint2, Core.Data.FixedPoint32)
+  name.vb: '*(FixedPoint2, FixedPoint32)'
+- uid: Core.Data.FixedPoint2.op_Division(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.FixedPoint2.op_Division(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  id: op_Division(Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator /(FixedPoint2, FixedPoint32)
+  nameWithType: FixedPoint2.operator /(FixedPoint2, FixedPoint32)
+  fullName: Core.Data.FixedPoint2.operator /(Core.Data.FixedPoint2, Core.Data.FixedPoint32)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Division
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 404
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 operator /(FixedPoint2 a, FixedPoint32 scalar)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: scalar
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared Operator /(a As FixedPoint2, scalar As FixedPoint32) As FixedPoint2
+  overload: Core.Data.FixedPoint2.op_Division*
+  nameWithType.vb: FixedPoint2./(FixedPoint2, FixedPoint32)
+  fullName.vb: Core.Data.FixedPoint2./(Core.Data.FixedPoint2, Core.Data.FixedPoint32)
+  name.vb: /(FixedPoint2, FixedPoint32)
+- uid: Core.Data.FixedPoint2.op_Equality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.op_Equality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: op_Equality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator ==(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.operator ==(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.operator ==(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 407
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator ==(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(a As FixedPoint2, b As FixedPoint2) As Boolean
+  overload: Core.Data.FixedPoint2.op_Equality*
+  nameWithType.vb: FixedPoint2.=(FixedPoint2, FixedPoint2)
+  fullName.vb: Core.Data.FixedPoint2.=(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  name.vb: =(FixedPoint2, FixedPoint2)
+- uid: Core.Data.FixedPoint2.op_Inequality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.op_Inequality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: op_Inequality(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: operator !=(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.operator !=(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.operator !=(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 410
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator !=(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(a As FixedPoint2, b As FixedPoint2) As Boolean
+  overload: Core.Data.FixedPoint2.op_Inequality*
+  nameWithType.vb: FixedPoint2.<>(FixedPoint2, FixedPoint2)
+  fullName.vb: Core.Data.FixedPoint2.<>(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  name.vb: <>(FixedPoint2, FixedPoint2)
+- uid: Core.Data.FixedPoint2.Dot(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.Dot(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: Dot(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Dot(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.Dot(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.Dot(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dot
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 413
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint32 Dot(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Shared Function Dot(a As FixedPoint2, b As FixedPoint2) As FixedPoint32
+  overload: Core.Data.FixedPoint2.Dot*
+- uid: Core.Data.FixedPoint2.Distance(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.Distance(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: Distance(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Distance(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.Distance(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.Distance(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Distance
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 416
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint32 Distance(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Shared Function Distance(a As FixedPoint2, b As FixedPoint2) As FixedPoint32
+  overload: Core.Data.FixedPoint2.Distance*
+- uid: Core.Data.FixedPoint2.DistanceSquared(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.DistanceSquared(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  id: DistanceSquared(Core.Data.FixedPoint2,Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: DistanceSquared(FixedPoint2, FixedPoint2)
+  nameWithType: FixedPoint2.DistanceSquared(FixedPoint2, FixedPoint2)
+  fullName: Core.Data.FixedPoint2.DistanceSquared(Core.Data.FixedPoint2, Core.Data.FixedPoint2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DistanceSquared
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 419
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint32 DistanceSquared(FixedPoint2 a, FixedPoint2 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    return:
+      type: Core.Data.FixedPoint32
+    content.vb: Public Shared Function DistanceSquared(a As FixedPoint2, b As FixedPoint2) As FixedPoint32
+  overload: Core.Data.FixedPoint2.DistanceSquared*
+- uid: Core.Data.FixedPoint2.Lerp(Core.Data.FixedPoint2,Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  commentId: M:Core.Data.FixedPoint2.Lerp(Core.Data.FixedPoint2,Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  id: Lerp(Core.Data.FixedPoint2,Core.Data.FixedPoint2,Core.Data.FixedPoint32)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Lerp(FixedPoint2, FixedPoint2, FixedPoint32)
+  nameWithType: FixedPoint2.Lerp(FixedPoint2, FixedPoint2, FixedPoint32)
+  fullName: Core.Data.FixedPoint2.Lerp(Core.Data.FixedPoint2, Core.Data.FixedPoint2, Core.Data.FixedPoint32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Lerp
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 422
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static FixedPoint2 Lerp(FixedPoint2 a, FixedPoint2 b, FixedPoint32 t)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint2
+    - id: b
+      type: Core.Data.FixedPoint2
+    - id: t
+      type: Core.Data.FixedPoint32
+    return:
+      type: Core.Data.FixedPoint2
+    content.vb: Public Shared Function Lerp(a As FixedPoint2, b As FixedPoint2, t As FixedPoint32) As FixedPoint2
+  overload: Core.Data.FixedPoint2.Lerp*
+- uid: Core.Data.FixedPoint2.Equals(Core.Data.FixedPoint2)
+  commentId: M:Core.Data.FixedPoint2.Equals(Core.Data.FixedPoint2)
+  id: Equals(Core.Data.FixedPoint2)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Equals(FixedPoint2)
+  nameWithType: FixedPoint2.Equals(FixedPoint2)
+  fullName: Core.Data.FixedPoint2.Equals(Core.Data.FixedPoint2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 427
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public bool Equals(FixedPoint2 other)
+    parameters:
+    - id: other
+      type: Core.Data.FixedPoint2
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As FixedPoint2) As Boolean
+  overload: Core.Data.FixedPoint2.Equals*
+- uid: Core.Data.FixedPoint2.Equals(System.Object)
+  commentId: M:Core.Data.FixedPoint2.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: FixedPoint2.Equals(object)
+  fullName: Core.Data.FixedPoint2.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 429
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.FixedPoint2.Equals*
+  nameWithType.vb: FixedPoint2.Equals(Object)
+  fullName.vb: Core.Data.FixedPoint2.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.FixedPoint2.GetHashCode
+  commentId: M:Core.Data.FixedPoint2.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: FixedPoint2.GetHashCode()
+  fullName: Core.Data.FixedPoint2.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 432
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.FixedPoint2.GetHashCode*
+- uid: Core.Data.FixedPoint2.ToString
+  commentId: M:Core.Data.FixedPoint2.ToString
+  id: ToString
+  parent: Core.Data.FixedPoint2
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: FixedPoint2.ToString()
+  fullName: Core.Data.FixedPoint2.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Math/FixedPointMath.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/Math/FixedPointMath.cs
+    startLine: 434
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.FixedPoint2.ToString*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Data.FixedPoint32
+  commentId: T:Core.Data.FixedPoint32
+  parent: Core.Data
+  href: Core.Data.FixedPoint32.html
+  name: FixedPoint32
+  nameWithType: FixedPoint32
+  fullName: Core.Data.FixedPoint32
+- uid: Core.Data.FixedPoint2.#ctor*
+  commentId: Overload:Core.Data.FixedPoint2.#ctor
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2__ctor_Core_Data_FixedPoint32_Core_Data_FixedPoint32_
+  name: FixedPoint2
+  nameWithType: FixedPoint2.FixedPoint2
+  fullName: Core.Data.FixedPoint2.FixedPoint2
+  nameWithType.vb: FixedPoint2.New
+  fullName.vb: Core.Data.FixedPoint2.New
+  name.vb: New
+- uid: Core.Data.FixedPoint2.Zero*
+  commentId: Overload:Core.Data.FixedPoint2.Zero
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Zero
+  name: Zero
+  nameWithType: FixedPoint2.Zero
+  fullName: Core.Data.FixedPoint2.Zero
+- uid: Core.Data.FixedPoint2
+  commentId: T:Core.Data.FixedPoint2
+  parent: Core.Data
+  href: Core.Data.FixedPoint2.html
+  name: FixedPoint2
+  nameWithType: FixedPoint2
+  fullName: Core.Data.FixedPoint2
+- uid: Core.Data.FixedPoint2.One*
+  commentId: Overload:Core.Data.FixedPoint2.One
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_One
+  name: One
+  nameWithType: FixedPoint2.One
+  fullName: Core.Data.FixedPoint2.One
+- uid: Core.Data.FixedPoint2.LengthSquared*
+  commentId: Overload:Core.Data.FixedPoint2.LengthSquared
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_LengthSquared
+  name: LengthSquared
+  nameWithType: FixedPoint2.LengthSquared
+  fullName: Core.Data.FixedPoint2.LengthSquared
+- uid: Core.Data.FixedPoint2.Length*
+  commentId: Overload:Core.Data.FixedPoint2.Length
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Length
+  name: Length
+  nameWithType: FixedPoint2.Length
+  fullName: Core.Data.FixedPoint2.Length
+- uid: Core.Data.FixedPoint2.op_Addition*
+  commentId: Overload:Core.Data.FixedPoint2.op_Addition
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Addition_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: operator +
+  nameWithType: FixedPoint2.operator +
+  fullName: Core.Data.FixedPoint2.operator +
+  nameWithType.vb: FixedPoint2.+
+  fullName.vb: Core.Data.FixedPoint2.+
+  name.vb: +
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Addition*
+    name: +
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Addition_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+- uid: Core.Data.FixedPoint2.op_Subtraction*
+  commentId: Overload:Core.Data.FixedPoint2.op_Subtraction
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Subtraction_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: operator -
+  nameWithType: FixedPoint2.operator -
+  fullName: Core.Data.FixedPoint2.operator -
+  nameWithType.vb: FixedPoint2.-
+  fullName.vb: Core.Data.FixedPoint2.-
+  name.vb: '-'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Subtraction*
+    name: '-'
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Subtraction_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+- uid: Core.Data.FixedPoint2.op_Multiply*
+  commentId: Overload:Core.Data.FixedPoint2.op_Multiply
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Multiply_Core_Data_FixedPoint2_Core_Data_FixedPoint32_
+  name: operator *
+  nameWithType: FixedPoint2.operator *
+  fullName: Core.Data.FixedPoint2.operator *
+  nameWithType.vb: FixedPoint2.*
+  fullName.vb: Core.Data.FixedPoint2.*
+  name.vb: '*'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Multiply*
+    name: '*'
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Multiply_Core_Data_FixedPoint2_Core_Data_FixedPoint32_
+- uid: Core.Data.FixedPoint2.op_Division*
+  commentId: Overload:Core.Data.FixedPoint2.op_Division
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Division_Core_Data_FixedPoint2_Core_Data_FixedPoint32_
+  name: operator /
+  nameWithType: FixedPoint2.operator /
+  fullName: Core.Data.FixedPoint2.operator /
+  nameWithType.vb: FixedPoint2./
+  fullName.vb: Core.Data.FixedPoint2./
+  name.vb: /
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Division*
+    name: /
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Division_Core_Data_FixedPoint2_Core_Data_FixedPoint32_
+- uid: Core.Data.FixedPoint2.op_Equality*
+  commentId: Overload:Core.Data.FixedPoint2.op_Equality
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Equality_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: operator ==
+  nameWithType: FixedPoint2.operator ==
+  fullName: Core.Data.FixedPoint2.operator ==
+  nameWithType.vb: FixedPoint2.=
+  fullName.vb: Core.Data.FixedPoint2.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Equality*
+    name: ==
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Equality_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint2.op_Inequality*
+  commentId: Overload:Core.Data.FixedPoint2.op_Inequality
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Inequality_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: operator !=
+  nameWithType: FixedPoint2.operator !=
+  fullName: Core.Data.FixedPoint2.operator !=
+  nameWithType.vb: FixedPoint2.<>
+  fullName.vb: Core.Data.FixedPoint2.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint2.op_Inequality*
+    name: '!='
+    href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_op_Inequality_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+- uid: Core.Data.FixedPoint2.Dot*
+  commentId: Overload:Core.Data.FixedPoint2.Dot
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Dot_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: Dot
+  nameWithType: FixedPoint2.Dot
+  fullName: Core.Data.FixedPoint2.Dot
+- uid: Core.Data.FixedPoint2.Distance*
+  commentId: Overload:Core.Data.FixedPoint2.Distance
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Distance_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: Distance
+  nameWithType: FixedPoint2.Distance
+  fullName: Core.Data.FixedPoint2.Distance
+- uid: Core.Data.FixedPoint2.DistanceSquared*
+  commentId: Overload:Core.Data.FixedPoint2.DistanceSquared
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_DistanceSquared_Core_Data_FixedPoint2_Core_Data_FixedPoint2_
+  name: DistanceSquared
+  nameWithType: FixedPoint2.DistanceSquared
+  fullName: Core.Data.FixedPoint2.DistanceSquared
+- uid: Core.Data.FixedPoint2.Lerp*
+  commentId: Overload:Core.Data.FixedPoint2.Lerp
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Lerp_Core_Data_FixedPoint2_Core_Data_FixedPoint2_Core_Data_FixedPoint32_
+  name: Lerp
+  nameWithType: FixedPoint2.Lerp
+  fullName: Core.Data.FixedPoint2.Lerp
+- uid: Core.Data.FixedPoint2.Equals*
+  commentId: Overload:Core.Data.FixedPoint2.Equals
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_Equals_Core_Data_FixedPoint2_
+  name: Equals
+  nameWithType: FixedPoint2.Equals
+  fullName: Core.Data.FixedPoint2.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint2.GetHashCode*
+  commentId: Overload:Core.Data.FixedPoint2.GetHashCode
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_GetHashCode
+  name: GetHashCode
+  nameWithType: FixedPoint2.GetHashCode
+  fullName: Core.Data.FixedPoint2.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint2.ToString*
+  commentId: Overload:Core.Data.FixedPoint2.ToString
+  href: Core.Data.FixedPoint2.html#Core_Data_FixedPoint2_ToString
+  name: ToString
+  nameWithType: FixedPoint2.ToString
+  fullName: Core.Data.FixedPoint2.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

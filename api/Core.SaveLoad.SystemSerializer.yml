@@ -1,0 +1,406 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SystemSerializer
+  commentId: T:Core.SaveLoad.SystemSerializer
+  id: SystemSerializer
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SystemSerializer.#ctor(System.Boolean)
+  - Core.SaveLoad.SystemSerializer.LoadSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryReader})
+  - Core.SaveLoad.SystemSerializer.SaveSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryWriter})
+  - Core.SaveLoad.SystemSerializer.SetLogOperations(System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: SystemSerializer
+  nameWithType: SystemSerializer
+  fullName: Core.SaveLoad.SystemSerializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SystemSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SystemSerializer
+    path: Scripts/Core/SaveLoad/SystemSerializer.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Generic system serialization helper
+
+
+    Responsibilities:
+
+    - Provide generic Save/Load methods for systems with SaveState/LoadState
+
+    - Handle MemoryStream/BinaryWriter/BinaryReader boilerplate
+
+    - Store/retrieve serialized data in SaveGameData
+
+    - Reduce SaveManager code duplication
+
+
+    Pattern:
+
+    Instead of writing 6+ pairs of SaveXXX/LoadXXX methods with identical patterns,
+
+    use generic methods that work with any system implementing the save/load pattern.
+
+
+    Usage:
+
+    systemSerializer.SaveSystem(saveData, "TimeManager", gameState.Time);
+
+    systemSerializer.LoadSystem(saveData, "TimeManager", gameState.Time);
+  example: []
+  syntax:
+    content: public class SystemSerializer
+    content.vb: Public Class SystemSerializer
+  inheritance:
+  - System.Object
+- uid: Core.SaveLoad.SystemSerializer.#ctor(System.Boolean)
+  commentId: M:Core.SaveLoad.SystemSerializer.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: Core.SaveLoad.SystemSerializer
+  langs:
+  - csharp
+  - vb
+  name: SystemSerializer(bool)
+  nameWithType: SystemSerializer.SystemSerializer(bool)
+  fullName: Core.SaveLoad.SystemSerializer.SystemSerializer(bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SystemSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/SaveLoad/SystemSerializer.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public SystemSerializer(bool logOperations = false)
+    parameters:
+    - id: logOperations
+      type: System.Boolean
+    content.vb: Public Sub New(logOperations As Boolean = False)
+  overload: Core.SaveLoad.SystemSerializer.#ctor*
+  nameWithType.vb: SystemSerializer.New(Boolean)
+  fullName.vb: Core.SaveLoad.SystemSerializer.New(Boolean)
+  name.vb: New(Boolean)
+- uid: Core.SaveLoad.SystemSerializer.SaveSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryWriter})
+  commentId: M:Core.SaveLoad.SystemSerializer.SaveSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryWriter})
+  id: SaveSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryWriter})
+  parent: Core.SaveLoad.SystemSerializer
+  langs:
+  - csharp
+  - vb
+  name: SaveSystem<T>(SaveGameData, string, T, Action<BinaryWriter>)
+  nameWithType: SystemSerializer.SaveSystem<T>(SaveGameData, string, T, Action<BinaryWriter>)
+  fullName: Core.SaveLoad.SystemSerializer.SaveSystem<T>(Core.SaveLoad.SaveGameData, string, T, System.Action<System.IO.BinaryWriter>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SystemSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveSystem
+    path: Scripts/Core/SaveLoad/SystemSerializer.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Save a system's state using its SaveState(BinaryWriter) method
+
+    Generic method that works with any system following the save pattern
+  example: []
+  syntax:
+    content: public void SaveSystem<T>(SaveGameData saveData, string systemName, T system, Action<BinaryWriter> saveAction)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: systemName
+      type: System.String
+    - id: system
+      type: '{T}'
+    - id: saveAction
+      type: System.Action{System.IO.BinaryWriter}
+    typeParameters:
+    - id: T
+    content.vb: Public Sub SaveSystem(Of T)(saveData As SaveGameData, systemName As String, system As T, saveAction As Action(Of BinaryWriter))
+  overload: Core.SaveLoad.SystemSerializer.SaveSystem*
+  nameWithType.vb: SystemSerializer.SaveSystem(Of T)(SaveGameData, String, T, Action(Of BinaryWriter))
+  fullName.vb: Core.SaveLoad.SystemSerializer.SaveSystem(Of T)(Core.SaveLoad.SaveGameData, String, T, System.Action(Of System.IO.BinaryWriter))
+  name.vb: SaveSystem(Of T)(SaveGameData, String, T, Action(Of BinaryWriter))
+- uid: Core.SaveLoad.SystemSerializer.LoadSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryReader})
+  commentId: M:Core.SaveLoad.SystemSerializer.LoadSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryReader})
+  id: LoadSystem``1(Core.SaveLoad.SaveGameData,System.String,``0,System.Action{System.IO.BinaryReader})
+  parent: Core.SaveLoad.SystemSerializer
+  langs:
+  - csharp
+  - vb
+  name: LoadSystem<T>(SaveGameData, string, T, Action<BinaryReader>)
+  nameWithType: SystemSerializer.LoadSystem<T>(SaveGameData, string, T, Action<BinaryReader>)
+  fullName: Core.SaveLoad.SystemSerializer.LoadSystem<T>(Core.SaveLoad.SaveGameData, string, T, System.Action<System.IO.BinaryReader>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SystemSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadSystem
+    path: Scripts/Core/SaveLoad/SystemSerializer.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Load a system's state using its LoadState(BinaryReader) method
+
+    Generic method that works with any system following the load pattern
+  example: []
+  syntax:
+    content: public void LoadSystem<T>(SaveGameData saveData, string systemName, T system, Action<BinaryReader> loadAction)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: systemName
+      type: System.String
+    - id: system
+      type: '{T}'
+    - id: loadAction
+      type: System.Action{System.IO.BinaryReader}
+    typeParameters:
+    - id: T
+    content.vb: Public Sub LoadSystem(Of T)(saveData As SaveGameData, systemName As String, system As T, loadAction As Action(Of BinaryReader))
+  overload: Core.SaveLoad.SystemSerializer.LoadSystem*
+  nameWithType.vb: SystemSerializer.LoadSystem(Of T)(SaveGameData, String, T, Action(Of BinaryReader))
+  fullName.vb: Core.SaveLoad.SystemSerializer.LoadSystem(Of T)(Core.SaveLoad.SaveGameData, String, T, System.Action(Of System.IO.BinaryReader))
+  name.vb: LoadSystem(Of T)(SaveGameData, String, T, Action(Of BinaryReader))
+- uid: Core.SaveLoad.SystemSerializer.SetLogOperations(System.Boolean)
+  commentId: M:Core.SaveLoad.SystemSerializer.SetLogOperations(System.Boolean)
+  id: SetLogOperations(System.Boolean)
+  parent: Core.SaveLoad.SystemSerializer
+  langs:
+  - csharp
+  - vb
+  name: SetLogOperations(bool)
+  nameWithType: SystemSerializer.SetLogOperations(bool)
+  fullName: Core.SaveLoad.SystemSerializer.SetLogOperations(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SystemSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetLogOperations
+    path: Scripts/Core/SaveLoad/SystemSerializer.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Enable/disable operation logging
+  example: []
+  syntax:
+    content: public void SetLogOperations(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: Public Sub SetLogOperations(enabled As Boolean)
+  overload: Core.SaveLoad.SystemSerializer.SetLogOperations*
+  nameWithType.vb: SystemSerializer.SetLogOperations(Boolean)
+  fullName.vb: Core.SaveLoad.SystemSerializer.SetLogOperations(Boolean)
+  name.vb: SetLogOperations(Boolean)
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.SaveLoad.SystemSerializer.#ctor*
+  commentId: Overload:Core.SaveLoad.SystemSerializer.#ctor
+  href: Core.SaveLoad.SystemSerializer.html#Core_SaveLoad_SystemSerializer__ctor_System_Boolean_
+  name: SystemSerializer
+  nameWithType: SystemSerializer.SystemSerializer
+  fullName: Core.SaveLoad.SystemSerializer.SystemSerializer
+  nameWithType.vb: SystemSerializer.New
+  fullName.vb: Core.SaveLoad.SystemSerializer.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.SaveLoad.SystemSerializer.SaveSystem*
+  commentId: Overload:Core.SaveLoad.SystemSerializer.SaveSystem
+  href: Core.SaveLoad.SystemSerializer.html#Core_SaveLoad_SystemSerializer_SaveSystem__1_Core_SaveLoad_SaveGameData_System_String___0_System_Action_System_IO_BinaryWriter__
+  name: SaveSystem
+  nameWithType: SystemSerializer.SaveSystem
+  fullName: Core.SaveLoad.SystemSerializer.SaveSystem
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveGameData.html
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Action{System.IO.BinaryWriter}
+  commentId: T:System.Action{System.IO.BinaryWriter}
+  parent: System
+  definition: System.Action`1
+  name: Action<BinaryWriter>
+  nameWithType: Action<BinaryWriter>
+  fullName: System.Action<System.IO.BinaryWriter>
+  nameWithType.vb: Action(Of BinaryWriter)
+  fullName.vb: System.Action(Of System.IO.BinaryWriter)
+  name.vb: Action(Of BinaryWriter)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.SaveLoad.SystemSerializer.LoadSystem*
+  commentId: Overload:Core.SaveLoad.SystemSerializer.LoadSystem
+  href: Core.SaveLoad.SystemSerializer.html#Core_SaveLoad_SystemSerializer_LoadSystem__1_Core_SaveLoad_SaveGameData_System_String___0_System_Action_System_IO_BinaryReader__
+  name: LoadSystem
+  nameWithType: SystemSerializer.LoadSystem
+  fullName: Core.SaveLoad.SystemSerializer.LoadSystem
+- uid: System.Action{System.IO.BinaryReader}
+  commentId: T:System.Action{System.IO.BinaryReader}
+  parent: System
+  definition: System.Action`1
+  name: Action<BinaryReader>
+  nameWithType: Action<BinaryReader>
+  fullName: System.Action<System.IO.BinaryReader>
+  nameWithType.vb: Action(Of BinaryReader)
+  fullName.vb: System.Action(Of System.IO.BinaryReader)
+  name.vb: Action(Of BinaryReader)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+- uid: Core.SaveLoad.SystemSerializer.SetLogOperations*
+  commentId: Overload:Core.SaveLoad.SystemSerializer.SetLogOperations
+  href: Core.SaveLoad.SystemSerializer.html#Core_SaveLoad_SystemSerializer_SetLogOperations_System_Boolean_
+  name: SetLogOperations
+  nameWithType: SystemSerializer.SetLogOperations
+  fullName: Core.SaveLoad.SystemSerializer.SetLogOperations

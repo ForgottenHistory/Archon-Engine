@@ -1,0 +1,589 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.EngineInitializer
+  commentId: T:Core.EngineInitializer
+  id: EngineInitializer
+  parent: Core
+  children:
+  - Core.EngineInitializer.CurrentPhase
+  - Core.EngineInitializer.IsComplete
+  - Core.EngineInitializer.IsLoading
+  - Core.EngineInitializer.OnLoadingComplete
+  - Core.EngineInitializer.OnLoadingProgress
+  - Core.EngineInitializer.Progress
+  - Core.EngineInitializer.StartInitialization
+  - Core.EngineInitializer.Status
+  langs:
+  - csharp
+  - vb
+  name: EngineInitializer
+  nameWithType: EngineInitializer
+  fullName: Core.EngineInitializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EngineInitializer
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core
+  summary: >-
+    ENGINE LAYER: Master coordinator for engine initialization and data loading
+
+    Orchestrates the complete loading pipeline from files to ready-to-play state
+
+    Performance: Target &lt;5 seconds for 10k provinces, &lt;100MB memory during loading
+  example: []
+  syntax:
+    content: 'public class EngineInitializer : MonoBehaviour'
+    content.vb: Public Class EngineInitializer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.EngineInitializer.OnLoadingProgress
+  commentId: F:Core.EngineInitializer.OnLoadingProgress
+  id: OnLoadingProgress
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: OnLoadingProgress
+  nameWithType: EngineInitializer.OnLoadingProgress
+  fullName: Core.EngineInitializer.OnLoadingProgress
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnLoadingProgress
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public Action<EngineInitializer.LoadingPhase, float, string> OnLoadingProgress
+    return:
+      type: System.Action{Core.EngineInitializer.LoadingPhase,System.Single,System.String}
+    content.vb: Public OnLoadingProgress As Action(Of EngineInitializer.LoadingPhase, Single, String)
+- uid: Core.EngineInitializer.OnLoadingComplete
+  commentId: F:Core.EngineInitializer.OnLoadingComplete
+  id: OnLoadingComplete
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: OnLoadingComplete
+  nameWithType: EngineInitializer.OnLoadingComplete
+  fullName: Core.EngineInitializer.OnLoadingComplete
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnLoadingComplete
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public Action<bool, string> OnLoadingComplete
+    return:
+      type: System.Action{System.Boolean,System.String}
+    content.vb: Public OnLoadingComplete As Action(Of Boolean, String)
+- uid: Core.EngineInitializer.CurrentPhase
+  commentId: P:Core.EngineInitializer.CurrentPhase
+  id: CurrentPhase
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: CurrentPhase
+  nameWithType: EngineInitializer.CurrentPhase
+  fullName: Core.EngineInitializer.CurrentPhase
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentPhase
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public EngineInitializer.LoadingPhase CurrentPhase { get; }
+    parameters: []
+    return:
+      type: Core.EngineInitializer.LoadingPhase
+    content.vb: Public ReadOnly Property CurrentPhase As EngineInitializer.LoadingPhase
+  overload: Core.EngineInitializer.CurrentPhase*
+- uid: Core.EngineInitializer.Progress
+  commentId: P:Core.EngineInitializer.Progress
+  id: Progress
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: Progress
+  nameWithType: EngineInitializer.Progress
+  fullName: Core.EngineInitializer.Progress
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Progress
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public float Progress { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property Progress As Single
+  overload: Core.EngineInitializer.Progress*
+- uid: Core.EngineInitializer.Status
+  commentId: P:Core.EngineInitializer.Status
+  id: Status
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: Status
+  nameWithType: EngineInitializer.Status
+  fullName: Core.EngineInitializer.Status
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Status
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public string Status { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Status As String
+  overload: Core.EngineInitializer.Status*
+- uid: Core.EngineInitializer.IsLoading
+  commentId: P:Core.EngineInitializer.IsLoading
+  id: IsLoading
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsLoading
+  nameWithType: EngineInitializer.IsLoading
+  fullName: Core.EngineInitializer.IsLoading
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsLoading
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool IsLoading { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsLoading As Boolean
+  overload: Core.EngineInitializer.IsLoading*
+- uid: Core.EngineInitializer.IsComplete
+  commentId: P:Core.EngineInitializer.IsComplete
+  id: IsComplete
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsComplete
+  nameWithType: EngineInitializer.IsComplete
+  fullName: Core.EngineInitializer.IsComplete
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsComplete
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: public bool IsComplete { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsComplete As Boolean
+  overload: Core.EngineInitializer.IsComplete*
+- uid: Core.EngineInitializer.StartInitialization
+  commentId: M:Core.EngineInitializer.StartInitialization
+  id: StartInitialization
+  parent: Core.EngineInitializer
+  langs:
+  - csharp
+  - vb
+  name: StartInitialization()
+  nameWithType: EngineInitializer.StartInitialization()
+  fullName: Core.EngineInitializer.StartInitialization()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/EngineInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartInitialization
+    path: Scripts/Core/EngineInitializer.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Start the complete game initialization process
+  example: []
+  syntax:
+    content: public void StartInitialization()
+    content.vb: Public Sub StartInitialization()
+  overload: Core.EngineInitializer.StartInitialization*
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Action{Core.EngineInitializer.LoadingPhase,System.Single,System.String}
+  commentId: T:System.Action{Core.EngineInitializer.LoadingPhase,System.Single,System.String}
+  parent: System
+  definition: System.Action`3
+  href: Core.EngineInitializer.html
+  name: Action<EngineInitializer.LoadingPhase, float, string>
+  nameWithType: Action<EngineInitializer.LoadingPhase, float, string>
+  fullName: System.Action<Core.EngineInitializer.LoadingPhase, float, string>
+  nameWithType.vb: Action(Of EngineInitializer.LoadingPhase, Single, String)
+  fullName.vb: System.Action(Of Core.EngineInitializer.LoadingPhase, Single, String)
+  name.vb: Action(Of EngineInitializer.LoadingPhase, Single, String)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Action`3
+  commentId: T:System.Action`3
+  isExternal: true
+  name: Action<T1, T2, T3>
+  nameWithType: Action<T1, T2, T3>
+  fullName: System.Action<T1, T2, T3>
+  nameWithType.vb: Action(Of T1, T2, T3)
+  fullName.vb: System.Action(Of T1, T2, T3)
+  name.vb: Action(Of T1, T2, T3)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+- uid: System.Action{System.Boolean,System.String}
+  commentId: T:System.Action{System.Boolean,System.String}
+  parent: System
+  definition: System.Action`2
+  name: Action<bool, string>
+  nameWithType: Action<bool, string>
+  fullName: System.Action<bool, string>
+  nameWithType.vb: Action(Of Boolean, String)
+  fullName.vb: System.Action(Of Boolean, String)
+  name.vb: Action(Of Boolean, String)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Core.EngineInitializer.CurrentPhase*
+  commentId: Overload:Core.EngineInitializer.CurrentPhase
+  href: Core.EngineInitializer.html#Core_EngineInitializer_CurrentPhase
+  name: CurrentPhase
+  nameWithType: EngineInitializer.CurrentPhase
+  fullName: Core.EngineInitializer.CurrentPhase
+- uid: Core.EngineInitializer.LoadingPhase
+  commentId: T:Core.EngineInitializer.LoadingPhase
+  parent: Core
+  href: Core.EngineInitializer.html
+  name: EngineInitializer.LoadingPhase
+  nameWithType: EngineInitializer.LoadingPhase
+  fullName: Core.EngineInitializer.LoadingPhase
+  spec.csharp:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+  spec.vb:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+- uid: Core.EngineInitializer.Progress*
+  commentId: Overload:Core.EngineInitializer.Progress
+  href: Core.EngineInitializer.html#Core_EngineInitializer_Progress
+  name: Progress
+  nameWithType: EngineInitializer.Progress
+  fullName: Core.EngineInitializer.Progress
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.EngineInitializer.Status*
+  commentId: Overload:Core.EngineInitializer.Status
+  href: Core.EngineInitializer.html#Core_EngineInitializer_Status
+  name: Status
+  nameWithType: EngineInitializer.Status
+  fullName: Core.EngineInitializer.Status
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.EngineInitializer.IsLoading*
+  commentId: Overload:Core.EngineInitializer.IsLoading
+  href: Core.EngineInitializer.html#Core_EngineInitializer_IsLoading
+  name: IsLoading
+  nameWithType: EngineInitializer.IsLoading
+  fullName: Core.EngineInitializer.IsLoading
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.EngineInitializer.IsComplete*
+  commentId: Overload:Core.EngineInitializer.IsComplete
+  href: Core.EngineInitializer.html#Core_EngineInitializer_IsComplete
+  name: IsComplete
+  nameWithType: EngineInitializer.IsComplete
+  fullName: Core.EngineInitializer.IsComplete
+- uid: Core.EngineInitializer.StartInitialization*
+  commentId: Overload:Core.EngineInitializer.StartInitialization
+  href: Core.EngineInitializer.html#Core_EngineInitializer_StartInitialization
+  name: StartInitialization
+  nameWithType: EngineInitializer.StartInitialization
+  fullName: Core.EngineInitializer.StartInitialization

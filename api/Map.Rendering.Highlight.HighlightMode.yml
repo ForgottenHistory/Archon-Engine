@@ -1,0 +1,122 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Highlight.HighlightMode
+  commentId: T:Map.Rendering.Highlight.HighlightMode
+  id: HighlightMode
+  parent: Map.Rendering.Highlight
+  children:
+  - Map.Rendering.Highlight.HighlightMode.BorderOnly
+  - Map.Rendering.Highlight.HighlightMode.Fill
+  langs:
+  - csharp
+  - vb
+  name: HighlightMode
+  nameWithType: HighlightMode
+  fullName: Map.Rendering.Highlight.HighlightMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightMode
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Highlight mode - how to visualize the highlight
+  example: []
+  syntax:
+    content: public enum HighlightMode
+    content.vb: Public Enum HighlightMode
+- uid: Map.Rendering.Highlight.HighlightMode.Fill
+  commentId: F:Map.Rendering.Highlight.HighlightMode.Fill
+  id: Fill
+  parent: Map.Rendering.Highlight.HighlightMode
+  langs:
+  - csharp
+  - vb
+  name: Fill
+  nameWithType: HighlightMode.Fill
+  fullName: Map.Rendering.Highlight.HighlightMode.Fill
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Fill
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  syntax:
+    content: Fill = 0
+    return:
+      type: Map.Rendering.Highlight.HighlightMode
+- uid: Map.Rendering.Highlight.HighlightMode.BorderOnly
+  commentId: F:Map.Rendering.Highlight.HighlightMode.BorderOnly
+  id: BorderOnly
+  parent: Map.Rendering.Highlight.HighlightMode
+  langs:
+  - csharp
+  - vb
+  name: BorderOnly
+  nameWithType: HighlightMode.BorderOnly
+  fullName: Map.Rendering.Highlight.HighlightMode.BorderOnly
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderOnly
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 87
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  syntax:
+    content: BorderOnly = 1
+    return:
+      type: Map.Rendering.Highlight.HighlightMode
+references:
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: Map.Rendering.Highlight.HighlightMode
+  commentId: T:Map.Rendering.Highlight.HighlightMode
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightMode.html
+  name: HighlightMode
+  nameWithType: HighlightMode
+  fullName: Map.Rendering.Highlight.HighlightMode

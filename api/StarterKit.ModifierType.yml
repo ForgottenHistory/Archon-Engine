@@ -1,0 +1,145 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.ModifierType
+  commentId: T:StarterKit.ModifierType
+  id: ModifierType
+  parent: StarterKit
+  children:
+  - StarterKit.ModifierType.CountryIncomeModifier
+  - StarterKit.ModifierType.LocalIncomeAdditive
+  - StarterKit.ModifierType.LocalIncomeModifier
+  langs:
+  - csharp
+  - vb
+  name: ModifierType
+  nameWithType: ModifierType
+  fullName: StarterKit.ModifierType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierType
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 19
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT: Modifier type IDs for the modifier system.
+
+    Maps string keys from JSON5 data files to ushort IDs for the Engine ModifierSystem.
+
+
+    Convention:
+
+    - Keys ending in "_modifier" are multiplicative (percentage bonus)
+
+    - Keys ending in "_additive" or "monthly_" are additive (flat bonus)
+
+
+    Usage:
+      modifierSystem.AddProvinceModifier(provinceId, ModifierSource.CreatePermanent(
+          ModifierSource.SourceType.Building,
+          buildingId,
+          (ushort)ModifierType.LocalIncomeModifier,
+          value,
+          isMultiplicative: true
+      ));
+  example: []
+  syntax:
+    content: 'public enum ModifierType : ushort'
+    content.vb: Public Enum ModifierType As UShort
+- uid: StarterKit.ModifierType.LocalIncomeModifier
+  commentId: F:StarterKit.ModifierType.LocalIncomeModifier
+  id: LocalIncomeModifier
+  parent: StarterKit.ModifierType
+  langs:
+  - csharp
+  - vb
+  name: LocalIncomeModifier
+  nameWithType: ModifierType.LocalIncomeModifier
+  fullName: StarterKit.ModifierType.LocalIncomeModifier
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalIncomeModifier
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: LocalIncomeModifier = 1
+    return:
+      type: StarterKit.ModifierType
+- uid: StarterKit.ModifierType.LocalIncomeAdditive
+  commentId: F:StarterKit.ModifierType.LocalIncomeAdditive
+  id: LocalIncomeAdditive
+  parent: StarterKit.ModifierType
+  langs:
+  - csharp
+  - vb
+  name: LocalIncomeAdditive
+  nameWithType: ModifierType.LocalIncomeAdditive
+  fullName: StarterKit.ModifierType.LocalIncomeAdditive
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalIncomeAdditive
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 23
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: LocalIncomeAdditive = 2
+    return:
+      type: StarterKit.ModifierType
+- uid: StarterKit.ModifierType.CountryIncomeModifier
+  commentId: F:StarterKit.ModifierType.CountryIncomeModifier
+  id: CountryIncomeModifier
+  parent: StarterKit.ModifierType
+  langs:
+  - csharp
+  - vb
+  name: CountryIncomeModifier
+  nameWithType: ModifierType.CountryIncomeModifier
+  fullName: StarterKit.ModifierType.CountryIncomeModifier
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryIncomeModifier
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 26
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: CountryIncomeModifier = 100
+    return:
+      type: StarterKit.ModifierType
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: StarterKit.ModifierType
+  commentId: T:StarterKit.ModifierType
+  parent: StarterKit
+  href: StarterKit.ModifierType.html
+  name: ModifierType
+  nameWithType: ModifierType
+  fullName: StarterKit.ModifierType

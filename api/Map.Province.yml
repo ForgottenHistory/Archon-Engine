@@ -1,0 +1,312 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province
+  commentId: N:Map.Province
+  id: Map.Province
+  children:
+  - Map.Province.GPUProvinceNeighborDetector
+  - Map.Province.ProvinceColorHasher
+  - Map.Province.ProvinceData
+  - Map.Province.ProvinceDataManager
+  - Map.Province.ProvinceFlags
+  - Map.Province.ProvinceIDEncoder
+  - Map.Province.ProvinceIDEncoder.EncodingResult
+  - Map.Province.ProvinceMetadataGenerator
+  - Map.Province.ProvinceMetadataGenerator.MetadataResult
+  - Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  - Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  - Map.Province.ProvinceMetadataGenerator.TerrainType
+  - Map.Province.ProvinceNeighborDetector
+  - Map.Province.ProvinceNeighborDetector.NeighborPair
+  - Map.Province.ProvinceNeighborDetector.NeighborResult
+  - Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Province.GPUProvinceNeighborDetector
+  commentId: T:Map.Province.GPUProvinceNeighborDetector
+  href: Map.Province.GPUProvinceNeighborDetector.html
+  name: GPUProvinceNeighborDetector
+  nameWithType: GPUProvinceNeighborDetector
+  fullName: Map.Province.GPUProvinceNeighborDetector
+- uid: Map.Province.ProvinceIDEncoder
+  commentId: T:Map.Province.ProvinceIDEncoder
+  href: Map.Province.ProvinceIDEncoder.html
+  name: ProvinceIDEncoder
+  nameWithType: ProvinceIDEncoder
+  fullName: Map.Province.ProvinceIDEncoder
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult
+  commentId: T:Map.Province.ProvinceIDEncoder.EncodingResult
+  parent: Map.Province
+  href: Map.Province.ProvinceIDEncoder.html
+  name: ProvinceIDEncoder.EncodingResult
+  nameWithType: ProvinceIDEncoder.EncodingResult
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceIDEncoder
+    name: ProvinceIDEncoder
+    href: Map.Province.ProvinceIDEncoder.html
+  - name: .
+  - uid: Map.Province.ProvinceIDEncoder.EncodingResult
+    name: EncodingResult
+    href: Map.Province.ProvinceIDEncoder.EncodingResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceIDEncoder
+    name: ProvinceIDEncoder
+    href: Map.Province.ProvinceIDEncoder.html
+  - name: .
+  - uid: Map.Province.ProvinceIDEncoder.EncodingResult
+    name: EncodingResult
+    href: Map.Province.ProvinceIDEncoder.EncodingResult.html
+- uid: Map.Province.ProvinceNeighborDetector
+  commentId: T:Map.Province.ProvinceNeighborDetector
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector
+  nameWithType: ProvinceNeighborDetector
+  fullName: Map.Province.ProvinceNeighborDetector
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborResult
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborResult
+  nameWithType: ProvinceNeighborDetector.NeighborResult
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  commentId: T:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.ProvinceNeighborData
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+    name: ProvinceNeighborData
+    href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+    name: ProvinceNeighborData
+    href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  commentId: T:Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.ProvinceBounds
+  nameWithType: ProvinceNeighborDetector.ProvinceBounds
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Province.ProvinceNeighborDetector.ProvinceBounds.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Province.ProvinceNeighborDetector.ProvinceBounds.html
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborPair
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborPair
+  nameWithType: ProvinceNeighborDetector.NeighborPair
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+    name: NeighborPair
+    href: Map.Province.ProvinceNeighborDetector.NeighborPair.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+    name: NeighborPair
+    href: Map.Province.ProvinceNeighborDetector.NeighborPair.html
+- uid: Map.Province.ProvinceMetadataGenerator
+  commentId: T:Map.Province.ProvinceMetadataGenerator
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator
+  nameWithType: ProvinceMetadataGenerator
+  fullName: Map.Province.ProvinceMetadataGenerator
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  commentId: T:Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.ProvinceMetadata
+  nameWithType: ProvinceMetadataGenerator.ProvinceMetadata
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  commentId: T:Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.ProvinceBounds
+  nameWithType: ProvinceMetadataGenerator.ProvinceBounds
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+    name: ProvinceBounds
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceBounds.html
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+  commentId: T:Map.Province.ProvinceMetadataGenerator.TerrainType
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.TerrainType
+  nameWithType: ProvinceMetadataGenerator.TerrainType
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  commentId: T:Map.Province.ProvinceMetadataGenerator.MetadataResult
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.MetadataResult
+  nameWithType: ProvinceMetadataGenerator.MetadataResult
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+- uid: Map.Province.ProvinceData
+  commentId: T:Map.Province.ProvinceData
+  parent: Map.Province
+  href: Map.Province.ProvinceData.html
+  name: ProvinceData
+  nameWithType: ProvinceData
+  fullName: Map.Province.ProvinceData
+- uid: Map.Province.ProvinceFlags
+  commentId: T:Map.Province.ProvinceFlags
+  parent: Map.Province
+  href: Map.Province.ProvinceFlags.html
+  name: ProvinceFlags
+  nameWithType: ProvinceFlags
+  fullName: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceColorHasher
+  commentId: T:Map.Province.ProvinceColorHasher
+  href: Map.Province.ProvinceColorHasher.html
+  name: ProvinceColorHasher
+  nameWithType: ProvinceColorHasher
+  fullName: Map.Province.ProvinceColorHasher
+- uid: Map.Province.ProvinceDataManager
+  commentId: T:Map.Province.ProvinceDataManager
+  parent: Map.Province
+  href: Map.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html

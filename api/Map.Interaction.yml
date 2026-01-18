@@ -1,0 +1,78 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  id: Map.Interaction
+  children:
+  - Map.Interaction.ProvinceHighlighter
+  - Map.Interaction.ProvinceHighlighter.HighlightMode
+  - Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Interaction.ProvinceHighlighter
+  commentId: T:Map.Interaction.ProvinceHighlighter
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceHighlighter.html
+  name: ProvinceHighlighter
+  nameWithType: ProvinceHighlighter
+  fullName: Map.Interaction.ProvinceHighlighter
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+  commentId: T:Map.Interaction.ProvinceHighlighter.HighlightMode
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceHighlighter.html
+  name: ProvinceHighlighter.HighlightMode
+  nameWithType: ProvinceHighlighter.HighlightMode
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode
+  spec.csharp:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html
+  spec.vb:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html
+- uid: Map.Interaction.ProvinceSelector
+  commentId: T:Map.Interaction.ProvinceSelector
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceSelector.html
+  name: ProvinceSelector
+  nameWithType: ProvinceSelector
+  fullName: Map.Interaction.ProvinceSelector
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  href: Map.html
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html

@@ -1,0 +1,2920 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  id: FixedPoint64
+  parent: Core.Data
+  children:
+  - Core.Data.FixedPoint64.Abs(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Ceiling(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Clamp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.CompareTo(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Equals(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Equals(System.Object)
+  - Core.Data.FixedPoint64.Floor(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Frac(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.FromBytes(System.Byte[],System.Int32)
+  - Core.Data.FixedPoint64.FromDouble(System.Double)
+  - Core.Data.FixedPoint64.FromFloat(System.Single)
+  - Core.Data.FixedPoint64.FromFraction(System.Int64,System.Int64)
+  - Core.Data.FixedPoint64.FromInt(System.Int32)
+  - Core.Data.FixedPoint64.FromLong(System.Int64)
+  - Core.Data.FixedPoint64.FromRaw(System.Int64)
+  - Core.Data.FixedPoint64.GetHashCode
+  - Core.Data.FixedPoint64.Half
+  - Core.Data.FixedPoint64.Hundred
+  - Core.Data.FixedPoint64.InverseLerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.IsNegative
+  - Core.Data.FixedPoint64.IsNonNegative
+  - Core.Data.FixedPoint64.IsNonPositive
+  - Core.Data.FixedPoint64.IsPositive
+  - Core.Data.FixedPoint64.IsZero
+  - Core.Data.FixedPoint64.Lerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.LerpClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Max(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.MaxValue
+  - Core.Data.FixedPoint64.Min(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.MinValue
+  - Core.Data.FixedPoint64.MoveTowards(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.NegativeOne
+  - Core.Data.FixedPoint64.One
+  - Core.Data.FixedPoint64.Percentage(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Pow(Core.Data.FixedPoint64,System.Int32)
+  - Core.Data.FixedPoint64.RawValue
+  - Core.Data.FixedPoint64.Remap(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.RemapClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Round(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Sign
+  - Core.Data.FixedPoint64.Sqrt(Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.Ten
+  - Core.Data.FixedPoint64.ToBytes
+  - Core.Data.FixedPoint64.ToDouble
+  - Core.Data.FixedPoint64.ToFloat
+  - Core.Data.FixedPoint64.ToInt
+  - Core.Data.FixedPoint64.ToLong
+  - Core.Data.FixedPoint64.ToString
+  - Core.Data.FixedPoint64.ToString(System.String)
+  - Core.Data.FixedPoint64.Two
+  - Core.Data.FixedPoint64.Zero
+  - Core.Data.FixedPoint64.op_Addition(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,System.Int32)
+  - Core.Data.FixedPoint64.op_Equality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_GreaterThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_GreaterThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Inequality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_LessThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_LessThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Modulus(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,System.Int32)
+  - Core.Data.FixedPoint64.op_Subtraction(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  - Core.Data.FixedPoint64.op_UnaryNegation(Core.Data.FixedPoint64)
+  langs:
+  - csharp
+  - vb
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FixedPoint64
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    64-bit fixed-point number for deterministic calculations across all platforms
+
+    Format: 32.32 (32 integer bits, 32 fractional bits)
+
+    Range: -2,147,483,648 to 2,147,483,647 with ~0.0000000002 precision
+
+
+    CRITICAL: This type is used for ALL simulation math to ensure multiplayer determinism.
+
+    Float operations produce different results on different CPUs/compilers.
+
+    Fixed-point math guarantees identical results across all platforms.
+  example: []
+  syntax:
+    content: public struct FixedPoint64
+    content.vb: Public Structure FixedPoint64
+- uid: Core.Data.FixedPoint64.RawValue
+  commentId: F:Core.Data.FixedPoint64.RawValue
+  id: RawValue
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: RawValue
+  nameWithType: FixedPoint64.RawValue
+  fullName: Core.Data.FixedPoint64.RawValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RawValue
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public readonly long RawValue
+    return:
+      type: System.Int64
+    content.vb: Public ReadOnly RawValue As Long
+- uid: Core.Data.FixedPoint64.Zero
+  commentId: F:Core.Data.FixedPoint64.Zero
+  id: Zero
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Zero
+  nameWithType: FixedPoint64.Zero
+  fullName: Core.Data.FixedPoint64.Zero
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Zero
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 Zero
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly Zero As FixedPoint64
+- uid: Core.Data.FixedPoint64.One
+  commentId: F:Core.Data.FixedPoint64.One
+  id: One
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: One
+  nameWithType: FixedPoint64.One
+  fullName: Core.Data.FixedPoint64.One
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: One
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 One
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly One As FixedPoint64
+- uid: Core.Data.FixedPoint64.Half
+  commentId: F:Core.Data.FixedPoint64.Half
+  id: Half
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Half
+  nameWithType: FixedPoint64.Half
+  fullName: Core.Data.FixedPoint64.Half
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Half
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 Half
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly Half As FixedPoint64
+- uid: Core.Data.FixedPoint64.Two
+  commentId: F:Core.Data.FixedPoint64.Two
+  id: Two
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Two
+  nameWithType: FixedPoint64.Two
+  fullName: Core.Data.FixedPoint64.Two
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Two
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 Two
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly Two As FixedPoint64
+- uid: Core.Data.FixedPoint64.MinValue
+  commentId: F:Core.Data.FixedPoint64.MinValue
+  id: MinValue
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: MinValue
+  nameWithType: FixedPoint64.MinValue
+  fullName: Core.Data.FixedPoint64.MinValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinValue
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 MinValue
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly MinValue As FixedPoint64
+- uid: Core.Data.FixedPoint64.MaxValue
+  commentId: F:Core.Data.FixedPoint64.MaxValue
+  id: MaxValue
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: MaxValue
+  nameWithType: FixedPoint64.MaxValue
+  fullName: Core.Data.FixedPoint64.MaxValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxValue
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 MaxValue
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly MaxValue As FixedPoint64
+- uid: Core.Data.FixedPoint64.NegativeOne
+  commentId: F:Core.Data.FixedPoint64.NegativeOne
+  id: NegativeOne
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: NegativeOne
+  nameWithType: FixedPoint64.NegativeOne
+  fullName: Core.Data.FixedPoint64.NegativeOne
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NegativeOne
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 NegativeOne
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly NegativeOne As FixedPoint64
+- uid: Core.Data.FixedPoint64.Ten
+  commentId: F:Core.Data.FixedPoint64.Ten
+  id: Ten
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Ten
+  nameWithType: FixedPoint64.Ten
+  fullName: Core.Data.FixedPoint64.Ten
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Ten
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 Ten
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly Ten As FixedPoint64
+- uid: Core.Data.FixedPoint64.Hundred
+  commentId: F:Core.Data.FixedPoint64.Hundred
+  id: Hundred
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Hundred
+  nameWithType: FixedPoint64.Hundred
+  fullName: Core.Data.FixedPoint64.Hundred
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hundred
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static readonly FixedPoint64 Hundred
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared ReadOnly Hundred As FixedPoint64
+- uid: Core.Data.FixedPoint64.IsZero
+  commentId: P:Core.Data.FixedPoint64.IsZero
+  id: IsZero
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: IsZero
+  nameWithType: FixedPoint64.IsZero
+  fullName: Core.Data.FixedPoint64.IsZero
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsZero
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: True if value equals zero
+  example: []
+  syntax:
+    content: public bool IsZero { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsZero As Boolean
+  overload: Core.Data.FixedPoint64.IsZero*
+- uid: Core.Data.FixedPoint64.IsPositive
+  commentId: P:Core.Data.FixedPoint64.IsPositive
+  id: IsPositive
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: IsPositive
+  nameWithType: FixedPoint64.IsPositive
+  fullName: Core.Data.FixedPoint64.IsPositive
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsPositive
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: True if value is greater than zero
+  example: []
+  syntax:
+    content: public bool IsPositive { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsPositive As Boolean
+  overload: Core.Data.FixedPoint64.IsPositive*
+- uid: Core.Data.FixedPoint64.IsNegative
+  commentId: P:Core.Data.FixedPoint64.IsNegative
+  id: IsNegative
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: IsNegative
+  nameWithType: FixedPoint64.IsNegative
+  fullName: Core.Data.FixedPoint64.IsNegative
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsNegative
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: True if value is less than zero
+  example: []
+  syntax:
+    content: public bool IsNegative { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNegative As Boolean
+  overload: Core.Data.FixedPoint64.IsNegative*
+- uid: Core.Data.FixedPoint64.IsNonNegative
+  commentId: P:Core.Data.FixedPoint64.IsNonNegative
+  id: IsNonNegative
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: IsNonNegative
+  nameWithType: FixedPoint64.IsNonNegative
+  fullName: Core.Data.FixedPoint64.IsNonNegative
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsNonNegative
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: True if value is greater than or equal to zero
+  example: []
+  syntax:
+    content: public bool IsNonNegative { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNonNegative As Boolean
+  overload: Core.Data.FixedPoint64.IsNonNegative*
+- uid: Core.Data.FixedPoint64.IsNonPositive
+  commentId: P:Core.Data.FixedPoint64.IsNonPositive
+  id: IsNonPositive
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: IsNonPositive
+  nameWithType: FixedPoint64.IsNonPositive
+  fullName: Core.Data.FixedPoint64.IsNonPositive
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsNonPositive
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: True if value is less than or equal to zero
+  example: []
+  syntax:
+    content: public bool IsNonPositive { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsNonPositive As Boolean
+  overload: Core.Data.FixedPoint64.IsNonPositive*
+- uid: Core.Data.FixedPoint64.Sign
+  commentId: P:Core.Data.FixedPoint64.Sign
+  id: Sign
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Sign
+  nameWithType: FixedPoint64.Sign
+  fullName: Core.Data.FixedPoint64.Sign
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Sign
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: 'Returns the sign: -1, 0, or 1'
+  example: []
+  syntax:
+    content: public int Sign { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Sign As Integer
+  overload: Core.Data.FixedPoint64.Sign*
+- uid: Core.Data.FixedPoint64.FromRaw(System.Int64)
+  commentId: M:Core.Data.FixedPoint64.FromRaw(System.Int64)
+  id: FromRaw(System.Int64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromRaw(long)
+  nameWithType: FixedPoint64.FromRaw(long)
+  fullName: Core.Data.FixedPoint64.FromRaw(long)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromRaw
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from raw fixed-point value (for serialization)
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromRaw(long raw)
+    parameters:
+    - id: raw
+      type: System.Int64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromRaw(raw As Long) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromRaw*
+  nameWithType.vb: FixedPoint64.FromRaw(Long)
+  fullName.vb: Core.Data.FixedPoint64.FromRaw(Long)
+  name.vb: FromRaw(Long)
+- uid: Core.Data.FixedPoint64.FromInt(System.Int32)
+  commentId: M:Core.Data.FixedPoint64.FromInt(System.Int32)
+  id: FromInt(System.Int32)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromInt(int)
+  nameWithType: FixedPoint64.FromInt(int)
+  fullName: Core.Data.FixedPoint64.FromInt(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromInt
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from integer value
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromInt(int value)
+    parameters:
+    - id: value
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromInt(value As Integer) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromInt*
+  nameWithType.vb: FixedPoint64.FromInt(Integer)
+  fullName.vb: Core.Data.FixedPoint64.FromInt(Integer)
+  name.vb: FromInt(Integer)
+- uid: Core.Data.FixedPoint64.FromLong(System.Int64)
+  commentId: M:Core.Data.FixedPoint64.FromLong(System.Int64)
+  id: FromLong(System.Int64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromLong(long)
+  nameWithType: FixedPoint64.FromLong(long)
+  fullName: Core.Data.FixedPoint64.FromLong(long)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromLong
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from long integer value
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromLong(long value)
+    parameters:
+    - id: value
+      type: System.Int64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromLong(value As Long) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromLong*
+  nameWithType.vb: FixedPoint64.FromLong(Long)
+  fullName.vb: Core.Data.FixedPoint64.FromLong(Long)
+  name.vb: FromLong(Long)
+- uid: Core.Data.FixedPoint64.FromFraction(System.Int64,System.Int64)
+  commentId: M:Core.Data.FixedPoint64.FromFraction(System.Int64,System.Int64)
+  id: FromFraction(System.Int64,System.Int64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromFraction(long, long)
+  nameWithType: FixedPoint64.FromFraction(long, long)
+  fullName: Core.Data.FixedPoint64.FromFraction(long, long)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromFraction
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from fraction (numerator / denominator)
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromFraction(long numerator, long denominator)
+    parameters:
+    - id: numerator
+      type: System.Int64
+    - id: denominator
+      type: System.Int64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromFraction(numerator As Long, denominator As Long) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromFraction*
+  nameWithType.vb: FixedPoint64.FromFraction(Long, Long)
+  fullName.vb: Core.Data.FixedPoint64.FromFraction(Long, Long)
+  name.vb: FromFraction(Long, Long)
+- uid: Core.Data.FixedPoint64.FromFloat(System.Single)
+  commentId: M:Core.Data.FixedPoint64.FromFloat(System.Single)
+  id: FromFloat(System.Single)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromFloat(float)
+  nameWithType: FixedPoint64.FromFloat(float)
+  fullName: Core.Data.FixedPoint64.FromFloat(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromFloat
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from float (ONLY use during initialization, NEVER in simulation)
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromFloat(float value)
+    parameters:
+    - id: value
+      type: System.Single
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromFloat(value As Single) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromFloat*
+  nameWithType.vb: FixedPoint64.FromFloat(Single)
+  fullName.vb: Core.Data.FixedPoint64.FromFloat(Single)
+  name.vb: FromFloat(Single)
+- uid: Core.Data.FixedPoint64.FromDouble(System.Double)
+  commentId: M:Core.Data.FixedPoint64.FromDouble(System.Double)
+  id: FromDouble(System.Double)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromDouble(double)
+  nameWithType: FixedPoint64.FromDouble(double)
+  fullName: Core.Data.FixedPoint64.FromDouble(double)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromDouble
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create from double (ONLY use during initialization, NEVER in simulation)
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromDouble(double value)
+    parameters:
+    - id: value
+      type: System.Double
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromDouble(value As Double) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromDouble*
+  nameWithType.vb: FixedPoint64.FromDouble(Double)
+  fullName.vb: Core.Data.FixedPoint64.FromDouble(Double)
+  name.vb: FromDouble(Double)
+- uid: Core.Data.FixedPoint64.op_Addition(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Addition(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Addition(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator +(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator +(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator +(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Addition
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Adds two fixed-point values.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator +(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator +(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Addition*
+  nameWithType.vb: FixedPoint64.+(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.+(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: +(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_Subtraction(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Subtraction(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Subtraction(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator -(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator -(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator -(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Subtraction
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Subtracts two fixed-point values.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator -(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator -(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Subtraction*
+  nameWithType.vb: FixedPoint64.-(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.-(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: -(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_UnaryNegation(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_UnaryNegation(Core.Data.FixedPoint64)
+  id: op_UnaryNegation(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator -(FixedPoint64)
+  nameWithType: FixedPoint64.operator -(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator -(Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_UnaryNegation
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Negates a fixed-point value.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator -(FixedPoint64 a)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator -(a As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_UnaryNegation*
+  nameWithType.vb: FixedPoint64.-(FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.-(Core.Data.FixedPoint64)
+  name.vb: -(FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Multiply(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator *(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator *(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator *(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Multiply
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Multiplies two fixed-point values using 128-bit intermediate to prevent overflow.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator *(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator *(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Multiply*
+  nameWithType.vb: FixedPoint64.*(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.*(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: '*(FixedPoint64, FixedPoint64)'
+- uid: Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Division(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator /(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator /(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator /(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Division
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Divides two fixed-point values. Throws DivideByZeroException if divisor is zero.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator /(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator /(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Division*
+  nameWithType.vb: FixedPoint64./(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64./(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: /(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_Modulus(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Modulus(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Modulus(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator %(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator %(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator %(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Modulus
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 156
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Returns the remainder after division.
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator %(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator Mod(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Modulus*
+  nameWithType.vb: FixedPoint64.Mod(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.Mod(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: Mod(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,System.Int32)
+  commentId: M:Core.Data.FixedPoint64.op_Multiply(Core.Data.FixedPoint64,System.Int32)
+  id: op_Multiply(Core.Data.FixedPoint64,System.Int32)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator *(FixedPoint64, int)
+  nameWithType: FixedPoint64.operator *(FixedPoint64, int)
+  fullName: Core.Data.FixedPoint64.operator *(Core.Data.FixedPoint64, int)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Multiply
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 162
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Multiplies by an integer (more efficient than FixedPoint64 multiplication).
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator *(FixedPoint64 a, int b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator *(a As FixedPoint64, b As Integer) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Multiply*
+  nameWithType.vb: FixedPoint64.*(FixedPoint64, Integer)
+  fullName.vb: Core.Data.FixedPoint64.*(Core.Data.FixedPoint64, Integer)
+  name.vb: '*(FixedPoint64, Integer)'
+- uid: Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,System.Int32)
+  commentId: M:Core.Data.FixedPoint64.op_Division(Core.Data.FixedPoint64,System.Int32)
+  id: op_Division(Core.Data.FixedPoint64,System.Int32)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator /(FixedPoint64, int)
+  nameWithType: FixedPoint64.operator /(FixedPoint64, int)
+  fullName: Core.Data.FixedPoint64.operator /(Core.Data.FixedPoint64, int)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Division
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 166
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Divides by an integer (more efficient than FixedPoint64 division).
+  example: []
+  syntax:
+    content: public static FixedPoint64 operator /(FixedPoint64 a, int b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Operator /(a As FixedPoint64, b As Integer) As FixedPoint64
+  overload: Core.Data.FixedPoint64.op_Division*
+  nameWithType.vb: FixedPoint64./(FixedPoint64, Integer)
+  fullName.vb: Core.Data.FixedPoint64./(Core.Data.FixedPoint64, Integer)
+  name.vb: /(FixedPoint64, Integer)
+- uid: Core.Data.FixedPoint64.op_Equality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Equality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Equality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator ==(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator ==(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator ==(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 173
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator ==(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_Equality*
+  nameWithType.vb: FixedPoint64.=(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: =(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_Inequality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_Inequality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_Inequality(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator !=(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator !=(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator !=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 174
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator !=(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_Inequality*
+  nameWithType.vb: FixedPoint64.<>(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.<>(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: <>(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_LessThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_LessThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_LessThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator <(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator <(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator <(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_LessThan
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 175
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator <(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_LessThan*
+  nameWithType.vb: FixedPoint64.<(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.<(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: <(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_GreaterThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_GreaterThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_GreaterThan(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator >(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator >(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator >(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_GreaterThan
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 176
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator >(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator >(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_GreaterThan*
+  nameWithType.vb: FixedPoint64.>(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.>(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: '>(FixedPoint64, FixedPoint64)'
+- uid: Core.Data.FixedPoint64.op_LessThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_LessThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_LessThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator <=(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator <=(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator <=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_LessThanOrEqual
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 177
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator <=(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <=(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_LessThanOrEqual*
+  nameWithType.vb: FixedPoint64.<=(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.<=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: <=(FixedPoint64, FixedPoint64)
+- uid: Core.Data.FixedPoint64.op_GreaterThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.op_GreaterThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: op_GreaterThanOrEqual(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: operator >=(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.operator >=(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.operator >=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_GreaterThanOrEqual
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static bool operator >=(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator >=(a As FixedPoint64, b As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.op_GreaterThanOrEqual*
+  nameWithType.vb: FixedPoint64.>=(FixedPoint64, FixedPoint64)
+  fullName.vb: Core.Data.FixedPoint64.>=(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  name.vb: '>=(FixedPoint64, FixedPoint64)'
+- uid: Core.Data.FixedPoint64.ToInt
+  commentId: M:Core.Data.FixedPoint64.ToInt
+  id: ToInt
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToInt()
+  nameWithType: FixedPoint64.ToInt()
+  fullName: Core.Data.FixedPoint64.ToInt()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToInt
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Truncates to integer (rounds toward zero).
+  example: []
+  syntax:
+    content: public int ToInt()
+    return:
+      type: System.Int32
+    content.vb: Public Function ToInt() As Integer
+  overload: Core.Data.FixedPoint64.ToInt*
+- uid: Core.Data.FixedPoint64.ToLong
+  commentId: M:Core.Data.FixedPoint64.ToLong
+  id: ToLong
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToLong()
+  nameWithType: FixedPoint64.ToLong()
+  fullName: Core.Data.FixedPoint64.ToLong()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToLong
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 188
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Truncates to long integer (rounds toward zero).
+  example: []
+  syntax:
+    content: public long ToLong()
+    return:
+      type: System.Int64
+    content.vb: Public Function ToLong() As Long
+  overload: Core.Data.FixedPoint64.ToLong*
+- uid: Core.Data.FixedPoint64.ToFloat
+  commentId: M:Core.Data.FixedPoint64.ToFloat
+  id: ToFloat
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToFloat()
+  nameWithType: FixedPoint64.ToFloat()
+  fullName: Core.Data.FixedPoint64.ToFloat()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToFloat
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Convert to float (ONLY for presentation layer, NEVER use result in simulation)
+  example: []
+  syntax:
+    content: public float ToFloat()
+    return:
+      type: System.Single
+    content.vb: Public Function ToFloat() As Single
+  overload: Core.Data.FixedPoint64.ToFloat*
+- uid: Core.Data.FixedPoint64.ToDouble
+  commentId: M:Core.Data.FixedPoint64.ToDouble
+  id: ToDouble
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToDouble()
+  nameWithType: FixedPoint64.ToDouble()
+  fullName: Core.Data.FixedPoint64.ToDouble()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToDouble
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Convert to double (ONLY for presentation layer, NEVER use result in simulation)
+  example: []
+  syntax:
+    content: public double ToDouble()
+    return:
+      type: System.Double
+    content.vb: Public Function ToDouble() As Double
+  overload: Core.Data.FixedPoint64.ToDouble*
+- uid: Core.Data.FixedPoint64.Abs(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Abs(Core.Data.FixedPoint64)
+  id: Abs(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Abs(FixedPoint64)
+  nameWithType: FixedPoint64.Abs(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Abs(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Abs
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 205
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Returns the absolute value.
+  example: []
+  syntax:
+    content: public static FixedPoint64 Abs(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Abs(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Abs*
+- uid: Core.Data.FixedPoint64.Min(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Min(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Min(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Min(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Min(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Min(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Min
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 209
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Returns the smaller of two values.
+  example: []
+  syntax:
+    content: public static FixedPoint64 Min(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Min(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Min*
+- uid: Core.Data.FixedPoint64.Max(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Max(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Max(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Max(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Max(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Max(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Max
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 213
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Returns the larger of two values.
+  example: []
+  syntax:
+    content: public static FixedPoint64 Max(FixedPoint64 a, FixedPoint64 b)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Max(a As FixedPoint64, b As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Max*
+- uid: Core.Data.FixedPoint64.Clamp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Clamp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Clamp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Clamp(FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Clamp(FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Clamp(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clamp
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 217
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Clamps a value to the specified range.
+  example: []
+  syntax:
+    content: public static FixedPoint64 Clamp(FixedPoint64 value, FixedPoint64 min, FixedPoint64 max)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: min
+      type: Core.Data.FixedPoint64
+    - id: max
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Clamp(value As FixedPoint64, min As FixedPoint64, max As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Clamp*
+- uid: Core.Data.FixedPoint64.Floor(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Floor(Core.Data.FixedPoint64)
+  id: Floor(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Floor(FixedPoint64)
+  nameWithType: FixedPoint64.Floor(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Floor(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Floor
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 227
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Floor to nearest integer
+  example: []
+  syntax:
+    content: public static FixedPoint64 Floor(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Floor(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Floor*
+- uid: Core.Data.FixedPoint64.Ceiling(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Ceiling(Core.Data.FixedPoint64)
+  id: Ceiling(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Ceiling(FixedPoint64)
+  nameWithType: FixedPoint64.Ceiling(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Ceiling(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Ceiling
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 235
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Ceiling to nearest integer
+  example: []
+  syntax:
+    content: public static FixedPoint64 Ceiling(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Ceiling(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Ceiling*
+- uid: Core.Data.FixedPoint64.Round(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Round(Core.Data.FixedPoint64)
+  id: Round(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Round(FixedPoint64)
+  nameWithType: FixedPoint64.Round(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Round(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Round
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 247
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Round to nearest integer
+  example: []
+  syntax:
+    content: public static FixedPoint64 Round(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Round(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Round*
+- uid: Core.Data.FixedPoint64.Sqrt(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Sqrt(Core.Data.FixedPoint64)
+  id: Sqrt(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Sqrt(FixedPoint64)
+  nameWithType: FixedPoint64.Sqrt(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Sqrt(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Sqrt
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 258
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Square root using Newton-Raphson method (deterministic, Burst-compatible)
+
+    Returns Zero for negative inputs
+  example: []
+  syntax:
+    content: public static FixedPoint64 Sqrt(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Sqrt(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Sqrt*
+- uid: Core.Data.FixedPoint64.Pow(Core.Data.FixedPoint64,System.Int32)
+  commentId: M:Core.Data.FixedPoint64.Pow(Core.Data.FixedPoint64,System.Int32)
+  id: Pow(Core.Data.FixedPoint64,System.Int32)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Pow(FixedPoint64, int)
+  nameWithType: FixedPoint64.Pow(FixedPoint64, int)
+  fullName: Core.Data.FixedPoint64.Pow(Core.Data.FixedPoint64, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Pow
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 284
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Integer exponentiation (value^exponent)
+
+    Deterministic, handles negative exponents
+  example: []
+  syntax:
+    content: public static FixedPoint64 Pow(FixedPoint64 value, int exponent)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: exponent
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Pow(value As FixedPoint64, exponent As Integer) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Pow*
+  nameWithType.vb: FixedPoint64.Pow(FixedPoint64, Integer)
+  fullName.vb: Core.Data.FixedPoint64.Pow(Core.Data.FixedPoint64, Integer)
+  name.vb: Pow(FixedPoint64, Integer)
+- uid: Core.Data.FixedPoint64.Lerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Lerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Lerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Lerp(FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Lerp(FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Lerp(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Lerp
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Linear interpolation: a + (b - a) * t
+
+    When t=0 returns a, when t=1 returns b
+  example: []
+  syntax:
+    content: public static FixedPoint64 Lerp(FixedPoint64 a, FixedPoint64 b, FixedPoint64 t)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    - id: t
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Lerp(a As FixedPoint64, b As FixedPoint64, t As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Lerp*
+- uid: Core.Data.FixedPoint64.LerpClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.LerpClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: LerpClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: LerpClamped(FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.LerpClamped(FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.LerpClamped(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LerpClamped
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Clamped linear interpolation (t clamped to 0-1)
+  example: []
+  syntax:
+    content: public static FixedPoint64 LerpClamped(FixedPoint64 a, FixedPoint64 b, FixedPoint64 t)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    - id: t
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function LerpClamped(a As FixedPoint64, b As FixedPoint64, t As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.LerpClamped*
+- uid: Core.Data.FixedPoint64.InverseLerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.InverseLerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: InverseLerp(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: InverseLerp(FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.InverseLerp(FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.InverseLerp(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InverseLerp
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 331
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Inverse linear interpolation: returns t where Lerp(a, b, t) = value
+
+    Returns 0 if a == b
+  example: []
+  syntax:
+    content: public static FixedPoint64 InverseLerp(FixedPoint64 a, FixedPoint64 b, FixedPoint64 value)
+    parameters:
+    - id: a
+      type: Core.Data.FixedPoint64
+    - id: b
+      type: Core.Data.FixedPoint64
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function InverseLerp(a As FixedPoint64, b As FixedPoint64, value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.InverseLerp*
+- uid: Core.Data.FixedPoint64.Remap(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Remap(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Remap(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Remap(FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Remap(FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Remap(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Remap
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 343
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Remap value from one range to another
+
+    Example: Remap(50, 0, 100, 0, 1) = 0.5
+  example: []
+  syntax:
+    content: public static FixedPoint64 Remap(FixedPoint64 value, FixedPoint64 inMin, FixedPoint64 inMax, FixedPoint64 outMin, FixedPoint64 outMax)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: inMin
+      type: Core.Data.FixedPoint64
+    - id: inMax
+      type: Core.Data.FixedPoint64
+    - id: outMin
+      type: Core.Data.FixedPoint64
+    - id: outMax
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Remap(value As FixedPoint64, inMin As FixedPoint64, inMax As FixedPoint64, outMin As FixedPoint64, outMax As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Remap*
+- uid: Core.Data.FixedPoint64.RemapClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.RemapClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: RemapClamped(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: RemapClamped(FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.RemapClamped(FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.RemapClamped(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemapClamped
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 353
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Remap with clamping (output clamped to outMin-outMax range)
+  example: []
+  syntax:
+    content: public static FixedPoint64 RemapClamped(FixedPoint64 value, FixedPoint64 inMin, FixedPoint64 inMax, FixedPoint64 outMin, FixedPoint64 outMax)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: inMin
+      type: Core.Data.FixedPoint64
+    - id: inMax
+      type: Core.Data.FixedPoint64
+    - id: outMin
+      type: Core.Data.FixedPoint64
+    - id: outMax
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function RemapClamped(value As FixedPoint64, inMin As FixedPoint64, inMax As FixedPoint64, outMin As FixedPoint64, outMax As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.RemapClamped*
+- uid: Core.Data.FixedPoint64.MoveTowards(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.MoveTowards(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: MoveTowards(Core.Data.FixedPoint64,Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: MoveTowards(FixedPoint64, FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.MoveTowards(FixedPoint64, FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.MoveTowards(Core.Data.FixedPoint64, Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MoveTowards
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 363
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Move towards target by a maximum delta
+  example: []
+  syntax:
+    content: public static FixedPoint64 MoveTowards(FixedPoint64 current, FixedPoint64 target, FixedPoint64 maxDelta)
+    parameters:
+    - id: current
+      type: Core.Data.FixedPoint64
+    - id: target
+      type: Core.Data.FixedPoint64
+    - id: maxDelta
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function MoveTowards(current As FixedPoint64, target As FixedPoint64, maxDelta As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.MoveTowards*
+- uid: Core.Data.FixedPoint64.Frac(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Frac(Core.Data.FixedPoint64)
+  id: Frac(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Frac(FixedPoint64)
+  nameWithType: FixedPoint64.Frac(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Frac(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Frac
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 375
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Returns the fractional part of the value (0 to 0.999...)
+  example: []
+  syntax:
+    content: public static FixedPoint64 Frac(FixedPoint64 value)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Frac(value As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Frac*
+- uid: Core.Data.FixedPoint64.Percentage(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Percentage(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  id: Percentage(Core.Data.FixedPoint64,Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Percentage(FixedPoint64, FixedPoint64)
+  nameWithType: FixedPoint64.Percentage(FixedPoint64, FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Percentage(Core.Data.FixedPoint64, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Percentage
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 387
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Percentage: (value / total) * 100
+
+    Returns Zero if total is zero
+  example: []
+  syntax:
+    content: public static FixedPoint64 Percentage(FixedPoint64 value, FixedPoint64 total)
+    parameters:
+    - id: value
+      type: Core.Data.FixedPoint64
+    - id: total
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function Percentage(value As FixedPoint64, total As FixedPoint64) As FixedPoint64
+  overload: Core.Data.FixedPoint64.Percentage*
+- uid: Core.Data.FixedPoint64.Equals(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.Equals(Core.Data.FixedPoint64)
+  id: Equals(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Equals(FixedPoint64)
+  nameWithType: FixedPoint64.Equals(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.Equals(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 396
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public bool Equals(FixedPoint64 other)
+    parameters:
+    - id: other
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As FixedPoint64) As Boolean
+  overload: Core.Data.FixedPoint64.Equals*
+- uid: Core.Data.FixedPoint64.Equals(System.Object)
+  commentId: M:Core.Data.FixedPoint64.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: FixedPoint64.Equals(object)
+  fullName: Core.Data.FixedPoint64.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 398
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.FixedPoint64.Equals*
+  nameWithType.vb: FixedPoint64.Equals(Object)
+  fullName.vb: Core.Data.FixedPoint64.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.FixedPoint64.GetHashCode
+  commentId: M:Core.Data.FixedPoint64.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: FixedPoint64.GetHashCode()
+  fullName: Core.Data.FixedPoint64.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 401
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.FixedPoint64.GetHashCode*
+- uid: Core.Data.FixedPoint64.CompareTo(Core.Data.FixedPoint64)
+  commentId: M:Core.Data.FixedPoint64.CompareTo(Core.Data.FixedPoint64)
+  id: CompareTo(Core.Data.FixedPoint64)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: CompareTo(FixedPoint64)
+  nameWithType: FixedPoint64.CompareTo(FixedPoint64)
+  fullName: Core.Data.FixedPoint64.CompareTo(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompareTo
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 404
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public int CompareTo(FixedPoint64 other)
+    parameters:
+    - id: other
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Int32
+    content.vb: Public Function CompareTo(other As FixedPoint64) As Integer
+  overload: Core.Data.FixedPoint64.CompareTo*
+- uid: Core.Data.FixedPoint64.ToString
+  commentId: M:Core.Data.FixedPoint64.ToString
+  id: ToString
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: FixedPoint64.ToString()
+  fullName: Core.Data.FixedPoint64.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 407
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.FixedPoint64.ToString*
+- uid: Core.Data.FixedPoint64.ToString(System.String)
+  commentId: M:Core.Data.FixedPoint64.ToString(System.String)
+  id: ToString(System.String)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToString(string)
+  nameWithType: FixedPoint64.ToString(string)
+  fullName: Core.Data.FixedPoint64.ToString(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 409
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string ToString(string format)
+    parameters:
+    - id: format
+      type: System.String
+    return:
+      type: System.String
+    content.vb: Public Function ToString(format As String) As String
+  overload: Core.Data.FixedPoint64.ToString*
+  nameWithType.vb: FixedPoint64.ToString(String)
+  fullName.vb: Core.Data.FixedPoint64.ToString(String)
+  name.vb: ToString(String)
+- uid: Core.Data.FixedPoint64.ToBytes
+  commentId: M:Core.Data.FixedPoint64.ToBytes
+  id: ToBytes
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: ToBytes()
+  nameWithType: FixedPoint64.ToBytes()
+  fullName: Core.Data.FixedPoint64.ToBytes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToBytes
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 414
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Serialize to bytes for networking (8 bytes exactly)
+  example: []
+  syntax:
+    content: public byte[] ToBytes()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function ToBytes() As Byte()
+  overload: Core.Data.FixedPoint64.ToBytes*
+- uid: Core.Data.FixedPoint64.FromBytes(System.Byte[],System.Int32)
+  commentId: M:Core.Data.FixedPoint64.FromBytes(System.Byte[],System.Int32)
+  id: FromBytes(System.Byte[],System.Int32)
+  parent: Core.Data.FixedPoint64
+  langs:
+  - csharp
+  - vb
+  name: FromBytes(byte[], int)
+  nameWithType: FixedPoint64.FromBytes(byte[], int)
+  fullName: Core.Data.FixedPoint64.FromBytes(byte[], int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/FixedPoint64.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromBytes
+    path: Scripts/Core/Data/FixedPoint64.cs
+    startLine: 431
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Deserialize from bytes for networking
+  example: []
+  syntax:
+    content: public static FixedPoint64 FromBytes(byte[] bytes, int offset = 0)
+    parameters:
+    - id: bytes
+      type: System.Byte[]
+    - id: offset
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Shared Function FromBytes(bytes As Byte(), offset As Integer = 0) As FixedPoint64
+  overload: Core.Data.FixedPoint64.FromBytes*
+  nameWithType.vb: FixedPoint64.FromBytes(Byte(), Integer)
+  fullName.vb: Core.Data.FixedPoint64.FromBytes(Byte(), Integer)
+  name.vb: FromBytes(Byte(), Integer)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data.FixedPoint64.IsZero*
+  commentId: Overload:Core.Data.FixedPoint64.IsZero
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_IsZero
+  name: IsZero
+  nameWithType: FixedPoint64.IsZero
+  fullName: Core.Data.FixedPoint64.IsZero
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.FixedPoint64.IsPositive*
+  commentId: Overload:Core.Data.FixedPoint64.IsPositive
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_IsPositive
+  name: IsPositive
+  nameWithType: FixedPoint64.IsPositive
+  fullName: Core.Data.FixedPoint64.IsPositive
+- uid: Core.Data.FixedPoint64.IsNegative*
+  commentId: Overload:Core.Data.FixedPoint64.IsNegative
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_IsNegative
+  name: IsNegative
+  nameWithType: FixedPoint64.IsNegative
+  fullName: Core.Data.FixedPoint64.IsNegative
+- uid: Core.Data.FixedPoint64.IsNonNegative*
+  commentId: Overload:Core.Data.FixedPoint64.IsNonNegative
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_IsNonNegative
+  name: IsNonNegative
+  nameWithType: FixedPoint64.IsNonNegative
+  fullName: Core.Data.FixedPoint64.IsNonNegative
+- uid: Core.Data.FixedPoint64.IsNonPositive*
+  commentId: Overload:Core.Data.FixedPoint64.IsNonPositive
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_IsNonPositive
+  name: IsNonPositive
+  nameWithType: FixedPoint64.IsNonPositive
+  fullName: Core.Data.FixedPoint64.IsNonPositive
+- uid: Core.Data.FixedPoint64.Sign*
+  commentId: Overload:Core.Data.FixedPoint64.Sign
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Sign
+  name: Sign
+  nameWithType: FixedPoint64.Sign
+  fullName: Core.Data.FixedPoint64.Sign
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.FixedPoint64.FromRaw*
+  commentId: Overload:Core.Data.FixedPoint64.FromRaw
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromRaw_System_Int64_
+  name: FromRaw
+  nameWithType: FixedPoint64.FromRaw
+  fullName: Core.Data.FixedPoint64.FromRaw
+- uid: Core.Data.FixedPoint64.FromInt*
+  commentId: Overload:Core.Data.FixedPoint64.FromInt
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromInt_System_Int32_
+  name: FromInt
+  nameWithType: FixedPoint64.FromInt
+  fullName: Core.Data.FixedPoint64.FromInt
+- uid: Core.Data.FixedPoint64.FromLong*
+  commentId: Overload:Core.Data.FixedPoint64.FromLong
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromLong_System_Int64_
+  name: FromLong
+  nameWithType: FixedPoint64.FromLong
+  fullName: Core.Data.FixedPoint64.FromLong
+- uid: Core.Data.FixedPoint64.FromFraction*
+  commentId: Overload:Core.Data.FixedPoint64.FromFraction
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromFraction_System_Int64_System_Int64_
+  name: FromFraction
+  nameWithType: FixedPoint64.FromFraction
+  fullName: Core.Data.FixedPoint64.FromFraction
+- uid: Core.Data.FixedPoint64.FromFloat*
+  commentId: Overload:Core.Data.FixedPoint64.FromFloat
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromFloat_System_Single_
+  name: FromFloat
+  nameWithType: FixedPoint64.FromFloat
+  fullName: Core.Data.FixedPoint64.FromFloat
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Data.FixedPoint64.FromDouble*
+  commentId: Overload:Core.Data.FixedPoint64.FromDouble
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromDouble_System_Double_
+  name: FromDouble
+  nameWithType: FixedPoint64.FromDouble
+  fullName: Core.Data.FixedPoint64.FromDouble
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Core.Data.FixedPoint64.op_Addition*
+  commentId: Overload:Core.Data.FixedPoint64.op_Addition
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Addition_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator +
+  nameWithType: FixedPoint64.operator +
+  fullName: Core.Data.FixedPoint64.operator +
+  nameWithType.vb: FixedPoint64.+
+  fullName.vb: Core.Data.FixedPoint64.+
+  name.vb: +
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Addition*
+    name: +
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Addition_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Subtraction*
+  commentId: Overload:Core.Data.FixedPoint64.op_Subtraction
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Subtraction_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator -
+  nameWithType: FixedPoint64.operator -
+  fullName: Core.Data.FixedPoint64.operator -
+  nameWithType.vb: FixedPoint64.-
+  fullName.vb: Core.Data.FixedPoint64.-
+  name.vb: '-'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Subtraction*
+    name: '-'
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Subtraction_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_UnaryNegation*
+  commentId: Overload:Core.Data.FixedPoint64.op_UnaryNegation
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_UnaryNegation_Core_Data_FixedPoint64_
+  name: operator -
+  nameWithType: FixedPoint64.operator -
+  fullName: Core.Data.FixedPoint64.operator -
+  nameWithType.vb: FixedPoint64.-
+  fullName.vb: Core.Data.FixedPoint64.-
+  name.vb: '-'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_UnaryNegation*
+    name: '-'
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_UnaryNegation_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Multiply*
+  commentId: Overload:Core.Data.FixedPoint64.op_Multiply
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Multiply_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator *
+  nameWithType: FixedPoint64.operator *
+  fullName: Core.Data.FixedPoint64.operator *
+  nameWithType.vb: FixedPoint64.*
+  fullName.vb: Core.Data.FixedPoint64.*
+  name.vb: '*'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Multiply*
+    name: '*'
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Multiply_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Division*
+  commentId: Overload:Core.Data.FixedPoint64.op_Division
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Division_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator /
+  nameWithType: FixedPoint64.operator /
+  fullName: Core.Data.FixedPoint64.operator /
+  nameWithType.vb: FixedPoint64./
+  fullName.vb: Core.Data.FixedPoint64./
+  name.vb: /
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Division*
+    name: /
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Division_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Modulus*
+  commentId: Overload:Core.Data.FixedPoint64.op_Modulus
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Modulus_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator %
+  nameWithType: FixedPoint64.operator %
+  fullName: Core.Data.FixedPoint64.operator %
+  nameWithType.vb: FixedPoint64.Mod
+  fullName.vb: Core.Data.FixedPoint64.Mod
+  name.vb: Mod
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Modulus*
+    name: '%'
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Modulus_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Equality*
+  commentId: Overload:Core.Data.FixedPoint64.op_Equality
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Equality_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator ==
+  nameWithType: FixedPoint64.operator ==
+  fullName: Core.Data.FixedPoint64.operator ==
+  nameWithType.vb: FixedPoint64.=
+  fullName.vb: Core.Data.FixedPoint64.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Equality*
+    name: ==
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Equality_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_Inequality*
+  commentId: Overload:Core.Data.FixedPoint64.op_Inequality
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Inequality_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator !=
+  nameWithType: FixedPoint64.operator !=
+  fullName: Core.Data.FixedPoint64.operator !=
+  nameWithType.vb: FixedPoint64.<>
+  fullName.vb: Core.Data.FixedPoint64.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_Inequality*
+    name: '!='
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_Inequality_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_LessThan*
+  commentId: Overload:Core.Data.FixedPoint64.op_LessThan
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_LessThan_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator <
+  nameWithType: FixedPoint64.operator <
+  fullName: Core.Data.FixedPoint64.operator <
+  nameWithType.vb: FixedPoint64.<
+  fullName.vb: Core.Data.FixedPoint64.<
+  name.vb: <
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_LessThan*
+    name: <
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_LessThan_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_GreaterThan*
+  commentId: Overload:Core.Data.FixedPoint64.op_GreaterThan
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_GreaterThan_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator >
+  nameWithType: FixedPoint64.operator >
+  fullName: Core.Data.FixedPoint64.operator >
+  nameWithType.vb: FixedPoint64.>
+  fullName.vb: Core.Data.FixedPoint64.>
+  name.vb: '>'
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_GreaterThan*
+    name: '>'
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_GreaterThan_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_LessThanOrEqual*
+  commentId: Overload:Core.Data.FixedPoint64.op_LessThanOrEqual
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_LessThanOrEqual_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator <=
+  nameWithType: FixedPoint64.operator <=
+  fullName: Core.Data.FixedPoint64.operator <=
+  nameWithType.vb: FixedPoint64.<=
+  fullName.vb: Core.Data.FixedPoint64.<=
+  name.vb: <=
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_LessThanOrEqual*
+    name: <=
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_LessThanOrEqual_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.op_GreaterThanOrEqual*
+  commentId: Overload:Core.Data.FixedPoint64.op_GreaterThanOrEqual
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_GreaterThanOrEqual_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: operator >=
+  nameWithType: FixedPoint64.operator >=
+  fullName: Core.Data.FixedPoint64.operator >=
+  nameWithType.vb: FixedPoint64.>=
+  fullName.vb: Core.Data.FixedPoint64.>=
+  name.vb: '>='
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.FixedPoint64.op_GreaterThanOrEqual*
+    name: '>='
+    href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_op_GreaterThanOrEqual_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+- uid: Core.Data.FixedPoint64.ToInt*
+  commentId: Overload:Core.Data.FixedPoint64.ToInt
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToInt
+  name: ToInt
+  nameWithType: FixedPoint64.ToInt
+  fullName: Core.Data.FixedPoint64.ToInt
+- uid: Core.Data.FixedPoint64.ToLong*
+  commentId: Overload:Core.Data.FixedPoint64.ToLong
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToLong
+  name: ToLong
+  nameWithType: FixedPoint64.ToLong
+  fullName: Core.Data.FixedPoint64.ToLong
+- uid: Core.Data.FixedPoint64.ToFloat*
+  commentId: Overload:Core.Data.FixedPoint64.ToFloat
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToFloat
+  name: ToFloat
+  nameWithType: FixedPoint64.ToFloat
+  fullName: Core.Data.FixedPoint64.ToFloat
+- uid: Core.Data.FixedPoint64.ToDouble*
+  commentId: Overload:Core.Data.FixedPoint64.ToDouble
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToDouble
+  name: ToDouble
+  nameWithType: FixedPoint64.ToDouble
+  fullName: Core.Data.FixedPoint64.ToDouble
+- uid: Core.Data.FixedPoint64.Abs*
+  commentId: Overload:Core.Data.FixedPoint64.Abs
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Abs_Core_Data_FixedPoint64_
+  name: Abs
+  nameWithType: FixedPoint64.Abs
+  fullName: Core.Data.FixedPoint64.Abs
+- uid: Core.Data.FixedPoint64.Min*
+  commentId: Overload:Core.Data.FixedPoint64.Min
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Min_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Min
+  nameWithType: FixedPoint64.Min
+  fullName: Core.Data.FixedPoint64.Min
+- uid: Core.Data.FixedPoint64.Max*
+  commentId: Overload:Core.Data.FixedPoint64.Max
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Max_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Max
+  nameWithType: FixedPoint64.Max
+  fullName: Core.Data.FixedPoint64.Max
+- uid: Core.Data.FixedPoint64.Clamp*
+  commentId: Overload:Core.Data.FixedPoint64.Clamp
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Clamp_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Clamp
+  nameWithType: FixedPoint64.Clamp
+  fullName: Core.Data.FixedPoint64.Clamp
+- uid: Core.Data.FixedPoint64.Floor*
+  commentId: Overload:Core.Data.FixedPoint64.Floor
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Floor_Core_Data_FixedPoint64_
+  name: Floor
+  nameWithType: FixedPoint64.Floor
+  fullName: Core.Data.FixedPoint64.Floor
+- uid: Core.Data.FixedPoint64.Ceiling*
+  commentId: Overload:Core.Data.FixedPoint64.Ceiling
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Ceiling_Core_Data_FixedPoint64_
+  name: Ceiling
+  nameWithType: FixedPoint64.Ceiling
+  fullName: Core.Data.FixedPoint64.Ceiling
+- uid: Core.Data.FixedPoint64.Round*
+  commentId: Overload:Core.Data.FixedPoint64.Round
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Round_Core_Data_FixedPoint64_
+  name: Round
+  nameWithType: FixedPoint64.Round
+  fullName: Core.Data.FixedPoint64.Round
+- uid: Core.Data.FixedPoint64.Sqrt*
+  commentId: Overload:Core.Data.FixedPoint64.Sqrt
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Sqrt_Core_Data_FixedPoint64_
+  name: Sqrt
+  nameWithType: FixedPoint64.Sqrt
+  fullName: Core.Data.FixedPoint64.Sqrt
+- uid: Core.Data.FixedPoint64.Pow*
+  commentId: Overload:Core.Data.FixedPoint64.Pow
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Pow_Core_Data_FixedPoint64_System_Int32_
+  name: Pow
+  nameWithType: FixedPoint64.Pow
+  fullName: Core.Data.FixedPoint64.Pow
+- uid: Core.Data.FixedPoint64.Lerp*
+  commentId: Overload:Core.Data.FixedPoint64.Lerp
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Lerp_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Lerp
+  nameWithType: FixedPoint64.Lerp
+  fullName: Core.Data.FixedPoint64.Lerp
+- uid: Core.Data.FixedPoint64.LerpClamped*
+  commentId: Overload:Core.Data.FixedPoint64.LerpClamped
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_LerpClamped_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: LerpClamped
+  nameWithType: FixedPoint64.LerpClamped
+  fullName: Core.Data.FixedPoint64.LerpClamped
+- uid: Core.Data.FixedPoint64.InverseLerp*
+  commentId: Overload:Core.Data.FixedPoint64.InverseLerp
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_InverseLerp_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: InverseLerp
+  nameWithType: FixedPoint64.InverseLerp
+  fullName: Core.Data.FixedPoint64.InverseLerp
+- uid: Core.Data.FixedPoint64.Remap*
+  commentId: Overload:Core.Data.FixedPoint64.Remap
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Remap_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Remap
+  nameWithType: FixedPoint64.Remap
+  fullName: Core.Data.FixedPoint64.Remap
+- uid: Core.Data.FixedPoint64.RemapClamped*
+  commentId: Overload:Core.Data.FixedPoint64.RemapClamped
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_RemapClamped_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: RemapClamped
+  nameWithType: FixedPoint64.RemapClamped
+  fullName: Core.Data.FixedPoint64.RemapClamped
+- uid: Core.Data.FixedPoint64.MoveTowards*
+  commentId: Overload:Core.Data.FixedPoint64.MoveTowards
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_MoveTowards_Core_Data_FixedPoint64_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: MoveTowards
+  nameWithType: FixedPoint64.MoveTowards
+  fullName: Core.Data.FixedPoint64.MoveTowards
+- uid: Core.Data.FixedPoint64.Frac*
+  commentId: Overload:Core.Data.FixedPoint64.Frac
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Frac_Core_Data_FixedPoint64_
+  name: Frac
+  nameWithType: FixedPoint64.Frac
+  fullName: Core.Data.FixedPoint64.Frac
+- uid: Core.Data.FixedPoint64.Percentage*
+  commentId: Overload:Core.Data.FixedPoint64.Percentage
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Percentage_Core_Data_FixedPoint64_Core_Data_FixedPoint64_
+  name: Percentage
+  nameWithType: FixedPoint64.Percentage
+  fullName: Core.Data.FixedPoint64.Percentage
+- uid: Core.Data.FixedPoint64.Equals*
+  commentId: Overload:Core.Data.FixedPoint64.Equals
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_Equals_Core_Data_FixedPoint64_
+  name: Equals
+  nameWithType: FixedPoint64.Equals
+  fullName: Core.Data.FixedPoint64.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint64.GetHashCode*
+  commentId: Overload:Core.Data.FixedPoint64.GetHashCode
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_GetHashCode
+  name: GetHashCode
+  nameWithType: FixedPoint64.GetHashCode
+  fullName: Core.Data.FixedPoint64.GetHashCode
+- uid: Core.Data.FixedPoint64.CompareTo*
+  commentId: Overload:Core.Data.FixedPoint64.CompareTo
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_CompareTo_Core_Data_FixedPoint64_
+  name: CompareTo
+  nameWithType: FixedPoint64.CompareTo
+  fullName: Core.Data.FixedPoint64.CompareTo
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint64.ToString*
+  commentId: Overload:Core.Data.FixedPoint64.ToString
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToString
+  name: ToString
+  nameWithType: FixedPoint64.ToString
+  fullName: Core.Data.FixedPoint64.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.FixedPoint64.ToBytes*
+  commentId: Overload:Core.Data.FixedPoint64.ToBytes
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_ToBytes
+  name: ToBytes
+  nameWithType: FixedPoint64.ToBytes
+  fullName: Core.Data.FixedPoint64.ToBytes
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.FixedPoint64.FromBytes*
+  commentId: Overload:Core.Data.FixedPoint64.FromBytes
+  href: Core.Data.FixedPoint64.html#Core_Data_FixedPoint64_FromBytes_System_Byte___System_Int32_
+  name: FromBytes
+  nameWithType: FixedPoint64.FromBytes
+  fullName: Core.Data.FixedPoint64.FromBytes

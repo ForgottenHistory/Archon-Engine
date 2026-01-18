@@ -1,0 +1,240 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BillboardAtlasGenerator
+  commentId: T:Map.Rendering.BillboardAtlasGenerator
+  id: BillboardAtlasGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+  - Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas(System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: BillboardAtlasGenerator
+  nameWithType: BillboardAtlasGenerator
+  fullName: Map.Rendering.BillboardAtlasGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BillboardAtlasGenerator
+    path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Optional utility for generating texture atlases at runtime.
+
+    Can generate numeric atlases (0-99) or custom character sets.
+
+
+    Use Cases:
+
+    - Unit count badges (grand strategy games)
+
+    - Score displays
+
+    - Numeric indicators on map
+
+    - Any instanced text rendering
+
+
+    Architecture:
+
+    - Generates texture at runtime (no asset files needed)
+
+    - Procedural bitmap font for digits
+
+    - Point filtering for crisp text at any distance
+
+    - Configurable colors and resolution
+
+
+    NOTE: This is an optional feature. Games don't need to use this
+
+    if they don't need numeric badges or have their own text rendering.
+  example: []
+  syntax:
+    content: 'public class BillboardAtlasGenerator : MonoBehaviour'
+    content.vb: Public Class BillboardAtlasGenerator Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+  commentId: P:Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+  id: AtlasTexture
+  parent: Map.Rendering.BillboardAtlasGenerator
+  langs:
+  - csharp
+  - vb
+  name: AtlasTexture
+  nameWithType: BillboardAtlasGenerator.AtlasTexture
+  fullName: Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AtlasTexture
+    path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the generated atlas texture. Generates on first access.
+  example: []
+  syntax:
+    content: public Texture2D AtlasTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property AtlasTexture As Texture2D
+  overload: Map.Rendering.BillboardAtlasGenerator.AtlasTexture*
+- uid: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas(System.Boolean)
+  commentId: M:Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas(System.Boolean)
+  id: GetOrGenerateAtlas(System.Boolean)
+  parent: Map.Rendering.BillboardAtlasGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetOrGenerateAtlas(bool)
+  nameWithType: BillboardAtlasGenerator.GetOrGenerateAtlas(bool)
+  fullName: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOrGenerateAtlas
+    path: Scripts/Map/Rendering/BillboardAtlasGenerator.cs
+    startLine: 52
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get atlas texture with explicit generation.
+
+    Useful for forcing regeneration with new settings.
+  example: []
+  syntax:
+    content: public Texture2D GetOrGenerateAtlas(bool forceRegenerate = false)
+    parameters:
+    - id: forceRegenerate
+      type: System.Boolean
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Function GetOrGenerateAtlas(forceRegenerate As Boolean = False) As Texture2D
+  overload: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas*
+  nameWithType.vb: BillboardAtlasGenerator.GetOrGenerateAtlas(Boolean)
+  fullName.vb: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas(Boolean)
+  name.vb: GetOrGenerateAtlas(Boolean)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.BillboardAtlasGenerator.AtlasTexture*
+  commentId: Overload:Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+  href: Map.Rendering.BillboardAtlasGenerator.html#Map_Rendering_BillboardAtlasGenerator_AtlasTexture
+  name: AtlasTexture
+  nameWithType: BillboardAtlasGenerator.AtlasTexture
+  fullName: Map.Rendering.BillboardAtlasGenerator.AtlasTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas*
+  commentId: Overload:Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas
+  href: Map.Rendering.BillboardAtlasGenerator.html#Map_Rendering_BillboardAtlasGenerator_GetOrGenerateAtlas_System_Boolean_
+  name: GetOrGenerateAtlas
+  nameWithType: BillboardAtlasGenerator.GetOrGenerateAtlas
+  fullName: Map.Rendering.BillboardAtlasGenerator.GetOrGenerateAtlas
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

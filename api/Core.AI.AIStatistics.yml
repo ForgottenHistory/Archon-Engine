@@ -1,0 +1,522 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIStatistics
+  commentId: T:Core.AI.AIStatistics
+  id: AIStatistics
+  parent: Core.AI
+  children:
+  - Core.AI.AIStatistics.#ctor(System.Int32)
+  - Core.AI.AIStatistics.AverageProcessingTimeMs
+  - Core.AI.AIStatistics.GetProcessedByTier(System.Int32)
+  - Core.AI.AIStatistics.GetSummary
+  - Core.AI.AIStatistics.RecordProcessing(System.Byte,System.UInt16,System.Int64,System.Boolean)
+  - Core.AI.AIStatistics.RecordSkipped
+  - Core.AI.AIStatistics.Reset
+  - Core.AI.AIStatistics.TotalProcessed
+  - Core.AI.AIStatistics.TotalSkipped
+  - Core.AI.AIStatistics.TotalTimeouts
+  langs:
+  - csharp
+  - vb
+  name: AIStatistics
+  nameWithType: AIStatistics
+  fullName: Core.AI.AIStatistics
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIStatistics
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: 'ENGINE: Statistics for AI system debugging and profiling.'
+  example: []
+  syntax:
+    content: public class AIStatistics
+    content.vb: Public Class AIStatistics
+  inheritance:
+  - System.Object
+- uid: Core.AI.AIStatistics.#ctor(System.Int32)
+  commentId: M:Core.AI.AIStatistics.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: AIStatistics(int)
+  nameWithType: AIStatistics.AIStatistics(int)
+  fullName: Core.AI.AIStatistics.AIStatistics(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AIStatistics(int maxTiers = 8)
+    parameters:
+    - id: maxTiers
+      type: System.Int32
+    content.vb: Public Sub New(maxTiers As Integer = 8)
+  overload: Core.AI.AIStatistics.#ctor*
+  nameWithType.vb: AIStatistics.New(Integer)
+  fullName.vb: Core.AI.AIStatistics.New(Integer)
+  name.vb: New(Integer)
+- uid: Core.AI.AIStatistics.RecordProcessing(System.Byte,System.UInt16,System.Int64,System.Boolean)
+  commentId: M:Core.AI.AIStatistics.RecordProcessing(System.Byte,System.UInt16,System.Int64,System.Boolean)
+  id: RecordProcessing(System.Byte,System.UInt16,System.Int64,System.Boolean)
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: RecordProcessing(byte, ushort, long, bool)
+  nameWithType: AIStatistics.RecordProcessing(byte, ushort, long, bool)
+  fullName: Core.AI.AIStatistics.RecordProcessing(byte, ushort, long, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RecordProcessing
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Record an AI processing event.
+  example: []
+  syntax:
+    content: public void RecordProcessing(byte tier, ushort goalID, long elapsedTicks, bool timedOut)
+    parameters:
+    - id: tier
+      type: System.Byte
+    - id: goalID
+      type: System.UInt16
+    - id: elapsedTicks
+      type: System.Int64
+    - id: timedOut
+      type: System.Boolean
+    content.vb: Public Sub RecordProcessing(tier As Byte, goalID As UShort, elapsedTicks As Long, timedOut As Boolean)
+  overload: Core.AI.AIStatistics.RecordProcessing*
+  nameWithType.vb: AIStatistics.RecordProcessing(Byte, UShort, Long, Boolean)
+  fullName.vb: Core.AI.AIStatistics.RecordProcessing(Byte, UShort, Long, Boolean)
+  name.vb: RecordProcessing(Byte, UShort, Long, Boolean)
+- uid: Core.AI.AIStatistics.RecordSkipped
+  commentId: M:Core.AI.AIStatistics.RecordSkipped
+  id: RecordSkipped
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: RecordSkipped()
+  nameWithType: AIStatistics.RecordSkipped()
+  fullName: Core.AI.AIStatistics.RecordSkipped()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RecordSkipped
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Record a skipped AI (inactive).
+  example: []
+  syntax:
+    content: public void RecordSkipped()
+    content.vb: Public Sub RecordSkipped()
+  overload: Core.AI.AIStatistics.RecordSkipped*
+- uid: Core.AI.AIStatistics.Reset
+  commentId: M:Core.AI.AIStatistics.Reset
+  id: Reset
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: Reset()
+  nameWithType: AIStatistics.Reset()
+  fullName: Core.AI.AIStatistics.Reset()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Reset
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Reset all statistics.
+  example: []
+  syntax:
+    content: public void Reset()
+    content.vb: Public Sub Reset()
+  overload: Core.AI.AIStatistics.Reset*
+- uid: Core.AI.AIStatistics.TotalProcessed
+  commentId: P:Core.AI.AIStatistics.TotalProcessed
+  id: TotalProcessed
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalProcessed
+  nameWithType: AIStatistics.TotalProcessed
+  fullName: Core.AI.AIStatistics.TotalProcessed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalProcessed
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public int TotalProcessed { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalProcessed As Integer
+  overload: Core.AI.AIStatistics.TotalProcessed*
+- uid: Core.AI.AIStatistics.TotalSkipped
+  commentId: P:Core.AI.AIStatistics.TotalSkipped
+  id: TotalSkipped
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalSkipped
+  nameWithType: AIStatistics.TotalSkipped
+  fullName: Core.AI.AIStatistics.TotalSkipped
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalSkipped
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public int TotalSkipped { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalSkipped As Integer
+  overload: Core.AI.AIStatistics.TotalSkipped*
+- uid: Core.AI.AIStatistics.TotalTimeouts
+  commentId: P:Core.AI.AIStatistics.TotalTimeouts
+  id: TotalTimeouts
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: TotalTimeouts
+  nameWithType: AIStatistics.TotalTimeouts
+  fullName: Core.AI.AIStatistics.TotalTimeouts
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalTimeouts
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public int TotalTimeouts { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalTimeouts As Integer
+  overload: Core.AI.AIStatistics.TotalTimeouts*
+- uid: Core.AI.AIStatistics.AverageProcessingTimeMs
+  commentId: P:Core.AI.AIStatistics.AverageProcessingTimeMs
+  id: AverageProcessingTimeMs
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: AverageProcessingTimeMs
+  nameWithType: AIStatistics.AverageProcessingTimeMs
+  fullName: Core.AI.AIStatistics.AverageProcessingTimeMs
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageProcessingTimeMs
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public double AverageProcessingTimeMs { get; }
+    parameters: []
+    return:
+      type: System.Double
+    content.vb: Public ReadOnly Property AverageProcessingTimeMs As Double
+  overload: Core.AI.AIStatistics.AverageProcessingTimeMs*
+- uid: Core.AI.AIStatistics.GetProcessedByTier(System.Int32)
+  commentId: M:Core.AI.AIStatistics.GetProcessedByTier(System.Int32)
+  id: GetProcessedByTier(System.Int32)
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: GetProcessedByTier(int)
+  nameWithType: AIStatistics.GetProcessedByTier(int)
+  fullName: Core.AI.AIStatistics.GetProcessedByTier(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProcessedByTier
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public int GetProcessedByTier(int tier)
+    parameters:
+    - id: tier
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function GetProcessedByTier(tier As Integer) As Integer
+  overload: Core.AI.AIStatistics.GetProcessedByTier*
+  nameWithType.vb: AIStatistics.GetProcessedByTier(Integer)
+  fullName.vb: Core.AI.AIStatistics.GetProcessedByTier(Integer)
+  name.vb: GetProcessedByTier(Integer)
+- uid: Core.AI.AIStatistics.GetSummary
+  commentId: M:Core.AI.AIStatistics.GetSummary
+  id: GetSummary
+  parent: Core.AI.AIStatistics
+  langs:
+  - csharp
+  - vb
+  name: GetSummary()
+  nameWithType: AIStatistics.GetSummary()
+  fullName: Core.AI.AIStatistics.GetSummary()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIStatistics.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSummary
+    path: Scripts/Core/AI/AIStatistics.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get statistics summary as string.
+  example: []
+  syntax:
+    content: public string GetSummary()
+    return:
+      type: System.String
+    content.vb: Public Function GetSummary() As String
+  overload: Core.AI.AIStatistics.GetSummary*
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.AIStatistics.#ctor*
+  commentId: Overload:Core.AI.AIStatistics.#ctor
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics__ctor_System_Int32_
+  name: AIStatistics
+  nameWithType: AIStatistics.AIStatistics
+  fullName: Core.AI.AIStatistics.AIStatistics
+  nameWithType.vb: AIStatistics.New
+  fullName.vb: Core.AI.AIStatistics.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.AI.AIStatistics.RecordProcessing*
+  commentId: Overload:Core.AI.AIStatistics.RecordProcessing
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_RecordProcessing_System_Byte_System_UInt16_System_Int64_System_Boolean_
+  name: RecordProcessing
+  nameWithType: AIStatistics.RecordProcessing
+  fullName: Core.AI.AIStatistics.RecordProcessing
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.AI.AIStatistics.RecordSkipped*
+  commentId: Overload:Core.AI.AIStatistics.RecordSkipped
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_RecordSkipped
+  name: RecordSkipped
+  nameWithType: AIStatistics.RecordSkipped
+  fullName: Core.AI.AIStatistics.RecordSkipped
+- uid: Core.AI.AIStatistics.Reset*
+  commentId: Overload:Core.AI.AIStatistics.Reset
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_Reset
+  name: Reset
+  nameWithType: AIStatistics.Reset
+  fullName: Core.AI.AIStatistics.Reset
+- uid: Core.AI.AIStatistics.TotalProcessed*
+  commentId: Overload:Core.AI.AIStatistics.TotalProcessed
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_TotalProcessed
+  name: TotalProcessed
+  nameWithType: AIStatistics.TotalProcessed
+  fullName: Core.AI.AIStatistics.TotalProcessed
+- uid: Core.AI.AIStatistics.TotalSkipped*
+  commentId: Overload:Core.AI.AIStatistics.TotalSkipped
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_TotalSkipped
+  name: TotalSkipped
+  nameWithType: AIStatistics.TotalSkipped
+  fullName: Core.AI.AIStatistics.TotalSkipped
+- uid: Core.AI.AIStatistics.TotalTimeouts*
+  commentId: Overload:Core.AI.AIStatistics.TotalTimeouts
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_TotalTimeouts
+  name: TotalTimeouts
+  nameWithType: AIStatistics.TotalTimeouts
+  fullName: Core.AI.AIStatistics.TotalTimeouts
+- uid: Core.AI.AIStatistics.AverageProcessingTimeMs*
+  commentId: Overload:Core.AI.AIStatistics.AverageProcessingTimeMs
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_AverageProcessingTimeMs
+  name: AverageProcessingTimeMs
+  nameWithType: AIStatistics.AverageProcessingTimeMs
+  fullName: Core.AI.AIStatistics.AverageProcessingTimeMs
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Core.AI.AIStatistics.GetProcessedByTier*
+  commentId: Overload:Core.AI.AIStatistics.GetProcessedByTier
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_GetProcessedByTier_System_Int32_
+  name: GetProcessedByTier
+  nameWithType: AIStatistics.GetProcessedByTier
+  fullName: Core.AI.AIStatistics.GetProcessedByTier
+- uid: Core.AI.AIStatistics.GetSummary*
+  commentId: Overload:Core.AI.AIStatistics.GetSummary
+  href: Core.AI.AIStatistics.html#Core_AI_AIStatistics_GetSummary
+  name: GetSummary
+  nameWithType: AIStatistics.GetSummary
+  fullName: Core.AI.AIStatistics.GetSummary
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

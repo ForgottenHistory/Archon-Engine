@@ -1,0 +1,403 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Jobs.ProvinceProcessingResult
+  commentId: T:Core.Jobs.ProvinceProcessingResult
+  id: ProvinceProcessingResult
+  parent: Core.Jobs
+  children:
+  - Core.Jobs.ProvinceProcessingResult.Dispose
+  - Core.Jobs.ProvinceProcessingResult.Failure(System.String)
+  - Core.Jobs.ProvinceProcessingResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  - Core.Jobs.ProvinceProcessingResult.errorMessage
+  - Core.Jobs.ProvinceProcessingResult.processedCount
+  - Core.Jobs.ProvinceProcessingResult.provinces
+  - Core.Jobs.ProvinceProcessingResult.success
+  langs:
+  - csharp
+  - vb
+  name: ProvinceProcessingResult
+  nameWithType: ProvinceProcessingResult
+  fullName: Core.Jobs.ProvinceProcessingResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceProcessingResult
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: Job result containing processed province data
+  example: []
+  syntax:
+    content: public struct ProvinceProcessingResult
+    content.vb: Public Structure ProvinceProcessingResult
+- uid: Core.Jobs.ProvinceProcessingResult.success
+  commentId: F:Core.Jobs.ProvinceProcessingResult.success
+  id: success
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: success
+  nameWithType: ProvinceProcessingResult.success
+  fullName: Core.Jobs.ProvinceProcessingResult.success
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: success
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public bool success
+    return:
+      type: System.Boolean
+    content.vb: Public success As Boolean
+- uid: Core.Jobs.ProvinceProcessingResult.provinces
+  commentId: F:Core.Jobs.ProvinceProcessingResult.provinces
+  id: provinces
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: provinces
+  nameWithType: ProvinceProcessingResult.provinces
+  fullName: Core.Jobs.ProvinceProcessingResult.provinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinces
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public NativeArray<ProvinceInitialState> provinces
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+    content.vb: Public provinces As NativeArray(Of ProvinceInitialState)
+- uid: Core.Jobs.ProvinceProcessingResult.processedCount
+  commentId: F:Core.Jobs.ProvinceProcessingResult.processedCount
+  id: processedCount
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: processedCount
+  nameWithType: ProvinceProcessingResult.processedCount
+  fullName: Core.Jobs.ProvinceProcessingResult.processedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: processedCount
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 99
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public int processedCount
+    return:
+      type: System.Int32
+    content.vb: Public processedCount As Integer
+- uid: Core.Jobs.ProvinceProcessingResult.errorMessage
+  commentId: F:Core.Jobs.ProvinceProcessingResult.errorMessage
+  id: errorMessage
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: errorMessage
+  nameWithType: ProvinceProcessingResult.errorMessage
+  fullName: Core.Jobs.ProvinceProcessingResult.errorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: errorMessage
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public string errorMessage
+    return:
+      type: System.String
+    content.vb: Public errorMessage As String
+- uid: Core.Jobs.ProvinceProcessingResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  commentId: M:Core.Jobs.ProvinceProcessingResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  id: Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: Success(NativeArray<ProvinceInitialState>, int)
+  nameWithType: ProvinceProcessingResult.Success(NativeArray<ProvinceInitialState>, int)
+  fullName: Core.Jobs.ProvinceProcessingResult.Success(Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public static ProvinceProcessingResult Success(NativeArray<ProvinceInitialState> data, int count)
+    parameters:
+    - id: data
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+    - id: count
+      type: System.Int32
+    return:
+      type: Core.Jobs.ProvinceProcessingResult
+    content.vb: Public Shared Function Success(data As NativeArray(Of ProvinceInitialState), count As Integer) As ProvinceProcessingResult
+  overload: Core.Jobs.ProvinceProcessingResult.Success*
+  nameWithType.vb: ProvinceProcessingResult.Success(NativeArray(Of ProvinceInitialState), Integer)
+  fullName.vb: Core.Jobs.ProvinceProcessingResult.Success(Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState), Integer)
+  name.vb: Success(NativeArray(Of ProvinceInitialState), Integer)
+- uid: Core.Jobs.ProvinceProcessingResult.Failure(System.String)
+  commentId: M:Core.Jobs.ProvinceProcessingResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: ProvinceProcessingResult.Failure(string)
+  fullName: Core.Jobs.ProvinceProcessingResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public static ProvinceProcessingResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Jobs.ProvinceProcessingResult
+    content.vb: Public Shared Function Failure([error] As String) As ProvinceProcessingResult
+  overload: Core.Jobs.ProvinceProcessingResult.Failure*
+  nameWithType.vb: ProvinceProcessingResult.Failure(String)
+  fullName.vb: Core.Jobs.ProvinceProcessingResult.Failure(String)
+  name.vb: Failure(String)
+- uid: Core.Jobs.ProvinceProcessingResult.Dispose
+  commentId: M:Core.Jobs.ProvinceProcessingResult.Dispose
+  id: Dispose
+  parent: Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceProcessingResult.Dispose()
+  fullName: Core.Jobs.ProvinceProcessingResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Jobs/ProvinceProcessingJob.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Jobs.ProvinceProcessingResult.Dispose*
+references:
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  href: Core.html
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.ProvinceInitialState.html
+  name: NativeArray<ProvinceInitialState>
+  nameWithType: NativeArray<ProvinceInitialState>
+  fullName: Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>
+  nameWithType.vb: NativeArray(Of ProvinceInitialState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState)
+  name.vb: NativeArray(Of ProvinceInitialState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Jobs.ProvinceProcessingResult.Success*
+  commentId: Overload:Core.Jobs.ProvinceProcessingResult.Success
+  href: Core.Jobs.ProvinceProcessingResult.html#Core_Jobs_ProvinceProcessingResult_Success_Unity_Collections_NativeArray_Core_Data_ProvinceInitialState__System_Int32_
+  name: Success
+  nameWithType: ProvinceProcessingResult.Success
+  fullName: Core.Jobs.ProvinceProcessingResult.Success
+- uid: Core.Jobs.ProvinceProcessingResult
+  commentId: T:Core.Jobs.ProvinceProcessingResult
+  parent: Core.Jobs
+  href: Core.Jobs.ProvinceProcessingResult.html
+  name: ProvinceProcessingResult
+  nameWithType: ProvinceProcessingResult
+  fullName: Core.Jobs.ProvinceProcessingResult
+- uid: Core.Jobs.ProvinceProcessingResult.Failure*
+  commentId: Overload:Core.Jobs.ProvinceProcessingResult.Failure
+  href: Core.Jobs.ProvinceProcessingResult.html#Core_Jobs_ProvinceProcessingResult_Failure_System_String_
+  name: Failure
+  nameWithType: ProvinceProcessingResult.Failure
+  fullName: Core.Jobs.ProvinceProcessingResult.Failure
+- uid: Core.Jobs.ProvinceProcessingResult.Dispose*
+  commentId: Overload:Core.Jobs.ProvinceProcessingResult.Dispose
+  href: Core.Jobs.ProvinceProcessingResult.html#Core_Jobs_ProvinceProcessingResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceProcessingResult.Dispose
+  fullName: Core.Jobs.ProvinceProcessingResult.Dispose

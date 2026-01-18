@@ -1,0 +1,737 @@
+### YamlMime:ManagedReference
+items:
+- uid: Utils.CircularBuffer`1
+  commentId: T:Utils.CircularBuffer`1
+  id: CircularBuffer`1
+  parent: Utils
+  children:
+  - Utils.CircularBuffer`1.#ctor(System.Int32)
+  - Utils.CircularBuffer`1.Add(`0)
+  - Utils.CircularBuffer`1.Capacity
+  - Utils.CircularBuffer`1.Clear
+  - Utils.CircularBuffer`1.Count
+  - Utils.CircularBuffer`1.GetAll
+  - Utils.CircularBuffer`1.GetMostRecent(System.Int32)
+  - Utils.CircularBuffer`1.GetOldest(System.Int32)
+  - Utils.CircularBuffer`1.IsEmpty
+  - Utils.CircularBuffer`1.IsFull
+  - Utils.CircularBuffer`1.PeekNewest
+  - Utils.CircularBuffer`1.PeekOldest
+  - Utils.CircularBuffer`1.RemoveOldest
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Utils.CircularBuffer<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CircularBuffer
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 12
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: >-
+    Fixed-size circular buffer for bounded data storage.
+
+    Prevents unbounded growth in late-game scenarios.
+
+    When full, adding new items overwrites the oldest.
+
+    Used for province history, event logs, replay buffers, etc.
+  example: []
+  syntax:
+    content: public class CircularBuffer<T>
+    typeParameters:
+    - id: T
+      description: Type of elements stored in the buffer.
+    content.vb: Public Class CircularBuffer(Of T)
+  inheritance:
+  - System.Object
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Utils.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+- uid: Utils.CircularBuffer`1.#ctor(System.Int32)
+  commentId: M:Utils.CircularBuffer`1.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer(int)
+  nameWithType: CircularBuffer<T>.CircularBuffer(int)
+  fullName: Utils.CircularBuffer<T>.CircularBuffer(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 25
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Creates a new circular buffer with the specified capacity.
+  example: []
+  syntax:
+    content: public CircularBuffer(int capacity)
+    parameters:
+    - id: capacity
+      type: System.Int32
+      description: Maximum number of items the buffer can hold.
+    content.vb: Public Sub New(capacity As Integer)
+  overload: Utils.CircularBuffer`1.#ctor*
+  exceptions:
+  - type: System.ArgumentException
+    commentId: T:System.ArgumentException
+    description: Thrown if capacity is not positive.
+  nameWithType.vb: CircularBuffer(Of T).New(Integer)
+  fullName.vb: Utils.CircularBuffer(Of T).New(Integer)
+  name.vb: New(Integer)
+- uid: Utils.CircularBuffer`1.Count
+  commentId: P:Utils.CircularBuffer`1.Count
+  id: Count
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Utils.CircularBuffer<T>.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 38
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Current number of items in the buffer.
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Utils.CircularBuffer`1.Count*
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Utils.CircularBuffer(Of T).Count
+- uid: Utils.CircularBuffer`1.Capacity
+  commentId: P:Utils.CircularBuffer`1.Capacity
+  id: Capacity
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Utils.CircularBuffer<T>.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 41
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Maximum number of items the buffer can hold.
+  example: []
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Utils.CircularBuffer`1.Capacity*
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Utils.CircularBuffer(Of T).Capacity
+- uid: Utils.CircularBuffer`1.IsEmpty
+  commentId: P:Utils.CircularBuffer`1.IsEmpty
+  id: IsEmpty
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: IsEmpty
+  nameWithType: CircularBuffer<T>.IsEmpty
+  fullName: Utils.CircularBuffer<T>.IsEmpty
+  type: Property
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsEmpty
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 44
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: True if the buffer contains no items.
+  example: []
+  syntax:
+    content: public bool IsEmpty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsEmpty As Boolean
+  overload: Utils.CircularBuffer`1.IsEmpty*
+  nameWithType.vb: CircularBuffer(Of T).IsEmpty
+  fullName.vb: Utils.CircularBuffer(Of T).IsEmpty
+- uid: Utils.CircularBuffer`1.IsFull
+  commentId: P:Utils.CircularBuffer`1.IsFull
+  id: IsFull
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: IsFull
+  nameWithType: CircularBuffer<T>.IsFull
+  fullName: Utils.CircularBuffer<T>.IsFull
+  type: Property
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsFull
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 47
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: True if the buffer is at capacity (next Add will overwrite oldest).
+  example: []
+  syntax:
+    content: public bool IsFull { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsFull As Boolean
+  overload: Utils.CircularBuffer`1.IsFull*
+  nameWithType.vb: CircularBuffer(Of T).IsFull
+  fullName.vb: Utils.CircularBuffer(Of T).IsFull
+- uid: Utils.CircularBuffer`1.Add(`0)
+  commentId: M:Utils.CircularBuffer`1.Add(`0)
+  id: Add(`0)
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Add(T)
+  nameWithType: CircularBuffer<T>.Add(T)
+  fullName: Utils.CircularBuffer<T>.Add(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 52
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Add item to buffer (overwrites oldest if full)
+  example: []
+  syntax:
+    content: public void Add(T item)
+    parameters:
+    - id: item
+      type: '{T}'
+    content.vb: Public Sub Add(item As T)
+  overload: Utils.CircularBuffer`1.Add*
+  nameWithType.vb: CircularBuffer(Of T).Add(T)
+  fullName.vb: Utils.CircularBuffer(Of T).Add(T)
+- uid: Utils.CircularBuffer`1.RemoveOldest
+  commentId: M:Utils.CircularBuffer`1.RemoveOldest
+  id: RemoveOldest
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: RemoveOldest()
+  nameWithType: CircularBuffer<T>.RemoveOldest()
+  fullName: Utils.CircularBuffer<T>.RemoveOldest()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveOldest
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 71
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Remove and return oldest item
+  example: []
+  syntax:
+    content: public T RemoveOldest()
+    return:
+      type: '{T}'
+    content.vb: Public Function RemoveOldest() As T
+  overload: Utils.CircularBuffer`1.RemoveOldest*
+  nameWithType.vb: CircularBuffer(Of T).RemoveOldest()
+  fullName.vb: Utils.CircularBuffer(Of T).RemoveOldest()
+- uid: Utils.CircularBuffer`1.GetMostRecent(System.Int32)
+  commentId: M:Utils.CircularBuffer`1.GetMostRecent(System.Int32)
+  id: GetMostRecent(System.Int32)
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: GetMostRecent(int)
+  nameWithType: CircularBuffer<T>.GetMostRecent(int)
+  fullName: Utils.CircularBuffer<T>.GetMostRecent(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMostRecent
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 87
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Get most recent N items without removing them
+  example: []
+  syntax:
+    content: public IEnumerable<T> GetMostRecent(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetMostRecent(count As Integer) As IEnumerable(Of T)
+  overload: Utils.CircularBuffer`1.GetMostRecent*
+  nameWithType.vb: CircularBuffer(Of T).GetMostRecent(Integer)
+  fullName.vb: Utils.CircularBuffer(Of T).GetMostRecent(Integer)
+  name.vb: GetMostRecent(Integer)
+- uid: Utils.CircularBuffer`1.GetOldest(System.Int32)
+  commentId: M:Utils.CircularBuffer`1.GetOldest(System.Int32)
+  id: GetOldest(System.Int32)
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: GetOldest(int)
+  nameWithType: CircularBuffer<T>.GetOldest(int)
+  fullName: Utils.CircularBuffer<T>.GetOldest(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOldest
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 108
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Get oldest N items without removing them
+  example: []
+  syntax:
+    content: public IEnumerable<T> GetOldest(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetOldest(count As Integer) As IEnumerable(Of T)
+  overload: Utils.CircularBuffer`1.GetOldest*
+  nameWithType.vb: CircularBuffer(Of T).GetOldest(Integer)
+  fullName.vb: Utils.CircularBuffer(Of T).GetOldest(Integer)
+  name.vb: GetOldest(Integer)
+- uid: Utils.CircularBuffer`1.GetAll
+  commentId: M:Utils.CircularBuffer`1.GetAll
+  id: GetAll
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: GetAll()
+  nameWithType: CircularBuffer<T>.GetAll()
+  fullName: Utils.CircularBuffer<T>.GetAll()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAll
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 126
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Get all items from oldest to newest
+  example: []
+  syntax:
+    content: public IEnumerable<T> GetAll()
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetAll() As IEnumerable(Of T)
+  overload: Utils.CircularBuffer`1.GetAll*
+  nameWithType.vb: CircularBuffer(Of T).GetAll()
+  fullName.vb: Utils.CircularBuffer(Of T).GetAll()
+- uid: Utils.CircularBuffer`1.Clear
+  commentId: M:Utils.CircularBuffer`1.Clear
+  id: Clear
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: CircularBuffer<T>.Clear()
+  fullName: Utils.CircularBuffer<T>.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 134
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Clear all items
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Utils.CircularBuffer`1.Clear*
+  nameWithType.vb: CircularBuffer(Of T).Clear()
+  fullName.vb: Utils.CircularBuffer(Of T).Clear()
+- uid: Utils.CircularBuffer`1.PeekNewest
+  commentId: M:Utils.CircularBuffer`1.PeekNewest
+  id: PeekNewest
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: PeekNewest()
+  nameWithType: CircularBuffer<T>.PeekNewest()
+  fullName: Utils.CircularBuffer<T>.PeekNewest()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PeekNewest
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 145
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Peek at newest item without removing
+  example: []
+  syntax:
+    content: public T PeekNewest()
+    return:
+      type: '{T}'
+    content.vb: Public Function PeekNewest() As T
+  overload: Utils.CircularBuffer`1.PeekNewest*
+  nameWithType.vb: CircularBuffer(Of T).PeekNewest()
+  fullName.vb: Utils.CircularBuffer(Of T).PeekNewest()
+- uid: Utils.CircularBuffer`1.PeekOldest
+  commentId: M:Utils.CircularBuffer`1.PeekOldest
+  id: PeekOldest
+  parent: Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: PeekOldest()
+  nameWithType: CircularBuffer<T>.PeekOldest()
+  fullName: Utils.CircularBuffer<T>.PeekOldest()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Utils/CircularBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PeekOldest
+    path: Scripts/Utils/CircularBuffer.cs
+    startLine: 160
+  assemblies:
+  - Utils
+  namespace: Utils
+  summary: Peek at oldest item without removing
+  example: []
+  syntax:
+    content: public T PeekOldest()
+    return:
+      type: '{T}'
+    content.vb: Public Function PeekOldest() As T
+  overload: Utils.CircularBuffer`1.PeekOldest*
+  nameWithType.vb: CircularBuffer(Of T).PeekOldest()
+  fullName.vb: Utils.CircularBuffer(Of T).PeekOldest()
+references:
+- uid: Utils
+  commentId: N:Utils
+  href: Utils.html
+  name: Utils
+  nameWithType: Utils
+  fullName: Utils
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.ArgumentException
+  commentId: T:System.ArgumentException
+  isExternal: true
+  name: ArgumentException
+  nameWithType: ArgumentException
+  fullName: System.ArgumentException
+- uid: Utils.CircularBuffer`1.#ctor*
+  commentId: Overload:Utils.CircularBuffer`1.#ctor
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1__ctor_System_Int32_
+  name: CircularBuffer
+  nameWithType: CircularBuffer<T>.CircularBuffer
+  fullName: Utils.CircularBuffer<T>.CircularBuffer
+  nameWithType.vb: CircularBuffer(Of T).New
+  fullName.vb: Utils.CircularBuffer(Of T).New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Utils.CircularBuffer`1.Count*
+  commentId: Overload:Utils.CircularBuffer`1.Count
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_Count
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Utils.CircularBuffer<T>.Count
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Utils.CircularBuffer(Of T).Count
+- uid: Utils.CircularBuffer`1.Capacity*
+  commentId: Overload:Utils.CircularBuffer`1.Capacity
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_Capacity
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Utils.CircularBuffer<T>.Capacity
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Utils.CircularBuffer(Of T).Capacity
+- uid: Utils.CircularBuffer`1.IsEmpty*
+  commentId: Overload:Utils.CircularBuffer`1.IsEmpty
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_IsEmpty
+  name: IsEmpty
+  nameWithType: CircularBuffer<T>.IsEmpty
+  fullName: Utils.CircularBuffer<T>.IsEmpty
+  nameWithType.vb: CircularBuffer(Of T).IsEmpty
+  fullName.vb: Utils.CircularBuffer(Of T).IsEmpty
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Utils.CircularBuffer`1.IsFull*
+  commentId: Overload:Utils.CircularBuffer`1.IsFull
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_IsFull
+  name: IsFull
+  nameWithType: CircularBuffer<T>.IsFull
+  fullName: Utils.CircularBuffer<T>.IsFull
+  nameWithType.vb: CircularBuffer(Of T).IsFull
+  fullName.vb: Utils.CircularBuffer(Of T).IsFull
+- uid: Utils.CircularBuffer`1.Add*
+  commentId: Overload:Utils.CircularBuffer`1.Add
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_Add__0_
+  name: Add
+  nameWithType: CircularBuffer<T>.Add
+  fullName: Utils.CircularBuffer<T>.Add
+  nameWithType.vb: CircularBuffer(Of T).Add
+  fullName.vb: Utils.CircularBuffer(Of T).Add
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Utils.CircularBuffer`1.RemoveOldest*
+  commentId: Overload:Utils.CircularBuffer`1.RemoveOldest
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_RemoveOldest
+  name: RemoveOldest
+  nameWithType: CircularBuffer<T>.RemoveOldest
+  fullName: Utils.CircularBuffer<T>.RemoveOldest
+  nameWithType.vb: CircularBuffer(Of T).RemoveOldest
+  fullName.vb: Utils.CircularBuffer(Of T).RemoveOldest
+- uid: Utils.CircularBuffer`1.GetMostRecent*
+  commentId: Overload:Utils.CircularBuffer`1.GetMostRecent
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_GetMostRecent_System_Int32_
+  name: GetMostRecent
+  nameWithType: CircularBuffer<T>.GetMostRecent
+  fullName: Utils.CircularBuffer<T>.GetMostRecent
+  nameWithType.vb: CircularBuffer(Of T).GetMostRecent
+  fullName.vb: Utils.CircularBuffer(Of T).GetMostRecent
+- uid: System.Collections.Generic.IEnumerable{{T}}
+  commentId: T:System.Collections.Generic.IEnumerable{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Utils.CircularBuffer`1.GetOldest*
+  commentId: Overload:Utils.CircularBuffer`1.GetOldest
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_GetOldest_System_Int32_
+  name: GetOldest
+  nameWithType: CircularBuffer<T>.GetOldest
+  fullName: Utils.CircularBuffer<T>.GetOldest
+  nameWithType.vb: CircularBuffer(Of T).GetOldest
+  fullName.vb: Utils.CircularBuffer(Of T).GetOldest
+- uid: Utils.CircularBuffer`1.GetAll*
+  commentId: Overload:Utils.CircularBuffer`1.GetAll
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_GetAll
+  name: GetAll
+  nameWithType: CircularBuffer<T>.GetAll
+  fullName: Utils.CircularBuffer<T>.GetAll
+  nameWithType.vb: CircularBuffer(Of T).GetAll
+  fullName.vb: Utils.CircularBuffer(Of T).GetAll
+- uid: Utils.CircularBuffer`1.Clear*
+  commentId: Overload:Utils.CircularBuffer`1.Clear
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_Clear
+  name: Clear
+  nameWithType: CircularBuffer<T>.Clear
+  fullName: Utils.CircularBuffer<T>.Clear
+  nameWithType.vb: CircularBuffer(Of T).Clear
+  fullName.vb: Utils.CircularBuffer(Of T).Clear
+- uid: Utils.CircularBuffer`1.PeekNewest*
+  commentId: Overload:Utils.CircularBuffer`1.PeekNewest
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_PeekNewest
+  name: PeekNewest
+  nameWithType: CircularBuffer<T>.PeekNewest
+  fullName: Utils.CircularBuffer<T>.PeekNewest
+  nameWithType.vb: CircularBuffer(Of T).PeekNewest
+  fullName.vb: Utils.CircularBuffer(Of T).PeekNewest
+- uid: Utils.CircularBuffer`1.PeekOldest*
+  commentId: Overload:Utils.CircularBuffer`1.PeekOldest
+  href: Utils.CircularBuffer-1.html#Utils_CircularBuffer_1_PeekOldest
+  name: PeekOldest
+  nameWithType: CircularBuffer<T>.PeekOldest
+  fullName: Utils.CircularBuffer<T>.PeekOldest
+  nameWithType.vb: CircularBuffer(Of T).PeekOldest
+  fullName.vb: Utils.CircularBuffer(Of T).PeekOldest

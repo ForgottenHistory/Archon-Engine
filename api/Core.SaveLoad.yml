@@ -1,0 +1,82 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  id: Core.SaveLoad
+  children:
+  - Core.SaveLoad.CustomSystemSerializers
+  - Core.SaveLoad.SaveFileSerializer
+  - Core.SaveLoad.SaveGameData
+  - Core.SaveLoad.SaveManager
+  - Core.SaveLoad.SerializationHelper
+  - Core.SaveLoad.SystemSerializer
+  langs:
+  - csharp
+  - vb
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.SaveLoad.SaveManager
+  commentId: T:Core.SaveLoad.SaveManager
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveManager.html
+  name: SaveManager
+  nameWithType: SaveManager
+  fullName: Core.SaveLoad.SaveManager
+- uid: Core.SaveLoad.CustomSystemSerializers
+  commentId: T:Core.SaveLoad.CustomSystemSerializers
+  href: Core.SaveLoad.CustomSystemSerializers.html
+  name: CustomSystemSerializers
+  nameWithType: CustomSystemSerializers
+  fullName: Core.SaveLoad.CustomSystemSerializers
+- uid: Core.SaveLoad.SystemSerializer
+  commentId: T:Core.SaveLoad.SystemSerializer
+  href: Core.SaveLoad.SystemSerializer.html
+  name: SystemSerializer
+  nameWithType: SystemSerializer
+  fullName: Core.SaveLoad.SystemSerializer
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveGameData.html
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+- uid: Core.SaveLoad.SerializationHelper
+  commentId: T:Core.SaveLoad.SerializationHelper
+  href: Core.SaveLoad.SerializationHelper.html
+  name: SerializationHelper
+  nameWithType: SerializationHelper
+  fullName: Core.SaveLoad.SerializationHelper
+- uid: Core.SaveLoad.SaveFileSerializer
+  commentId: T:Core.SaveLoad.SaveFileSerializer
+  href: Core.SaveLoad.SaveFileSerializer.html
+  name: SaveFileSerializer
+  nameWithType: SaveFileSerializer
+  fullName: Core.SaveLoad.SaveFileSerializer
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html

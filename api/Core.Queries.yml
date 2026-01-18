@@ -1,0 +1,109 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  id: Core.Queries
+  children:
+  - Core.Queries.CountryQueries
+  - Core.Queries.CountryQueryBuilder
+  - Core.Queries.CountryStatistics
+  - Core.Queries.ProvinceQueries
+  - Core.Queries.ProvinceQueryBuilder
+  - Core.Queries.ProvinceStatistics
+  - Core.Queries.Query
+  - Core.Queries.QueryPerformanceStats
+  - Core.Queries.UnitQueryBuilder
+  langs:
+  - csharp
+  - vb
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Queries.CountryQueryBuilder
+  commentId: T:Core.Queries.CountryQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.CountryQueryBuilder.html
+  name: CountryQueryBuilder
+  nameWithType: CountryQueryBuilder
+  fullName: Core.Queries.CountryQueryBuilder
+- uid: Core.Queries.Query
+  commentId: T:Core.Queries.Query
+  href: Core.Queries.Query.html
+  name: Query
+  nameWithType: Query
+  fullName: Core.Queries.Query
+- uid: Core.Queries.ProvinceQueryBuilder
+  commentId: T:Core.Queries.ProvinceQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueryBuilder.html
+  name: ProvinceQueryBuilder
+  nameWithType: ProvinceQueryBuilder
+  fullName: Core.Queries.ProvinceQueryBuilder
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  parent: Core.Queries
+  href: Core.Queries.CountryQueries.html
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+- uid: Core.Queries.CountryStatistics
+  commentId: T:Core.Queries.CountryStatistics
+  parent: Core.Queries
+  href: Core.Queries.CountryStatistics.html
+  name: CountryStatistics
+  nameWithType: CountryStatistics
+  fullName: Core.Queries.CountryStatistics
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries.ProvinceStatistics
+  commentId: T:Core.Queries.ProvinceStatistics
+  parent: Core.Queries
+  href: Core.Queries.ProvinceStatistics.html
+  name: ProvinceStatistics
+  nameWithType: ProvinceStatistics
+  fullName: Core.Queries.ProvinceStatistics
+- uid: Core.Queries.QueryPerformanceStats
+  commentId: T:Core.Queries.QueryPerformanceStats
+  parent: Core.Queries
+  href: Core.Queries.QueryPerformanceStats.html
+  name: QueryPerformanceStats
+  nameWithType: QueryPerformanceStats
+  fullName: Core.Queries.QueryPerformanceStats
+- uid: Core.Queries.UnitQueryBuilder
+  commentId: T:Core.Queries.UnitQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.UnitQueryBuilder.html
+  name: UnitQueryBuilder
+  nameWithType: UnitQueryBuilder
+  fullName: Core.Queries.UnitQueryBuilder
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html

@@ -1,0 +1,315 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data
+  commentId: N:Core.Data
+  id: Core.Data
+  children:
+  - Core.Data.CalendarConstants
+  - Core.Data.CircularBuffer`1
+  - Core.Data.CompressedEvent
+  - Core.Data.CompressedHistory
+  - Core.Data.CountryColdData
+  - Core.Data.CountryData
+  - Core.Data.CountryDataCollection
+  - Core.Data.CountryDataLoadResult
+  - Core.Data.CountryHotData
+  - Core.Data.DeterministicRandom
+  - Core.Data.FixedPoint2
+  - Core.Data.FixedPoint32
+  - Core.Data.FixedPoint64
+  - Core.Data.HistoricalEvent
+  - Core.Data.HistoryDatabaseStats
+  - Core.Data.HistoryEventType
+  - Core.Data.HistoryStatistics
+  - Core.Data.Json5CountryLoadResult
+  - Core.Data.Json5ProvinceLoadResult
+  - Core.Data.LoadingStatistics
+  - Core.Data.ProvinceColdData
+  - Core.Data.ProvinceHistoryDatabase
+  - Core.Data.ProvinceHistorySummary
+  - Core.Data.ProvinceInitialState
+  - Core.Data.ProvinceInitialStateLoadResult
+  - Core.Data.ProvinceState
+  - Core.Data.ProvinceStateSerializer
+  - Core.Data.ProvinceStateSerializer.SerializationStats
+  - Core.Data.RawCountryData
+  - Core.Data.RawProvinceData
+  - Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Data.ProvinceColdData
+  commentId: T:Core.Data.ProvinceColdData
+  parent: Core.Data
+  href: Core.Data.ProvinceColdData.html
+  name: ProvinceColdData
+  nameWithType: ProvinceColdData
+  fullName: Core.Data.ProvinceColdData
+- uid: Core.Data.CircularBuffer`1
+  commentId: T:Core.Data.CircularBuffer`1
+  href: Core.Data.CircularBuffer-1.html
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Core.Data.CircularBuffer<T>
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Core.Data.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+  spec.csharp:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.CountryHotData
+  commentId: T:Core.Data.CountryHotData
+  parent: Core.Data
+  href: Core.Data.CountryHotData.html
+  name: CountryHotData
+  nameWithType: CountryHotData
+  fullName: Core.Data.CountryHotData
+- uid: Core.Data.CountryColdData
+  commentId: T:Core.Data.CountryColdData
+  parent: Core.Data
+  href: Core.Data.CountryColdData.html
+  name: CountryColdData
+  nameWithType: CountryColdData
+  fullName: Core.Data.CountryColdData
+- uid: Core.Data.CountryData
+  commentId: T:Core.Data.CountryData
+  parent: Core.Data
+  href: Core.Data.CountryData.html
+  name: CountryData
+  nameWithType: CountryData
+  fullName: Core.Data.CountryData
+- uid: Core.Data.CountryDataCollection
+  commentId: T:Core.Data.CountryDataCollection
+  parent: Core.Data
+  href: Core.Data.CountryDataCollection.html
+  name: CountryDataCollection
+  nameWithType: CountryDataCollection
+  fullName: Core.Data.CountryDataCollection
+- uid: Core.Data.RawCountryData
+  commentId: T:Core.Data.RawCountryData
+  parent: Core.Data
+  href: Core.Data.RawCountryData.html
+  name: RawCountryData
+  nameWithType: RawCountryData
+  fullName: Core.Data.RawCountryData
+- uid: Core.Data.Json5CountryLoadResult
+  commentId: T:Core.Data.Json5CountryLoadResult
+  parent: Core.Data
+  href: Core.Data.Json5CountryLoadResult.html
+  name: Json5CountryLoadResult
+  nameWithType: Json5CountryLoadResult
+  fullName: Core.Data.Json5CountryLoadResult
+- uid: Core.Data.ProvinceHistoryDatabase
+  commentId: T:Core.Data.ProvinceHistoryDatabase
+  parent: Core.Data
+  href: Core.Data.ProvinceHistoryDatabase.html
+  name: ProvinceHistoryDatabase
+  nameWithType: ProvinceHistoryDatabase
+  fullName: Core.Data.ProvinceHistoryDatabase
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  parent: Core.Data
+  href: Core.Data.HistoricalEvent.html
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent
+- uid: Core.Data.CompressedHistory
+  commentId: T:Core.Data.CompressedHistory
+  href: Core.Data.CompressedHistory.html
+  name: CompressedHistory
+  nameWithType: CompressedHistory
+  fullName: Core.Data.CompressedHistory
+- uid: Core.Data.HistoryStatistics
+  commentId: T:Core.Data.HistoryStatistics
+  href: Core.Data.HistoryStatistics.html
+  name: HistoryStatistics
+  nameWithType: HistoryStatistics
+  fullName: Core.Data.HistoryStatistics
+- uid: Core.Data.CompressedEvent
+  commentId: T:Core.Data.CompressedEvent
+  href: Core.Data.CompressedEvent.html
+  name: CompressedEvent
+  nameWithType: CompressedEvent
+  fullName: Core.Data.CompressedEvent
+- uid: Core.Data.HistoryEventType
+  commentId: T:Core.Data.HistoryEventType
+  parent: Core.Data
+  href: Core.Data.HistoryEventType.html
+  name: HistoryEventType
+  nameWithType: HistoryEventType
+  fullName: Core.Data.HistoryEventType
+- uid: Core.Data.ProvinceHistorySummary
+  commentId: T:Core.Data.ProvinceHistorySummary
+  parent: Core.Data
+  href: Core.Data.ProvinceHistorySummary.html
+  name: ProvinceHistorySummary
+  nameWithType: ProvinceHistorySummary
+  fullName: Core.Data.ProvinceHistorySummary
+- uid: Core.Data.HistoryDatabaseStats
+  commentId: T:Core.Data.HistoryDatabaseStats
+  parent: Core.Data
+  href: Core.Data.HistoryDatabaseStats.html
+  name: HistoryDatabaseStats
+  nameWithType: HistoryDatabaseStats
+  fullName: Core.Data.HistoryDatabaseStats
+- uid: Core.Data.ProvinceStateSerializer
+  commentId: T:Core.Data.ProvinceStateSerializer
+  href: Core.Data.ProvinceStateSerializer.html
+  name: ProvinceStateSerializer
+  nameWithType: ProvinceStateSerializer
+  fullName: Core.Data.ProvinceStateSerializer
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats
+  commentId: T:Core.Data.ProvinceStateSerializer.SerializationStats
+  parent: Core.Data
+  href: Core.Data.ProvinceStateSerializer.html
+  name: ProvinceStateSerializer.SerializationStats
+  nameWithType: ProvinceStateSerializer.SerializationStats
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats
+  spec.csharp:
+  - uid: Core.Data.ProvinceStateSerializer
+    name: ProvinceStateSerializer
+    href: Core.Data.ProvinceStateSerializer.html
+  - name: .
+  - uid: Core.Data.ProvinceStateSerializer.SerializationStats
+    name: SerializationStats
+    href: Core.Data.ProvinceStateSerializer.SerializationStats.html
+  spec.vb:
+  - uid: Core.Data.ProvinceStateSerializer
+    name: ProvinceStateSerializer
+    href: Core.Data.ProvinceStateSerializer.html
+  - name: .
+  - uid: Core.Data.ProvinceStateSerializer.SerializationStats
+    name: SerializationStats
+    href: Core.Data.ProvinceStateSerializer.SerializationStats.html
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Data.TerrainType
+  commentId: T:Core.Data.TerrainType
+  parent: Core.Data
+  href: Core.Data.TerrainType.html
+  name: TerrainType
+  nameWithType: TerrainType
+  fullName: Core.Data.TerrainType
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data.ProvinceInitialState
+  commentId: T:Core.Data.ProvinceInitialState
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialState.html
+  name: ProvinceInitialState
+  nameWithType: ProvinceInitialState
+  fullName: Core.Data.ProvinceInitialState
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialStateLoadResult.html
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+- uid: Core.Data.DeterministicRandom
+  commentId: T:Core.Data.DeterministicRandom
+  parent: Core.Data
+  href: Core.Data.DeterministicRandom.html
+  name: DeterministicRandom
+  nameWithType: DeterministicRandom
+  fullName: Core.Data.DeterministicRandom
+- uid: Core.Data.RawProvinceData
+  commentId: T:Core.Data.RawProvinceData
+  parent: Core.Data
+  href: Core.Data.RawProvinceData.html
+  name: RawProvinceData
+  nameWithType: RawProvinceData
+  fullName: Core.Data.RawProvinceData
+- uid: Core.Data.Json5ProvinceLoadResult
+  commentId: T:Core.Data.Json5ProvinceLoadResult
+  parent: Core.Data
+  href: Core.Data.Json5ProvinceLoadResult.html
+  name: Json5ProvinceLoadResult
+  nameWithType: Json5ProvinceLoadResult
+  fullName: Core.Data.Json5ProvinceLoadResult
+- uid: Core.Data.CountryDataLoadResult
+  commentId: T:Core.Data.CountryDataLoadResult
+  parent: Core.Data
+  href: Core.Data.CountryDataLoadResult.html
+  name: CountryDataLoadResult
+  nameWithType: CountryDataLoadResult
+  fullName: Core.Data.CountryDataLoadResult
+- uid: Core.Data.LoadingStatistics
+  commentId: T:Core.Data.LoadingStatistics
+  parent: Core.Data
+  href: Core.Data.LoadingStatistics.html
+  name: LoadingStatistics
+  nameWithType: LoadingStatistics
+  fullName: Core.Data.LoadingStatistics
+- uid: Core.Data.CalendarConstants
+  commentId: T:Core.Data.CalendarConstants
+  href: Core.Data.CalendarConstants.html
+  name: CalendarConstants
+  nameWithType: CalendarConstants
+  fullName: Core.Data.CalendarConstants
+- uid: Core.Data.FixedPoint32
+  commentId: T:Core.Data.FixedPoint32
+  parent: Core.Data
+  href: Core.Data.FixedPoint32.html
+  name: FixedPoint32
+  nameWithType: FixedPoint32
+  fullName: Core.Data.FixedPoint32
+- uid: Core.Data.FixedPoint2
+  commentId: T:Core.Data.FixedPoint2
+  parent: Core.Data
+  href: Core.Data.FixedPoint2.html
+  name: FixedPoint2
+  nameWithType: FixedPoint2
+  fullName: Core.Data.FixedPoint2
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html

@@ -1,0 +1,284 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.MapRenderingCoordinator
+  commentId: T:Map.Rendering.MapRenderingCoordinator
+  id: MapRenderingCoordinator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.MapRenderingCoordinator.Initialize(Map.Rendering.MapTextureManager,Map.MapModes.MapModeManager,UnityEngine.MeshRenderer,UnityEngine.Camera)
+  - Map.Rendering.MapRenderingCoordinator.MapMaterial
+  - Map.Rendering.MapRenderingCoordinator.SetupMapRendering
+  langs:
+  - csharp
+  - vb
+  name: MapRenderingCoordinator
+  nameWithType: MapRenderingCoordinator
+  fullName: Map.Rendering.MapRenderingCoordinator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapRenderingCoordinator
+    path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Coordinates map rendering setup including material configuration and camera positioning
+
+    Extracted from MapGenerator to follow single responsibility principle
+
+    Works with existing MapRenderer component for mesh creation
+  example: []
+  syntax:
+    content: 'public class MapRenderingCoordinator : MonoBehaviour'
+    content.vb: Public Class MapRenderingCoordinator Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.MapRenderingCoordinator.MapMaterial
+  commentId: P:Map.Rendering.MapRenderingCoordinator.MapMaterial
+  id: MapMaterial
+  parent: Map.Rendering.MapRenderingCoordinator
+  langs:
+  - csharp
+  - vb
+  name: MapMaterial
+  nameWithType: MapRenderingCoordinator.MapMaterial
+  fullName: Map.Rendering.MapRenderingCoordinator.MapMaterial
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapMaterial
+    path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Material MapMaterial { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Material
+    content.vb: Public ReadOnly Property MapMaterial As Material
+  overload: Map.Rendering.MapRenderingCoordinator.MapMaterial*
+- uid: Map.Rendering.MapRenderingCoordinator.Initialize(Map.Rendering.MapTextureManager,Map.MapModes.MapModeManager,UnityEngine.MeshRenderer,UnityEngine.Camera)
+  commentId: M:Map.Rendering.MapRenderingCoordinator.Initialize(Map.Rendering.MapTextureManager,Map.MapModes.MapModeManager,UnityEngine.MeshRenderer,UnityEngine.Camera)
+  id: Initialize(Map.Rendering.MapTextureManager,Map.MapModes.MapModeManager,UnityEngine.MeshRenderer,UnityEngine.Camera)
+  parent: Map.Rendering.MapRenderingCoordinator
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager, MapModeManager, MeshRenderer, Camera)
+  nameWithType: MapRenderingCoordinator.Initialize(MapTextureManager, MapModeManager, MeshRenderer, Camera)
+  fullName: Map.Rendering.MapRenderingCoordinator.Initialize(Map.Rendering.MapTextureManager, Map.MapModes.MapModeManager, UnityEngine.MeshRenderer, UnityEngine.Camera)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public void Initialize(MapTextureManager textures, MapModeManager modes, MeshRenderer renderer, Camera camera)
+    parameters:
+    - id: textures
+      type: Map.Rendering.MapTextureManager
+    - id: modes
+      type: Map.MapModes.MapModeManager
+    - id: renderer
+      type: UnityEngine.MeshRenderer
+    - id: camera
+      type: UnityEngine.Camera
+    content.vb: Public Sub Initialize(textures As MapTextureManager, modes As MapModeManager, renderer As MeshRenderer, camera As Camera)
+  overload: Map.Rendering.MapRenderingCoordinator.Initialize*
+- uid: Map.Rendering.MapRenderingCoordinator.SetupMapRendering
+  commentId: M:Map.Rendering.MapRenderingCoordinator.SetupMapRendering
+  id: SetupMapRendering
+  parent: Map.Rendering.MapRenderingCoordinator
+  langs:
+  - csharp
+  - vb
+  name: SetupMapRendering()
+  nameWithType: MapRenderingCoordinator.SetupMapRendering()
+  fullName: Map.Rendering.MapRenderingCoordinator.SetupMapRendering()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetupMapRendering
+    path: Scripts/Map/Rendering/MapRenderingCoordinator.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set up complete map rendering system
+  example: []
+  syntax:
+    content: public void SetupMapRendering()
+    content.vb: Public Sub SetupMapRendering()
+  overload: Map.Rendering.MapRenderingCoordinator.SetupMapRendering*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.MapRenderingCoordinator.MapMaterial*
+  commentId: Overload:Map.Rendering.MapRenderingCoordinator.MapMaterial
+  href: Map.Rendering.MapRenderingCoordinator.html#Map_Rendering_MapRenderingCoordinator_MapMaterial
+  name: MapMaterial
+  nameWithType: MapRenderingCoordinator.MapMaterial
+  fullName: Map.Rendering.MapRenderingCoordinator.MapMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.MapRenderingCoordinator.Initialize*
+  commentId: Overload:Map.Rendering.MapRenderingCoordinator.Initialize
+  href: Map.Rendering.MapRenderingCoordinator.html#Map_Rendering_MapRenderingCoordinator_Initialize_Map_Rendering_MapTextureManager_Map_MapModes_MapModeManager_UnityEngine_MeshRenderer_UnityEngine_Camera_
+  name: Initialize
+  nameWithType: MapRenderingCoordinator.Initialize
+  fullName: Map.Rendering.MapRenderingCoordinator.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeManager.html
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+- uid: UnityEngine.MeshRenderer
+  commentId: T:UnityEngine.MeshRenderer
+  parent: UnityEngine
+  isExternal: true
+  name: MeshRenderer
+  nameWithType: MeshRenderer
+  fullName: UnityEngine.MeshRenderer
+- uid: UnityEngine.Camera
+  commentId: T:UnityEngine.Camera
+  parent: UnityEngine
+  isExternal: true
+  name: Camera
+  nameWithType: Camera
+  fullName: UnityEngine.Camera
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: Map.Rendering.MapRenderingCoordinator.SetupMapRendering*
+  commentId: Overload:Map.Rendering.MapRenderingCoordinator.SetupMapRendering
+  href: Map.Rendering.MapRenderingCoordinator.html#Map_Rendering_MapRenderingCoordinator_SetupMapRendering
+  name: SetupMapRendering
+  nameWithType: MapRenderingCoordinator.SetupMapRendering
+  fullName: Map.Rendering.MapRenderingCoordinator.SetupMapRendering

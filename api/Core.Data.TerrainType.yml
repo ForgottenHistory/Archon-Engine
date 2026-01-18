@@ -1,0 +1,279 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.TerrainType
+  commentId: T:Core.Data.TerrainType
+  id: TerrainType
+  parent: Core.Data
+  children:
+  - Core.Data.TerrainType.Desert
+  - Core.Data.TerrainType.Forest
+  - Core.Data.TerrainType.Grassland
+  - Core.Data.TerrainType.Hills
+  - Core.Data.TerrainType.Marsh
+  - Core.Data.TerrainType.Mountain
+  - Core.Data.TerrainType.Ocean
+  - Core.Data.TerrainType.Tundra
+  langs:
+  - csharp
+  - vb
+  name: TerrainType
+  nameWithType: TerrainType
+  fullName: Core.Data.TerrainType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainType
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 189
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Terrain types for provinces (engine-defined generic types)
+
+    Games can define their own terrain interpretations in game layer
+  example: []
+  syntax:
+    content: 'public enum TerrainType : ushort'
+    content.vb: Public Enum TerrainType As UShort
+- uid: Core.Data.TerrainType.Ocean
+  commentId: F:Core.Data.TerrainType.Ocean
+  id: Ocean
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Ocean
+  nameWithType: TerrainType.Ocean
+  fullName: Core.Data.TerrainType.Ocean
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Ocean
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Ocean = 0
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Grassland
+  commentId: F:Core.Data.TerrainType.Grassland
+  id: Grassland
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Grassland
+  nameWithType: TerrainType.Grassland
+  fullName: Core.Data.TerrainType.Grassland
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Grassland
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Grassland = 1
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Forest
+  commentId: F:Core.Data.TerrainType.Forest
+  id: Forest
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Forest
+  nameWithType: TerrainType.Forest
+  fullName: Core.Data.TerrainType.Forest
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Forest
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 193
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Forest = 2
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Hills
+  commentId: F:Core.Data.TerrainType.Hills
+  id: Hills
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Hills
+  nameWithType: TerrainType.Hills
+  fullName: Core.Data.TerrainType.Hills
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hills
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 194
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Hills = 3
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Mountain
+  commentId: F:Core.Data.TerrainType.Mountain
+  id: Mountain
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Mountain
+  nameWithType: TerrainType.Mountain
+  fullName: Core.Data.TerrainType.Mountain
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mountain
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 195
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Mountain = 4
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Desert
+  commentId: F:Core.Data.TerrainType.Desert
+  id: Desert
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Desert
+  nameWithType: TerrainType.Desert
+  fullName: Core.Data.TerrainType.Desert
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Desert
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 196
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Desert = 5
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Marsh
+  commentId: F:Core.Data.TerrainType.Marsh
+  id: Marsh
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Marsh
+  nameWithType: TerrainType.Marsh
+  fullName: Core.Data.TerrainType.Marsh
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Marsh
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Marsh = 6
+    return:
+      type: Core.Data.TerrainType
+- uid: Core.Data.TerrainType.Tundra
+  commentId: F:Core.Data.TerrainType.Tundra
+  id: Tundra
+  parent: Core.Data.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Tundra
+  nameWithType: TerrainType.Tundra
+  fullName: Core.Data.TerrainType.Tundra
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tundra
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: Tundra = 7
+    return:
+      type: Core.Data.TerrainType
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Data.TerrainType
+  commentId: T:Core.Data.TerrainType
+  parent: Core.Data
+  href: Core.Data.TerrainType.html
+  name: TerrainType
+  nameWithType: TerrainType
+  fullName: Core.Data.TerrainType

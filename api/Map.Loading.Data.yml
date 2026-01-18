@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Data
+  commentId: N:Map.Loading.Data
+  id: Map.Loading.Data
+  children:
+  - Map.Loading.Data.TerrainColorMapper
+  langs:
+  - csharp
+  - vb
+  name: Map.Loading.Data
+  nameWithType: Map.Loading.Data
+  fullName: Map.Loading.Data
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Loading.Data.TerrainColorMapper
+  commentId: T:Map.Loading.Data.TerrainColorMapper
+  href: Map.Loading.Data.TerrainColorMapper.html
+  name: TerrainColorMapper
+  nameWithType: TerrainColorMapper
+  fullName: Map.Loading.Data.TerrainColorMapper

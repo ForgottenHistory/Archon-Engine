@@ -1,0 +1,257 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Linking.ValidationError
+  commentId: T:Core.Linking.ValidationError
+  id: ValidationError
+  parent: Core.Linking
+  children:
+  - Core.Linking.ValidationError.Category
+  - Core.Linking.ValidationError.IsError
+  - Core.Linking.ValidationError.Message
+  - Core.Linking.ValidationError.ToString
+  langs:
+  - csharp
+  - vb
+  name: ValidationError
+  nameWithType: ValidationError
+  fullName: Core.Linking.ValidationError
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationError
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 324
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  summary: Represents a validation error or warning
+  example: []
+  syntax:
+    content: public class ValidationError
+    content.vb: Public Class ValidationError
+  inheritance:
+  - System.Object
+- uid: Core.Linking.ValidationError.Message
+  commentId: P:Core.Linking.ValidationError.Message
+  id: Message
+  parent: Core.Linking.ValidationError
+  langs:
+  - csharp
+  - vb
+  name: Message
+  nameWithType: ValidationError.Message
+  fullName: Core.Linking.ValidationError.Message
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Message
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 326
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  syntax:
+    content: public string Message { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Message As String
+  overload: Core.Linking.ValidationError.Message*
+- uid: Core.Linking.ValidationError.Category
+  commentId: P:Core.Linking.ValidationError.Category
+  id: Category
+  parent: Core.Linking.ValidationError
+  langs:
+  - csharp
+  - vb
+  name: Category
+  nameWithType: ValidationError.Category
+  fullName: Core.Linking.ValidationError.Category
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Category
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 327
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  syntax:
+    content: public string Category { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Category As String
+  overload: Core.Linking.ValidationError.Category*
+- uid: Core.Linking.ValidationError.IsError
+  commentId: P:Core.Linking.ValidationError.IsError
+  id: IsError
+  parent: Core.Linking.ValidationError
+  langs:
+  - csharp
+  - vb
+  name: IsError
+  nameWithType: ValidationError.IsError
+  fullName: Core.Linking.ValidationError.IsError
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsError
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 328
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  syntax:
+    content: public bool IsError { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsError As Boolean
+  overload: Core.Linking.ValidationError.IsError*
+- uid: Core.Linking.ValidationError.ToString
+  commentId: M:Core.Linking.ValidationError.ToString
+  id: ToString
+  parent: Core.Linking.ValidationError
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ValidationError.ToString()
+  fullName: Core.Linking.ValidationError.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Linking/DataValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Linking/DataValidator.cs
+    startLine: 330
+  assemblies:
+  - Core
+  namespace: Core.Linking
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.Object.ToString
+  overload: Core.Linking.ValidationError.ToString*
+references:
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  href: Core.html
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Linking.ValidationError.Message*
+  commentId: Overload:Core.Linking.ValidationError.Message
+  href: Core.Linking.ValidationError.html#Core_Linking_ValidationError_Message
+  name: Message
+  nameWithType: ValidationError.Message
+  fullName: Core.Linking.ValidationError.Message
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Linking.ValidationError.Category*
+  commentId: Overload:Core.Linking.ValidationError.Category
+  href: Core.Linking.ValidationError.html#Core_Linking_ValidationError_Category
+  name: Category
+  nameWithType: ValidationError.Category
+  fullName: Core.Linking.ValidationError.Category
+- uid: Core.Linking.ValidationError.IsError*
+  commentId: Overload:Core.Linking.ValidationError.IsError
+  href: Core.Linking.ValidationError.html#Core_Linking_ValidationError_IsError
+  name: IsError
+  nameWithType: ValidationError.IsError
+  fullName: Core.Linking.ValidationError.IsError
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Linking.ValidationError.ToString*
+  commentId: Overload:Core.Linking.ValidationError.ToString
+  href: Core.Linking.ValidationError.html#Core_Linking_ValidationError_ToString
+  name: ToString
+  nameWithType: ValidationError.ToString
+  fullName: Core.Linking.ValidationError.ToString

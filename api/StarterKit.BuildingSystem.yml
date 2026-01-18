@@ -1,0 +1,1011 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.BuildingSystem
+  commentId: T:StarterKit.BuildingSystem
+  id: BuildingSystem
+  parent: StarterKit
+  children:
+  - StarterKit.BuildingSystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem,Core.Modifiers.ModifierSystem,System.Boolean)
+  - StarterKit.BuildingSystem.CanConstruct(System.UInt16,System.String,System.String@)
+  - StarterKit.BuildingSystem.Construct(System.UInt16,System.String)
+  - StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
+  - StarterKit.BuildingSystem.Deserialize(System.Byte[])
+  - StarterKit.BuildingSystem.Dispose
+  - StarterKit.BuildingSystem.GetAllBuildingTypes
+  - StarterKit.BuildingSystem.GetBuildingCount(System.UInt16,System.UInt16)
+  - StarterKit.BuildingSystem.GetBuildingType(System.String)
+  - StarterKit.BuildingSystem.GetBuildingType(System.UInt16)
+  - StarterKit.BuildingSystem.GetProvinceBuildings(System.UInt16)
+  - StarterKit.BuildingSystem.GetTotalBuildingCount(System.UInt16)
+  - StarterKit.BuildingSystem.IsProvinceOwnedByPlayer(System.UInt16)
+  - StarterKit.BuildingSystem.LoadBuildingTypes(System.String)
+  - StarterKit.BuildingSystem.PlayerState
+  - StarterKit.BuildingSystem.Serialize
+  langs:
+  - csharp
+  - vb
+  name: BuildingSystem
+  nameWithType: BuildingSystem
+  fullName: StarterKit.BuildingSystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingSystem
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 49
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Simple building system. Allows constructing buildings that provide bonuses.
+
+    Uses ModifierSystem for province-local and country-wide effects.
+  example: []
+  syntax:
+    content: public class BuildingSystem
+    content.vb: Public Class BuildingSystem
+  inheritance:
+  - System.Object
+- uid: StarterKit.BuildingSystem.PlayerState
+  commentId: P:StarterKit.BuildingSystem.PlayerState
+  id: PlayerState
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: PlayerState
+  nameWithType: BuildingSystem.PlayerState
+  fullName: StarterKit.BuildingSystem.PlayerState
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerState
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 69
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public PlayerState PlayerState { get; }
+    parameters: []
+    return:
+      type: StarterKit.PlayerState
+    content.vb: Public ReadOnly Property PlayerState As PlayerState
+  overload: StarterKit.BuildingSystem.PlayerState*
+- uid: StarterKit.BuildingSystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem,Core.Modifiers.ModifierSystem,System.Boolean)
+  commentId: M:StarterKit.BuildingSystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem,Core.Modifiers.ModifierSystem,System.Boolean)
+  id: '#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem,Core.Modifiers.ModifierSystem,System.Boolean)'
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: BuildingSystem(GameState, PlayerState, EconomySystem, ModifierSystem, bool)
+  nameWithType: BuildingSystem.BuildingSystem(GameState, PlayerState, EconomySystem, ModifierSystem, bool)
+  fullName: StarterKit.BuildingSystem.BuildingSystem(Core.GameState, StarterKit.PlayerState, StarterKit.EconomySystem, Core.Modifiers.ModifierSystem, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 75
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public BuildingSystem(GameState gameStateRef, PlayerState playerStateRef, EconomySystem economySystemRef, ModifierSystem modifierSystemRef, bool log = true)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: playerStateRef
+      type: StarterKit.PlayerState
+    - id: economySystemRef
+      type: StarterKit.EconomySystem
+    - id: modifierSystemRef
+      type: Core.Modifiers.ModifierSystem
+    - id: log
+      type: System.Boolean
+    content.vb: Public Sub New(gameStateRef As GameState, playerStateRef As PlayerState, economySystemRef As EconomySystem, modifierSystemRef As ModifierSystem, log As Boolean = True)
+  overload: StarterKit.BuildingSystem.#ctor*
+  nameWithType.vb: BuildingSystem.New(GameState, PlayerState, EconomySystem, ModifierSystem, Boolean)
+  fullName.vb: StarterKit.BuildingSystem.New(Core.GameState, StarterKit.PlayerState, StarterKit.EconomySystem, Core.Modifiers.ModifierSystem, Boolean)
+  name.vb: New(GameState, PlayerState, EconomySystem, ModifierSystem, Boolean)
+- uid: StarterKit.BuildingSystem.LoadBuildingTypes(System.String)
+  commentId: M:StarterKit.BuildingSystem.LoadBuildingTypes(System.String)
+  id: LoadBuildingTypes(System.String)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: LoadBuildingTypes(string)
+  nameWithType: BuildingSystem.LoadBuildingTypes(string)
+  fullName: StarterKit.BuildingSystem.LoadBuildingTypes(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadBuildingTypes
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 100
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Load building types from Template-Data/buildings/ directory.
+  example: []
+  syntax:
+    content: public void LoadBuildingTypes(string buildingsPath)
+    parameters:
+    - id: buildingsPath
+      type: System.String
+    content.vb: Public Sub LoadBuildingTypes(buildingsPath As String)
+  overload: StarterKit.BuildingSystem.LoadBuildingTypes*
+  nameWithType.vb: BuildingSystem.LoadBuildingTypes(String)
+  fullName.vb: StarterKit.BuildingSystem.LoadBuildingTypes(String)
+  name.vb: LoadBuildingTypes(String)
+- uid: StarterKit.BuildingSystem.GetBuildingType(System.String)
+  commentId: M:StarterKit.BuildingSystem.GetBuildingType(System.String)
+  id: GetBuildingType(System.String)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetBuildingType(string)
+  nameWithType: BuildingSystem.GetBuildingType(string)
+  fullName: StarterKit.BuildingSystem.GetBuildingType(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBuildingType
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 196
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get building type by string ID.
+  example: []
+  syntax:
+    content: public BuildingType GetBuildingType(string stringId)
+    parameters:
+    - id: stringId
+      type: System.String
+    return:
+      type: StarterKit.BuildingType
+    content.vb: Public Function GetBuildingType(stringId As String) As BuildingType
+  overload: StarterKit.BuildingSystem.GetBuildingType*
+  nameWithType.vb: BuildingSystem.GetBuildingType(String)
+  fullName.vb: StarterKit.BuildingSystem.GetBuildingType(String)
+  name.vb: GetBuildingType(String)
+- uid: StarterKit.BuildingSystem.GetBuildingType(System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.GetBuildingType(System.UInt16)
+  id: GetBuildingType(System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetBuildingType(ushort)
+  nameWithType: BuildingSystem.GetBuildingType(ushort)
+  fullName: StarterKit.BuildingSystem.GetBuildingType(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBuildingType
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 204
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get building type by numeric ID.
+  example: []
+  syntax:
+    content: public BuildingType GetBuildingType(ushort typeId)
+    parameters:
+    - id: typeId
+      type: System.UInt16
+    return:
+      type: StarterKit.BuildingType
+    content.vb: Public Function GetBuildingType(typeId As UShort) As BuildingType
+  overload: StarterKit.BuildingSystem.GetBuildingType*
+  nameWithType.vb: BuildingSystem.GetBuildingType(UShort)
+  fullName.vb: StarterKit.BuildingSystem.GetBuildingType(UShort)
+  name.vb: GetBuildingType(UShort)
+- uid: StarterKit.BuildingSystem.GetAllBuildingTypes
+  commentId: M:StarterKit.BuildingSystem.GetAllBuildingTypes
+  id: GetAllBuildingTypes
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetAllBuildingTypes()
+  nameWithType: BuildingSystem.GetAllBuildingTypes()
+  fullName: StarterKit.BuildingSystem.GetAllBuildingTypes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllBuildingTypes
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 212
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get all registered building types.
+  example: []
+  syntax:
+    content: public IEnumerable<BuildingType> GetAllBuildingTypes()
+    return:
+      type: System.Collections.Generic.IEnumerable{StarterKit.BuildingType}
+    content.vb: Public Function GetAllBuildingTypes() As IEnumerable(Of BuildingType)
+  overload: StarterKit.BuildingSystem.GetAllBuildingTypes*
+- uid: StarterKit.BuildingSystem.CanConstruct(System.UInt16,System.String,System.String@)
+  commentId: M:StarterKit.BuildingSystem.CanConstruct(System.UInt16,System.String,System.String@)
+  id: CanConstruct(System.UInt16,System.String,System.String@)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: CanConstruct(ushort, string, out string)
+  nameWithType: BuildingSystem.CanConstruct(ushort, string, out string)
+  fullName: StarterKit.BuildingSystem.CanConstruct(ushort, string, out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanConstruct
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 224
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a building can be constructed in a province.
+  example: []
+  syntax:
+    content: public bool CanConstruct(ushort provinceId, string buildingTypeId, out string reason)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.String
+    - id: reason
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function CanConstruct(provinceId As UShort, buildingTypeId As String, reason As String) As Boolean
+  overload: StarterKit.BuildingSystem.CanConstruct*
+  nameWithType.vb: BuildingSystem.CanConstruct(UShort, String, String)
+  fullName.vb: StarterKit.BuildingSystem.CanConstruct(UShort, String, String)
+  name.vb: CanConstruct(UShort, String, String)
+- uid: StarterKit.BuildingSystem.Construct(System.UInt16,System.String)
+  commentId: M:StarterKit.BuildingSystem.Construct(System.UInt16,System.String)
+  id: Construct(System.UInt16,System.String)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: Construct(ushort, string)
+  nameWithType: BuildingSystem.Construct(ushort, string)
+  fullName: StarterKit.BuildingSystem.Construct(ushort, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Construct
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 265
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Construct a building in a province (instant construction).
+
+    Applies modifiers via ModifierSystem.
+  example: []
+  syntax:
+    content: public bool Construct(ushort provinceId, string buildingTypeId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function Construct(provinceId As UShort, buildingTypeId As String) As Boolean
+  overload: StarterKit.BuildingSystem.Construct*
+  nameWithType.vb: BuildingSystem.Construct(UShort, String)
+  fullName.vb: StarterKit.BuildingSystem.Construct(UShort, String)
+  name.vb: Construct(UShort, String)
+- uid: StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
+  commentId: M:StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
+  id: ConstructForAI(System.UInt16,System.String)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: ConstructForAI(ushort, string)
+  nameWithType: BuildingSystem.ConstructForAI(ushort, string)
+  fullName: StarterKit.BuildingSystem.ConstructForAI(ushort, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConstructForAI
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 309
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Construct a building for AI (no gold cost, no ownership check).
+
+    Applies modifiers via ModifierSystem.
+  example: []
+  syntax:
+    content: public bool ConstructForAI(ushort provinceId, string buildingTypeId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function ConstructForAI(provinceId As UShort, buildingTypeId As String) As Boolean
+  overload: StarterKit.BuildingSystem.ConstructForAI*
+  nameWithType.vb: BuildingSystem.ConstructForAI(UShort, String)
+  fullName.vb: StarterKit.BuildingSystem.ConstructForAI(UShort, String)
+  name.vb: ConstructForAI(UShort, String)
+- uid: StarterKit.BuildingSystem.GetBuildingCount(System.UInt16,System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.GetBuildingCount(System.UInt16,System.UInt16)
+  id: GetBuildingCount(System.UInt16,System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetBuildingCount(ushort, ushort)
+  nameWithType: BuildingSystem.GetBuildingCount(ushort, ushort)
+  fullName: StarterKit.BuildingSystem.GetBuildingCount(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBuildingCount
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 360
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get the count of a specific building type in a province.
+  example: []
+  syntax:
+    content: public int GetBuildingCount(ushort provinceId, ushort buildingTypeId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetBuildingCount(provinceId As UShort, buildingTypeId As UShort) As Integer
+  overload: StarterKit.BuildingSystem.GetBuildingCount*
+  nameWithType.vb: BuildingSystem.GetBuildingCount(UShort, UShort)
+  fullName.vb: StarterKit.BuildingSystem.GetBuildingCount(UShort, UShort)
+  name.vb: GetBuildingCount(UShort, UShort)
+- uid: StarterKit.BuildingSystem.GetTotalBuildingCount(System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.GetTotalBuildingCount(System.UInt16)
+  id: GetTotalBuildingCount(System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetTotalBuildingCount(ushort)
+  nameWithType: BuildingSystem.GetTotalBuildingCount(ushort)
+  fullName: StarterKit.BuildingSystem.GetTotalBuildingCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTotalBuildingCount
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 371
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get total building count in a province.
+  example: []
+  syntax:
+    content: public int GetTotalBuildingCount(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetTotalBuildingCount(provinceId As UShort) As Integer
+  overload: StarterKit.BuildingSystem.GetTotalBuildingCount*
+  nameWithType.vb: BuildingSystem.GetTotalBuildingCount(UShort)
+  fullName.vb: StarterKit.BuildingSystem.GetTotalBuildingCount(UShort)
+  name.vb: GetTotalBuildingCount(UShort)
+- uid: StarterKit.BuildingSystem.GetProvinceBuildings(System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.GetProvinceBuildings(System.UInt16)
+  id: GetProvinceBuildings(System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceBuildings(ushort)
+  nameWithType: BuildingSystem.GetProvinceBuildings(ushort)
+  fullName: StarterKit.BuildingSystem.GetProvinceBuildings(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceBuildings
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 429
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get all buildings in a province (buildingTypeId -&gt; count).
+  example: []
+  syntax:
+    content: public Dictionary<ushort, int> GetProvinceBuildings(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.Dictionary{System.UInt16,System.Int32}
+    content.vb: Public Function GetProvinceBuildings(provinceId As UShort) As Dictionary(Of UShort, Integer)
+  overload: StarterKit.BuildingSystem.GetProvinceBuildings*
+  nameWithType.vb: BuildingSystem.GetProvinceBuildings(UShort)
+  fullName.vb: StarterKit.BuildingSystem.GetProvinceBuildings(UShort)
+  name.vb: GetProvinceBuildings(UShort)
+- uid: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer(System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.IsProvinceOwnedByPlayer(System.UInt16)
+  id: IsProvinceOwnedByPlayer(System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: IsProvinceOwnedByPlayer(ushort)
+  nameWithType: BuildingSystem.IsProvinceOwnedByPlayer(ushort)
+  fullName: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsProvinceOwnedByPlayer
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 440
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a province is owned by the player.
+  example: []
+  syntax:
+    content: public bool IsProvinceOwnedByPlayer(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsProvinceOwnedByPlayer(provinceId As UShort) As Boolean
+  overload: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer*
+  nameWithType.vb: BuildingSystem.IsProvinceOwnedByPlayer(UShort)
+  fullName.vb: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer(UShort)
+  name.vb: IsProvinceOwnedByPlayer(UShort)
+- uid: StarterKit.BuildingSystem.Dispose
+  commentId: M:StarterKit.BuildingSystem.Dispose
+  id: Dispose
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: BuildingSystem.Dispose()
+  fullName: StarterKit.BuildingSystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 453
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: StarterKit.BuildingSystem.Dispose*
+- uid: StarterKit.BuildingSystem.Serialize
+  commentId: M:StarterKit.BuildingSystem.Serialize
+  id: Serialize
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: Serialize()
+  nameWithType: BuildingSystem.Serialize()
+  fullName: StarterKit.BuildingSystem.Serialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 475
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Serialize building state to byte array
+  example: []
+  syntax:
+    content: public byte[] Serialize()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function Serialize() As Byte()
+  overload: StarterKit.BuildingSystem.Serialize*
+- uid: StarterKit.BuildingSystem.Deserialize(System.Byte[])
+  commentId: M:StarterKit.BuildingSystem.Deserialize(System.Byte[])
+  id: Deserialize(System.Byte[])
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(byte[])
+  nameWithType: BuildingSystem.Deserialize(byte[])
+  fullName: StarterKit.BuildingSystem.Deserialize(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 503
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Deserialize building state from byte array
+  example: []
+  syntax:
+    content: public void Deserialize(byte[] data)
+    parameters:
+    - id: data
+      type: System.Byte[]
+    content.vb: Public Sub Deserialize(data As Byte())
+  overload: StarterKit.BuildingSystem.Deserialize*
+  nameWithType.vb: BuildingSystem.Deserialize(Byte())
+  fullName.vb: StarterKit.BuildingSystem.Deserialize(Byte())
+  name.vb: Deserialize(Byte())
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.BuildingSystem.PlayerState*
+  commentId: Overload:StarterKit.BuildingSystem.PlayerState
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_PlayerState
+  name: PlayerState
+  nameWithType: BuildingSystem.PlayerState
+  fullName: StarterKit.BuildingSystem.PlayerState
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  parent: StarterKit
+  href: StarterKit.PlayerState.html
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+- uid: StarterKit.BuildingSystem.#ctor*
+  commentId: Overload:StarterKit.BuildingSystem.#ctor
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem__ctor_Core_GameState_StarterKit_PlayerState_StarterKit_EconomySystem_Core_Modifiers_ModifierSystem_System_Boolean_
+  name: BuildingSystem
+  nameWithType: BuildingSystem.BuildingSystem
+  fullName: StarterKit.BuildingSystem.BuildingSystem
+  nameWithType.vb: BuildingSystem.New
+  fullName.vb: StarterKit.BuildingSystem.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.EconomySystem
+  commentId: T:StarterKit.EconomySystem
+  parent: StarterKit
+  href: StarterKit.EconomySystem.html
+  name: EconomySystem
+  nameWithType: EconomySystem
+  fullName: StarterKit.EconomySystem
+- uid: Core.Modifiers.ModifierSystem
+  commentId: T:Core.Modifiers.ModifierSystem
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSystem.html
+  name: ModifierSystem
+  nameWithType: ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: StarterKit.BuildingSystem.LoadBuildingTypes*
+  commentId: Overload:StarterKit.BuildingSystem.LoadBuildingTypes
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_LoadBuildingTypes_System_String_
+  name: LoadBuildingTypes
+  nameWithType: BuildingSystem.LoadBuildingTypes
+  fullName: StarterKit.BuildingSystem.LoadBuildingTypes
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.BuildingSystem.GetBuildingType*
+  commentId: Overload:StarterKit.BuildingSystem.GetBuildingType
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_GetBuildingType_System_String_
+  name: GetBuildingType
+  nameWithType: BuildingSystem.GetBuildingType
+  fullName: StarterKit.BuildingSystem.GetBuildingType
+- uid: StarterKit.BuildingType
+  commentId: T:StarterKit.BuildingType
+  parent: StarterKit
+  href: StarterKit.BuildingType.html
+  name: BuildingType
+  nameWithType: BuildingType
+  fullName: StarterKit.BuildingType
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.BuildingSystem.GetAllBuildingTypes*
+  commentId: Overload:StarterKit.BuildingSystem.GetAllBuildingTypes
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_GetAllBuildingTypes
+  name: GetAllBuildingTypes
+  nameWithType: BuildingSystem.GetAllBuildingTypes
+  fullName: StarterKit.BuildingSystem.GetAllBuildingTypes
+- uid: System.Collections.Generic.IEnumerable{StarterKit.BuildingType}
+  commentId: T:System.Collections.Generic.IEnumerable{StarterKit.BuildingType}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: StarterKit.BuildingType.html
+  name: IEnumerable<BuildingType>
+  nameWithType: IEnumerable<BuildingType>
+  fullName: System.Collections.Generic.IEnumerable<StarterKit.BuildingType>
+  nameWithType.vb: IEnumerable(Of BuildingType)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of StarterKit.BuildingType)
+  name.vb: IEnumerable(Of BuildingType)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: StarterKit.BuildingType
+    name: BuildingType
+    href: StarterKit.BuildingType.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: StarterKit.BuildingType
+    name: BuildingType
+    href: StarterKit.BuildingType.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: StarterKit.BuildingSystem.CanConstruct*
+  commentId: Overload:StarterKit.BuildingSystem.CanConstruct
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_CanConstruct_System_UInt16_System_String_System_String__
+  name: CanConstruct
+  nameWithType: BuildingSystem.CanConstruct
+  fullName: StarterKit.BuildingSystem.CanConstruct
+- uid: StarterKit.BuildingSystem.Construct*
+  commentId: Overload:StarterKit.BuildingSystem.Construct
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_Construct_System_UInt16_System_String_
+  name: Construct
+  nameWithType: BuildingSystem.Construct
+  fullName: StarterKit.BuildingSystem.Construct
+- uid: StarterKit.BuildingSystem.ConstructForAI*
+  commentId: Overload:StarterKit.BuildingSystem.ConstructForAI
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_ConstructForAI_System_UInt16_System_String_
+  name: ConstructForAI
+  nameWithType: BuildingSystem.ConstructForAI
+  fullName: StarterKit.BuildingSystem.ConstructForAI
+- uid: StarterKit.BuildingSystem.GetBuildingCount*
+  commentId: Overload:StarterKit.BuildingSystem.GetBuildingCount
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_GetBuildingCount_System_UInt16_System_UInt16_
+  name: GetBuildingCount
+  nameWithType: BuildingSystem.GetBuildingCount
+  fullName: StarterKit.BuildingSystem.GetBuildingCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.BuildingSystem.GetTotalBuildingCount*
+  commentId: Overload:StarterKit.BuildingSystem.GetTotalBuildingCount
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_GetTotalBuildingCount_System_UInt16_
+  name: GetTotalBuildingCount
+  nameWithType: BuildingSystem.GetTotalBuildingCount
+  fullName: StarterKit.BuildingSystem.GetTotalBuildingCount
+- uid: StarterKit.BuildingSystem.GetProvinceBuildings*
+  commentId: Overload:StarterKit.BuildingSystem.GetProvinceBuildings
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_GetProvinceBuildings_System_UInt16_
+  name: GetProvinceBuildings
+  nameWithType: BuildingSystem.GetProvinceBuildings
+  fullName: StarterKit.BuildingSystem.GetProvinceBuildings
+- uid: System.Collections.Generic.Dictionary{System.UInt16,System.Int32}
+  commentId: T:System.Collections.Generic.Dictionary{System.UInt16,System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<ushort, int>
+  nameWithType: Dictionary<ushort, int>
+  fullName: System.Collections.Generic.Dictionary<ushort, int>
+  nameWithType.vb: Dictionary(Of UShort, Integer)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UShort, Integer)
+  name.vb: Dictionary(Of UShort, Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer*
+  commentId: Overload:StarterKit.BuildingSystem.IsProvinceOwnedByPlayer
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_IsProvinceOwnedByPlayer_System_UInt16_
+  name: IsProvinceOwnedByPlayer
+  nameWithType: BuildingSystem.IsProvinceOwnedByPlayer
+  fullName: StarterKit.BuildingSystem.IsProvinceOwnedByPlayer
+- uid: StarterKit.BuildingSystem.Dispose*
+  commentId: Overload:StarterKit.BuildingSystem.Dispose
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_Dispose
+  name: Dispose
+  nameWithType: BuildingSystem.Dispose
+  fullName: StarterKit.BuildingSystem.Dispose
+- uid: StarterKit.BuildingSystem.Serialize*
+  commentId: Overload:StarterKit.BuildingSystem.Serialize
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_Serialize
+  name: Serialize
+  nameWithType: BuildingSystem.Serialize
+  fullName: StarterKit.BuildingSystem.Serialize
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: StarterKit.BuildingSystem.Deserialize*
+  commentId: Overload:StarterKit.BuildingSystem.Deserialize
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_Deserialize_System_Byte___
+  name: Deserialize
+  nameWithType: BuildingSystem.Deserialize
+  fullName: StarterKit.BuildingSystem.Deserialize

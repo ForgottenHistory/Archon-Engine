@@ -1,0 +1,673 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceIDEncoder
+  commentId: T:Map.Province.ProvinceIDEncoder
+  id: ProvinceIDEncoder
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution(Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32})
+  - Map.Province.ProvinceIDEncoder.CreateTestPattern(System.Int32,System.Int32,Unity.Collections.NativeArray{UnityEngine.Color32}@)
+  - Map.Province.ProvinceIDEncoder.EncodeProvinceIDs(Unity.Collections.NativeArray{UnityEngine.Color32},System.Boolean)
+  - Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32},System.Boolean)
+  - Map.Province.ProvinceIDEncoder.GetMaxProvinceCount
+  - Map.Province.ProvinceIDEncoder.IsValidProvinceID(System.UInt16)
+  - Map.Province.ProvinceIDEncoder.PackProvinceID(System.UInt16)
+  - Map.Province.ProvinceIDEncoder.UnpackProvinceID(UnityEngine.Color32)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDEncoder
+  nameWithType: ProvinceIDEncoder
+  fullName: Map.Province.ProvinceIDEncoder
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDEncoder
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    High-performance province ID encoding system for texture-based rendering
+
+    Handles RGB color to sequential ID conversion with collision detection
+  example: []
+  syntax:
+    content: public static class ProvinceIDEncoder
+    content.vb: Public Module ProvinceIDEncoder
+  inheritance:
+  - System.Object
+- uid: Map.Province.ProvinceIDEncoder.PackProvinceID(System.UInt16)
+  commentId: M:Map.Province.ProvinceIDEncoder.PackProvinceID(System.UInt16)
+  id: PackProvinceID(System.UInt16)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: PackProvinceID(ushort)
+  nameWithType: ProvinceIDEncoder.PackProvinceID(ushort)
+  fullName: Map.Province.ProvinceIDEncoder.PackProvinceID(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PackProvinceID
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Pack 16-bit province ID into R16G16 format
+  example: []
+  syntax:
+    content: public static Color32 PackProvinceID(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Shared Function PackProvinceID(provinceID As UShort) As Color32
+  overload: Map.Province.ProvinceIDEncoder.PackProvinceID*
+  nameWithType.vb: ProvinceIDEncoder.PackProvinceID(UShort)
+  fullName.vb: Map.Province.ProvinceIDEncoder.PackProvinceID(UShort)
+  name.vb: PackProvinceID(UShort)
+- uid: Map.Province.ProvinceIDEncoder.UnpackProvinceID(UnityEngine.Color32)
+  commentId: M:Map.Province.ProvinceIDEncoder.UnpackProvinceID(UnityEngine.Color32)
+  id: UnpackProvinceID(UnityEngine.Color32)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: UnpackProvinceID(Color32)
+  nameWithType: ProvinceIDEncoder.UnpackProvinceID(Color32)
+  fullName: Map.Province.ProvinceIDEncoder.UnpackProvinceID(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnpackProvinceID
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Unpack province ID from R16G16 format
+  example: []
+  syntax:
+    content: public static ushort UnpackProvinceID(Color32 packedColor)
+    parameters:
+    - id: packedColor
+      type: UnityEngine.Color32
+    return:
+      type: System.UInt16
+    content.vb: Public Shared Function UnpackProvinceID(packedColor As Color32) As UShort
+  overload: Map.Province.ProvinceIDEncoder.UnpackProvinceID*
+- uid: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs(Unity.Collections.NativeArray{UnityEngine.Color32},System.Boolean)
+  commentId: M:Map.Province.ProvinceIDEncoder.EncodeProvinceIDs(Unity.Collections.NativeArray{UnityEngine.Color32},System.Boolean)
+  id: EncodeProvinceIDs(Unity.Collections.NativeArray{UnityEngine.Color32},System.Boolean)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: EncodeProvinceIDs(NativeArray<Color32>, bool)
+  nameWithType: ProvinceIDEncoder.EncodeProvinceIDs(NativeArray<Color32>, bool)
+  fullName: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs(Unity.Collections.NativeArray<UnityEngine.Color32>, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EncodeProvinceIDs
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Encode unique colors to sequential province IDs with full validation
+  example: []
+  syntax:
+    content: public static ProvinceIDEncoder.EncodingResult EncodeProvinceIDs(NativeArray<Color32> uniqueColors, bool reserveOceanID = true)
+    parameters:
+    - id: uniqueColors
+      type: Unity.Collections.NativeArray{UnityEngine.Color32}
+      description: Array of unique province colors
+    - id: reserveOceanID
+      type: System.Boolean
+      description: Reserve ID 0 for ocean/no province
+    return:
+      type: Map.Province.ProvinceIDEncoder.EncodingResult
+      description: Encoding result with lookup tables
+    content.vb: Public Shared Function EncodeProvinceIDs(uniqueColors As NativeArray(Of Color32), reserveOceanID As Boolean = True) As ProvinceIDEncoder.EncodingResult
+  overload: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs*
+  nameWithType.vb: ProvinceIDEncoder.EncodeProvinceIDs(NativeArray(Of Color32), Boolean)
+  fullName.vb: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs(Unity.Collections.NativeArray(Of UnityEngine.Color32), Boolean)
+  name.vb: EncodeProvinceIDs(NativeArray(Of Color32), Boolean)
+- uid: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32},System.Boolean)
+  commentId: M:Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32},System.Boolean)
+  id: EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32},System.Boolean)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: EncodeProvinceIDsFromFrequencies(NativeHashMap<Color32, int>, bool)
+  nameWithType: ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(NativeHashMap<Color32, int>, bool)
+  fullName: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap<UnityEngine.Color32, int>, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EncodeProvinceIDsFromFrequencies
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 129
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Create province ID encoding from color frequency map
+  example: []
+  syntax:
+    content: public static ProvinceIDEncoder.EncodingResult EncodeProvinceIDsFromFrequencies(NativeHashMap<Color32, int> colorFrequencies, bool sortByFrequency = false)
+    parameters:
+    - id: colorFrequencies
+      type: Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32}
+      description: Dictionary of colors and their pixel counts
+    - id: sortByFrequency
+      type: System.Boolean
+      description: Sort IDs by frequency (most common gets lowest ID)
+    return:
+      type: Map.Province.ProvinceIDEncoder.EncodingResult
+      description: Encoding result
+    content.vb: Public Shared Function EncodeProvinceIDsFromFrequencies(colorFrequencies As NativeHashMap(Of Color32, Integer), sortByFrequency As Boolean = False) As ProvinceIDEncoder.EncodingResult
+  overload: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies*
+  nameWithType.vb: ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(NativeHashMap(Of Color32, Integer), Boolean)
+  fullName.vb: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies(Unity.Collections.NativeHashMap(Of UnityEngine.Color32, Integer), Boolean)
+  name.vb: EncodeProvinceIDsFromFrequencies(NativeHashMap(Of Color32, Integer), Boolean)
+- uid: Map.Province.ProvinceIDEncoder.IsValidProvinceID(System.UInt16)
+  commentId: M:Map.Province.ProvinceIDEncoder.IsValidProvinceID(System.UInt16)
+  id: IsValidProvinceID(System.UInt16)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: IsValidProvinceID(ushort)
+  nameWithType: ProvinceIDEncoder.IsValidProvinceID(ushort)
+  fullName: Map.Province.ProvinceIDEncoder.IsValidProvinceID(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValidProvinceID
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 238
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Check if province ID is within valid range
+  example: []
+  syntax:
+    content: public static bool IsValidProvinceID(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsValidProvinceID(provinceID As UShort) As Boolean
+  overload: Map.Province.ProvinceIDEncoder.IsValidProvinceID*
+  nameWithType.vb: ProvinceIDEncoder.IsValidProvinceID(UShort)
+  fullName.vb: Map.Province.ProvinceIDEncoder.IsValidProvinceID(UShort)
+  name.vb: IsValidProvinceID(UShort)
+- uid: Map.Province.ProvinceIDEncoder.GetMaxProvinceCount
+  commentId: M:Map.Province.ProvinceIDEncoder.GetMaxProvinceCount
+  id: GetMaxProvinceCount
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: GetMaxProvinceCount()
+  nameWithType: ProvinceIDEncoder.GetMaxProvinceCount()
+  fullName: Map.Province.ProvinceIDEncoder.GetMaxProvinceCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMaxProvinceCount
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 248
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get the maximum theoretical province count
+  example: []
+  syntax:
+    content: public static int GetMaxProvinceCount()
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function GetMaxProvinceCount() As Integer
+  overload: Map.Province.ProvinceIDEncoder.GetMaxProvinceCount*
+- uid: Map.Province.ProvinceIDEncoder.CreateTestPattern(System.Int32,System.Int32,Unity.Collections.NativeArray{UnityEngine.Color32}@)
+  commentId: M:Map.Province.ProvinceIDEncoder.CreateTestPattern(System.Int32,System.Int32,Unity.Collections.NativeArray{UnityEngine.Color32}@)
+  id: CreateTestPattern(System.Int32,System.Int32,Unity.Collections.NativeArray{UnityEngine.Color32}@)
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: CreateTestPattern(int, int, out NativeArray<Color32>)
+  nameWithType: ProvinceIDEncoder.CreateTestPattern(int, int, out NativeArray<Color32>)
+  fullName: Map.Province.ProvinceIDEncoder.CreateTestPattern(int, int, out Unity.Collections.NativeArray<UnityEngine.Color32>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateTestPattern
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 256
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Create test pattern for validation
+  example: []
+  syntax:
+    content: public static void CreateTestPattern(int width, int height, out NativeArray<Color32> testPixels)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: testPixels
+      type: Unity.Collections.NativeArray{UnityEngine.Color32}
+    content.vb: Public Shared Sub CreateTestPattern(width As Integer, height As Integer, testPixels As NativeArray(Of Color32))
+  overload: Map.Province.ProvinceIDEncoder.CreateTestPattern*
+  nameWithType.vb: ProvinceIDEncoder.CreateTestPattern(Integer, Integer, NativeArray(Of Color32))
+  fullName.vb: Map.Province.ProvinceIDEncoder.CreateTestPattern(Integer, Integer, Unity.Collections.NativeArray(Of UnityEngine.Color32))
+  name.vb: CreateTestPattern(Integer, Integer, NativeArray(Of Color32))
+- uid: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution(Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32})
+  commentId: M:Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution(Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32})
+  id: AnalyzeIDDistribution(Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32})
+  parent: Map.Province.ProvinceIDEncoder
+  langs:
+  - csharp
+  - vb
+  name: AnalyzeIDDistribution(NativeHashMap<ushort, Color32>)
+  nameWithType: ProvinceIDEncoder.AnalyzeIDDistribution(NativeHashMap<ushort, Color32>)
+  fullName: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution(Unity.Collections.NativeHashMap<ushort, UnityEngine.Color32>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceIDEncoder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AnalyzeIDDistribution
+    path: Scripts/Map/Province/ProvinceIDEncoder.cs
+    startLine: 279
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Analyze province ID distribution for debugging
+  example: []
+  syntax:
+    content: public static void AnalyzeIDDistribution(NativeHashMap<ushort, Color32> idToColor)
+    parameters:
+    - id: idToColor
+      type: Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+    content.vb: Public Shared Sub AnalyzeIDDistribution(idToColor As NativeHashMap(Of UShort, Color32))
+  overload: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution*
+  nameWithType.vb: ProvinceIDEncoder.AnalyzeIDDistribution(NativeHashMap(Of UShort, Color32))
+  fullName.vb: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution(Unity.Collections.NativeHashMap(Of UShort, UnityEngine.Color32))
+  name.vb: AnalyzeIDDistribution(NativeHashMap(Of UShort, Color32))
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceIDEncoder.PackProvinceID*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.PackProvinceID
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_PackProvinceID_System_UInt16_
+  name: PackProvinceID
+  nameWithType: ProvinceIDEncoder.PackProvinceID
+  fullName: Map.Province.ProvinceIDEncoder.PackProvinceID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Province.ProvinceIDEncoder.UnpackProvinceID*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.UnpackProvinceID
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_UnpackProvinceID_UnityEngine_Color32_
+  name: UnpackProvinceID
+  nameWithType: ProvinceIDEncoder.UnpackProvinceID
+  fullName: Map.Province.ProvinceIDEncoder.UnpackProvinceID
+- uid: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.EncodeProvinceIDs
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_EncodeProvinceIDs_Unity_Collections_NativeArray_UnityEngine_Color32__System_Boolean_
+  name: EncodeProvinceIDs
+  nameWithType: ProvinceIDEncoder.EncodeProvinceIDs
+  fullName: Map.Province.ProvinceIDEncoder.EncodeProvinceIDs
+- uid: Unity.Collections.NativeArray{UnityEngine.Color32}
+  commentId: T:Unity.Collections.NativeArray{UnityEngine.Color32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<Color32>
+  nameWithType: NativeArray<Color32>
+  fullName: Unity.Collections.NativeArray<UnityEngine.Color32>
+  nameWithType.vb: NativeArray(Of Color32)
+  fullName.vb: Unity.Collections.NativeArray(Of UnityEngine.Color32)
+  name.vb: NativeArray(Of Color32)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Province.ProvinceIDEncoder.EncodingResult
+  commentId: T:Map.Province.ProvinceIDEncoder.EncodingResult
+  parent: Map.Province
+  href: Map.Province.ProvinceIDEncoder.html
+  name: ProvinceIDEncoder.EncodingResult
+  nameWithType: ProvinceIDEncoder.EncodingResult
+  fullName: Map.Province.ProvinceIDEncoder.EncodingResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceIDEncoder
+    name: ProvinceIDEncoder
+    href: Map.Province.ProvinceIDEncoder.html
+  - name: .
+  - uid: Map.Province.ProvinceIDEncoder.EncodingResult
+    name: EncodingResult
+    href: Map.Province.ProvinceIDEncoder.EncodingResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceIDEncoder
+    name: ProvinceIDEncoder
+    href: Map.Province.ProvinceIDEncoder.html
+  - name: .
+  - uid: Map.Province.ProvinceIDEncoder.EncodingResult
+    name: EncodingResult
+    href: Map.Province.ProvinceIDEncoder.EncodingResult.html
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_EncodeProvinceIDsFromFrequencies_Unity_Collections_NativeHashMap_UnityEngine_Color32_System_Int32__System_Boolean_
+  name: EncodeProvinceIDsFromFrequencies
+  nameWithType: ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies
+  fullName: Map.Province.ProvinceIDEncoder.EncodeProvinceIDsFromFrequencies
+- uid: Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{UnityEngine.Color32,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<Color32, int>
+  nameWithType: NativeHashMap<Color32, int>
+  fullName: Unity.Collections.NativeHashMap<UnityEngine.Color32, int>
+  nameWithType.vb: NativeHashMap(Of Color32, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UnityEngine.Color32, Integer)
+  name.vb: NativeHashMap(Of Color32, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Map.Province.ProvinceIDEncoder.IsValidProvinceID*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.IsValidProvinceID
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_IsValidProvinceID_System_UInt16_
+  name: IsValidProvinceID
+  nameWithType: ProvinceIDEncoder.IsValidProvinceID
+  fullName: Map.Province.ProvinceIDEncoder.IsValidProvinceID
+- uid: Map.Province.ProvinceIDEncoder.GetMaxProvinceCount*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.GetMaxProvinceCount
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_GetMaxProvinceCount
+  name: GetMaxProvinceCount
+  nameWithType: ProvinceIDEncoder.GetMaxProvinceCount
+  fullName: Map.Province.ProvinceIDEncoder.GetMaxProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceIDEncoder.CreateTestPattern*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.CreateTestPattern
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_CreateTestPattern_System_Int32_System_Int32_Unity_Collections_NativeArray_UnityEngine_Color32___
+  name: CreateTestPattern
+  nameWithType: ProvinceIDEncoder.CreateTestPattern
+  fullName: Map.Province.ProvinceIDEncoder.CreateTestPattern
+- uid: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution*
+  commentId: Overload:Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution
+  href: Map.Province.ProvinceIDEncoder.html#Map_Province_ProvinceIDEncoder_AnalyzeIDDistribution_Unity_Collections_NativeHashMap_System_UInt16_UnityEngine_Color32__
+  name: AnalyzeIDDistribution
+  nameWithType: ProvinceIDEncoder.AnalyzeIDDistribution
+  fullName: Map.Province.ProvinceIDEncoder.AnalyzeIDDistribution
+- uid: Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,UnityEngine.Color32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<ushort, Color32>
+  nameWithType: NativeHashMap<ushort, Color32>
+  fullName: Unity.Collections.NativeHashMap<ushort, UnityEngine.Color32>
+  nameWithType.vb: NativeHashMap(Of UShort, Color32)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, UnityEngine.Color32)
+  name.vb: NativeHashMap(Of UShort, Color32)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )

@@ -1,0 +1,202 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.YearlyTickEvent
+  commentId: T:Core.Systems.YearlyTickEvent
+  id: YearlyTickEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.YearlyTickEvent.GameTime
+  - Core.Systems.YearlyTickEvent.Tick
+  - Core.Systems.YearlyTickEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: YearlyTickEvent
+  nameWithType: YearlyTickEvent
+  fullName: Core.Systems.YearlyTickEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YearlyTickEvent
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: 'public struct YearlyTickEvent : IGameEvent'
+    content.vb: Public Structure YearlyTickEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.YearlyTickEvent.GameTime
+  commentId: F:Core.Systems.YearlyTickEvent.GameTime
+  id: GameTime
+  parent: Core.Systems.YearlyTickEvent
+  langs:
+  - csharp
+  - vb
+  name: GameTime
+  nameWithType: YearlyTickEvent.GameTime
+  fullName: Core.Systems.YearlyTickEvent.GameTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameTime
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public GameTime GameTime
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public GameTime As GameTime
+- uid: Core.Systems.YearlyTickEvent.Tick
+  commentId: F:Core.Systems.YearlyTickEvent.Tick
+  id: Tick
+  parent: Core.Systems.YearlyTickEvent
+  langs:
+  - csharp
+  - vb
+  name: Tick
+  nameWithType: YearlyTickEvent.Tick
+  fullName: Core.Systems.YearlyTickEvent.Tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tick
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ulong Tick
+    return:
+      type: System.UInt64
+    content.vb: Public Tick As ULong
+- uid: Core.Systems.YearlyTickEvent.TimeStamp
+  commentId: P:Core.Systems.YearlyTickEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.YearlyTickEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: YearlyTickEvent.TimeStamp
+  fullName: Core.Systems.YearlyTickEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.YearlyTickEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  parent: Core.Systems
+  href: Core.Systems.GameTime.html
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.YearlyTickEvent.TimeStamp*
+  commentId: Overload:Core.Systems.YearlyTickEvent.TimeStamp
+  href: Core.Systems.YearlyTickEvent.html#Core_Systems_YearlyTickEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: YearlyTickEvent.TimeStamp
+  fullName: Core.Systems.YearlyTickEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

@@ -1,0 +1,556 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacySaveLoadHandler
+  commentId: T:Core.Diplomacy.DiplomacySaveLoadHandler
+  id: DiplomacySaveLoadHandler
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  - Core.Diplomacy.DiplomacySaveLoadHandler.OnSave(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashSet{System.UInt64})
+  langs:
+  - csharp
+  - vb
+  name: DiplomacySaveLoadHandler
+  nameWithType: DiplomacySaveLoadHandler
+  fullName: Core.Diplomacy.DiplomacySaveLoadHandler
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacySaveLoadHandler
+    path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Handles diplomacy save/load serialization
+
+
+    RESPONSIBILITY:
+
+    - Save diplomatic state to binary format
+
+    - Load diplomatic state and rebuild indices
+
+    - Rebuild derived data (activeWars, warsByCountry, modifierCache)
+
+
+    PATTERN: Stateless handler (receives data references from DiplomacySystem)
+
+    - Does NOT own NativeCollections (passed as parameters)
+
+    - Binary serialization for efficiency
+
+    - Rebuilds indices after load (Pattern 14: Hybrid Save/Load)
+
+
+    FORMAT:
+
+    - relationCount: int32
+
+    - For each relationship:
+      - country1, country2: ushort × 2
+      - baseOpinion: int64 (FixedPoint64.RawValue)
+      - atWar: bool
+      - treatyFlags: byte
+      - modifierCount: int32
+      - For each modifier:
+        - modifierTypeID: ushort
+        - value: int64 (FixedPoint64.RawValue)
+        - appliedTick: int32
+        - decayRate: int32
+  example: []
+  syntax:
+    content: public static class DiplomacySaveLoadHandler
+    content.vb: Public Module DiplomacySaveLoadHandler
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashSet{System.UInt64})
+  commentId: M:Core.Diplomacy.DiplomacySaveLoadHandler.OnSave(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashSet{System.UInt64})
+  id: OnSave(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashSet{System.UInt64})
+  parent: Core.Diplomacy.DiplomacySaveLoadHandler
+  langs:
+  - csharp
+  - vb
+  name: OnSave(SaveGameData, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashSet<ulong>)
+  nameWithType: DiplomacySaveLoadHandler.OnSave(SaveGameData, NativeParallelHashMap<ulong, RelationData>, NativeList<ModifierWithKey>, NativeParallelHashSet<ulong>)
+  fullName: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave(Core.SaveLoad.SaveGameData, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashSet<ulong>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSave
+    path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Save diplomatic state to save data
+
+    Pattern 14: Hybrid Save/Load (state snapshot for speed)
+  example: []
+  syntax:
+    content: public static void OnSave(SaveGameData saveData, NativeParallelHashMap<ulong, RelationData> relations, NativeList<ModifierWithKey> allModifiers, NativeParallelHashSet<ulong> activeWars)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    content.vb: Public Shared Sub OnSave(saveData As SaveGameData, relations As NativeParallelHashMap(Of ULong, RelationData), allModifiers As NativeList(Of ModifierWithKey), activeWars As NativeParallelHashSet(Of ULong))
+  overload: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave*
+  nameWithType.vb: DiplomacySaveLoadHandler.OnSave(SaveGameData, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashSet(Of ULong))
+  fullName.vb: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave(Core.SaveLoad.SaveGameData, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashSet(Of ULong))
+  name.vb: OnSave(SaveGameData, NativeParallelHashMap(Of ULong, RelationData), NativeList(Of ModifierWithKey), NativeParallelHashSet(Of ULong))
+- uid: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  commentId: M:Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  id: OnLoad(Core.SaveLoad.SaveGameData,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey},Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32})
+  parent: Core.Diplomacy.DiplomacySaveLoadHandler
+  langs:
+  - csharp
+  - vb
+  name: OnLoad(SaveGameData, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  nameWithType: DiplomacySaveLoadHandler.OnLoad(SaveGameData, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, NativeList<ModifierWithKey>, NativeParallelHashMap<ulong, int>)
+  fullName: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad(Core.SaveLoad.SaveGameData, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeParallelHashSet<ulong>, Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>, Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>, Unity.Collections.NativeParallelHashMap<ulong, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnLoad
+    path: Scripts/Core/Diplomacy/DiplomacySaveLoadHandler.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Load diplomatic state from save data
+
+    Rebuilds derived indices (activeWars, warsByCountry, modifierCache)
+  example: []
+  syntax:
+    content: public static void OnLoad(SaveGameData saveData, NativeParallelHashMap<ulong, RelationData> relations, NativeParallelHashSet<ulong> activeWars, NativeParallelMultiHashMap<ushort, ushort> warsByCountry, NativeList<ModifierWithKey> allModifiers, NativeParallelHashMap<ulong, int> modifierCache)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    - id: warsByCountry
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    - id: allModifiers
+      type: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+    - id: modifierCache
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+    content.vb: Public Shared Sub OnLoad(saveData As SaveGameData, relations As NativeParallelHashMap(Of ULong, RelationData), activeWars As NativeParallelHashSet(Of ULong), warsByCountry As NativeParallelMultiHashMap(Of UShort, UShort), allModifiers As NativeList(Of ModifierWithKey), modifierCache As NativeParallelHashMap(Of ULong, Integer))
+  overload: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad*
+  nameWithType.vb: DiplomacySaveLoadHandler.OnLoad(SaveGameData, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+  fullName.vb: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad(Core.SaveLoad.SaveGameData, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeParallelHashSet(Of ULong), Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort), Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey), Unity.Collections.NativeParallelHashMap(Of ULong, Integer))
+  name.vb: OnLoad(SaveGameData, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), NativeList(Of ModifierWithKey), NativeParallelHashMap(Of ULong, Integer))
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave*
+  commentId: Overload:Core.Diplomacy.DiplomacySaveLoadHandler.OnSave
+  href: Core.Diplomacy.DiplomacySaveLoadHandler.html#Core_Diplomacy_DiplomacySaveLoadHandler_OnSave_Core_SaveLoad_SaveGameData_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashSet_System_UInt64__
+  name: OnSave
+  nameWithType: DiplomacySaveLoadHandler.OnSave
+  fullName: Core.Diplomacy.DiplomacySaveLoadHandler.OnSave
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveGameData.html
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  href: Core.Diplomacy.RelationData.html
+  name: NativeParallelHashMap<ulong, RelationData>
+  nameWithType: NativeParallelHashMap<ulong, RelationData>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, RelationData)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData)
+  name.vb: NativeParallelHashMap(Of ULong, RelationData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: )
+- uid: Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  commentId: T:Unity.Collections.NativeList{Core.Diplomacy.ModifierWithKey}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Core.Diplomacy.ModifierWithKey.html
+  name: NativeList<ModifierWithKey>
+  nameWithType: NativeList<ModifierWithKey>
+  fullName: Unity.Collections.NativeList<Core.Diplomacy.ModifierWithKey>
+  nameWithType.vb: NativeList(Of ModifierWithKey)
+  fullName.vb: Unity.Collections.NativeList(Of Core.Diplomacy.ModifierWithKey)
+  name.vb: NativeList(Of ModifierWithKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: )
+- uid: Unity.Collections.NativeParallelHashSet{System.UInt64}
+  commentId: T:Unity.Collections.NativeParallelHashSet{System.UInt64}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashSet`1
+  name: NativeParallelHashSet<ulong>
+  nameWithType: NativeParallelHashSet<ulong>
+  fullName: Unity.Collections.NativeParallelHashSet<ulong>
+  nameWithType.vb: NativeParallelHashSet(Of ULong)
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of ULong)
+  name.vb: NativeParallelHashSet(Of ULong)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: )
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: Unity.Collections.NativeParallelHashMap`2
+  commentId: T:Unity.Collections.NativeParallelHashMap`2
+  isExternal: true
+  name: NativeParallelHashMap<TKey, TValue>
+  nameWithType: NativeParallelHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of TKey, TValue)
+  name.vb: NativeParallelHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeParallelHashSet`1
+  commentId: T:Unity.Collections.NativeParallelHashSet`1
+  isExternal: true
+  name: NativeParallelHashSet<T>
+  nameWithType: NativeParallelHashSet<T>
+  fullName: Unity.Collections.NativeParallelHashSet<T>
+  nameWithType.vb: NativeParallelHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of T)
+  name.vb: NativeParallelHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad*
+  commentId: Overload:Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad
+  href: Core.Diplomacy.DiplomacySaveLoadHandler.html#Core_Diplomacy_DiplomacySaveLoadHandler_OnLoad_Core_SaveLoad_SaveGameData_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeParallelHashSet_System_UInt64__Unity_Collections_NativeParallelMultiHashMap_System_UInt16_System_UInt16__Unity_Collections_NativeList_Core_Diplomacy_ModifierWithKey__Unity_Collections_NativeParallelHashMap_System_UInt64_System_Int32__
+  name: OnLoad
+  nameWithType: DiplomacySaveLoadHandler.OnLoad
+  fullName: Core.Diplomacy.DiplomacySaveLoadHandler.OnLoad
+- uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelMultiHashMap`2
+  name: NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType: NativeParallelMultiHashMap<ushort, ushort>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort)
+  name.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  name: NativeParallelHashMap<ulong, int>
+  nameWithType: NativeParallelHashMap<ulong, int>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, int>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, Integer)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Integer)
+  name.vb: NativeParallelHashMap(Of ULong, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeParallelMultiHashMap`2
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap`2
+  isExternal: true
+  name: NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType: NativeParallelMultiHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of TKey, TValue)
+  name.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )

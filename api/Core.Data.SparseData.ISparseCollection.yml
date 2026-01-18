@@ -1,0 +1,427 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.SparseData.ISparseCollection
+  commentId: T:Core.Data.SparseData.ISparseCollection
+  id: ISparseCollection
+  parent: Core.Data.SparseData
+  children:
+  - Core.Data.SparseData.ISparseCollection.Capacity
+  - Core.Data.SparseData.ISparseCollection.CapacityUsage
+  - Core.Data.SparseData.ISparseCollection.Clear
+  - Core.Data.SparseData.ISparseCollection.Count
+  - Core.Data.SparseData.ISparseCollection.GetStats
+  - Core.Data.SparseData.ISparseCollection.IsInitialized
+  - Core.Data.SparseData.ISparseCollection.Name
+  langs:
+  - csharp
+  - vb
+  name: ISparseCollection
+  nameWithType: ISparseCollection
+  fullName: Core.Data.SparseData.ISparseCollection
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ISparseCollection
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Non-generic interface for sparse collections (type-erased)
+
+
+    Purpose: Enables polymorphic management of different collection types
+
+    - Memory monitoring across all collections
+
+    - Unified disposal at shutdown
+
+    - Capacity warnings for all collections
+
+
+    Pattern: Interface with generic implementation
+
+    - ISparseCollection provides type-erased contract
+
+    - SparseCollectionManager{TKey, TValue} implements typed operations
+
+
+    Use case: Central management in game systems
+
+    - Track memory usage across all sparse collections
+
+    - Dispose all collections at shutdown
+
+    - Monitor capacity warnings globally
+  example: []
+  syntax:
+    content: public interface ISparseCollection
+    content.vb: Public Interface ISparseCollection
+- uid: Core.Data.SparseData.ISparseCollection.Name
+  commentId: P:Core.Data.SparseData.ISparseCollection.Name
+  id: Name
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ISparseCollection.Name
+  fullName: Core.Data.SparseData.ISparseCollection.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Name for debugging and logging
+
+    Example: "ProvinceBuildings", "CountryModifiers"
+  example: []
+  syntax:
+    content: string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property Name As String
+  overload: Core.Data.SparseData.ISparseCollection.Name*
+- uid: Core.Data.SparseData.ISparseCollection.IsInitialized
+  commentId: P:Core.Data.SparseData.ISparseCollection.IsInitialized
+  id: IsInitialized
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: ISparseCollection.IsInitialized
+  fullName: Core.Data.SparseData.ISparseCollection.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: Is the collection initialized and ready for use?
+  example: []
+  syntax:
+    content: bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsInitialized As Boolean
+  overload: Core.Data.SparseData.ISparseCollection.IsInitialized*
+- uid: Core.Data.SparseData.ISparseCollection.Capacity
+  commentId: P:Core.Data.SparseData.ISparseCollection.Capacity
+  id: Capacity
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: ISparseCollection.Capacity
+  fullName: Core.Data.SparseData.ISparseCollection.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Pre-allocated capacity (from Principle 4)
+
+    - Set at initialization
+
+    - Fixed during gameplay (zero allocations)
+  example: []
+  syntax:
+    content: int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property Capacity As Integer
+  overload: Core.Data.SparseData.ISparseCollection.Capacity*
+- uid: Core.Data.SparseData.ISparseCollection.Count
+  commentId: P:Core.Data.SparseData.ISparseCollection.Count
+  id: Count
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: ISparseCollection.Count
+  fullName: Core.Data.SparseData.ISparseCollection.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Current number of entries in collection
+
+    - Actual items stored (not capacity)
+
+    - Used for memory monitoring
+  example: []
+  syntax:
+    content: int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property Count As Integer
+  overload: Core.Data.SparseData.ISparseCollection.Count*
+- uid: Core.Data.SparseData.ISparseCollection.CapacityUsage
+  commentId: P:Core.Data.SparseData.ISparseCollection.CapacityUsage
+  id: CapacityUsage
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: CapacityUsage
+  nameWithType: ISparseCollection.CapacityUsage
+  fullName: Core.Data.SparseData.ISparseCollection.CapacityUsage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CapacityUsage
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Percentage of capacity used (0.0 to 1.0)
+
+    - Warns when approaching capacity
+
+    - Triggers logging at thresholds (80%, 90%, 95%)
+  example: []
+  syntax:
+    content: float CapacityUsage { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: ReadOnly Property CapacityUsage As Single
+  overload: Core.Data.SparseData.ISparseCollection.CapacityUsage*
+- uid: Core.Data.SparseData.ISparseCollection.Clear
+  commentId: M:Core.Data.SparseData.ISparseCollection.Clear
+  id: Clear
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ISparseCollection.Clear()
+  fullName: Core.Data.SparseData.ISparseCollection.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Clear all entries without deallocating
+
+    - Resets count to 0
+
+    - Keeps pre-allocated capacity (Principle 4)
+
+    - Used for scenario reload or game reset
+  example: []
+  syntax:
+    content: void Clear()
+    content.vb: Sub Clear()
+  overload: Core.Data.SparseData.ISparseCollection.Clear*
+- uid: Core.Data.SparseData.ISparseCollection.GetStats
+  commentId: M:Core.Data.SparseData.ISparseCollection.GetStats
+  id: GetStats
+  parent: Core.Data.SparseData.ISparseCollection
+  langs:
+  - csharp
+  - vb
+  name: GetStats()
+  nameWithType: ISparseCollection.GetStats()
+  fullName: Core.Data.SparseData.ISparseCollection.GetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStats
+    path: Scripts/Core/Data/SparseData/ISparseCollection.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: Get memory statistics for profiling
+  example: []
+  syntax:
+    content: SparseCollectionStats GetStats()
+    return:
+      type: Core.Data.SparseData.SparseCollectionStats
+    content.vb: Function GetStats() As SparseCollectionStats
+  overload: Core.Data.SparseData.ISparseCollection.GetStats*
+references:
+- uid: Core.Data.SparseData
+  commentId: N:Core.Data.SparseData
+  href: Core.html
+  name: Core.Data.SparseData
+  nameWithType: Core.Data.SparseData
+  fullName: Core.Data.SparseData
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+- uid: Core.Data.SparseData.ISparseCollection.Name*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.Name
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Name
+  name: Name
+  nameWithType: ISparseCollection.Name
+  fullName: Core.Data.SparseData.ISparseCollection.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.SparseData.ISparseCollection.IsInitialized*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.IsInitialized
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_IsInitialized
+  name: IsInitialized
+  nameWithType: ISparseCollection.IsInitialized
+  fullName: Core.Data.SparseData.ISparseCollection.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.SparseData.ISparseCollection.Capacity*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.Capacity
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Capacity
+  name: Capacity
+  nameWithType: ISparseCollection.Capacity
+  fullName: Core.Data.SparseData.ISparseCollection.Capacity
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.SparseData.ISparseCollection.Count*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.Count
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Count
+  name: Count
+  nameWithType: ISparseCollection.Count
+  fullName: Core.Data.SparseData.ISparseCollection.Count
+- uid: Core.Data.SparseData.ISparseCollection.CapacityUsage*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.CapacityUsage
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_CapacityUsage
+  name: CapacityUsage
+  nameWithType: ISparseCollection.CapacityUsage
+  fullName: Core.Data.SparseData.ISparseCollection.CapacityUsage
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Data.SparseData.ISparseCollection.Clear*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.Clear
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_Clear
+  name: Clear
+  nameWithType: ISparseCollection.Clear
+  fullName: Core.Data.SparseData.ISparseCollection.Clear
+- uid: Core.Data.SparseData.ISparseCollection.GetStats*
+  commentId: Overload:Core.Data.SparseData.ISparseCollection.GetStats
+  href: Core.Data.SparseData.ISparseCollection.html#Core_Data_SparseData_ISparseCollection_GetStats
+  name: GetStats
+  nameWithType: ISparseCollection.GetStats
+  fullName: Core.Data.SparseData.ISparseCollection.GetStats
+- uid: Core.Data.SparseData.SparseCollectionStats
+  commentId: T:Core.Data.SparseData.SparseCollectionStats
+  parent: Core.Data.SparseData
+  href: Core.Data.SparseData.SparseCollectionStats.html
+  name: SparseCollectionStats
+  nameWithType: SparseCollectionStats
+  fullName: Core.Data.SparseData.SparseCollectionStats

@@ -1,0 +1,246 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  commentId: T:Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  id: ColoredTextMarkup.ColoredTextSegment
+  parent: Core.Localization
+  children:
+  - Core.Localization.ColoredTextMarkup.ColoredTextSegment.Color
+  - Core.Localization.ColoredTextMarkup.ColoredTextSegment.HasColor
+  - Core.Localization.ColoredTextMarkup.ColoredTextSegment.Style
+  - Core.Localization.ColoredTextMarkup.ColoredTextSegment.Text
+  langs:
+  - csharp
+  - vb
+  name: ColoredTextMarkup.ColoredTextSegment
+  nameWithType: ColoredTextMarkup.ColoredTextSegment
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColoredTextSegment
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Text segment with color information
+  example: []
+  syntax:
+    content: public struct ColoredTextMarkup.ColoredTextSegment
+    content.vb: Public Structure ColoredTextMarkup.ColoredTextSegment
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Text
+  commentId: F:Core.Localization.ColoredTextMarkup.ColoredTextSegment.Text
+  id: Text
+  parent: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  langs:
+  - csharp
+  - vb
+  name: Text
+  nameWithType: ColoredTextMarkup.ColoredTextSegment.Text
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Text
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Text
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString128Bytes Text
+    return:
+      type: Unity.Collections.FixedString128Bytes
+    content.vb: Public Text As FixedString128Bytes
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Color
+  commentId: F:Core.Localization.ColoredTextMarkup.ColoredTextSegment.Color
+  id: Color
+  parent: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: ColoredTextMarkup.ColoredTextSegment.Color
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Color
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Color
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public Color32 Color
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Color As Color32
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment.HasColor
+  commentId: F:Core.Localization.ColoredTextMarkup.ColoredTextSegment.HasColor
+  id: HasColor
+  parent: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  langs:
+  - csharp
+  - vb
+  name: HasColor
+  nameWithType: ColoredTextMarkup.ColoredTextSegment.HasColor
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment.HasColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasColor
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool HasColor
+    return:
+      type: System.Boolean
+    content.vb: Public HasColor As Boolean
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Style
+  commentId: F:Core.Localization.ColoredTextMarkup.ColoredTextSegment.Style
+  id: Style
+  parent: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  langs:
+  - csharp
+  - vb
+  name: Style
+  nameWithType: ColoredTextMarkup.ColoredTextSegment.Style
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment.Style
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/ColoredTextMarkup.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Style
+    path: Scripts/Core/Localization/ColoredTextMarkup.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public ColoredTextMarkup.TextStyle Style
+    return:
+      type: Core.Localization.ColoredTextMarkup.TextStyle
+    content.vb: Public Style As ColoredTextMarkup.TextStyle
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.FixedString128Bytes
+  commentId: T:Unity.Collections.FixedString128Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString128Bytes
+  nameWithType: FixedString128Bytes
+  fullName: Unity.Collections.FixedString128Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.ColoredTextMarkup.TextStyle
+  commentId: T:Core.Localization.ColoredTextMarkup.TextStyle
+  parent: Core.Localization
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.TextStyle
+  nameWithType: ColoredTextMarkup.TextStyle
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html

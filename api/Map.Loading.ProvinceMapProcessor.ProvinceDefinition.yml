@@ -1,0 +1,179 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  commentId: T:Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  id: ProvinceMapProcessor.ProvinceDefinition
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinition.B
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinition.G
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinition.ProvinceID
+  - Map.Loading.ProvinceMapProcessor.ProvinceDefinition.R
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.ProvinceDefinition
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDefinition
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 168
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public struct ProvinceMapProcessor.ProvinceDefinition
+    content.vb: Public Structure ProvinceMapProcessor.ProvinceDefinition
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.ProvinceID
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceDefinition.ProvinceID
+  id: ProvinceID
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition.ProvinceID
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 170
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int ProvinceID
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceID As Integer
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.R
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceDefinition.R
+  id: R
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  langs:
+  - csharp
+  - vb
+  name: R
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition.R
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.R
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: R
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 171
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int R
+    return:
+      type: System.Int32
+    content.vb: Public R As Integer
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.G
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceDefinition.G
+  id: G
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  langs:
+  - csharp
+  - vb
+  name: G
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition.G
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.G
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: G
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 171
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int G
+    return:
+      type: System.Int32
+    content.vb: Public G As Integer
+- uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.B
+  commentId: F:Map.Loading.ProvinceMapProcessor.ProvinceDefinition.B
+  id: B
+  parent: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+  langs:
+  - csharp
+  - vb
+  name: B
+  nameWithType: ProvinceMapProcessor.ProvinceDefinition.B
+  fullName: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.B
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: B
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 171
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int B
+    return:
+      type: System.Int32
+    content.vb: Public B As Integer
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

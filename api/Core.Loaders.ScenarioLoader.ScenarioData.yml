@@ -1,0 +1,480 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.ScenarioData
+  commentId: T:Core.Loaders.ScenarioLoader.ScenarioData
+  id: ScenarioLoader.ScenarioData
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.ScenarioData.#ctor
+  - Core.Loaders.ScenarioLoader.ScenarioData.CountrySetups
+  - Core.Loaders.ScenarioLoader.ScenarioData.Description
+  - Core.Loaders.ScenarioLoader.ScenarioData.DiplomaticRelations
+  - Core.Loaders.ScenarioLoader.ScenarioData.Name
+  - Core.Loaders.ScenarioLoader.ScenarioData.ProvinceSetups
+  - Core.Loaders.ScenarioLoader.ScenarioData.StartDate
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.ScenarioData
+  nameWithType: ScenarioLoader.ScenarioData
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScenarioData
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Complete scenario data
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public class ScenarioLoader.ScenarioData
+    content.vb: >-
+      <Serializable>
+
+      Public Class ScenarioLoader.ScenarioData
+  inheritance:
+  - System.Object
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.Name
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.Name
+  id: Name
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ScenarioLoader.ScenarioData.Name
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.Name
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Name
+    return:
+      type: System.String
+    content.vb: Public Name As String
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.Description
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.Description
+  id: Description
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: ScenarioLoader.ScenarioData.Description
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.Description
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Description
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Description
+    return:
+      type: System.String
+    content.vb: Public Description As String
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.StartDate
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.StartDate
+  id: StartDate
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: StartDate
+  nameWithType: ScenarioLoader.ScenarioData.StartDate
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.StartDate
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartDate
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public DateTime StartDate
+    return:
+      type: System.DateTime
+    content.vb: Public StartDate As Date
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.ProvinceSetups
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.ProvinceSetups
+  id: ProvinceSetups
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSetups
+  nameWithType: ScenarioLoader.ScenarioData.ProvinceSetups
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.ProvinceSetups
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSetups
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public List<ScenarioLoader.ProvinceSetup> ProvinceSetups
+    return:
+      type: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.ProvinceSetup}
+    content.vb: Public ProvinceSetups As List(Of ScenarioLoader.ProvinceSetup)
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.CountrySetups
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.CountrySetups
+  id: CountrySetups
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: CountrySetups
+  nameWithType: ScenarioLoader.ScenarioData.CountrySetups
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.CountrySetups
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySetups
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public List<ScenarioLoader.CountrySetup> CountrySetups
+    return:
+      type: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.CountrySetup}
+    content.vb: Public CountrySetups As List(Of ScenarioLoader.CountrySetup)
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.DiplomaticRelations
+  commentId: F:Core.Loaders.ScenarioLoader.ScenarioData.DiplomaticRelations
+  id: DiplomaticRelations
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: DiplomaticRelations
+  nameWithType: ScenarioLoader.ScenarioData.DiplomaticRelations
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.DiplomaticRelations
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomaticRelations
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 55
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public List<ScenarioLoader.DiplomaticRelation> DiplomaticRelations
+    return:
+      type: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.DiplomaticRelation}
+    content.vb: Public DiplomaticRelations As List(Of ScenarioLoader.DiplomaticRelation)
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.#ctor
+  commentId: M:Core.Loaders.ScenarioLoader.ScenarioData.#ctor
+  id: '#ctor'
+  parent: Core.Loaders.ScenarioLoader.ScenarioData
+  langs:
+  - csharp
+  - vb
+  name: ScenarioData()
+  nameWithType: ScenarioLoader.ScenarioData.ScenarioData()
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.ScenarioData()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ScenarioData()
+    content.vb: Public Sub New()
+  overload: Core.Loaders.ScenarioLoader.ScenarioData.#ctor*
+  nameWithType.vb: ScenarioLoader.ScenarioData.New()
+  fullName.vb: Core.Loaders.ScenarioLoader.ScenarioData.New()
+  name.vb: New()
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.ProvinceSetup}
+  commentId: T:System.Collections.Generic.List{Core.Loaders.ScenarioLoader.ProvinceSetup}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Loaders.ScenarioLoader.html
+  name: List<ScenarioLoader.ProvinceSetup>
+  nameWithType: List<ScenarioLoader.ProvinceSetup>
+  fullName: System.Collections.Generic.List<Core.Loaders.ScenarioLoader.ProvinceSetup>
+  nameWithType.vb: List(Of ScenarioLoader.ProvinceSetup)
+  fullName.vb: System.Collections.Generic.List(Of Core.Loaders.ScenarioLoader.ProvinceSetup)
+  name.vb: List(Of ScenarioLoader.ProvinceSetup)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+    name: ProvinceSetup
+    href: Core.Loaders.ScenarioLoader.ProvinceSetup.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+    name: ProvinceSetup
+    href: Core.Loaders.ScenarioLoader.ProvinceSetup.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.CountrySetup}
+  commentId: T:System.Collections.Generic.List{Core.Loaders.ScenarioLoader.CountrySetup}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Loaders.ScenarioLoader.html
+  name: List<ScenarioLoader.CountrySetup>
+  nameWithType: List<ScenarioLoader.CountrySetup>
+  fullName: System.Collections.Generic.List<Core.Loaders.ScenarioLoader.CountrySetup>
+  nameWithType.vb: List(Of ScenarioLoader.CountrySetup)
+  fullName.vb: System.Collections.Generic.List(Of Core.Loaders.ScenarioLoader.CountrySetup)
+  name.vb: List(Of ScenarioLoader.CountrySetup)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.CountrySetup
+    name: CountrySetup
+    href: Core.Loaders.ScenarioLoader.CountrySetup.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.CountrySetup
+    name: CountrySetup
+    href: Core.Loaders.ScenarioLoader.CountrySetup.html
+  - name: )
+- uid: System.Collections.Generic.List{Core.Loaders.ScenarioLoader.DiplomaticRelation}
+  commentId: T:System.Collections.Generic.List{Core.Loaders.ScenarioLoader.DiplomaticRelation}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Loaders.ScenarioLoader.html
+  name: List<ScenarioLoader.DiplomaticRelation>
+  nameWithType: List<ScenarioLoader.DiplomaticRelation>
+  fullName: System.Collections.Generic.List<Core.Loaders.ScenarioLoader.DiplomaticRelation>
+  nameWithType.vb: List(Of ScenarioLoader.DiplomaticRelation)
+  fullName.vb: System.Collections.Generic.List(Of Core.Loaders.ScenarioLoader.DiplomaticRelation)
+  name.vb: List(Of ScenarioLoader.DiplomaticRelation)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+    name: DiplomaticRelation
+    href: Core.Loaders.ScenarioLoader.DiplomaticRelation.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+    name: DiplomaticRelation
+    href: Core.Loaders.ScenarioLoader.DiplomaticRelation.html
+  - name: )
+- uid: Core.Loaders.ScenarioLoader.ScenarioData.#ctor*
+  commentId: Overload:Core.Loaders.ScenarioLoader.ScenarioData.#ctor
+  href: Core.Loaders.ScenarioLoader.ScenarioData.html#Core_Loaders_ScenarioLoader_ScenarioData__ctor
+  name: ScenarioData
+  nameWithType: ScenarioLoader.ScenarioData.ScenarioData
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData.ScenarioData
+  nameWithType.vb: ScenarioLoader.ScenarioData.New
+  fullName.vb: Core.Loaders.ScenarioLoader.ScenarioData.New
+  name.vb: New

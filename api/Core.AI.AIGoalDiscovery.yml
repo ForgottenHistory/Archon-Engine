@@ -1,0 +1,163 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIGoalDiscovery
+  commentId: T:Core.AI.AIGoalDiscovery
+  id: AIGoalDiscovery
+  parent: Core.AI
+  children:
+  - Core.AI.AIGoalDiscovery.DiscoverAndRegister(Core.AI.AIGoalRegistry,System.Reflection.Assembly[])
+  langs:
+  - csharp
+  - vb
+  name: AIGoalDiscovery
+  nameWithType: AIGoalDiscovery
+  fullName: Core.AI.AIGoalDiscovery
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalDiscovery.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIGoalDiscovery
+    path: Scripts/Core/AI/AIGoalDiscovery.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Auto-discovery and registration for AI goals.
+
+
+    Scans assemblies for classes with [Goal] attribute and registers them.
+
+    Follows same pattern as SimpleCommandFactory.DiscoverAndRegister().
+
+
+    Usage:
+
+    // During initialization
+
+    AIGoalDiscovery.DiscoverAndRegister(goalRegistry, Assembly.GetExecutingAssembly());
+
+
+    // Or scan multiple assemblies
+
+    AIGoalDiscovery.DiscoverAndRegister(goalRegistry,
+        typeof(EngineGoal).Assembly,   // ENGINE goals
+        typeof(GameGoal).Assembly);    // GAME goals
+  example: []
+  syntax:
+    content: public static class AIGoalDiscovery
+    content.vb: Public Module AIGoalDiscovery
+  inheritance:
+  - System.Object
+- uid: Core.AI.AIGoalDiscovery.DiscoverAndRegister(Core.AI.AIGoalRegistry,System.Reflection.Assembly[])
+  commentId: M:Core.AI.AIGoalDiscovery.DiscoverAndRegister(Core.AI.AIGoalRegistry,System.Reflection.Assembly[])
+  id: DiscoverAndRegister(Core.AI.AIGoalRegistry,System.Reflection.Assembly[])
+  parent: Core.AI.AIGoalDiscovery
+  langs:
+  - csharp
+  - vb
+  name: DiscoverAndRegister(AIGoalRegistry, params Assembly[])
+  nameWithType: AIGoalDiscovery.DiscoverAndRegister(AIGoalRegistry, params Assembly[])
+  fullName: Core.AI.AIGoalDiscovery.DiscoverAndRegister(Core.AI.AIGoalRegistry, params System.Reflection.Assembly[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIGoalDiscovery.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiscoverAndRegister
+    path: Scripts/Core/AI/AIGoalDiscovery.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Discover all AIGoal classes with [Goal] attribute and register them.
+  example: []
+  syntax:
+    content: public static void DiscoverAndRegister(AIGoalRegistry registry, params Assembly[] assemblies)
+    parameters:
+    - id: registry
+      type: Core.AI.AIGoalRegistry
+      description: The AIGoalRegistry to register goals with.
+    - id: assemblies
+      type: System.Reflection.Assembly[]
+      description: Assemblies to scan. If empty, uses calling assembly.
+    content.vb: Public Shared Sub DiscoverAndRegister(registry As AIGoalRegistry, ParamArray assemblies As Assembly())
+  overload: Core.AI.AIGoalDiscovery.DiscoverAndRegister*
+  nameWithType.vb: AIGoalDiscovery.DiscoverAndRegister(AIGoalRegistry, ParamArray Assembly())
+  fullName.vb: Core.AI.AIGoalDiscovery.DiscoverAndRegister(Core.AI.AIGoalRegistry, ParamArray System.Reflection.Assembly())
+  name.vb: DiscoverAndRegister(AIGoalRegistry, ParamArray Assembly())
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.AIGoalDiscovery.DiscoverAndRegister*
+  commentId: Overload:Core.AI.AIGoalDiscovery.DiscoverAndRegister
+  href: Core.AI.AIGoalDiscovery.html#Core_AI_AIGoalDiscovery_DiscoverAndRegister_Core_AI_AIGoalRegistry_System_Reflection_Assembly___
+  name: DiscoverAndRegister
+  nameWithType: AIGoalDiscovery.DiscoverAndRegister
+  fullName: Core.AI.AIGoalDiscovery.DiscoverAndRegister
+- uid: Core.AI.AIGoalRegistry
+  commentId: T:Core.AI.AIGoalRegistry
+  parent: Core.AI
+  href: Core.AI.AIGoalRegistry.html
+  name: AIGoalRegistry
+  nameWithType: AIGoalRegistry
+  fullName: Core.AI.AIGoalRegistry
+- uid: System.Reflection.Assembly[]
+  isExternal: true
+  name: Assembly[]
+  nameWithType: Assembly[]
+  fullName: System.Reflection.Assembly[]
+  nameWithType.vb: Assembly()
+  fullName.vb: System.Reflection.Assembly()
+  name.vb: Assembly()
+  spec.csharp:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: (
+  - name: )

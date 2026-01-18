@@ -1,0 +1,495 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPProvinceStatsJob
+  commentId: T:Map.Loading.Images.BMPProvinceStatsJob
+  id: BMPProvinceStatsJob
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPProvinceStatsJob.BatchResults
+  - Map.Loading.Images.BMPProvinceStatsJob.ColorToProvinceID
+  - Map.Loading.Images.BMPProvinceStatsJob.Execute(System.Int32,System.Int32)
+  - Map.Loading.Images.BMPProvinceStatsJob.Height
+  - Map.Loading.Images.BMPProvinceStatsJob.PixelData
+  - Map.Loading.Images.BMPProvinceStatsJob.Width
+  langs:
+  - csharp
+  - vb
+  name: BMPProvinceStatsJob
+  nameWithType: BMPProvinceStatsJob
+  fullName: Map.Loading.Images.BMPProvinceStatsJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPProvinceStatsJob
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 102
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Burst-compiled job for parallel province statistics calculation
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
+
+      public struct BMPProvinceStatsJob
+    content.vb: >-
+      <BurstCompile(OptimizeFor:=OptimizeFor.Performance)>
+
+      Public Structure BMPProvinceStatsJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: OptimizeFor
+      type: Unity.Burst.OptimizeFor
+      value: 1
+- uid: Map.Loading.Images.BMPProvinceStatsJob.PixelData
+  commentId: F:Map.Loading.Images.BMPProvinceStatsJob.PixelData
+  id: PixelData
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: PixelData
+  nameWithType: BMPProvinceStatsJob.PixelData
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.PixelData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelData
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 105
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public BMPParser.BMPPixelData PixelData
+    return:
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    content.vb: >-
+      <ReadOnly>
+
+      Public PixelData As BMPParser.BMPPixelData
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPProvinceStatsJob.Width
+  commentId: F:Map.Loading.Images.BMPProvinceStatsJob.Width
+  id: Width
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: BMPProvinceStatsJob.Width
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int Width
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public Width As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPProvinceStatsJob.Height
+  commentId: F:Map.Loading.Images.BMPProvinceStatsJob.Height
+  id: Height
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: BMPProvinceStatsJob.Height
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 107
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int Height
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public Height As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPProvinceStatsJob.ColorToProvinceID
+  commentId: F:Map.Loading.Images.BMPProvinceStatsJob.ColorToProvinceID
+  id: ColorToProvinceID
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: ColorToProvinceID
+  nameWithType: BMPProvinceStatsJob.ColorToProvinceID
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.ColorToProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorToProvinceID
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 108
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public NativeHashMap<int, int> ColorToProvinceID
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: >-
+      <ReadOnly>
+
+      Public ColorToProvinceID As NativeHashMap(Of Integer, Integer)
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPProvinceStatsJob.BatchResults
+  commentId: F:Map.Loading.Images.BMPProvinceStatsJob.BatchResults
+  id: BatchResults
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: BatchResults
+  nameWithType: BMPProvinceStatsJob.BatchResults
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.BatchResults
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BatchResults
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 111
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: >-
+      [WriteOnly]
+
+      public NativeArray<BMPProvinceStatsData> BatchResults
+    return:
+      type: Unity.Collections.NativeArray{Map.Loading.Images.BMPProvinceStatsData}
+    content.vb: >-
+      <WriteOnly>
+
+      Public BatchResults As NativeArray(Of BMPProvinceStatsData)
+  attributes:
+  - type: Unity.Collections.WriteOnlyAttribute
+    ctor: Unity.Collections.WriteOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Loading.Images.BMPProvinceStatsJob.Execute(System.Int32,System.Int32)
+  commentId: M:Map.Loading.Images.BMPProvinceStatsJob.Execute(System.Int32,System.Int32)
+  id: Execute(System.Int32,System.Int32)
+  parent: Map.Loading.Images.BMPProvinceStatsJob
+  langs:
+  - csharp
+  - vb
+  name: Execute(int, int)
+  nameWithType: BMPProvinceStatsJob.Execute(int, int)
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.Execute(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Map/Loading/Images/BMPProcessingJobs.cs
+    startLine: 113
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  example: []
+  syntax:
+    content: public void Execute(int startIndex, int count)
+    parameters:
+    - id: startIndex
+      type: System.Int32
+    - id: count
+      type: System.Int32
+    content.vb: Public Sub Execute(startIndex As Integer, count As Integer)
+  overload: Map.Loading.Images.BMPProvinceStatsJob.Execute*
+  nameWithType.vb: BMPProvinceStatsJob.Execute(Integer, Integer)
+  fullName.vb: Map.Loading.Images.BMPProvinceStatsJob.Execute(Integer, Integer)
+  name.vb: Execute(Integer, Integer)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<int, int>
+  nameWithType: NativeHashMap<int, int>
+  fullName: Unity.Collections.NativeHashMap<int, int>
+  nameWithType.vb: NativeHashMap(Of Integer, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Integer, Integer)
+  name.vb: NativeHashMap(Of Integer, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray{Map.Loading.Images.BMPProvinceStatsData}
+  commentId: T:Unity.Collections.NativeArray{Map.Loading.Images.BMPProvinceStatsData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Map.Loading.Images.BMPProvinceStatsData.html
+  name: NativeArray<BMPProvinceStatsData>
+  nameWithType: NativeArray<BMPProvinceStatsData>
+  fullName: Unity.Collections.NativeArray<Map.Loading.Images.BMPProvinceStatsData>
+  nameWithType.vb: NativeArray(Of BMPProvinceStatsData)
+  fullName.vb: Unity.Collections.NativeArray(Of Map.Loading.Images.BMPProvinceStatsData)
+  name.vb: NativeArray(Of BMPProvinceStatsData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.BMPProvinceStatsData
+    name: BMPProvinceStatsData
+    href: Map.Loading.Images.BMPProvinceStatsData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.BMPProvinceStatsData
+    name: BMPProvinceStatsData
+    href: Map.Loading.Images.BMPProvinceStatsData.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.Images.BMPProvinceStatsJob.Execute*
+  commentId: Overload:Map.Loading.Images.BMPProvinceStatsJob.Execute
+  href: Map.Loading.Images.BMPProvinceStatsJob.html#Map_Loading_Images_BMPProvinceStatsJob_Execute_System_Int32_System_Int32_
+  name: Execute
+  nameWithType: BMPProvinceStatsJob.Execute
+  fullName: Map.Loading.Images.BMPProvinceStatsJob.Execute

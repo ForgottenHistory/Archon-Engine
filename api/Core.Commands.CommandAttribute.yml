@@ -1,0 +1,367 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandAttribute
+  commentId: T:Core.Commands.CommandAttribute
+  id: CommandAttribute
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandAttribute.#ctor(System.String)
+  - Core.Commands.CommandAttribute.Aliases
+  - Core.Commands.CommandAttribute.Description
+  - Core.Commands.CommandAttribute.Examples
+  - Core.Commands.CommandAttribute.Name
+  - Core.Commands.CommandAttribute.Usage
+  langs:
+  - csharp
+  - vb
+  name: CommandAttribute
+  nameWithType: CommandAttribute
+  fullName: Core.Commands.CommandAttribute
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandAttribute
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Marks a SimpleCommand class for auto-discovery and factory generation.
+
+    Replaces the need for separate ICommandFactory + CommandMetadataAttribute.
+
+
+    Usage:
+
+    [Command("my_command", Description = "Does something")]
+
+    public class MyCommand : SimpleCommand { ... }
+  example: []
+  syntax:
+    content: >-
+      [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+
+      public class CommandAttribute : Attribute
+    content.vb: >-
+      <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False)>
+
+      Public Class CommandAttribute Inherits Attribute
+  inheritance:
+  - System.Object
+  - System.Attribute
+  attributes:
+  - type: System.AttributeUsageAttribute
+    ctor: System.AttributeUsageAttribute.#ctor(System.AttributeTargets)
+    arguments:
+    - type: System.AttributeTargets
+      value: 4
+    namedArguments:
+    - name: AllowMultiple
+      type: System.Boolean
+      value: false
+- uid: Core.Commands.CommandAttribute.Name
+  commentId: P:Core.Commands.CommandAttribute.Name
+  id: Name
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: CommandAttribute.Name
+  fullName: Core.Commands.CommandAttribute.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Primary command name (e.g., "add_gold")
+  example: []
+  syntax:
+    content: public string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property Name As String
+  overload: Core.Commands.CommandAttribute.Name*
+- uid: Core.Commands.CommandAttribute.Aliases
+  commentId: P:Core.Commands.CommandAttribute.Aliases
+  id: Aliases
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: Aliases
+  nameWithType: CommandAttribute.Aliases
+  fullName: Core.Commands.CommandAttribute.Aliases
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Aliases
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Aliases for the command (e.g., ["gold", "ag"])
+  example: []
+  syntax:
+    content: public string[] Aliases { get; set; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: Public Property Aliases As String()
+  overload: Core.Commands.CommandAttribute.Aliases*
+- uid: Core.Commands.CommandAttribute.Description
+  commentId: P:Core.Commands.CommandAttribute.Description
+  id: Description
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: CommandAttribute.Description
+  fullName: Core.Commands.CommandAttribute.Description
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Description
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Description of what the command does
+  example: []
+  syntax:
+    content: public string Description { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Description As String
+  overload: Core.Commands.CommandAttribute.Description*
+- uid: Core.Commands.CommandAttribute.Usage
+  commentId: P:Core.Commands.CommandAttribute.Usage
+  id: Usage
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: Usage
+  nameWithType: CommandAttribute.Usage
+  fullName: Core.Commands.CommandAttribute.Usage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Usage
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Usage example. Auto-generated from [Arg] attributes if not provided.
+  example: []
+  syntax:
+    content: public string Usage { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Usage As String
+  overload: Core.Commands.CommandAttribute.Usage*
+- uid: Core.Commands.CommandAttribute.Examples
+  commentId: P:Core.Commands.CommandAttribute.Examples
+  id: Examples
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: Examples
+  nameWithType: CommandAttribute.Examples
+  fullName: Core.Commands.CommandAttribute.Examples
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Examples
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Example invocations
+  example: []
+  syntax:
+    content: public string[] Examples { get; set; }
+    parameters: []
+    return:
+      type: System.String[]
+    content.vb: Public Property Examples As String()
+  overload: Core.Commands.CommandAttribute.Examples*
+- uid: Core.Commands.CommandAttribute.#ctor(System.String)
+  commentId: M:Core.Commands.CommandAttribute.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Core.Commands.CommandAttribute
+  langs:
+  - csharp
+  - vb
+  name: CommandAttribute(string)
+  nameWithType: CommandAttribute.CommandAttribute(string)
+  fullName: Core.Commands.CommandAttribute.CommandAttribute(string)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandAttribute.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandAttribute.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandAttribute(string name)
+    parameters:
+    - id: name
+      type: System.String
+    content.vb: Public Sub New(name As String)
+  overload: Core.Commands.CommandAttribute.#ctor*
+  nameWithType.vb: CommandAttribute.New(String)
+  fullName.vb: Core.Commands.CommandAttribute.New(String)
+  name.vb: New(String)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Attribute
+  commentId: T:System.Attribute
+  parent: System
+  isExternal: true
+  name: Attribute
+  nameWithType: Attribute
+  fullName: System.Attribute
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandAttribute.Name*
+  commentId: Overload:Core.Commands.CommandAttribute.Name
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute_Name
+  name: Name
+  nameWithType: CommandAttribute.Name
+  fullName: Core.Commands.CommandAttribute.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.CommandAttribute.Aliases*
+  commentId: Overload:Core.Commands.CommandAttribute.Aliases
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute_Aliases
+  name: Aliases
+  nameWithType: CommandAttribute.Aliases
+  fullName: Core.Commands.CommandAttribute.Aliases
+- uid: System.String[]
+  isExternal: true
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.CommandAttribute.Description*
+  commentId: Overload:Core.Commands.CommandAttribute.Description
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute_Description
+  name: Description
+  nameWithType: CommandAttribute.Description
+  fullName: Core.Commands.CommandAttribute.Description
+- uid: Core.Commands.CommandAttribute.Usage*
+  commentId: Overload:Core.Commands.CommandAttribute.Usage
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute_Usage
+  name: Usage
+  nameWithType: CommandAttribute.Usage
+  fullName: Core.Commands.CommandAttribute.Usage
+- uid: Core.Commands.CommandAttribute.Examples*
+  commentId: Overload:Core.Commands.CommandAttribute.Examples
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute_Examples
+  name: Examples
+  nameWithType: CommandAttribute.Examples
+  fullName: Core.Commands.CommandAttribute.Examples
+- uid: Core.Commands.CommandAttribute.#ctor*
+  commentId: Overload:Core.Commands.CommandAttribute.#ctor
+  href: Core.Commands.CommandAttribute.html#Core_Commands_CommandAttribute__ctor_System_String_
+  name: CommandAttribute
+  nameWithType: CommandAttribute.CommandAttribute
+  fullName: Core.Commands.CommandAttribute.CommandAttribute
+  nameWithType.vb: CommandAttribute.New
+  fullName.vb: Core.Commands.CommandAttribute.New
+  name.vb: New

@@ -1,0 +1,354 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  id: HistoricalEvent
+  parent: Core.Data
+  children:
+  - Core.Data.HistoricalEvent.CreateOwnershipChange(System.DateTime,System.UInt16,System.UInt16)
+  - Core.Data.HistoricalEvent.Date
+  - Core.Data.HistoricalEvent.NewDevelopment
+  - Core.Data.HistoricalEvent.NewOwnerID
+  - Core.Data.HistoricalEvent.OldDevelopment
+  - Core.Data.HistoricalEvent.OldOwnerID
+  - Core.Data.HistoricalEvent.RelatedProvinceID
+  - Core.Data.HistoricalEvent.Type
+  langs:
+  - csharp
+  - vb
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HistoricalEvent
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Historical event structure for recent history
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct HistoricalEvent
+    content.vb: >-
+      <Serializable>
+
+      Public Structure HistoricalEvent
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.HistoricalEvent.Date
+  commentId: F:Core.Data.HistoricalEvent.Date
+  id: Date
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: Date
+  nameWithType: HistoricalEvent.Date
+  fullName: Core.Data.HistoricalEvent.Date
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Date
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 195
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public DateTime Date
+    return:
+      type: System.DateTime
+    content.vb: Public [Date] As Date
+- uid: Core.Data.HistoricalEvent.Type
+  commentId: F:Core.Data.HistoricalEvent.Type
+  id: Type
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: HistoricalEvent.Type
+  fullName: Core.Data.HistoricalEvent.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 196
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public HistoryEventType Type
+    return:
+      type: Core.Data.HistoryEventType
+    content.vb: Public Type As HistoryEventType
+- uid: Core.Data.HistoricalEvent.OldOwnerID
+  commentId: F:Core.Data.HistoricalEvent.OldOwnerID
+  id: OldOwnerID
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: OldOwnerID
+  nameWithType: HistoricalEvent.OldOwnerID
+  fullName: Core.Data.HistoricalEvent.OldOwnerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldOwnerID
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort OldOwnerID
+    return:
+      type: System.UInt16
+    content.vb: Public OldOwnerID As UShort
+- uid: Core.Data.HistoricalEvent.NewOwnerID
+  commentId: F:Core.Data.HistoricalEvent.NewOwnerID
+  id: NewOwnerID
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: NewOwnerID
+  nameWithType: HistoricalEvent.NewOwnerID
+  fullName: Core.Data.HistoricalEvent.NewOwnerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewOwnerID
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 198
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort NewOwnerID
+    return:
+      type: System.UInt16
+    content.vb: Public NewOwnerID As UShort
+- uid: Core.Data.HistoricalEvent.OldDevelopment
+  commentId: F:Core.Data.HistoricalEvent.OldDevelopment
+  id: OldDevelopment
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: OldDevelopment
+  nameWithType: HistoricalEvent.OldDevelopment
+  fullName: Core.Data.HistoricalEvent.OldDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 199
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte OldDevelopment
+    return:
+      type: System.Byte
+    content.vb: Public OldDevelopment As Byte
+- uid: Core.Data.HistoricalEvent.NewDevelopment
+  commentId: F:Core.Data.HistoricalEvent.NewDevelopment
+  id: NewDevelopment
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: NewDevelopment
+  nameWithType: HistoricalEvent.NewDevelopment
+  fullName: Core.Data.HistoricalEvent.NewDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte NewDevelopment
+    return:
+      type: System.Byte
+    content.vb: Public NewDevelopment As Byte
+- uid: Core.Data.HistoricalEvent.RelatedProvinceID
+  commentId: F:Core.Data.HistoricalEvent.RelatedProvinceID
+  id: RelatedProvinceID
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: RelatedProvinceID
+  nameWithType: HistoricalEvent.RelatedProvinceID
+  fullName: Core.Data.HistoricalEvent.RelatedProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RelatedProvinceID
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 201
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort RelatedProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public RelatedProvinceID As UShort
+- uid: Core.Data.HistoricalEvent.CreateOwnershipChange(System.DateTime,System.UInt16,System.UInt16)
+  commentId: M:Core.Data.HistoricalEvent.CreateOwnershipChange(System.DateTime,System.UInt16,System.UInt16)
+  id: CreateOwnershipChange(System.DateTime,System.UInt16,System.UInt16)
+  parent: Core.Data.HistoricalEvent
+  langs:
+  - csharp
+  - vb
+  name: CreateOwnershipChange(DateTime, ushort, ushort)
+  nameWithType: HistoricalEvent.CreateOwnershipChange(DateTime, ushort, ushort)
+  fullName: Core.Data.HistoricalEvent.CreateOwnershipChange(System.DateTime, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateOwnershipChange
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static HistoricalEvent CreateOwnershipChange(DateTime date, ushort oldOwner, ushort newOwner)
+    parameters:
+    - id: date
+      type: System.DateTime
+    - id: oldOwner
+      type: System.UInt16
+    - id: newOwner
+      type: System.UInt16
+    return:
+      type: Core.Data.HistoricalEvent
+    content.vb: Public Shared Function CreateOwnershipChange([date] As Date, oldOwner As UShort, newOwner As UShort) As HistoricalEvent
+  overload: Core.Data.HistoricalEvent.CreateOwnershipChange*
+  nameWithType.vb: HistoricalEvent.CreateOwnershipChange(Date, UShort, UShort)
+  fullName.vb: Core.Data.HistoricalEvent.CreateOwnershipChange(Date, UShort, UShort)
+  name.vb: CreateOwnershipChange(Date, UShort, UShort)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.HistoryEventType
+  commentId: T:Core.Data.HistoryEventType
+  parent: Core.Data
+  href: Core.Data.HistoryEventType.html
+  name: HistoryEventType
+  nameWithType: HistoryEventType
+  fullName: Core.Data.HistoryEventType
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Data.HistoricalEvent.CreateOwnershipChange*
+  commentId: Overload:Core.Data.HistoricalEvent.CreateOwnershipChange
+  href: Core.Data.HistoricalEvent.html#Core_Data_HistoricalEvent_CreateOwnershipChange_System_DateTime_System_UInt16_System_UInt16_
+  name: CreateOwnershipChange
+  nameWithType: HistoricalEvent.CreateOwnershipChange
+  fullName: Core.Data.HistoricalEvent.CreateOwnershipChange
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  parent: Core.Data
+  href: Core.Data.HistoricalEvent.html
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent

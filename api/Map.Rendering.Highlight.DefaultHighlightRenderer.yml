@@ -1,0 +1,1042 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.DefaultHighlightRenderer
+  id: DefaultHighlightRenderer
+  parent: Map.Rendering.Highlight
+  children:
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor(UnityEngine.ComputeShader)
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry(System.UInt16,UnityEngine.Color)
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+  - Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness(System.Single)
+  langs:
+  - csharp
+  - vb
+  name: DefaultHighlightRenderer
+  nameWithType: DefaultHighlightRenderer
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefaultHighlightRenderer
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: >-
+    ENGINE: Default GPU compute-based highlight renderer.
+
+    Provides fill and border-only highlight modes using compute shaders.
+  example: []
+  syntax:
+    content: 'public class DefaultHighlightRenderer : HighlightRendererBase, IHighlightRenderer'
+    content.vb: Public Class DefaultHighlightRenderer Inherits HighlightRendererBase Implements IHighlightRenderer
+  inheritance:
+  - System.Object
+  - Map.Rendering.Highlight.HighlightRendererBase
+  implements:
+  - Map.Rendering.Highlight.IHighlightRenderer
+  inheritedMembers:
+  - Map.Rendering.Highlight.HighlightRendererBase.textureManager
+  - Map.Rendering.Highlight.HighlightRendererBase.context
+  - Map.Rendering.Highlight.HighlightRendererBase.isInitialized
+  - Map.Rendering.Highlight.HighlightRendererBase.currentHighlightedProvince
+  - Map.Rendering.Highlight.HighlightRendererBase.currentHighlightColor
+  - Map.Rendering.Highlight.HighlightRendererBase.currentMode
+  - Map.Rendering.Highlight.HighlightRendererBase.THREAD_GROUP_SIZE
+  - Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Highlight.HighlightRendererContext)
+  - Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame
+  - Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince
+  - Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  - Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+  commentId: P:Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: DefaultHighlightRenderer.RendererId
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Unique identifier for this renderer (e.g., "Default", "Glow", "Pulse")
+  example: []
+  syntax:
+    content: public override string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property RendererId As String
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.RendererId
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+  commentId: P:Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: DefaultHighlightRenderer.DisplayName
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Display name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.DisplayName
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+  id: RequiresPerFrameUpdate
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: RequiresPerFrameUpdate
+  nameWithType: DefaultHighlightRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresPerFrameUpdate
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Whether this renderer requires per-frame updates (e.g., animated effects)
+  example: []
+  syntax:
+    content: public override bool RequiresPerFrameUpdate { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides ReadOnly Property RequiresPerFrameUpdate As Boolean
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.RequiresPerFrameUpdate
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor(UnityEngine.ComputeShader)
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor(UnityEngine.ComputeShader)
+  id: '#ctor(UnityEngine.ComputeShader)'
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: DefaultHighlightRenderer(ComputeShader)
+  nameWithType: DefaultHighlightRenderer.DefaultHighlightRenderer(ComputeShader)
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.DefaultHighlightRenderer(UnityEngine.ComputeShader)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  syntax:
+    content: public DefaultHighlightRenderer(ComputeShader computeShader = null)
+    parameters:
+    - id: computeShader
+      type: UnityEngine.ComputeShader
+    content.vb: Public Sub New(computeShader As ComputeShader = Nothing)
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor*
+  nameWithType.vb: DefaultHighlightRenderer.New(ComputeShader)
+  fullName.vb: Map.Rendering.Highlight.DefaultHighlightRenderer.New(UnityEngine.ComputeShader)
+  name.vb: New(ComputeShader)
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize
+  id: OnInitialize
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: DefaultHighlightRenderer.OnInitialize()
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: >-
+    Override for custom initialization logic.
+
+    Called after textureManager and context are set.
+  example: []
+  syntax:
+    content: protected override void OnInitialize()
+    content.vb: Protected Overrides Sub OnInitialize()
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.OnInitialize
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  id: HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: HighlightProvince(ushort, Color, HighlightMode)
+  nameWithType: DefaultHighlightRenderer.HighlightProvince(ushort, Color, HighlightMode)
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince(ushort, UnityEngine.Color, Map.Rendering.Highlight.HighlightMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightProvince
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Highlight a single province.
+  example: []
+  syntax:
+    content: public override void HighlightProvince(ushort provinceID, Color color, HighlightMode mode)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+      description: Province to highlight (0 = clear)
+    - id: color
+      type: UnityEngine.Color
+      description: Highlight color with alpha
+    - id: mode
+      type: Map.Rendering.Highlight.HighlightMode
+      description: Fill or border-only mode
+    content.vb: Public Overrides Sub HighlightProvince(provinceID As UShort, color As Color, mode As HighlightMode)
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince*
+  nameWithType.vb: DefaultHighlightRenderer.HighlightProvince(UShort, Color, HighlightMode)
+  fullName.vb: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince(UShort, UnityEngine.Color, Map.Rendering.Highlight.HighlightMode)
+  name.vb: HighlightProvince(UShort, Color, HighlightMode)
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry(System.UInt16,UnityEngine.Color)
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry(System.UInt16,UnityEngine.Color)
+  id: HighlightCountry(System.UInt16,UnityEngine.Color)
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: HighlightCountry(ushort, Color)
+  nameWithType: DefaultHighlightRenderer.HighlightCountry(ushort, Color)
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry(ushort, UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightCountry
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 107
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Highlight all provinces owned by a country.
+  example: []
+  syntax:
+    content: public override void HighlightCountry(ushort countryID, Color color)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+      description: Country ID to highlight
+    - id: color
+      type: UnityEngine.Color
+      description: Highlight color with alpha
+    content.vb: Public Overrides Sub HighlightCountry(countryID As UShort, color As Color)
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(System.UInt16,UnityEngine.Color)
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry*
+  nameWithType.vb: DefaultHighlightRenderer.HighlightCountry(UShort, Color)
+  fullName.vb: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry(UShort, UnityEngine.Color)
+  name.vb: HighlightCountry(UShort, Color)
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight
+  id: ClearHighlight
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: ClearHighlight()
+  nameWithType: DefaultHighlightRenderer.ClearHighlight()
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearHighlight
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 139
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Clear all highlights.
+  example: []
+  syntax:
+    content: public override void ClearHighlight()
+    content.vb: Public Overrides Sub ClearHighlight()
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  id: ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: ApplyToMaterial(Material, HighlightStyleParams)
+  nameWithType: DefaultHighlightRenderer.ApplyToMaterial(Material, HighlightStyleParams)
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Highlight.HighlightStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyToMaterial
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 160
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: >-
+    Apply visual parameters to the material (colors, effects, etc.)
+
+    Called when visual style parameters change.
+  example: []
+  syntax:
+    content: public override void ApplyToMaterial(Material material, HighlightStyleParams styleParams)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: styleParams
+      type: Map.Rendering.Highlight.HighlightStyleParams
+    content.vb: Public Overrides Sub ApplyToMaterial(material As Material, styleParams As HighlightStyleParams)
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial*
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness(System.Single)
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness(System.Single)
+  id: SetBorderThickness(System.Single)
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetBorderThickness(float)
+  nameWithType: DefaultHighlightRenderer.SetBorderThickness(float)
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderThickness
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 180
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Set border thickness for BorderOnly mode.
+  example: []
+  syntax:
+    content: public void SetBorderThickness(float thickness)
+    parameters:
+    - id: thickness
+      type: System.Single
+    content.vb: Public Sub SetBorderThickness(thickness As Single)
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness*
+  nameWithType.vb: DefaultHighlightRenderer.SetBorderThickness(Single)
+  fullName.vb: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness(Single)
+  name.vb: SetBorderThickness(Single)
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose
+  commentId: M:Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.Highlight.DefaultHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: DefaultHighlightRenderer.Dispose()
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Highlight/Implementations/DefaultHighlightRenderer.cs
+    startLine: 185
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Cleanup resources when renderer is deactivated or destroyed.
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: Map.Rendering.Highlight.HighlightRendererBase.Dispose
+  overload: Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose*
+references:
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.Highlight.HighlightRendererBase
+  commentId: T:Map.Rendering.Highlight.HighlightRendererBase
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightRendererBase.html
+  name: HighlightRendererBase
+  nameWithType: HighlightRendererBase
+  fullName: Map.Rendering.Highlight.HighlightRendererBase
+- uid: Map.Rendering.Highlight.IHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.IHighlightRenderer
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.IHighlightRenderer.html
+  name: IHighlightRenderer
+  nameWithType: IHighlightRenderer
+  fullName: Map.Rendering.Highlight.IHighlightRenderer
+- uid: Map.Rendering.Highlight.HighlightRendererBase.textureManager
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.textureManager
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_textureManager
+  name: textureManager
+  nameWithType: HighlightRendererBase.textureManager
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.textureManager
+- uid: Map.Rendering.Highlight.HighlightRendererBase.context
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.context
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_context
+  name: context
+  nameWithType: HighlightRendererBase.context
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.context
+- uid: Map.Rendering.Highlight.HighlightRendererBase.isInitialized
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.isInitialized
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_isInitialized
+  name: isInitialized
+  nameWithType: HighlightRendererBase.isInitialized
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.isInitialized
+- uid: Map.Rendering.Highlight.HighlightRendererBase.currentHighlightedProvince
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.currentHighlightedProvince
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_currentHighlightedProvince
+  name: currentHighlightedProvince
+  nameWithType: HighlightRendererBase.currentHighlightedProvince
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.currentHighlightedProvince
+- uid: Map.Rendering.Highlight.HighlightRendererBase.currentHighlightColor
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.currentHighlightColor
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_currentHighlightColor
+  name: currentHighlightColor
+  nameWithType: HighlightRendererBase.currentHighlightColor
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.currentHighlightColor
+- uid: Map.Rendering.Highlight.HighlightRendererBase.currentMode
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.currentMode
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_currentMode
+  name: currentMode
+  nameWithType: HighlightRendererBase.currentMode
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.currentMode
+- uid: Map.Rendering.Highlight.HighlightRendererBase.THREAD_GROUP_SIZE
+  commentId: F:Map.Rendering.Highlight.HighlightRendererBase.THREAD_GROUP_SIZE
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: HighlightRendererBase.THREAD_GROUP_SIZE
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.THREAD_GROUP_SIZE
+- uid: Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Highlight.HighlightRendererContext)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Highlight.HighlightRendererContext)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Highlight_HighlightRendererContext_
+  name: Initialize(MapTextureManager, HighlightRendererContext)
+  nameWithType: HighlightRendererBase.Initialize(MapTextureManager, HighlightRendererContext)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.Highlight.HighlightRendererContext)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Highlight.HighlightRendererContext)
+    name: Initialize
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Highlight_HighlightRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightRendererContext
+    name: HighlightRendererContext
+    href: Map.Rendering.Highlight.HighlightRendererContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Highlight.HighlightRendererContext)
+    name: Initialize
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Highlight_HighlightRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightRendererContext
+    name: HighlightRendererContext
+    href: Map.Rendering.Highlight.HighlightRendererContext.html
+  - name: )
+- uid: Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: HighlightRendererBase.OnRenderFrame()
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_GetHighlightedProvince
+  name: GetHighlightedProvince()
+  nameWithType: HighlightRendererBase.GetHighlightedProvince()
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince()
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince
+    name: GetHighlightedProvince
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_GetHighlightedProvince
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.GetHighlightedProvince
+    name: GetHighlightedProvince
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_GetHighlightedProvince
+  - name: (
+  - name: )
+- uid: Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  isExternal: true
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: HighlightRendererBase.CalculateThreadGroups(int, int)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: HighlightRendererBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  isExternal: true
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  name: ApplyCommonStyleParams(Material, HighlightStyleParams)
+  nameWithType: HighlightRendererBase.ApplyCommonStyleParams(Material, HighlightStyleParams)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material, Map.Rendering.Highlight.HighlightStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightStyleParams
+    name: HighlightStyleParams
+    href: Map.Rendering.Highlight.HighlightStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightStyleParams
+    name: HighlightStyleParams
+    href: Map.Rendering.Highlight.HighlightStyleParams.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Highlight.HighlightRendererBase.RendererId
+  commentId: P:Map.Rendering.Highlight.HighlightRendererBase.RendererId
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_RendererId
+  name: RendererId
+  nameWithType: HighlightRendererBase.RendererId
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.RendererId
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_RendererId
+  name: RendererId
+  nameWithType: DefaultHighlightRenderer.RendererId
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Highlight.HighlightRendererBase.DisplayName
+  commentId: P:Map.Rendering.Highlight.HighlightRendererBase.DisplayName
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_DisplayName
+  name: DisplayName
+  nameWithType: HighlightRendererBase.DisplayName
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.DisplayName
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_DisplayName
+  name: DisplayName
+  nameWithType: DefaultHighlightRenderer.DisplayName
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.DisplayName
+- uid: Map.Rendering.Highlight.HighlightRendererBase.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Highlight.HighlightRendererBase.RequiresPerFrameUpdate
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: HighlightRendererBase.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.RequiresPerFrameUpdate
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: DefaultHighlightRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.RequiresPerFrameUpdate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.#ctor
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer__ctor_UnityEngine_ComputeShader_
+  name: DefaultHighlightRenderer
+  nameWithType: DefaultHighlightRenderer.DefaultHighlightRenderer
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.DefaultHighlightRenderer
+  nameWithType.vb: DefaultHighlightRenderer.New
+  fullName.vb: Map.Rendering.Highlight.DefaultHighlightRenderer.New
+  name.vb: New
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Highlight.HighlightRendererBase.OnInitialize
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.OnInitialize
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnInitialize
+  name: OnInitialize()
+  nameWithType: HighlightRendererBase.OnInitialize()
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.OnInitialize()
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnInitialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_OnInitialize
+  - name: (
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_OnInitialize
+  name: OnInitialize
+  nameWithType: DefaultHighlightRenderer.OnInitialize
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.OnInitialize
+- uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  isExternal: true
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightProvince_System_UInt16_UnityEngine_Color_Map_Rendering_Highlight_HighlightMode_
+  name: HighlightProvince(ushort, Color, HighlightMode)
+  nameWithType: HighlightRendererBase.HighlightProvince(ushort, Color, HighlightMode)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(ushort, UnityEngine.Color, Map.Rendering.Highlight.HighlightMode)
+  nameWithType.vb: HighlightRendererBase.HighlightProvince(UShort, Color, HighlightMode)
+  fullName.vb: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(UShort, UnityEngine.Color, Map.Rendering.Highlight.HighlightMode)
+  name.vb: HighlightProvince(UShort, Color, HighlightMode)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+    name: HighlightProvince
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightProvince_System_UInt16_UnityEngine_Color_Map_Rendering_Highlight_HighlightMode_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightMode
+    name: HighlightMode
+    href: Map.Rendering.Highlight.HighlightMode.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightProvince(System.UInt16,UnityEngine.Color,Map.Rendering.Highlight.HighlightMode)
+    name: HighlightProvince
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightProvince_System_UInt16_UnityEngine_Color_Map_Rendering_Highlight_HighlightMode_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightMode
+    name: HighlightMode
+    href: Map.Rendering.Highlight.HighlightMode.html
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_HighlightProvince_System_UInt16_UnityEngine_Color_Map_Rendering_Highlight_HighlightMode_
+  name: HighlightProvince
+  nameWithType: DefaultHighlightRenderer.HighlightProvince
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: Map.Rendering.Highlight.HighlightMode
+  commentId: T:Map.Rendering.Highlight.HighlightMode
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightMode.html
+  name: HighlightMode
+  nameWithType: HighlightMode
+  fullName: Map.Rendering.Highlight.HighlightMode
+- uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(System.UInt16,UnityEngine.Color)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(System.UInt16,UnityEngine.Color)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  isExternal: true
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightCountry_System_UInt16_UnityEngine_Color_
+  name: HighlightCountry(ushort, Color)
+  nameWithType: HighlightRendererBase.HighlightCountry(ushort, Color)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(ushort, UnityEngine.Color)
+  nameWithType.vb: HighlightRendererBase.HighlightCountry(UShort, Color)
+  fullName.vb: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(UShort, UnityEngine.Color)
+  name.vb: HighlightCountry(UShort, Color)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(System.UInt16,UnityEngine.Color)
+    name: HighlightCountry
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightCountry_System_UInt16_UnityEngine_Color_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.HighlightCountry(System.UInt16,UnityEngine.Color)
+    name: HighlightCountry
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_HighlightCountry_System_UInt16_UnityEngine_Color_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_HighlightCountry_System_UInt16_UnityEngine_Color_
+  name: HighlightCountry
+  nameWithType: DefaultHighlightRenderer.HighlightCountry
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.HighlightCountry
+- uid: Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ClearHighlight
+  name: ClearHighlight()
+  nameWithType: HighlightRendererBase.ClearHighlight()
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight()
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight
+    name: ClearHighlight
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ClearHighlight
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ClearHighlight
+    name: ClearHighlight
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ClearHighlight
+  - name: (
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_ClearHighlight
+  name: ClearHighlight
+  nameWithType: DefaultHighlightRenderer.ClearHighlight
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.ClearHighlight
+- uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  isExternal: true
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  name: ApplyToMaterial(Material, HighlightStyleParams)
+  nameWithType: HighlightRendererBase.ApplyToMaterial(Material, HighlightStyleParams)
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Highlight.HighlightStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightStyleParams
+    name: HighlightStyleParams
+    href: Map.Rendering.Highlight.HighlightStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Highlight.HighlightStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Highlight.HighlightStyleParams
+    name: HighlightStyleParams
+    href: Map.Rendering.Highlight.HighlightStyleParams.html
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Highlight_HighlightStyleParams_
+  name: ApplyToMaterial
+  nameWithType: DefaultHighlightRenderer.ApplyToMaterial
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.ApplyToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.Highlight.HighlightStyleParams
+  commentId: T:Map.Rendering.Highlight.HighlightStyleParams
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightStyleParams.html
+  name: HighlightStyleParams
+  nameWithType: HighlightStyleParams
+  fullName: Map.Rendering.Highlight.HighlightStyleParams
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_SetBorderThickness_System_Single_
+  name: SetBorderThickness
+  nameWithType: DefaultHighlightRenderer.SetBorderThickness
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.SetBorderThickness
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.Highlight.HighlightRendererBase.Dispose
+  commentId: M:Map.Rendering.Highlight.HighlightRendererBase.Dispose
+  parent: Map.Rendering.Highlight.HighlightRendererBase
+  href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Dispose
+  name: Dispose()
+  nameWithType: HighlightRendererBase.Dispose()
+  fullName: Map.Rendering.Highlight.HighlightRendererBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Highlight.HighlightRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Highlight.HighlightRendererBase.html#Map_Rendering_Highlight_HighlightRendererBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose*
+  commentId: Overload:Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html#Map_Rendering_Highlight_DefaultHighlightRenderer_Dispose
+  name: Dispose
+  nameWithType: DefaultHighlightRenderer.Dispose
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer.Dispose

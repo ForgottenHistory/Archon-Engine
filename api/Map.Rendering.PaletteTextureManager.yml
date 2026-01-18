@@ -1,0 +1,448 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.PaletteTextureManager
+  commentId: T:Map.Rendering.PaletteTextureManager
+  id: PaletteTextureManager
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.PaletteTextureManager.#ctor(System.Boolean)
+  - Map.Rendering.PaletteTextureManager.ApplyChanges
+  - Map.Rendering.PaletteTextureManager.BindToMaterial(UnityEngine.Material)
+  - Map.Rendering.PaletteTextureManager.CreatePalette
+  - Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+  - Map.Rendering.PaletteTextureManager.Release
+  - Map.Rendering.PaletteTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  - Map.Rendering.PaletteTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  langs:
+  - csharp
+  - vb
+  name: PaletteTextureManager
+  nameWithType: PaletteTextureManager
+  fullName: Map.Rendering.PaletteTextureManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PaletteTextureManager
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Manages province color palette texture (256×1 RGBA32)
+
+    Handles palette generation and color updates
+
+    Extracted from MapTextureManager for single responsibility
+  example: []
+  syntax:
+    content: public class PaletteTextureManager
+    content.vb: Public Class PaletteTextureManager
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+  commentId: P:Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+  id: ProvinceColorPalette
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorPalette
+  nameWithType: PaletteTextureManager.ProvinceColorPalette
+  fullName: Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorPalette
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D ProvinceColorPalette { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property ProvinceColorPalette As Texture2D
+  overload: Map.Rendering.PaletteTextureManager.ProvinceColorPalette*
+- uid: Map.Rendering.PaletteTextureManager.#ctor(System.Boolean)
+  commentId: M:Map.Rendering.PaletteTextureManager.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: PaletteTextureManager(bool)
+  nameWithType: PaletteTextureManager.PaletteTextureManager(bool)
+  fullName: Map.Rendering.PaletteTextureManager.PaletteTextureManager(bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public PaletteTextureManager(bool logCreation = true)
+    parameters:
+    - id: logCreation
+      type: System.Boolean
+    content.vb: Public Sub New(logCreation As Boolean = True)
+  overload: Map.Rendering.PaletteTextureManager.#ctor*
+  nameWithType.vb: PaletteTextureManager.New(Boolean)
+  fullName.vb: Map.Rendering.PaletteTextureManager.New(Boolean)
+  name.vb: New(Boolean)
+- uid: Map.Rendering.PaletteTextureManager.CreatePalette
+  commentId: M:Map.Rendering.PaletteTextureManager.CreatePalette
+  id: CreatePalette
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: CreatePalette()
+  nameWithType: PaletteTextureManager.CreatePalette()
+  fullName: Map.Rendering.PaletteTextureManager.CreatePalette()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreatePalette
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Create province color palette texture
+  example: []
+  syntax:
+    content: public void CreatePalette()
+    content.vb: Public Sub CreatePalette()
+  overload: Map.Rendering.PaletteTextureManager.CreatePalette*
+- uid: Map.Rendering.PaletteTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  commentId: M:Map.Rendering.PaletteTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
+  id: SetPaletteColor(System.Byte,UnityEngine.Color32)
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetPaletteColor(byte, Color32)
+  nameWithType: PaletteTextureManager.SetPaletteColor(byte, Color32)
+  fullName: Map.Rendering.PaletteTextureManager.SetPaletteColor(byte, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPaletteColor
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update single palette color
+  example: []
+  syntax:
+    content: public void SetPaletteColor(byte paletteIndex, Color32 color)
+    parameters:
+    - id: paletteIndex
+      type: System.Byte
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetPaletteColor(paletteIndex As Byte, color As Color32)
+  overload: Map.Rendering.PaletteTextureManager.SetPaletteColor*
+  nameWithType.vb: PaletteTextureManager.SetPaletteColor(Byte, Color32)
+  fullName.vb: Map.Rendering.PaletteTextureManager.SetPaletteColor(Byte, UnityEngine.Color32)
+  name.vb: SetPaletteColor(Byte, Color32)
+- uid: Map.Rendering.PaletteTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  commentId: M:Map.Rendering.PaletteTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  id: SetPaletteColors(UnityEngine.Color32[])
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetPaletteColors(Color32[])
+  nameWithType: PaletteTextureManager.SetPaletteColors(Color32[])
+  fullName: Map.Rendering.PaletteTextureManager.SetPaletteColors(UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPaletteColors
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update all palette colors at once
+  example: []
+  syntax:
+    content: public void SetPaletteColors(Color32[] colors)
+    parameters:
+    - id: colors
+      type: UnityEngine.Color32[]
+    content.vb: Public Sub SetPaletteColors(colors As Color32())
+  overload: Map.Rendering.PaletteTextureManager.SetPaletteColors*
+  nameWithType.vb: PaletteTextureManager.SetPaletteColors(Color32())
+  fullName.vb: Map.Rendering.PaletteTextureManager.SetPaletteColors(UnityEngine.Color32())
+  name.vb: SetPaletteColors(Color32())
+- uid: Map.Rendering.PaletteTextureManager.ApplyChanges
+  commentId: M:Map.Rendering.PaletteTextureManager.ApplyChanges
+  id: ApplyChanges
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: ApplyChanges()
+  nameWithType: PaletteTextureManager.ApplyChanges()
+  fullName: Map.Rendering.PaletteTextureManager.ApplyChanges()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyChanges
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Apply palette changes
+  example: []
+  syntax:
+    content: public void ApplyChanges()
+    content.vb: Public Sub ApplyChanges()
+  overload: Map.Rendering.PaletteTextureManager.ApplyChanges*
+- uid: Map.Rendering.PaletteTextureManager.BindToMaterial(UnityEngine.Material)
+  commentId: M:Map.Rendering.PaletteTextureManager.BindToMaterial(UnityEngine.Material)
+  id: BindToMaterial(UnityEngine.Material)
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: BindToMaterial(Material)
+  nameWithType: PaletteTextureManager.BindToMaterial(Material)
+  fullName: Map.Rendering.PaletteTextureManager.BindToMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BindToMaterial
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 108
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Bind palette to material
+  example: []
+  syntax:
+    content: public void BindToMaterial(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Public Sub BindToMaterial(material As Material)
+  overload: Map.Rendering.PaletteTextureManager.BindToMaterial*
+- uid: Map.Rendering.PaletteTextureManager.Release
+  commentId: M:Map.Rendering.PaletteTextureManager.Release
+  id: Release
+  parent: Map.Rendering.PaletteTextureManager
+  langs:
+  - csharp
+  - vb
+  name: Release()
+  nameWithType: PaletteTextureManager.Release()
+  fullName: Map.Rendering.PaletteTextureManager.Release()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/PaletteTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Release
+    path: Scripts/Map/Rendering/PaletteTextureManager.cs
+    startLine: 123
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Release palette texture
+  example: []
+  syntax:
+    content: public void Release()
+    content.vb: Public Sub Release()
+  overload: Map.Rendering.PaletteTextureManager.Release*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.PaletteTextureManager.ProvinceColorPalette*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_ProvinceColorPalette
+  name: ProvinceColorPalette
+  nameWithType: PaletteTextureManager.ProvinceColorPalette
+  fullName: Map.Rendering.PaletteTextureManager.ProvinceColorPalette
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.PaletteTextureManager.#ctor*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.#ctor
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager__ctor_System_Boolean_
+  name: PaletteTextureManager
+  nameWithType: PaletteTextureManager.PaletteTextureManager
+  fullName: Map.Rendering.PaletteTextureManager.PaletteTextureManager
+  nameWithType.vb: PaletteTextureManager.New
+  fullName.vb: Map.Rendering.PaletteTextureManager.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.PaletteTextureManager.CreatePalette*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.CreatePalette
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_CreatePalette
+  name: CreatePalette
+  nameWithType: PaletteTextureManager.CreatePalette
+  fullName: Map.Rendering.PaletteTextureManager.CreatePalette
+- uid: Map.Rendering.PaletteTextureManager.SetPaletteColor*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.SetPaletteColor
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_SetPaletteColor_System_Byte_UnityEngine_Color32_
+  name: SetPaletteColor
+  nameWithType: PaletteTextureManager.SetPaletteColor
+  fullName: Map.Rendering.PaletteTextureManager.SetPaletteColor
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Map.Rendering.PaletteTextureManager.SetPaletteColors*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.SetPaletteColors
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_SetPaletteColors_UnityEngine_Color32___
+  name: SetPaletteColors
+  nameWithType: PaletteTextureManager.SetPaletteColors
+  fullName: Map.Rendering.PaletteTextureManager.SetPaletteColors
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.PaletteTextureManager.ApplyChanges*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.ApplyChanges
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_ApplyChanges
+  name: ApplyChanges
+  nameWithType: PaletteTextureManager.ApplyChanges
+  fullName: Map.Rendering.PaletteTextureManager.ApplyChanges
+- uid: Map.Rendering.PaletteTextureManager.BindToMaterial*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.BindToMaterial
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_BindToMaterial_UnityEngine_Material_
+  name: BindToMaterial
+  nameWithType: PaletteTextureManager.BindToMaterial
+  fullName: Map.Rendering.PaletteTextureManager.BindToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.PaletteTextureManager.Release*
+  commentId: Overload:Map.Rendering.PaletteTextureManager.Release
+  href: Map.Rendering.PaletteTextureManager.html#Map_Rendering_PaletteTextureManager_Release
+  name: Release
+  nameWithType: PaletteTextureManager.Release
+  fullName: Map.Rendering.PaletteTextureManager.Release

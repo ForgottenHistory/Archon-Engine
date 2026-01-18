@@ -1,0 +1,311 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.RawProvinceData
+  commentId: T:Core.Data.RawProvinceData
+  id: RawProvinceData
+  parent: Core.Data
+  children:
+  - Core.Data.RawProvinceData.Invalid
+  - Core.Data.RawProvinceData.controller
+  - Core.Data.RawProvinceData.hasController
+  - Core.Data.RawProvinceData.hasOwner
+  - Core.Data.RawProvinceData.owner
+  - Core.Data.RawProvinceData.provinceID
+  langs:
+  - csharp
+  - vb
+  name: RawProvinceData
+  nameWithType: RawProvinceData
+  fullName: Core.Data.RawProvinceData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RawProvinceData
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Burst-compatible struct for province data extracted from JSON5
+
+    Used as intermediate format between JSON parsing and burst processing
+
+
+    ENGINE layer - generic province data only.
+
+    Game-specific fields (culture, religion, trade goods, development, etc.)
+
+    should be parsed by game layer and stored in ProvinceColdData.CustomData.
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct RawProvinceData
+    content.vb: >-
+      <Serializable>
+
+      Public Structure RawProvinceData
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.RawProvinceData.provinceID
+  commentId: F:Core.Data.RawProvinceData.provinceID
+  id: provinceID
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: provinceID
+  nameWithType: RawProvinceData.provinceID
+  fullName: Core.Data.RawProvinceData.provinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceID
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int provinceID
+    return:
+      type: System.Int32
+    content.vb: Public provinceID As Integer
+- uid: Core.Data.RawProvinceData.owner
+  commentId: F:Core.Data.RawProvinceData.owner
+  id: owner
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: owner
+  nameWithType: RawProvinceData.owner
+  fullName: Core.Data.RawProvinceData.owner
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: owner
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes owner
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public owner As FixedString64Bytes
+- uid: Core.Data.RawProvinceData.controller
+  commentId: F:Core.Data.RawProvinceData.controller
+  id: controller
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: controller
+  nameWithType: RawProvinceData.controller
+  fullName: Core.Data.RawProvinceData.controller
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: controller
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes controller
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public controller As FixedString64Bytes
+- uid: Core.Data.RawProvinceData.hasOwner
+  commentId: F:Core.Data.RawProvinceData.hasOwner
+  id: hasOwner
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: hasOwner
+  nameWithType: RawProvinceData.hasOwner
+  fullName: Core.Data.RawProvinceData.hasOwner
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hasOwner
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool hasOwner
+    return:
+      type: System.Boolean
+    content.vb: Public hasOwner As Boolean
+- uid: Core.Data.RawProvinceData.hasController
+  commentId: F:Core.Data.RawProvinceData.hasController
+  id: hasController
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: hasController
+  nameWithType: RawProvinceData.hasController
+  fullName: Core.Data.RawProvinceData.hasController
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hasController
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool hasController
+    return:
+      type: System.Boolean
+    content.vb: Public hasController As Boolean
+- uid: Core.Data.RawProvinceData.Invalid
+  commentId: P:Core.Data.RawProvinceData.Invalid
+  id: Invalid
+  parent: Core.Data.RawProvinceData
+  langs:
+  - csharp
+  - vb
+  name: Invalid
+  nameWithType: RawProvinceData.Invalid
+  fullName: Core.Data.RawProvinceData.Invalid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5ProvinceData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Invalid
+    path: Scripts/Core/Data/Json5ProvinceData.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static RawProvinceData Invalid { get; }
+    parameters: []
+    return:
+      type: Core.Data.RawProvinceData
+    content.vb: Public Shared ReadOnly Property Invalid As RawProvinceData
+  overload: Core.Data.RawProvinceData.Invalid*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.RawProvinceData.Invalid*
+  commentId: Overload:Core.Data.RawProvinceData.Invalid
+  href: Core.Data.RawProvinceData.html#Core_Data_RawProvinceData_Invalid
+  name: Invalid
+  nameWithType: RawProvinceData.Invalid
+  fullName: Core.Data.RawProvinceData.Invalid
+- uid: Core.Data.RawProvinceData
+  commentId: T:Core.Data.RawProvinceData
+  parent: Core.Data
+  href: Core.Data.RawProvinceData.html
+  name: RawProvinceData
+  nameWithType: RawProvinceData
+  fullName: Core.Data.RawProvinceData

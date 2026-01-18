@@ -1,0 +1,273 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPFileHeader
+  id: BMPParser.BMPFileHeader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPParser.BMPFileHeader.DataOffset
+  - Map.Loading.Images.BMPParser.BMPFileHeader.FileSize
+  - Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+  - Map.Loading.Images.BMPParser.BMPFileHeader.Reserved1
+  - Map.Loading.Images.BMPParser.BMPFileHeader.Reserved2
+  - Map.Loading.Images.BMPParser.BMPFileHeader.Signature
+  langs:
+  - csharp
+  - vb
+  name: BMPParser.BMPFileHeader
+  nameWithType: BMPParser.BMPFileHeader
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPFileHeader
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: BMP file header structure (14 bytes)
+  example: []
+  syntax:
+    content: public struct BMPParser.BMPFileHeader
+    content.vb: Public Structure BMPParser.BMPFileHeader
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.Signature
+  commentId: F:Map.Loading.Images.BMPParser.BMPFileHeader.Signature
+  id: Signature
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: Signature
+  nameWithType: BMPParser.BMPFileHeader.Signature
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.Signature
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Signature
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ushort Signature
+    return:
+      type: System.UInt16
+    content.vb: Public Signature As UShort
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.FileSize
+  commentId: F:Map.Loading.Images.BMPParser.BMPFileHeader.FileSize
+  id: FileSize
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: FileSize
+  nameWithType: BMPParser.BMPFileHeader.FileSize
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.FileSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FileSize
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint FileSize
+    return:
+      type: System.UInt32
+    content.vb: Public FileSize As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.Reserved1
+  commentId: F:Map.Loading.Images.BMPParser.BMPFileHeader.Reserved1
+  id: Reserved1
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: Reserved1
+  nameWithType: BMPParser.BMPFileHeader.Reserved1
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.Reserved1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Reserved1
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ushort Reserved1
+    return:
+      type: System.UInt16
+    content.vb: Public Reserved1 As UShort
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.Reserved2
+  commentId: F:Map.Loading.Images.BMPParser.BMPFileHeader.Reserved2
+  id: Reserved2
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: Reserved2
+  nameWithType: BMPParser.BMPFileHeader.Reserved2
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.Reserved2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Reserved2
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ushort Reserved2
+    return:
+      type: System.UInt16
+    content.vb: Public Reserved2 As UShort
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.DataOffset
+  commentId: F:Map.Loading.Images.BMPParser.BMPFileHeader.DataOffset
+  id: DataOffset
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: DataOffset
+  nameWithType: BMPParser.BMPFileHeader.DataOffset
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.DataOffset
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DataOffset
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint DataOffset
+    return:
+      type: System.UInt32
+    content.vb: Public DataOffset As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+  commentId: P:Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.BMPParser.BMPFileHeader
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: BMPParser.BMPFileHeader.IsValid
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Map.Loading.Images.BMPParser.BMPFileHeader.IsValid*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader.IsValid*
+  commentId: Overload:Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+  href: Map.Loading.Images.BMPParser.BMPFileHeader.html#Map_Loading_Images_BMPParser_BMPFileHeader_IsValid
+  name: IsValid
+  nameWithType: BMPParser.BMPFileHeader.IsValid
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

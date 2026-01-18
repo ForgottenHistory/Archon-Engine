@@ -1,0 +1,677 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.PNGParser
+  commentId: T:Map.Loading.Images.PNGParser
+  id: PNGParser
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.PNGParser.CollectUniqueColors(Map.Loading.Images.PNGParser.PNGPixelData,Unity.Collections.Allocator)
+  - Map.Loading.Images.PNGParser.FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,Unity.Collections.Allocator)
+  - Map.Loading.Images.PNGParser.IsPNG(Unity.Collections.NativeArray{System.Byte})
+  - Map.Loading.Images.PNGParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  - Map.Loading.Images.PNGParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  - Map.Loading.Images.PNGParser.TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  - Map.Loading.Images.PNGParser.TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Int32@)
+  langs:
+  - csharp
+  - vb
+  name: PNGParser
+  nameWithType: PNGParser
+  fullName: Map.Loading.Images.PNGParser
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PNGParser
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    High-performance PNG file parser for map files
+
+    Supports 8-bit indexed, 24-bit RGB, and 32-bit RGBA formats
+
+    Uses managed decompression but NativeArray for pixel storage
+  example: []
+  syntax:
+    content: public static class PNGParser
+    content.vb: Public Module PNGParser
+  inheritance:
+  - System.Object
+- uid: Map.Loading.Images.PNGParser.IsPNG(Unity.Collections.NativeArray{System.Byte})
+  commentId: M:Map.Loading.Images.PNGParser.IsPNG(Unity.Collections.NativeArray{System.Byte})
+  id: IsPNG(Unity.Collections.NativeArray{System.Byte})
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: IsPNG(NativeArray<byte>)
+  nameWithType: PNGParser.IsPNG(NativeArray<byte>)
+  fullName: Map.Loading.Images.PNGParser.IsPNG(Unity.Collections.NativeArray<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsPNG
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Check if file data is a valid PNG
+  example: []
+  syntax:
+    content: public static bool IsPNG(NativeArray<byte> fileData)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsPNG(fileData As NativeArray(Of Byte)) As Boolean
+  overload: Map.Loading.Images.PNGParser.IsPNG*
+  nameWithType.vb: PNGParser.IsPNG(NativeArray(Of Byte))
+  fullName.vb: Map.Loading.Images.PNGParser.IsPNG(Unity.Collections.NativeArray(Of Byte))
+  name.vb: IsPNG(NativeArray(Of Byte))
+- uid: Map.Loading.Images.PNGParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  commentId: M:Map.Loading.Images.PNGParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  id: ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: ParseHeader(NativeArray<byte>)
+  nameWithType: PNGParser.ParseHeader(NativeArray<byte>)
+  fullName: Map.Loading.Images.PNGParser.ParseHeader(Unity.Collections.NativeArray<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ParseHeader
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Parse PNG header from file data
+  example: []
+  syntax:
+    content: public static PNGParser.PNGHeader ParseHeader(NativeArray<byte> fileData)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    return:
+      type: Map.Loading.Images.PNGParser.PNGHeader
+    content.vb: Public Shared Function ParseHeader(fileData As NativeArray(Of Byte)) As PNGParser.PNGHeader
+  overload: Map.Loading.Images.PNGParser.ParseHeader*
+  nameWithType.vb: PNGParser.ParseHeader(NativeArray(Of Byte))
+  fullName.vb: Map.Loading.Images.PNGParser.ParseHeader(Unity.Collections.NativeArray(Of Byte))
+  name.vb: ParseHeader(NativeArray(Of Byte))
+- uid: Map.Loading.Images.PNGParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.PNGParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  id: Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: Parse(NativeArray<byte>, Allocator)
+  nameWithType: PNGParser.Parse(NativeArray<byte>, Allocator)
+  fullName: Map.Loading.Images.PNGParser.Parse(Unity.Collections.NativeArray<byte>, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Parse
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 119
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Parse and decode entire PNG file
+  example: []
+  syntax:
+    content: public static PNGParser.PNGPixelData Parse(NativeArray<byte> fileData, Allocator allocator)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Map.Loading.Images.PNGParser.PNGPixelData
+    content.vb: Public Shared Function Parse(fileData As NativeArray(Of Byte), allocator As Allocator) As PNGParser.PNGPixelData
+  overload: Map.Loading.Images.PNGParser.Parse*
+  nameWithType.vb: PNGParser.Parse(NativeArray(Of Byte), Allocator)
+  fullName.vb: Map.Loading.Images.PNGParser.Parse(Unity.Collections.NativeArray(Of Byte), Unity.Collections.Allocator)
+  name.vb: Parse(NativeArray(Of Byte), Allocator)
+- uid: Map.Loading.Images.PNGParser.TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  commentId: M:Map.Loading.Images.PNGParser.TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  id: TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetPixelRGB(PNGPixelData, int, int, out byte, out byte, out byte)
+  nameWithType: PNGParser.TryGetPixelRGB(PNGParser.PNGPixelData, int, int, out byte, out byte, out byte)
+  fullName: Map.Loading.Images.PNGParser.TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData, int, int, out byte, out byte, out byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetPixelRGB
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 184
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get RGB color at specific pixel coordinates
+  example: []
+  syntax:
+    content: public static bool TryGetPixelRGB(PNGParser.PNGPixelData pixelData, int x, int y, out byte r, out byte g, out byte b)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.PNGParser.PNGPixelData
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: r
+      type: System.Byte
+    - id: g
+      type: System.Byte
+    - id: b
+      type: System.Byte
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetPixelRGB(pixelData As PNGParser.PNGPixelData, x As Integer, y As Integer, r As Byte, g As Byte, b As Byte) As Boolean
+  overload: Map.Loading.Images.PNGParser.TryGetPixelRGB*
+  nameWithType.vb: PNGParser.TryGetPixelRGB(PNGParser.PNGPixelData, Integer, Integer, Byte, Byte, Byte)
+  fullName.vb: Map.Loading.Images.PNGParser.TryGetPixelRGB(Map.Loading.Images.PNGParser.PNGPixelData, Integer, Integer, Byte, Byte, Byte)
+  name.vb: TryGetPixelRGB(PNGPixelData, Integer, Integer, Byte, Byte, Byte)
+- uid: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Int32@)
+  commentId: M:Map.Loading.Images.PNGParser.TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Int32@)
+  id: TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,System.Int32,System.Int32@)
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetPixelRGBPacked(PNGPixelData, int, int, out int)
+  nameWithType: PNGParser.TryGetPixelRGBPacked(PNGParser.PNGPixelData, int, int, out int)
+  fullName: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData, int, int, out int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetPixelRGBPacked
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 241
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get packed RGB color (0xRRGGBB) at specific coordinates
+  example: []
+  syntax:
+    content: public static bool TryGetPixelRGBPacked(PNGParser.PNGPixelData pixelData, int x, int y, out int rgb)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.PNGParser.PNGPixelData
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: rgb
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetPixelRGBPacked(pixelData As PNGParser.PNGPixelData, x As Integer, y As Integer, rgb As Integer) As Boolean
+  overload: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked*
+  nameWithType.vb: PNGParser.TryGetPixelRGBPacked(PNGParser.PNGPixelData, Integer, Integer, Integer)
+  fullName.vb: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked(Map.Loading.Images.PNGParser.PNGPixelData, Integer, Integer, Integer)
+  name.vb: TryGetPixelRGBPacked(PNGPixelData, Integer, Integer, Integer)
+- uid: Map.Loading.Images.PNGParser.CollectUniqueColors(Map.Loading.Images.PNGParser.PNGPixelData,Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.PNGParser.CollectUniqueColors(Map.Loading.Images.PNGParser.PNGPixelData,Unity.Collections.Allocator)
+  id: CollectUniqueColors(Map.Loading.Images.PNGParser.PNGPixelData,Unity.Collections.Allocator)
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: CollectUniqueColors(PNGPixelData, Allocator)
+  nameWithType: PNGParser.CollectUniqueColors(PNGParser.PNGPixelData, Allocator)
+  fullName: Map.Loading.Images.PNGParser.CollectUniqueColors(Map.Loading.Images.PNGParser.PNGPixelData, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CollectUniqueColors
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 257
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Scan all pixels and collect unique RGB values
+  example: []
+  syntax:
+    content: public static NativeHashSet<int> CollectUniqueColors(PNGParser.PNGPixelData pixelData, Allocator allocator)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.PNGParser.PNGPixelData
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeHashSet{System.Int32}
+    content.vb: Public Shared Function CollectUniqueColors(pixelData As PNGParser.PNGPixelData, allocator As Allocator) As NativeHashSet(Of Integer)
+  overload: Map.Loading.Images.PNGParser.CollectUniqueColors*
+- uid: Map.Loading.Images.PNGParser.FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.PNGParser.FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,Unity.Collections.Allocator)
+  id: FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData,System.Int32,Unity.Collections.Allocator)
+  parent: Map.Loading.Images.PNGParser
+  langs:
+  - csharp
+  - vb
+  name: FindPixelsWithColor(PNGPixelData, int, Allocator)
+  nameWithType: PNGParser.FindPixelsWithColor(PNGParser.PNGPixelData, int, Allocator)
+  fullName: Map.Loading.Images.PNGParser.FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData, int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPixelsWithColor
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 284
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Find all pixels with a specific RGB color
+  example: []
+  syntax:
+    content: public static NativeList<PixelCoord> FindPixelsWithColor(PNGParser.PNGPixelData pixelData, int targetRGB, Allocator allocator)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.PNGParser.PNGPixelData
+    - id: targetRGB
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+    content.vb: Public Shared Function FindPixelsWithColor(pixelData As PNGParser.PNGPixelData, targetRGB As Integer, allocator As Allocator) As NativeList(Of PixelCoord)
+  overload: Map.Loading.Images.PNGParser.FindPixelsWithColor*
+  nameWithType.vb: PNGParser.FindPixelsWithColor(PNGParser.PNGPixelData, Integer, Allocator)
+  fullName.vb: Map.Loading.Images.PNGParser.FindPixelsWithColor(Map.Loading.Images.PNGParser.PNGPixelData, Integer, Unity.Collections.Allocator)
+  name.vb: FindPixelsWithColor(PNGPixelData, Integer, Allocator)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.PNGParser.IsPNG*
+  commentId: Overload:Map.Loading.Images.PNGParser.IsPNG
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_IsPNG_Unity_Collections_NativeArray_System_Byte__
+  name: IsPNG
+  nameWithType: PNGParser.IsPNG
+  fullName: Map.Loading.Images.PNGParser.IsPNG
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.Images.PNGParser.ParseHeader*
+  commentId: Overload:Map.Loading.Images.PNGParser.ParseHeader
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_ParseHeader_Unity_Collections_NativeArray_System_Byte__
+  name: ParseHeader
+  nameWithType: PNGParser.ParseHeader
+  fullName: Map.Loading.Images.PNGParser.ParseHeader
+- uid: Map.Loading.Images.PNGParser.PNGHeader
+  commentId: T:Map.Loading.Images.PNGParser.PNGHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGHeader
+  nameWithType: PNGParser.PNGHeader
+  fullName: Map.Loading.Images.PNGParser.PNGHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+- uid: Map.Loading.Images.PNGParser.Parse*
+  commentId: Overload:Map.Loading.Images.PNGParser.Parse
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_Parse_Unity_Collections_NativeArray_System_Byte__Unity_Collections_Allocator_
+  name: Parse
+  nameWithType: PNGParser.Parse
+  fullName: Map.Loading.Images.PNGParser.Parse
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Map.Loading.Images.PNGParser.PNGPixelData
+  commentId: T:Map.Loading.Images.PNGParser.PNGPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGPixelData
+  nameWithType: PNGParser.PNGPixelData
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGPixelData
+    name: PNGPixelData
+    href: Map.Loading.Images.PNGParser.PNGPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGPixelData
+    name: PNGPixelData
+    href: Map.Loading.Images.PNGParser.PNGPixelData.html
+- uid: Map.Loading.Images.PNGParser.TryGetPixelRGB*
+  commentId: Overload:Map.Loading.Images.PNGParser.TryGetPixelRGB
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_TryGetPixelRGB_Map_Loading_Images_PNGParser_PNGPixelData_System_Int32_System_Int32_System_Byte__System_Byte__System_Byte__
+  name: TryGetPixelRGB
+  nameWithType: PNGParser.TryGetPixelRGB
+  fullName: Map.Loading.Images.PNGParser.TryGetPixelRGB
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked*
+  commentId: Overload:Map.Loading.Images.PNGParser.TryGetPixelRGBPacked
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_TryGetPixelRGBPacked_Map_Loading_Images_PNGParser_PNGPixelData_System_Int32_System_Int32_System_Int32__
+  name: TryGetPixelRGBPacked
+  nameWithType: PNGParser.TryGetPixelRGBPacked
+  fullName: Map.Loading.Images.PNGParser.TryGetPixelRGBPacked
+- uid: Map.Loading.Images.PNGParser.CollectUniqueColors*
+  commentId: Overload:Map.Loading.Images.PNGParser.CollectUniqueColors
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_CollectUniqueColors_Map_Loading_Images_PNGParser_PNGPixelData_Unity_Collections_Allocator_
+  name: CollectUniqueColors
+  nameWithType: PNGParser.CollectUniqueColors
+  fullName: Map.Loading.Images.PNGParser.CollectUniqueColors
+- uid: Unity.Collections.NativeHashSet{System.Int32}
+  commentId: T:Unity.Collections.NativeHashSet{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashSet`1
+  name: NativeHashSet<int>
+  nameWithType: NativeHashSet<int>
+  fullName: Unity.Collections.NativeHashSet<int>
+  nameWithType.vb: NativeHashSet(Of Integer)
+  fullName.vb: Unity.Collections.NativeHashSet(Of Integer)
+  name.vb: NativeHashSet(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashSet`1
+  commentId: T:Unity.Collections.NativeHashSet`1
+  isExternal: true
+  name: NativeHashSet<T>
+  nameWithType: NativeHashSet<T>
+  fullName: Unity.Collections.NativeHashSet<T>
+  nameWithType.vb: NativeHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeHashSet(Of T)
+  name.vb: NativeHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.Images.PNGParser.FindPixelsWithColor*
+  commentId: Overload:Map.Loading.Images.PNGParser.FindPixelsWithColor
+  href: Map.Loading.Images.PNGParser.html#Map_Loading_Images_PNGParser_FindPixelsWithColor_Map_Loading_Images_PNGParser_PNGPixelData_System_Int32_Unity_Collections_Allocator_
+  name: FindPixelsWithColor
+  nameWithType: PNGParser.FindPixelsWithColor
+  fullName: Map.Loading.Images.PNGParser.FindPixelsWithColor
+- uid: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  commentId: T:Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Map.Loading.Images.PixelCoord.html
+  name: NativeList<PixelCoord>
+  nameWithType: NativeList<PixelCoord>
+  fullName: Unity.Collections.NativeList<Map.Loading.Images.PixelCoord>
+  nameWithType.vb: NativeList(Of PixelCoord)
+  fullName.vb: Unity.Collections.NativeList(Of Map.Loading.Images.PixelCoord)
+  name.vb: NativeList(Of PixelCoord)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

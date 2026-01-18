@@ -1,0 +1,163 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.QueryPerformanceStats
+  commentId: T:Core.Queries.QueryPerformanceStats
+  id: QueryPerformanceStats
+  parent: Core.Queries
+  children:
+  - Core.Queries.QueryPerformanceStats.AverageQueryTime
+  - Core.Queries.QueryPerformanceStats.QueryCount
+  - Core.Queries.QueryPerformanceStats.TotalQueryTime
+  langs:
+  - csharp
+  - vb
+  name: QueryPerformanceStats
+  nameWithType: QueryPerformanceStats
+  fullName: Core.Queries.QueryPerformanceStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: QueryPerformanceStats
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 762
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Query performance statistics
+  example: []
+  syntax:
+    content: public struct QueryPerformanceStats
+    content.vb: Public Structure QueryPerformanceStats
+- uid: Core.Queries.QueryPerformanceStats.QueryCount
+  commentId: F:Core.Queries.QueryPerformanceStats.QueryCount
+  id: QueryCount
+  parent: Core.Queries.QueryPerformanceStats
+  langs:
+  - csharp
+  - vb
+  name: QueryCount
+  nameWithType: QueryPerformanceStats.QueryCount
+  fullName: Core.Queries.QueryPerformanceStats.QueryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: QueryCount
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 764
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public int QueryCount
+    return:
+      type: System.Int32
+    content.vb: Public QueryCount As Integer
+- uid: Core.Queries.QueryPerformanceStats.TotalQueryTime
+  commentId: F:Core.Queries.QueryPerformanceStats.TotalQueryTime
+  id: TotalQueryTime
+  parent: Core.Queries.QueryPerformanceStats
+  langs:
+  - csharp
+  - vb
+  name: TotalQueryTime
+  nameWithType: QueryPerformanceStats.TotalQueryTime
+  fullName: Core.Queries.QueryPerformanceStats.TotalQueryTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalQueryTime
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 765
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public float TotalQueryTime
+    return:
+      type: System.Single
+    content.vb: Public TotalQueryTime As Single
+- uid: Core.Queries.QueryPerformanceStats.AverageQueryTime
+  commentId: F:Core.Queries.QueryPerformanceStats.AverageQueryTime
+  id: AverageQueryTime
+  parent: Core.Queries.QueryPerformanceStats
+  langs:
+  - csharp
+  - vb
+  name: AverageQueryTime
+  nameWithType: QueryPerformanceStats.AverageQueryTime
+  fullName: Core.Queries.QueryPerformanceStats.AverageQueryTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageQueryTime
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 766
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public float AverageQueryTime
+    return:
+      type: System.Single
+    content.vb: Public AverageQueryTime As Single
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

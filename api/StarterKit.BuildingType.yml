@@ -1,0 +1,387 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.BuildingType
+  commentId: T:StarterKit.BuildingType
+  id: BuildingType
+  parent: StarterKit
+  children:
+  - StarterKit.BuildingType.Cost
+  - StarterKit.BuildingType.ID
+  - StarterKit.BuildingType.MaxPerProvince
+  - StarterKit.BuildingType.Modifiers
+  - StarterKit.BuildingType.Name
+  - StarterKit.BuildingType.StringID
+  langs:
+  - csharp
+  - vb
+  name: BuildingType
+  nameWithType: BuildingType
+  fullName: StarterKit.BuildingType
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingType
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 25
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Simple building definition.
+  example: []
+  syntax:
+    content: public class BuildingType
+    content.vb: Public Class BuildingType
+  inheritance:
+  - System.Object
+- uid: StarterKit.BuildingType.ID
+  commentId: P:StarterKit.BuildingType.ID
+  id: ID
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: BuildingType.ID
+  fullName: StarterKit.BuildingType.ID
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ID
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 27
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ushort ID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property ID As UShort
+  overload: StarterKit.BuildingType.ID*
+- uid: StarterKit.BuildingType.StringID
+  commentId: P:StarterKit.BuildingType.StringID
+  id: StringID
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: StringID
+  nameWithType: BuildingType.StringID
+  fullName: StarterKit.BuildingType.StringID
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StringID
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 28
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public string StringID { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property StringID As String
+  overload: StarterKit.BuildingType.StringID*
+- uid: StarterKit.BuildingType.Name
+  commentId: P:StarterKit.BuildingType.Name
+  id: Name
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: BuildingType.Name
+  fullName: StarterKit.BuildingType.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 29
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: StarterKit.BuildingType.Name*
+- uid: StarterKit.BuildingType.Cost
+  commentId: P:StarterKit.BuildingType.Cost
+  id: Cost
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: Cost
+  nameWithType: BuildingType.Cost
+  fullName: StarterKit.BuildingType.Cost
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Cost
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 30
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int Cost { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Cost As Integer
+  overload: StarterKit.BuildingType.Cost*
+- uid: StarterKit.BuildingType.MaxPerProvince
+  commentId: P:StarterKit.BuildingType.MaxPerProvince
+  id: MaxPerProvince
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: MaxPerProvince
+  nameWithType: BuildingType.MaxPerProvince
+  fullName: StarterKit.BuildingType.MaxPerProvince
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxPerProvince
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 31
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public int MaxPerProvince { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxPerProvince As Integer
+  overload: StarterKit.BuildingType.MaxPerProvince*
+- uid: StarterKit.BuildingType.Modifiers
+  commentId: P:StarterKit.BuildingType.Modifiers
+  id: Modifiers
+  parent: StarterKit.BuildingType
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: BuildingType.Modifiers
+  fullName: StarterKit.BuildingType.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Modifiers
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 34
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public List<BuildingModifier> Modifiers { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{StarterKit.BuildingModifier}
+    content.vb: Public Property Modifiers As List(Of BuildingModifier)
+  overload: StarterKit.BuildingType.Modifiers*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.BuildingType.ID*
+  commentId: Overload:StarterKit.BuildingType.ID
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_ID
+  name: ID
+  nameWithType: BuildingType.ID
+  fullName: StarterKit.BuildingType.ID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.BuildingType.StringID*
+  commentId: Overload:StarterKit.BuildingType.StringID
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_StringID
+  name: StringID
+  nameWithType: BuildingType.StringID
+  fullName: StarterKit.BuildingType.StringID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.BuildingType.Name*
+  commentId: Overload:StarterKit.BuildingType.Name
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_Name
+  name: Name
+  nameWithType: BuildingType.Name
+  fullName: StarterKit.BuildingType.Name
+- uid: StarterKit.BuildingType.Cost*
+  commentId: Overload:StarterKit.BuildingType.Cost
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_Cost
+  name: Cost
+  nameWithType: BuildingType.Cost
+  fullName: StarterKit.BuildingType.Cost
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.BuildingType.MaxPerProvince*
+  commentId: Overload:StarterKit.BuildingType.MaxPerProvince
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_MaxPerProvince
+  name: MaxPerProvince
+  nameWithType: BuildingType.MaxPerProvince
+  fullName: StarterKit.BuildingType.MaxPerProvince
+- uid: StarterKit.BuildingType.Modifiers*
+  commentId: Overload:StarterKit.BuildingType.Modifiers
+  href: StarterKit.BuildingType.html#StarterKit_BuildingType_Modifiers
+  name: Modifiers
+  nameWithType: BuildingType.Modifiers
+  fullName: StarterKit.BuildingType.Modifiers
+- uid: System.Collections.Generic.List{StarterKit.BuildingModifier}
+  commentId: T:System.Collections.Generic.List{StarterKit.BuildingModifier}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: StarterKit.BuildingModifier.html
+  name: List<BuildingModifier>
+  nameWithType: List<BuildingModifier>
+  fullName: System.Collections.Generic.List<StarterKit.BuildingModifier>
+  nameWithType.vb: List(Of BuildingModifier)
+  fullName.vb: System.Collections.Generic.List(Of StarterKit.BuildingModifier)
+  name.vb: List(Of BuildingModifier)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: StarterKit.BuildingModifier
+    name: BuildingModifier
+    href: StarterKit.BuildingModifier.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: StarterKit.BuildingModifier
+    name: BuildingModifier
+    href: StarterKit.BuildingModifier.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true

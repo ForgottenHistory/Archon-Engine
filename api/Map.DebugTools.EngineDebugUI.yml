@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.DebugTools.EngineDebugUI
+  commentId: T:Map.DebugTools.EngineDebugUI
+  id: EngineDebugUI
+  parent: Map.DebugTools
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: EngineDebugUI
+  nameWithType: EngineDebugUI
+  fullName: Map.DebugTools.EngineDebugUI
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Debug/EngineDebugUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EngineDebugUI
+    path: Scripts/Map/Debug/EngineDebugUI.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.DebugTools
+  summary: >-
+    ENGINE LAYER: Simple debug UI for map showcase scenes
+
+    Displays current date and provides time controls
+
+    Uses OnGUI for zero dependencies (no UI Toolkit/Canvas required)
+  example: []
+  syntax:
+    content: 'public class EngineDebugUI : MonoBehaviour'
+    content.vb: Public Class EngineDebugUI Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+references:
+- uid: Map.DebugTools
+  commentId: N:Map.DebugTools
+  href: Map.html
+  name: Map.DebugTools
+  nameWithType: Map.DebugTools
+  fullName: Map.DebugTools
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.DebugTools
+    name: DebugTools
+    href: Map.DebugTools.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.DebugTools
+    name: DebugTools
+    href: Map.DebugTools.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

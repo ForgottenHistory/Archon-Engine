@@ -1,0 +1,1592 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.Registry`1
+  commentId: T:Core.Registries.Registry`1
+  id: Registry`1
+  parent: Core.Registries
+  children:
+  - Core.Registries.Registry`1.#ctor(System.String)
+  - Core.Registries.Registry`1.Count
+  - Core.Registries.Registry`1.Exists(System.String)
+  - Core.Registries.Registry`1.Exists(System.UInt16)
+  - Core.Registries.Registry`1.Get(System.String)
+  - Core.Registries.Registry`1.Get(System.UInt16)
+  - Core.Registries.Registry`1.GetAll
+  - Core.Registries.Registry`1.GetAllIds
+  - Core.Registries.Registry`1.GetDiagnostics
+  - Core.Registries.Registry`1.GetId(System.String)
+  - Core.Registries.Registry`1.Register(System.String,`0)
+  - Core.Registries.Registry`1.Replace(System.String,`0)
+  - Core.Registries.Registry`1.TryGet(System.String,`0@)
+  - Core.Registries.Registry`1.TryGetId(System.String,System.UInt16@)
+  - Core.Registries.Registry`1.TypeName
+  langs:
+  - csharp
+  - vb
+  name: Registry<T>
+  nameWithType: Registry<T>
+  fullName: Core.Registries.Registry<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Registry
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: >-
+    Generic registry implementation for game entities
+
+    Provides O(1) lookups for both string keys and numeric IDs
+
+    Follows data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: 'public class Registry<T> : IRegistry<T> where T : class'
+    typeParameters:
+    - id: T
+    content.vb: Public Class Registry(Of T As Class) Implements IRegistry(Of T)
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Registries.IRegistry{{T}}
+  nameWithType.vb: Registry(Of T)
+  fullName.vb: Core.Registries.Registry(Of T)
+  name.vb: Registry(Of T)
+- uid: Core.Registries.Registry`1.TypeName
+  commentId: P:Core.Registries.Registry`1.TypeName
+  id: TypeName
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: TypeName
+  nameWithType: Registry<T>.TypeName
+  fullName: Core.Registries.Registry<T>.TypeName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TypeName
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get the type name for error messages
+  example: []
+  syntax:
+    content: public string TypeName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property TypeName As String
+  overload: Core.Registries.Registry`1.TypeName*
+  implements:
+  - Core.Registries.IRegistry{{T}}.TypeName
+  nameWithType.vb: Registry(Of T).TypeName
+  fullName.vb: Core.Registries.Registry(Of T).TypeName
+- uid: Core.Registries.Registry`1.Count
+  commentId: P:Core.Registries.Registry`1.Count
+  id: Count
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: Registry<T>.Count
+  fullName: Core.Registries.Registry<T>.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get the count of registered entities
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Registries.Registry`1.Count*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Count
+  nameWithType.vb: Registry(Of T).Count
+  fullName.vb: Core.Registries.Registry(Of T).Count
+- uid: Core.Registries.Registry`1.#ctor(System.String)
+  commentId: M:Core.Registries.Registry`1.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Registry(string)
+  nameWithType: Registry<T>.Registry(string)
+  fullName: Core.Registries.Registry<T>.Registry(string)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public Registry(string typeName)
+    parameters:
+    - id: typeName
+      type: System.String
+    content.vb: Public Sub New(typeName As String)
+  overload: Core.Registries.Registry`1.#ctor*
+  nameWithType.vb: Registry(Of T).New(String)
+  fullName.vb: Core.Registries.Registry(Of T).New(String)
+  name.vb: New(String)
+- uid: Core.Registries.Registry`1.Register(System.String,`0)
+  commentId: M:Core.Registries.Registry`1.Register(System.String,`0)
+  id: Register(System.String,`0)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Register(string, T)
+  nameWithType: Registry<T>.Register(string, T)
+  fullName: Core.Registries.Registry<T>.Register(string, T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Register
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Register a new entity with validation
+  example: []
+  syntax:
+    content: public ushort Register(string key, T item)
+    parameters:
+    - id: key
+      type: System.String
+    - id: item
+      type: '{T}'
+    return:
+      type: System.UInt16
+    content.vb: Public Function Register(key As String, item As T) As UShort
+  overload: Core.Registries.Registry`1.Register*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Register(System.String,{T})
+  nameWithType.vb: Registry(Of T).Register(String, T)
+  fullName.vb: Core.Registries.Registry(Of T).Register(String, T)
+  name.vb: Register(String, T)
+- uid: Core.Registries.Registry`1.Get(System.UInt16)
+  commentId: M:Core.Registries.Registry`1.Get(System.UInt16)
+  id: Get(System.UInt16)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Get(ushort)
+  nameWithType: Registry<T>.Get(ushort)
+  fullName: Core.Registries.Registry<T>.Get(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get entity by numeric ID - primary runtime access method
+  example: []
+  syntax:
+    content: public T Get(ushort id)
+    parameters:
+    - id: id
+      type: System.UInt16
+    return:
+      type: '{T}'
+    content.vb: Public Function [Get](id As UShort) As T
+  overload: Core.Registries.Registry`1.Get*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Get(System.UInt16)
+  nameWithType.vb: Registry(Of T).Get(UShort)
+  fullName.vb: Core.Registries.Registry(Of T).Get(UShort)
+  name.vb: Get(UShort)
+- uid: Core.Registries.Registry`1.Get(System.String)
+  commentId: M:Core.Registries.Registry`1.Get(System.String)
+  id: Get(System.String)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Get(string)
+  nameWithType: Registry<T>.Get(string)
+  fullName: Core.Registries.Registry<T>.Get(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get entity by string key - use only during loading
+  example: []
+  syntax:
+    content: public T Get(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: '{T}'
+    content.vb: Public Function [Get](key As String) As T
+  overload: Core.Registries.Registry`1.Get*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Get(System.String)
+  nameWithType.vb: Registry(Of T).Get(String)
+  fullName.vb: Core.Registries.Registry(Of T).Get(String)
+  name.vb: Get(String)
+- uid: Core.Registries.Registry`1.GetId(System.String)
+  commentId: M:Core.Registries.Registry`1.GetId(System.String)
+  id: GetId(System.String)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: GetId(string)
+  nameWithType: Registry<T>.GetId(string)
+  fullName: Core.Registries.Registry<T>.GetId(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetId
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get numeric ID for string key
+  example: []
+  syntax:
+    content: public ushort GetId(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetId(key As String) As UShort
+  overload: Core.Registries.Registry`1.GetId*
+  implements:
+  - Core.Registries.IRegistry{{T}}.GetId(System.String)
+  nameWithType.vb: Registry(Of T).GetId(String)
+  fullName.vb: Core.Registries.Registry(Of T).GetId(String)
+  name.vb: GetId(String)
+- uid: Core.Registries.Registry`1.TryGet(System.String,`0@)
+  commentId: M:Core.Registries.Registry`1.TryGet(System.String,`0@)
+  id: TryGet(System.String,`0@)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: TryGet(string, out T)
+  nameWithType: Registry<T>.TryGet(string, out T)
+  fullName: Core.Registries.Registry<T>.TryGet(string, out T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGet
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Try get entity by string key
+  example: []
+  syntax:
+    content: public bool TryGet(string key, out T item)
+    parameters:
+    - id: key
+      type: System.String
+    - id: item
+      type: '{T}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGet(key As String, item As T) As Boolean
+  overload: Core.Registries.Registry`1.TryGet*
+  implements:
+  - Core.Registries.IRegistry{{T}}.TryGet(System.String,{T}@)
+  nameWithType.vb: Registry(Of T).TryGet(String, T)
+  fullName.vb: Core.Registries.Registry(Of T).TryGet(String, T)
+  name.vb: TryGet(String, T)
+- uid: Core.Registries.Registry`1.TryGetId(System.String,System.UInt16@)
+  commentId: M:Core.Registries.Registry`1.TryGetId(System.String,System.UInt16@)
+  id: TryGetId(System.String,System.UInt16@)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: TryGetId(string, out ushort)
+  nameWithType: Registry<T>.TryGetId(string, out ushort)
+  fullName: Core.Registries.Registry<T>.TryGetId(string, out ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetId
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Try get ID by string key
+  example: []
+  syntax:
+    content: public bool TryGetId(string key, out ushort id)
+    parameters:
+    - id: key
+      type: System.String
+    - id: id
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetId(key As String, id As UShort) As Boolean
+  overload: Core.Registries.Registry`1.TryGetId*
+  implements:
+  - Core.Registries.IRegistry{{T}}.TryGetId(System.String,System.UInt16@)
+  nameWithType.vb: Registry(Of T).TryGetId(String, UShort)
+  fullName.vb: Core.Registries.Registry(Of T).TryGetId(String, UShort)
+  name.vb: TryGetId(String, UShort)
+- uid: Core.Registries.Registry`1.GetAll
+  commentId: M:Core.Registries.Registry`1.GetAll
+  id: GetAll
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: GetAll()
+  nameWithType: Registry<T>.GetAll()
+  fullName: Core.Registries.Registry<T>.GetAll()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAll
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get all entities (excluding null at index 0)
+  example: []
+  syntax:
+    content: public IEnumerable<T> GetAll()
+    return:
+      type: System.Collections.Generic.IEnumerable{{T}}
+    content.vb: Public Function GetAll() As IEnumerable(Of T)
+  overload: Core.Registries.Registry`1.GetAll*
+  implements:
+  - Core.Registries.IRegistry{{T}}.GetAll
+  nameWithType.vb: Registry(Of T).GetAll()
+  fullName.vb: Core.Registries.Registry(Of T).GetAll()
+- uid: Core.Registries.Registry`1.GetAllIds
+  commentId: M:Core.Registries.Registry`1.GetAllIds
+  id: GetAllIds
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: GetAllIds()
+  nameWithType: Registry<T>.GetAllIds()
+  fullName: Core.Registries.Registry<T>.GetAllIds()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllIds
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get all valid IDs (excluding 0)
+  example: []
+  syntax:
+    content: public IEnumerable<ushort> GetAllIds()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    content.vb: Public Function GetAllIds() As IEnumerable(Of UShort)
+  overload: Core.Registries.Registry`1.GetAllIds*
+  implements:
+  - Core.Registries.IRegistry{{T}}.GetAllIds
+  nameWithType.vb: Registry(Of T).GetAllIds()
+  fullName.vb: Core.Registries.Registry(Of T).GetAllIds()
+- uid: Core.Registries.Registry`1.Exists(System.String)
+  commentId: M:Core.Registries.Registry`1.Exists(System.String)
+  id: Exists(System.String)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Exists(string)
+  nameWithType: Registry<T>.Exists(string)
+  fullName: Core.Registries.Registry<T>.Exists(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 147
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Check if string key exists
+  example: []
+  syntax:
+    content: public bool Exists(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(key As String) As Boolean
+  overload: Core.Registries.Registry`1.Exists*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Exists(System.String)
+  nameWithType.vb: Registry(Of T).Exists(String)
+  fullName.vb: Core.Registries.Registry(Of T).Exists(String)
+  name.vb: Exists(String)
+- uid: Core.Registries.Registry`1.Exists(System.UInt16)
+  commentId: M:Core.Registries.Registry`1.Exists(System.UInt16)
+  id: Exists(System.UInt16)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Exists(ushort)
+  nameWithType: Registry<T>.Exists(ushort)
+  fullName: Core.Registries.Registry<T>.Exists(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 155
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Check if numeric ID exists
+  example: []
+  syntax:
+    content: public bool Exists(ushort id)
+    parameters:
+    - id: id
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(id As UShort) As Boolean
+  overload: Core.Registries.Registry`1.Exists*
+  implements:
+  - Core.Registries.IRegistry{{T}}.Exists(System.UInt16)
+  nameWithType.vb: Registry(Of T).Exists(UShort)
+  fullName.vb: Core.Registries.Registry(Of T).Exists(UShort)
+  name.vb: Exists(UShort)
+- uid: Core.Registries.Registry`1.Replace(System.String,`0)
+  commentId: M:Core.Registries.Registry`1.Replace(System.String,`0)
+  id: Replace(System.String,`0)
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: Replace(string, T)
+  nameWithType: Registry<T>.Replace(string, T)
+  fullName: Core.Registries.Registry<T>.Replace(string, T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Replace
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 163
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Replace an existing entity (for mod support)
+  example: []
+  syntax:
+    content: public void Replace(string key, T newItem)
+    parameters:
+    - id: key
+      type: System.String
+    - id: newItem
+      type: '{T}'
+    content.vb: Public Sub Replace(key As String, newItem As T)
+  overload: Core.Registries.Registry`1.Replace*
+  nameWithType.vb: Registry(Of T).Replace(String, T)
+  fullName.vb: Core.Registries.Registry(Of T).Replace(String, T)
+  name.vb: Replace(String, T)
+- uid: Core.Registries.Registry`1.GetDiagnostics
+  commentId: M:Core.Registries.Registry`1.GetDiagnostics
+  id: GetDiagnostics
+  parent: Core.Registries.Registry`1
+  langs:
+  - csharp
+  - vb
+  name: GetDiagnostics()
+  nameWithType: Registry<T>.GetDiagnostics()
+  fullName: Core.Registries.Registry<T>.GetDiagnostics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/Registry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDiagnostics
+    path: Scripts/Core/Registries/Registry.cs
+    startLine: 175
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get diagnostic information
+  example: []
+  syntax:
+    content: public string GetDiagnostics()
+    return:
+      type: System.String
+    content.vb: Public Function GetDiagnostics() As String
+  overload: Core.Registries.Registry`1.GetDiagnostics*
+  nameWithType.vb: Registry(Of T).GetDiagnostics()
+  fullName.vb: Core.Registries.Registry(Of T).GetDiagnostics()
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Registries.IRegistry{{T}}
+  commentId: T:Core.Registries.IRegistry{`0}
+  parent: Core.Registries
+  definition: Core.Registries.IRegistry`1
+  href: Core.Registries.IRegistry-1.html
+  name: IRegistry<T>
+  nameWithType: IRegistry<T>
+  fullName: Core.Registries.IRegistry<T>
+  nameWithType.vb: IRegistry(Of T)
+  fullName.vb: Core.Registries.IRegistry(Of T)
+  name.vb: IRegistry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.IRegistry`1
+  commentId: T:Core.Registries.IRegistry`1
+  href: Core.Registries.IRegistry-1.html
+  name: IRegistry<T>
+  nameWithType: IRegistry<T>
+  fullName: Core.Registries.IRegistry<T>
+  nameWithType.vb: IRegistry(Of T)
+  fullName.vb: Core.Registries.IRegistry(Of T)
+  name.vb: IRegistry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry
+    href: Core.Registries.IRegistry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.Registry`1.TypeName*
+  commentId: Overload:Core.Registries.Registry`1.TypeName
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_TypeName
+  name: TypeName
+  nameWithType: Registry<T>.TypeName
+  fullName: Core.Registries.Registry<T>.TypeName
+  nameWithType.vb: Registry(Of T).TypeName
+  fullName.vb: Core.Registries.Registry(Of T).TypeName
+- uid: Core.Registries.IRegistry{{T}}.TypeName
+  commentId: P:Core.Registries.IRegistry{`0}.TypeName
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.TypeName
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TypeName
+  name: TypeName
+  nameWithType: IRegistry<T>.TypeName
+  fullName: Core.Registries.IRegistry<T>.TypeName
+  nameWithType.vb: IRegistry(Of T).TypeName
+  fullName.vb: Core.Registries.IRegistry(Of T).TypeName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.IRegistry`1.TypeName
+  commentId: P:Core.Registries.IRegistry`1.TypeName
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TypeName
+  name: TypeName
+  nameWithType: IRegistry<T>.TypeName
+  fullName: Core.Registries.IRegistry<T>.TypeName
+  nameWithType.vb: IRegistry(Of T).TypeName
+  fullName.vb: Core.Registries.IRegistry(Of T).TypeName
+- uid: Core.Registries.Registry`1.Count*
+  commentId: Overload:Core.Registries.Registry`1.Count
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_Count
+  name: Count
+  nameWithType: Registry<T>.Count
+  fullName: Core.Registries.Registry<T>.Count
+  nameWithType.vb: Registry(Of T).Count
+  fullName.vb: Core.Registries.Registry(Of T).Count
+- uid: Core.Registries.IRegistry{{T}}.Count
+  commentId: P:Core.Registries.IRegistry{`0}.Count
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Count
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Count
+  name: Count
+  nameWithType: IRegistry<T>.Count
+  fullName: Core.Registries.IRegistry<T>.Count
+  nameWithType.vb: IRegistry(Of T).Count
+  fullName.vb: Core.Registries.IRegistry(Of T).Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Registries.IRegistry`1.Count
+  commentId: P:Core.Registries.IRegistry`1.Count
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Count
+  name: Count
+  nameWithType: IRegistry<T>.Count
+  fullName: Core.Registries.IRegistry<T>.Count
+  nameWithType.vb: IRegistry(Of T).Count
+  fullName.vb: Core.Registries.IRegistry(Of T).Count
+- uid: Core.Registries.Registry`1.#ctor*
+  commentId: Overload:Core.Registries.Registry`1.#ctor
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1__ctor_System_String_
+  name: Registry
+  nameWithType: Registry<T>.Registry
+  fullName: Core.Registries.Registry<T>.Registry
+  nameWithType.vb: Registry(Of T).New
+  fullName.vb: Core.Registries.Registry(Of T).New
+  name.vb: New
+- uid: Core.Registries.Registry`1.Register*
+  commentId: Overload:Core.Registries.Registry`1.Register
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_Register_System_String__0_
+  name: Register
+  nameWithType: Registry<T>.Register
+  fullName: Core.Registries.Registry<T>.Register
+  nameWithType.vb: Registry(Of T).Register
+  fullName.vb: Core.Registries.Registry(Of T).Register
+- uid: Core.Registries.IRegistry{{T}}.Register(System.String,{T})
+  commentId: M:Core.Registries.IRegistry{`0}.Register(System.String,`0)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Register(System.String,`0)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  name: Register(string, T)
+  nameWithType: IRegistry<T>.Register(string, T)
+  fullName: Core.Registries.IRegistry<T>.Register(string, T)
+  nameWithType.vb: IRegistry(Of T).Register(String, T)
+  fullName.vb: Core.Registries.IRegistry(Of T).Register(String, T)
+  name.vb: Register(String, T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.Register(System.String,`0)
+    name: Register
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.Register(System.String,`0)
+    name: Register
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Registries.IRegistry`1.Register(System.String,`0)
+  commentId: M:Core.Registries.IRegistry`1.Register(System.String,`0)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  name: Register(string, T)
+  nameWithType: IRegistry<T>.Register(string, T)
+  fullName: Core.Registries.IRegistry<T>.Register(string, T)
+  nameWithType.vb: IRegistry(Of T).Register(String, T)
+  fullName.vb: Core.Registries.IRegistry(Of T).Register(String, T)
+  name.vb: Register(String, T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.Register(System.String,`0)
+    name: Register
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.Register(System.String,`0)
+    name: Register
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Register_System_String__0_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Registries.Registry`1.Get*
+  commentId: Overload:Core.Registries.Registry`1.Get
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_Get_System_UInt16_
+  name: Get
+  nameWithType: Registry<T>.Get
+  fullName: Core.Registries.Registry<T>.Get
+  nameWithType.vb: Registry(Of T).Get
+  fullName.vb: Core.Registries.Registry(Of T).Get
+- uid: Core.Registries.IRegistry{{T}}.Get(System.UInt16)
+  commentId: M:Core.Registries.IRegistry{`0}.Get(System.UInt16)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Get(System.UInt16)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  name: Get(ushort)
+  nameWithType: IRegistry<T>.Get(ushort)
+  fullName: Core.Registries.IRegistry<T>.Get(ushort)
+  nameWithType.vb: IRegistry(Of T).Get(UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).Get(UShort)
+  name.vb: Get(UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.Get(System.UInt16)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.Get(System.UInt16)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.Get(System.UInt16)
+  commentId: M:Core.Registries.IRegistry`1.Get(System.UInt16)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  name: Get(ushort)
+  nameWithType: IRegistry<T>.Get(ushort)
+  fullName: Core.Registries.IRegistry<T>.Get(ushort)
+  nameWithType.vb: IRegistry(Of T).Get(UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).Get(UShort)
+  name.vb: Get(UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.Get(System.UInt16)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.Get(System.UInt16)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry{{T}}.Get(System.String)
+  commentId: M:Core.Registries.IRegistry{`0}.Get(System.String)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Get(System.String)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  name: Get(string)
+  nameWithType: IRegistry<T>.Get(string)
+  fullName: Core.Registries.IRegistry<T>.Get(string)
+  nameWithType.vb: IRegistry(Of T).Get(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).Get(String)
+  name.vb: Get(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.Get(System.String)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.Get(System.String)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.Get(System.String)
+  commentId: M:Core.Registries.IRegistry`1.Get(System.String)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  name: Get(string)
+  nameWithType: IRegistry<T>.Get(string)
+  fullName: Core.Registries.IRegistry<T>.Get(string)
+  nameWithType.vb: IRegistry(Of T).Get(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).Get(String)
+  name.vb: Get(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.Get(System.String)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.Get(System.String)
+    name: Get
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Get_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.Registry`1.GetId*
+  commentId: Overload:Core.Registries.Registry`1.GetId
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_GetId_System_String_
+  name: GetId
+  nameWithType: Registry<T>.GetId
+  fullName: Core.Registries.Registry<T>.GetId
+  nameWithType.vb: Registry(Of T).GetId
+  fullName.vb: Core.Registries.Registry(Of T).GetId
+- uid: Core.Registries.IRegistry{{T}}.GetId(System.String)
+  commentId: M:Core.Registries.IRegistry{`0}.GetId(System.String)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.GetId(System.String)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  name: GetId(string)
+  nameWithType: IRegistry<T>.GetId(string)
+  fullName: Core.Registries.IRegistry<T>.GetId(string)
+  nameWithType.vb: IRegistry(Of T).GetId(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).GetId(String)
+  name.vb: GetId(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.GetId(System.String)
+    name: GetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.GetId(System.String)
+    name: GetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.GetId(System.String)
+  commentId: M:Core.Registries.IRegistry`1.GetId(System.String)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  name: GetId(string)
+  nameWithType: IRegistry<T>.GetId(string)
+  fullName: Core.Registries.IRegistry<T>.GetId(string)
+  nameWithType.vb: IRegistry(Of T).GetId(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).GetId(String)
+  name.vb: GetId(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.GetId(System.String)
+    name: GetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.GetId(System.String)
+    name: GetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetId_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.Registry`1.TryGet*
+  commentId: Overload:Core.Registries.Registry`1.TryGet
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_TryGet_System_String__0__
+  name: TryGet
+  nameWithType: Registry<T>.TryGet
+  fullName: Core.Registries.Registry<T>.TryGet
+  nameWithType.vb: Registry(Of T).TryGet
+  fullName.vb: Core.Registries.Registry(Of T).TryGet
+- uid: Core.Registries.IRegistry{{T}}.TryGet(System.String,{T}@)
+  commentId: M:Core.Registries.IRegistry{`0}.TryGet(System.String,`0@)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.TryGet(System.String,`0@)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  name: TryGet(string, out T)
+  nameWithType: IRegistry<T>.TryGet(string, out T)
+  fullName: Core.Registries.IRegistry<T>.TryGet(string, out T)
+  nameWithType.vb: IRegistry(Of T).TryGet(String, T)
+  fullName.vb: Core.Registries.IRegistry(Of T).TryGet(String, T)
+  name.vb: TryGet(String, T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.TryGet(System.String,`0@)
+    name: TryGet
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.TryGet(System.String,`0@)
+    name: TryGet
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Registries.IRegistry`1.TryGet(System.String,`0@)
+  commentId: M:Core.Registries.IRegistry`1.TryGet(System.String,`0@)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  name: TryGet(string, out T)
+  nameWithType: IRegistry<T>.TryGet(string, out T)
+  fullName: Core.Registries.IRegistry<T>.TryGet(string, out T)
+  nameWithType.vb: IRegistry(Of T).TryGet(String, T)
+  fullName.vb: Core.Registries.IRegistry(Of T).TryGet(String, T)
+  name.vb: TryGet(String, T)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.TryGet(System.String,`0@)
+    name: TryGet
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - name: T
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.TryGet(System.String,`0@)
+    name: TryGet
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGet_System_String__0__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.Registry`1.TryGetId*
+  commentId: Overload:Core.Registries.Registry`1.TryGetId
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_TryGetId_System_String_System_UInt16__
+  name: TryGetId
+  nameWithType: Registry<T>.TryGetId
+  fullName: Core.Registries.Registry<T>.TryGetId
+  nameWithType.vb: Registry(Of T).TryGetId
+  fullName.vb: Core.Registries.Registry(Of T).TryGetId
+- uid: Core.Registries.IRegistry{{T}}.TryGetId(System.String,System.UInt16@)
+  commentId: M:Core.Registries.IRegistry{`0}.TryGetId(System.String,System.UInt16@)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.TryGetId(System.String,System.UInt16@)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  name: TryGetId(string, out ushort)
+  nameWithType: IRegistry<T>.TryGetId(string, out ushort)
+  fullName: Core.Registries.IRegistry<T>.TryGetId(string, out ushort)
+  nameWithType.vb: IRegistry(Of T).TryGetId(String, UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).TryGetId(String, UShort)
+  name.vb: TryGetId(String, UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.TryGetId(System.String,System.UInt16@)
+    name: TryGetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.TryGetId(System.String,System.UInt16@)
+    name: TryGetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.TryGetId(System.String,System.UInt16@)
+  commentId: M:Core.Registries.IRegistry`1.TryGetId(System.String,System.UInt16@)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  name: TryGetId(string, out ushort)
+  nameWithType: IRegistry<T>.TryGetId(string, out ushort)
+  fullName: Core.Registries.IRegistry<T>.TryGetId(string, out ushort)
+  nameWithType.vb: IRegistry(Of T).TryGetId(String, UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).TryGetId(String, UShort)
+  name.vb: TryGetId(String, UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.TryGetId(System.String,System.UInt16@)
+    name: TryGetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.TryGetId(System.String,System.UInt16@)
+    name: TryGetId
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_TryGetId_System_String_System_UInt16__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.Registry`1.GetAll*
+  commentId: Overload:Core.Registries.Registry`1.GetAll
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_GetAll
+  name: GetAll
+  nameWithType: Registry<T>.GetAll
+  fullName: Core.Registries.Registry<T>.GetAll
+  nameWithType.vb: Registry(Of T).GetAll
+  fullName.vb: Core.Registries.Registry(Of T).GetAll
+- uid: Core.Registries.IRegistry{{T}}.GetAll
+  commentId: M:Core.Registries.IRegistry{`0}.GetAll
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.GetAll
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  name: GetAll()
+  nameWithType: IRegistry<T>.GetAll()
+  fullName: Core.Registries.IRegistry<T>.GetAll()
+  nameWithType.vb: IRegistry(Of T).GetAll()
+  fullName.vb: Core.Registries.IRegistry(Of T).GetAll()
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.GetAll
+    name: GetAll
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.GetAll
+    name: GetAll
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{{T}}
+  commentId: T:System.Collections.Generic.IEnumerable{`0}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.IRegistry`1.GetAll
+  commentId: M:Core.Registries.IRegistry`1.GetAll
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  name: GetAll()
+  nameWithType: IRegistry<T>.GetAll()
+  fullName: Core.Registries.IRegistry<T>.GetAll()
+  nameWithType.vb: IRegistry(Of T).GetAll()
+  fullName.vb: Core.Registries.IRegistry(Of T).GetAll()
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.GetAll
+    name: GetAll
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.GetAll
+    name: GetAll
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAll
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Registries.Registry`1.GetAllIds*
+  commentId: Overload:Core.Registries.Registry`1.GetAllIds
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_GetAllIds
+  name: GetAllIds
+  nameWithType: Registry<T>.GetAllIds
+  fullName: Core.Registries.Registry<T>.GetAllIds
+  nameWithType.vb: Registry(Of T).GetAllIds
+  fullName.vb: Core.Registries.Registry(Of T).GetAllIds
+- uid: Core.Registries.IRegistry{{T}}.GetAllIds
+  commentId: M:Core.Registries.IRegistry{`0}.GetAllIds
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.GetAllIds
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  name: GetAllIds()
+  nameWithType: IRegistry<T>.GetAllIds()
+  fullName: Core.Registries.IRegistry<T>.GetAllIds()
+  nameWithType.vb: IRegistry(Of T).GetAllIds()
+  fullName.vb: Core.Registries.IRegistry(Of T).GetAllIds()
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.GetAllIds
+    name: GetAllIds
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.GetAllIds
+    name: GetAllIds
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  - name: (
+  - name: )
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.GetAllIds
+  commentId: M:Core.Registries.IRegistry`1.GetAllIds
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  name: GetAllIds()
+  nameWithType: IRegistry<T>.GetAllIds()
+  fullName: Core.Registries.IRegistry<T>.GetAllIds()
+  nameWithType.vb: IRegistry(Of T).GetAllIds()
+  fullName.vb: Core.Registries.IRegistry(Of T).GetAllIds()
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.GetAllIds
+    name: GetAllIds
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.GetAllIds
+    name: GetAllIds
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_GetAllIds
+  - name: (
+  - name: )
+- uid: Core.Registries.Registry`1.Exists*
+  commentId: Overload:Core.Registries.Registry`1.Exists
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_Exists_System_String_
+  name: Exists
+  nameWithType: Registry<T>.Exists
+  fullName: Core.Registries.Registry<T>.Exists
+  nameWithType.vb: Registry(Of T).Exists
+  fullName.vb: Core.Registries.Registry(Of T).Exists
+- uid: Core.Registries.IRegistry{{T}}.Exists(System.String)
+  commentId: M:Core.Registries.IRegistry{`0}.Exists(System.String)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Exists(System.String)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  name: Exists(string)
+  nameWithType: IRegistry<T>.Exists(string)
+  fullName: Core.Registries.IRegistry<T>.Exists(string)
+  nameWithType.vb: IRegistry(Of T).Exists(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).Exists(String)
+  name.vb: Exists(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.Exists(System.String)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.Exists(System.String)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.Exists(System.String)
+  commentId: M:Core.Registries.IRegistry`1.Exists(System.String)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  name: Exists(string)
+  nameWithType: IRegistry<T>.Exists(string)
+  fullName: Core.Registries.IRegistry<T>.Exists(string)
+  nameWithType.vb: IRegistry(Of T).Exists(String)
+  fullName.vb: Core.Registries.IRegistry(Of T).Exists(String)
+  name.vb: Exists(String)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.Exists(System.String)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.Exists(System.String)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry{{T}}.Exists(System.UInt16)
+  commentId: M:Core.Registries.IRegistry{`0}.Exists(System.UInt16)
+  parent: Core.Registries.IRegistry{{T}}
+  definition: Core.Registries.IRegistry`1.Exists(System.UInt16)
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  name: Exists(ushort)
+  nameWithType: IRegistry<T>.Exists(ushort)
+  fullName: Core.Registries.IRegistry<T>.Exists(ushort)
+  nameWithType.vb: IRegistry(Of T).Exists(UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).Exists(UShort)
+  name.vb: Exists(UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry{`0}.Exists(System.UInt16)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry{`0}.Exists(System.UInt16)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.IRegistry`1.Exists(System.UInt16)
+  commentId: M:Core.Registries.IRegistry`1.Exists(System.UInt16)
+  isExternal: true
+  href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  name: Exists(ushort)
+  nameWithType: IRegistry<T>.Exists(ushort)
+  fullName: Core.Registries.IRegistry<T>.Exists(ushort)
+  nameWithType.vb: IRegistry(Of T).Exists(UShort)
+  fullName.vb: Core.Registries.IRegistry(Of T).Exists(UShort)
+  name.vb: Exists(UShort)
+  spec.csharp:
+  - uid: Core.Registries.IRegistry`1.Exists(System.UInt16)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Registries.IRegistry`1.Exists(System.UInt16)
+    name: Exists
+    href: Core.Registries.IRegistry-1.html#Core_Registries_IRegistry_1_Exists_System_UInt16_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Registries.Registry`1.Replace*
+  commentId: Overload:Core.Registries.Registry`1.Replace
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_Replace_System_String__0_
+  name: Replace
+  nameWithType: Registry<T>.Replace
+  fullName: Core.Registries.Registry<T>.Replace
+  nameWithType.vb: Registry(Of T).Replace
+  fullName.vb: Core.Registries.Registry(Of T).Replace
+- uid: Core.Registries.Registry`1.GetDiagnostics*
+  commentId: Overload:Core.Registries.Registry`1.GetDiagnostics
+  href: Core.Registries.Registry-1.html#Core_Registries_Registry_1_GetDiagnostics
+  name: GetDiagnostics
+  nameWithType: Registry<T>.GetDiagnostics
+  fullName: Core.Registries.Registry<T>.GetDiagnostics
+  nameWithType.vb: Registry(Of T).GetDiagnostics
+  fullName.vb: Core.Registries.Registry(Of T).GetDiagnostics

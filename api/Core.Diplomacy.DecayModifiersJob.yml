@@ -1,0 +1,368 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DecayModifiersJob
+  commentId: T:Core.Diplomacy.DecayModifiersJob
+  id: DecayModifiersJob
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DecayModifiersJob.Execute(System.Int32)
+  - Core.Diplomacy.DecayModifiersJob.currentTick
+  - Core.Diplomacy.DecayModifiersJob.isDecayed
+  - Core.Diplomacy.DecayModifiersJob.modifiers
+  langs:
+  - csharp
+  - vb
+  name: DecayModifiersJob
+  nameWithType: DecayModifiersJob
+  fullName: Core.Diplomacy.DecayModifiersJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DecayModifiersJob
+    path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Burst-compiled job for marking decayed opinion modifiers
+
+
+    ARCHITECTURE: Flat storage with relationship keys
+
+    - All modifiers stored in single NativeList{ModifierWithKey}
+
+    - Job marks decayed modifiers (parallel READ-ONLY operation)
+
+    - Main thread compacts array SEQUENTIALLY (deterministic order preserved)
+
+
+    DETERMINISM GUARANTEE:
+
+    - Job is READ-ONLY (no race conditions, no order dependency)
+
+    - Compaction is SEQUENTIAL on main thread
+
+    - Insertion order preserved (append-only)
+
+    - Result identical across all game clients
+
+
+    Performance Target: &lt;5ms for 610k modifiers (parallel SIMD processing)
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile(CompileSynchronously = true, OptimizeFor = OptimizeFor.Performance)]
+
+      public struct DecayModifiersJob
+    content.vb: >-
+      <BurstCompile(CompileSynchronously:=True, OptimizeFor:=OptimizeFor.Performance)>
+
+      Public Structure DecayModifiersJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: CompileSynchronously
+      type: System.Boolean
+      value: true
+    - name: OptimizeFor
+      type: Unity.Burst.OptimizeFor
+      value: 1
+- uid: Core.Diplomacy.DecayModifiersJob.modifiers
+  commentId: F:Core.Diplomacy.DecayModifiersJob.modifiers
+  id: modifiers
+  parent: Core.Diplomacy.DecayModifiersJob
+  langs:
+  - csharp
+  - vb
+  name: modifiers
+  nameWithType: DecayModifiersJob.modifiers
+  fullName: Core.Diplomacy.DecayModifiersJob.modifiers
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: modifiers
+    path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    All modifiers with their relationship keys (flat contiguous array)
+
+    READ-ONLY for determinism
+  example: []
+  syntax:
+    content: public NativeArray<ModifierWithKey> modifiers
+    return:
+      type: Unity.Collections.NativeArray{Core.Diplomacy.ModifierWithKey}
+    content.vb: Public modifiers As NativeArray(Of ModifierWithKey)
+- uid: Core.Diplomacy.DecayModifiersJob.currentTick
+  commentId: F:Core.Diplomacy.DecayModifiersJob.currentTick
+  id: currentTick
+  parent: Core.Diplomacy.DecayModifiersJob
+  langs:
+  - csharp
+  - vb
+  name: currentTick
+  nameWithType: DecayModifiersJob.currentTick
+  fullName: Core.Diplomacy.DecayModifiersJob.currentTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: currentTick
+    path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Current game tick for decay calculations
+  example: []
+  syntax:
+    content: public int currentTick
+    return:
+      type: System.Int32
+    content.vb: Public currentTick As Integer
+- uid: Core.Diplomacy.DecayModifiersJob.isDecayed
+  commentId: F:Core.Diplomacy.DecayModifiersJob.isDecayed
+  id: isDecayed
+  parent: Core.Diplomacy.DecayModifiersJob
+  langs:
+  - csharp
+  - vb
+  name: isDecayed
+  nameWithType: DecayModifiersJob.isDecayed
+  fullName: Core.Diplomacy.DecayModifiersJob.isDecayed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: isDecayed
+    path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Output: true if modifier at index i is fully decayed
+
+    Each thread writes to unique index (no race conditions)
+  example: []
+  syntax:
+    content: >-
+      [WriteOnly]
+
+      public NativeArray<bool> isDecayed
+    return:
+      type: Unity.Collections.NativeArray{System.Boolean}
+    content.vb: >-
+      <WriteOnly>
+
+      Public isDecayed As NativeArray(Of Boolean)
+  attributes:
+  - type: Unity.Collections.WriteOnlyAttribute
+    ctor: Unity.Collections.WriteOnlyAttribute.#ctor
+    arguments: []
+- uid: Core.Diplomacy.DecayModifiersJob.Execute(System.Int32)
+  commentId: M:Core.Diplomacy.DecayModifiersJob.Execute(System.Int32)
+  id: Execute(System.Int32)
+  parent: Core.Diplomacy.DecayModifiersJob
+  langs:
+  - csharp
+  - vb
+  name: Execute(int)
+  nameWithType: DecayModifiersJob.Execute(int)
+  fullName: Core.Diplomacy.DecayModifiersJob.Execute(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Diplomacy/DecayModifiersJob.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Execute for each modifier in parallel
+
+    Pure read operation - deterministic across all clients
+  example: []
+  syntax:
+    content: public void Execute(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    content.vb: Public Sub Execute(index As Integer)
+  overload: Core.Diplomacy.DecayModifiersJob.Execute*
+  nameWithType.vb: DecayModifiersJob.Execute(Integer)
+  fullName.vb: Core.Diplomacy.DecayModifiersJob.Execute(Integer)
+  name.vb: Execute(Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Unity.Collections.NativeArray{Core.Diplomacy.ModifierWithKey}
+  commentId: T:Unity.Collections.NativeArray{Core.Diplomacy.ModifierWithKey}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Diplomacy.ModifierWithKey.html
+  name: NativeArray<ModifierWithKey>
+  nameWithType: NativeArray<ModifierWithKey>
+  fullName: Unity.Collections.NativeArray<Core.Diplomacy.ModifierWithKey>
+  nameWithType.vb: NativeArray(Of ModifierWithKey)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Diplomacy.ModifierWithKey)
+  name.vb: NativeArray(Of ModifierWithKey)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    href: Core.Diplomacy.ModifierWithKey.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeArray{System.Boolean}
+  commentId: T:Unity.Collections.NativeArray{System.Boolean}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<bool>
+  nameWithType: NativeArray<bool>
+  fullName: Unity.Collections.NativeArray<bool>
+  nameWithType.vb: NativeArray(Of Boolean)
+  fullName.vb: Unity.Collections.NativeArray(Of Boolean)
+  name.vb: NativeArray(Of Boolean)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Core.Diplomacy.DecayModifiersJob.Execute*
+  commentId: Overload:Core.Diplomacy.DecayModifiersJob.Execute
+  href: Core.Diplomacy.DecayModifiersJob.html#Core_Diplomacy_DecayModifiersJob_Execute_System_Int32_
+  name: Execute
+  nameWithType: DecayModifiersJob.Execute
+  fullName: Core.Diplomacy.DecayModifiersJob.Execute

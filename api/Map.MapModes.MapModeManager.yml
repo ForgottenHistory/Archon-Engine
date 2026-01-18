@@ -1,0 +1,1034 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  id: MapModeManager
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+  - Map.MapModes.MapModeManager.CurrentMode
+  - Map.MapModes.MapModeManager.ForceTextureUpdate
+  - Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
+  - Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
+  - Map.MapModes.MapModeManager.GetHandler(Map.MapModes.MapMode)
+  - Map.MapModes.MapModeManager.GetMapDimensions
+  - Map.MapModes.MapModeManager.GetProvinceTooltip(System.UInt16)
+  - Map.MapModes.MapModeManager.Initialize(Core.GameState,UnityEngine.Material,Map.Rendering.ProvinceMapping,System.Object)
+  - Map.MapModes.MapModeManager.IsInitialized
+  - Map.MapModes.MapModeManager.RebindTextures
+  - Map.MapModes.MapModeManager.RegisterCustomMapMode(System.Int32)
+  - Map.MapModes.MapModeManager.RegisterHandler(Map.MapModes.MapMode,Map.MapModes.IMapModeHandler)
+  - Map.MapModes.MapModeManager.RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
+  - Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode,System.Boolean)
+  - Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
+  - Map.MapModes.MapModeManager.UpdateMaterial(UnityEngine.Material)
+  langs:
+  - csharp
+  - vb
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapModeManager
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Central manager for the map mode system
+
+    Handles mode switching, texture updates, and handler coordination
+
+    Performance: &lt;0.1ms mode switching, efficient texture scheduling
+  example: []
+  syntax:
+    content: 'public class MapModeManager : MonoBehaviour'
+    content.vb: Public Class MapModeManager Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.MapModes.MapModeManager.CurrentMode
+  commentId: P:Map.MapModes.MapModeManager.CurrentMode
+  id: CurrentMode
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentMode
+  nameWithType: MapModeManager.CurrentMode
+  fullName: Map.MapModes.MapModeManager.CurrentMode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentMode
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public MapMode CurrentMode { get; }
+    parameters: []
+    return:
+      type: Map.MapModes.MapMode
+    content.vb: Public ReadOnly Property CurrentMode As MapMode
+  overload: Map.MapModes.MapModeManager.CurrentMode*
+- uid: Map.MapModes.MapModeManager.IsInitialized
+  commentId: P:Map.MapModes.MapModeManager.IsInitialized
+  id: IsInitialized
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: MapModeManager.IsInitialized
+  fullName: Map.MapModes.MapModeManager.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Map.MapModes.MapModeManager.IsInitialized*
+- uid: Map.MapModes.MapModeManager.Initialize(Core.GameState,UnityEngine.Material,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.MapModeManager.Initialize(Core.GameState,UnityEngine.Material,Map.Rendering.ProvinceMapping,System.Object)
+  id: Initialize(Core.GameState,UnityEngine.Material,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, Material, ProvinceMapping, object)
+  nameWithType: MapModeManager.Initialize(GameState, Material, ProvinceMapping, object)
+  fullName: Map.MapModes.MapModeManager.Initialize(Core.GameState, UnityEngine.Material, Map.Rendering.ProvinceMapping, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Initialize the map mode system
+
+    ENGINE provides MECHANISM, GAME controls WHEN to initialize
+
+    Called by GAME layer after handlers are registered
+  example: []
+  syntax:
+    content: public void Initialize(GameState gameStateRef, Material material, ProvinceMapping mapping, object gameSystem = null)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: material
+      type: UnityEngine.Material
+    - id: mapping
+      type: Map.Rendering.ProvinceMapping
+    - id: gameSystem
+      type: System.Object
+      description: Optional game-specific province system - engine passes through without knowing type
+    content.vb: Public Sub Initialize(gameStateRef As GameState, material As Material, mapping As ProvinceMapping, gameSystem As Object = Nothing)
+  overload: Map.MapModes.MapModeManager.Initialize*
+  nameWithType.vb: MapModeManager.Initialize(GameState, Material, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.MapModeManager.Initialize(Core.GameState, UnityEngine.Material, Map.Rendering.ProvinceMapping, Object)
+  name.vb: Initialize(GameState, Material, ProvinceMapping, Object)
+- uid: Map.MapModes.MapModeManager.RegisterHandler(Map.MapModes.MapMode,Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.MapModeManager.RegisterHandler(Map.MapModes.MapMode,Map.MapModes.IMapModeHandler)
+  id: RegisterHandler(Map.MapModes.MapMode,Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: RegisterHandler(MapMode, IMapModeHandler)
+  nameWithType: MapModeManager.RegisterHandler(MapMode, IMapModeHandler)
+  fullName: Map.MapModes.MapModeManager.RegisterHandler(Map.MapModes.MapMode, Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterHandler
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 243
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Register a map mode handler - called by GAME layer during initialization
+
+    Enables dependency injection: ENGINE provides mechanism, GAME provides policy
+  example: []
+  syntax:
+    content: public void RegisterHandler(MapMode mode, IMapModeHandler handler)
+    parameters:
+    - id: mode
+      type: Map.MapModes.MapMode
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub RegisterHandler(mode As MapMode, handler As IMapModeHandler)
+  overload: Map.MapModes.MapModeManager.RegisterHandler*
+- uid: Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode,System.Boolean)
+  commentId: M:Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode,System.Boolean)
+  id: SetMapMode(Map.MapModes.MapMode,System.Boolean)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: SetMapMode(MapMode, bool)
+  nameWithType: MapModeManager.SetMapMode(MapMode, bool)
+  fullName: Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMapMode
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 283
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public void SetMapMode(MapMode mode, bool forceUpdate = false)
+    parameters:
+    - id: mode
+      type: Map.MapModes.MapMode
+    - id: forceUpdate
+      type: System.Boolean
+    content.vb: Public Sub SetMapMode(mode As MapMode, forceUpdate As Boolean = False)
+  overload: Map.MapModes.MapModeManager.SetMapMode*
+  nameWithType.vb: MapModeManager.SetMapMode(MapMode, Boolean)
+  fullName.vb: Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode, Boolean)
+  name.vb: SetMapMode(MapMode, Boolean)
+- uid: Map.MapModes.MapModeManager.GetProvinceTooltip(System.UInt16)
+  commentId: M:Map.MapModes.MapModeManager.GetProvinceTooltip(System.UInt16)
+  id: GetProvinceTooltip(System.UInt16)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTooltip(ushort)
+  nameWithType: MapModeManager.GetProvinceTooltip(ushort)
+  fullName: Map.MapModes.MapModeManager.GetProvinceTooltip(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTooltip
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 332
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public string GetProvinceTooltip(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.String
+    content.vb: Public Function GetProvinceTooltip(provinceId As UShort) As String
+  overload: Map.MapModes.MapModeManager.GetProvinceTooltip*
+  nameWithType.vb: MapModeManager.GetProvinceTooltip(UShort)
+  fullName.vb: Map.MapModes.MapModeManager.GetProvinceTooltip(UShort)
+  name.vb: GetProvinceTooltip(UShort)
+- uid: Map.MapModes.MapModeManager.ForceTextureUpdate
+  commentId: M:Map.MapModes.MapModeManager.ForceTextureUpdate
+  id: ForceTextureUpdate
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: ForceTextureUpdate()
+  nameWithType: MapModeManager.ForceTextureUpdate()
+  fullName: Map.MapModes.MapModeManager.ForceTextureUpdate()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceTextureUpdate
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 347
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Force an immediate texture update for the current map mode
+  example: []
+  syntax:
+    content: public void ForceTextureUpdate()
+    content.vb: Public Sub ForceTextureUpdate()
+  overload: Map.MapModes.MapModeManager.ForceTextureUpdate*
+- uid: Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
+  id: ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: ForceUpdateIfActive(IMapModeHandler)
+  nameWithType: MapModeManager.ForceUpdateIfActive(IMapModeHandler)
+  fullName: Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceUpdateIfActive
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 362
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Force texture update only if the given handler is currently active.
+
+    Called by GradientMapMode.MarkDirty() to trigger event-driven updates.
+  example: []
+  syntax:
+    content: public void ForceUpdateIfActive(IMapModeHandler handler)
+    parameters:
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub ForceUpdateIfActive(handler As IMapModeHandler)
+  overload: Map.MapModes.MapModeManager.ForceUpdateIfActive*
+- uid: Map.MapModes.MapModeManager.RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.MapModeManager.RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
+  id: RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: RequestDeferredUpdate(IMapModeHandler)
+  nameWithType: MapModeManager.RequestDeferredUpdate(IMapModeHandler)
+  fullName: Map.MapModes.MapModeManager.RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequestDeferredUpdate
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 385
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Request a deferred texture update for next frame.
+
+    Multiple requests within same frame are batched into single update.
+
+    Called by GradientMapMode.MarkDirty() to prevent multiple rebuilds per tick.
+  example: []
+  syntax:
+    content: public void RequestDeferredUpdate(IMapModeHandler handler)
+    parameters:
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub RequestDeferredUpdate(handler As IMapModeHandler)
+  overload: Map.MapModes.MapModeManager.RequestDeferredUpdate*
+- uid: Map.MapModes.MapModeManager.GetHandler(Map.MapModes.MapMode)
+  commentId: M:Map.MapModes.MapModeManager.GetHandler(Map.MapModes.MapMode)
+  id: GetHandler(Map.MapModes.MapMode)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: GetHandler(MapMode)
+  nameWithType: MapModeManager.GetHandler(MapMode)
+  fullName: Map.MapModes.MapModeManager.GetHandler(Map.MapModes.MapMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHandler
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 419
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get a specific map mode handler (for GAME layer to mark dirty)
+
+    Returns null if handler not registered
+  example: []
+  syntax:
+    content: public IMapModeHandler GetHandler(MapMode mode)
+    parameters:
+    - id: mode
+      type: Map.MapModes.MapMode
+    return:
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Function GetHandler(mode As MapMode) As IMapModeHandler
+  overload: Map.MapModes.MapModeManager.GetHandler*
+- uid: Map.MapModes.MapModeManager.UpdateMaterial(UnityEngine.Material)
+  commentId: M:Map.MapModes.MapModeManager.UpdateMaterial(UnityEngine.Material)
+  id: UpdateMaterial(UnityEngine.Material)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: UpdateMaterial(Material)
+  nameWithType: MapModeManager.UpdateMaterial(Material)
+  fullName: Map.MapModes.MapModeManager.UpdateMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateMaterial
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 429
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Update material reference when material is swapped
+
+    Called by GAME layer (VisualStyleManager) when material changes
+  example: []
+  syntax:
+    content: public void UpdateMaterial(Material newMaterial)
+    parameters:
+    - id: newMaterial
+      type: UnityEngine.Material
+    content.vb: Public Sub UpdateMaterial(newMaterial As Material)
+  overload: Map.MapModes.MapModeManager.UpdateMaterial*
+- uid: Map.MapModes.MapModeManager.RebindTextures
+  commentId: M:Map.MapModes.MapModeManager.RebindTextures
+  id: RebindTextures
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: RebindTextures()
+  nameWithType: MapModeManager.RebindTextures()
+  fullName: Map.MapModes.MapModeManager.RebindTextures()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebindTextures
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 467
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Rebind all map mode textures to the material
+
+    Call this after other systems rebind base textures to prevent losing map mode texture bindings
+  example: []
+  syntax:
+    content: public void RebindTextures()
+    content.vb: Public Sub RebindTextures()
+  overload: Map.MapModes.MapModeManager.RebindTextures*
+- uid: Map.MapModes.MapModeManager.RegisterCustomMapMode(System.Int32)
+  commentId: M:Map.MapModes.MapModeManager.RegisterCustomMapMode(System.Int32)
+  id: RegisterCustomMapMode(System.Int32)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: RegisterCustomMapMode(int)
+  nameWithType: MapModeManager.RegisterCustomMapMode(int)
+  fullName: Map.MapModes.MapModeManager.RegisterCustomMapMode(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterCustomMapMode
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 490
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Register a custom map mode and get its array index.
+
+    Called by GAME layer when creating custom map modes.
+  example: []
+  syntax:
+    content: public int RegisterCustomMapMode(int customModeId)
+    parameters:
+    - id: customModeId
+      type: System.Int32
+      description: Unique ID for this custom mode (typically ShaderModeID from handler)
+    return:
+      type: System.Int32
+      description: Array index for this mode's texture slice, or -1 if full
+    content.vb: Public Function RegisterCustomMapMode(customModeId As Integer) As Integer
+  overload: Map.MapModes.MapModeManager.RegisterCustomMapMode*
+  nameWithType.vb: MapModeManager.RegisterCustomMapMode(Integer)
+  fullName.vb: Map.MapModes.MapModeManager.RegisterCustomMapMode(Integer)
+  name.vb: RegisterCustomMapMode(Integer)
+- uid: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
+  commentId: M:Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
+  id: UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: UpdateCustomMapModeTexture(int, Color32[])
+  nameWithType: MapModeManager.UpdateCustomMapModeTexture(int, Color32[])
+  fullName: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(int, UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateCustomMapModeTexture
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 528
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Update a custom map mode's texture data (CPU pixel array version).
+
+    Called by GAME map mode handlers when their data changes (dirty).
+
+    NOTE: This is SLOW due to GPU→CPU→GPU roundtrip. Prefer BindCustomMapModeRenderTexture().
+  example: []
+  syntax:
+    content: public void UpdateCustomMapModeTexture(int arrayIndex, Color32[] pixels)
+    parameters:
+    - id: arrayIndex
+      type: System.Int32
+      description: Index returned from RegisterCustomMapMode
+    - id: pixels
+      type: UnityEngine.Color32[]
+      description: Color data for the entire map
+    content.vb: Public Sub UpdateCustomMapModeTexture(arrayIndex As Integer, pixels As Color32())
+  overload: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture*
+  nameWithType.vb: MapModeManager.UpdateCustomMapModeTexture(Integer, Color32())
+  fullName.vb: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(Integer, UnityEngine.Color32())
+  name.vb: UpdateCustomMapModeTexture(Integer, Color32())
+- uid: Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+  commentId: M:Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+  id: CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: CopyRenderTextureToArray(int, RenderTexture)
+  nameWithType: MapModeManager.CopyRenderTextureToArray(int, RenderTexture)
+  fullName: Map.MapModes.MapModeManager.CopyRenderTextureToArray(int, UnityEngine.RenderTexture)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CopyRenderTextureToArray
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 556
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Copy a RenderTexture to the texture array using GPU-to-GPU copy.
+
+    This is the FAST path - no CPU roundtrip, stays entirely on GPU.
+
+    Called by GradientMapMode after compute shader dispatch.
+  example: []
+  syntax:
+    content: public void CopyRenderTextureToArray(int arrayIndex, RenderTexture sourceTexture)
+    parameters:
+    - id: arrayIndex
+      type: System.Int32
+    - id: sourceTexture
+      type: UnityEngine.RenderTexture
+    content.vb: Public Sub CopyRenderTextureToArray(arrayIndex As Integer, sourceTexture As RenderTexture)
+  overload: Map.MapModes.MapModeManager.CopyRenderTextureToArray*
+  nameWithType.vb: MapModeManager.CopyRenderTextureToArray(Integer, RenderTexture)
+  fullName.vb: Map.MapModes.MapModeManager.CopyRenderTextureToArray(Integer, UnityEngine.RenderTexture)
+  name.vb: CopyRenderTextureToArray(Integer, RenderTexture)
+- uid: Map.MapModes.MapModeManager.GetMapDimensions
+  commentId: M:Map.MapModes.MapModeManager.GetMapDimensions
+  id: GetMapDimensions
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: GetMapDimensions()
+  nameWithType: MapModeManager.GetMapDimensions()
+  fullName: Map.MapModes.MapModeManager.GetMapDimensions()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMapDimensions
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 575
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get the dimensions of the map mode texture array.
+
+    GAME map modes need this to create correctly sized pixel arrays.
+  example: []
+  syntax:
+    content: public (int width, int height) GetMapDimensions()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int32}
+    content.vb: Public Function GetMapDimensions() As (width As Integer, height As Integer)
+  overload: Map.MapModes.MapModeManager.GetMapDimensions*
+- uid: Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
+  commentId: M:Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
+  id: GetCustomModeArrayIndex(System.Int32)
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: GetCustomModeArrayIndex(int)
+  nameWithType: MapModeManager.GetCustomModeArrayIndex(int)
+  fullName: Map.MapModes.MapModeManager.GetCustomModeArrayIndex(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCustomModeArrayIndex
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 584
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get the array index for a registered custom mode.
+
+    Returns -1 if not registered.
+  example: []
+  syntax:
+    content: public int GetCustomModeArrayIndex(int customModeId)
+    parameters:
+    - id: customModeId
+      type: System.Int32
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCustomModeArrayIndex(customModeId As Integer) As Integer
+  overload: Map.MapModes.MapModeManager.GetCustomModeArrayIndex*
+  nameWithType.vb: MapModeManager.GetCustomModeArrayIndex(Integer)
+  fullName.vb: Map.MapModes.MapModeManager.GetCustomModeArrayIndex(Integer)
+  name.vb: GetCustomModeArrayIndex(Integer)
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.MapModeManager.CurrentMode*
+  commentId: Overload:Map.MapModes.MapModeManager.CurrentMode
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_CurrentMode
+  name: CurrentMode
+  nameWithType: MapModeManager.CurrentMode
+  fullName: Map.MapModes.MapModeManager.CurrentMode
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes.MapModeManager.IsInitialized*
+  commentId: Overload:Map.MapModes.MapModeManager.IsInitialized
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_IsInitialized
+  name: IsInitialized
+  nameWithType: MapModeManager.IsInitialized
+  fullName: Map.MapModes.MapModeManager.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.MapModes.MapModeManager.Initialize*
+  commentId: Overload:Map.MapModes.MapModeManager.Initialize
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_Initialize_Core_GameState_UnityEngine_Material_Map_Rendering_ProvinceMapping_System_Object_
+  name: Initialize
+  nameWithType: MapModeManager.Initialize
+  fullName: Map.MapModes.MapModeManager.Initialize
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.MapModes.MapModeManager.RegisterHandler*
+  commentId: Overload:Map.MapModes.MapModeManager.RegisterHandler
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_RegisterHandler_Map_MapModes_MapMode_Map_MapModes_IMapModeHandler_
+  name: RegisterHandler
+  nameWithType: MapModeManager.RegisterHandler
+  fullName: Map.MapModes.MapModeManager.RegisterHandler
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.MapModeManager.SetMapMode*
+  commentId: Overload:Map.MapModes.MapModeManager.SetMapMode
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_SetMapMode_Map_MapModes_MapMode_System_Boolean_
+  name: SetMapMode
+  nameWithType: MapModeManager.SetMapMode
+  fullName: Map.MapModes.MapModeManager.SetMapMode
+- uid: Map.MapModes.MapModeManager.GetProvinceTooltip*
+  commentId: Overload:Map.MapModes.MapModeManager.GetProvinceTooltip
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetProvinceTooltip_System_UInt16_
+  name: GetProvinceTooltip
+  nameWithType: MapModeManager.GetProvinceTooltip
+  fullName: Map.MapModes.MapModeManager.GetProvinceTooltip
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.MapModes.MapModeManager.ForceTextureUpdate*
+  commentId: Overload:Map.MapModes.MapModeManager.ForceTextureUpdate
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_ForceTextureUpdate
+  name: ForceTextureUpdate
+  nameWithType: MapModeManager.ForceTextureUpdate
+  fullName: Map.MapModes.MapModeManager.ForceTextureUpdate
+- uid: Map.MapModes.MapModeManager.ForceUpdateIfActive*
+  commentId: Overload:Map.MapModes.MapModeManager.ForceUpdateIfActive
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_ForceUpdateIfActive_Map_MapModes_IMapModeHandler_
+  name: ForceUpdateIfActive
+  nameWithType: MapModeManager.ForceUpdateIfActive
+  fullName: Map.MapModes.MapModeManager.ForceUpdateIfActive
+- uid: Map.MapModes.MapModeManager.RequestDeferredUpdate*
+  commentId: Overload:Map.MapModes.MapModeManager.RequestDeferredUpdate
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_RequestDeferredUpdate_Map_MapModes_IMapModeHandler_
+  name: RequestDeferredUpdate
+  nameWithType: MapModeManager.RequestDeferredUpdate
+  fullName: Map.MapModes.MapModeManager.RequestDeferredUpdate
+- uid: Map.MapModes.MapModeManager.GetHandler*
+  commentId: Overload:Map.MapModes.MapModeManager.GetHandler
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetHandler_Map_MapModes_MapMode_
+  name: GetHandler
+  nameWithType: MapModeManager.GetHandler
+  fullName: Map.MapModes.MapModeManager.GetHandler
+- uid: Map.MapModes.MapModeManager.UpdateMaterial*
+  commentId: Overload:Map.MapModes.MapModeManager.UpdateMaterial
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_UpdateMaterial_UnityEngine_Material_
+  name: UpdateMaterial
+  nameWithType: MapModeManager.UpdateMaterial
+  fullName: Map.MapModes.MapModeManager.UpdateMaterial
+- uid: Map.MapModes.MapModeManager.RebindTextures*
+  commentId: Overload:Map.MapModes.MapModeManager.RebindTextures
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_RebindTextures
+  name: RebindTextures
+  nameWithType: MapModeManager.RebindTextures
+  fullName: Map.MapModes.MapModeManager.RebindTextures
+- uid: Map.MapModes.MapModeManager.RegisterCustomMapMode*
+  commentId: Overload:Map.MapModes.MapModeManager.RegisterCustomMapMode
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_RegisterCustomMapMode_System_Int32_
+  name: RegisterCustomMapMode
+  nameWithType: MapModeManager.RegisterCustomMapMode
+  fullName: Map.MapModes.MapModeManager.RegisterCustomMapMode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture*
+  commentId: Overload:Map.MapModes.MapModeManager.UpdateCustomMapModeTexture
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_UpdateCustomMapModeTexture_System_Int32_UnityEngine_Color32___
+  name: UpdateCustomMapModeTexture
+  nameWithType: MapModeManager.UpdateCustomMapModeTexture
+  fullName: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.MapModeManager.CopyRenderTextureToArray*
+  commentId: Overload:Map.MapModes.MapModeManager.CopyRenderTextureToArray
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_CopyRenderTextureToArray_System_Int32_UnityEngine_RenderTexture_
+  name: CopyRenderTextureToArray
+  nameWithType: MapModeManager.CopyRenderTextureToArray
+  fullName: Map.MapModes.MapModeManager.CopyRenderTextureToArray
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: Map.MapModes.MapModeManager.GetMapDimensions*
+  commentId: Overload:Map.MapModes.MapModeManager.GetMapDimensions
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetMapDimensions
+  name: GetMapDimensions
+  nameWithType: MapModeManager.GetMapDimensions
+  fullName: Map.MapModes.MapModeManager.GetMapDimensions
+- uid: System.ValueTuple{System.Int32,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (int x, int y)
+  nameWithType: (int x, int y)
+  fullName: (int x, int y)
+  nameWithType.vb: (x As Integer, y As Integer)
+  fullName.vb: (x As Integer, y As Integer)
+  name.vb: (x As Integer, y As Integer)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.x
+    name: x
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.y
+    name: y
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int32}.x
+    name: x
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32}.y
+    name: y
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Map.MapModes.MapModeManager.GetCustomModeArrayIndex*
+  commentId: Overload:Map.MapModes.MapModeManager.GetCustomModeArrayIndex
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetCustomModeArrayIndex_System_Int32_
+  name: GetCustomModeArrayIndex
+  nameWithType: MapModeManager.GetCustomModeArrayIndex
+  fullName: Map.MapModes.MapModeManager.GetCustomModeArrayIndex

@@ -1,0 +1,256 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.IGoalSelector
+  commentId: T:Core.AI.IGoalSelector
+  id: IGoalSelector
+  parent: Core.AI
+  children:
+  - Core.AI.IGoalSelector.SelectGoal(System.UInt16,System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation},Core.GameState,Core.AI.AIState)
+  langs:
+  - csharp
+  - vb
+  name: IGoalSelector
+  nameWithType: IGoalSelector
+  fullName: Core.AI.IGoalSelector
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IGoalSelector
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    ENGINE: Interface for custom goal selection strategies.
+
+
+    Default behavior: Pick highest-scoring goal.
+
+    Custom implementations can add:
+
+    - Weighted random selection (personality variance)
+
+    - Goal cooldowns (don't repeat same goal)
+
+    - Multi-goal execution (do several things per tick)
+
+    - Priority overrides (emergency goals always win)
+
+
+    GAME layer implements to customize AI behavior.
+  example: []
+  syntax:
+    content: public interface IGoalSelector
+    content.vb: Public Interface IGoalSelector
+- uid: Core.AI.IGoalSelector.SelectGoal(System.UInt16,System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation},Core.GameState,Core.AI.AIState)
+  commentId: M:Core.AI.IGoalSelector.SelectGoal(System.UInt16,System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation},Core.GameState,Core.AI.AIState)
+  id: SelectGoal(System.UInt16,System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation},Core.GameState,Core.AI.AIState)
+  parent: Core.AI.IGoalSelector
+  langs:
+  - csharp
+  - vb
+  name: SelectGoal(ushort, IReadOnlyList<GoalEvaluation>, GameState, AIState)
+  nameWithType: IGoalSelector.SelectGoal(ushort, IReadOnlyList<GoalEvaluation>, GameState, AIState)
+  fullName: Core.AI.IGoalSelector.SelectGoal(ushort, System.Collections.Generic.IReadOnlyList<Core.AI.GoalEvaluation>, Core.GameState, Core.AI.AIState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/IGoalSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SelectGoal
+    path: Scripts/Core/AI/IGoalSelector.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Select goal(s) to execute for a country.
+
+    Goals with score of zero or less are already filtered out.
+  example: []
+  syntax:
+    content: AIGoal SelectGoal(ushort countryID, IReadOnlyList<GoalEvaluation> evaluatedGoals, GameState gameState, AIState aiState)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+      description: The country making the decision.
+    - id: evaluatedGoals
+      type: System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation}
+      description: Goals with their scores (pre-evaluated).
+    - id: gameState
+      type: Core.GameState
+      description: Current game state.
+    - id: aiState
+      type: Core.AI.AIState
+      description: Current AI state for this country.
+    return:
+      type: Core.AI.AIGoal
+      description: The goal to execute, or null if none.
+    content.vb: Function SelectGoal(countryID As UShort, evaluatedGoals As IReadOnlyList(Of GoalEvaluation), gameState As GameState, aiState As AIState) As AIGoal
+  overload: Core.AI.IGoalSelector.SelectGoal*
+  nameWithType.vb: IGoalSelector.SelectGoal(UShort, IReadOnlyList(Of GoalEvaluation), GameState, AIState)
+  fullName.vb: Core.AI.IGoalSelector.SelectGoal(UShort, System.Collections.Generic.IReadOnlyList(Of Core.AI.GoalEvaluation), Core.GameState, Core.AI.AIState)
+  name.vb: SelectGoal(UShort, IReadOnlyList(Of GoalEvaluation), GameState, AIState)
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: Core.AI.IGoalSelector.SelectGoal*
+  commentId: Overload:Core.AI.IGoalSelector.SelectGoal
+  href: Core.AI.IGoalSelector.html#Core_AI_IGoalSelector_SelectGoal_System_UInt16_System_Collections_Generic_IReadOnlyList_Core_AI_GoalEvaluation__Core_GameState_Core_AI_AIState_
+  name: SelectGoal
+  nameWithType: IGoalSelector.SelectGoal
+  fullName: Core.AI.IGoalSelector.SelectGoal
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Core.AI.GoalEvaluation}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: Core.AI.GoalEvaluation.html
+  name: IReadOnlyList<GoalEvaluation>
+  nameWithType: IReadOnlyList<GoalEvaluation>
+  fullName: System.Collections.Generic.IReadOnlyList<Core.AI.GoalEvaluation>
+  nameWithType.vb: IReadOnlyList(Of GoalEvaluation)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Core.AI.GoalEvaluation)
+  name.vb: IReadOnlyList(Of GoalEvaluation)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: Core.AI.GoalEvaluation
+    name: GoalEvaluation
+    href: Core.AI.GoalEvaluation.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.AI.GoalEvaluation
+    name: GoalEvaluation
+    href: Core.AI.GoalEvaluation.html
+  - name: )
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.AI.AIState
+  commentId: T:Core.AI.AIState
+  parent: Core.AI
+  href: Core.AI.AIState.html
+  name: AIState
+  nameWithType: AIState
+  fullName: Core.AI.AIState
+- uid: Core.AI.AIGoal
+  commentId: T:Core.AI.AIGoal
+  parent: Core.AI
+  href: Core.AI.AIGoal.html
+  name: AIGoal
+  nameWithType: AIGoal
+  fullName: Core.AI.AIGoal
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core

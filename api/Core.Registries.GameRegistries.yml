@@ -1,0 +1,540 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  id: GameRegistries
+  parent: Core.Registries
+  children:
+  - Core.Registries.GameRegistries.#ctor
+  - Core.Registries.GameRegistries.Buildings
+  - Core.Registries.GameRegistries.Countries
+  - Core.Registries.GameRegistries.GetDiagnostics
+  - Core.Registries.GameRegistries.Governments
+  - Core.Registries.GameRegistries.Provinces
+  - Core.Registries.GameRegistries.Technologies
+  - Core.Registries.GameRegistries.Terrains
+  - Core.Registries.GameRegistries.ValidateRegistries
+  langs:
+  - csharp
+  - vb
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameRegistries
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: >-
+    Central container for all game entity registries
+
+    Provides access to all string-to-ID mapping systems
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: public class GameRegistries
+    content.vb: Public Class GameRegistries
+  inheritance:
+  - System.Object
+- uid: Core.Registries.GameRegistries.Terrains
+  commentId: F:Core.Registries.GameRegistries.Terrains
+  id: Terrains
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Terrains
+  nameWithType: GameRegistries.Terrains
+  fullName: Core.Registries.GameRegistries.Terrains
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Terrains
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly Registry<TerrainData> Terrains
+    return:
+      type: Core.Registries.Registry{Core.Registries.TerrainData}
+    content.vb: Public ReadOnly Terrains As Registry(Of TerrainData)
+- uid: Core.Registries.GameRegistries.Buildings
+  commentId: F:Core.Registries.GameRegistries.Buildings
+  id: Buildings
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Buildings
+  nameWithType: GameRegistries.Buildings
+  fullName: Core.Registries.GameRegistries.Buildings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Buildings
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly Registry<BuildingData> Buildings
+    return:
+      type: Core.Registries.Registry{Core.Registries.BuildingData}
+    content.vb: Public ReadOnly Buildings As Registry(Of BuildingData)
+- uid: Core.Registries.GameRegistries.Technologies
+  commentId: F:Core.Registries.GameRegistries.Technologies
+  id: Technologies
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Technologies
+  nameWithType: GameRegistries.Technologies
+  fullName: Core.Registries.GameRegistries.Technologies
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Technologies
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly Registry<TechnologyData> Technologies
+    return:
+      type: Core.Registries.Registry{Core.Registries.TechnologyData}
+    content.vb: Public ReadOnly Technologies As Registry(Of TechnologyData)
+- uid: Core.Registries.GameRegistries.Governments
+  commentId: F:Core.Registries.GameRegistries.Governments
+  id: Governments
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Governments
+  nameWithType: GameRegistries.Governments
+  fullName: Core.Registries.GameRegistries.Governments
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Governments
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly Registry<GovernmentData> Governments
+    return:
+      type: Core.Registries.Registry{Core.Registries.GovernmentData}
+    content.vb: Public ReadOnly Governments As Registry(Of GovernmentData)
+- uid: Core.Registries.GameRegistries.Countries
+  commentId: F:Core.Registries.GameRegistries.Countries
+  id: Countries
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Countries
+  nameWithType: GameRegistries.Countries
+  fullName: Core.Registries.GameRegistries.Countries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Countries
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly CountryRegistry Countries
+    return:
+      type: Core.Registries.CountryRegistry
+    content.vb: Public ReadOnly Countries As CountryRegistry
+- uid: Core.Registries.GameRegistries.Provinces
+  commentId: F:Core.Registries.GameRegistries.Provinces
+  id: Provinces
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: Provinces
+  nameWithType: GameRegistries.Provinces
+  fullName: Core.Registries.GameRegistries.Provinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Provinces
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public readonly ProvinceRegistry Provinces
+    return:
+      type: Core.Registries.ProvinceRegistry
+    content.vb: Public ReadOnly Provinces As ProvinceRegistry
+- uid: Core.Registries.GameRegistries.#ctor
+  commentId: M:Core.Registries.GameRegistries.#ctor
+  id: '#ctor'
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: GameRegistries()
+  nameWithType: GameRegistries.GameRegistries()
+  fullName: Core.Registries.GameRegistries.GameRegistries()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public GameRegistries()
+    content.vb: Public Sub New()
+  overload: Core.Registries.GameRegistries.#ctor*
+  nameWithType.vb: GameRegistries.New()
+  fullName.vb: Core.Registries.GameRegistries.New()
+  name.vb: New()
+- uid: Core.Registries.GameRegistries.GetDiagnostics
+  commentId: M:Core.Registries.GameRegistries.GetDiagnostics
+  id: GetDiagnostics
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: GetDiagnostics()
+  nameWithType: GameRegistries.GetDiagnostics()
+  fullName: Core.Registries.GameRegistries.GetDiagnostics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDiagnostics
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Get diagnostic information for all registries
+  example: []
+  syntax:
+    content: public string GetDiagnostics()
+    return:
+      type: System.String
+    content.vb: Public Function GetDiagnostics() As String
+  overload: Core.Registries.GameRegistries.GetDiagnostics*
+- uid: Core.Registries.GameRegistries.ValidateRegistries
+  commentId: M:Core.Registries.GameRegistries.ValidateRegistries
+  id: ValidateRegistries
+  parent: Core.Registries.GameRegistries
+  langs:
+  - csharp
+  - vb
+  name: ValidateRegistries()
+  nameWithType: GameRegistries.ValidateRegistries()
+  fullName: Core.Registries.GameRegistries.ValidateRegistries()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateRegistries
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  summary: Validate all registries have required data
+  example: []
+  syntax:
+    content: public bool ValidateRegistries()
+    return:
+      type: System.Boolean
+    content.vb: Public Function ValidateRegistries() As Boolean
+  overload: Core.Registries.GameRegistries.ValidateRegistries*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.Registry{Core.Registries.TerrainData}
+  commentId: T:Core.Registries.Registry{Core.Registries.TerrainData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<TerrainData>
+  nameWithType: Registry<TerrainData>
+  fullName: Core.Registries.Registry<Core.Registries.TerrainData>
+  nameWithType.vb: Registry(Of TerrainData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.TerrainData)
+  name.vb: Registry(Of TerrainData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: )
+- uid: Core.Registries.Registry`1
+  commentId: T:Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<T>
+  nameWithType: Registry<T>
+  fullName: Core.Registries.Registry<T>
+  nameWithType.vb: Registry(Of T)
+  fullName.vb: Core.Registries.Registry(Of T)
+  name.vb: Registry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries.Registry{Core.Registries.BuildingData}
+  commentId: T:Core.Registries.Registry{Core.Registries.BuildingData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<BuildingData>
+  nameWithType: Registry<BuildingData>
+  fullName: Core.Registries.Registry<Core.Registries.BuildingData>
+  nameWithType.vb: Registry(Of BuildingData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.BuildingData)
+  name.vb: Registry(Of BuildingData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.BuildingData
+    name: BuildingData
+    href: Core.Registries.BuildingData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.BuildingData
+    name: BuildingData
+    href: Core.Registries.BuildingData.html
+  - name: )
+- uid: Core.Registries.Registry{Core.Registries.TechnologyData}
+  commentId: T:Core.Registries.Registry{Core.Registries.TechnologyData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<TechnologyData>
+  nameWithType: Registry<TechnologyData>
+  fullName: Core.Registries.Registry<Core.Registries.TechnologyData>
+  nameWithType.vb: Registry(Of TechnologyData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.TechnologyData)
+  name.vb: Registry(Of TechnologyData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.TechnologyData
+    name: TechnologyData
+    href: Core.Registries.TechnologyData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.TechnologyData
+    name: TechnologyData
+    href: Core.Registries.TechnologyData.html
+  - name: )
+- uid: Core.Registries.Registry{Core.Registries.GovernmentData}
+  commentId: T:Core.Registries.Registry{Core.Registries.GovernmentData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<GovernmentData>
+  nameWithType: Registry<GovernmentData>
+  fullName: Core.Registries.Registry<Core.Registries.GovernmentData>
+  nameWithType.vb: Registry(Of GovernmentData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.GovernmentData)
+  name.vb: Registry(Of GovernmentData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.GovernmentData
+    name: GovernmentData
+    href: Core.Registries.GovernmentData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.GovernmentData
+    name: GovernmentData
+    href: Core.Registries.GovernmentData.html
+  - name: )
+- uid: Core.Registries.CountryRegistry
+  commentId: T:Core.Registries.CountryRegistry
+  parent: Core.Registries
+  href: Core.Registries.CountryRegistry.html
+  name: CountryRegistry
+  nameWithType: CountryRegistry
+  fullName: Core.Registries.CountryRegistry
+- uid: Core.Registries.ProvinceRegistry
+  commentId: T:Core.Registries.ProvinceRegistry
+  parent: Core.Registries
+  href: Core.Registries.ProvinceRegistry.html
+  name: ProvinceRegistry
+  nameWithType: ProvinceRegistry
+  fullName: Core.Registries.ProvinceRegistry
+- uid: Core.Registries.GameRegistries.#ctor*
+  commentId: Overload:Core.Registries.GameRegistries.#ctor
+  href: Core.Registries.GameRegistries.html#Core_Registries_GameRegistries__ctor
+  name: GameRegistries
+  nameWithType: GameRegistries.GameRegistries
+  fullName: Core.Registries.GameRegistries.GameRegistries
+  nameWithType.vb: GameRegistries.New
+  fullName.vb: Core.Registries.GameRegistries.New
+  name.vb: New
+- uid: Core.Registries.GameRegistries.GetDiagnostics*
+  commentId: Overload:Core.Registries.GameRegistries.GetDiagnostics
+  href: Core.Registries.GameRegistries.html#Core_Registries_GameRegistries_GetDiagnostics
+  name: GetDiagnostics
+  nameWithType: GameRegistries.GetDiagnostics
+  fullName: Core.Registries.GameRegistries.GetDiagnostics
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.GameRegistries.ValidateRegistries*
+  commentId: Overload:Core.Registries.GameRegistries.ValidateRegistries
+  href: Core.Registries.GameRegistries.html#Core_Registries_GameRegistries_ValidateRegistries
+  name: ValidateRegistries
+  nameWithType: GameRegistries.ValidateRegistries
+  fullName: Core.Registries.GameRegistries.ValidateRegistries
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

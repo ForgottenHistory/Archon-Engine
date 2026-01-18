@@ -1,0 +1,1274 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceColdData
+  commentId: T:Core.Data.ProvinceColdData
+  id: ProvinceColdData
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceColdData.#ctor(System.UInt16)
+  - Core.Data.ProvinceColdData.AddHistoricalEvent(Core.Data.HistoricalEvent)
+  - Core.Data.ProvinceColdData.Bounds
+  - Core.Data.ProvinceColdData.CacheFrame
+  - Core.Data.ProvinceColdData.CenterPoint
+  - Core.Data.ProvinceColdData.CustomData
+  - Core.Data.ProvinceColdData.GetCustomData``1(System.String,``0)
+  - Core.Data.ProvinceColdData.GetEstimatedMemoryUsage
+  - Core.Data.ProvinceColdData.GetModifier(System.String)
+  - Core.Data.ProvinceColdData.GetModifier(System.String,Core.Data.FixedPoint64)
+  - Core.Data.ProvinceColdData.GetRecentHistory
+  - Core.Data.ProvinceColdData.HasCustomData(System.String)
+  - Core.Data.ProvinceColdData.IdentifierColor
+  - Core.Data.ProvinceColdData.InvalidateCache
+  - Core.Data.ProvinceColdData.Modifiers
+  - Core.Data.ProvinceColdData.Name
+  - Core.Data.ProvinceColdData.PixelCount
+  - Core.Data.ProvinceColdData.ProvinceID
+  - Core.Data.ProvinceColdData.RecentHistory
+  - Core.Data.ProvinceColdData.RemoveCustomData(System.String)
+  - Core.Data.ProvinceColdData.SetCustomData(System.String,System.Object)
+  - Core.Data.ProvinceColdData.SetModifier(System.String,Core.Data.FixedPoint64)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColdData
+  nameWithType: ProvinceColdData
+  fullName: Core.Data.ProvinceColdData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColdData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Cold data storage for provinces (accessed rarely, loaded on-demand)
+
+    This data is NOT synchronized in multiplayer - it's presentation/metadata only
+
+
+    ENGINE layer - generic province data only.
+
+    Game-specific data (buildings, trade values, etc.) should be stored in customData dictionary.
+  example: []
+  syntax:
+    content: public class ProvinceColdData
+    content.vb: Public Class ProvinceColdData
+  inheritance:
+  - System.Object
+- uid: Core.Data.ProvinceColdData.ProvinceID
+  commentId: P:Core.Data.ProvinceColdData.ProvinceID
+  id: ProvinceID
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceColdData.ProvinceID
+  fullName: Core.Data.ProvinceColdData.ProvinceID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort ProvinceID { get; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property ProvinceID As UShort
+  overload: Core.Data.ProvinceColdData.ProvinceID*
+- uid: Core.Data.ProvinceColdData.Name
+  commentId: P:Core.Data.ProvinceColdData.Name
+  id: Name
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ProvinceColdData.Name
+  fullName: Core.Data.ProvinceColdData.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Core.Data.ProvinceColdData.Name*
+- uid: Core.Data.ProvinceColdData.IdentifierColor
+  commentId: P:Core.Data.ProvinceColdData.IdentifierColor
+  id: IdentifierColor
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: IdentifierColor
+  nameWithType: ProvinceColdData.IdentifierColor
+  fullName: Core.Data.ProvinceColdData.IdentifierColor
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IdentifierColor
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Color32 IdentifierColor { get; set; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Property IdentifierColor As Color32
+  overload: Core.Data.ProvinceColdData.IdentifierColor*
+- uid: Core.Data.ProvinceColdData.CenterPoint
+  commentId: P:Core.Data.ProvinceColdData.CenterPoint
+  id: CenterPoint
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: CenterPoint
+  nameWithType: ProvinceColdData.CenterPoint
+  fullName: Core.Data.ProvinceColdData.CenterPoint
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CenterPoint
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Vector2 CenterPoint { get; set; }
+    parameters: []
+    return:
+      type: UnityEngine.Vector2
+    content.vb: Public Property CenterPoint As Vector2
+  overload: Core.Data.ProvinceColdData.CenterPoint*
+- uid: Core.Data.ProvinceColdData.PixelCount
+  commentId: P:Core.Data.ProvinceColdData.PixelCount
+  id: PixelCount
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: PixelCount
+  nameWithType: ProvinceColdData.PixelCount
+  fullName: Core.Data.ProvinceColdData.PixelCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelCount
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int PixelCount { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property PixelCount As Integer
+  overload: Core.Data.ProvinceColdData.PixelCount*
+- uid: Core.Data.ProvinceColdData.Bounds
+  commentId: P:Core.Data.ProvinceColdData.Bounds
+  id: Bounds
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: Bounds
+  nameWithType: ProvinceColdData.Bounds
+  fullName: Core.Data.ProvinceColdData.Bounds
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Bounds
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Rect Bounds { get; set; }
+    parameters: []
+    return:
+      type: UnityEngine.Rect
+    content.vb: Public Property Bounds As Rect
+  overload: Core.Data.ProvinceColdData.Bounds*
+- uid: Core.Data.ProvinceColdData.RecentHistory
+  commentId: P:Core.Data.ProvinceColdData.RecentHistory
+  id: RecentHistory
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: RecentHistory
+  nameWithType: ProvinceColdData.RecentHistory
+  fullName: Core.Data.ProvinceColdData.RecentHistory
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RecentHistory
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CircularBuffer<HistoricalEvent> RecentHistory { get; }
+    parameters: []
+    return:
+      type: Core.Data.CircularBuffer{Core.Data.HistoricalEvent}
+    content.vb: Public Property RecentHistory As CircularBuffer(Of HistoricalEvent)
+  overload: Core.Data.ProvinceColdData.RecentHistory*
+- uid: Core.Data.ProvinceColdData.Modifiers
+  commentId: P:Core.Data.ProvinceColdData.Modifiers
+  id: Modifiers
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: Modifiers
+  nameWithType: ProvinceColdData.Modifiers
+  fullName: Core.Data.ProvinceColdData.Modifiers
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Modifiers
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Dictionary<string, FixedPoint64> Modifiers { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,Core.Data.FixedPoint64}
+    content.vb: Public Property Modifiers As Dictionary(Of String, FixedPoint64)
+  overload: Core.Data.ProvinceColdData.Modifiers*
+- uid: Core.Data.ProvinceColdData.CustomData
+  commentId: P:Core.Data.ProvinceColdData.CustomData
+  id: CustomData
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: CustomData
+  nameWithType: ProvinceColdData.CustomData
+  fullName: Core.Data.ProvinceColdData.CustomData
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CustomData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public Dictionary<string, object> CustomData { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    content.vb: Public Property CustomData As Dictionary(Of String, Object)
+  overload: Core.Data.ProvinceColdData.CustomData*
+- uid: Core.Data.ProvinceColdData.CacheFrame
+  commentId: P:Core.Data.ProvinceColdData.CacheFrame
+  id: CacheFrame
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: CacheFrame
+  nameWithType: ProvinceColdData.CacheFrame
+  fullName: Core.Data.ProvinceColdData.CacheFrame
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CacheFrame
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int CacheFrame { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property CacheFrame As Integer
+  overload: Core.Data.ProvinceColdData.CacheFrame*
+- uid: Core.Data.ProvinceColdData.#ctor(System.UInt16)
+  commentId: M:Core.Data.ProvinceColdData.#ctor(System.UInt16)
+  id: '#ctor(System.UInt16)'
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColdData(ushort)
+  nameWithType: ProvinceColdData.ProvinceColdData(ushort)
+  fullName: Core.Data.ProvinceColdData.ProvinceColdData(ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ProvinceColdData(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    content.vb: Public Sub New(provinceID As UShort)
+  overload: Core.Data.ProvinceColdData.#ctor*
+  nameWithType.vb: ProvinceColdData.New(UShort)
+  fullName.vb: Core.Data.ProvinceColdData.New(UShort)
+  name.vb: New(UShort)
+- uid: Core.Data.ProvinceColdData.AddHistoricalEvent(Core.Data.HistoricalEvent)
+  commentId: M:Core.Data.ProvinceColdData.AddHistoricalEvent(Core.Data.HistoricalEvent)
+  id: AddHistoricalEvent(Core.Data.HistoricalEvent)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: AddHistoricalEvent(HistoricalEvent)
+  nameWithType: ProvinceColdData.AddHistoricalEvent(HistoricalEvent)
+  fullName: Core.Data.ProvinceColdData.AddHistoricalEvent(Core.Data.HistoricalEvent)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddHistoricalEvent
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Add a historical event (bounded to prevent memory growth)
+  example: []
+  syntax:
+    content: public void AddHistoricalEvent(HistoricalEvent evt)
+    parameters:
+    - id: evt
+      type: Core.Data.HistoricalEvent
+    content.vb: Public Sub AddHistoricalEvent(evt As HistoricalEvent)
+  overload: Core.Data.ProvinceColdData.AddHistoricalEvent*
+- uid: Core.Data.ProvinceColdData.GetRecentHistory
+  commentId: M:Core.Data.ProvinceColdData.GetRecentHistory
+  id: GetRecentHistory
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: GetRecentHistory()
+  nameWithType: ProvinceColdData.GetRecentHistory()
+  fullName: Core.Data.ProvinceColdData.GetRecentHistory()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRecentHistory
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get recent historical events
+  example: []
+  syntax:
+    content: public IReadOnlyList<HistoricalEvent> GetRecentHistory()
+    return:
+      type: System.Collections.Generic.IReadOnlyList{Core.Data.HistoricalEvent}
+    content.vb: Public Function GetRecentHistory() As IReadOnlyList(Of HistoricalEvent)
+  overload: Core.Data.ProvinceColdData.GetRecentHistory*
+- uid: Core.Data.ProvinceColdData.SetModifier(System.String,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.ProvinceColdData.SetModifier(System.String,Core.Data.FixedPoint64)
+  id: SetModifier(System.String,Core.Data.FixedPoint64)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: SetModifier(string, FixedPoint64)
+  nameWithType: ProvinceColdData.SetModifier(string, FixedPoint64)
+  fullName: Core.Data.ProvinceColdData.SetModifier(string, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetModifier
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Add or update a modifier (uses FixedPoint64 for determinism)
+  example: []
+  syntax:
+    content: public void SetModifier(string key, FixedPoint64 value)
+    parameters:
+    - id: key
+      type: System.String
+    - id: value
+      type: Core.Data.FixedPoint64
+    content.vb: Public Sub SetModifier(key As String, value As FixedPoint64)
+  overload: Core.Data.ProvinceColdData.SetModifier*
+  nameWithType.vb: ProvinceColdData.SetModifier(String, FixedPoint64)
+  fullName.vb: Core.Data.ProvinceColdData.SetModifier(String, Core.Data.FixedPoint64)
+  name.vb: SetModifier(String, FixedPoint64)
+- uid: Core.Data.ProvinceColdData.GetModifier(System.String,Core.Data.FixedPoint64)
+  commentId: M:Core.Data.ProvinceColdData.GetModifier(System.String,Core.Data.FixedPoint64)
+  id: GetModifier(System.String,Core.Data.FixedPoint64)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: GetModifier(string, FixedPoint64)
+  nameWithType: ProvinceColdData.GetModifier(string, FixedPoint64)
+  fullName: Core.Data.ProvinceColdData.GetModifier(string, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetModifier
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get modifier value (returns FixedPoint64 for determinism)
+  example: []
+  syntax:
+    content: public FixedPoint64 GetModifier(string key, FixedPoint64 defaultValue)
+    parameters:
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetModifier(key As String, defaultValue As FixedPoint64) As FixedPoint64
+  overload: Core.Data.ProvinceColdData.GetModifier*
+  nameWithType.vb: ProvinceColdData.GetModifier(String, FixedPoint64)
+  fullName.vb: Core.Data.ProvinceColdData.GetModifier(String, Core.Data.FixedPoint64)
+  name.vb: GetModifier(String, FixedPoint64)
+- uid: Core.Data.ProvinceColdData.GetModifier(System.String)
+  commentId: M:Core.Data.ProvinceColdData.GetModifier(System.String)
+  id: GetModifier(System.String)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: GetModifier(string)
+  nameWithType: ProvinceColdData.GetModifier(string)
+  fullName: Core.Data.ProvinceColdData.GetModifier(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetModifier
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get modifier value with default zero
+  example: []
+  syntax:
+    content: public FixedPoint64 GetModifier(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetModifier(key As String) As FixedPoint64
+  overload: Core.Data.ProvinceColdData.GetModifier*
+  nameWithType.vb: ProvinceColdData.GetModifier(String)
+  fullName.vb: Core.Data.ProvinceColdData.GetModifier(String)
+  name.vb: GetModifier(String)
+- uid: Core.Data.ProvinceColdData.GetCustomData``1(System.String,``0)
+  commentId: M:Core.Data.ProvinceColdData.GetCustomData``1(System.String,``0)
+  id: GetCustomData``1(System.String,``0)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: GetCustomData<T>(string, T)
+  nameWithType: ProvinceColdData.GetCustomData<T>(string, T)
+  fullName: Core.Data.ProvinceColdData.GetCustomData<T>(string, T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCustomData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get custom data with type safety
+  example: []
+  syntax:
+    content: public T GetCustomData<T>(string key, T defaultValue = default)
+    parameters:
+    - id: key
+      type: System.String
+    - id: defaultValue
+      type: '{T}'
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function GetCustomData(Of T)(key As String, defaultValue As T = Nothing) As T
+  overload: Core.Data.ProvinceColdData.GetCustomData*
+  nameWithType.vb: ProvinceColdData.GetCustomData(Of T)(String, T)
+  fullName.vb: Core.Data.ProvinceColdData.GetCustomData(Of T)(String, T)
+  name.vb: GetCustomData(Of T)(String, T)
+- uid: Core.Data.ProvinceColdData.SetCustomData(System.String,System.Object)
+  commentId: M:Core.Data.ProvinceColdData.SetCustomData(System.String,System.Object)
+  id: SetCustomData(System.String,System.Object)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: SetCustomData(string, object)
+  nameWithType: ProvinceColdData.SetCustomData(string, object)
+  fullName: Core.Data.ProvinceColdData.SetCustomData(string, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetCustomData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Set custom data
+  example: []
+  syntax:
+    content: public void SetCustomData(string key, object value)
+    parameters:
+    - id: key
+      type: System.String
+    - id: value
+      type: System.Object
+    content.vb: Public Sub SetCustomData(key As String, value As Object)
+  overload: Core.Data.ProvinceColdData.SetCustomData*
+  nameWithType.vb: ProvinceColdData.SetCustomData(String, Object)
+  fullName.vb: Core.Data.ProvinceColdData.SetCustomData(String, Object)
+  name.vb: SetCustomData(String, Object)
+- uid: Core.Data.ProvinceColdData.RemoveCustomData(System.String)
+  commentId: M:Core.Data.ProvinceColdData.RemoveCustomData(System.String)
+  id: RemoveCustomData(System.String)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: RemoveCustomData(string)
+  nameWithType: ProvinceColdData.RemoveCustomData(string)
+  fullName: Core.Data.ProvinceColdData.RemoveCustomData(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveCustomData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Remove custom data
+  example: []
+  syntax:
+    content: public bool RemoveCustomData(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function RemoveCustomData(key As String) As Boolean
+  overload: Core.Data.ProvinceColdData.RemoveCustomData*
+  nameWithType.vb: ProvinceColdData.RemoveCustomData(String)
+  fullName.vb: Core.Data.ProvinceColdData.RemoveCustomData(String)
+  name.vb: RemoveCustomData(String)
+- uid: Core.Data.ProvinceColdData.HasCustomData(System.String)
+  commentId: M:Core.Data.ProvinceColdData.HasCustomData(System.String)
+  id: HasCustomData(System.String)
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: HasCustomData(string)
+  nameWithType: ProvinceColdData.HasCustomData(string)
+  fullName: Core.Data.ProvinceColdData.HasCustomData(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasCustomData
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Check if custom data exists
+  example: []
+  syntax:
+    content: public bool HasCustomData(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasCustomData(key As String) As Boolean
+  overload: Core.Data.ProvinceColdData.HasCustomData*
+  nameWithType.vb: ProvinceColdData.HasCustomData(String)
+  fullName.vb: Core.Data.ProvinceColdData.HasCustomData(String)
+  name.vb: HasCustomData(String)
+- uid: Core.Data.ProvinceColdData.InvalidateCache
+  commentId: M:Core.Data.ProvinceColdData.InvalidateCache
+  id: InvalidateCache
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCache()
+  nameWithType: ProvinceColdData.InvalidateCache()
+  fullName: Core.Data.ProvinceColdData.InvalidateCache()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateCache
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 138
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Invalidate cached calculations
+  example: []
+  syntax:
+    content: public void InvalidateCache()
+    content.vb: Public Sub InvalidateCache()
+  overload: Core.Data.ProvinceColdData.InvalidateCache*
+- uid: Core.Data.ProvinceColdData.GetEstimatedMemoryUsage
+  commentId: M:Core.Data.ProvinceColdData.GetEstimatedMemoryUsage
+  id: GetEstimatedMemoryUsage
+  parent: Core.Data.ProvinceColdData
+  langs:
+  - csharp
+  - vb
+  name: GetEstimatedMemoryUsage()
+  nameWithType: ProvinceColdData.GetEstimatedMemoryUsage()
+  fullName: Core.Data.ProvinceColdData.GetEstimatedMemoryUsage()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetEstimatedMemoryUsage
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 146
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get estimated memory usage
+  example: []
+  syntax:
+    content: public int GetEstimatedMemoryUsage()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetEstimatedMemoryUsage() As Integer
+  overload: Core.Data.ProvinceColdData.GetEstimatedMemoryUsage*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.ProvinceColdData.ProvinceID*
+  commentId: Overload:Core.Data.ProvinceColdData.ProvinceID
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_ProvinceID
+  name: ProvinceID
+  nameWithType: ProvinceColdData.ProvinceID
+  fullName: Core.Data.ProvinceColdData.ProvinceID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.ProvinceColdData.Name*
+  commentId: Overload:Core.Data.ProvinceColdData.Name
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_Name
+  name: Name
+  nameWithType: ProvinceColdData.Name
+  fullName: Core.Data.ProvinceColdData.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.ProvinceColdData.IdentifierColor*
+  commentId: Overload:Core.Data.ProvinceColdData.IdentifierColor
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_IdentifierColor
+  name: IdentifierColor
+  nameWithType: ProvinceColdData.IdentifierColor
+  fullName: Core.Data.ProvinceColdData.IdentifierColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Data.ProvinceColdData.CenterPoint*
+  commentId: Overload:Core.Data.ProvinceColdData.CenterPoint
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_CenterPoint
+  name: CenterPoint
+  nameWithType: ProvinceColdData.CenterPoint
+  fullName: Core.Data.ProvinceColdData.CenterPoint
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: Core.Data.ProvinceColdData.PixelCount*
+  commentId: Overload:Core.Data.ProvinceColdData.PixelCount
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_PixelCount
+  name: PixelCount
+  nameWithType: ProvinceColdData.PixelCount
+  fullName: Core.Data.ProvinceColdData.PixelCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.ProvinceColdData.Bounds*
+  commentId: Overload:Core.Data.ProvinceColdData.Bounds
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_Bounds
+  name: Bounds
+  nameWithType: ProvinceColdData.Bounds
+  fullName: Core.Data.ProvinceColdData.Bounds
+- uid: UnityEngine.Rect
+  commentId: T:UnityEngine.Rect
+  parent: UnityEngine
+  isExternal: true
+  name: Rect
+  nameWithType: Rect
+  fullName: UnityEngine.Rect
+- uid: Core.Data.ProvinceColdData.RecentHistory*
+  commentId: Overload:Core.Data.ProvinceColdData.RecentHistory
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_RecentHistory
+  name: RecentHistory
+  nameWithType: ProvinceColdData.RecentHistory
+  fullName: Core.Data.ProvinceColdData.RecentHistory
+- uid: Core.Data.CircularBuffer{Core.Data.HistoricalEvent}
+  commentId: T:Core.Data.CircularBuffer{Core.Data.HistoricalEvent}
+  parent: Core.Data
+  definition: Core.Data.CircularBuffer`1
+  href: Core.Data.CircularBuffer-1.html
+  name: CircularBuffer<HistoricalEvent>
+  nameWithType: CircularBuffer<HistoricalEvent>
+  fullName: Core.Data.CircularBuffer<Core.Data.HistoricalEvent>
+  nameWithType.vb: CircularBuffer(Of HistoricalEvent)
+  fullName.vb: Core.Data.CircularBuffer(Of Core.Data.HistoricalEvent)
+  name.vb: CircularBuffer(Of HistoricalEvent)
+  spec.csharp:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: <
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: )
+- uid: Core.Data.CircularBuffer`1
+  commentId: T:Core.Data.CircularBuffer`1
+  href: Core.Data.CircularBuffer-1.html
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Core.Data.CircularBuffer<T>
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Core.Data.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+  spec.csharp:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer
+    href: Core.Data.CircularBuffer-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.ProvinceColdData.Modifiers*
+  commentId: Overload:Core.Data.ProvinceColdData.Modifiers
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_Modifiers
+  name: Modifiers
+  nameWithType: ProvinceColdData.Modifiers
+  fullName: Core.Data.ProvinceColdData.Modifiers
+- uid: System.Collections.Generic.Dictionary{System.String,Core.Data.FixedPoint64}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,Core.Data.FixedPoint64}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: Core.Data.FixedPoint64.html
+  name: Dictionary<string, FixedPoint64>
+  nameWithType: Dictionary<string, FixedPoint64>
+  fullName: System.Collections.Generic.Dictionary<string, Core.Data.FixedPoint64>
+  nameWithType.vb: Dictionary(Of String, FixedPoint64)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Core.Data.FixedPoint64)
+  name.vb: Dictionary(Of String, FixedPoint64)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Data.ProvinceColdData.CustomData*
+  commentId: Overload:Core.Data.ProvinceColdData.CustomData
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_CustomData
+  name: CustomData
+  nameWithType: ProvinceColdData.CustomData
+  fullName: Core.Data.ProvinceColdData.CustomData
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<string, object>
+  nameWithType: Dictionary<string, object>
+  fullName: System.Collections.Generic.Dictionary<string, object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Core.Data.ProvinceColdData.CacheFrame*
+  commentId: Overload:Core.Data.ProvinceColdData.CacheFrame
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_CacheFrame
+  name: CacheFrame
+  nameWithType: ProvinceColdData.CacheFrame
+  fullName: Core.Data.ProvinceColdData.CacheFrame
+- uid: Core.Data.ProvinceColdData.#ctor*
+  commentId: Overload:Core.Data.ProvinceColdData.#ctor
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData__ctor_System_UInt16_
+  name: ProvinceColdData
+  nameWithType: ProvinceColdData.ProvinceColdData
+  fullName: Core.Data.ProvinceColdData.ProvinceColdData
+  nameWithType.vb: ProvinceColdData.New
+  fullName.vb: Core.Data.ProvinceColdData.New
+  name.vb: New
+- uid: Core.Data.ProvinceColdData.AddHistoricalEvent*
+  commentId: Overload:Core.Data.ProvinceColdData.AddHistoricalEvent
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_AddHistoricalEvent_Core_Data_HistoricalEvent_
+  name: AddHistoricalEvent
+  nameWithType: ProvinceColdData.AddHistoricalEvent
+  fullName: Core.Data.ProvinceColdData.AddHistoricalEvent
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  parent: Core.Data
+  href: Core.Data.HistoricalEvent.html
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent
+- uid: Core.Data.ProvinceColdData.GetRecentHistory*
+  commentId: Overload:Core.Data.ProvinceColdData.GetRecentHistory
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_GetRecentHistory
+  name: GetRecentHistory
+  nameWithType: ProvinceColdData.GetRecentHistory
+  fullName: Core.Data.ProvinceColdData.GetRecentHistory
+- uid: System.Collections.Generic.IReadOnlyList{Core.Data.HistoricalEvent}
+  commentId: T:System.Collections.Generic.IReadOnlyList{Core.Data.HistoricalEvent}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: Core.Data.HistoricalEvent.html
+  name: IReadOnlyList<HistoricalEvent>
+  nameWithType: IReadOnlyList<HistoricalEvent>
+  fullName: System.Collections.Generic.IReadOnlyList<Core.Data.HistoricalEvent>
+  nameWithType.vb: IReadOnlyList(Of HistoricalEvent)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of Core.Data.HistoricalEvent)
+  name.vb: IReadOnlyList(Of HistoricalEvent)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Data.ProvinceColdData.SetModifier*
+  commentId: Overload:Core.Data.ProvinceColdData.SetModifier
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_SetModifier_System_String_Core_Data_FixedPoint64_
+  name: SetModifier
+  nameWithType: ProvinceColdData.SetModifier
+  fullName: Core.Data.ProvinceColdData.SetModifier
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data.ProvinceColdData.GetModifier*
+  commentId: Overload:Core.Data.ProvinceColdData.GetModifier
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_GetModifier_System_String_Core_Data_FixedPoint64_
+  name: GetModifier
+  nameWithType: ProvinceColdData.GetModifier
+  fullName: Core.Data.ProvinceColdData.GetModifier
+- uid: Core.Data.ProvinceColdData.GetCustomData*
+  commentId: Overload:Core.Data.ProvinceColdData.GetCustomData
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_GetCustomData__1_System_String___0_
+  name: GetCustomData
+  nameWithType: ProvinceColdData.GetCustomData
+  fullName: Core.Data.ProvinceColdData.GetCustomData
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Data.ProvinceColdData.SetCustomData*
+  commentId: Overload:Core.Data.ProvinceColdData.SetCustomData
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_SetCustomData_System_String_System_Object_
+  name: SetCustomData
+  nameWithType: ProvinceColdData.SetCustomData
+  fullName: Core.Data.ProvinceColdData.SetCustomData
+- uid: Core.Data.ProvinceColdData.RemoveCustomData*
+  commentId: Overload:Core.Data.ProvinceColdData.RemoveCustomData
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_RemoveCustomData_System_String_
+  name: RemoveCustomData
+  nameWithType: ProvinceColdData.RemoveCustomData
+  fullName: Core.Data.ProvinceColdData.RemoveCustomData
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.ProvinceColdData.HasCustomData*
+  commentId: Overload:Core.Data.ProvinceColdData.HasCustomData
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_HasCustomData_System_String_
+  name: HasCustomData
+  nameWithType: ProvinceColdData.HasCustomData
+  fullName: Core.Data.ProvinceColdData.HasCustomData
+- uid: Core.Data.ProvinceColdData.InvalidateCache*
+  commentId: Overload:Core.Data.ProvinceColdData.InvalidateCache
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_InvalidateCache
+  name: InvalidateCache
+  nameWithType: ProvinceColdData.InvalidateCache
+  fullName: Core.Data.ProvinceColdData.InvalidateCache
+- uid: Core.Data.ProvinceColdData.GetEstimatedMemoryUsage*
+  commentId: Overload:Core.Data.ProvinceColdData.GetEstimatedMemoryUsage
+  href: Core.Data.ProvinceColdData.html#Core_Data_ProvinceColdData_GetEstimatedMemoryUsage
+  name: GetEstimatedMemoryUsage
+  nameWithType: ProvinceColdData.GetEstimatedMemoryUsage
+  fullName: Core.Data.ProvinceColdData.GetEstimatedMemoryUsage

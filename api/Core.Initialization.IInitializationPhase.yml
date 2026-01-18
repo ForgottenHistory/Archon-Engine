@@ -1,0 +1,317 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.IInitializationPhase
+  commentId: T:Core.Initialization.IInitializationPhase
+  id: IInitializationPhase
+  parent: Core.Initialization
+  children:
+  - Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  - Core.Initialization.IInitializationPhase.PhaseName
+  - Core.Initialization.IInitializationPhase.ProgressEnd
+  - Core.Initialization.IInitializationPhase.ProgressStart
+  - Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  langs:
+  - csharp
+  - vb
+  name: IInitializationPhase
+  nameWithType: IInitializationPhase
+  fullName: Core.Initialization.IInitializationPhase
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IInitializationPhase
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: >-
+    Interface for initialization phases in the engine startup sequence
+
+    Each phase is responsible for a specific aspect of initialization
+  example: []
+  syntax:
+    content: public interface IInitializationPhase
+    content.vb: Public Interface IInitializationPhase
+- uid: Core.Initialization.IInitializationPhase.PhaseName
+  commentId: P:Core.Initialization.IInitializationPhase.PhaseName
+  id: PhaseName
+  parent: Core.Initialization.IInitializationPhase
+  langs:
+  - csharp
+  - vb
+  name: PhaseName
+  nameWithType: IInitializationPhase.PhaseName
+  fullName: Core.Initialization.IInitializationPhase.PhaseName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PhaseName
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: Human-readable name of this phase (for logging and progress tracking)
+  example: []
+  syntax:
+    content: string PhaseName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property PhaseName As String
+  overload: Core.Initialization.IInitializationPhase.PhaseName*
+- uid: Core.Initialization.IInitializationPhase.ProgressStart
+  commentId: P:Core.Initialization.IInitializationPhase.ProgressStart
+  id: ProgressStart
+  parent: Core.Initialization.IInitializationPhase
+  langs:
+  - csharp
+  - vb
+  name: ProgressStart
+  nameWithType: IInitializationPhase.ProgressStart
+  fullName: Core.Initialization.IInitializationPhase.ProgressStart
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProgressStart
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: Progress percentage range this phase covers (0-100)
+  example: []
+  syntax:
+    content: float ProgressStart { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: ReadOnly Property ProgressStart As Single
+  overload: Core.Initialization.IInitializationPhase.ProgressStart*
+- uid: Core.Initialization.IInitializationPhase.ProgressEnd
+  commentId: P:Core.Initialization.IInitializationPhase.ProgressEnd
+  id: ProgressEnd
+  parent: Core.Initialization.IInitializationPhase
+  langs:
+  - csharp
+  - vb
+  name: ProgressEnd
+  nameWithType: IInitializationPhase.ProgressEnd
+  fullName: Core.Initialization.IInitializationPhase.ProgressEnd
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProgressEnd
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: float ProgressEnd { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: ReadOnly Property ProgressEnd As Single
+  overload: Core.Initialization.IInitializationPhase.ProgressEnd*
+- uid: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  id: ExecuteAsync(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.IInitializationPhase
+  langs:
+  - csharp
+  - vb
+  name: ExecuteAsync(InitializationContext)
+  nameWithType: IInitializationPhase.ExecuteAsync(InitializationContext)
+  fullName: Core.Initialization.IInitializationPhase.ExecuteAsync(Core.Initialization.InitializationContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExecuteAsync
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: >-
+    Execute this initialization phase
+
+    Returns IEnumerator for coroutine-based async execution
+  example: []
+  syntax:
+    content: IEnumerator ExecuteAsync(InitializationContext context)
+    parameters:
+    - id: context
+      type: Core.Initialization.InitializationContext
+      description: Shared initialization context
+    return:
+      type: System.Collections.IEnumerator
+      description: Coroutine enumerator
+    content.vb: Function ExecuteAsync(context As InitializationContext) As IEnumerator
+  overload: Core.Initialization.IInitializationPhase.ExecuteAsync*
+- uid: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  commentId: M:Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  id: Rollback(Core.Initialization.InitializationContext)
+  parent: Core.Initialization.IInitializationPhase
+  langs:
+  - csharp
+  - vb
+  name: Rollback(InitializationContext)
+  nameWithType: IInitializationPhase.Rollback(InitializationContext)
+  fullName: Core.Initialization.IInitializationPhase.Rollback(Core.Initialization.InitializationContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/IInitializationPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Rollback
+    path: Scripts/Core/Initialization/IInitializationPhase.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: >-
+    Rollback this phase if initialization fails
+
+    Used for cleanup and error recovery
+  example: []
+  syntax:
+    content: void Rollback(InitializationContext context)
+    parameters:
+    - id: context
+      type: Core.Initialization.InitializationContext
+      description: Shared initialization context
+    content.vb: Sub Rollback(context As InitializationContext)
+  overload: Core.Initialization.IInitializationPhase.Rollback*
+references:
+- uid: Core.Initialization
+  commentId: N:Core.Initialization
+  href: Core.html
+  name: Core.Initialization
+  nameWithType: Core.Initialization
+  fullName: Core.Initialization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+- uid: Core.Initialization.IInitializationPhase.PhaseName*
+  commentId: Overload:Core.Initialization.IInitializationPhase.PhaseName
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_PhaseName
+  name: PhaseName
+  nameWithType: IInitializationPhase.PhaseName
+  fullName: Core.Initialization.IInitializationPhase.PhaseName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Initialization.IInitializationPhase.ProgressStart*
+  commentId: Overload:Core.Initialization.IInitializationPhase.ProgressStart
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ProgressStart
+  name: ProgressStart
+  nameWithType: IInitializationPhase.ProgressStart
+  fullName: Core.Initialization.IInitializationPhase.ProgressStart
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Initialization.IInitializationPhase.ProgressEnd*
+  commentId: Overload:Core.Initialization.IInitializationPhase.ProgressEnd
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ProgressEnd
+  name: ProgressEnd
+  nameWithType: IInitializationPhase.ProgressEnd
+  fullName: Core.Initialization.IInitializationPhase.ProgressEnd
+- uid: Core.Initialization.IInitializationPhase.ExecuteAsync*
+  commentId: Overload:Core.Initialization.IInitializationPhase.ExecuteAsync
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_ExecuteAsync_Core_Initialization_InitializationContext_
+  name: ExecuteAsync
+  nameWithType: IInitializationPhase.ExecuteAsync
+  fullName: Core.Initialization.IInitializationPhase.ExecuteAsync
+- uid: Core.Initialization.InitializationContext
+  commentId: T:Core.Initialization.InitializationContext
+  parent: Core.Initialization
+  href: Core.Initialization.InitializationContext.html
+  name: InitializationContext
+  nameWithType: InitializationContext
+  fullName: Core.Initialization.InitializationContext
+- uid: System.Collections.IEnumerator
+  commentId: T:System.Collections.IEnumerator
+  parent: System.Collections
+  isExternal: true
+  name: IEnumerator
+  nameWithType: IEnumerator
+  fullName: System.Collections.IEnumerator
+- uid: System.Collections
+  commentId: N:System.Collections
+  isExternal: true
+  name: System.Collections
+  nameWithType: System.Collections
+  fullName: System.Collections
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Initialization.IInitializationPhase.Rollback*
+  commentId: Overload:Core.Initialization.IInitializationPhase.Rollback
+  href: Core.Initialization.IInitializationPhase.html#Core_Initialization_IInitializationPhase_Rollback_Core_Initialization_InitializationContext_
+  name: Rollback
+  nameWithType: IInitializationPhase.Rollback
+  fullName: Core.Initialization.IInitializationPhase.Rollback

@@ -1,0 +1,687 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandLogger
+  commentId: T:Core.Commands.CommandLogger
+  id: CommandLogger
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandLogger.ClearHistory
+  - Core.Commands.CommandLogger.DeserializeCommand(System.Byte[])
+  - Core.Commands.CommandLogger.GetAllCommands
+  - Core.Commands.CommandLogger.GetRecentCommands(System.Int32)
+  - Core.Commands.CommandLogger.GetStatistics
+  - Core.Commands.CommandLogger.LogCommand(Core.Commands.ICommand)
+  - Core.Commands.CommandLogger.logCommandExecution
+  - Core.Commands.CommandLogger.maxCommandHistory
+  langs:
+  - csharp
+  - vb
+  name: CommandLogger
+  nameWithType: CommandLogger
+  fullName: Core.Commands.CommandLogger
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandLogger
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    ENGINE LAYER - Tracks executed commands for replay/verification
+
+
+    Purpose:
+
+    - Hybrid save/load: Store recent commands for determinism verification
+
+    - Bug reproduction: Log commands to reproduce exact game state
+
+    - Replay system foundation: Command history for replay viewer
+
+
+    Architecture:
+
+    - Ring buffer: Keeps last N commands only (bounded memory)
+
+    - Serialization: Commands serialize to byte arrays
+
+    - Integration: CommandProcessor calls LogCommand after execution
+
+
+    Usage:
+
+    commandLogger.LogCommand(command);
+
+    byte[][] recentCommands = commandLogger.GetRecentCommands(100);
+  example: []
+  syntax:
+    content: 'public class CommandLogger : MonoBehaviour'
+    content.vb: Public Class CommandLogger Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.Commands.CommandLogger.maxCommandHistory
+  commentId: F:Core.Commands.CommandLogger.maxCommandHistory
+  id: maxCommandHistory
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: maxCommandHistory
+  nameWithType: CommandLogger.maxCommandHistory
+  fullName: Core.Commands.CommandLogger.maxCommandHistory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: maxCommandHistory
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: >-
+      [Header("Configuration")]
+
+      [Tooltip("Maximum commands to keep in history (ring buffer size)")]
+
+      public int maxCommandHistory
+    return:
+      type: System.Int32
+    content.vb: >-
+      <Header("Configuration")>
+
+      <Tooltip("Maximum commands to keep in history (ring buffer size)")>
+
+      Public maxCommandHistory As Integer
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Configuration
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Maximum commands to keep in history (ring buffer size)
+- uid: Core.Commands.CommandLogger.logCommandExecution
+  commentId: F:Core.Commands.CommandLogger.logCommandExecution
+  id: logCommandExecution
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: logCommandExecution
+  nameWithType: CommandLogger.logCommandExecution
+  fullName: Core.Commands.CommandLogger.logCommandExecution
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: logCommandExecution
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: >-
+      [Tooltip("Enable debug logging for command tracking")]
+
+      public bool logCommandExecution
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Enable debug logging for command tracking")>
+
+      Public logCommandExecution As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Enable debug logging for command tracking
+- uid: Core.Commands.CommandLogger.LogCommand(Core.Commands.ICommand)
+  commentId: M:Core.Commands.CommandLogger.LogCommand(Core.Commands.ICommand)
+  id: LogCommand(Core.Commands.ICommand)
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: LogCommand(ICommand)
+  nameWithType: CommandLogger.LogCommand(ICommand)
+  fullName: Core.Commands.CommandLogger.LogCommand(Core.Commands.ICommand)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogCommand
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Log a command after execution
+  example: []
+  syntax:
+    content: public void LogCommand(ICommand command)
+    parameters:
+    - id: command
+      type: Core.Commands.ICommand
+    content.vb: Public Sub LogCommand(command As ICommand)
+  overload: Core.Commands.CommandLogger.LogCommand*
+- uid: Core.Commands.CommandLogger.GetRecentCommands(System.Int32)
+  commentId: M:Core.Commands.CommandLogger.GetRecentCommands(System.Int32)
+  id: GetRecentCommands(System.Int32)
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: GetRecentCommands(int)
+  nameWithType: CommandLogger.GetRecentCommands(int)
+  fullName: Core.Commands.CommandLogger.GetRecentCommands(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRecentCommands
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 82
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get recent commands (last N commands)
+  example: []
+  syntax:
+    content: public List<byte[]> GetRecentCommands(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.List{System.Byte[]}
+    content.vb: Public Function GetRecentCommands(count As Integer) As List(Of Byte())
+  overload: Core.Commands.CommandLogger.GetRecentCommands*
+  nameWithType.vb: CommandLogger.GetRecentCommands(Integer)
+  fullName.vb: Core.Commands.CommandLogger.GetRecentCommands(Integer)
+  name.vb: GetRecentCommands(Integer)
+- uid: Core.Commands.CommandLogger.GetAllCommands
+  commentId: M:Core.Commands.CommandLogger.GetAllCommands
+  id: GetAllCommands
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: GetAllCommands()
+  nameWithType: CommandLogger.GetAllCommands()
+  fullName: Core.Commands.CommandLogger.GetAllCommands()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllCommands
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get all logged commands
+  example: []
+  syntax:
+    content: public List<byte[]> GetAllCommands()
+    return:
+      type: System.Collections.Generic.List{System.Byte[]}
+    content.vb: Public Function GetAllCommands() As List(Of Byte())
+  overload: Core.Commands.CommandLogger.GetAllCommands*
+- uid: Core.Commands.CommandLogger.ClearHistory
+  commentId: M:Core.Commands.CommandLogger.ClearHistory
+  id: ClearHistory
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: ClearHistory()
+  nameWithType: CommandLogger.ClearHistory()
+  fullName: Core.Commands.CommandLogger.ClearHistory()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearHistory
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 121
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Clear command history
+  example: []
+  syntax:
+    content: public void ClearHistory()
+    content.vb: Public Sub ClearHistory()
+  overload: Core.Commands.CommandLogger.ClearHistory*
+- uid: Core.Commands.CommandLogger.GetStatistics
+  commentId: M:Core.Commands.CommandLogger.GetStatistics
+  id: GetStatistics
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: GetStatistics()
+  nameWithType: CommandLogger.GetStatistics()
+  fullName: Core.Commands.CommandLogger.GetStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStatistics
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 136
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get statistics about logged commands
+  example: []
+  syntax:
+    content: public (int totalCommands, long totalBytes, int currentBufferSize) GetStatistics()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int64,System.Int32}
+    content.vb: Public Function GetStatistics() As (totalCommands As Integer, totalBytes As Long, currentBufferSize As Integer)
+  overload: Core.Commands.CommandLogger.GetStatistics*
+- uid: Core.Commands.CommandLogger.DeserializeCommand(System.Byte[])
+  commentId: M:Core.Commands.CommandLogger.DeserializeCommand(System.Byte[])
+  id: DeserializeCommand(System.Byte[])
+  parent: Core.Commands.CommandLogger
+  langs:
+  - csharp
+  - vb
+  name: DeserializeCommand(byte[])
+  nameWithType: CommandLogger.DeserializeCommand(byte[])
+  fullName: Core.Commands.CommandLogger.DeserializeCommand(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandLogger.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeserializeCommand
+    path: Scripts/Core/Commands/CommandLogger.cs
+    startLine: 168
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Deserialize command from byte array
+
+    NOTE: Requires command type to be available at runtime
+  example: []
+  syntax:
+    content: public ICommand DeserializeCommand(byte[] commandBytes)
+    parameters:
+    - id: commandBytes
+      type: System.Byte[]
+    return:
+      type: Core.Commands.ICommand
+    content.vb: Public Function DeserializeCommand(commandBytes As Byte()) As ICommand
+  overload: Core.Commands.CommandLogger.DeserializeCommand*
+  nameWithType.vb: CommandLogger.DeserializeCommand(Byte())
+  fullName.vb: Core.Commands.CommandLogger.DeserializeCommand(Byte())
+  name.vb: DeserializeCommand(Byte())
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Commands.CommandLogger.LogCommand*
+  commentId: Overload:Core.Commands.CommandLogger.LogCommand
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_LogCommand_Core_Commands_ICommand_
+  name: LogCommand
+  nameWithType: CommandLogger.LogCommand
+  fullName: Core.Commands.CommandLogger.LogCommand
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: Core.Commands.CommandLogger.GetRecentCommands*
+  commentId: Overload:Core.Commands.CommandLogger.GetRecentCommands
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_GetRecentCommands_System_Int32_
+  name: GetRecentCommands
+  nameWithType: CommandLogger.GetRecentCommands
+  fullName: Core.Commands.CommandLogger.GetRecentCommands
+- uid: System.Collections.Generic.List{System.Byte[]}
+  commentId: T:System.Collections.Generic.List{System.Byte[]}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<byte[]>
+  nameWithType: List<byte[]>
+  fullName: System.Collections.Generic.List<byte[]>
+  nameWithType.vb: List(Of Byte())
+  fullName.vb: System.Collections.Generic.List(Of Byte())
+  name.vb: List(Of Byte())
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Commands.CommandLogger.GetAllCommands*
+  commentId: Overload:Core.Commands.CommandLogger.GetAllCommands
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_GetAllCommands
+  name: GetAllCommands
+  nameWithType: CommandLogger.GetAllCommands
+  fullName: Core.Commands.CommandLogger.GetAllCommands
+- uid: Core.Commands.CommandLogger.ClearHistory*
+  commentId: Overload:Core.Commands.CommandLogger.ClearHistory
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_ClearHistory
+  name: ClearHistory
+  nameWithType: CommandLogger.ClearHistory
+  fullName: Core.Commands.CommandLogger.ClearHistory
+- uid: Core.Commands.CommandLogger.GetStatistics*
+  commentId: Overload:Core.Commands.CommandLogger.GetStatistics
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_GetStatistics
+  name: GetStatistics
+  nameWithType: CommandLogger.GetStatistics
+  fullName: Core.Commands.CommandLogger.GetStatistics
+- uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int64,System.Int32}
+  parent: System
+  definition: System.ValueTuple`3
+  name: (int totalCommands, long totalBytes, int currentBufferSize)
+  nameWithType: (int totalCommands, long totalBytes, int currentBufferSize)
+  fullName: (int totalCommands, long totalBytes, int currentBufferSize)
+  nameWithType.vb: (totalCommands As Integer, totalBytes As Long, currentBufferSize As Integer)
+  fullName.vb: (totalCommands As Integer, totalBytes As Long, currentBufferSize As Integer)
+  name.vb: (totalCommands As Integer, totalBytes As Long, currentBufferSize As Integer)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.totalCommands
+    name: totalCommands
+  - name: ','
+  - name: " "
+  - uid: System.Int64
+    name: long
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.totalBytes
+    name: totalBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.currentBufferSize
+    name: currentBufferSize
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.totalCommands
+    name: totalCommands
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.totalBytes
+    name: totalBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int64
+    name: Long
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int64,System.Int32}.currentBufferSize
+    name: currentBufferSize
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`3
+  commentId: T:System.ValueTuple`3
+  name: (T1, T2, T3)
+  nameWithType: (T1, T2, T3)
+  fullName: (T1, T2, T3)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+- uid: Core.Commands.CommandLogger.DeserializeCommand*
+  commentId: Overload:Core.Commands.CommandLogger.DeserializeCommand
+  href: Core.Commands.CommandLogger.html#Core_Commands_CommandLogger_DeserializeCommand_System_Byte___
+  name: DeserializeCommand
+  nameWithType: CommandLogger.DeserializeCommand
+  fullName: Core.Commands.CommandLogger.DeserializeCommand
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )

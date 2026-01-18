@@ -1,0 +1,598 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  id: ProvinceMapping
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.ProvinceMapping.AddPixelToProvince(System.UInt16,System.Int32,System.Int32)
+  - Map.Rendering.ProvinceMapping.AddProvince(System.UInt16,UnityEngine.Color32)
+  - Map.Rendering.ProvinceMapping.GetAllProvinces
+  - Map.Rendering.ProvinceMapping.GetProvinceByColor(UnityEngine.Color32)
+  - Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor(System.UInt16)
+  - Map.Rendering.ProvinceMapping.GetProvincePixels(System.UInt16)
+  - Map.Rendering.ProvinceMapping.HasProvince(System.UInt16)
+  - Map.Rendering.ProvinceMapping.ProvinceCount
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapping
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Compatibility shim for legacy ProvinceMapping
+
+    Bridges the gap between old system expectations and new ProvinceMapProcessor
+  example: []
+  syntax:
+    content: public class ProvinceMapping
+    content.vb: Public Class ProvinceMapping
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.ProvinceMapping.ProvinceCount
+  commentId: P:Map.Rendering.ProvinceMapping.ProvinceCount
+  id: ProvinceCount
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceMapping.ProvinceCount
+  fullName: Map.Rendering.ProvinceMapping.ProvinceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public int ProvinceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ProvinceCount As Integer
+  overload: Map.Rendering.ProvinceMapping.ProvinceCount*
+- uid: Map.Rendering.ProvinceMapping.AddProvince(System.UInt16,UnityEngine.Color32)
+  commentId: M:Map.Rendering.ProvinceMapping.AddProvince(System.UInt16,UnityEngine.Color32)
+  id: AddProvince(System.UInt16,UnityEngine.Color32)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: AddProvince(ushort, Color32)
+  nameWithType: ProvinceMapping.AddProvince(ushort, Color32)
+  fullName: Map.Rendering.ProvinceMapping.AddProvince(ushort, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvince
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public void AddProvince(ushort id, Color32 identifierColor)
+    parameters:
+    - id: id
+      type: System.UInt16
+    - id: identifierColor
+      type: UnityEngine.Color32
+    content.vb: Public Sub AddProvince(id As UShort, identifierColor As Color32)
+  overload: Map.Rendering.ProvinceMapping.AddProvince*
+  nameWithType.vb: ProvinceMapping.AddProvince(UShort, Color32)
+  fullName.vb: Map.Rendering.ProvinceMapping.AddProvince(UShort, UnityEngine.Color32)
+  name.vb: AddProvince(UShort, Color32)
+- uid: Map.Rendering.ProvinceMapping.AddPixelToProvince(System.UInt16,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.ProvinceMapping.AddPixelToProvince(System.UInt16,System.Int32,System.Int32)
+  id: AddPixelToProvince(System.UInt16,System.Int32,System.Int32)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: AddPixelToProvince(ushort, int, int)
+  nameWithType: ProvinceMapping.AddPixelToProvince(ushort, int, int)
+  fullName: Map.Rendering.ProvinceMapping.AddPixelToProvince(ushort, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddPixelToProvince
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public void AddPixelToProvince(ushort provinceID, int x, int y)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    content.vb: Public Sub AddPixelToProvince(provinceID As UShort, x As Integer, y As Integer)
+  overload: Map.Rendering.ProvinceMapping.AddPixelToProvince*
+  nameWithType.vb: ProvinceMapping.AddPixelToProvince(UShort, Integer, Integer)
+  fullName.vb: Map.Rendering.ProvinceMapping.AddPixelToProvince(UShort, Integer, Integer)
+  name.vb: AddPixelToProvince(UShort, Integer, Integer)
+- uid: Map.Rendering.ProvinceMapping.HasProvince(System.UInt16)
+  commentId: M:Map.Rendering.ProvinceMapping.HasProvince(System.UInt16)
+  id: HasProvince(System.UInt16)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: HasProvince(ushort)
+  nameWithType: ProvinceMapping.HasProvince(ushort)
+  fullName: Map.Rendering.ProvinceMapping.HasProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasProvince
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public bool HasProvince(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasProvince(provinceID As UShort) As Boolean
+  overload: Map.Rendering.ProvinceMapping.HasProvince*
+  nameWithType.vb: ProvinceMapping.HasProvince(UShort)
+  fullName.vb: Map.Rendering.ProvinceMapping.HasProvince(UShort)
+  name.vb: HasProvince(UShort)
+- uid: Map.Rendering.ProvinceMapping.GetProvincePixels(System.UInt16)
+  commentId: M:Map.Rendering.ProvinceMapping.GetProvincePixels(System.UInt16)
+  id: GetProvincePixels(System.UInt16)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: GetProvincePixels(ushort)
+  nameWithType: ProvinceMapping.GetProvincePixels(ushort)
+  fullName: Map.Rendering.ProvinceMapping.GetProvincePixels(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincePixels
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public List<Vector2Int> GetProvincePixels(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2Int}
+    content.vb: Public Function GetProvincePixels(provinceID As UShort) As List(Of Vector2Int)
+  overload: Map.Rendering.ProvinceMapping.GetProvincePixels*
+  nameWithType.vb: ProvinceMapping.GetProvincePixels(UShort)
+  fullName.vb: Map.Rendering.ProvinceMapping.GetProvincePixels(UShort)
+  name.vb: GetProvincePixels(UShort)
+- uid: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor(System.UInt16)
+  commentId: M:Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor(System.UInt16)
+  id: GetProvinceIdentifierColor(System.UInt16)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceIdentifierColor(ushort)
+  nameWithType: ProvinceMapping.GetProvinceIdentifierColor(ushort)
+  fullName: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceIdentifierColor
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Color32 GetProvinceIdentifierColor(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetProvinceIdentifierColor(provinceID As UShort) As Color32
+  overload: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor*
+  nameWithType.vb: ProvinceMapping.GetProvinceIdentifierColor(UShort)
+  fullName.vb: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor(UShort)
+  name.vb: GetProvinceIdentifierColor(UShort)
+- uid: Map.Rendering.ProvinceMapping.GetProvinceByColor(UnityEngine.Color32)
+  commentId: M:Map.Rendering.ProvinceMapping.GetProvinceByColor(UnityEngine.Color32)
+  id: GetProvinceByColor(UnityEngine.Color32)
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceByColor(Color32)
+  nameWithType: ProvinceMapping.GetProvinceByColor(Color32)
+  fullName: Map.Rendering.ProvinceMapping.GetProvinceByColor(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceByColor
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 51
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public ushort GetProvinceByColor(Color32 color)
+    parameters:
+    - id: color
+      type: UnityEngine.Color32
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceByColor(color As Color32) As UShort
+  overload: Map.Rendering.ProvinceMapping.GetProvinceByColor*
+- uid: Map.Rendering.ProvinceMapping.GetAllProvinces
+  commentId: M:Map.Rendering.ProvinceMapping.GetAllProvinces
+  id: GetAllProvinces
+  parent: Map.Rendering.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinces()
+  nameWithType: ProvinceMapping.GetAllProvinces()
+  fullName: Map.Rendering.ProvinceMapping.GetAllProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/ProvinceMapping.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinces
+    path: Scripts/Map/Compatibility/ProvinceMapping.cs
+    startLine: 56
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Dictionary<ushort, ProvinceMapping.ProvinceInfo> GetAllProvinces()
+    return:
+      type: System.Collections.Generic.Dictionary{System.UInt16,Map.Rendering.ProvinceMapping.ProvinceInfo}
+    content.vb: Public Function GetAllProvinces() As Dictionary(Of UShort, ProvinceMapping.ProvinceInfo)
+  overload: Map.Rendering.ProvinceMapping.GetAllProvinces*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.ProvinceMapping.ProvinceCount*
+  commentId: Overload:Map.Rendering.ProvinceMapping.ProvinceCount
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_ProvinceCount
+  name: ProvinceCount
+  nameWithType: ProvinceMapping.ProvinceCount
+  fullName: Map.Rendering.ProvinceMapping.ProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.ProvinceMapping.AddProvince*
+  commentId: Overload:Map.Rendering.ProvinceMapping.AddProvince
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_AddProvince_System_UInt16_UnityEngine_Color32_
+  name: AddProvince
+  nameWithType: ProvinceMapping.AddProvince
+  fullName: Map.Rendering.ProvinceMapping.AddProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.ProvinceMapping.AddPixelToProvince*
+  commentId: Overload:Map.Rendering.ProvinceMapping.AddPixelToProvince
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_AddPixelToProvince_System_UInt16_System_Int32_System_Int32_
+  name: AddPixelToProvince
+  nameWithType: ProvinceMapping.AddPixelToProvince
+  fullName: Map.Rendering.ProvinceMapping.AddPixelToProvince
+- uid: Map.Rendering.ProvinceMapping.HasProvince*
+  commentId: Overload:Map.Rendering.ProvinceMapping.HasProvince
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_HasProvince_System_UInt16_
+  name: HasProvince
+  nameWithType: ProvinceMapping.HasProvince
+  fullName: Map.Rendering.ProvinceMapping.HasProvince
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.ProvinceMapping.GetProvincePixels*
+  commentId: Overload:Map.Rendering.ProvinceMapping.GetProvincePixels
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_GetProvincePixels_System_UInt16_
+  name: GetProvincePixels
+  nameWithType: ProvinceMapping.GetProvincePixels
+  fullName: Map.Rendering.ProvinceMapping.GetProvincePixels
+- uid: System.Collections.Generic.List{UnityEngine.Vector2Int}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2Int}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2Int>
+  nameWithType: List<Vector2Int>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2Int>
+  nameWithType.vb: List(Of Vector2Int)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2Int)
+  name.vb: List(Of Vector2Int)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2Int
+    name: Vector2Int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2Int
+    name: Vector2Int
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor*
+  commentId: Overload:Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_GetProvinceIdentifierColor_System_UInt16_
+  name: GetProvinceIdentifierColor
+  nameWithType: ProvinceMapping.GetProvinceIdentifierColor
+  fullName: Map.Rendering.ProvinceMapping.GetProvinceIdentifierColor
+- uid: Map.Rendering.ProvinceMapping.GetProvinceByColor*
+  commentId: Overload:Map.Rendering.ProvinceMapping.GetProvinceByColor
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_GetProvinceByColor_UnityEngine_Color32_
+  name: GetProvinceByColor
+  nameWithType: ProvinceMapping.GetProvinceByColor
+  fullName: Map.Rendering.ProvinceMapping.GetProvinceByColor
+- uid: Map.Rendering.ProvinceMapping.GetAllProvinces*
+  commentId: Overload:Map.Rendering.ProvinceMapping.GetAllProvinces
+  href: Map.Rendering.ProvinceMapping.html#Map_Rendering_ProvinceMapping_GetAllProvinces
+  name: GetAllProvinces
+  nameWithType: ProvinceMapping.GetAllProvinces
+  fullName: Map.Rendering.ProvinceMapping.GetAllProvinces
+- uid: System.Collections.Generic.Dictionary{System.UInt16,Map.Rendering.ProvinceMapping.ProvinceInfo}
+  commentId: T:System.Collections.Generic.Dictionary{System.UInt16,Map.Rendering.ProvinceMapping.ProvinceInfo}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: Map.Rendering.ProvinceMapping.html
+  name: Dictionary<ushort, ProvinceMapping.ProvinceInfo>
+  nameWithType: Dictionary<ushort, ProvinceMapping.ProvinceInfo>
+  fullName: System.Collections.Generic.Dictionary<ushort, Map.Rendering.ProvinceMapping.ProvinceInfo>
+  nameWithType.vb: Dictionary(Of UShort, ProvinceMapping.ProvinceInfo)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UShort, Map.Rendering.ProvinceMapping.ProvinceInfo)
+  name.vb: Dictionary(Of UShort, ProvinceMapping.ProvinceInfo)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: .
+  - uid: Map.Rendering.ProvinceMapping.ProvinceInfo
+    name: ProvinceInfo
+    href: Map.Rendering.ProvinceMapping.ProvinceInfo.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: .
+  - uid: Map.Rendering.ProvinceMapping.ProvinceInfo
+    name: ProvinceInfo
+    href: Map.Rendering.ProvinceMapping.ProvinceInfo.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )

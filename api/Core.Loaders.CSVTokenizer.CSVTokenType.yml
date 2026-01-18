@@ -1,0 +1,184 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenType
+  id: CSVTokenizer.CSVTokenType
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVTokenizer.CSVTokenType.EndOfFile
+  - Core.Loaders.CSVTokenizer.CSVTokenType.EndOfRow
+  - Core.Loaders.CSVTokenizer.CSVTokenType.Field
+  - Core.Loaders.CSVTokenizer.CSVTokenType.QuotedField
+  langs:
+  - csharp
+  - vb
+  name: CSVTokenizer.CSVTokenType
+  nameWithType: CSVTokenizer.CSVTokenType
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVTokenType
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: CSV token types
+  example: []
+  syntax:
+    content: 'public enum CSVTokenizer.CSVTokenType : byte'
+    content.vb: Public Enum CSVTokenizer.CSVTokenType As Byte
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType.Field
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenType.Field
+  id: Field
+  parent: Core.Loaders.CSVTokenizer.CSVTokenType
+  langs:
+  - csharp
+  - vb
+  name: Field
+  nameWithType: CSVTokenizer.CSVTokenType.Field
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType.Field
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Field
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: Field = 0
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType.QuotedField
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenType.QuotedField
+  id: QuotedField
+  parent: Core.Loaders.CSVTokenizer.CSVTokenType
+  langs:
+  - csharp
+  - vb
+  name: QuotedField
+  nameWithType: CSVTokenizer.CSVTokenType.QuotedField
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType.QuotedField
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: QuotedField
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: QuotedField = 1
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType.EndOfRow
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenType.EndOfRow
+  id: EndOfRow
+  parent: Core.Loaders.CSVTokenizer.CSVTokenType
+  langs:
+  - csharp
+  - vb
+  name: EndOfRow
+  nameWithType: CSVTokenizer.CSVTokenType.EndOfRow
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType.EndOfRow
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EndOfRow
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: EndOfRow = 2
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType.EndOfFile
+  commentId: F:Core.Loaders.CSVTokenizer.CSVTokenType.EndOfFile
+  id: EndOfFile
+  parent: Core.Loaders.CSVTokenizer.CSVTokenType
+  langs:
+  - csharp
+  - vb
+  name: EndOfFile
+  nameWithType: CSVTokenizer.CSVTokenType.EndOfFile
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType.EndOfFile
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EndOfFile
+    path: Scripts/Core/Loaders/CSVTokenizer.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: EndOfFile = 3
+    return:
+      type: Core.Loaders.CSVTokenizer.CSVTokenType
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: Core.Loaders.CSVTokenizer.CSVTokenType
+  commentId: T:Core.Loaders.CSVTokenizer.CSVTokenType
+  parent: Core.Loaders
+  href: Core.Loaders.CSVTokenizer.html
+  name: CSVTokenizer.CSVTokenType
+  nameWithType: CSVTokenizer.CSVTokenType
+  fullName: Core.Loaders.CSVTokenizer.CSVTokenType
+  spec.csharp:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html
+  spec.vb:
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    href: Core.Loaders.CSVTokenizer.html
+  - name: .
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenType
+    href: Core.Loaders.CSVTokenizer.CSVTokenType.html

@@ -1,0 +1,218 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.Phases.CountryDataReadyEvent
+  commentId: T:Core.Initialization.Phases.CountryDataReadyEvent
+  id: CountryDataReadyEvent
+  parent: Core.Initialization.Phases
+  children:
+  - Core.Initialization.Phases.CountryDataReadyEvent.CountryCount
+  - Core.Initialization.Phases.CountryDataReadyEvent.HasScenarioData
+  - Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: CountryDataReadyEvent
+  nameWithType: CountryDataReadyEvent
+  fullName: Core.Initialization.Phases.CountryDataReadyEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryDataReadyEvent
+    path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+    startLine: 111
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: >-
+    Event emitted when country data is fully loaded and ready
+
+    Includes all country files and country system initialization
+  example: []
+  syntax:
+    content: 'public struct CountryDataReadyEvent : IGameEvent'
+    content.vb: Public Structure CountryDataReadyEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Initialization.Phases.CountryDataReadyEvent.CountryCount
+  commentId: F:Core.Initialization.Phases.CountryDataReadyEvent.CountryCount
+  id: CountryCount
+  parent: Core.Initialization.Phases.CountryDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryCount
+  nameWithType: CountryDataReadyEvent.CountryCount
+  fullName: Core.Initialization.Phases.CountryDataReadyEvent.CountryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryCount
+    path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int CountryCount
+    return:
+      type: System.Int32
+    content.vb: Public CountryCount As Integer
+- uid: Core.Initialization.Phases.CountryDataReadyEvent.HasScenarioData
+  commentId: F:Core.Initialization.Phases.CountryDataReadyEvent.HasScenarioData
+  id: HasScenarioData
+  parent: Core.Initialization.Phases.CountryDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: HasScenarioData
+  nameWithType: CountryDataReadyEvent.HasScenarioData
+  fullName: Core.Initialization.Phases.CountryDataReadyEvent.HasScenarioData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasScenarioData
+    path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public bool HasScenarioData
+    return:
+      type: System.Boolean
+    content.vb: Public HasScenarioData As Boolean
+- uid: Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+  commentId: P:Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Initialization.Phases.CountryDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: CountryDataReadyEvent.TimeStamp
+  fullName: Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Initialization/Phases/CountryDataLoadingPhase.cs
+    startLine: 115
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Initialization.Phases
+  commentId: N:Core.Initialization.Phases
+  href: Core.html
+  name: Core.Initialization.Phases
+  nameWithType: Core.Initialization.Phases
+  fullName: Core.Initialization.Phases
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp*
+  commentId: Overload:Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+  href: Core.Initialization.Phases.CountryDataReadyEvent.html#Core_Initialization_Phases_CountryDataReadyEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: CountryDataReadyEvent.TimeStamp
+  fullName: Core.Initialization.Phases.CountryDataReadyEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

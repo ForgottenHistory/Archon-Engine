@@ -1,0 +1,537 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.LocalizationFallbackChain
+  commentId: T:Core.Localization.LocalizationFallbackChain
+  id: LocalizationFallbackChain
+  parent: Core.Localization
+  children:
+  - Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain(Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes},Unity.Collections.Allocator)
+  - Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain(Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  - Core.Localization.LocalizationFallbackChain.GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.NativeArray{System.UInt32},Unity.Collections.NativeArray{System.Int32}@,System.Single@,Unity.Collections.Allocator)
+  - Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,System.UInt32)
+  - Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.FixedString64Bytes)
+  langs:
+  - csharp
+  - vb
+  name: LocalizationFallbackChain
+  nameWithType: LocalizationFallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalizationFallbackChain
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: >-
+    Advanced fallback chain system for localization
+
+    Supports complex fallback hierarchies and regional variants
+  example: []
+  syntax:
+    content: public static class LocalizationFallbackChain
+    content.vb: Public Module LocalizationFallbackChain
+  inheritance:
+  - System.Object
+- uid: Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain(Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain(Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  id: CreateStandardFallbackChain(Unity.Collections.FixedString64Bytes,Unity.Collections.Allocator)
+  parent: Core.Localization.LocalizationFallbackChain
+  langs:
+  - csharp
+  - vb
+  name: CreateStandardFallbackChain(FixedString64Bytes, Allocator)
+  nameWithType: LocalizationFallbackChain.CreateStandardFallbackChain(FixedString64Bytes, Allocator)
+  fullName: Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain(Unity.Collections.FixedString64Bytes, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateStandardFallbackChain
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Create a fallback chain with common language hierarchies
+  example: []
+  syntax:
+    content: public static LocalizationFallbackChain.FallbackChain CreateStandardFallbackChain(FixedString64Bytes primaryLanguage, Allocator allocator)
+    parameters:
+    - id: primaryLanguage
+      type: Unity.Collections.FixedString64Bytes
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.LocalizationFallbackChain.FallbackChain
+    content.vb: Public Shared Function CreateStandardFallbackChain(primaryLanguage As FixedString64Bytes, allocator As Allocator) As LocalizationFallbackChain.FallbackChain
+  overload: Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain*
+- uid: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain(Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes},Unity.Collections.Allocator)
+  commentId: M:Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain(Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes},Unity.Collections.Allocator)
+  id: CreateCustomFallbackChain(Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes},Unity.Collections.Allocator)
+  parent: Core.Localization.LocalizationFallbackChain
+  langs:
+  - csharp
+  - vb
+  name: CreateCustomFallbackChain(NativeArray<FixedString64Bytes>, Allocator)
+  nameWithType: LocalizationFallbackChain.CreateCustomFallbackChain(NativeArray<FixedString64Bytes>, Allocator)
+  fullName: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain(Unity.Collections.NativeArray<Unity.Collections.FixedString64Bytes>, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateCustomFallbackChain
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Create a custom fallback chain
+  example: []
+  syntax:
+    content: public static LocalizationFallbackChain.FallbackChain CreateCustomFallbackChain(NativeArray<FixedString64Bytes> languageOrder, Allocator allocator)
+    parameters:
+    - id: languageOrder
+      type: Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Localization.LocalizationFallbackChain.FallbackChain
+    content.vb: Public Shared Function CreateCustomFallbackChain(languageOrder As NativeArray(Of FixedString64Bytes), allocator As Allocator) As LocalizationFallbackChain.FallbackChain
+  overload: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain*
+  nameWithType.vb: LocalizationFallbackChain.CreateCustomFallbackChain(NativeArray(Of FixedString64Bytes), Allocator)
+  fullName.vb: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain(Unity.Collections.NativeArray(Of Unity.Collections.FixedString64Bytes), Unity.Collections.Allocator)
+  name.vb: CreateCustomFallbackChain(NativeArray(Of FixedString64Bytes), Allocator)
+- uid: Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,System.UInt32)
+  commentId: M:Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,System.UInt32)
+  id: ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,System.UInt32)
+  parent: Core.Localization.LocalizationFallbackChain
+  langs:
+  - csharp
+  - vb
+  name: ResolveWithFallback(MultiLanguageResult, FallbackChain, uint)
+  nameWithType: LocalizationFallbackChain.ResolveWithFallback(MultiLanguageExtractor.MultiLanguageResult, LocalizationFallbackChain.FallbackChain, uint)
+  fullName: Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Core.Localization.LocalizationFallbackChain.FallbackChain, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolveWithFallback
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Resolve localization with fallback chain
+  example: []
+  syntax:
+    content: public static LocalizationFallbackChain.FallbackResult ResolveWithFallback(MultiLanguageExtractor.MultiLanguageResult multiLangResult, LocalizationFallbackChain.FallbackChain fallbackChain, uint keyHash)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: fallbackChain
+      type: Core.Localization.LocalizationFallbackChain.FallbackChain
+    - id: keyHash
+      type: System.UInt32
+    return:
+      type: Core.Localization.LocalizationFallbackChain.FallbackResult
+    content.vb: Public Shared Function ResolveWithFallback(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, fallbackChain As LocalizationFallbackChain.FallbackChain, keyHash As UInteger) As LocalizationFallbackChain.FallbackResult
+  overload: Core.Localization.LocalizationFallbackChain.ResolveWithFallback*
+  nameWithType.vb: LocalizationFallbackChain.ResolveWithFallback(MultiLanguageExtractor.MultiLanguageResult, LocalizationFallbackChain.FallbackChain, UInteger)
+  fullName.vb: Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Core.Localization.LocalizationFallbackChain.FallbackChain, UInteger)
+  name.vb: ResolveWithFallback(MultiLanguageResult, FallbackChain, UInteger)
+- uid: Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.FixedString64Bytes)
+  commentId: M:Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.FixedString64Bytes)
+  id: ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.FixedString64Bytes)
+  parent: Core.Localization.LocalizationFallbackChain
+  langs:
+  - csharp
+  - vb
+  name: ResolveWithFallback(MultiLanguageResult, FallbackChain, FixedString64Bytes)
+  nameWithType: LocalizationFallbackChain.ResolveWithFallback(MultiLanguageExtractor.MultiLanguageResult, LocalizationFallbackChain.FallbackChain, FixedString64Bytes)
+  fullName: Core.Localization.LocalizationFallbackChain.ResolveWithFallback(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Core.Localization.LocalizationFallbackChain.FallbackChain, Unity.Collections.FixedString64Bytes)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolveWithFallback
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 138
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Resolve localization with fallback chain (string key overload)
+  example: []
+  syntax:
+    content: public static LocalizationFallbackChain.FallbackResult ResolveWithFallback(MultiLanguageExtractor.MultiLanguageResult multiLangResult, LocalizationFallbackChain.FallbackChain fallbackChain, FixedString64Bytes key)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: fallbackChain
+      type: Core.Localization.LocalizationFallbackChain.FallbackChain
+    - id: key
+      type: Unity.Collections.FixedString64Bytes
+    return:
+      type: Core.Localization.LocalizationFallbackChain.FallbackResult
+    content.vb: Public Shared Function ResolveWithFallback(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, fallbackChain As LocalizationFallbackChain.FallbackChain, key As FixedString64Bytes) As LocalizationFallbackChain.FallbackResult
+  overload: Core.Localization.LocalizationFallbackChain.ResolveWithFallback*
+- uid: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.NativeArray{System.UInt32},Unity.Collections.NativeArray{System.Int32}@,System.Single@,Unity.Collections.Allocator)
+  commentId: M:Core.Localization.LocalizationFallbackChain.GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.NativeArray{System.UInt32},Unity.Collections.NativeArray{System.Int32}@,System.Single@,Unity.Collections.Allocator)
+  id: GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult,Core.Localization.LocalizationFallbackChain.FallbackChain,Unity.Collections.NativeArray{System.UInt32},Unity.Collections.NativeArray{System.Int32}@,System.Single@,Unity.Collections.Allocator)
+  parent: Core.Localization.LocalizationFallbackChain
+  langs:
+  - csharp
+  - vb
+  name: GetFallbackStatistics(MultiLanguageResult, FallbackChain, NativeArray<uint>, out NativeArray<int>, out float, Allocator)
+  nameWithType: LocalizationFallbackChain.GetFallbackStatistics(MultiLanguageExtractor.MultiLanguageResult, LocalizationFallbackChain.FallbackChain, NativeArray<uint>, out NativeArray<int>, out float, Allocator)
+  fullName: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Core.Localization.LocalizationFallbackChain.FallbackChain, Unity.Collections.NativeArray<uint>, out Unity.Collections.NativeArray<int>, out float, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFallbackStatistics
+    path: Scripts/Core/Localization/LocalizationFallbackChain.cs
+    startLine: 177
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Get fallback statistics
+  example: []
+  syntax:
+    content: public static void GetFallbackStatistics(MultiLanguageExtractor.MultiLanguageResult multiLangResult, LocalizationFallbackChain.FallbackChain fallbackChain, NativeArray<uint> testKeys, out NativeArray<int> fallbackLevelCounts, out float primaryLanguageHitRate, Allocator allocator)
+    parameters:
+    - id: multiLangResult
+      type: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    - id: fallbackChain
+      type: Core.Localization.LocalizationFallbackChain.FallbackChain
+    - id: testKeys
+      type: Unity.Collections.NativeArray{System.UInt32}
+    - id: fallbackLevelCounts
+      type: Unity.Collections.NativeArray{System.Int32}
+    - id: primaryLanguageHitRate
+      type: System.Single
+    - id: allocator
+      type: Unity.Collections.Allocator
+    content.vb: Public Shared Sub GetFallbackStatistics(multiLangResult As MultiLanguageExtractor.MultiLanguageResult, fallbackChain As LocalizationFallbackChain.FallbackChain, testKeys As NativeArray(Of UInteger), fallbackLevelCounts As NativeArray(Of Integer), primaryLanguageHitRate As Single, allocator As Allocator)
+  overload: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics*
+  nameWithType.vb: LocalizationFallbackChain.GetFallbackStatistics(MultiLanguageExtractor.MultiLanguageResult, LocalizationFallbackChain.FallbackChain, NativeArray(Of UInteger), NativeArray(Of Integer), Single, Allocator)
+  fullName.vb: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics(Core.Localization.MultiLanguageExtractor.MultiLanguageResult, Core.Localization.LocalizationFallbackChain.FallbackChain, Unity.Collections.NativeArray(Of UInteger), Unity.Collections.NativeArray(Of Integer), Single, Unity.Collections.Allocator)
+  name.vb: GetFallbackStatistics(MultiLanguageResult, FallbackChain, NativeArray(Of UInteger), NativeArray(Of Integer), Single, Allocator)
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain*
+  commentId: Overload:Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain
+  href: Core.Localization.LocalizationFallbackChain.html#Core_Localization_LocalizationFallbackChain_CreateStandardFallbackChain_Unity_Collections_FixedString64Bytes_Unity_Collections_Allocator_
+  name: CreateStandardFallbackChain
+  nameWithType: LocalizationFallbackChain.CreateStandardFallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain.CreateStandardFallbackChain
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackChain
+  parent: Core.Localization
+  href: Core.Localization.LocalizationFallbackChain.html
+  name: LocalizationFallbackChain.FallbackChain
+  nameWithType: LocalizationFallbackChain.FallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain
+  spec.csharp:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+    name: FallbackChain
+    href: Core.Localization.LocalizationFallbackChain.FallbackChain.html
+  spec.vb:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+    name: FallbackChain
+    href: Core.Localization.LocalizationFallbackChain.FallbackChain.html
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain*
+  commentId: Overload:Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain
+  href: Core.Localization.LocalizationFallbackChain.html#Core_Localization_LocalizationFallbackChain_CreateCustomFallbackChain_Unity_Collections_NativeArray_Unity_Collections_FixedString64Bytes__Unity_Collections_Allocator_
+  name: CreateCustomFallbackChain
+  nameWithType: LocalizationFallbackChain.CreateCustomFallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain.CreateCustomFallbackChain
+- uid: Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes}
+  commentId: T:Unity.Collections.NativeArray{Unity.Collections.FixedString64Bytes}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<FixedString64Bytes>
+  nameWithType: NativeArray<FixedString64Bytes>
+  fullName: Unity.Collections.NativeArray<Unity.Collections.FixedString64Bytes>
+  nameWithType.vb: NativeArray(Of FixedString64Bytes)
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Collections.FixedString64Bytes)
+  name.vb: NativeArray(Of FixedString64Bytes)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.FixedString64Bytes
+    name: FixedString64Bytes
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Localization.LocalizationFallbackChain.ResolveWithFallback*
+  commentId: Overload:Core.Localization.LocalizationFallbackChain.ResolveWithFallback
+  href: Core.Localization.LocalizationFallbackChain.html#Core_Localization_LocalizationFallbackChain_ResolveWithFallback_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Core_Localization_LocalizationFallbackChain_FallbackChain_System_UInt32_
+  name: ResolveWithFallback
+  nameWithType: LocalizationFallbackChain.ResolveWithFallback
+  fullName: Core.Localization.LocalizationFallbackChain.ResolveWithFallback
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  commentId: T:Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  parent: Core.Localization
+  href: Core.Localization.MultiLanguageExtractor.html
+  name: MultiLanguageExtractor.MultiLanguageResult
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  spec.csharp:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+  spec.vb:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackResult
+  parent: Core.Localization
+  href: Core.Localization.LocalizationFallbackChain.html
+  name: LocalizationFallbackChain.FallbackResult
+  nameWithType: LocalizationFallbackChain.FallbackResult
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult
+  spec.csharp:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+    name: FallbackResult
+    href: Core.Localization.LocalizationFallbackChain.FallbackResult.html
+  spec.vb:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+    name: FallbackResult
+    href: Core.Localization.LocalizationFallbackChain.FallbackResult.html
+- uid: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics*
+  commentId: Overload:Core.Localization.LocalizationFallbackChain.GetFallbackStatistics
+  href: Core.Localization.LocalizationFallbackChain.html#Core_Localization_LocalizationFallbackChain_GetFallbackStatistics_Core_Localization_MultiLanguageExtractor_MultiLanguageResult_Core_Localization_LocalizationFallbackChain_FallbackChain_Unity_Collections_NativeArray_System_UInt32__Unity_Collections_NativeArray_System_Int32___System_Single__Unity_Collections_Allocator_
+  name: GetFallbackStatistics
+  nameWithType: LocalizationFallbackChain.GetFallbackStatistics
+  fullName: Core.Localization.LocalizationFallbackChain.GetFallbackStatistics
+- uid: Unity.Collections.NativeArray{System.UInt32}
+  commentId: T:Unity.Collections.NativeArray{System.UInt32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<uint>
+  nameWithType: NativeArray<uint>
+  fullName: Unity.Collections.NativeArray<uint>
+  nameWithType.vb: NativeArray(Of UInteger)
+  fullName.vb: Unity.Collections.NativeArray(Of UInteger)
+  name.vb: NativeArray(Of UInteger)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray{System.Int32}
+  commentId: T:Unity.Collections.NativeArray{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int>
+  nameWithType: NativeArray<int>
+  fullName: Unity.Collections.NativeArray<int>
+  nameWithType.vb: NativeArray(Of Integer)
+  fullName.vb: Unity.Collections.NativeArray(Of Integer)
+  name.vb: NativeArray(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

@@ -1,0 +1,243 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  commentId: T:Core.Loaders.ScenarioLoader.DiplomaticRelation
+  id: ScenarioLoader.DiplomaticRelation
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.DiplomaticRelation.Country1
+  - Core.Loaders.ScenarioLoader.DiplomaticRelation.Country2
+  - Core.Loaders.ScenarioLoader.DiplomaticRelation.Type
+  - Core.Loaders.ScenarioLoader.DiplomaticRelation.Value
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.DiplomaticRelation
+  nameWithType: ScenarioLoader.DiplomaticRelation
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomaticRelation
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Diplomatic relation between countries
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct ScenarioLoader.DiplomaticRelation
+    content.vb: >-
+      <Serializable>
+
+      Public Structure ScenarioLoader.DiplomaticRelation
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation.Country1
+  commentId: F:Core.Loaders.ScenarioLoader.DiplomaticRelation.Country1
+  id: Country1
+  parent: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  langs:
+  - csharp
+  - vb
+  name: Country1
+  nameWithType: ScenarioLoader.DiplomaticRelation.Country1
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation.Country1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country1
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 101
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort Country1
+    return:
+      type: System.UInt16
+    content.vb: Public Country1 As UShort
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation.Country2
+  commentId: F:Core.Loaders.ScenarioLoader.DiplomaticRelation.Country2
+  id: Country2
+  parent: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  langs:
+  - csharp
+  - vb
+  name: Country2
+  nameWithType: ScenarioLoader.DiplomaticRelation.Country2
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation.Country2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country2
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort Country2
+    return:
+      type: System.UInt16
+    content.vb: Public Country2 As UShort
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation.Type
+  commentId: F:Core.Loaders.ScenarioLoader.DiplomaticRelation.Type
+  id: Type
+  parent: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: ScenarioLoader.DiplomaticRelation.Type
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ScenarioLoader.RelationType Type
+    return:
+      type: Core.Loaders.ScenarioLoader.RelationType
+    content.vb: Public Type As ScenarioLoader.RelationType
+- uid: Core.Loaders.ScenarioLoader.DiplomaticRelation.Value
+  commentId: F:Core.Loaders.ScenarioLoader.DiplomaticRelation.Value
+  id: Value
+  parent: Core.Loaders.ScenarioLoader.DiplomaticRelation
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: ScenarioLoader.DiplomaticRelation.Value
+  fullName: Core.Loaders.ScenarioLoader.DiplomaticRelation.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public FixedPoint64 Value
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Value As FixedPoint64
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.ScenarioLoader.RelationType
+  commentId: T:Core.Loaders.ScenarioLoader.RelationType
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.RelationType
+  nameWithType: ScenarioLoader.RelationType
+  fullName: Core.Loaders.ScenarioLoader.RelationType
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: RelationType
+    href: Core.Loaders.ScenarioLoader.RelationType.html
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html

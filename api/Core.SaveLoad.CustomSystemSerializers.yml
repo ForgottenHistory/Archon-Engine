@@ -1,0 +1,361 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.CustomSystemSerializers
+  commentId: T:Core.SaveLoad.CustomSystemSerializers
+  id: CustomSystemSerializers
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem(System.IO.BinaryReader,Core.Resources.ResourceSystem)
+  - Core.SaveLoad.CustomSystemSerializers.LoadTimeManager(System.IO.BinaryReader,Core.Systems.TimeManager)
+  - Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem(System.IO.BinaryWriter,Core.Resources.ResourceSystem)
+  - Core.SaveLoad.CustomSystemSerializers.SaveTimeManager(System.IO.BinaryWriter,Core.Systems.TimeManager)
+  langs:
+  - csharp
+  - vb
+  name: CustomSystemSerializers
+  nameWithType: CustomSystemSerializers
+  fullName: Core.SaveLoad.CustomSystemSerializers
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CustomSystemSerializers
+    path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Custom serialization logic for specific systems
+
+
+    Purpose:
+
+    Some systems (TimeManager, ResourceSystem) have custom serialization needs
+
+    that don't fit the generic SaveState/LoadState pattern.
+
+
+    This class centralizes that custom logic, keeping SaveManager clean.
+
+
+    Systems with generic SaveState/LoadState:
+
+    - ProvinceSystem, ModifierSystem, CountrySystem, UnitSystem
+
+    (These use SystemSerializer directly, no custom logic needed)
+
+
+    Systems with custom serialization:
+
+    - TimeManager (multiple fields, not a single SaveState method)
+
+    - ResourceSystem (iterates all resources, special capacity handling)
+  example: []
+  syntax:
+    content: public static class CustomSystemSerializers
+    content.vb: Public Module CustomSystemSerializers
+  inheritance:
+  - System.Object
+- uid: Core.SaveLoad.CustomSystemSerializers.SaveTimeManager(System.IO.BinaryWriter,Core.Systems.TimeManager)
+  commentId: M:Core.SaveLoad.CustomSystemSerializers.SaveTimeManager(System.IO.BinaryWriter,Core.Systems.TimeManager)
+  id: SaveTimeManager(System.IO.BinaryWriter,Core.Systems.TimeManager)
+  parent: Core.SaveLoad.CustomSystemSerializers
+  langs:
+  - csharp
+  - vb
+  name: SaveTimeManager(BinaryWriter, TimeManager)
+  nameWithType: CustomSystemSerializers.SaveTimeManager(BinaryWriter, TimeManager)
+  fullName: Core.SaveLoad.CustomSystemSerializers.SaveTimeManager(System.IO.BinaryWriter, Core.Systems.TimeManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveTimeManager
+    path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Save TimeManager data
+
+    Saves: tick, date/time, speed, pause state, accumulator
+  example: []
+  syntax:
+    content: public static void SaveTimeManager(BinaryWriter writer, TimeManager timeManager)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: timeManager
+      type: Core.Systems.TimeManager
+    content.vb: Public Shared Sub SaveTimeManager(writer As BinaryWriter, timeManager As TimeManager)
+  overload: Core.SaveLoad.CustomSystemSerializers.SaveTimeManager*
+- uid: Core.SaveLoad.CustomSystemSerializers.LoadTimeManager(System.IO.BinaryReader,Core.Systems.TimeManager)
+  commentId: M:Core.SaveLoad.CustomSystemSerializers.LoadTimeManager(System.IO.BinaryReader,Core.Systems.TimeManager)
+  id: LoadTimeManager(System.IO.BinaryReader,Core.Systems.TimeManager)
+  parent: Core.SaveLoad.CustomSystemSerializers
+  langs:
+  - csharp
+  - vb
+  name: LoadTimeManager(BinaryReader, TimeManager)
+  nameWithType: CustomSystemSerializers.LoadTimeManager(BinaryReader, TimeManager)
+  fullName: Core.SaveLoad.CustomSystemSerializers.LoadTimeManager(System.IO.BinaryReader, Core.Systems.TimeManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadTimeManager
+    path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Load TimeManager data
+  example: []
+  syntax:
+    content: public static void LoadTimeManager(BinaryReader reader, TimeManager timeManager)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    - id: timeManager
+      type: Core.Systems.TimeManager
+    content.vb: Public Shared Sub LoadTimeManager(reader As BinaryReader, timeManager As TimeManager)
+  overload: Core.SaveLoad.CustomSystemSerializers.LoadTimeManager*
+- uid: Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem(System.IO.BinaryWriter,Core.Resources.ResourceSystem)
+  commentId: M:Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem(System.IO.BinaryWriter,Core.Resources.ResourceSystem)
+  id: SaveResourceSystem(System.IO.BinaryWriter,Core.Resources.ResourceSystem)
+  parent: Core.SaveLoad.CustomSystemSerializers
+  langs:
+  - csharp
+  - vb
+  name: SaveResourceSystem(BinaryWriter, ResourceSystem)
+  nameWithType: CustomSystemSerializers.SaveResourceSystem(BinaryWriter, ResourceSystem)
+  fullName: Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem(System.IO.BinaryWriter, Core.Resources.ResourceSystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveResourceSystem
+    path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Save ResourceSystem data
+
+    Saves: maxCountries, resource storage arrays
+
+    Skips: resourceDefinitions (will be re-registered by GAME layer on load)
+  example: []
+  syntax:
+    content: public static void SaveResourceSystem(BinaryWriter writer, ResourceSystem resourceSystem)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    - id: resourceSystem
+      type: Core.Resources.ResourceSystem
+    content.vb: Public Shared Sub SaveResourceSystem(writer As BinaryWriter, resourceSystem As ResourceSystem)
+  overload: Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem*
+- uid: Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem(System.IO.BinaryReader,Core.Resources.ResourceSystem)
+  commentId: M:Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem(System.IO.BinaryReader,Core.Resources.ResourceSystem)
+  id: LoadResourceSystem(System.IO.BinaryReader,Core.Resources.ResourceSystem)
+  parent: Core.SaveLoad.CustomSystemSerializers
+  langs:
+  - csharp
+  - vb
+  name: LoadResourceSystem(BinaryReader, ResourceSystem)
+  nameWithType: CustomSystemSerializers.LoadResourceSystem(BinaryReader, ResourceSystem)
+  fullName: Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem(System.IO.BinaryReader, Core.Resources.ResourceSystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadResourceSystem
+    path: Scripts/Core/SaveLoad/CustomSystemSerializers.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Load ResourceSystem data
+
+    Assumes ResourceSystem is already initialized with resource definitions from GAME layer
+  example: []
+  syntax:
+    content: public static void LoadResourceSystem(BinaryReader reader, ResourceSystem resourceSystem)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    - id: resourceSystem
+      type: Core.Resources.ResourceSystem
+    content.vb: Public Shared Sub LoadResourceSystem(reader As BinaryReader, resourceSystem As ResourceSystem)
+  overload: Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem*
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.SaveLoad.CustomSystemSerializers.SaveTimeManager*
+  commentId: Overload:Core.SaveLoad.CustomSystemSerializers.SaveTimeManager
+  href: Core.SaveLoad.CustomSystemSerializers.html#Core_SaveLoad_CustomSystemSerializers_SaveTimeManager_System_IO_BinaryWriter_Core_Systems_TimeManager_
+  name: SaveTimeManager
+  nameWithType: CustomSystemSerializers.SaveTimeManager
+  fullName: Core.SaveLoad.CustomSystemSerializers.SaveTimeManager
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: Core.Systems.TimeManager
+  commentId: T:Core.Systems.TimeManager
+  parent: Core.Systems
+  href: Core.Systems.TimeManager.html
+  name: TimeManager
+  nameWithType: TimeManager
+  fullName: Core.Systems.TimeManager
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.SaveLoad.CustomSystemSerializers.LoadTimeManager*
+  commentId: Overload:Core.SaveLoad.CustomSystemSerializers.LoadTimeManager
+  href: Core.SaveLoad.CustomSystemSerializers.html#Core_SaveLoad_CustomSystemSerializers_LoadTimeManager_System_IO_BinaryReader_Core_Systems_TimeManager_
+  name: LoadTimeManager
+  nameWithType: CustomSystemSerializers.LoadTimeManager
+  fullName: Core.SaveLoad.CustomSystemSerializers.LoadTimeManager
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem*
+  commentId: Overload:Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem
+  href: Core.SaveLoad.CustomSystemSerializers.html#Core_SaveLoad_CustomSystemSerializers_SaveResourceSystem_System_IO_BinaryWriter_Core_Resources_ResourceSystem_
+  name: SaveResourceSystem
+  nameWithType: CustomSystemSerializers.SaveResourceSystem
+  fullName: Core.SaveLoad.CustomSystemSerializers.SaveResourceSystem
+- uid: Core.Resources.ResourceSystem
+  commentId: T:Core.Resources.ResourceSystem
+  parent: Core.Resources
+  href: Core.Resources.ResourceSystem.html
+  name: ResourceSystem
+  nameWithType: ResourceSystem
+  fullName: Core.Resources.ResourceSystem
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem*
+  commentId: Overload:Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem
+  href: Core.SaveLoad.CustomSystemSerializers.html#Core_SaveLoad_CustomSystemSerializers_LoadResourceSystem_System_IO_BinaryReader_Core_Resources_ResourceSystem_
+  name: LoadResourceSystem
+  nameWithType: CustomSystemSerializers.LoadResourceSystem
+  fullName: Core.SaveLoad.CustomSystemSerializers.LoadResourceSystem

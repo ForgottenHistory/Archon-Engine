@@ -1,0 +1,332 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderMeshRenderer
+  commentId: T:Map.Rendering.BorderMeshRenderer
+  id: BorderMeshRenderer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderMeshRenderer.#ctor(UnityEngine.Transform)
+  - Map.Rendering.BorderMeshRenderer.Dispose
+  - Map.Rendering.BorderMeshRenderer.RenderBorders
+  - Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List{UnityEngine.Mesh},System.Collections.Generic.List{UnityEngine.Mesh})
+  langs:
+  - csharp
+  - vb
+  name: BorderMeshRenderer
+  nameWithType: BorderMeshRenderer
+  fullName: Map.Rendering.BorderMeshRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderMeshRenderer
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Renders border meshes using Unity's Graphics.DrawMesh API
+
+    Handles province and country borders as separate mesh objects
+
+    Uses unlit vertex color material for simple flat-shaded borders
+  example: []
+  syntax:
+    content: public class BorderMeshRenderer
+    content.vb: Public Class BorderMeshRenderer
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.BorderMeshRenderer.#ctor(UnityEngine.Transform)
+  commentId: M:Map.Rendering.BorderMeshRenderer.#ctor(UnityEngine.Transform)
+  id: '#ctor(UnityEngine.Transform)'
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: BorderMeshRenderer(Transform)
+  nameWithType: BorderMeshRenderer.BorderMeshRenderer(Transform)
+  fullName: Map.Rendering.BorderMeshRenderer.BorderMeshRenderer(UnityEngine.Transform)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public BorderMeshRenderer(Transform mapPlane = null)
+    parameters:
+    - id: mapPlane
+      type: UnityEngine.Transform
+    content.vb: Public Sub New(mapPlane As Transform = Nothing)
+  overload: Map.Rendering.BorderMeshRenderer.#ctor*
+  nameWithType.vb: BorderMeshRenderer.New(Transform)
+  fullName.vb: Map.Rendering.BorderMeshRenderer.New(UnityEngine.Transform)
+  name.vb: New(Transform)
+- uid: Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List{UnityEngine.Mesh},System.Collections.Generic.List{UnityEngine.Mesh})
+  commentId: M:Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List{UnityEngine.Mesh},System.Collections.Generic.List{UnityEngine.Mesh})
+  id: SetMeshes(System.Collections.Generic.List{UnityEngine.Mesh},System.Collections.Generic.List{UnityEngine.Mesh})
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetMeshes(List<Mesh>, List<Mesh>)
+  nameWithType: BorderMeshRenderer.SetMeshes(List<Mesh>, List<Mesh>)
+  fullName: Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List<UnityEngine.Mesh>, System.Collections.Generic.List<UnityEngine.Mesh>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMeshes
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set the meshes to render (may be multiple meshes due to 65k vertex limit)
+  example: []
+  syntax:
+    content: public void SetMeshes(List<Mesh> provinceMeshes, List<Mesh> countryMeshes)
+    parameters:
+    - id: provinceMeshes
+      type: System.Collections.Generic.List{UnityEngine.Mesh}
+    - id: countryMeshes
+      type: System.Collections.Generic.List{UnityEngine.Mesh}
+    content.vb: Public Sub SetMeshes(provinceMeshes As List(Of Mesh), countryMeshes As List(Of Mesh))
+  overload: Map.Rendering.BorderMeshRenderer.SetMeshes*
+  nameWithType.vb: BorderMeshRenderer.SetMeshes(List(Of Mesh), List(Of Mesh))
+  fullName.vb: Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List(Of UnityEngine.Mesh), System.Collections.Generic.List(Of UnityEngine.Mesh))
+  name.vb: SetMeshes(List(Of Mesh), List(Of Mesh))
+- uid: Map.Rendering.BorderMeshRenderer.RenderBorders
+  commentId: M:Map.Rendering.BorderMeshRenderer.RenderBorders
+  id: RenderBorders
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: RenderBorders()
+  nameWithType: BorderMeshRenderer.RenderBorders()
+  fullName: Map.Rendering.BorderMeshRenderer.RenderBorders()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RenderBorders
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Render borders for current frame
+
+    Called every frame by MapRenderingCoordinator
+  example: []
+  syntax:
+    content: public void RenderBorders()
+    content.vb: Public Sub RenderBorders()
+  overload: Map.Rendering.BorderMeshRenderer.RenderBorders*
+- uid: Map.Rendering.BorderMeshRenderer.Dispose
+  commentId: M:Map.Rendering.BorderMeshRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: BorderMeshRenderer.Dispose()
+  fullName: Map.Rendering.BorderMeshRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 139
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Clean up resources
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Rendering.BorderMeshRenderer.Dispose*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.BorderMeshRenderer.#ctor*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.#ctor
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer__ctor_UnityEngine_Transform_
+  name: BorderMeshRenderer
+  nameWithType: BorderMeshRenderer.BorderMeshRenderer
+  fullName: Map.Rendering.BorderMeshRenderer.BorderMeshRenderer
+  nameWithType.vb: BorderMeshRenderer.New
+  fullName.vb: Map.Rendering.BorderMeshRenderer.New
+  name.vb: New
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.BorderMeshRenderer.SetMeshes*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.SetMeshes
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_SetMeshes_System_Collections_Generic_List_UnityEngine_Mesh__System_Collections_Generic_List_UnityEngine_Mesh__
+  name: SetMeshes
+  nameWithType: BorderMeshRenderer.SetMeshes
+  fullName: Map.Rendering.BorderMeshRenderer.SetMeshes
+- uid: System.Collections.Generic.List{UnityEngine.Mesh}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Mesh}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Mesh>
+  nameWithType: List<Mesh>
+  fullName: System.Collections.Generic.List<UnityEngine.Mesh>
+  nameWithType.vb: List(Of Mesh)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Mesh)
+  name.vb: List(Of Mesh)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Mesh
+    name: Mesh
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Mesh
+    name: Mesh
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.BorderMeshRenderer.RenderBorders*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.RenderBorders
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_RenderBorders
+  name: RenderBorders
+  nameWithType: BorderMeshRenderer.RenderBorders
+  fullName: Map.Rendering.BorderMeshRenderer.RenderBorders
+- uid: Map.Rendering.BorderMeshRenderer.Dispose*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.Dispose
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_Dispose
+  name: Dispose
+  nameWithType: BorderMeshRenderer.Dispose
+  fullName: Map.Rendering.BorderMeshRenderer.Dispose

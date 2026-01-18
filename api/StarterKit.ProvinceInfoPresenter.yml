@@ -1,0 +1,177 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.ProvinceInfoPresenter
+  commentId: T:StarterKit.ProvinceInfoPresenter
+  id: ProvinceInfoPresenter
+  parent: StarterKit
+  children:
+  - StarterKit.ProvinceInfoPresenter.UpdatePanelData(System.UInt16,Core.GameState,UnityEngine.UIElements.Label,UnityEngine.UIElements.Label,UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Label)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceInfoPresenter
+  nameWithType: ProvinceInfoPresenter
+  fullName: StarterKit.ProvinceInfoPresenter
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/ProvinceInfoPresenter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceInfoPresenter
+    path: Scripts/StarterKit/UI/ProvinceInfoPresenter.cs
+    startLine: 16
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Province info presenter (stateless data formatting)
+
+    Pattern: UI Presenter Pattern - Presenter Component
+
+
+    Responsibilities:
+
+    - Query GameState for province data
+
+    - Format data for display
+
+    - Update UI element contents
+  example: []
+  syntax:
+    content: public static class ProvinceInfoPresenter
+    content.vb: Public Module ProvinceInfoPresenter
+  inheritance:
+  - System.Object
+- uid: StarterKit.ProvinceInfoPresenter.UpdatePanelData(System.UInt16,Core.GameState,UnityEngine.UIElements.Label,UnityEngine.UIElements.Label,UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Label)
+  commentId: M:StarterKit.ProvinceInfoPresenter.UpdatePanelData(System.UInt16,Core.GameState,UnityEngine.UIElements.Label,UnityEngine.UIElements.Label,UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Label)
+  id: UpdatePanelData(System.UInt16,Core.GameState,UnityEngine.UIElements.Label,UnityEngine.UIElements.Label,UnityEngine.UIElements.VisualElement,UnityEngine.UIElements.Label)
+  parent: StarterKit.ProvinceInfoPresenter
+  langs:
+  - csharp
+  - vb
+  name: UpdatePanelData(ushort, GameState, Label, Label, VisualElement, Label)
+  nameWithType: ProvinceInfoPresenter.UpdatePanelData(ushort, GameState, Label, Label, VisualElement, Label)
+  fullName: StarterKit.ProvinceInfoPresenter.UpdatePanelData(ushort, Core.GameState, UnityEngine.UIElements.Label, UnityEngine.UIElements.Label, UnityEngine.UIElements.VisualElement, UnityEngine.UIElements.Label)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/ProvinceInfoPresenter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdatePanelData
+    path: Scripts/StarterKit/UI/ProvinceInfoPresenter.cs
+    startLine: 21
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Update province info labels with data from GameState
+  example: []
+  syntax:
+    content: public static void UpdatePanelData(ushort provinceID, GameState gameState, Label nameLabel, Label idLabel, VisualElement ownerColorIndicator, Label ownerLabel)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: gameState
+      type: Core.GameState
+    - id: nameLabel
+      type: UnityEngine.UIElements.Label
+    - id: idLabel
+      type: UnityEngine.UIElements.Label
+    - id: ownerColorIndicator
+      type: UnityEngine.UIElements.VisualElement
+    - id: ownerLabel
+      type: UnityEngine.UIElements.Label
+    content.vb: Public Shared Sub UpdatePanelData(provinceID As UShort, gameState As GameState, nameLabel As Label, idLabel As Label, ownerColorIndicator As VisualElement, ownerLabel As Label)
+  overload: StarterKit.ProvinceInfoPresenter.UpdatePanelData*
+  nameWithType.vb: ProvinceInfoPresenter.UpdatePanelData(UShort, GameState, Label, Label, VisualElement, Label)
+  fullName.vb: StarterKit.ProvinceInfoPresenter.UpdatePanelData(UShort, Core.GameState, UnityEngine.UIElements.Label, UnityEngine.UIElements.Label, UnityEngine.UIElements.VisualElement, UnityEngine.UIElements.Label)
+  name.vb: UpdatePanelData(UShort, GameState, Label, Label, VisualElement, Label)
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.ProvinceInfoPresenter.UpdatePanelData*
+  commentId: Overload:StarterKit.ProvinceInfoPresenter.UpdatePanelData
+  href: StarterKit.ProvinceInfoPresenter.html#StarterKit_ProvinceInfoPresenter_UpdatePanelData_System_UInt16_Core_GameState_UnityEngine_UIElements_Label_UnityEngine_UIElements_Label_UnityEngine_UIElements_VisualElement_UnityEngine_UIElements_Label_
+  name: UpdatePanelData
+  nameWithType: ProvinceInfoPresenter.UpdatePanelData
+  fullName: StarterKit.ProvinceInfoPresenter.UpdatePanelData
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: UnityEngine.UIElements.Label
+  commentId: T:UnityEngine.UIElements.Label
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: Label
+  nameWithType: Label
+  fullName: UnityEngine.UIElements.Label
+- uid: UnityEngine.UIElements.VisualElement
+  commentId: T:UnityEngine.UIElements.VisualElement
+  parent: UnityEngine.UIElements
+  isExternal: true
+  name: VisualElement
+  nameWithType: VisualElement
+  fullName: UnityEngine.UIElements.VisualElement
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: UnityEngine.UIElements
+  commentId: N:UnityEngine.UIElements
+  isExternal: true
+  name: UnityEngine.UIElements
+  nameWithType: UnityEngine.UIElements
+  fullName: UnityEngine.UIElements
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.UIElements
+    name: UIElements
+    isExternal: true

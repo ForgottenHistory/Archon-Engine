@@ -1,0 +1,321 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats
+  commentId: T:Map.Loading.Images.HeightmapParser.HeightmapStats
+  id: HeightmapParser.HeightmapStats
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.AverageHeight
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.HillPixels
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.IsValid
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.MedianHeight
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.MountainPixels
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.PeakPixels
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.PlainPixels
+  - Map.Loading.Images.HeightmapParser.HeightmapStats.WaterPixels
+  langs:
+  - csharp
+  - vb
+  name: HeightmapParser.HeightmapStats
+  nameWithType: HeightmapParser.HeightmapStats
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightmapStats
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 278
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Generate heightmap statistics
+  example: []
+  syntax:
+    content: public struct HeightmapParser.HeightmapStats
+    content.vb: Public Structure HeightmapParser.HeightmapStats
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.AverageHeight
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.AverageHeight
+  id: AverageHeight
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: AverageHeight
+  nameWithType: HeightmapParser.HeightmapStats.AverageHeight
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.AverageHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageHeight
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 280
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float AverageHeight
+    return:
+      type: System.Single
+    content.vb: Public AverageHeight As Single
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.MedianHeight
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.MedianHeight
+  id: MedianHeight
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: MedianHeight
+  nameWithType: HeightmapParser.HeightmapStats.MedianHeight
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.MedianHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MedianHeight
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 281
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float MedianHeight
+    return:
+      type: System.Single
+    content.vb: Public MedianHeight As Single
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.WaterPixels
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.WaterPixels
+  id: WaterPixels
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: WaterPixels
+  nameWithType: HeightmapParser.HeightmapStats.WaterPixels
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.WaterPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WaterPixels
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 282
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int WaterPixels
+    return:
+      type: System.Int32
+    content.vb: Public WaterPixels As Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.PlainPixels
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.PlainPixels
+  id: PlainPixels
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: PlainPixels
+  nameWithType: HeightmapParser.HeightmapStats.PlainPixels
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.PlainPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlainPixels
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 283
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int PlainPixels
+    return:
+      type: System.Int32
+    content.vb: Public PlainPixels As Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.HillPixels
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.HillPixels
+  id: HillPixels
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: HillPixels
+  nameWithType: HeightmapParser.HeightmapStats.HillPixels
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.HillPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HillPixels
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 284
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int HillPixels
+    return:
+      type: System.Int32
+    content.vb: Public HillPixels As Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.MountainPixels
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.MountainPixels
+  id: MountainPixels
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: MountainPixels
+  nameWithType: HeightmapParser.HeightmapStats.MountainPixels
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.MountainPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MountainPixels
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 285
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int MountainPixels
+    return:
+      type: System.Int32
+    content.vb: Public MountainPixels As Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.PeakPixels
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.PeakPixels
+  id: PeakPixels
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: PeakPixels
+  nameWithType: HeightmapParser.HeightmapStats.PeakPixels
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.PeakPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PeakPixels
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 286
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int PeakPixels
+    return:
+      type: System.Int32
+    content.vb: Public PeakPixels As Integer
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats.IsValid
+  commentId: F:Map.Loading.Images.HeightmapParser.HeightmapStats.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.HeightmapParser.HeightmapStats
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: HeightmapParser.HeightmapStats.IsValid
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats.IsValid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/HeightmapParser.cs
+    startLine: 287
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid
+    return:
+      type: System.Boolean
+    content.vb: Public IsValid As Boolean
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

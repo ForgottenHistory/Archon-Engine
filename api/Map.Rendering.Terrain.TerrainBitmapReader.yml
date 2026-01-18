@@ -1,0 +1,300 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainBitmapReader
+  commentId: T:Map.Rendering.Terrain.TerrainBitmapReader
+  id: TerrainBitmapReader
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainBitmapReader.#ctor(System.Boolean)
+  - Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes(UnityEngine.Texture2D,Map.Rendering.Terrain.TerrainRGBLookup,System.Int32,System.Int32)
+  - Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices(System.String,System.Int32,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: TerrainBitmapReader
+  nameWithType: TerrainBitmapReader
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainBitmapReader
+    path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    ENGINE: Reads terrain.bmp and converts RGB pixels to terrain type indices
+
+    Handles both direct BMP palette reading and Unity Texture2D RGB conversion
+  example: []
+  syntax:
+    content: public class TerrainBitmapReader
+    content.vb: Public Class TerrainBitmapReader
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.#ctor(System.Boolean)
+  commentId: M:Map.Rendering.Terrain.TerrainBitmapReader.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
+  parent: Map.Rendering.Terrain.TerrainBitmapReader
+  langs:
+  - csharp
+  - vb
+  name: TerrainBitmapReader(bool)
+  nameWithType: TerrainBitmapReader.TerrainBitmapReader(bool)
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.TerrainBitmapReader(bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  syntax:
+    content: public TerrainBitmapReader(bool logProgress = true)
+    parameters:
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub New(logProgress As Boolean = True)
+  overload: Map.Rendering.Terrain.TerrainBitmapReader.#ctor*
+  nameWithType.vb: TerrainBitmapReader.New(Boolean)
+  fullName.vb: Map.Rendering.Terrain.TerrainBitmapReader.New(Boolean)
+  name.vb: New(Boolean)
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices(System.String,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices(System.String,System.Int32,System.Int32)
+  id: ReadBmpPaletteIndices(System.String,System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.TerrainBitmapReader
+  langs:
+  - csharp
+  - vb
+  name: ReadBmpPaletteIndices(string, int, int)
+  nameWithType: TerrainBitmapReader.ReadBmpPaletteIndices(string, int, int)
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices(string, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadBmpPaletteIndices
+    path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Read raw palette indices from an 8-bit indexed BMP file
+
+    Bypasses Unity's texture import which converts palette indices to RGB
+
+    Returns array of palette indices [y * width + x] = paletteIndex
+  example: []
+  syntax:
+    content: public uint[] ReadBmpPaletteIndices(string bmpPath, int expectedWidth, int expectedHeight)
+    parameters:
+    - id: bmpPath
+      type: System.String
+    - id: expectedWidth
+      type: System.Int32
+    - id: expectedHeight
+      type: System.Int32
+    return:
+      type: System.UInt32[]
+    content.vb: Public Function ReadBmpPaletteIndices(bmpPath As String, expectedWidth As Integer, expectedHeight As Integer) As UInteger()
+  overload: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices*
+  nameWithType.vb: TerrainBitmapReader.ReadBmpPaletteIndices(String, Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices(String, Integer, Integer)
+  name.vb: ReadBmpPaletteIndices(String, Integer, Integer)
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes(UnityEngine.Texture2D,Map.Rendering.Terrain.TerrainRGBLookup,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes(UnityEngine.Texture2D,Map.Rendering.Terrain.TerrainRGBLookup,System.Int32,System.Int32)
+  id: ConvertRGBToTerrainTypes(UnityEngine.Texture2D,Map.Rendering.Terrain.TerrainRGBLookup,System.Int32,System.Int32)
+  parent: Map.Rendering.Terrain.TerrainBitmapReader
+  langs:
+  - csharp
+  - vb
+  name: ConvertRGBToTerrainTypes(Texture2D, TerrainRGBLookup, int, int)
+  nameWithType: TerrainBitmapReader.ConvertRGBToTerrainTypes(Texture2D, TerrainRGBLookup, int, int)
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes(UnityEngine.Texture2D, Map.Rendering.Terrain.TerrainRGBLookup, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConvertRGBToTerrainTypes
+    path: Scripts/Map/Rendering/Terrain/TerrainBitmapReader.cs
+    startLine: 151
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Convert RGB pixels from terrain texture to terrain type indices
+
+    Uses TerrainRGBLookup to map RGB colors to terrain indices
+
+    Returns array of terrain indices [y * width + x] = terrainTypeIndex
+  example: []
+  syntax:
+    content: public uint[] ConvertRGBToTerrainTypes(Texture2D terrainTexture, TerrainRGBLookup rgbLookup, int width, int height)
+    parameters:
+    - id: terrainTexture
+      type: UnityEngine.Texture2D
+    - id: rgbLookup
+      type: Map.Rendering.Terrain.TerrainRGBLookup
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    return:
+      type: System.UInt32[]
+    content.vb: Public Function ConvertRGBToTerrainTypes(terrainTexture As Texture2D, rgbLookup As TerrainRGBLookup, width As Integer, height As Integer) As UInteger()
+  overload: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes*
+  nameWithType.vb: TerrainBitmapReader.ConvertRGBToTerrainTypes(Texture2D, TerrainRGBLookup, Integer, Integer)
+  fullName.vb: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes(UnityEngine.Texture2D, Map.Rendering.Terrain.TerrainRGBLookup, Integer, Integer)
+  name.vb: ConvertRGBToTerrainTypes(Texture2D, TerrainRGBLookup, Integer, Integer)
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.#ctor*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBitmapReader.#ctor
+  href: Map.Rendering.Terrain.TerrainBitmapReader.html#Map_Rendering_Terrain_TerrainBitmapReader__ctor_System_Boolean_
+  name: TerrainBitmapReader
+  nameWithType: TerrainBitmapReader.TerrainBitmapReader
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.TerrainBitmapReader
+  nameWithType.vb: TerrainBitmapReader.New
+  fullName.vb: Map.Rendering.Terrain.TerrainBitmapReader.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices
+  href: Map.Rendering.Terrain.TerrainBitmapReader.html#Map_Rendering_Terrain_TerrainBitmapReader_ReadBmpPaletteIndices_System_String_System_Int32_System_Int32_
+  name: ReadBmpPaletteIndices
+  nameWithType: TerrainBitmapReader.ReadBmpPaletteIndices
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.ReadBmpPaletteIndices
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes
+  href: Map.Rendering.Terrain.TerrainBitmapReader.html#Map_Rendering_Terrain_TerrainBitmapReader_ConvertRGBToTerrainTypes_UnityEngine_Texture2D_Map_Rendering_Terrain_TerrainRGBLookup_System_Int32_System_Int32_
+  name: ConvertRGBToTerrainTypes
+  nameWithType: TerrainBitmapReader.ConvertRGBToTerrainTypes
+  fullName: Map.Rendering.Terrain.TerrainBitmapReader.ConvertRGBToTerrainTypes
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: Map.Rendering.Terrain.TerrainRGBLookup
+  commentId: T:Map.Rendering.Terrain.TerrainRGBLookup
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html
+  name: TerrainRGBLookup
+  nameWithType: TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

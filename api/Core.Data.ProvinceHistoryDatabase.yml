@@ -1,0 +1,434 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceHistoryDatabase
+  commentId: T:Core.Data.ProvinceHistoryDatabase
+  id: ProvinceHistoryDatabase
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceHistoryDatabase.#ctor
+  - Core.Data.ProvinceHistoryDatabase.AddEvent(System.Int32,Core.Data.HistoricalEvent)
+  - Core.Data.ProvinceHistoryDatabase.Dispose
+  - Core.Data.ProvinceHistoryDatabase.GetHistorySummary(System.Int32)
+  - Core.Data.ProvinceHistoryDatabase.GetRecentEvents(System.Int32,System.Int32)
+  - Core.Data.ProvinceHistoryDatabase.GetStats
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistoryDatabase
+  nameWithType: ProvinceHistoryDatabase
+  fullName: Core.Data.ProvinceHistoryDatabase
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceHistoryDatabase
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Cold data storage for province historical events
+
+    Implements tiered history with compression to prevent unbounded growth
+
+    Follows performance architecture: recent events + compressed history + statistics
+  example: []
+  syntax:
+    content: public class ProvinceHistoryDatabase
+    content.vb: Public Class ProvinceHistoryDatabase
+  inheritance:
+  - System.Object
+- uid: Core.Data.ProvinceHistoryDatabase.#ctor
+  commentId: M:Core.Data.ProvinceHistoryDatabase.#ctor
+  id: '#ctor'
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistoryDatabase()
+  nameWithType: ProvinceHistoryDatabase.ProvinceHistoryDatabase()
+  fullName: Core.Data.ProvinceHistoryDatabase.ProvinceHistoryDatabase()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ProvinceHistoryDatabase()
+    content.vb: Public Sub New()
+  overload: Core.Data.ProvinceHistoryDatabase.#ctor*
+  nameWithType.vb: ProvinceHistoryDatabase.New()
+  fullName.vb: Core.Data.ProvinceHistoryDatabase.New()
+  name.vb: New()
+- uid: Core.Data.ProvinceHistoryDatabase.AddEvent(System.Int32,Core.Data.HistoricalEvent)
+  commentId: M:Core.Data.ProvinceHistoryDatabase.AddEvent(System.Int32,Core.Data.HistoricalEvent)
+  id: AddEvent(System.Int32,Core.Data.HistoricalEvent)
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: AddEvent(int, HistoricalEvent)
+  nameWithType: ProvinceHistoryDatabase.AddEvent(int, HistoricalEvent)
+  fullName: Core.Data.ProvinceHistoryDatabase.AddEvent(int, Core.Data.HistoricalEvent)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddEvent
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Add historical event for province (bounded growth)
+  example: []
+  syntax:
+    content: public void AddEvent(int provinceID, HistoricalEvent evt)
+    parameters:
+    - id: provinceID
+      type: System.Int32
+    - id: evt
+      type: Core.Data.HistoricalEvent
+    content.vb: Public Sub AddEvent(provinceID As Integer, evt As HistoricalEvent)
+  overload: Core.Data.ProvinceHistoryDatabase.AddEvent*
+  nameWithType.vb: ProvinceHistoryDatabase.AddEvent(Integer, HistoricalEvent)
+  fullName.vb: Core.Data.ProvinceHistoryDatabase.AddEvent(Integer, Core.Data.HistoricalEvent)
+  name.vb: AddEvent(Integer, HistoricalEvent)
+- uid: Core.Data.ProvinceHistoryDatabase.GetRecentEvents(System.Int32,System.Int32)
+  commentId: M:Core.Data.ProvinceHistoryDatabase.GetRecentEvents(System.Int32,System.Int32)
+  id: GetRecentEvents(System.Int32,System.Int32)
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: GetRecentEvents(int, int)
+  nameWithType: ProvinceHistoryDatabase.GetRecentEvents(int, int)
+  fullName: Core.Data.ProvinceHistoryDatabase.GetRecentEvents(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetRecentEvents
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get recent events for province (bounded result)
+  example: []
+  syntax:
+    content: public List<HistoricalEvent> GetRecentEvents(int provinceID, int maxCount = 20)
+    parameters:
+    - id: provinceID
+      type: System.Int32
+    - id: maxCount
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.List{Core.Data.HistoricalEvent}
+    content.vb: Public Function GetRecentEvents(provinceID As Integer, maxCount As Integer = 20) As List(Of HistoricalEvent)
+  overload: Core.Data.ProvinceHistoryDatabase.GetRecentEvents*
+  nameWithType.vb: ProvinceHistoryDatabase.GetRecentEvents(Integer, Integer)
+  fullName.vb: Core.Data.ProvinceHistoryDatabase.GetRecentEvents(Integer, Integer)
+  name.vb: GetRecentEvents(Integer, Integer)
+- uid: Core.Data.ProvinceHistoryDatabase.GetHistorySummary(System.Int32)
+  commentId: M:Core.Data.ProvinceHistoryDatabase.GetHistorySummary(System.Int32)
+  id: GetHistorySummary(System.Int32)
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: GetHistorySummary(int)
+  nameWithType: ProvinceHistoryDatabase.GetHistorySummary(int)
+  fullName: Core.Data.ProvinceHistoryDatabase.GetHistorySummary(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHistorySummary
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get compressed historical summary for province
+  example: []
+  syntax:
+    content: public ProvinceHistorySummary GetHistorySummary(int provinceID)
+    parameters:
+    - id: provinceID
+      type: System.Int32
+    return:
+      type: Core.Data.ProvinceHistorySummary
+    content.vb: Public Function GetHistorySummary(provinceID As Integer) As ProvinceHistorySummary
+  overload: Core.Data.ProvinceHistoryDatabase.GetHistorySummary*
+  nameWithType.vb: ProvinceHistoryDatabase.GetHistorySummary(Integer)
+  fullName.vb: Core.Data.ProvinceHistoryDatabase.GetHistorySummary(Integer)
+  name.vb: GetHistorySummary(Integer)
+- uid: Core.Data.ProvinceHistoryDatabase.GetStats
+  commentId: M:Core.Data.ProvinceHistoryDatabase.GetStats
+  id: GetStats
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: GetStats()
+  nameWithType: ProvinceHistoryDatabase.GetStats()
+  fullName: Core.Data.ProvinceHistoryDatabase.GetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStats
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 149
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get memory usage statistics
+  example: []
+  syntax:
+    content: public HistoryDatabaseStats GetStats()
+    return:
+      type: Core.Data.HistoryDatabaseStats
+    content.vb: Public Function GetStats() As HistoryDatabaseStats
+  overload: Core.Data.ProvinceHistoryDatabase.GetStats*
+- uid: Core.Data.ProvinceHistoryDatabase.Dispose
+  commentId: M:Core.Data.ProvinceHistoryDatabase.Dispose
+  id: Dispose
+  parent: Core.Data.ProvinceHistoryDatabase
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceHistoryDatabase.Dispose()
+  fullName: Core.Data.ProvinceHistoryDatabase.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Data.ProvinceHistoryDatabase.Dispose*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.ProvinceHistoryDatabase.#ctor*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.#ctor
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase__ctor
+  name: ProvinceHistoryDatabase
+  nameWithType: ProvinceHistoryDatabase.ProvinceHistoryDatabase
+  fullName: Core.Data.ProvinceHistoryDatabase.ProvinceHistoryDatabase
+  nameWithType.vb: ProvinceHistoryDatabase.New
+  fullName.vb: Core.Data.ProvinceHistoryDatabase.New
+  name.vb: New
+- uid: Core.Data.ProvinceHistoryDatabase.AddEvent*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.AddEvent
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase_AddEvent_System_Int32_Core_Data_HistoricalEvent_
+  name: AddEvent
+  nameWithType: ProvinceHistoryDatabase.AddEvent
+  fullName: Core.Data.ProvinceHistoryDatabase.AddEvent
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  parent: Core.Data
+  href: Core.Data.HistoricalEvent.html
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent
+- uid: Core.Data.ProvinceHistoryDatabase.GetRecentEvents*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.GetRecentEvents
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase_GetRecentEvents_System_Int32_System_Int32_
+  name: GetRecentEvents
+  nameWithType: ProvinceHistoryDatabase.GetRecentEvents
+  fullName: Core.Data.ProvinceHistoryDatabase.GetRecentEvents
+- uid: System.Collections.Generic.List{Core.Data.HistoricalEvent}
+  commentId: T:System.Collections.Generic.List{Core.Data.HistoricalEvent}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Data.HistoricalEvent.html
+  name: List<HistoricalEvent>
+  nameWithType: List<HistoricalEvent>
+  fullName: System.Collections.Generic.List<Core.Data.HistoricalEvent>
+  nameWithType.vb: List(Of HistoricalEvent)
+  fullName.vb: System.Collections.Generic.List(Of Core.Data.HistoricalEvent)
+  name.vb: List(Of HistoricalEvent)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    href: Core.Data.HistoricalEvent.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Data.ProvinceHistoryDatabase.GetHistorySummary*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.GetHistorySummary
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase_GetHistorySummary_System_Int32_
+  name: GetHistorySummary
+  nameWithType: ProvinceHistoryDatabase.GetHistorySummary
+  fullName: Core.Data.ProvinceHistoryDatabase.GetHistorySummary
+- uid: Core.Data.ProvinceHistorySummary
+  commentId: T:Core.Data.ProvinceHistorySummary
+  parent: Core.Data
+  href: Core.Data.ProvinceHistorySummary.html
+  name: ProvinceHistorySummary
+  nameWithType: ProvinceHistorySummary
+  fullName: Core.Data.ProvinceHistorySummary
+- uid: Core.Data.ProvinceHistoryDatabase.GetStats*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.GetStats
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase_GetStats
+  name: GetStats
+  nameWithType: ProvinceHistoryDatabase.GetStats
+  fullName: Core.Data.ProvinceHistoryDatabase.GetStats
+- uid: Core.Data.HistoryDatabaseStats
+  commentId: T:Core.Data.HistoryDatabaseStats
+  parent: Core.Data
+  href: Core.Data.HistoryDatabaseStats.html
+  name: HistoryDatabaseStats
+  nameWithType: HistoryDatabaseStats
+  fullName: Core.Data.HistoryDatabaseStats
+- uid: Core.Data.ProvinceHistoryDatabase.Dispose*
+  commentId: Overload:Core.Data.ProvinceHistoryDatabase.Dispose
+  href: Core.Data.ProvinceHistoryDatabase.html#Core_Data_ProvinceHistoryDatabase_Dispose
+  name: Dispose
+  nameWithType: ProvinceHistoryDatabase.Dispose
+  fullName: Core.Data.ProvinceHistoryDatabase.Dispose

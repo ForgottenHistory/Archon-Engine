@@ -1,0 +1,511 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.CoreTextureSet
+  commentId: T:Map.Rendering.CoreTextureSet
+  id: CoreTextureSet
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.CoreTextureSet.#ctor(System.Int32,System.Int32,System.Boolean)
+  - Map.Rendering.CoreTextureSet.ApplyChanges
+  - Map.Rendering.CoreTextureSet.BindToMaterial(UnityEngine.Material)
+  - Map.Rendering.CoreTextureSet.CreateTextures
+  - Map.Rendering.CoreTextureSet.ProvinceColorTexture
+  - Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+  - Map.Rendering.CoreTextureSet.ProvinceIDTexture
+  - Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+  - Map.Rendering.CoreTextureSet.Release
+  - Map.Rendering.CoreTextureSet.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  langs:
+  - csharp
+  - vb
+  name: CoreTextureSet
+  nameWithType: CoreTextureSet
+  fullName: Map.Rendering.CoreTextureSet
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CoreTextureSet
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Manages core gameplay-critical textures
+
+    Province ID, Owner, Color, and Development textures
+
+    Extracted from MapTextureManager for single responsibility
+  example: []
+  syntax:
+    content: public class CoreTextureSet
+    content.vb: Public Class CoreTextureSet
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.CoreTextureSet.ProvinceIDTexture
+  commentId: P:Map.Rendering.CoreTextureSet.ProvinceIDTexture
+  id: ProvinceIDTexture
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDTexture
+  nameWithType: CoreTextureSet.ProvinceIDTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceIDTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDTexture
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceIDTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceIDTexture As RenderTexture
+  overload: Map.Rendering.CoreTextureSet.ProvinceIDTexture*
+- uid: Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+  commentId: P:Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+  id: ProvinceOwnerTexture
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnerTexture
+  nameWithType: CoreTextureSet.ProvinceOwnerTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnerTexture
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceOwnerTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceOwnerTexture As RenderTexture
+  overload: Map.Rendering.CoreTextureSet.ProvinceOwnerTexture*
+- uid: Map.Rendering.CoreTextureSet.ProvinceColorTexture
+  commentId: P:Map.Rendering.CoreTextureSet.ProvinceColorTexture
+  id: ProvinceColorTexture
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColorTexture
+  nameWithType: CoreTextureSet.ProvinceColorTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceColorTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColorTexture
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Texture2D ProvinceColorTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public ReadOnly Property ProvinceColorTexture As Texture2D
+  overload: Map.Rendering.CoreTextureSet.ProvinceColorTexture*
+- uid: Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+  commentId: P:Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+  id: ProvinceDevelopmentTexture
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDevelopmentTexture
+  nameWithType: CoreTextureSet.ProvinceDevelopmentTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDevelopmentTexture
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public RenderTexture ProvinceDevelopmentTexture { get; }
+    parameters: []
+    return:
+      type: UnityEngine.RenderTexture
+    content.vb: Public ReadOnly Property ProvinceDevelopmentTexture As RenderTexture
+  overload: Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture*
+- uid: Map.Rendering.CoreTextureSet.#ctor(System.Int32,System.Int32,System.Boolean)
+  commentId: M:Map.Rendering.CoreTextureSet.#ctor(System.Int32,System.Int32,System.Boolean)
+  id: '#ctor(System.Int32,System.Int32,System.Boolean)'
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: CoreTextureSet(int, int, bool)
+  nameWithType: CoreTextureSet.CoreTextureSet(int, int, bool)
+  fullName: Map.Rendering.CoreTextureSet.CoreTextureSet(int, int, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public CoreTextureSet(int width, int height, bool logCreation = true)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: logCreation
+      type: System.Boolean
+    content.vb: Public Sub New(width As Integer, height As Integer, logCreation As Boolean = True)
+  overload: Map.Rendering.CoreTextureSet.#ctor*
+  nameWithType.vb: CoreTextureSet.New(Integer, Integer, Boolean)
+  fullName.vb: Map.Rendering.CoreTextureSet.New(Integer, Integer, Boolean)
+  name.vb: New(Integer, Integer, Boolean)
+- uid: Map.Rendering.CoreTextureSet.CreateTextures
+  commentId: M:Map.Rendering.CoreTextureSet.CreateTextures
+  id: CreateTextures
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: CreateTextures()
+  nameWithType: CoreTextureSet.CreateTextures()
+  fullName: Map.Rendering.CoreTextureSet.CreateTextures()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateTextures
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Create all core textures
+  example: []
+  syntax:
+    content: public void CreateTextures()
+    content.vb: Public Sub CreateTextures()
+  overload: Map.Rendering.CoreTextureSet.CreateTextures*
+- uid: Map.Rendering.CoreTextureSet.BindToMaterial(UnityEngine.Material)
+  commentId: M:Map.Rendering.CoreTextureSet.BindToMaterial(UnityEngine.Material)
+  id: BindToMaterial(UnityEngine.Material)
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: BindToMaterial(Material)
+  nameWithType: CoreTextureSet.BindToMaterial(Material)
+  fullName: Map.Rendering.CoreTextureSet.BindToMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BindToMaterial
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 186
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Bind core textures to material
+  example: []
+  syntax:
+    content: public void BindToMaterial(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Public Sub BindToMaterial(material As Material)
+  overload: Map.Rendering.CoreTextureSet.BindToMaterial*
+- uid: Map.Rendering.CoreTextureSet.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  commentId: M:Map.Rendering.CoreTextureSet.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  id: SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceColor(int, int, Color32)
+  nameWithType: CoreTextureSet.SetProvinceColor(int, int, Color32)
+  fullName: Map.Rendering.CoreTextureSet.SetProvinceColor(int, int, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceColor
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 204
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update province color at coordinates
+  example: []
+  syntax:
+    content: public void SetProvinceColor(int x, int y, Color32 color)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetProvinceColor(x As Integer, y As Integer, color As Color32)
+  overload: Map.Rendering.CoreTextureSet.SetProvinceColor*
+  nameWithType.vb: CoreTextureSet.SetProvinceColor(Integer, Integer, Color32)
+  fullName.vb: Map.Rendering.CoreTextureSet.SetProvinceColor(Integer, Integer, UnityEngine.Color32)
+  name.vb: SetProvinceColor(Integer, Integer, Color32)
+- uid: Map.Rendering.CoreTextureSet.ApplyChanges
+  commentId: M:Map.Rendering.CoreTextureSet.ApplyChanges
+  id: ApplyChanges
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: ApplyChanges()
+  nameWithType: CoreTextureSet.ApplyChanges()
+  fullName: Map.Rendering.CoreTextureSet.ApplyChanges()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyChanges
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 219
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    NOTE: SetProvinceDevelopment removed - ProvinceDevelopmentTexture is now a RenderTexture
+
+    updated by GPU compute shaders. Use GradientMapMode for gradient-based colorization.
+  example: []
+  syntax:
+    content: public void ApplyChanges()
+    content.vb: Public Sub ApplyChanges()
+  overload: Map.Rendering.CoreTextureSet.ApplyChanges*
+- uid: Map.Rendering.CoreTextureSet.Release
+  commentId: M:Map.Rendering.CoreTextureSet.Release
+  id: Release
+  parent: Map.Rendering.CoreTextureSet
+  langs:
+  - csharp
+  - vb
+  name: Release()
+  nameWithType: CoreTextureSet.Release()
+  fullName: Map.Rendering.CoreTextureSet.Release()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/CoreTextureSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Release
+    path: Scripts/Map/Rendering/CoreTextureSet.cs
+    startLine: 228
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Release all textures
+  example: []
+  syntax:
+    content: public void Release()
+    content.vb: Public Sub Release()
+  overload: Map.Rendering.CoreTextureSet.Release*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.CoreTextureSet.ProvinceIDTexture*
+  commentId: Overload:Map.Rendering.CoreTextureSet.ProvinceIDTexture
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_ProvinceIDTexture
+  name: ProvinceIDTexture
+  nameWithType: CoreTextureSet.ProvinceIDTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceIDTexture
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.CoreTextureSet.ProvinceOwnerTexture*
+  commentId: Overload:Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_ProvinceOwnerTexture
+  name: ProvinceOwnerTexture
+  nameWithType: CoreTextureSet.ProvinceOwnerTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceOwnerTexture
+- uid: Map.Rendering.CoreTextureSet.ProvinceColorTexture*
+  commentId: Overload:Map.Rendering.CoreTextureSet.ProvinceColorTexture
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_ProvinceColorTexture
+  name: ProvinceColorTexture
+  nameWithType: CoreTextureSet.ProvinceColorTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceColorTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture*
+  commentId: Overload:Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_ProvinceDevelopmentTexture
+  name: ProvinceDevelopmentTexture
+  nameWithType: CoreTextureSet.ProvinceDevelopmentTexture
+  fullName: Map.Rendering.CoreTextureSet.ProvinceDevelopmentTexture
+- uid: Map.Rendering.CoreTextureSet.#ctor*
+  commentId: Overload:Map.Rendering.CoreTextureSet.#ctor
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet__ctor_System_Int32_System_Int32_System_Boolean_
+  name: CoreTextureSet
+  nameWithType: CoreTextureSet.CoreTextureSet
+  fullName: Map.Rendering.CoreTextureSet.CoreTextureSet
+  nameWithType.vb: CoreTextureSet.New
+  fullName.vb: Map.Rendering.CoreTextureSet.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.CoreTextureSet.CreateTextures*
+  commentId: Overload:Map.Rendering.CoreTextureSet.CreateTextures
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_CreateTextures
+  name: CreateTextures
+  nameWithType: CoreTextureSet.CreateTextures
+  fullName: Map.Rendering.CoreTextureSet.CreateTextures
+- uid: Map.Rendering.CoreTextureSet.BindToMaterial*
+  commentId: Overload:Map.Rendering.CoreTextureSet.BindToMaterial
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_BindToMaterial_UnityEngine_Material_
+  name: BindToMaterial
+  nameWithType: CoreTextureSet.BindToMaterial
+  fullName: Map.Rendering.CoreTextureSet.BindToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.CoreTextureSet.SetProvinceColor*
+  commentId: Overload:Map.Rendering.CoreTextureSet.SetProvinceColor
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_SetProvinceColor_System_Int32_System_Int32_UnityEngine_Color32_
+  name: SetProvinceColor
+  nameWithType: CoreTextureSet.SetProvinceColor
+  fullName: Map.Rendering.CoreTextureSet.SetProvinceColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Map.Rendering.CoreTextureSet.ApplyChanges*
+  commentId: Overload:Map.Rendering.CoreTextureSet.ApplyChanges
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_ApplyChanges
+  name: ApplyChanges
+  nameWithType: CoreTextureSet.ApplyChanges
+  fullName: Map.Rendering.CoreTextureSet.ApplyChanges
+- uid: Map.Rendering.CoreTextureSet.Release*
+  commentId: Overload:Map.Rendering.CoreTextureSet.Release
+  href: Map.Rendering.CoreTextureSet.html#Map_Rendering_CoreTextureSet_Release
+  name: Release
+  nameWithType: CoreTextureSet.Release
+  fullName: Map.Rendering.CoreTextureSet.Release

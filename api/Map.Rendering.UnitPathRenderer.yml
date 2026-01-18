@@ -1,0 +1,455 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.UnitPathRenderer
+  commentId: T:Map.Rendering.UnitPathRenderer
+  id: UnitPathRenderer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.UnitPathRenderer.ActivePathCount
+  - Map.Rendering.UnitPathRenderer.GetCountryColor(System.UInt16)
+  - Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Rendering.ProvinceMapping,UnityEngine.Transform,System.Int32,System.Int32)
+  - Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Utils.ProvinceCenterLookup)
+  - Map.Rendering.UnitPathRenderer.IsInitialized
+  - Map.Rendering.UnitPathRenderer.SetEnabled(System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: UnitPathRenderer
+  nameWithType: UnitPathRenderer
+  fullName: Map.Rendering.UnitPathRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitPathRenderer
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    ENGINE (Map Layer) - Renders movement path lines for units.
+
+
+    Simple LineRenderer-based visualization for unit movement paths.
+
+    Subscribes to Core movement events and draws paths using ProvinceCenterLookup.
+
+
+    Can be disabled/replaced by GAME layer if custom visualization is needed.
+  example: []
+  syntax:
+    content: 'public class UnitPathRenderer : MonoBehaviour'
+    content.vb: Public Class UnitPathRenderer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.UnitPathRenderer.IsInitialized
+  commentId: P:Map.Rendering.UnitPathRenderer.IsInitialized
+  id: IsInitialized
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: UnitPathRenderer.IsInitialized
+  fullName: Map.Rendering.UnitPathRenderer.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Map.Rendering.UnitPathRenderer.IsInitialized*
+- uid: Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Utils.ProvinceCenterLookup)
+  commentId: M:Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Utils.ProvinceCenterLookup)
+  id: Initialize(Core.GameState,Map.Utils.ProvinceCenterLookup)
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, ProvinceCenterLookup)
+  nameWithType: UnitPathRenderer.Initialize(GameState, ProvinceCenterLookup)
+  fullName: Map.Rendering.UnitPathRenderer.Initialize(Core.GameState, Map.Utils.ProvinceCenterLookup)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize the path renderer.
+  example: []
+  syntax:
+    content: public void Initialize(GameState gameState, ProvinceCenterLookup centerLookup)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    - id: centerLookup
+      type: Map.Utils.ProvinceCenterLookup
+    content.vb: Public Sub Initialize(gameState As GameState, centerLookup As ProvinceCenterLookup)
+  overload: Map.Rendering.UnitPathRenderer.Initialize*
+- uid: Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Rendering.ProvinceMapping,UnityEngine.Transform,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.UnitPathRenderer.Initialize(Core.GameState,Map.Rendering.ProvinceMapping,UnityEngine.Transform,System.Int32,System.Int32)
+  id: Initialize(Core.GameState,Map.Rendering.ProvinceMapping,UnityEngine.Transform,System.Int32,System.Int32)
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, ProvinceMapping, Transform, int, int)
+  nameWithType: UnitPathRenderer.Initialize(GameState, ProvinceMapping, Transform, int, int)
+  fullName: Map.Rendering.UnitPathRenderer.Initialize(Core.GameState, Map.Rendering.ProvinceMapping, UnityEngine.Transform, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 72
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Alternative initialization with ProvinceMapping (creates its own ProvinceCenterLookup).
+  example: []
+  syntax:
+    content: public void Initialize(GameState gameState, ProvinceMapping provinceMapping, Transform meshTransform, int texWidth, int texHeight)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    - id: provinceMapping
+      type: Map.Rendering.ProvinceMapping
+    - id: meshTransform
+      type: UnityEngine.Transform
+    - id: texWidth
+      type: System.Int32
+    - id: texHeight
+      type: System.Int32
+    content.vb: Public Sub Initialize(gameState As GameState, provinceMapping As ProvinceMapping, meshTransform As Transform, texWidth As Integer, texHeight As Integer)
+  overload: Map.Rendering.UnitPathRenderer.Initialize*
+  nameWithType.vb: UnitPathRenderer.Initialize(GameState, ProvinceMapping, Transform, Integer, Integer)
+  fullName.vb: Map.Rendering.UnitPathRenderer.Initialize(Core.GameState, Map.Rendering.ProvinceMapping, UnityEngine.Transform, Integer, Integer)
+  name.vb: Initialize(GameState, ProvinceMapping, Transform, Integer, Integer)
+- uid: Map.Rendering.UnitPathRenderer.GetCountryColor(System.UInt16)
+  commentId: M:Map.Rendering.UnitPathRenderer.GetCountryColor(System.UInt16)
+  id: GetCountryColor(System.UInt16)
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: GetCountryColor(ushort)
+  nameWithType: UnitPathRenderer.GetCountryColor(ushort)
+  fullName: Map.Rendering.UnitPathRenderer.GetCountryColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryColor
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 207
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get color for a country (simple hue-based).
+
+    Override in subclass or use SetCountryColorProvider for custom colors.
+  example: []
+  syntax:
+    content: protected virtual Color GetCountryColor(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color
+    content.vb: Protected Overridable Function GetCountryColor(countryID As UShort) As Color
+  overload: Map.Rendering.UnitPathRenderer.GetCountryColor*
+  nameWithType.vb: UnitPathRenderer.GetCountryColor(UShort)
+  fullName.vb: Map.Rendering.UnitPathRenderer.GetCountryColor(UShort)
+  name.vb: GetCountryColor(UShort)
+- uid: Map.Rendering.UnitPathRenderer.SetEnabled(System.Boolean)
+  commentId: M:Map.Rendering.UnitPathRenderer.SetEnabled(System.Boolean)
+  id: SetEnabled(System.Boolean)
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetEnabled(bool)
+  nameWithType: UnitPathRenderer.SetEnabled(bool)
+  fullName: Map.Rendering.UnitPathRenderer.SetEnabled(bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetEnabled
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 216
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Enable or disable path rendering at runtime.
+  example: []
+  syntax:
+    content: public void SetEnabled(bool enabled)
+    parameters:
+    - id: enabled
+      type: System.Boolean
+    content.vb: Public Sub SetEnabled(enabled As Boolean)
+  overload: Map.Rendering.UnitPathRenderer.SetEnabled*
+  nameWithType.vb: UnitPathRenderer.SetEnabled(Boolean)
+  fullName.vb: Map.Rendering.UnitPathRenderer.SetEnabled(Boolean)
+  name.vb: SetEnabled(Boolean)
+- uid: Map.Rendering.UnitPathRenderer.ActivePathCount
+  commentId: P:Map.Rendering.UnitPathRenderer.ActivePathCount
+  id: ActivePathCount
+  parent: Map.Rendering.UnitPathRenderer
+  langs:
+  - csharp
+  - vb
+  name: ActivePathCount
+  nameWithType: UnitPathRenderer.ActivePathCount
+  fullName: Map.Rendering.UnitPathRenderer.ActivePathCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/UnitPathRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ActivePathCount
+    path: Scripts/Map/Rendering/UnitPathRenderer.cs
+    startLine: 226
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get count of active path lines.
+  example: []
+  syntax:
+    content: public int ActivePathCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ActivePathCount As Integer
+  overload: Map.Rendering.UnitPathRenderer.ActivePathCount*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.UnitPathRenderer.IsInitialized*
+  commentId: Overload:Map.Rendering.UnitPathRenderer.IsInitialized
+  href: Map.Rendering.UnitPathRenderer.html#Map_Rendering_UnitPathRenderer_IsInitialized
+  name: IsInitialized
+  nameWithType: UnitPathRenderer.IsInitialized
+  fullName: Map.Rendering.UnitPathRenderer.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.UnitPathRenderer.Initialize*
+  commentId: Overload:Map.Rendering.UnitPathRenderer.Initialize
+  href: Map.Rendering.UnitPathRenderer.html#Map_Rendering_UnitPathRenderer_Initialize_Core_GameState_Map_Utils_ProvinceCenterLookup_
+  name: Initialize
+  nameWithType: UnitPathRenderer.Initialize
+  fullName: Map.Rendering.UnitPathRenderer.Initialize
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Map.Utils.ProvinceCenterLookup
+  commentId: T:Map.Utils.ProvinceCenterLookup
+  parent: Map.Utils
+  href: Map.Utils.ProvinceCenterLookup.html
+  name: ProvinceCenterLookup
+  nameWithType: ProvinceCenterLookup
+  fullName: Map.Utils.ProvinceCenterLookup
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Map.Utils
+  commentId: N:Map.Utils
+  href: Map.html
+  name: Map.Utils
+  nameWithType: Map.Utils
+  fullName: Map.Utils
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Utils
+    name: Utils
+    href: Map.Utils.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Utils
+    name: Utils
+    href: Map.Utils.html
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.UnitPathRenderer.GetCountryColor*
+  commentId: Overload:Map.Rendering.UnitPathRenderer.GetCountryColor
+  href: Map.Rendering.UnitPathRenderer.html#Map_Rendering_UnitPathRenderer_GetCountryColor_System_UInt16_
+  name: GetCountryColor
+  nameWithType: UnitPathRenderer.GetCountryColor
+  fullName: Map.Rendering.UnitPathRenderer.GetCountryColor
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: Map.Rendering.UnitPathRenderer.SetEnabled*
+  commentId: Overload:Map.Rendering.UnitPathRenderer.SetEnabled
+  href: Map.Rendering.UnitPathRenderer.html#Map_Rendering_UnitPathRenderer_SetEnabled_System_Boolean_
+  name: SetEnabled
+  nameWithType: UnitPathRenderer.SetEnabled
+  fullName: Map.Rendering.UnitPathRenderer.SetEnabled
+- uid: Map.Rendering.UnitPathRenderer.ActivePathCount*
+  commentId: Overload:Map.Rendering.UnitPathRenderer.ActivePathCount
+  href: Map.Rendering.UnitPathRenderer.html#Map_Rendering_UnitPathRenderer_ActivePathCount
+  name: ActivePathCount
+  nameWithType: UnitPathRenderer.ActivePathCount
+  fullName: Map.Rendering.UnitPathRenderer.ActivePathCount

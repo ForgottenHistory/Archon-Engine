@@ -1,0 +1,156 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.PlayerCountrySelectedEvent
+  commentId: T:StarterKit.PlayerCountrySelectedEvent
+  id: PlayerCountrySelectedEvent
+  parent: StarterKit
+  children:
+  - StarterKit.PlayerCountrySelectedEvent.CountryId
+  - StarterKit.PlayerCountrySelectedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: PlayerCountrySelectedEvent
+  nameWithType: PlayerCountrySelectedEvent
+  fullName: StarterKit.PlayerCountrySelectedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerCountrySelectedEvent
+    path: Scripts/StarterKit/State/PlayerEvents.cs
+    startLine: 8
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Fired when player selects a country and clicks Start.
+
+    Game layer can subscribe to this to initialize game-specific systems.
+  example: []
+  syntax:
+    content: 'public struct PlayerCountrySelectedEvent : IGameEvent'
+    content.vb: Public Structure PlayerCountrySelectedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: StarterKit.PlayerCountrySelectedEvent.CountryId
+  commentId: F:StarterKit.PlayerCountrySelectedEvent.CountryId
+  id: CountryId
+  parent: StarterKit.PlayerCountrySelectedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: PlayerCountrySelectedEvent.CountryId
+  fullName: StarterKit.PlayerCountrySelectedEvent.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/StarterKit/State/PlayerEvents.cs
+    startLine: 10
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: StarterKit.PlayerCountrySelectedEvent.TimeStamp
+  commentId: P:StarterKit.PlayerCountrySelectedEvent.TimeStamp
+  id: TimeStamp
+  parent: StarterKit.PlayerCountrySelectedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: PlayerCountrySelectedEvent.TimeStamp
+  fullName: StarterKit.PlayerCountrySelectedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/StarterKit/State/PlayerEvents.cs
+    startLine: 11
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: StarterKit.PlayerCountrySelectedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.PlayerCountrySelectedEvent.TimeStamp*
+  commentId: Overload:StarterKit.PlayerCountrySelectedEvent.TimeStamp
+  href: StarterKit.PlayerCountrySelectedEvent.html#StarterKit_PlayerCountrySelectedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: PlayerCountrySelectedEvent.TimeStamp
+  fullName: StarterKit.PlayerCountrySelectedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

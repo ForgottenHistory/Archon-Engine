@@ -1,0 +1,261 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.SparseData.IDefinition
+  commentId: T:Core.Data.SparseData.IDefinition
+  id: IDefinition
+  parent: Core.Data.SparseData
+  children:
+  - Core.Data.SparseData.IDefinition.ID
+  - Core.Data.SparseData.IDefinition.StringID
+  - Core.Data.SparseData.IDefinition.Version
+  langs:
+  - csharp
+  - vb
+  name: IDefinition
+  nameWithType: IDefinition
+  fullName: Core.Data.SparseData.IDefinition
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/IDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IDefinition
+    path: Scripts/Core/Data/SparseData/IDefinition.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Base interface for all definition types (buildings, modifiers, trade goods, etc.)
+
+
+    Purpose: Enables generic definition loading and mod support
+
+    - ID: Runtime-assigned unique identifier (assigned during loading)
+
+    - StringID: Stable identifier for save/load and mod compatibility
+
+    - Version: Definition version for compatibility checks
+
+
+    Pattern:
+
+    - Engine defines interface (mechanism)
+
+    - Game implements specific definitions (policy)
+
+    - Mods add definitions at runtime
+
+
+    Example implementations:
+
+    - BuildingDefinition (game-specific fields: cost, effects)
+
+    - ModifierDefinition (game-specific fields: stat bonuses, duration)
+
+    - TradeGoodDefinition (game-specific fields: base price, category)
+
+
+    Mod compatibility:
+
+    - StringID stable across saves (e.g., "farm")
+
+    - ID assigned at runtime (may differ between sessions)
+
+    - Version allows definition evolution
+  example: []
+  syntax:
+    content: public interface IDefinition
+    content.vb: Public Interface IDefinition
+- uid: Core.Data.SparseData.IDefinition.ID
+  commentId: P:Core.Data.SparseData.IDefinition.ID
+  id: ID
+  parent: Core.Data.SparseData.IDefinition
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: IDefinition.ID
+  fullName: Core.Data.SparseData.IDefinition.ID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/IDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ID
+    path: Scripts/Core/Data/SparseData/IDefinition.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Runtime-assigned unique identifier
+
+    - Assigned during definition loading (0-65535 range)
+
+    - May differ between game sessions
+
+    - Used for fast lookups in sparse collections
+  example: []
+  syntax:
+    content: ushort ID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Property ID As UShort
+  overload: Core.Data.SparseData.IDefinition.ID*
+- uid: Core.Data.SparseData.IDefinition.StringID
+  commentId: P:Core.Data.SparseData.IDefinition.StringID
+  id: StringID
+  parent: Core.Data.SparseData.IDefinition
+  langs:
+  - csharp
+  - vb
+  name: StringID
+  nameWithType: IDefinition.StringID
+  fullName: Core.Data.SparseData.IDefinition.StringID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/IDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StringID
+    path: Scripts/Core/Data/SparseData/IDefinition.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Stable string identifier for save/load compatibility
+
+    - Unique across all definitions of this type
+
+    - Never changes (mod compatibility)
+
+    - Used in save files and mod references
+
+    - Example: "farm", "gold_mine", "tax_modifier"
+  example: []
+  syntax:
+    content: string StringID { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property StringID As String
+  overload: Core.Data.SparseData.IDefinition.StringID*
+- uid: Core.Data.SparseData.IDefinition.Version
+  commentId: P:Core.Data.SparseData.IDefinition.Version
+  id: Version
+  parent: Core.Data.SparseData.IDefinition
+  langs:
+  - csharp
+  - vb
+  name: Version
+  nameWithType: IDefinition.Version
+  fullName: Core.Data.SparseData.IDefinition.Version
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/SparseData/IDefinition.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Version
+    path: Scripts/Core/Data/SparseData/IDefinition.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Data.SparseData
+  summary: >-
+    Definition version for compatibility checks
+
+    - Increment when definition format changes
+
+    - Enables graceful handling of old saves
+
+    - Allows mod compatibility warnings
+  example: []
+  syntax:
+    content: ushort Version { get; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: ReadOnly Property Version As UShort
+  overload: Core.Data.SparseData.IDefinition.Version*
+references:
+- uid: Core.Data.SparseData
+  commentId: N:Core.Data.SparseData
+  href: Core.html
+  name: Core.Data.SparseData
+  nameWithType: Core.Data.SparseData
+  fullName: Core.Data.SparseData
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.SparseData
+    name: SparseData
+    href: Core.Data.SparseData.html
+- uid: Core.Data.SparseData.IDefinition.ID*
+  commentId: Overload:Core.Data.SparseData.IDefinition.ID
+  href: Core.Data.SparseData.IDefinition.html#Core_Data_SparseData_IDefinition_ID
+  name: ID
+  nameWithType: IDefinition.ID
+  fullName: Core.Data.SparseData.IDefinition.ID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.SparseData.IDefinition.StringID*
+  commentId: Overload:Core.Data.SparseData.IDefinition.StringID
+  href: Core.Data.SparseData.IDefinition.html#Core_Data_SparseData_IDefinition_StringID
+  name: StringID
+  nameWithType: IDefinition.StringID
+  fullName: Core.Data.SparseData.IDefinition.StringID
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.SparseData.IDefinition.Version*
+  commentId: Overload:Core.Data.SparseData.IDefinition.Version
+  href: Core.Data.SparseData.IDefinition.html#Core_Data_SparseData_IDefinition_Version
+  name: Version
+  nameWithType: IDefinition.Version
+  fullName: Core.Data.SparseData.IDefinition.Version

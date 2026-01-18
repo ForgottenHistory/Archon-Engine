@@ -1,0 +1,1994 @@
+### YamlMime:TableOfContent
+items:
+- uid: Core
+  name: Core
+  type: Namespace
+  items:
+  - uid: Core.CommandExecutedEvent
+    name: CommandExecutedEvent
+    type: Struct
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    type: Class
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: EngineInitializer.LoadingPhase
+    type: Enum
+  - uid: Core.EventBus
+    name: EventBus
+    type: Class
+  - uid: Core.GameSettings
+    name: GameSettings
+    type: Class
+  - uid: Core.GameSettings.ValidationResult
+    name: GameSettings.ValidationResult
+    type: Struct
+  - uid: Core.GameState
+    name: GameState
+    type: Class
+  - uid: Core.GameStateInitializedEvent
+    name: GameStateInitializedEvent
+    type: Struct
+  - uid: Core.GameStateSnapshot
+    name: GameStateSnapshot
+    type: Class
+  - uid: Core.IGameEvent
+    name: IGameEvent
+    type: Interface
+  - uid: Core.ReadOnlyAttribute
+    name: ReadOnlyAttribute
+    type: Class
+  - uid: Core.ReadOnlyDrawer
+    name: ReadOnlyDrawer
+    type: Class
+  - uid: Core.SimulationDataReadyEvent
+    name: SimulationDataReadyEvent
+    type: Struct
+- uid: Core.AI
+  name: Core.AI
+  type: Namespace
+  items:
+  - uid: Core.AI.AIDebugInfo
+    name: AIDebugInfo
+    type: Struct
+  - uid: Core.AI.AIDistanceCalculator
+    name: AIDistanceCalculator
+    type: Class
+  - uid: Core.AI.AIGoal
+    name: AIGoal
+    type: Class
+  - uid: Core.AI.AIGoalDiscovery
+    name: AIGoalDiscovery
+    type: Class
+  - uid: Core.AI.AIGoalRegistry
+    name: AIGoalRegistry
+    type: Class
+  - uid: Core.AI.AIScheduler
+    name: AIScheduler
+    type: Class
+  - uid: Core.AI.AISchedulingConfig
+    name: AISchedulingConfig
+    type: Class
+  - uid: Core.AI.AIState
+    name: AIState
+    type: Struct
+  - uid: Core.AI.AIStatistics
+    name: AIStatistics
+    type: Class
+  - uid: Core.AI.AISystem
+    name: AISystem
+    type: Class
+  - uid: Core.AI.AITierConfig
+    name: AITierConfig
+    type: Struct
+  - uid: Core.AI.AtWarConstraint
+    name: AtWarConstraint
+    type: Class
+  - uid: Core.AI.AtWarWithConstraint
+    name: AtWarWithConstraint
+    type: Class
+  - uid: Core.AI.BurstBFSDistanceJob
+    name: BurstBFSDistanceJob
+    type: Struct
+  - uid: Core.AI.DelegateConstraint
+    name: DelegateConstraint
+    type: Class
+  - uid: Core.AI.DelegateConstraint.ConstraintCheck
+    name: DelegateConstraint.ConstraintCheck
+    type: Delegate
+  - uid: Core.AI.GoalAttribute
+    name: GoalAttribute
+    type: Class
+  - uid: Core.AI.GoalEvaluation
+    name: GoalEvaluation
+    type: Struct
+  - uid: Core.AI.HighestScoreSelector
+    name: HighestScoreSelector
+    type: Class
+  - uid: Core.AI.IGoalConstraint
+    name: IGoalConstraint
+    type: Interface
+  - uid: Core.AI.IGoalSelector
+    name: IGoalSelector
+    type: Interface
+  - uid: Core.AI.MinProvincesConstraint
+    name: MinProvincesConstraint
+    type: Class
+  - uid: Core.AI.MinResourceConstraint
+    name: MinResourceConstraint
+    type: Class
+- uid: Core.Collections
+  name: Core.Collections
+  type: Namespace
+  items:
+  - uid: Core.Collections.NativeMinHeap`1
+    name: NativeMinHeap<T>
+    type: Struct
+  - uid: Core.Collections.PathfindingNode
+    name: PathfindingNode
+    type: Struct
+- uid: Core.Commands
+  name: Core.Commands
+  type: Namespace
+  items:
+  - uid: Core.Commands.ArgAttribute
+    name: ArgAttribute
+    type: Class
+  - uid: Core.Commands.BaseCommand
+    name: BaseCommand
+    type: Class
+  - uid: Core.Commands.BatchDeserializationResult
+    name: BatchDeserializationResult
+    type: Struct
+  - uid: Core.Commands.BatchHeader
+    name: BatchHeader
+    type: Struct
+  - uid: Core.Commands.BatchSerializationResult
+    name: BatchSerializationResult
+    type: Struct
+  - uid: Core.Commands.ChangeOwnerCommand
+    name: ChangeOwnerCommand
+    type: Struct
+  - uid: Core.Commands.ChangeProvinceOwnerCommand
+    name: ChangeProvinceOwnerCommand
+    type: Class
+  - uid: Core.Commands.CircularBuffer`1
+    name: CircularBuffer<T>
+    type: Class
+  - uid: Core.Commands.CommandAttribute
+    name: CommandAttribute
+    type: Class
+  - uid: Core.Commands.CommandBuffer
+    name: CommandBuffer
+    type: Class
+  - uid: Core.Commands.CommandBufferResult
+    name: CommandBufferResult
+    type: Struct
+  - uid: Core.Commands.CommandBufferStatistics
+    name: CommandBufferStatistics
+    type: Struct
+  - uid: Core.Commands.CommandExecutionRecord
+    name: CommandExecutionRecord
+    type: Struct
+  - uid: Core.Commands.CommandExecutionResult
+    name: CommandExecutionResult
+    type: Struct
+  - uid: Core.Commands.CommandLogger
+    name: CommandLogger
+    type: Class
+  - uid: Core.Commands.CommandMetadataAttribute
+    name: CommandMetadataAttribute
+    type: Class
+  - uid: Core.Commands.CommandProcessor
+    name: CommandProcessor
+    type: Class
+  - uid: Core.Commands.CommandProcessorStatistics
+    name: CommandProcessorStatistics
+    type: Struct
+  - uid: Core.Commands.CommandRegistry
+    name: CommandRegistry
+    type: Class
+  - uid: Core.Commands.CommandRegistry.CommandRegistration
+    name: CommandRegistry.CommandRegistration
+    type: Class
+  - uid: Core.Commands.CommandResult
+    name: CommandResult
+    type: Struct
+  - uid: Core.Commands.CommandSerializer
+    name: CommandSerializer
+    type: Class
+  - uid: Core.Commands.CommandSubmissionResult
+    name: CommandSubmissionResult
+    type: Struct
+  - uid: Core.Commands.CommandTypes
+    name: CommandTypes
+    type: Class
+  - uid: Core.Commands.CommandValidationError
+    name: CommandValidationError
+    type: Enum
+  - uid: Core.Commands.CommandValidationResult
+    name: CommandValidationResult
+    type: Struct
+  - uid: Core.Commands.DeserializationResult
+    name: DeserializationResult
+    type: Struct
+  - uid: Core.Commands.ICommand
+    name: ICommand
+    type: Interface
+  - uid: Core.Commands.ICommandFactory
+    name: ICommandFactory
+    type: Interface
+  - uid: Core.Commands.INetworkCommand
+    name: INetworkCommand
+    type: Interface
+  - uid: Core.Commands.IProvinceCommand
+    name: IProvinceCommand
+    type: Interface
+  - uid: Core.Commands.ProvinceCommandFactory
+    name: ProvinceCommandFactory
+    type: Class
+  - uid: Core.Commands.SerializationResult
+    name: SerializationResult
+    type: Struct
+  - uid: Core.Commands.SimpleCommand
+    name: SimpleCommand
+    type: Class
+  - uid: Core.Commands.SimpleCommandFactory
+    name: SimpleCommandFactory
+    type: Class
+  - uid: Core.Commands.StateSnapshot
+    name: StateSnapshot
+    type: Struct
+  - uid: Core.Commands.TickProcessResult
+    name: TickProcessResult
+    type: Struct
+  - uid: Core.Commands.TickProcessingResult
+    name: TickProcessingResult
+    type: Struct
+  - uid: Core.Commands.TransferProvincesCommand
+    name: TransferProvincesCommand
+    type: Class
+- uid: Core.Common
+  name: Core.Common
+  type: Namespace
+  items:
+  - uid: Core.Common.FrameCacheValue`1
+    name: FrameCacheValue<TValue>
+    type: Class
+  - uid: Core.Common.FrameCache`2
+    name: FrameCache<TKey, TValue>
+    type: Class
+  - uid: Core.Common.Result
+    name: Result
+    type: Struct
+  - uid: Core.Common.ResultExtensions
+    name: ResultExtensions
+    type: Class
+  - uid: Core.Common.Result`1
+    name: Result<T>
+    type: Struct
+  - uid: Core.Common.TimedCacheValue`1
+    name: TimedCacheValue<TValue>
+    type: Class
+  - uid: Core.Common.TimedCache`2
+    name: TimedCache<TKey, TValue>
+    type: Class
+- uid: Core.Data
+  name: Core.Data
+  type: Namespace
+  items:
+  - uid: Core.Data.CalendarConstants
+    name: CalendarConstants
+    type: Class
+  - uid: Core.Data.CircularBuffer`1
+    name: CircularBuffer<T>
+    type: Class
+  - uid: Core.Data.CompressedEvent
+    name: CompressedEvent
+    type: Struct
+  - uid: Core.Data.CompressedHistory
+    name: CompressedHistory
+    type: Class
+  - uid: Core.Data.CountryColdData
+    name: CountryColdData
+    type: Class
+  - uid: Core.Data.CountryData
+    name: CountryData
+    type: Class
+  - uid: Core.Data.CountryDataCollection
+    name: CountryDataCollection
+    type: Class
+  - uid: Core.Data.CountryDataLoadResult
+    name: CountryDataLoadResult
+    type: Class
+  - uid: Core.Data.CountryHotData
+    name: CountryHotData
+    type: Struct
+  - uid: Core.Data.DeterministicRandom
+    name: DeterministicRandom
+    type: Struct
+  - uid: Core.Data.FixedPoint2
+    name: FixedPoint2
+    type: Struct
+  - uid: Core.Data.FixedPoint32
+    name: FixedPoint32
+    type: Struct
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    type: Struct
+  - uid: Core.Data.HistoricalEvent
+    name: HistoricalEvent
+    type: Struct
+  - uid: Core.Data.HistoryDatabaseStats
+    name: HistoryDatabaseStats
+    type: Struct
+  - uid: Core.Data.HistoryEventType
+    name: HistoryEventType
+    type: Enum
+  - uid: Core.Data.HistoryStatistics
+    name: HistoryStatistics
+    type: Class
+  - uid: Core.Data.Json5CountryLoadResult
+    name: Json5CountryLoadResult
+    type: Struct
+  - uid: Core.Data.Json5ProvinceLoadResult
+    name: Json5ProvinceLoadResult
+    type: Struct
+  - uid: Core.Data.LoadingStatistics
+    name: LoadingStatistics
+    type: Class
+  - uid: Core.Data.ProvinceColdData
+    name: ProvinceColdData
+    type: Class
+  - uid: Core.Data.ProvinceHistoryDatabase
+    name: ProvinceHistoryDatabase
+    type: Class
+  - uid: Core.Data.ProvinceHistorySummary
+    name: ProvinceHistorySummary
+    type: Struct
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    type: Struct
+  - uid: Core.Data.ProvinceInitialStateLoadResult
+    name: ProvinceInitialStateLoadResult
+    type: Struct
+  - uid: Core.Data.ProvinceState
+    name: ProvinceState
+    type: Struct
+  - uid: Core.Data.ProvinceStateSerializer
+    name: ProvinceStateSerializer
+    type: Class
+  - uid: Core.Data.ProvinceStateSerializer.SerializationStats
+    name: ProvinceStateSerializer.SerializationStats
+    type: Struct
+  - uid: Core.Data.RawCountryData
+    name: RawCountryData
+    type: Struct
+  - uid: Core.Data.RawProvinceData
+    name: RawProvinceData
+    type: Struct
+  - uid: Core.Data.TerrainType
+    name: TerrainType
+    type: Enum
+- uid: Core.Data.Ids
+  name: Core.Data.Ids
+  type: Namespace
+  items:
+  - uid: Core.Data.Ids.BuildingId
+    name: BuildingId
+    type: Struct
+  - uid: Core.Data.Ids.CountryId
+    name: CountryId
+    type: Struct
+  - uid: Core.Data.Ids.ProvinceId
+    name: ProvinceId
+    type: Struct
+  - uid: Core.Data.Ids.TerrainId
+    name: TerrainId
+    type: Struct
+- uid: Core.Data.SparseData
+  name: Core.Data.SparseData
+  type: Namespace
+  items:
+  - uid: Core.Data.SparseData.IDefinition
+    name: IDefinition
+    type: Interface
+  - uid: Core.Data.SparseData.ISparseCollection
+    name: ISparseCollection
+    type: Interface
+  - uid: Core.Data.SparseData.SparseCollectionManager`2
+    name: SparseCollectionManager<TKey, TValue>
+    type: Class
+  - uid: Core.Data.SparseData.SparseCollectionStats
+    name: SparseCollectionStats
+    type: Struct
+- uid: Core.Diplomacy
+  name: Core.Diplomacy
+  type: Namespace
+  items:
+  - uid: Core.Diplomacy.AllianceBrokenEvent
+    name: AllianceBrokenEvent
+    type: Struct
+  - uid: Core.Diplomacy.AllianceFormedEvent
+    name: AllianceFormedEvent
+    type: Struct
+  - uid: Core.Diplomacy.BreakAllianceCommand
+    name: BreakAllianceCommand
+    type: Class
+  - uid: Core.Diplomacy.BreakNonAggressionPactCommand
+    name: BreakNonAggressionPactCommand
+    type: Class
+  - uid: Core.Diplomacy.DecayModifiersJob
+    name: DecayModifiersJob
+    type: Struct
+  - uid: Core.Diplomacy.DeclareWarCommand
+    name: DeclareWarCommand
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyColdData
+    name: DiplomacyColdData
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyColdDataNative
+    name: DiplomacyColdDataNative
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacyKeyHelper
+    name: DiplomacyKeyHelper
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyModifierProcessor
+    name: DiplomacyModifierProcessor
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyOpinionChangedEvent
+    name: DiplomacyOpinionChangedEvent
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacyPeaceMadeEvent
+    name: DiplomacyPeaceMadeEvent
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacyRelationManager
+    name: DiplomacyRelationManager
+    type: Class
+  - uid: Core.Diplomacy.DiplomacySaveLoadHandler
+    name: DiplomacySaveLoadHandler
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyStats
+    name: DiplomacyStats
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacySystem
+    name: DiplomacySystem
+    type: Class
+  - uid: Core.Diplomacy.DiplomacySystemInitializedEvent
+    name: DiplomacySystemInitializedEvent
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacyTreatyManager
+    name: DiplomacyTreatyManager
+    type: Class
+  - uid: Core.Diplomacy.DiplomacyWarDeclaredEvent
+    name: DiplomacyWarDeclaredEvent
+    type: Struct
+  - uid: Core.Diplomacy.DiplomacyWarManager
+    name: DiplomacyWarManager
+    type: Class
+  - uid: Core.Diplomacy.FormAllianceCommand
+    name: FormAllianceCommand
+    type: Class
+  - uid: Core.Diplomacy.FormNonAggressionPactCommand
+    name: FormNonAggressionPactCommand
+    type: Class
+  - uid: Core.Diplomacy.GrantMilitaryAccessCommand
+    name: GrantMilitaryAccessCommand
+    type: Class
+  - uid: Core.Diplomacy.GuaranteeGrantedEvent
+    name: GuaranteeGrantedEvent
+    type: Struct
+  - uid: Core.Diplomacy.GuaranteeIndependenceCommand
+    name: GuaranteeIndependenceCommand
+    type: Class
+  - uid: Core.Diplomacy.GuaranteeRevokedEvent
+    name: GuaranteeRevokedEvent
+    type: Struct
+  - uid: Core.Diplomacy.ImproveRelationsCommand
+    name: ImproveRelationsCommand
+    type: Class
+  - uid: Core.Diplomacy.MakePeaceCommand
+    name: MakePeaceCommand
+    type: Class
+  - uid: Core.Diplomacy.MilitaryAccessGrantedEvent
+    name: MilitaryAccessGrantedEvent
+    type: Struct
+  - uid: Core.Diplomacy.MilitaryAccessRevokedEvent
+    name: MilitaryAccessRevokedEvent
+    type: Struct
+  - uid: Core.Diplomacy.ModifierEntry
+    name: ModifierEntry
+    type: Struct
+  - uid: Core.Diplomacy.ModifierRange
+    name: ModifierRange
+    type: Struct
+  - uid: Core.Diplomacy.ModifierWithKey
+    name: ModifierWithKey
+    type: Struct
+  - uid: Core.Diplomacy.NonAggressionPactBrokenEvent
+    name: NonAggressionPactBrokenEvent
+    type: Struct
+  - uid: Core.Diplomacy.NonAggressionPactFormedEvent
+    name: NonAggressionPactFormedEvent
+    type: Struct
+  - uid: Core.Diplomacy.OpinionModifier
+    name: OpinionModifier
+    type: Struct
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    type: Struct
+  - uid: Core.Diplomacy.RevokeGuaranteeCommand
+    name: RevokeGuaranteeCommand
+    type: Class
+  - uid: Core.Diplomacy.RevokeMilitaryAccessCommand
+    name: RevokeMilitaryAccessCommand
+    type: Class
+  - uid: Core.Diplomacy.TreatyFlags
+    name: TreatyFlags
+    type: Enum
+- uid: Core.Events
+  name: Core.Events
+  type: Namespace
+  items:
+  - uid: Core.Events.CompositeDisposable
+    name: CompositeDisposable
+    type: Class
+  - uid: Core.Events.ISubscriptionToken
+    name: ISubscriptionToken
+    type: Interface
+  - uid: Core.Events.SubscriptionTokenGeneric`1
+    name: SubscriptionTokenGeneric<T>
+    type: Class
+  - uid: Core.Events.SubscriptionToken`1
+    name: SubscriptionToken<T>
+    type: Class
+- uid: Core.Graph
+  name: Core.Graph
+  type: Namespace
+  items:
+  - uid: Core.Graph.BFSDistanceJob
+    name: BFSDistanceJob
+    type: Struct
+  - uid: Core.Graph.GraphDistanceCalculator
+    name: GraphDistanceCalculator
+    type: Class
+- uid: Core.Initialization
+  name: Core.Initialization
+  type: Namespace
+  items:
+  - uid: Core.Initialization.IInitializationPhase
+    name: IInitializationPhase
+    type: Interface
+  - uid: Core.Initialization.InitializationContext
+    name: InitializationContext
+    type: Class
+- uid: Core.Initialization.Phases
+  name: Core.Initialization.Phases
+  type: Namespace
+  items:
+  - uid: Core.Initialization.Phases.CoreSystemsInitializationPhase
+    name: CoreSystemsInitializationPhase
+    type: Class
+  - uid: Core.Initialization.Phases.CountryDataLoadingPhase
+    name: CountryDataLoadingPhase
+    type: Class
+  - uid: Core.Initialization.Phases.CountryDataReadyEvent
+    name: CountryDataReadyEvent
+    type: Struct
+  - uid: Core.Initialization.Phases.ProvinceDataLoadingPhase
+    name: ProvinceDataLoadingPhase
+    type: Class
+  - uid: Core.Initialization.Phases.ProvinceDataReadyEvent
+    name: ProvinceDataReadyEvent
+    type: Struct
+  - uid: Core.Initialization.Phases.ReferenceLinkingPhase
+    name: ReferenceLinkingPhase
+    type: Class
+  - uid: Core.Initialization.Phases.ReferencesLinkedEvent
+    name: ReferencesLinkedEvent
+    type: Struct
+  - uid: Core.Initialization.Phases.ScenarioLoadingPhase
+    name: ScenarioLoadingPhase
+    type: Class
+  - uid: Core.Initialization.Phases.StaticDataLoadingPhase
+    name: StaticDataLoadingPhase
+    type: Class
+  - uid: Core.Initialization.Phases.StaticDataReadyEvent
+    name: StaticDataReadyEvent
+    type: Struct
+  - uid: Core.Initialization.Phases.SystemsWarmupPhase
+    name: SystemsWarmupPhase
+    type: Class
+- uid: Core.Jobs
+  name: Core.Jobs
+  type: Namespace
+  items:
+  - uid: Core.Jobs.CountryProcessingJob
+    name: CountryProcessingJob
+    type: Struct
+  - uid: Core.Jobs.CountryProcessingResult
+    name: CountryProcessingResult
+    type: Struct
+  - uid: Core.Jobs.LoadBalancedScheduler
+    name: LoadBalancedScheduler
+    type: Class
+  - uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+    name: LoadBalancedScheduler.WorkItem
+    type: Struct
+  - uid: Core.Jobs.ProvinceProcessingJob
+    name: ProvinceProcessingJob
+    type: Struct
+  - uid: Core.Jobs.ProvinceProcessingResult
+    name: ProvinceProcessingResult
+    type: Struct
+- uid: Core.Linking
+  name: Core.Linking
+  type: Namespace
+  items:
+  - uid: Core.Linking.CrossReferenceBuilder
+    name: CrossReferenceBuilder
+    type: Class
+  - uid: Core.Linking.DataValidator
+    name: DataValidator
+    type: Class
+  - uid: Core.Linking.ReferenceResolver
+    name: ReferenceResolver
+    type: Class
+  - uid: Core.Linking.ValidationError
+    name: ValidationError
+    type: Class
+- uid: Core.Loaders
+  name: Core.Loaders
+  type: Namespace
+  items:
+  - uid: Core.Loaders.BurstCountryLoader
+    name: BurstCountryLoader
+    type: Class
+  - uid: Core.Loaders.BurstProvinceHistoryLoader
+    name: BurstProvinceHistoryLoader
+    type: Class
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    type: Class
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParser.CSVParseResult
+    type: Struct
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVParser.CSVRow
+    type: Struct
+  - uid: Core.Loaders.CSVTokenizer
+    name: CSVTokenizer
+    type: Class
+  - uid: Core.Loaders.CSVTokenizer.CSVToken
+    name: CSVTokenizer.CSVToken
+    type: Struct
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenType
+    name: CSVTokenizer.CSVTokenType
+    type: Enum
+  - uid: Core.Loaders.CSVTokenizer.CSVTokenizeResult
+    name: CSVTokenizer.CSVTokenizeResult
+    type: Struct
+  - uid: Core.Loaders.CountryTagLoadResult
+    name: CountryTagLoadResult
+    type: Struct
+  - uid: Core.Loaders.CountryTagLoader
+    name: CountryTagLoader
+    type: Class
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    type: Class
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionLoader.DefinitionEntry
+    type: Struct
+  - uid: Core.Loaders.ILoaderFactory
+    name: ILoaderFactory
+    type: Interface
+  - uid: Core.Loaders.Json5CountryConverter
+    name: Json5CountryConverter
+    type: Class
+  - uid: Core.Loaders.Json5Loader
+    name: Json5Loader
+    type: Class
+  - uid: Core.Loaders.Json5ProvinceConverter
+    name: Json5ProvinceConverter
+    type: Class
+  - uid: Core.Loaders.LoaderContext
+    name: LoaderContext
+    type: Class
+  - uid: Core.Loaders.LoaderMetadataAttribute
+    name: LoaderMetadataAttribute
+    type: Class
+  - uid: Core.Loaders.LoaderRegistry
+    name: LoaderRegistry
+    type: Class
+  - uid: Core.Loaders.LoaderRegistry.LoaderRegistration
+    name: LoaderRegistry.LoaderRegistration
+    type: Class
+  - uid: Core.Loaders.ManifestLoadResult
+    name: ManifestLoadResult
+    type: Struct
+  - uid: Core.Loaders.ManifestLoader`1
+    name: ManifestLoader<T>
+    type: Class
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    type: Class
+  - uid: Core.Loaders.ScenarioLoader.CountrySetup
+    name: ScenarioLoader.CountrySetup
+    type: Struct
+  - uid: Core.Loaders.ScenarioLoader.DiplomaticRelation
+    name: ScenarioLoader.DiplomaticRelation
+    type: Struct
+  - uid: Core.Loaders.ScenarioLoader.LoadingStatistics
+    name: ScenarioLoader.LoadingStatistics
+    type: Struct
+  - uid: Core.Loaders.ScenarioLoader.ProvinceSetup
+    name: ScenarioLoader.ProvinceSetup
+    type: Struct
+  - uid: Core.Loaders.ScenarioLoader.RelationType
+    name: ScenarioLoader.RelationType
+    type: Enum
+  - uid: Core.Loaders.ScenarioLoader.ScenarioData
+    name: ScenarioLoader.ScenarioData
+    type: Class
+  - uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    name: ScenarioLoader.ScenarioLoadResult
+    type: Struct
+  - uid: Core.Loaders.TerrainLoader
+    name: TerrainLoader
+    type: Class
+- uid: Core.Localization
+  name: Core.Localization
+  type: Namespace
+  items:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    type: Class
+  - uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+    name: ColoredTextMarkup.ColoredTextSegment
+    type: Struct
+  - uid: Core.Localization.ColoredTextMarkup.MarkupResult
+    name: ColoredTextMarkup.MarkupResult
+    type: Struct
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: ColoredTextMarkup.TextStyle
+    type: Enum
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    type: Class
+  - uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    name: DynamicKeyResolver.DynamicKeyPattern
+    type: Struct
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+    name: DynamicKeyResolver.ResolutionContext
+    type: Struct
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: DynamicKeyResolver.ResolutionResult
+    type: Struct
+  - uid: Core.Localization.ErrorSeverity
+    name: ErrorSeverity
+    type: Enum
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    type: Class
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+    name: LocalizationFallbackChain.FallbackChain
+    type: Struct
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+    name: LocalizationFallbackChain.FallbackResult
+    type: Struct
+  - uid: Core.Localization.LocalizationManager
+    name: LocalizationManager
+    type: Class
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    type: Class
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageExtractor.MultiLanguageResult
+    type: Struct
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    type: Class
+  - uid: Core.Localization.StringReplacementSystem.ReplacementContext
+    name: StringReplacementSystem.ReplacementContext
+    type: Struct
+  - uid: Core.Localization.StringReplacementSystem.ReplacementParam
+    name: StringReplacementSystem.ReplacementParam
+    type: Struct
+  - uid: Core.Localization.StringReplacementSystem.ReplacementResult
+    name: StringReplacementSystem.ReplacementResult
+    type: Struct
+  - uid: Core.Localization.YAMLParser
+    name: YAMLParser
+    type: Class
+  - uid: Core.Localization.YAMLParser.YAMLParseResult
+    name: YAMLParser.YAMLParseResult
+    type: Struct
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    type: Class
+  - uid: Core.Localization.YAMLTokenizer.YAMLToken
+    name: YAMLTokenizer.YAMLToken
+    type: Struct
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+    name: YAMLTokenizer.YAMLTokenType
+    type: Enum
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    name: YAMLTokenizer.YAMLTokenizeResult
+    type: Struct
+- uid: Core.Modifiers
+  name: Core.Modifiers
+  type: Namespace
+  items:
+  - uid: Core.Modifiers.ActiveModifierList
+    name: ActiveModifierList
+    type: Struct
+  - uid: Core.Modifiers.ModifierScopeLevel
+    name: ModifierScopeLevel
+    type: Enum
+  - uid: Core.Modifiers.ModifierSet
+    name: ModifierSet
+    type: Struct
+  - uid: Core.Modifiers.ModifierSource
+    name: ModifierSource
+    type: Struct
+  - uid: Core.Modifiers.ModifierSource.SourceType
+    name: ModifierSource.SourceType
+    type: Enum
+  - uid: Core.Modifiers.ModifierSystem
+    name: ModifierSystem
+    type: Class
+  - uid: Core.Modifiers.ModifierValue
+    name: ModifierValue
+    type: Struct
+  - uid: Core.Modifiers.ScopedModifierContainer
+    name: ScopedModifierContainer
+    type: Struct
+- uid: Core.Queries
+  name: Core.Queries
+  type: Namespace
+  items:
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+    type: Class
+  - uid: Core.Queries.CountryQueryBuilder
+    name: CountryQueryBuilder
+    type: Struct
+  - uid: Core.Queries.CountryStatistics
+    name: CountryStatistics
+    type: Struct
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+    type: Class
+  - uid: Core.Queries.ProvinceQueryBuilder
+    name: ProvinceQueryBuilder
+    type: Struct
+  - uid: Core.Queries.ProvinceStatistics
+    name: ProvinceStatistics
+    type: Struct
+  - uid: Core.Queries.Query
+    name: Query
+    type: Class
+  - uid: Core.Queries.QueryPerformanceStats
+    name: QueryPerformanceStats
+    type: Struct
+  - uid: Core.Queries.UnitQueryBuilder
+    name: UnitQueryBuilder
+    type: Struct
+- uid: Core.Registries
+  name: Core.Registries
+  type: Namespace
+  items:
+  - uid: Core.Registries.BuildingData
+    name: BuildingData
+    type: Class
+  - uid: Core.Registries.CountryData
+    name: CountryData
+    type: Class
+  - uid: Core.Registries.CountryRegistry
+    name: CountryRegistry
+    type: Class
+  - uid: Core.Registries.GameRegistries
+    name: GameRegistries
+    type: Class
+  - uid: Core.Registries.GovernmentData
+    name: GovernmentData
+    type: Class
+  - uid: Core.Registries.IRegistry`1
+    name: IRegistry<T>
+    type: Interface
+  - uid: Core.Registries.ProvinceData
+    name: ProvinceData
+    type: Class
+  - uid: Core.Registries.ProvinceRegistry
+    name: ProvinceRegistry
+    type: Class
+  - uid: Core.Registries.Registry`1
+    name: Registry<T>
+    type: Class
+  - uid: Core.Registries.TechnologyData
+    name: TechnologyData
+    type: Class
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    type: Class
+- uid: Core.Resources
+  name: Core.Resources
+  type: Namespace
+  items:
+  - uid: Core.Resources.IResourceProvider
+    name: IResourceProvider
+    type: Interface
+  - uid: Core.Resources.ResourceBatchCompletedEvent
+    name: ResourceBatchCompletedEvent
+    type: Struct
+  - uid: Core.Resources.ResourceChangedEvent
+    name: ResourceChangedEvent
+    type: Struct
+  - uid: Core.Resources.ResourceCost
+    name: ResourceCost
+    type: Struct
+  - uid: Core.Resources.ResourceCostExtensions
+    name: ResourceCostExtensions
+    type: Class
+  - uid: Core.Resources.ResourceDefinition
+    name: ResourceDefinition
+    type: Class
+  - uid: Core.Resources.ResourceRegisteredEvent
+    name: ResourceRegisteredEvent
+    type: Struct
+  - uid: Core.Resources.ResourceSystem
+    name: ResourceSystem
+    type: Class
+  - uid: Core.Resources.ResourceSystemInitializedEvent
+    name: ResourceSystemInitializedEvent
+    type: Struct
+  - uid: Core.Resources.ResourceTransferredEvent
+    name: ResourceTransferredEvent
+    type: Struct
+- uid: Core.SaveLoad
+  name: Core.SaveLoad
+  type: Namespace
+  items:
+  - uid: Core.SaveLoad.CustomSystemSerializers
+    name: CustomSystemSerializers
+    type: Class
+  - uid: Core.SaveLoad.SaveFileSerializer
+    name: SaveFileSerializer
+    type: Class
+  - uid: Core.SaveLoad.SaveGameData
+    name: SaveGameData
+    type: Class
+  - uid: Core.SaveLoad.SaveManager
+    name: SaveManager
+    type: Class
+  - uid: Core.SaveLoad.SerializationHelper
+    name: SerializationHelper
+    type: Class
+  - uid: Core.SaveLoad.SystemSerializer
+    name: SystemSerializer
+    type: Class
+- uid: Core.Systems
+  name: Core.Systems
+  type: Namespace
+  items:
+  - uid: Core.Systems.AdjacencyStats
+    name: AdjacencyStats
+    type: Struct
+  - uid: Core.Systems.AdjacencySystem
+    name: AdjacencySystem
+    type: Class
+  - uid: Core.Systems.BurstPathfindingJob
+    name: BurstPathfindingJob
+    type: Struct
+  - uid: Core.Systems.CountryColorChangedEvent
+    name: CountryColorChangedEvent
+    type: Struct
+  - uid: Core.Systems.CountrySystem
+    name: CountrySystem
+    type: Class
+  - uid: Core.Systems.CountrySystemInitializedEvent
+    name: CountrySystemInitializedEvent
+    type: Struct
+  - uid: Core.Systems.DailyTickEvent
+    name: DailyTickEvent
+    type: Struct
+  - uid: Core.Systems.GameLoadedEvent
+    name: GameLoadedEvent
+    type: Struct
+  - uid: Core.Systems.GameSavedEvent
+    name: GameSavedEvent
+    type: Struct
+  - uid: Core.Systems.GameSystem
+    name: GameSystem
+    type: Class
+  - uid: Core.Systems.GameTime
+    name: GameTime
+    type: Struct
+  - uid: Core.Systems.HourlyTickEvent
+    name: HourlyTickEvent
+    type: Struct
+  - uid: Core.Systems.ICalendar
+    name: ICalendar
+    type: Interface
+  - uid: Core.Systems.IMovementCostCalculator
+    name: IMovementCostCalculator
+    type: Interface
+  - uid: Core.Systems.MonthlyTickEvent
+    name: MonthlyTickEvent
+    type: Struct
+  - uid: Core.Systems.MovementValidator
+    name: MovementValidator
+    type: Delegate
+  - uid: Core.Systems.NativeAdjacencyData
+    name: NativeAdjacencyData
+    type: Struct
+  - uid: Core.Systems.NativeProvinceData
+    name: NativeProvinceData
+    type: Struct
+  - uid: Core.Systems.PathCache
+    name: PathCache
+    type: Class
+  - uid: Core.Systems.PathContext
+    name: PathContext
+    type: Struct
+  - uid: Core.Systems.PathContextFlags
+    name: PathContextFlags
+    type: Enum
+  - uid: Core.Systems.PathOptions
+    name: PathOptions
+    type: Struct
+  - uid: Core.Systems.PathResult
+    name: PathResult
+    type: Struct
+  - uid: Core.Systems.PathStatus
+    name: PathStatus
+    type: Enum
+  - uid: Core.Systems.PathfindingSystem
+    name: PathfindingSystem
+    type: Class
+  - uid: Core.Systems.ProvinceDevelopmentChangedEvent
+    name: ProvinceDevelopmentChangedEvent
+    type: Struct
+  - uid: Core.Systems.ProvinceInitialStatesLoadedEvent
+    name: ProvinceInitialStatesLoadedEvent
+    type: Struct
+  - uid: Core.Systems.ProvinceOwnershipChangedEvent
+    name: ProvinceOwnershipChangedEvent
+    type: Struct
+  - uid: Core.Systems.ProvinceSimulation
+    name: ProvinceSimulation
+    type: Class
+  - uid: Core.Systems.ProvinceSystem
+    name: ProvinceSystem
+    type: Class
+  - uid: Core.Systems.ProvinceSystemInitializedEvent
+    name: ProvinceSystemInitializedEvent
+    type: Struct
+  - uid: Core.Systems.StandardCalendar
+    name: StandardCalendar
+    type: Class
+  - uid: Core.Systems.SystemRegistry
+    name: SystemRegistry
+    type: Class
+  - uid: Core.Systems.TerrainMovementCostCalculator
+    name: TerrainMovementCostCalculator
+    type: Class
+  - uid: Core.Systems.TimeChangedEvent
+    name: TimeChangedEvent
+    type: Struct
+  - uid: Core.Systems.TimeManager
+    name: TimeManager
+    type: Class
+  - uid: Core.Systems.TimeStateChangedEvent
+    name: TimeStateChangedEvent
+    type: Struct
+  - uid: Core.Systems.UniformCostCalculator
+    name: UniformCostCalculator
+    type: Class
+  - uid: Core.Systems.WeeklyTickEvent
+    name: WeeklyTickEvent
+    type: Struct
+  - uid: Core.Systems.YearlyTickEvent
+    name: YearlyTickEvent
+    type: Struct
+- uid: Core.Systems.Country
+  name: Core.Systems.Country
+  type: Namespace
+  items:
+  - uid: Core.Systems.Country.CountryDataManager
+    name: CountryDataManager
+    type: Class
+  - uid: Core.Systems.Country.CountryStateLoader
+    name: CountryStateLoader
+    type: Class
+- uid: Core.Systems.Province
+  name: Core.Systems.Province
+  type: Namespace
+  items:
+  - uid: Core.Systems.Province.ProvinceDataManager
+    name: ProvinceDataManager
+    type: Class
+  - uid: Core.Systems.Province.ProvinceStateLoader
+    name: ProvinceStateLoader
+    type: Class
+- uid: Core.UI
+  name: Core.UI
+  type: Namespace
+  items:
+  - uid: Core.UI.BasePanel
+    name: BasePanel
+    type: Class
+  - uid: Core.UI.UIHelper
+    name: UIHelper
+    type: Class
+- uid: Core.Units
+  name: Core.Units
+  type: Namespace
+  items:
+  - uid: Core.Units.CreateUnitCommand
+    name: CreateUnitCommand
+    type: Class
+  - uid: Core.Units.DestructionReason
+    name: DestructionReason
+    type: Enum
+  - uid: Core.Units.DisbandUnitCommand
+    name: DisbandUnitCommand
+    type: Class
+  - uid: Core.Units.MoveUnitCommand
+    name: MoveUnitCommand
+    type: Class
+  - uid: Core.Units.UnitColdData
+    name: UnitColdData
+    type: Class
+  - uid: Core.Units.UnitCountChangedEvent
+    name: UnitCountChangedEvent
+    type: Struct
+  - uid: Core.Units.UnitCreatedEvent
+    name: UnitCreatedEvent
+    type: Struct
+  - uid: Core.Units.UnitDestroyedEvent
+    name: UnitDestroyedEvent
+    type: Struct
+  - uid: Core.Units.UnitMovedEvent
+    name: UnitMovedEvent
+    type: Struct
+  - uid: Core.Units.UnitMovementCancelledEvent
+    name: UnitMovementCancelledEvent
+    type: Struct
+  - uid: Core.Units.UnitMovementCompletedEvent
+    name: UnitMovementCompletedEvent
+    type: Struct
+  - uid: Core.Units.UnitMovementQueue
+    name: UnitMovementQueue
+    type: Class
+  - uid: Core.Units.UnitMovementQueue.MovementState
+    name: UnitMovementQueue.MovementState
+    type: Struct
+  - uid: Core.Units.UnitMovementStartedEvent
+    name: UnitMovementStartedEvent
+    type: Struct
+  - uid: Core.Units.UnitState
+    name: UnitState
+    type: Struct
+  - uid: Core.Units.UnitSystem
+    name: UnitSystem
+    type: Class
+- uid: Core.Validation
+  name: Core.Validation
+  type: Namespace
+  items:
+  - uid: Core.Validation.Validate
+    name: Validate
+    type: Class
+  - uid: Core.Validation.ValidationBuilder
+    name: ValidationBuilder
+    type: Class
+- uid: Map.CameraControllers
+  name: Map.CameraControllers
+  type: Namespace
+  items:
+  - uid: Map.CameraControllers.BaseCameraController
+    name: BaseCameraController
+    type: Class
+  - uid: Map.CameraControllers.OrthographicCameraController
+    name: OrthographicCameraController
+    type: Class
+  - uid: Map.CameraControllers.PerspectiveCameraController
+    name: PerspectiveCameraController
+    type: Class
+- uid: Map.Core
+  name: Map.Core
+  type: Namespace
+  items:
+  - uid: Map.Core.EngineMapInitializer
+    name: EngineMapInitializer
+    type: Class
+  - uid: Map.Core.MapInitializer
+    name: MapInitializer
+    type: Class
+  - uid: Map.Core.MapSystemCoordinator
+    name: MapSystemCoordinator
+    type: Class
+- uid: Map.DebugTools
+  name: Map.DebugTools
+  type: Namespace
+  items:
+  - uid: Map.DebugTools.EngineDebugUI
+    name: EngineDebugUI
+    type: Class
+- uid: Map.Integration
+  name: Map.Integration
+  type: Namespace
+  items:
+  - uid: Map.Integration.MapDataIntegrator
+    name: MapDataIntegrator
+    type: Class
+  - uid: Map.Integration.ProvinceDataConverter
+    name: ProvinceDataConverter
+    type: Class
+  - uid: Map.Integration.ProvinceMetadataManager
+    name: ProvinceMetadataManager
+    type: Class
+  - uid: Map.Integration.ProvinceTextureSynchronizer
+    name: ProvinceTextureSynchronizer
+    type: Class
+- uid: Map.Interaction
+  name: Map.Interaction
+  type: Namespace
+  items:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    type: Class
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: ProvinceHighlighter.HighlightMode
+    type: Enum
+  - uid: Map.Interaction.ProvinceSelector
+    name: ProvinceSelector
+    type: Class
+- uid: Map.Loading
+  name: Map.Loading
+  type: Namespace
+  items:
+  - uid: Map.Loading.DetailTextureArrayLoader
+    name: DetailTextureArrayLoader
+    type: Class
+  - uid: Map.Loading.IMapDataProvider
+    name: IMapDataProvider
+    type: Interface
+  - uid: Map.Loading.MapDataLoader
+    name: MapDataLoader
+    type: Class
+  - uid: Map.Loading.NoiseTextureGenerator
+    name: NoiseTextureGenerator
+    type: Class
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    type: Class
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: ProvinceMapLoader.LoadResult
+    type: Struct
+  - uid: Map.Loading.ProvinceMapLoader.ProvincePixel
+    name: ProvinceMapLoader.ProvincePixel
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor
+    name: ProvinceMapProcessor
+    type: Class
+  - uid: Map.Loading.ProvinceMapProcessor.BMPData
+    name: ProvinceMapProcessor.BMPData
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+    name: ProvinceMapProcessor.BMPPixelDataWrapper
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.ProcessingProgress
+    name: ProvinceMapProcessor.ProcessingProgress
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinition
+    name: ProvinceMapProcessor.ProvinceDefinition
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceDefinitions
+    name: ProvinceMapProcessor.ProvinceDefinitions
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
+    name: ProvinceMapProcessor.ProvinceMapResult
+    type: Struct
+  - uid: Map.Loading.ProvinceMapProcessor.ProvinceMappings
+    name: ProvinceMapProcessor.ProvinceMappings
+    type: Struct
+  - uid: Map.Loading.TerrainTypeTextureGenerator
+    name: TerrainTypeTextureGenerator
+    type: Class
+- uid: Map.Loading.Data
+  name: Map.Loading.Data
+  type: Namespace
+  items:
+  - uid: Map.Loading.Data.TerrainColorMapper
+    name: TerrainColorMapper
+    type: Class
+- uid: Map.Loading.Images
+  name: Map.Loading.Images
+  type: Namespace
+  items:
+  - uid: Map.Loading.Images.BMPColorCollectionJob
+    name: BMPColorCollectionJob
+    type: Struct
+  - uid: Map.Loading.Images.BMPLoadResult
+    name: BMPLoadResult
+    type: Struct
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    type: Class
+  - uid: Map.Loading.Images.BMPParser.BMPFileHeader
+    name: BMPParser.BMPFileHeader
+    type: Struct
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPParser.BMPHeader
+    type: Struct
+  - uid: Map.Loading.Images.BMPParser.BMPInfoHeader
+    name: BMPParser.BMPInfoHeader
+    type: Struct
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPParser.BMPPixelData
+    type: Struct
+  - uid: Map.Loading.Images.BMPPixelSearchJob
+    name: BMPPixelSearchJob
+    type: Struct
+  - uid: Map.Loading.Images.BMPProvinceStatsData
+    name: BMPProvinceStatsData
+    type: Struct
+  - uid: Map.Loading.Images.BMPProvinceStatsJob
+    name: BMPProvinceStatsJob
+    type: Struct
+  - uid: Map.Loading.Images.BitmapTextureLoader
+    name: BitmapTextureLoader
+    type: Class
+  - uid: Map.Loading.Images.HeightmapBitmapLoader
+    name: HeightmapBitmapLoader
+    type: Class
+  - uid: Map.Loading.Images.HeightmapImageLoader
+    name: HeightmapImageLoader
+    type: Class
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    type: Class
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapResult
+    name: HeightmapParser.HeightmapResult
+    type: Struct
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapStats
+    name: HeightmapParser.HeightmapStats
+    type: Struct
+  - uid: Map.Loading.Images.HeightmapParser.TerrainType
+    name: HeightmapParser.TerrainType
+    type: Enum
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    type: Class
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageParser.ImageFormat
+    type: Enum
+  - uid: Map.Loading.Images.ImageParser.ImageHeader
+    name: ImageParser.ImageHeader
+    type: Struct
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImageParser.ImagePixelData
+    type: Struct
+  - uid: Map.Loading.Images.JobifiedBMPLoader
+    name: JobifiedBMPLoader
+    type: Class
+  - uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+    name: JobifiedBMPLoader.LoadingProgress
+    type: Struct
+  - uid: Map.Loading.Images.NormalMapBitmapLoader
+    name: NormalMapBitmapLoader
+    type: Class
+  - uid: Map.Loading.Images.NormalMapImageLoader
+    name: NormalMapImageLoader
+    type: Class
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    type: Class
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGParser.PNGHeader
+    type: Struct
+  - uid: Map.Loading.Images.PNGParser.PNGPixelData
+    name: PNGParser.PNGPixelData
+    type: Struct
+  - uid: Map.Loading.Images.PersistentBMPPixelData
+    name: PersistentBMPPixelData
+    type: Struct
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    type: Struct
+  - uid: Map.Loading.Images.ProvinceBounds
+    name: ProvinceBounds
+    type: Struct
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    type: Class
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+    name: ProvinceMapParser.ProvinceMapResult
+    type: Struct
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+    name: ProvinceMapParser.ProvinceMapValidationResult
+    type: Struct
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+    name: ProvinceMapParser.ProvinceStats
+    type: Struct
+  - uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+    name: ProvinceMapParser.UnifiedProvinceMapResult
+    type: Struct
+  - uid: Map.Loading.Images.TerrainImageLoader
+    name: TerrainImageLoader
+    type: Class
+- uid: Map.MapModes
+  name: Map.MapModes
+  type: Namespace
+  items:
+  - uid: Map.MapModes.BaseMapModeHandler
+    name: BaseMapModeHandler
+    type: Class
+  - uid: Map.MapModes.ColorGradient
+    name: ColorGradient
+    type: Class
+  - uid: Map.MapModes.DebugMapModeHandler
+    name: DebugMapModeHandler
+    type: Class
+  - uid: Map.MapModes.EnginePoliticalMapMode
+    name: EnginePoliticalMapMode
+    type: Class
+  - uid: Map.MapModes.GradientComputeDispatcher
+    name: GradientComputeDispatcher
+    type: Class
+  - uid: Map.MapModes.GradientMapMode
+    name: GradientMapMode
+    type: Class
+  - uid: Map.MapModes.GradientMapMode.ValueStats
+    name: GradientMapMode.ValueStats
+    type: Struct
+  - uid: Map.MapModes.IMapModeHandler
+    name: IMapModeHandler
+    type: Interface
+  - uid: Map.MapModes.MapMode
+    name: MapMode
+    type: Enum
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    type: Class
+  - uid: Map.MapModes.MapModeManager
+    name: MapModeManager
+    type: Class
+  - uid: Map.MapModes.TextureUpdateScheduler
+    name: TextureUpdateScheduler
+    type: Class
+  - uid: Map.MapModes.UpdateFrequency
+    name: UpdateFrequency
+    type: Enum
+- uid: Map.MapModes.Colorization
+  name: Map.MapModes.Colorization
+  type: Namespace
+  items:
+  - uid: Map.MapModes.Colorization.ColorizationStyleParams
+    name: ColorizationStyleParams
+    type: Struct
+  - uid: Map.MapModes.Colorization.GradientMapModeColorizer
+    name: GradientMapModeColorizer
+    type: Class
+  - uid: Map.MapModes.Colorization.IMapModeColorizer
+    name: IMapModeColorizer
+    type: Interface
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase
+    name: MapModeColorizerBase
+    type: Class
+  - uid: Map.MapModes.Colorization.MapModeColorizerContext
+    name: MapModeColorizerContext
+    type: Struct
+- uid: Map.Province
+  name: Map.Province
+  type: Namespace
+  items:
+  - uid: Map.Province.GPUProvinceNeighborDetector
+    name: GPUProvinceNeighborDetector
+    type: Class
+  - uid: Map.Province.ProvinceColorHasher
+    name: ProvinceColorHasher
+    type: Class
+  - uid: Map.Province.ProvinceData
+    name: ProvinceData
+    type: Struct
+  - uid: Map.Province.ProvinceDataManager
+    name: ProvinceDataManager
+    type: Class
+  - uid: Map.Province.ProvinceFlags
+    name: ProvinceFlags
+    type: Enum
+  - uid: Map.Province.ProvinceIDEncoder
+    name: ProvinceIDEncoder
+    type: Class
+  - uid: Map.Province.ProvinceIDEncoder.EncodingResult
+    name: ProvinceIDEncoder.EncodingResult
+    type: Struct
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    type: Class
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: ProvinceMetadataGenerator.MetadataResult
+    type: Struct
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceBounds
+    name: ProvinceMetadataGenerator.ProvinceBounds
+    type: Struct
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadataGenerator.ProvinceMetadata
+    type: Struct
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: ProvinceMetadataGenerator.TerrainType
+    type: Enum
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    type: Class
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+    name: ProvinceNeighborDetector.NeighborPair
+    type: Struct
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: ProvinceNeighborDetector.NeighborResult
+    type: Struct
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceBounds
+    name: ProvinceNeighborDetector.ProvinceBounds
+    type: Struct
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+    name: ProvinceNeighborDetector.ProvinceNeighborData
+    type: Struct
+- uid: Map.Rendering
+  name: Map.Rendering
+  type: Namespace
+  items:
+  - uid: Map.Rendering.BillboardAtlasGenerator
+    name: BillboardAtlasGenerator
+    type: Class
+  - uid: Map.Rendering.BorderComputeDispatcher
+    name: BorderComputeDispatcher
+    type: Class
+  - uid: Map.Rendering.BorderCurveCache
+    name: BorderCurveCache
+    type: Class
+  - uid: Map.Rendering.BorderCurveExtractor
+    name: BorderCurveExtractor
+    type: Class
+  - uid: Map.Rendering.BorderDistanceFieldGenerator
+    name: BorderDistanceFieldGenerator
+    type: Class
+  - uid: Map.Rendering.BorderMeshGenerator
+    name: BorderMeshGenerator
+    type: Class
+  - uid: Map.Rendering.BorderMeshRenderer
+    name: BorderMeshRenderer
+    type: Class
+  - uid: Map.Rendering.BorderMode
+    name: BorderMode
+    type: Enum
+  - uid: Map.Rendering.BorderRenderingMode
+    name: BorderRenderingMode
+    type: Enum
+  - uid: Map.Rendering.BorderStyle
+    name: BorderStyle
+    type: Struct
+  - uid: Map.Rendering.BorderTextureDebug
+    name: BorderTextureDebug
+    type: Class
+  - uid: Map.Rendering.BorderType
+    name: BorderType
+    type: Enum
+  - uid: Map.Rendering.CoreTextureSet
+    name: CoreTextureSet
+    type: Class
+  - uid: Map.Rendering.DynamicTextureSet
+    name: DynamicTextureSet
+    type: Class
+  - uid: Map.Rendering.FogOfWarSystem
+    name: FogOfWarSystem
+    type: Class
+  - uid: Map.Rendering.InstancedBillboardRenderer
+    name: InstancedBillboardRenderer
+    type: Class
+  - uid: Map.Rendering.MapRenderer
+    name: MapRenderer
+    type: Class
+  - uid: Map.Rendering.MapRendererRegistry
+    name: MapRendererRegistry
+    type: Class
+  - uid: Map.Rendering.MapRenderingCoordinator
+    name: MapRenderingCoordinator
+    type: Class
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    type: Class
+  - uid: Map.Rendering.MapTexturePopulator
+    name: MapTexturePopulator
+    type: Class
+  - uid: Map.Rendering.NormalMapGenerator
+    name: NormalMapGenerator
+    type: Class
+  - uid: Map.Rendering.OwnerTextureDispatcher
+    name: OwnerTextureDispatcher
+    type: Class
+  - uid: Map.Rendering.PaletteTextureManager
+    name: PaletteTextureManager
+    type: Class
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    type: Class
+  - uid: Map.Rendering.ProvinceMapping.ProvinceInfo
+    name: ProvinceMapping.ProvinceInfo
+    type: Class
+  - uid: Map.Rendering.ProvinceTerrainAnalyzer
+    name: ProvinceTerrainAnalyzer
+    type: Class
+  - uid: Map.Rendering.SubdividedPlaneMeshGenerator
+    name: SubdividedPlaneMeshGenerator
+    type: Class
+  - uid: Map.Rendering.TextureStreamingManager
+    name: TextureStreamingManager
+    type: Class
+  - uid: Map.Rendering.TextureUpdateBridge
+    name: TextureUpdateBridge
+    type: Class
+  - uid: Map.Rendering.TreeInstanceGenerator
+    name: TreeInstanceGenerator
+    type: Class
+  - uid: Map.Rendering.TreeInstanceRenderer
+    name: TreeInstanceRenderer
+    type: Class
+  - uid: Map.Rendering.UnitPathRenderer
+    name: UnitPathRenderer
+    type: Class
+  - uid: Map.Rendering.VisualTextureSet
+    name: VisualTextureSet
+    type: Class
+- uid: Map.Rendering.Border
+  name: Map.Rendering.Border
+  type: Namespace
+  items:
+  - uid: Map.Rendering.Border.BorderChainMerger
+    name: BorderChainMerger
+    type: Class
+  - uid: Map.Rendering.Border.BorderDebugUtility
+    name: BorderDebugUtility
+    type: Class
+  - uid: Map.Rendering.Border.BorderGenerationParams
+    name: BorderGenerationParams
+    type: Struct
+  - uid: Map.Rendering.Border.BorderGeometryUtils
+    name: BorderGeometryUtils
+    type: Class
+  - uid: Map.Rendering.Border.BorderParameterBinder
+    name: BorderParameterBinder
+    type: Class
+  - uid: Map.Rendering.Border.BorderPolylineSimplifier
+    name: BorderPolylineSimplifier
+    type: Class
+  - uid: Map.Rendering.Border.BorderRendererBase
+    name: BorderRendererBase
+    type: Class
+  - uid: Map.Rendering.Border.BorderRendererContext
+    name: BorderRendererContext
+    type: Struct
+  - uid: Map.Rendering.Border.BorderShaderManager
+    name: BorderShaderManager
+    type: Class
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    type: Struct
+  - uid: Map.Rendering.Border.BorderStyleUpdater
+    name: BorderStyleUpdater
+    type: Class
+  - uid: Map.Rendering.Border.DistanceFieldBorderRenderer
+    name: DistanceFieldBorderRenderer
+    type: Class
+  - uid: Map.Rendering.Border.IBorderRenderer
+    name: IBorderRenderer
+    type: Interface
+  - uid: Map.Rendering.Border.JunctionDetector
+    name: JunctionDetector
+    type: Class
+  - uid: Map.Rendering.Border.MedianFilterProcessor
+    name: MedianFilterProcessor
+    type: Class
+  - uid: Map.Rendering.Border.MeshGeometryBorderRenderer
+    name: MeshGeometryBorderRenderer
+    type: Class
+  - uid: Map.Rendering.Border.NoneBorderRenderer
+    name: NoneBorderRenderer
+    type: Class
+  - uid: Map.Rendering.Border.PixelPerfectBorderRenderer
+    name: PixelPerfectBorderRenderer
+    type: Class
+- uid: Map.Rendering.Compositing
+  name: Map.Rendering.Compositing
+  type: Namespace
+  items:
+  - uid: Map.Rendering.Compositing.BlendMode
+    name: BlendMode
+    type: Enum
+  - uid: Map.Rendering.Compositing.CinematicShaderCompositor
+    name: CinematicShaderCompositor
+    type: Class
+  - uid: Map.Rendering.Compositing.CompositorConfig
+    name: CompositorConfig
+    type: Class
+  - uid: Map.Rendering.Compositing.CompositorContext
+    name: CompositorContext
+    type: Struct
+  - uid: Map.Rendering.Compositing.DefaultShaderCompositor
+    name: DefaultShaderCompositor
+    type: Class
+  - uid: Map.Rendering.Compositing.IShaderCompositor
+    name: IShaderCompositor
+    type: Interface
+  - uid: Map.Rendering.Compositing.MinimalShaderCompositor
+    name: MinimalShaderCompositor
+    type: Class
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase
+    name: ShaderCompositorBase
+    type: Class
+  - uid: Map.Rendering.Compositing.StylizedShaderCompositor
+    name: StylizedShaderCompositor
+    type: Class
+- uid: Map.Rendering.FogOfWar
+  name: Map.Rendering.FogOfWar
+  type: Namespace
+  items:
+  - uid: Map.Rendering.FogOfWar.DefaultFogOfWarRenderer
+    name: DefaultFogOfWarRenderer
+    type: Class
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererBase
+    name: FogOfWarRendererBase
+    type: Class
+  - uid: Map.Rendering.FogOfWar.FogOfWarRendererContext
+    name: FogOfWarRendererContext
+    type: Struct
+  - uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+    name: FogOfWarStyleParams
+    type: Struct
+  - uid: Map.Rendering.FogOfWar.IFogOfWarRenderer
+    name: IFogOfWarRenderer
+    type: Interface
+  - uid: Map.Rendering.FogOfWar.VisibilityState
+    name: VisibilityState
+    type: Enum
+- uid: Map.Rendering.Highlight
+  name: Map.Rendering.Highlight
+  type: Namespace
+  items:
+  - uid: Map.Rendering.Highlight.DefaultHighlightRenderer
+    name: DefaultHighlightRenderer
+    type: Class
+  - uid: Map.Rendering.Highlight.HighlightMode
+    name: HighlightMode
+    type: Enum
+  - uid: Map.Rendering.Highlight.HighlightRendererBase
+    name: HighlightRendererBase
+    type: Class
+  - uid: Map.Rendering.Highlight.HighlightRendererContext
+    name: HighlightRendererContext
+    type: Struct
+  - uid: Map.Rendering.Highlight.HighlightStyleParams
+    name: HighlightStyleParams
+    type: Struct
+  - uid: Map.Rendering.Highlight.IHighlightRenderer
+    name: IHighlightRenderer
+    type: Interface
+- uid: Map.Rendering.Terrain
+  name: Map.Rendering.Terrain
+  type: Namespace
+  items:
+  - uid: Map.Rendering.Terrain.DefaultTerrainRenderer
+    name: DefaultTerrainRenderer
+    type: Class
+  - uid: Map.Rendering.Terrain.ITerrainRenderer
+    name: ITerrainRenderer
+    type: Interface
+  - uid: Map.Rendering.Terrain.TerrainBitmapReader
+    name: TerrainBitmapReader
+    type: Class
+  - uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
+    name: TerrainBlendMapGenerator
+    type: Class
+  - uid: Map.Rendering.Terrain.TerrainOverrideApplicator
+    name: TerrainOverrideApplicator
+    type: Class
+  - uid: Map.Rendering.Terrain.TerrainRGBLookup
+    name: TerrainRGBLookup
+    type: Class
+  - uid: Map.Rendering.Terrain.TerrainRendererBase
+    name: TerrainRendererBase
+    type: Class
+  - uid: Map.Rendering.Terrain.TerrainRendererContext
+    name: TerrainRendererContext
+    type: Struct
+  - uid: Map.Rendering.Terrain.TerrainStyleParams
+    name: TerrainStyleParams
+    type: Struct
+- uid: Map.Setup
+  name: Map.Setup
+  type: Namespace
+  items:
+  - uid: Map.Setup.MapRendererSetup
+    name: MapRendererSetup
+    type: Class
+- uid: Map.Simulation
+  name: Map.Simulation
+  type: Namespace
+  items:
+  - uid: Map.Simulation.ChecksumComparison
+    name: ChecksumComparison
+    type: Struct
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    type: Class
+  - uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
+    name: SimulationMapLoader.ProvinceBounds
+    type: Struct
+  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    name: SimulationMapLoader.SimulationLoadResult
+    type: Struct
+  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
+    name: SimulationMapLoader.SimulationMapData
+    type: Struct
+  - uid: Map.Simulation.StateChecksum
+    name: StateChecksum
+    type: Struct
+  - uid: Map.Simulation.StateValidationResult
+    name: StateValidationResult
+    type: Struct
+  - uid: Map.Simulation.StateValidator
+    name: StateValidator
+    type: Class
+- uid: Map.Utils
+  name: Map.Utils
+  type: Namespace
+  items:
+  - uid: Map.Utils.ProvinceCenterLookup
+    name: ProvinceCenterLookup
+    type: Class
+- uid: StarterKit
+  name: StarterKit
+  type: Namespace
+  items:
+  - uid: StarterKit.AISystem
+    name: AISystem
+    type: Class
+  - uid: StarterKit.BuildingConstructedEvent
+    name: BuildingConstructedEvent
+    type: Struct
+  - uid: StarterKit.BuildingInfoUI
+    name: BuildingInfoUI
+    type: Class
+  - uid: StarterKit.BuildingModifier
+    name: BuildingModifier
+    type: Struct
+  - uid: StarterKit.BuildingSystem
+    name: BuildingSystem
+    type: Class
+  - uid: StarterKit.BuildingType
+    name: BuildingType
+    type: Class
+  - uid: StarterKit.CountrySelectionUI
+    name: CountrySelectionUI
+    type: Class
+  - uid: StarterKit.DiplomacyPanel
+    name: DiplomacyPanel
+    type: Class
+  - uid: StarterKit.EconomySystem
+    name: EconomySystem
+    type: Class
+  - uid: StarterKit.GoldChangedEvent
+    name: GoldChangedEvent
+    type: Struct
+  - uid: StarterKit.Initializer
+    name: Initializer
+    type: Class
+  - uid: StarterKit.LandUnitCostCalculator
+    name: LandUnitCostCalculator
+    type: Class
+  - uid: StarterKit.LedgerUI
+    name: LedgerUI
+    type: Class
+  - uid: StarterKit.ModifierType
+    name: ModifierType
+    type: Enum
+  - uid: StarterKit.ModifierTypeHelper
+    name: ModifierTypeHelper
+    type: Class
+  - uid: StarterKit.OwnershipRecord
+    name: OwnershipRecord
+    type: Struct
+  - uid: StarterKit.PlayerCountrySelectedEvent
+    name: PlayerCountrySelectedEvent
+    type: Struct
+  - uid: StarterKit.PlayerState
+    name: PlayerState
+    type: Class
+  - uid: StarterKit.ProvinceBuildingData
+    name: ProvinceBuildingData
+    type: Struct
+  - uid: StarterKit.ProvinceHistoryData
+    name: ProvinceHistoryData
+    type: Class
+  - uid: StarterKit.ProvinceHistorySystem
+    name: ProvinceHistorySystem
+    type: Class
+  - uid: StarterKit.ProvinceInfoPresenter
+    name: ProvinceInfoPresenter
+    type: Class
+  - uid: StarterKit.ProvinceInfoUI
+    name: ProvinceInfoUI
+    type: Class
+  - uid: StarterKit.ResourceBarUI
+    name: ResourceBarUI
+    type: Class
+  - uid: StarterKit.StarterKitPanel
+    name: StarterKitPanel
+    type: Class
+  - uid: StarterKit.TimeUI
+    name: TimeUI
+    type: Class
+  - uid: StarterKit.ToolbarUI
+    name: ToolbarUI
+    type: Class
+  - uid: StarterKit.UnitInfoUI
+    name: UnitInfoUI
+    type: Class
+  - uid: StarterKit.UnitMoveHandler
+    name: UnitMoveHandler
+    type: Class
+  - uid: StarterKit.UnitSystem
+    name: UnitSystem
+    type: Class
+  - uid: StarterKit.UnitType
+    name: UnitType
+    type: Class
+  - uid: StarterKit.UnitVisualization
+    name: UnitVisualization
+    type: Class
+- uid: StarterKit.Commands
+  name: StarterKit.Commands
+  type: Namespace
+  items:
+  - uid: StarterKit.Commands.AddGoldCommand
+    name: AddGoldCommand
+    type: Class
+  - uid: StarterKit.Commands.ConstructBuildingCommand
+    name: ConstructBuildingCommand
+    type: Class
+  - uid: StarterKit.Commands.CreateUnitCommand
+    name: CreateUnitCommand
+    type: Class
+  - uid: StarterKit.Commands.DisbandUnitCommand
+    name: DisbandUnitCommand
+    type: Class
+  - uid: StarterKit.Commands.MoveUnitCommand
+    name: MoveUnitCommand
+    type: Class
+- uid: StarterKit.MapModes
+  name: StarterKit.MapModes
+  type: Namespace
+  items:
+  - uid: StarterKit.MapModes.FarmDensityMapMode
+    name: FarmDensityMapMode
+    type: Class
+  - uid: StarterKit.MapModes.TerrainCostMapMode
+    name: TerrainCostMapMode
+    type: Class
+- uid: StarterKit.Validation
+  name: StarterKit.Validation
+  type: Namespace
+  items:
+  - uid: StarterKit.Validation.StarterKitValidationExtensions
+    name: StarterKitValidationExtensions
+    type: Class
+- uid: Utils
+  name: Utils
+  type: Namespace
+  items:
+  - uid: Utils.CircularBuffer`1
+    name: CircularBuffer<T>
+    type: Class
+memberLayout: SamePage

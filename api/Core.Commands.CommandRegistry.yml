@@ -1,0 +1,591 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandRegistry
+  commentId: T:Core.Commands.CommandRegistry
+  id: CommandRegistry
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandRegistry.#ctor(System.String)
+  - Core.Commands.CommandRegistry.Count
+  - Core.Commands.CommandRegistry.DiscoverCommands(System.Reflection.Assembly[])
+  - Core.Commands.CommandRegistry.GenerateHelpText
+  - Core.Commands.CommandRegistry.GetAllCommands
+  - Core.Commands.CommandRegistry.RegisterFactory(Core.Commands.ICommandFactory,Core.Commands.CommandMetadataAttribute)
+  - Core.Commands.CommandRegistry.RegisterFactory(System.Type)
+  - Core.Commands.CommandRegistry.TryGetCommand(System.String,Core.Commands.CommandRegistry.CommandRegistration@)
+  langs:
+  - csharp
+  - vb
+  name: CommandRegistry
+  nameWithType: CommandRegistry
+  fullName: Core.Commands.CommandRegistry
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandRegistry
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Registry for command factories with auto-discovery.
+
+    Discovers commands via reflection and provides lookup by name/alias.
+
+
+    Usage:
+
+    1. Create registry instance
+
+    2. Call DiscoverCommands() with assemblies to scan
+
+    3. Use TryGetCommand() to find commands by name/alias
+  example: []
+  syntax:
+    content: public class CommandRegistry
+    content.vb: Public Class CommandRegistry
+  inheritance:
+  - System.Object
+- uid: Core.Commands.CommandRegistry.#ctor(System.String)
+  commentId: M:Core.Commands.CommandRegistry.#ctor(System.String)
+  id: '#ctor(System.String)'
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: CommandRegistry(string)
+  nameWithType: CommandRegistry.CommandRegistry(string)
+  fullName: Core.Commands.CommandRegistry.CommandRegistry(string)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Create a command registry.
+  example: []
+  syntax:
+    content: public CommandRegistry(string logSubsystem = "core_commands")
+    parameters:
+    - id: logSubsystem
+      type: System.String
+      description: Subsystem name for logging (e.g., "game_hegemon", "starter_kit")
+    content.vb: Public Sub New(logSubsystem As String = "core_commands")
+  overload: Core.Commands.CommandRegistry.#ctor*
+  nameWithType.vb: CommandRegistry.New(String)
+  fullName.vb: Core.Commands.CommandRegistry.New(String)
+  name.vb: New(String)
+- uid: Core.Commands.CommandRegistry.DiscoverCommands(System.Reflection.Assembly[])
+  commentId: M:Core.Commands.CommandRegistry.DiscoverCommands(System.Reflection.Assembly[])
+  id: DiscoverCommands(System.Reflection.Assembly[])
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: DiscoverCommands(params Assembly[])
+  nameWithType: CommandRegistry.DiscoverCommands(params Assembly[])
+  fullName: Core.Commands.CommandRegistry.DiscoverCommands(params System.Reflection.Assembly[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiscoverCommands
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Auto-discover and register all command factories in specified assemblies.
+  example: []
+  syntax:
+    content: public void DiscoverCommands(params Assembly[] assemblies)
+    parameters:
+    - id: assemblies
+      type: System.Reflection.Assembly[]
+      description: Assemblies to scan for ICommandFactory implementations
+    content.vb: Public Sub DiscoverCommands(ParamArray assemblies As Assembly())
+  overload: Core.Commands.CommandRegistry.DiscoverCommands*
+  nameWithType.vb: CommandRegistry.DiscoverCommands(ParamArray Assembly())
+  fullName.vb: Core.Commands.CommandRegistry.DiscoverCommands(ParamArray System.Reflection.Assembly())
+  name.vb: DiscoverCommands(ParamArray Assembly())
+- uid: Core.Commands.CommandRegistry.RegisterFactory(System.Type)
+  commentId: M:Core.Commands.CommandRegistry.RegisterFactory(System.Type)
+  id: RegisterFactory(System.Type)
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterFactory(Type)
+  nameWithType: CommandRegistry.RegisterFactory(Type)
+  fullName: Core.Commands.CommandRegistry.RegisterFactory(System.Type)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterFactory
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Manually register a command factory type.
+  example: []
+  syntax:
+    content: public bool RegisterFactory(Type factoryType)
+    parameters:
+    - id: factoryType
+      type: System.Type
+    return:
+      type: System.Boolean
+    content.vb: Public Function RegisterFactory(factoryType As Type) As Boolean
+  overload: Core.Commands.CommandRegistry.RegisterFactory*
+- uid: Core.Commands.CommandRegistry.RegisterFactory(Core.Commands.ICommandFactory,Core.Commands.CommandMetadataAttribute)
+  commentId: M:Core.Commands.CommandRegistry.RegisterFactory(Core.Commands.ICommandFactory,Core.Commands.CommandMetadataAttribute)
+  id: RegisterFactory(Core.Commands.ICommandFactory,Core.Commands.CommandMetadataAttribute)
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterFactory(ICommandFactory, CommandMetadataAttribute)
+  nameWithType: CommandRegistry.RegisterFactory(ICommandFactory, CommandMetadataAttribute)
+  fullName: Core.Commands.CommandRegistry.RegisterFactory(Core.Commands.ICommandFactory, Core.Commands.CommandMetadataAttribute)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterFactory
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Manually register a command factory instance with metadata.
+  example: []
+  syntax:
+    content: public bool RegisterFactory(ICommandFactory factory, CommandMetadataAttribute metadata)
+    parameters:
+    - id: factory
+      type: Core.Commands.ICommandFactory
+    - id: metadata
+      type: Core.Commands.CommandMetadataAttribute
+    return:
+      type: System.Boolean
+    content.vb: Public Function RegisterFactory(factory As ICommandFactory, metadata As CommandMetadataAttribute) As Boolean
+  overload: Core.Commands.CommandRegistry.RegisterFactory*
+- uid: Core.Commands.CommandRegistry.TryGetCommand(System.String,Core.Commands.CommandRegistry.CommandRegistration@)
+  commentId: M:Core.Commands.CommandRegistry.TryGetCommand(System.String,Core.Commands.CommandRegistry.CommandRegistration@)
+  id: TryGetCommand(System.String,Core.Commands.CommandRegistry.CommandRegistration@)
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: TryGetCommand(string, out CommandRegistration)
+  nameWithType: CommandRegistry.TryGetCommand(string, out CommandRegistry.CommandRegistration)
+  fullName: Core.Commands.CommandRegistry.TryGetCommand(string, out Core.Commands.CommandRegistry.CommandRegistration)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetCommand
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 136
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Try to get command registration by name or alias.
+  example: []
+  syntax:
+    content: public bool TryGetCommand(string nameOrAlias, out CommandRegistry.CommandRegistration registration)
+    parameters:
+    - id: nameOrAlias
+      type: System.String
+    - id: registration
+      type: Core.Commands.CommandRegistry.CommandRegistration
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetCommand(nameOrAlias As String, registration As CommandRegistry.CommandRegistration) As Boolean
+  overload: Core.Commands.CommandRegistry.TryGetCommand*
+  nameWithType.vb: CommandRegistry.TryGetCommand(String, CommandRegistry.CommandRegistration)
+  fullName.vb: Core.Commands.CommandRegistry.TryGetCommand(String, Core.Commands.CommandRegistry.CommandRegistration)
+  name.vb: TryGetCommand(String, CommandRegistration)
+- uid: Core.Commands.CommandRegistry.GetAllCommands
+  commentId: M:Core.Commands.CommandRegistry.GetAllCommands
+  id: GetAllCommands
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAllCommands()
+  nameWithType: CommandRegistry.GetAllCommands()
+  fullName: Core.Commands.CommandRegistry.GetAllCommands()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllCommands
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 153
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get all registered commands.
+  example: []
+  syntax:
+    content: public IEnumerable<CommandRegistry.CommandRegistration> GetAllCommands()
+    return:
+      type: System.Collections.Generic.IEnumerable{Core.Commands.CommandRegistry.CommandRegistration}
+    content.vb: Public Function GetAllCommands() As IEnumerable(Of CommandRegistry.CommandRegistration)
+  overload: Core.Commands.CommandRegistry.GetAllCommands*
+- uid: Core.Commands.CommandRegistry.Count
+  commentId: P:Core.Commands.CommandRegistry.Count
+  id: Count
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CommandRegistry.Count
+  fullName: Core.Commands.CommandRegistry.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 161
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Get count of registered commands.
+  example: []
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Commands.CommandRegistry.Count*
+- uid: Core.Commands.CommandRegistry.GenerateHelpText
+  commentId: M:Core.Commands.CommandRegistry.GenerateHelpText
+  id: GenerateHelpText
+  parent: Core.Commands.CommandRegistry
+  langs:
+  - csharp
+  - vb
+  name: GenerateHelpText()
+  nameWithType: CommandRegistry.GenerateHelpText()
+  fullName: Core.Commands.CommandRegistry.GenerateHelpText()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateHelpText
+    path: Scripts/Core/Commands/CommandRegistry.cs
+    startLine: 166
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Generate help text for all commands.
+  example: []
+  syntax:
+    content: public string GenerateHelpText()
+    return:
+      type: System.String
+    content.vb: Public Function GenerateHelpText() As String
+  overload: Core.Commands.CommandRegistry.GenerateHelpText*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandRegistry.#ctor*
+  commentId: Overload:Core.Commands.CommandRegistry.#ctor
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry__ctor_System_String_
+  name: CommandRegistry
+  nameWithType: CommandRegistry.CommandRegistry
+  fullName: Core.Commands.CommandRegistry.CommandRegistry
+  nameWithType.vb: CommandRegistry.New
+  fullName.vb: Core.Commands.CommandRegistry.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.CommandRegistry.DiscoverCommands*
+  commentId: Overload:Core.Commands.CommandRegistry.DiscoverCommands
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_DiscoverCommands_System_Reflection_Assembly___
+  name: DiscoverCommands
+  nameWithType: CommandRegistry.DiscoverCommands
+  fullName: Core.Commands.CommandRegistry.DiscoverCommands
+- uid: System.Reflection.Assembly[]
+  isExternal: true
+  name: Assembly[]
+  nameWithType: Assembly[]
+  fullName: System.Reflection.Assembly[]
+  nameWithType.vb: Assembly()
+  fullName.vb: System.Reflection.Assembly()
+  name.vb: Assembly()
+  spec.csharp:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.CommandRegistry.RegisterFactory*
+  commentId: Overload:Core.Commands.CommandRegistry.RegisterFactory
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_RegisterFactory_System_Type_
+  name: RegisterFactory
+  nameWithType: CommandRegistry.RegisterFactory
+  fullName: Core.Commands.CommandRegistry.RegisterFactory
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Commands.ICommandFactory
+  commentId: T:Core.Commands.ICommandFactory
+  parent: Core.Commands
+  href: Core.Commands.ICommandFactory.html
+  name: ICommandFactory
+  nameWithType: ICommandFactory
+  fullName: Core.Commands.ICommandFactory
+- uid: Core.Commands.CommandMetadataAttribute
+  commentId: T:Core.Commands.CommandMetadataAttribute
+  parent: Core.Commands
+  href: Core.Commands.CommandMetadataAttribute.html
+  name: CommandMetadataAttribute
+  nameWithType: CommandMetadataAttribute
+  fullName: Core.Commands.CommandMetadataAttribute
+- uid: Core.Commands.CommandRegistry.TryGetCommand*
+  commentId: Overload:Core.Commands.CommandRegistry.TryGetCommand
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_TryGetCommand_System_String_Core_Commands_CommandRegistry_CommandRegistration__
+  name: TryGetCommand
+  nameWithType: CommandRegistry.TryGetCommand
+  fullName: Core.Commands.CommandRegistry.TryGetCommand
+- uid: Core.Commands.CommandRegistry.CommandRegistration
+  commentId: T:Core.Commands.CommandRegistry.CommandRegistration
+  parent: Core.Commands
+  href: Core.Commands.CommandRegistry.html
+  name: CommandRegistry.CommandRegistration
+  nameWithType: CommandRegistry.CommandRegistration
+  fullName: Core.Commands.CommandRegistry.CommandRegistration
+  spec.csharp:
+  - uid: Core.Commands.CommandRegistry
+    name: CommandRegistry
+    href: Core.Commands.CommandRegistry.html
+  - name: .
+  - uid: Core.Commands.CommandRegistry.CommandRegistration
+    name: CommandRegistration
+    href: Core.Commands.CommandRegistry.CommandRegistration.html
+  spec.vb:
+  - uid: Core.Commands.CommandRegistry
+    name: CommandRegistry
+    href: Core.Commands.CommandRegistry.html
+  - name: .
+  - uid: Core.Commands.CommandRegistry.CommandRegistration
+    name: CommandRegistration
+    href: Core.Commands.CommandRegistry.CommandRegistration.html
+- uid: Core.Commands.CommandRegistry.GetAllCommands*
+  commentId: Overload:Core.Commands.CommandRegistry.GetAllCommands
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_GetAllCommands
+  name: GetAllCommands
+  nameWithType: CommandRegistry.GetAllCommands
+  fullName: Core.Commands.CommandRegistry.GetAllCommands
+- uid: System.Collections.Generic.IEnumerable{Core.Commands.CommandRegistry.CommandRegistration}
+  commentId: T:System.Collections.Generic.IEnumerable{Core.Commands.CommandRegistry.CommandRegistration}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: Core.Commands.CommandRegistry.html
+  name: IEnumerable<CommandRegistry.CommandRegistration>
+  nameWithType: IEnumerable<CommandRegistry.CommandRegistration>
+  fullName: System.Collections.Generic.IEnumerable<Core.Commands.CommandRegistry.CommandRegistration>
+  nameWithType.vb: IEnumerable(Of CommandRegistry.CommandRegistration)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Core.Commands.CommandRegistry.CommandRegistration)
+  name.vb: IEnumerable(Of CommandRegistry.CommandRegistration)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: Core.Commands.CommandRegistry
+    name: CommandRegistry
+    href: Core.Commands.CommandRegistry.html
+  - name: .
+  - uid: Core.Commands.CommandRegistry.CommandRegistration
+    name: CommandRegistration
+    href: Core.Commands.CommandRegistry.CommandRegistration.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Commands.CommandRegistry
+    name: CommandRegistry
+    href: Core.Commands.CommandRegistry.html
+  - name: .
+  - uid: Core.Commands.CommandRegistry.CommandRegistration
+    name: CommandRegistration
+    href: Core.Commands.CommandRegistry.CommandRegistration.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Commands.CommandRegistry.Count*
+  commentId: Overload:Core.Commands.CommandRegistry.Count
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_Count
+  name: Count
+  nameWithType: CommandRegistry.Count
+  fullName: Core.Commands.CommandRegistry.Count
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.CommandRegistry.GenerateHelpText*
+  commentId: Overload:Core.Commands.CommandRegistry.GenerateHelpText
+  href: Core.Commands.CommandRegistry.html#Core_Commands_CommandRegistry_GenerateHelpText
+  name: GenerateHelpText
+  nameWithType: CommandRegistry.GenerateHelpText
+  fullName: Core.Commands.CommandRegistry.GenerateHelpText

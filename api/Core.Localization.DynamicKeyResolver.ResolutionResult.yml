@@ -1,0 +1,283 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+  commentId: T:Core.Localization.DynamicKeyResolver.ResolutionResult
+  id: DynamicKeyResolver.ResolutionResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.IsSuccess
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.ResolutionSteps
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedKey
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedValue
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.UsedFallback
+  - Core.Localization.DynamicKeyResolver.ResolutionResult.UsedWildcard
+  langs:
+  - csharp
+  - vb
+  name: DynamicKeyResolver.ResolutionResult
+  nameWithType: DynamicKeyResolver.ResolutionResult
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolutionResult
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: Resolution result
+  example: []
+  syntax:
+    content: public struct DynamicKeyResolver.ResolutionResult
+    content.vb: Public Structure DynamicKeyResolver.ResolutionResult
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedValue
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedValue
+  id: ResolvedValue
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: ResolvedValue
+  nameWithType: DynamicKeyResolver.ResolutionResult.ResolvedValue
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolvedValue
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString512Bytes ResolvedValue
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public ResolvedValue As FixedString512Bytes
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedKey
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedKey
+  id: ResolvedKey
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: ResolvedKey
+  nameWithType: DynamicKeyResolver.ResolutionResult.ResolvedKey
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolvedKey
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolvedKey
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public FixedString128Bytes ResolvedKey
+    return:
+      type: Unity.Collections.FixedString128Bytes
+    content.vb: Public ResolvedKey As FixedString128Bytes
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolutionSteps
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.ResolutionSteps
+  id: ResolutionSteps
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: ResolutionSteps
+  nameWithType: DynamicKeyResolver.ResolutionResult.ResolutionSteps
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.ResolutionSteps
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResolutionSteps
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int ResolutionSteps
+    return:
+      type: System.Int32
+    content.vb: Public ResolutionSteps As Integer
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.IsSuccess
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: DynamicKeyResolver.ResolutionResult.IsSuccess
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.UsedFallback
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.UsedFallback
+  id: UsedFallback
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: UsedFallback
+  nameWithType: DynamicKeyResolver.ResolutionResult.UsedFallback
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.UsedFallback
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UsedFallback
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool UsedFallback
+    return:
+      type: System.Boolean
+    content.vb: Public UsedFallback As Boolean
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult.UsedWildcard
+  commentId: F:Core.Localization.DynamicKeyResolver.ResolutionResult.UsedWildcard
+  id: UsedWildcard
+  parent: Core.Localization.DynamicKeyResolver.ResolutionResult
+  langs:
+  - csharp
+  - vb
+  name: UsedWildcard
+  nameWithType: DynamicKeyResolver.ResolutionResult.UsedWildcard
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult.UsedWildcard
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/DynamicKeyResolver.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UsedWildcard
+    path: Scripts/Core/Localization/DynamicKeyResolver.cs
+    startLine: 63
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool UsedWildcard
+    return:
+      type: System.Boolean
+    content.vb: Public UsedWildcard As Boolean
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.FixedString128Bytes
+  commentId: T:Unity.Collections.FixedString128Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString128Bytes
+  nameWithType: FixedString128Bytes
+  fullName: Unity.Collections.FixedString128Bytes
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

@@ -1,0 +1,455 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.RelationData
+  commentId: T:Core.Diplomacy.RelationData
+  id: RelationData
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.RelationData.Create(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Diplomacy.RelationData.GetOtherCountry(System.UInt16)
+  - Core.Diplomacy.RelationData.InvolvesCountry(System.UInt16)
+  - Core.Diplomacy.RelationData.atWar
+  - Core.Diplomacy.RelationData.baseOpinion
+  - Core.Diplomacy.RelationData.country1
+  - Core.Diplomacy.RelationData.country2
+  - Core.Diplomacy.RelationData.treatyFlags
+  langs:
+  - csharp
+  - vb
+  name: RelationData
+  nameWithType: RelationData
+  fullName: Core.Diplomacy.RelationData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RelationData
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Hot data for diplomatic relations between two countries
+
+
+    Architecture:
+
+    - Fixed-size struct for cache efficiency
+
+    - Only stores essential hot data (opinion, war state)
+
+    - Cold data (modifiers, history) stored separately
+
+    - Stored in sparse Dictionary (only active relationships)
+
+
+    Memory: 16 bytes per relationship
+
+
+    Storage Pattern:
+
+    Dictionary{(ushort, ushort), RelationData} relations;
+
+    - Key: (country1, country2) sorted pair
+
+    - Value: this struct
+
+    - Only store relationships that exist (sparse)
+
+
+    Example:
+
+    1000 countries × 30% interaction = ~30k relationships × 16 bytes = ~480KB
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct RelationData
+    content.vb: >-
+      <Serializable>
+
+      Public Structure RelationData
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Diplomacy.RelationData.country1
+  commentId: F:Core.Diplomacy.RelationData.country1
+  id: country1
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: country1
+  nameWithType: RelationData.country1
+  fullName: Core.Diplomacy.RelationData.country1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country1
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: First country in the relationship (lower ID)
+  example: []
+  syntax:
+    content: public ushort country1
+    return:
+      type: System.UInt16
+    content.vb: Public country1 As UShort
+- uid: Core.Diplomacy.RelationData.country2
+  commentId: F:Core.Diplomacy.RelationData.country2
+  id: country2
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: country2
+  nameWithType: RelationData.country2
+  fullName: Core.Diplomacy.RelationData.country2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country2
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Second country in the relationship (higher ID)
+  example: []
+  syntax:
+    content: public ushort country2
+    return:
+      type: System.UInt16
+    content.vb: Public country2 As UShort
+- uid: Core.Diplomacy.RelationData.baseOpinion
+  commentId: F:Core.Diplomacy.RelationData.baseOpinion
+  id: baseOpinion
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: baseOpinion
+  nameWithType: RelationData.baseOpinion
+  fullName: Core.Diplomacy.RelationData.baseOpinion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: baseOpinion
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Base opinion value before modifiers (-200 to +200)
+
+    Cultural/religious similarity, historical relations, etc.
+  example: []
+  syntax:
+    content: public FixedPoint64 baseOpinion
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public baseOpinion As FixedPoint64
+- uid: Core.Diplomacy.RelationData.atWar
+  commentId: F:Core.Diplomacy.RelationData.atWar
+  id: atWar
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: atWar
+  nameWithType: RelationData.atWar
+  fullName: Core.Diplomacy.RelationData.atWar
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: atWar
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Are these countries currently at war?
+  example: []
+  syntax:
+    content: public bool atWar
+    return:
+      type: System.Boolean
+    content.vb: Public atWar As Boolean
+- uid: Core.Diplomacy.RelationData.treatyFlags
+  commentId: F:Core.Diplomacy.RelationData.treatyFlags
+  id: treatyFlags
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: treatyFlags
+  nameWithType: RelationData.treatyFlags
+  fullName: Core.Diplomacy.RelationData.treatyFlags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: treatyFlags
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Treaty flags (bitfield for 8 treaty types)
+
+    Phase 2: Alliance, NAP, Guarantee×2, MilitaryAccess×2
+  example: []
+  syntax:
+    content: public byte treatyFlags
+    return:
+      type: System.Byte
+    content.vb: Public treatyFlags As Byte
+- uid: Core.Diplomacy.RelationData.Create(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Diplomacy.RelationData.Create(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: Create(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: Create(ushort, ushort, FixedPoint64)
+  nameWithType: RelationData.Create(ushort, ushort, FixedPoint64)
+  fullName: Core.Diplomacy.RelationData.Create(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Create relationship with base opinion
+  example: []
+  syntax:
+    content: public static RelationData Create(ushort countryA, ushort countryB, FixedPoint64 baseOpinion)
+    parameters:
+    - id: countryA
+      type: System.UInt16
+    - id: countryB
+      type: System.UInt16
+    - id: baseOpinion
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Diplomacy.RelationData
+    content.vb: Public Shared Function Create(countryA As UShort, countryB As UShort, baseOpinion As FixedPoint64) As RelationData
+  overload: Core.Diplomacy.RelationData.Create*
+  nameWithType.vb: RelationData.Create(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Diplomacy.RelationData.Create(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: Create(UShort, UShort, FixedPoint64)
+- uid: Core.Diplomacy.RelationData.GetOtherCountry(System.UInt16)
+  commentId: M:Core.Diplomacy.RelationData.GetOtherCountry(System.UInt16)
+  id: GetOtherCountry(System.UInt16)
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: GetOtherCountry(ushort)
+  nameWithType: RelationData.GetOtherCountry(ushort)
+  fullName: Core.Diplomacy.RelationData.GetOtherCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOtherCountry
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get the other country in this relationship
+  example: []
+  syntax:
+    content: public ushort GetOtherCountry(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetOtherCountry(countryID As UShort) As UShort
+  overload: Core.Diplomacy.RelationData.GetOtherCountry*
+  nameWithType.vb: RelationData.GetOtherCountry(UShort)
+  fullName.vb: Core.Diplomacy.RelationData.GetOtherCountry(UShort)
+  name.vb: GetOtherCountry(UShort)
+- uid: Core.Diplomacy.RelationData.InvolvesCountry(System.UInt16)
+  commentId: M:Core.Diplomacy.RelationData.InvolvesCountry(System.UInt16)
+  id: InvolvesCountry(System.UInt16)
+  parent: Core.Diplomacy.RelationData
+  langs:
+  - csharp
+  - vb
+  name: InvolvesCountry(ushort)
+  nameWithType: RelationData.InvolvesCountry(ushort)
+  fullName: Core.Diplomacy.RelationData.InvolvesCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/RelationData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvolvesCountry
+    path: Scripts/Core/Diplomacy/RelationData.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Check if this relationship involves the given country
+  example: []
+  syntax:
+    content: public bool InvolvesCountry(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function InvolvesCountry(countryID As UShort) As Boolean
+  overload: Core.Diplomacy.RelationData.InvolvesCountry*
+  nameWithType.vb: RelationData.InvolvesCountry(UShort)
+  fullName.vb: Core.Diplomacy.RelationData.InvolvesCountry(UShort)
+  name.vb: InvolvesCountry(UShort)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Diplomacy.RelationData.Create*
+  commentId: Overload:Core.Diplomacy.RelationData.Create
+  href: Core.Diplomacy.RelationData.html#Core_Diplomacy_RelationData_Create_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: Create
+  nameWithType: RelationData.Create
+  fullName: Core.Diplomacy.RelationData.Create
+- uid: Core.Diplomacy.RelationData
+  commentId: T:Core.Diplomacy.RelationData
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.RelationData.html
+  name: RelationData
+  nameWithType: RelationData
+  fullName: Core.Diplomacy.RelationData
+- uid: Core.Diplomacy.RelationData.GetOtherCountry*
+  commentId: Overload:Core.Diplomacy.RelationData.GetOtherCountry
+  href: Core.Diplomacy.RelationData.html#Core_Diplomacy_RelationData_GetOtherCountry_System_UInt16_
+  name: GetOtherCountry
+  nameWithType: RelationData.GetOtherCountry
+  fullName: Core.Diplomacy.RelationData.GetOtherCountry
+- uid: Core.Diplomacy.RelationData.InvolvesCountry*
+  commentId: Overload:Core.Diplomacy.RelationData.InvolvesCountry
+  href: Core.Diplomacy.RelationData.html#Core_Diplomacy_RelationData_InvolvesCountry_System_UInt16_
+  name: InvolvesCountry
+  nameWithType: RelationData.InvolvesCountry
+  fullName: Core.Diplomacy.RelationData.InvolvesCountry

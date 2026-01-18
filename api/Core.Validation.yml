@@ -1,0 +1,53 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Validation
+  commentId: N:Core.Validation
+  id: Core.Validation
+  children:
+  - Core.Validation.Validate
+  - Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Core.Validation
+  nameWithType: Core.Validation
+  fullName: Core.Validation
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Validation.Validate
+  commentId: T:Core.Validation.Validate
+  href: Core.Validation.Validate.html
+  name: Validate
+  nameWithType: Validate
+  fullName: Core.Validation.Validate
+- uid: Core.Validation.ValidationBuilder
+  commentId: T:Core.Validation.ValidationBuilder
+  parent: Core.Validation
+  href: Core.Validation.ValidationBuilder.html
+  name: ValidationBuilder
+  nameWithType: ValidationBuilder
+  fullName: Core.Validation.ValidationBuilder
+- uid: Core.Validation
+  commentId: N:Core.Validation
+  href: Core.html
+  name: Core.Validation
+  nameWithType: Core.Validation
+  fullName: Core.Validation
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html

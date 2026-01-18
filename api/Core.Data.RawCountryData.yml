@@ -1,0 +1,389 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.RawCountryData
+  commentId: T:Core.Data.RawCountryData
+  id: RawCountryData
+  parent: Core.Data
+  children:
+  - Core.Data.RawCountryData.GetColor
+  - Core.Data.RawCountryData.Invalid
+  - Core.Data.RawCountryData.colorB
+  - Core.Data.RawCountryData.colorG
+  - Core.Data.RawCountryData.colorR
+  - Core.Data.RawCountryData.graphicalCulture
+  - Core.Data.RawCountryData.hasGraphicalCulture
+  - Core.Data.RawCountryData.tag
+  langs:
+  - csharp
+  - vb
+  name: RawCountryData
+  nameWithType: RawCountryData
+  fullName: Core.Data.RawCountryData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RawCountryData
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    Burst-compatible struct for country data extracted from JSON5
+
+    Used as intermediate format between JSON parsing and burst processing
+
+
+    ENGINE layer - generic country data only.
+
+    Game-specific fields (religion, revolutionary colors, etc.) should be
+
+    parsed by game layer and stored in CountryColdData.customData.
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct RawCountryData
+    content.vb: >-
+      <Serializable>
+
+      Public Structure RawCountryData
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.RawCountryData.tag
+  commentId: F:Core.Data.RawCountryData.tag
+  id: tag
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: tag
+  nameWithType: RawCountryData.tag
+  fullName: Core.Data.RawCountryData.tag
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tag
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes tag
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public tag As FixedString64Bytes
+- uid: Core.Data.RawCountryData.graphicalCulture
+  commentId: F:Core.Data.RawCountryData.graphicalCulture
+  id: graphicalCulture
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: graphicalCulture
+  nameWithType: RawCountryData.graphicalCulture
+  fullName: Core.Data.RawCountryData.graphicalCulture
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: graphicalCulture
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString64Bytes graphicalCulture
+    return:
+      type: Unity.Collections.FixedString64Bytes
+    content.vb: Public graphicalCulture As FixedString64Bytes
+- uid: Core.Data.RawCountryData.colorR
+  commentId: F:Core.Data.RawCountryData.colorR
+  id: colorR
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: colorR
+  nameWithType: RawCountryData.colorR
+  fullName: Core.Data.RawCountryData.colorR
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: colorR
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte colorR
+    return:
+      type: System.Byte
+    content.vb: Public colorR As Byte
+- uid: Core.Data.RawCountryData.colorG
+  commentId: F:Core.Data.RawCountryData.colorG
+  id: colorG
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: colorG
+  nameWithType: RawCountryData.colorG
+  fullName: Core.Data.RawCountryData.colorG
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: colorG
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte colorG
+    return:
+      type: System.Byte
+    content.vb: Public colorG As Byte
+- uid: Core.Data.RawCountryData.colorB
+  commentId: F:Core.Data.RawCountryData.colorB
+  id: colorB
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: colorB
+  nameWithType: RawCountryData.colorB
+  fullName: Core.Data.RawCountryData.colorB
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: colorB
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public byte colorB
+    return:
+      type: System.Byte
+    content.vb: Public colorB As Byte
+- uid: Core.Data.RawCountryData.hasGraphicalCulture
+  commentId: F:Core.Data.RawCountryData.hasGraphicalCulture
+  id: hasGraphicalCulture
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: hasGraphicalCulture
+  nameWithType: RawCountryData.hasGraphicalCulture
+  fullName: Core.Data.RawCountryData.hasGraphicalCulture
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hasGraphicalCulture
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool hasGraphicalCulture
+    return:
+      type: System.Boolean
+    content.vb: Public hasGraphicalCulture As Boolean
+- uid: Core.Data.RawCountryData.Invalid
+  commentId: P:Core.Data.RawCountryData.Invalid
+  id: Invalid
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: Invalid
+  nameWithType: RawCountryData.Invalid
+  fullName: Core.Data.RawCountryData.Invalid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Invalid
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static RawCountryData Invalid { get; }
+    parameters: []
+    return:
+      type: Core.Data.RawCountryData
+    content.vb: Public Shared ReadOnly Property Invalid As RawCountryData
+  overload: Core.Data.RawCountryData.Invalid*
+- uid: Core.Data.RawCountryData.GetColor
+  commentId: M:Core.Data.RawCountryData.GetColor
+  id: GetColor
+  parent: Core.Data.RawCountryData
+  langs:
+  - csharp
+  - vb
+  name: GetColor()
+  nameWithType: RawCountryData.GetColor()
+  fullName: Core.Data.RawCountryData.GetColor()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Json5CountryData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColor
+    path: Scripts/Core/Data/Json5CountryData.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get the country color as Unity Color32
+  example: []
+  syntax:
+    content: public Color32 GetColor()
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetColor() As Color32
+  overload: Core.Data.RawCountryData.GetColor*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Unity.Collections.FixedString64Bytes
+  commentId: T:Unity.Collections.FixedString64Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString64Bytes
+  nameWithType: FixedString64Bytes
+  fullName: Unity.Collections.FixedString64Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.RawCountryData.Invalid*
+  commentId: Overload:Core.Data.RawCountryData.Invalid
+  href: Core.Data.RawCountryData.html#Core_Data_RawCountryData_Invalid
+  name: Invalid
+  nameWithType: RawCountryData.Invalid
+  fullName: Core.Data.RawCountryData.Invalid
+- uid: Core.Data.RawCountryData
+  commentId: T:Core.Data.RawCountryData
+  parent: Core.Data
+  href: Core.Data.RawCountryData.html
+  name: RawCountryData
+  nameWithType: RawCountryData
+  fullName: Core.Data.RawCountryData
+- uid: Core.Data.RawCountryData.GetColor*
+  commentId: Overload:Core.Data.RawCountryData.GetColor
+  href: Core.Data.RawCountryData.html#Core_Data_RawCountryData_GetColor
+  name: GetColor
+  nameWithType: RawCountryData.GetColor
+  fullName: Core.Data.RawCountryData.GetColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

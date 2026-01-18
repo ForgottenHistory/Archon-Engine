@@ -1,0 +1,319 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  commentId: T:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  id: ProvinceNeighborDetector.ProvinceNeighborData
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.IsCoastal
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Neighbors
+  - Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.ProvinceID
+  langs:
+  - csharp
+  - vb
+  name: ProvinceNeighborDetector.ProvinceNeighborData
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceNeighborData
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Province neighbor data storage
+  example: []
+  syntax:
+    content: public struct ProvinceNeighborDetector.ProvinceNeighborData
+    content.vb: Public Structure ProvinceNeighborDetector.ProvinceNeighborData
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.ProvinceID
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.ProvinceID
+  id: ProvinceID
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.ProvinceID
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Neighbors
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Neighbors
+  id: Neighbors
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: Neighbors
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.Neighbors
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Neighbors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Neighbors
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public NativeList<ushort> Neighbors
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Neighbors As NativeList(Of UShort)
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.IsCoastal
+  commentId: F:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.IsCoastal
+  id: IsCoastal
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: IsCoastal
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.IsCoastal
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.IsCoastal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCoastal
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public bool IsCoastal
+    return:
+      type: System.Boolean
+    content.vb: Public IsCoastal As Boolean
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  commentId: P:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  id: NeighborCount
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: NeighborCount
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NeighborCount
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int NeighborCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property NeighborCount As Integer
+  overload: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount*
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose
+  commentId: M:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose
+  id: Dispose
+  parent: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.Dispose()
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html#Map_Province_ProvinceNeighborDetector_ProvinceNeighborData_NeighborCount
+  name: NeighborCount
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.NeighborCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose
+  href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html#Map_Province_ProvinceNeighborDetector_ProvinceNeighborData_Dispose
+  name: Dispose
+  nameWithType: ProvinceNeighborDetector.ProvinceNeighborData.Dispose
+  fullName: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.Dispose

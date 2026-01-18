@@ -1,0 +1,2346 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.MapRendererRegistry
+  commentId: T:Map.Rendering.MapRendererRegistry
+  id: MapRendererRegistry
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers
+  - Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers
+  - Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers
+  - Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers
+  - Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors
+  - Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers
+  - Map.Rendering.MapRendererRegistry.GetBorderRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer
+  - Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer
+  - Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer
+  - Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer
+  - Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor
+  - Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer
+  - Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.GetHighlightRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.GetMapModeColorizer(System.String)
+  - Map.Rendering.MapRendererRegistry.GetShaderCompositor(System.String)
+  - Map.Rendering.MapRendererRegistry.GetTerrainRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.HasBorderRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.HasHighlightRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.HasMapModeColorizer(System.String)
+  - Map.Rendering.MapRendererRegistry.HasShaderCompositor(System.String)
+  - Map.Rendering.MapRendererRegistry.HasTerrainRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.Initialize
+  - Map.Rendering.MapRendererRegistry.Instance
+  - Map.Rendering.MapRendererRegistry.IsInitialized
+  - Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId(Map.Rendering.BorderRenderingMode)
+  - Map.Rendering.MapRendererRegistry.RegisterBorderRenderer(Map.Rendering.Border.IBorderRenderer)
+  - Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer(Map.Rendering.FogOfWar.IFogOfWarRenderer)
+  - Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer(Map.Rendering.Highlight.IHighlightRenderer)
+  - Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer(Map.MapModes.Colorization.IMapModeColorizer)
+  - Map.Rendering.MapRendererRegistry.RegisterShaderCompositor(Map.Rendering.Compositing.IShaderCompositor)
+  - Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer(Map.Rendering.Terrain.ITerrainRenderer)
+  - Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer(System.String)
+  - Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor(System.String)
+  - Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor(System.String)
+  - Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer(System.String)
+  langs:
+  - csharp
+  - vb
+  name: MapRendererRegistry
+  nameWithType: MapRendererRegistry
+  fullName: Map.Rendering.MapRendererRegistry
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapRendererRegistry
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    ENGINE: Central registry for pluggable map rendering implementations.
+
+
+    ENGINE provides default renderers (DistanceField, PixelPerfect, MeshGeometry).
+
+    GAME can register custom implementations during initialization.
+
+
+    Usage:
+
+    1. ENGINE registers defaults automatically on initialization
+
+    2. GAME registers custom renderers before map initialization:
+       MapRendererRegistry.Instance.RegisterBorderRenderer(new MyCustomBorderRenderer());
+    3. VisualStyleConfiguration references renderers by string ID
+
+
+    Pattern follows IMapModeHandler registration approach.
+  example: []
+  syntax:
+    content: 'public class MapRendererRegistry : MonoBehaviour'
+    content.vb: Public Class MapRendererRegistry Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.MapRendererRegistry.Instance
+  commentId: P:Map.Rendering.MapRendererRegistry.Instance
+  id: Instance
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: Instance
+  nameWithType: MapRendererRegistry.Instance
+  fullName: Map.Rendering.MapRendererRegistry.Instance
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Instance
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static MapRendererRegistry Instance { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.MapRendererRegistry
+    content.vb: Public Shared Property Instance As MapRendererRegistry
+  overload: Map.Rendering.MapRendererRegistry.Instance*
+- uid: Map.Rendering.MapRendererRegistry.IsInitialized
+  commentId: P:Map.Rendering.MapRendererRegistry.IsInitialized
+  id: IsInitialized
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: MapRendererRegistry.IsInitialized
+  fullName: Map.Rendering.MapRendererRegistry.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsInitialized As Boolean
+  overload: Map.Rendering.MapRendererRegistry.IsInitialized*
+- uid: Map.Rendering.MapRendererRegistry.Initialize
+  commentId: M:Map.Rendering.MapRendererRegistry.Initialize
+  id: Initialize
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: MapRendererRegistry.Initialize()
+  fullName: Map.Rendering.MapRendererRegistry.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize the registry. Called by MapInitializer after ENGINE default renderers are created.
+  example: []
+  syntax:
+    content: public void Initialize()
+    content.vb: Public Sub Initialize()
+  overload: Map.Rendering.MapRendererRegistry.Initialize*
+- uid: Map.Rendering.MapRendererRegistry.RegisterBorderRenderer(Map.Rendering.Border.IBorderRenderer)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterBorderRenderer(Map.Rendering.Border.IBorderRenderer)
+  id: RegisterBorderRenderer(Map.Rendering.Border.IBorderRenderer)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterBorderRenderer(IBorderRenderer)
+  nameWithType: MapRendererRegistry.RegisterBorderRenderer(IBorderRenderer)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterBorderRenderer(Map.Rendering.Border.IBorderRenderer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 87
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a border renderer implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterBorderRenderer(IBorderRenderer renderer)
+    parameters:
+    - id: renderer
+      type: Map.Rendering.Border.IBorderRenderer
+    content.vb: Public Sub RegisterBorderRenderer(renderer As IBorderRenderer)
+  overload: Map.Rendering.MapRendererRegistry.RegisterBorderRenderer*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer(System.String)
+  id: UnregisterBorderRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterBorderRenderer(string)
+  nameWithType: MapRendererRegistry.UnregisterBorderRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 108
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a border renderer.
+  example: []
+  syntax:
+    content: public bool UnregisterBorderRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterBorderRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer*
+  nameWithType.vb: MapRendererRegistry.UnregisterBorderRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer(String)
+  name.vb: UnregisterBorderRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetBorderRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetBorderRenderer(System.String)
+  id: GetBorderRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetBorderRenderer(string)
+  nameWithType: MapRendererRegistry.GetBorderRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetBorderRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 124
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a border renderer by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public IBorderRenderer GetBorderRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.Border.IBorderRenderer
+    content.vb: Public Function GetBorderRenderer(rendererId As String) As IBorderRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetBorderRenderer*
+  nameWithType.vb: MapRendererRegistry.GetBorderRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetBorderRenderer(String)
+  name.vb: GetBorderRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer
+  id: GetDefaultBorderRenderer
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultBorderRenderer()
+  nameWithType: MapRendererRegistry.GetDefaultBorderRenderer()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 143
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default border renderer.
+  example: []
+  syntax:
+    content: public IBorderRenderer GetDefaultBorderRenderer()
+    return:
+      type: Map.Rendering.Border.IBorderRenderer
+    content.vb: Public Function GetDefaultBorderRenderer() As IBorderRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer(System.String)
+  id: SetDefaultBorderRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultBorderRenderer(string)
+  nameWithType: MapRendererRegistry.SetDefaultBorderRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 151
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which renderer ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultBorderRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    content.vb: Public Sub SetDefaultBorderRenderer(rendererId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer*
+  nameWithType.vb: MapRendererRegistry.SetDefaultBorderRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer(String)
+  name.vb: SetDefaultBorderRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers
+  id: GetAvailableBorderRenderers
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableBorderRenderers()
+  nameWithType: MapRendererRegistry.GetAvailableBorderRenderers()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableBorderRenderers
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available border renderer IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableBorderRenderers()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableBorderRenderers() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers*
+- uid: Map.Rendering.MapRendererRegistry.HasBorderRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasBorderRenderer(System.String)
+  id: HasBorderRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasBorderRenderer(string)
+  nameWithType: MapRendererRegistry.HasBorderRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasBorderRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasBorderRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 174
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a border renderer is registered.
+  example: []
+  syntax:
+    content: public bool HasBorderRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasBorderRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasBorderRenderer*
+  nameWithType.vb: MapRendererRegistry.HasBorderRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasBorderRenderer(String)
+  name.vb: HasBorderRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId(Map.Rendering.BorderRenderingMode)
+  commentId: M:Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId(Map.Rendering.BorderRenderingMode)
+  id: MapBorderModeToRendererId(Map.Rendering.BorderRenderingMode)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: MapBorderModeToRendererId(BorderRenderingMode)
+  nameWithType: MapRendererRegistry.MapBorderModeToRendererId(BorderRenderingMode)
+  fullName: Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId(Map.Rendering.BorderRenderingMode)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapBorderModeToRendererId
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Map legacy BorderRenderingMode enum to renderer ID.
+
+    Provides backwards compatibility with existing configurations.
+  example: []
+  syntax:
+    content: public static string MapBorderModeToRendererId(BorderRenderingMode mode)
+    parameters:
+    - id: mode
+      type: Map.Rendering.BorderRenderingMode
+    return:
+      type: System.String
+    content.vb: Public Shared Function MapBorderModeToRendererId(mode As BorderRenderingMode) As String
+  overload: Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId*
+- uid: Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer(Map.Rendering.Highlight.IHighlightRenderer)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer(Map.Rendering.Highlight.IHighlightRenderer)
+  id: RegisterHighlightRenderer(Map.Rendering.Highlight.IHighlightRenderer)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterHighlightRenderer(IHighlightRenderer)
+  nameWithType: MapRendererRegistry.RegisterHighlightRenderer(IHighlightRenderer)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer(Map.Rendering.Highlight.IHighlightRenderer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 203
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a highlight renderer implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterHighlightRenderer(IHighlightRenderer renderer)
+    parameters:
+    - id: renderer
+      type: Map.Rendering.Highlight.IHighlightRenderer
+    content.vb: Public Sub RegisterHighlightRenderer(renderer As IHighlightRenderer)
+  overload: Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer(System.String)
+  id: UnregisterHighlightRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterHighlightRenderer(string)
+  nameWithType: MapRendererRegistry.UnregisterHighlightRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 224
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a highlight renderer.
+  example: []
+  syntax:
+    content: public bool UnregisterHighlightRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterHighlightRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer*
+  nameWithType.vb: MapRendererRegistry.UnregisterHighlightRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer(String)
+  name.vb: UnregisterHighlightRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetHighlightRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetHighlightRenderer(System.String)
+  id: GetHighlightRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetHighlightRenderer(string)
+  nameWithType: MapRendererRegistry.GetHighlightRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetHighlightRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 240
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a highlight renderer by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public IHighlightRenderer GetHighlightRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.Highlight.IHighlightRenderer
+    content.vb: Public Function GetHighlightRenderer(rendererId As String) As IHighlightRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetHighlightRenderer*
+  nameWithType.vb: MapRendererRegistry.GetHighlightRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetHighlightRenderer(String)
+  name.vb: GetHighlightRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer
+  id: GetDefaultHighlightRenderer
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultHighlightRenderer()
+  nameWithType: MapRendererRegistry.GetDefaultHighlightRenderer()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 259
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default highlight renderer.
+  example: []
+  syntax:
+    content: public IHighlightRenderer GetDefaultHighlightRenderer()
+    return:
+      type: Map.Rendering.Highlight.IHighlightRenderer
+    content.vb: Public Function GetDefaultHighlightRenderer() As IHighlightRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer(System.String)
+  id: SetDefaultHighlightRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultHighlightRenderer(string)
+  nameWithType: MapRendererRegistry.SetDefaultHighlightRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 267
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which highlight renderer ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultHighlightRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    content.vb: Public Sub SetDefaultHighlightRenderer(rendererId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer*
+  nameWithType.vb: MapRendererRegistry.SetDefaultHighlightRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer(String)
+  name.vb: SetDefaultHighlightRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers
+  id: GetAvailableHighlightRenderers
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableHighlightRenderers()
+  nameWithType: MapRendererRegistry.GetAvailableHighlightRenderers()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableHighlightRenderers
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 282
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available highlight renderer IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableHighlightRenderers()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableHighlightRenderers() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers*
+- uid: Map.Rendering.MapRendererRegistry.HasHighlightRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasHighlightRenderer(System.String)
+  id: HasHighlightRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasHighlightRenderer(string)
+  nameWithType: MapRendererRegistry.HasHighlightRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasHighlightRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasHighlightRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 290
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a highlight renderer is registered.
+  example: []
+  syntax:
+    content: public bool HasHighlightRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasHighlightRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasHighlightRenderer*
+  nameWithType.vb: MapRendererRegistry.HasHighlightRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasHighlightRenderer(String)
+  name.vb: HasHighlightRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer(Map.Rendering.FogOfWar.IFogOfWarRenderer)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer(Map.Rendering.FogOfWar.IFogOfWarRenderer)
+  id: RegisterFogOfWarRenderer(Map.Rendering.FogOfWar.IFogOfWarRenderer)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterFogOfWarRenderer(IFogOfWarRenderer)
+  nameWithType: MapRendererRegistry.RegisterFogOfWarRenderer(IFogOfWarRenderer)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer(Map.Rendering.FogOfWar.IFogOfWarRenderer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 303
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a fog of war renderer implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterFogOfWarRenderer(IFogOfWarRenderer renderer)
+    parameters:
+    - id: renderer
+      type: Map.Rendering.FogOfWar.IFogOfWarRenderer
+    content.vb: Public Sub RegisterFogOfWarRenderer(renderer As IFogOfWarRenderer)
+  overload: Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer(System.String)
+  id: UnregisterFogOfWarRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterFogOfWarRenderer(string)
+  nameWithType: MapRendererRegistry.UnregisterFogOfWarRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 324
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a fog of war renderer.
+  example: []
+  syntax:
+    content: public bool UnregisterFogOfWarRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterFogOfWarRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer*
+  nameWithType.vb: MapRendererRegistry.UnregisterFogOfWarRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer(String)
+  name.vb: UnregisterFogOfWarRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer(System.String)
+  id: GetFogOfWarRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetFogOfWarRenderer(string)
+  nameWithType: MapRendererRegistry.GetFogOfWarRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 340
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a fog of war renderer by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public IFogOfWarRenderer GetFogOfWarRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.FogOfWar.IFogOfWarRenderer
+    content.vb: Public Function GetFogOfWarRenderer(rendererId As String) As IFogOfWarRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer*
+  nameWithType.vb: MapRendererRegistry.GetFogOfWarRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer(String)
+  name.vb: GetFogOfWarRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer
+  id: GetDefaultFogOfWarRenderer
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultFogOfWarRenderer()
+  nameWithType: MapRendererRegistry.GetDefaultFogOfWarRenderer()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 359
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default fog of war renderer.
+  example: []
+  syntax:
+    content: public IFogOfWarRenderer GetDefaultFogOfWarRenderer()
+    return:
+      type: Map.Rendering.FogOfWar.IFogOfWarRenderer
+    content.vb: Public Function GetDefaultFogOfWarRenderer() As IFogOfWarRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer(System.String)
+  id: SetDefaultFogOfWarRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultFogOfWarRenderer(string)
+  nameWithType: MapRendererRegistry.SetDefaultFogOfWarRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 367
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which fog of war renderer ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultFogOfWarRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    content.vb: Public Sub SetDefaultFogOfWarRenderer(rendererId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer*
+  nameWithType.vb: MapRendererRegistry.SetDefaultFogOfWarRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer(String)
+  name.vb: SetDefaultFogOfWarRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers
+  id: GetAvailableFogOfWarRenderers
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableFogOfWarRenderers()
+  nameWithType: MapRendererRegistry.GetAvailableFogOfWarRenderers()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableFogOfWarRenderers
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 382
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available fog of war renderer IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableFogOfWarRenderers()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableFogOfWarRenderers() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers*
+- uid: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer(System.String)
+  id: HasFogOfWarRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasFogOfWarRenderer(string)
+  nameWithType: MapRendererRegistry.HasFogOfWarRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasFogOfWarRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 390
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a fog of war renderer is registered.
+  example: []
+  syntax:
+    content: public bool HasFogOfWarRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasFogOfWarRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer*
+  nameWithType.vb: MapRendererRegistry.HasFogOfWarRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer(String)
+  name.vb: HasFogOfWarRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer(Map.Rendering.Terrain.ITerrainRenderer)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer(Map.Rendering.Terrain.ITerrainRenderer)
+  id: RegisterTerrainRenderer(Map.Rendering.Terrain.ITerrainRenderer)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterTerrainRenderer(ITerrainRenderer)
+  nameWithType: MapRendererRegistry.RegisterTerrainRenderer(ITerrainRenderer)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer(Map.Rendering.Terrain.ITerrainRenderer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 403
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a terrain renderer implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterTerrainRenderer(ITerrainRenderer renderer)
+    parameters:
+    - id: renderer
+      type: Map.Rendering.Terrain.ITerrainRenderer
+    content.vb: Public Sub RegisterTerrainRenderer(renderer As ITerrainRenderer)
+  overload: Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer(System.String)
+  id: UnregisterTerrainRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterTerrainRenderer(string)
+  nameWithType: MapRendererRegistry.UnregisterTerrainRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 424
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a terrain renderer.
+  example: []
+  syntax:
+    content: public bool UnregisterTerrainRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterTerrainRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer*
+  nameWithType.vb: MapRendererRegistry.UnregisterTerrainRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer(String)
+  name.vb: UnregisterTerrainRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetTerrainRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetTerrainRenderer(System.String)
+  id: GetTerrainRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetTerrainRenderer(string)
+  nameWithType: MapRendererRegistry.GetTerrainRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetTerrainRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 440
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a terrain renderer by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public ITerrainRenderer GetTerrainRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: Map.Rendering.Terrain.ITerrainRenderer
+    content.vb: Public Function GetTerrainRenderer(rendererId As String) As ITerrainRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetTerrainRenderer*
+  nameWithType.vb: MapRendererRegistry.GetTerrainRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetTerrainRenderer(String)
+  name.vb: GetTerrainRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer
+  id: GetDefaultTerrainRenderer
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultTerrainRenderer()
+  nameWithType: MapRendererRegistry.GetDefaultTerrainRenderer()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 459
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default terrain renderer.
+  example: []
+  syntax:
+    content: public ITerrainRenderer GetDefaultTerrainRenderer()
+    return:
+      type: Map.Rendering.Terrain.ITerrainRenderer
+    content.vb: Public Function GetDefaultTerrainRenderer() As ITerrainRenderer
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer(System.String)
+  id: SetDefaultTerrainRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultTerrainRenderer(string)
+  nameWithType: MapRendererRegistry.SetDefaultTerrainRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 467
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which terrain renderer ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultTerrainRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    content.vb: Public Sub SetDefaultTerrainRenderer(rendererId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer*
+  nameWithType.vb: MapRendererRegistry.SetDefaultTerrainRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer(String)
+  name.vb: SetDefaultTerrainRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers
+  id: GetAvailableTerrainRenderers
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableTerrainRenderers()
+  nameWithType: MapRendererRegistry.GetAvailableTerrainRenderers()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableTerrainRenderers
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 482
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available terrain renderer IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableTerrainRenderers()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableTerrainRenderers() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers*
+- uid: Map.Rendering.MapRendererRegistry.HasTerrainRenderer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasTerrainRenderer(System.String)
+  id: HasTerrainRenderer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasTerrainRenderer(string)
+  nameWithType: MapRendererRegistry.HasTerrainRenderer(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasTerrainRenderer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasTerrainRenderer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 490
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a terrain renderer is registered.
+  example: []
+  syntax:
+    content: public bool HasTerrainRenderer(string rendererId)
+    parameters:
+    - id: rendererId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasTerrainRenderer(rendererId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasTerrainRenderer*
+  nameWithType.vb: MapRendererRegistry.HasTerrainRenderer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasTerrainRenderer(String)
+  name.vb: HasTerrainRenderer(String)
+- uid: Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer(Map.MapModes.Colorization.IMapModeColorizer)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer(Map.MapModes.Colorization.IMapModeColorizer)
+  id: RegisterMapModeColorizer(Map.MapModes.Colorization.IMapModeColorizer)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterMapModeColorizer(IMapModeColorizer)
+  nameWithType: MapRendererRegistry.RegisterMapModeColorizer(IMapModeColorizer)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer(Map.MapModes.Colorization.IMapModeColorizer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 503
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a map mode colorizer implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterMapModeColorizer(IMapModeColorizer colorizer)
+    parameters:
+    - id: colorizer
+      type: Map.MapModes.Colorization.IMapModeColorizer
+    content.vb: Public Sub RegisterMapModeColorizer(colorizer As IMapModeColorizer)
+  overload: Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer(System.String)
+  id: UnregisterMapModeColorizer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterMapModeColorizer(string)
+  nameWithType: MapRendererRegistry.UnregisterMapModeColorizer(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 524
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a map mode colorizer.
+  example: []
+  syntax:
+    content: public bool UnregisterMapModeColorizer(string colorizerId)
+    parameters:
+    - id: colorizerId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterMapModeColorizer(colorizerId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer*
+  nameWithType.vb: MapRendererRegistry.UnregisterMapModeColorizer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer(String)
+  name.vb: UnregisterMapModeColorizer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetMapModeColorizer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetMapModeColorizer(System.String)
+  id: GetMapModeColorizer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetMapModeColorizer(string)
+  nameWithType: MapRendererRegistry.GetMapModeColorizer(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetMapModeColorizer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 540
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a map mode colorizer by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public IMapModeColorizer GetMapModeColorizer(string colorizerId)
+    parameters:
+    - id: colorizerId
+      type: System.String
+    return:
+      type: Map.MapModes.Colorization.IMapModeColorizer
+    content.vb: Public Function GetMapModeColorizer(colorizerId As String) As IMapModeColorizer
+  overload: Map.Rendering.MapRendererRegistry.GetMapModeColorizer*
+  nameWithType.vb: MapRendererRegistry.GetMapModeColorizer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetMapModeColorizer(String)
+  name.vb: GetMapModeColorizer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer
+  id: GetDefaultMapModeColorizer
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultMapModeColorizer()
+  nameWithType: MapRendererRegistry.GetDefaultMapModeColorizer()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 559
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default map mode colorizer.
+  example: []
+  syntax:
+    content: public IMapModeColorizer GetDefaultMapModeColorizer()
+    return:
+      type: Map.MapModes.Colorization.IMapModeColorizer
+    content.vb: Public Function GetDefaultMapModeColorizer() As IMapModeColorizer
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer(System.String)
+  id: SetDefaultMapModeColorizer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultMapModeColorizer(string)
+  nameWithType: MapRendererRegistry.SetDefaultMapModeColorizer(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 567
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which colorizer ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultMapModeColorizer(string colorizerId)
+    parameters:
+    - id: colorizerId
+      type: System.String
+    content.vb: Public Sub SetDefaultMapModeColorizer(colorizerId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer*
+  nameWithType.vb: MapRendererRegistry.SetDefaultMapModeColorizer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer(String)
+  name.vb: SetDefaultMapModeColorizer(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers
+  id: GetAvailableMapModeColorizers
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableMapModeColorizers()
+  nameWithType: MapRendererRegistry.GetAvailableMapModeColorizers()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableMapModeColorizers
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 582
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available map mode colorizer IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableMapModeColorizers()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableMapModeColorizers() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers*
+- uid: Map.Rendering.MapRendererRegistry.HasMapModeColorizer(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasMapModeColorizer(System.String)
+  id: HasMapModeColorizer(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasMapModeColorizer(string)
+  nameWithType: MapRendererRegistry.HasMapModeColorizer(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasMapModeColorizer(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasMapModeColorizer
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 590
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a map mode colorizer is registered.
+  example: []
+  syntax:
+    content: public bool HasMapModeColorizer(string colorizerId)
+    parameters:
+    - id: colorizerId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasMapModeColorizer(colorizerId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasMapModeColorizer*
+  nameWithType.vb: MapRendererRegistry.HasMapModeColorizer(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasMapModeColorizer(String)
+  name.vb: HasMapModeColorizer(String)
+- uid: Map.Rendering.MapRendererRegistry.RegisterShaderCompositor(Map.Rendering.Compositing.IShaderCompositor)
+  commentId: M:Map.Rendering.MapRendererRegistry.RegisterShaderCompositor(Map.Rendering.Compositing.IShaderCompositor)
+  id: RegisterShaderCompositor(Map.Rendering.Compositing.IShaderCompositor)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: RegisterShaderCompositor(IShaderCompositor)
+  nameWithType: MapRendererRegistry.RegisterShaderCompositor(IShaderCompositor)
+  fullName: Map.Rendering.MapRendererRegistry.RegisterShaderCompositor(Map.Rendering.Compositing.IShaderCompositor)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 603
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Register a shader compositor implementation.
+
+    ENGINE registers defaults; GAME can register customs.
+  example: []
+  syntax:
+    content: public void RegisterShaderCompositor(IShaderCompositor compositor)
+    parameters:
+    - id: compositor
+      type: Map.Rendering.Compositing.IShaderCompositor
+    content.vb: Public Sub RegisterShaderCompositor(compositor As IShaderCompositor)
+  overload: Map.Rendering.MapRendererRegistry.RegisterShaderCompositor*
+- uid: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor(System.String)
+  id: UnregisterShaderCompositor(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: UnregisterShaderCompositor(string)
+  nameWithType: MapRendererRegistry.UnregisterShaderCompositor(string)
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnregisterShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 624
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Unregister a shader compositor.
+  example: []
+  syntax:
+    content: public bool UnregisterShaderCompositor(string compositorId)
+    parameters:
+    - id: compositorId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function UnregisterShaderCompositor(compositorId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor*
+  nameWithType.vb: MapRendererRegistry.UnregisterShaderCompositor(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor(String)
+  name.vb: UnregisterShaderCompositor(String)
+- uid: Map.Rendering.MapRendererRegistry.GetShaderCompositor(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.GetShaderCompositor(System.String)
+  id: GetShaderCompositor(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetShaderCompositor(string)
+  nameWithType: MapRendererRegistry.GetShaderCompositor(string)
+  fullName: Map.Rendering.MapRendererRegistry.GetShaderCompositor(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 640
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Get a shader compositor by ID.
+
+    Returns null if not found.
+  example: []
+  syntax:
+    content: public IShaderCompositor GetShaderCompositor(string compositorId)
+    parameters:
+    - id: compositorId
+      type: System.String
+    return:
+      type: Map.Rendering.Compositing.IShaderCompositor
+    content.vb: Public Function GetShaderCompositor(compositorId As String) As IShaderCompositor
+  overload: Map.Rendering.MapRendererRegistry.GetShaderCompositor*
+  nameWithType.vb: MapRendererRegistry.GetShaderCompositor(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.GetShaderCompositor(String)
+  name.vb: GetShaderCompositor(String)
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor
+  commentId: M:Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor
+  id: GetDefaultShaderCompositor
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetDefaultShaderCompositor()
+  nameWithType: MapRendererRegistry.GetDefaultShaderCompositor()
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDefaultShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 659
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the default shader compositor.
+  example: []
+  syntax:
+    content: public IShaderCompositor GetDefaultShaderCompositor()
+    return:
+      type: Map.Rendering.Compositing.IShaderCompositor
+    content.vb: Public Function GetDefaultShaderCompositor() As IShaderCompositor
+  overload: Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor*
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor(System.String)
+  id: SetDefaultShaderCompositor(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultShaderCompositor(string)
+  nameWithType: MapRendererRegistry.SetDefaultShaderCompositor(string)
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 667
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set which compositor ID is the default.
+  example: []
+  syntax:
+    content: public void SetDefaultShaderCompositor(string compositorId)
+    parameters:
+    - id: compositorId
+      type: System.String
+    content.vb: Public Sub SetDefaultShaderCompositor(compositorId As String)
+  overload: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor*
+  nameWithType.vb: MapRendererRegistry.SetDefaultShaderCompositor(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor(String)
+  name.vb: SetDefaultShaderCompositor(String)
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors
+  commentId: M:Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors
+  id: GetAvailableShaderCompositors
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: GetAvailableShaderCompositors()
+  nameWithType: MapRendererRegistry.GetAvailableShaderCompositors()
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAvailableShaderCompositors
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 682
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get all available shader compositor IDs.
+  example: []
+  syntax:
+    content: public IEnumerable<string> GetAvailableShaderCompositors()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.String}
+    content.vb: Public Function GetAvailableShaderCompositors() As IEnumerable(Of String)
+  overload: Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors*
+- uid: Map.Rendering.MapRendererRegistry.HasShaderCompositor(System.String)
+  commentId: M:Map.Rendering.MapRendererRegistry.HasShaderCompositor(System.String)
+  id: HasShaderCompositor(System.String)
+  parent: Map.Rendering.MapRendererRegistry
+  langs:
+  - csharp
+  - vb
+  name: HasShaderCompositor(string)
+  nameWithType: MapRendererRegistry.HasShaderCompositor(string)
+  fullName: Map.Rendering.MapRendererRegistry.HasShaderCompositor(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapRendererRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasShaderCompositor
+    path: Scripts/Map/Rendering/MapRendererRegistry.cs
+    startLine: 690
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Check if a shader compositor is registered.
+  example: []
+  syntax:
+    content: public bool HasShaderCompositor(string compositorId)
+    parameters:
+    - id: compositorId
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasShaderCompositor(compositorId As String) As Boolean
+  overload: Map.Rendering.MapRendererRegistry.HasShaderCompositor*
+  nameWithType.vb: MapRendererRegistry.HasShaderCompositor(String)
+  fullName.vb: Map.Rendering.MapRendererRegistry.HasShaderCompositor(String)
+  name.vb: HasShaderCompositor(String)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.MapRendererRegistry.Instance*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.Instance
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_Instance
+  name: Instance
+  nameWithType: MapRendererRegistry.Instance
+  fullName: Map.Rendering.MapRendererRegistry.Instance
+- uid: Map.Rendering.MapRendererRegistry
+  commentId: T:Map.Rendering.MapRendererRegistry
+  parent: Map.Rendering
+  href: Map.Rendering.MapRendererRegistry.html
+  name: MapRendererRegistry
+  nameWithType: MapRendererRegistry
+  fullName: Map.Rendering.MapRendererRegistry
+- uid: Map.Rendering.MapRendererRegistry.IsInitialized*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.IsInitialized
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_IsInitialized
+  name: IsInitialized
+  nameWithType: MapRendererRegistry.IsInitialized
+  fullName: Map.Rendering.MapRendererRegistry.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.MapRendererRegistry.Initialize*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.Initialize
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_Initialize
+  name: Initialize
+  nameWithType: MapRendererRegistry.Initialize
+  fullName: Map.Rendering.MapRendererRegistry.Initialize
+- uid: Map.Rendering.MapRendererRegistry.RegisterBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterBorderRenderer_Map_Rendering_Border_IBorderRenderer_
+  name: RegisterBorderRenderer
+  nameWithType: MapRendererRegistry.RegisterBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.RegisterBorderRenderer
+- uid: Map.Rendering.Border.IBorderRenderer
+  commentId: T:Map.Rendering.Border.IBorderRenderer
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.IBorderRenderer.html
+  name: IBorderRenderer
+  nameWithType: IBorderRenderer
+  fullName: Map.Rendering.Border.IBorderRenderer
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterBorderRenderer_System_String_
+  name: UnregisterBorderRenderer
+  nameWithType: MapRendererRegistry.UnregisterBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterBorderRenderer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.MapRendererRegistry.GetBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetBorderRenderer_System_String_
+  name: GetBorderRenderer
+  nameWithType: MapRendererRegistry.GetBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetBorderRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultBorderRenderer
+  name: GetDefaultBorderRenderer
+  nameWithType: MapRendererRegistry.GetDefaultBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultBorderRenderer
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultBorderRenderer_System_String_
+  name: SetDefaultBorderRenderer
+  nameWithType: MapRendererRegistry.SetDefaultBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultBorderRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableBorderRenderers
+  name: GetAvailableBorderRenderers
+  nameWithType: MapRendererRegistry.GetAvailableBorderRenderers
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableBorderRenderers
+- uid: System.Collections.Generic.IEnumerable{System.String}
+  commentId: T:System.Collections.Generic.IEnumerable{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<string>
+  nameWithType: IEnumerable<string>
+  fullName: System.Collections.Generic.IEnumerable<string>
+  nameWithType.vb: IEnumerable(Of String)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of String)
+  name.vb: IEnumerable(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.MapRendererRegistry.HasBorderRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasBorderRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasBorderRenderer_System_String_
+  name: HasBorderRenderer
+  nameWithType: MapRendererRegistry.HasBorderRenderer
+  fullName: Map.Rendering.MapRendererRegistry.HasBorderRenderer
+- uid: Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_MapBorderModeToRendererId_Map_Rendering_BorderRenderingMode_
+  name: MapBorderModeToRendererId
+  nameWithType: MapRendererRegistry.MapBorderModeToRendererId
+  fullName: Map.Rendering.MapRendererRegistry.MapBorderModeToRendererId
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderRenderingMode.html
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterHighlightRenderer_Map_Rendering_Highlight_IHighlightRenderer_
+  name: RegisterHighlightRenderer
+  nameWithType: MapRendererRegistry.RegisterHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.RegisterHighlightRenderer
+- uid: Map.Rendering.Highlight.IHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.IHighlightRenderer
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.IHighlightRenderer.html
+  name: IHighlightRenderer
+  nameWithType: IHighlightRenderer
+  fullName: Map.Rendering.Highlight.IHighlightRenderer
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterHighlightRenderer_System_String_
+  name: UnregisterHighlightRenderer
+  nameWithType: MapRendererRegistry.UnregisterHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterHighlightRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetHighlightRenderer_System_String_
+  name: GetHighlightRenderer
+  nameWithType: MapRendererRegistry.GetHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetHighlightRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultHighlightRenderer
+  name: GetDefaultHighlightRenderer
+  nameWithType: MapRendererRegistry.GetDefaultHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultHighlightRenderer
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultHighlightRenderer_System_String_
+  name: SetDefaultHighlightRenderer
+  nameWithType: MapRendererRegistry.SetDefaultHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultHighlightRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableHighlightRenderers
+  name: GetAvailableHighlightRenderers
+  nameWithType: MapRendererRegistry.GetAvailableHighlightRenderers
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableHighlightRenderers
+- uid: Map.Rendering.MapRendererRegistry.HasHighlightRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasHighlightRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasHighlightRenderer_System_String_
+  name: HasHighlightRenderer
+  nameWithType: MapRendererRegistry.HasHighlightRenderer
+  fullName: Map.Rendering.MapRendererRegistry.HasHighlightRenderer
+- uid: Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterFogOfWarRenderer_Map_Rendering_FogOfWar_IFogOfWarRenderer_
+  name: RegisterFogOfWarRenderer
+  nameWithType: MapRendererRegistry.RegisterFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.RegisterFogOfWarRenderer
+- uid: Map.Rendering.FogOfWar.IFogOfWarRenderer
+  commentId: T:Map.Rendering.FogOfWar.IFogOfWarRenderer
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.IFogOfWarRenderer.html
+  name: IFogOfWarRenderer
+  nameWithType: IFogOfWarRenderer
+  fullName: Map.Rendering.FogOfWar.IFogOfWarRenderer
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterFogOfWarRenderer_System_String_
+  name: UnregisterFogOfWarRenderer
+  nameWithType: MapRendererRegistry.UnregisterFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterFogOfWarRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetFogOfWarRenderer_System_String_
+  name: GetFogOfWarRenderer
+  nameWithType: MapRendererRegistry.GetFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetFogOfWarRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultFogOfWarRenderer
+  name: GetDefaultFogOfWarRenderer
+  nameWithType: MapRendererRegistry.GetDefaultFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultFogOfWarRenderer
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultFogOfWarRenderer_System_String_
+  name: SetDefaultFogOfWarRenderer
+  nameWithType: MapRendererRegistry.SetDefaultFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultFogOfWarRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableFogOfWarRenderers
+  name: GetAvailableFogOfWarRenderers
+  nameWithType: MapRendererRegistry.GetAvailableFogOfWarRenderers
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableFogOfWarRenderers
+- uid: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasFogOfWarRenderer_System_String_
+  name: HasFogOfWarRenderer
+  nameWithType: MapRendererRegistry.HasFogOfWarRenderer
+  fullName: Map.Rendering.MapRendererRegistry.HasFogOfWarRenderer
+- uid: Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterTerrainRenderer_Map_Rendering_Terrain_ITerrainRenderer_
+  name: RegisterTerrainRenderer
+  nameWithType: MapRendererRegistry.RegisterTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.RegisterTerrainRenderer
+- uid: Map.Rendering.Terrain.ITerrainRenderer
+  commentId: T:Map.Rendering.Terrain.ITerrainRenderer
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.ITerrainRenderer.html
+  name: ITerrainRenderer
+  nameWithType: ITerrainRenderer
+  fullName: Map.Rendering.Terrain.ITerrainRenderer
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterTerrainRenderer_System_String_
+  name: UnregisterTerrainRenderer
+  nameWithType: MapRendererRegistry.UnregisterTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterTerrainRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetTerrainRenderer_System_String_
+  name: GetTerrainRenderer
+  nameWithType: MapRendererRegistry.GetTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetTerrainRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultTerrainRenderer
+  name: GetDefaultTerrainRenderer
+  nameWithType: MapRendererRegistry.GetDefaultTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultTerrainRenderer
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultTerrainRenderer_System_String_
+  name: SetDefaultTerrainRenderer
+  nameWithType: MapRendererRegistry.SetDefaultTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultTerrainRenderer
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableTerrainRenderers
+  name: GetAvailableTerrainRenderers
+  nameWithType: MapRendererRegistry.GetAvailableTerrainRenderers
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableTerrainRenderers
+- uid: Map.Rendering.MapRendererRegistry.HasTerrainRenderer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasTerrainRenderer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasTerrainRenderer_System_String_
+  name: HasTerrainRenderer
+  nameWithType: MapRendererRegistry.HasTerrainRenderer
+  fullName: Map.Rendering.MapRendererRegistry.HasTerrainRenderer
+- uid: Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterMapModeColorizer_Map_MapModes_Colorization_IMapModeColorizer_
+  name: RegisterMapModeColorizer
+  nameWithType: MapRendererRegistry.RegisterMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.RegisterMapModeColorizer
+- uid: Map.MapModes.Colorization.IMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.IMapModeColorizer
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.IMapModeColorizer.html
+  name: IMapModeColorizer
+  nameWithType: IMapModeColorizer
+  fullName: Map.MapModes.Colorization.IMapModeColorizer
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  href: Map.html
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterMapModeColorizer_System_String_
+  name: UnregisterMapModeColorizer
+  nameWithType: MapRendererRegistry.UnregisterMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterMapModeColorizer
+- uid: Map.Rendering.MapRendererRegistry.GetMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetMapModeColorizer_System_String_
+  name: GetMapModeColorizer
+  nameWithType: MapRendererRegistry.GetMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.GetMapModeColorizer
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultMapModeColorizer
+  name: GetDefaultMapModeColorizer
+  nameWithType: MapRendererRegistry.GetDefaultMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultMapModeColorizer
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultMapModeColorizer_System_String_
+  name: SetDefaultMapModeColorizer
+  nameWithType: MapRendererRegistry.SetDefaultMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultMapModeColorizer
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableMapModeColorizers
+  name: GetAvailableMapModeColorizers
+  nameWithType: MapRendererRegistry.GetAvailableMapModeColorizers
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableMapModeColorizers
+- uid: Map.Rendering.MapRendererRegistry.HasMapModeColorizer*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasMapModeColorizer
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasMapModeColorizer_System_String_
+  name: HasMapModeColorizer
+  nameWithType: MapRendererRegistry.HasMapModeColorizer
+  fullName: Map.Rendering.MapRendererRegistry.HasMapModeColorizer
+- uid: Map.Rendering.MapRendererRegistry.RegisterShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.RegisterShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_RegisterShaderCompositor_Map_Rendering_Compositing_IShaderCompositor_
+  name: RegisterShaderCompositor
+  nameWithType: MapRendererRegistry.RegisterShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.RegisterShaderCompositor
+- uid: Map.Rendering.Compositing.IShaderCompositor
+  commentId: T:Map.Rendering.Compositing.IShaderCompositor
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.IShaderCompositor.html
+  name: IShaderCompositor
+  nameWithType: IShaderCompositor
+  fullName: Map.Rendering.Compositing.IShaderCompositor
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+- uid: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_UnregisterShaderCompositor_System_String_
+  name: UnregisterShaderCompositor
+  nameWithType: MapRendererRegistry.UnregisterShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.UnregisterShaderCompositor
+- uid: Map.Rendering.MapRendererRegistry.GetShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetShaderCompositor_System_String_
+  name: GetShaderCompositor
+  nameWithType: MapRendererRegistry.GetShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.GetShaderCompositor
+- uid: Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetDefaultShaderCompositor
+  name: GetDefaultShaderCompositor
+  nameWithType: MapRendererRegistry.GetDefaultShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.GetDefaultShaderCompositor
+- uid: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_SetDefaultShaderCompositor_System_String_
+  name: SetDefaultShaderCompositor
+  nameWithType: MapRendererRegistry.SetDefaultShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.SetDefaultShaderCompositor
+- uid: Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_GetAvailableShaderCompositors
+  name: GetAvailableShaderCompositors
+  nameWithType: MapRendererRegistry.GetAvailableShaderCompositors
+  fullName: Map.Rendering.MapRendererRegistry.GetAvailableShaderCompositors
+- uid: Map.Rendering.MapRendererRegistry.HasShaderCompositor*
+  commentId: Overload:Map.Rendering.MapRendererRegistry.HasShaderCompositor
+  href: Map.Rendering.MapRendererRegistry.html#Map_Rendering_MapRendererRegistry_HasShaderCompositor_System_String_
+  name: HasShaderCompositor
+  nameWithType: MapRendererRegistry.HasShaderCompositor
+  fullName: Map.Rendering.MapRendererRegistry.HasShaderCompositor

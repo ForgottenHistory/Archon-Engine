@@ -1,0 +1,207 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  commentId: T:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  id: JobifiedBMPLoader.LoadingProgress
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.CurrentOperation
+  - Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.FilesProcessed
+  - Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.ProgressPercentage
+  - Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.TotalFiles
+  langs:
+  - csharp
+  - vb
+  name: JobifiedBMPLoader.LoadingProgress
+  nameWithType: JobifiedBMPLoader.LoadingProgress
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingProgress
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public struct JobifiedBMPLoader.LoadingProgress
+    content.vb: Public Structure JobifiedBMPLoader.LoadingProgress
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.FilesProcessed
+  commentId: F:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.FilesProcessed
+  id: FilesProcessed
+  parent: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  langs:
+  - csharp
+  - vb
+  name: FilesProcessed
+  nameWithType: JobifiedBMPLoader.LoadingProgress.FilesProcessed
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.FilesProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FilesProcessed
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int FilesProcessed
+    return:
+      type: System.Int32
+    content.vb: Public FilesProcessed As Integer
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.TotalFiles
+  commentId: F:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.TotalFiles
+  id: TotalFiles
+  parent: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  langs:
+  - csharp
+  - vb
+  name: TotalFiles
+  nameWithType: JobifiedBMPLoader.LoadingProgress.TotalFiles
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.TotalFiles
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalFiles
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int TotalFiles
+    return:
+      type: System.Int32
+    content.vb: Public TotalFiles As Integer
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.ProgressPercentage
+  commentId: F:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.ProgressPercentage
+  id: ProgressPercentage
+  parent: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  langs:
+  - csharp
+  - vb
+  name: ProgressPercentage
+  nameWithType: JobifiedBMPLoader.LoadingProgress.ProgressPercentage
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.ProgressPercentage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProgressPercentage
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public float ProgressPercentage
+    return:
+      type: System.Single
+    content.vb: Public ProgressPercentage As Single
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.CurrentOperation
+  commentId: F:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.CurrentOperation
+  id: CurrentOperation
+  parent: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  langs:
+  - csharp
+  - vb
+  name: CurrentOperation
+  nameWithType: JobifiedBMPLoader.LoadingProgress.CurrentOperation
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.CurrentOperation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentOperation
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public string CurrentOperation
+    return:
+      type: System.String
+    content.vb: Public CurrentOperation As String
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

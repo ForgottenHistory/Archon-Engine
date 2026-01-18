@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.MapModes
+  commentId: N:StarterKit.MapModes
+  id: StarterKit.MapModes
+  children:
+  - StarterKit.MapModes.FarmDensityMapMode
+  - StarterKit.MapModes.TerrainCostMapMode
+  langs:
+  - csharp
+  - vb
+  name: StarterKit.MapModes
+  nameWithType: StarterKit.MapModes
+  fullName: StarterKit.MapModes
+  type: Namespace
+  assemblies:
+  - StarterKit
+references:
+- uid: StarterKit.MapModes.TerrainCostMapMode
+  commentId: T:StarterKit.MapModes.TerrainCostMapMode
+  href: StarterKit.MapModes.TerrainCostMapMode.html
+  name: TerrainCostMapMode
+  nameWithType: TerrainCostMapMode
+  fullName: StarterKit.MapModes.TerrainCostMapMode
+- uid: StarterKit.MapModes.FarmDensityMapMode
+  commentId: T:StarterKit.MapModes.FarmDensityMapMode
+  href: StarterKit.MapModes.FarmDensityMapMode.html
+  name: FarmDensityMapMode
+  nameWithType: FarmDensityMapMode
+  fullName: StarterKit.MapModes.FarmDensityMapMode

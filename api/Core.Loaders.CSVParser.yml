@@ -1,0 +1,547 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.CSVParser
+  commentId: T:Core.Loaders.CSVParser
+  id: CSVParser
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.CSVParser.FindColumnIndex(Unity.Collections.NativeArray{System.UInt32},System.UInt32)
+  - Core.Loaders.CSVParser.GetField(Core.Loaders.CSVParser.CSVRow,System.Int32)
+  - Core.Loaders.CSVParser.Parse(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.Allocator,System.Boolean)
+  - Core.Loaders.CSVParser.TryGetFloat(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Single@)
+  - Core.Loaders.CSVParser.TryGetInt(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Int32@)
+  langs:
+  - csharp
+  - vb
+  name: CSVParser
+  nameWithType: CSVParser
+  fullName: Core.Loaders.CSVParser
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CSVParser
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    High-performance CSV parser for Paradox files.
+
+    Handles semicolon-delimited format with header detection.
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
+
+      public static class CSVParser
+    content.vb: >-
+      <BurstCompile(OptimizeFor:=OptimizeFor.Performance)>
+
+      Public Module CSVParser
+  inheritance:
+  - System.Object
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: OptimizeFor
+      type: Unity.Burst.OptimizeFor
+      value: 1
+- uid: Core.Loaders.CSVParser.Parse(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.Allocator,System.Boolean)
+  commentId: M:Core.Loaders.CSVParser.Parse(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.Allocator,System.Boolean)
+  id: Parse(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.Allocator,System.Boolean)
+  parent: Core.Loaders.CSVParser
+  langs:
+  - csharp
+  - vb
+  name: Parse(NativeSlice<byte>, Allocator, bool)
+  nameWithType: CSVParser.Parse(NativeSlice<byte>, Allocator, bool)
+  fullName: Core.Loaders.CSVParser.Parse(Unity.Collections.NativeSlice<byte>, Unity.Collections.Allocator, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Parse
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Parse CSV data with automatic header detection.
+
+    Assumes UTF-8 encoding (preprocess with Python if needed).
+  example: []
+  syntax:
+    content: public static CSVParser.CSVParseResult Parse(NativeSlice<byte> csvData, Allocator allocator, bool hasHeader = true)
+    parameters:
+    - id: csvData
+      type: Unity.Collections.NativeSlice{System.Byte}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    - id: hasHeader
+      type: System.Boolean
+    return:
+      type: Core.Loaders.CSVParser.CSVParseResult
+    content.vb: Public Shared Function Parse(csvData As NativeSlice(Of Byte), allocator As Allocator, hasHeader As Boolean = True) As CSVParser.CSVParseResult
+  overload: Core.Loaders.CSVParser.Parse*
+  nameWithType.vb: CSVParser.Parse(NativeSlice(Of Byte), Allocator, Boolean)
+  fullName.vb: Core.Loaders.CSVParser.Parse(Unity.Collections.NativeSlice(Of Byte), Unity.Collections.Allocator, Boolean)
+  name.vb: Parse(NativeSlice(Of Byte), Allocator, Boolean)
+- uid: Core.Loaders.CSVParser.FindColumnIndex(Unity.Collections.NativeArray{System.UInt32},System.UInt32)
+  commentId: M:Core.Loaders.CSVParser.FindColumnIndex(Unity.Collections.NativeArray{System.UInt32},System.UInt32)
+  id: FindColumnIndex(Unity.Collections.NativeArray{System.UInt32},System.UInt32)
+  parent: Core.Loaders.CSVParser
+  langs:
+  - csharp
+  - vb
+  name: FindColumnIndex(NativeArray<uint>, uint)
+  nameWithType: CSVParser.FindColumnIndex(NativeArray<uint>, uint)
+  fullName: Core.Loaders.CSVParser.FindColumnIndex(Unity.Collections.NativeArray<uint>, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindColumnIndex
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 238
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Find column index by name hash
+  example: []
+  syntax:
+    content: public static int FindColumnIndex(NativeArray<uint> headerHashes, uint columnNameHash)
+    parameters:
+    - id: headerHashes
+      type: Unity.Collections.NativeArray{System.UInt32}
+    - id: columnNameHash
+      type: System.UInt32
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function FindColumnIndex(headerHashes As NativeArray(Of UInteger), columnNameHash As UInteger) As Integer
+  overload: Core.Loaders.CSVParser.FindColumnIndex*
+  nameWithType.vb: CSVParser.FindColumnIndex(NativeArray(Of UInteger), UInteger)
+  fullName.vb: Core.Loaders.CSVParser.FindColumnIndex(Unity.Collections.NativeArray(Of UInteger), UInteger)
+  name.vb: FindColumnIndex(NativeArray(Of UInteger), UInteger)
+- uid: Core.Loaders.CSVParser.GetField(Core.Loaders.CSVParser.CSVRow,System.Int32)
+  commentId: M:Core.Loaders.CSVParser.GetField(Core.Loaders.CSVParser.CSVRow,System.Int32)
+  id: GetField(Core.Loaders.CSVParser.CSVRow,System.Int32)
+  parent: Core.Loaders.CSVParser
+  langs:
+  - csharp
+  - vb
+  name: GetField(CSVRow, int)
+  nameWithType: CSVParser.GetField(CSVParser.CSVRow, int)
+  fullName: Core.Loaders.CSVParser.GetField(Core.Loaders.CSVParser.CSVRow, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetField
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 252
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Get field data as string slice
+  example: []
+  syntax:
+    content: public static NativeSlice<byte> GetField(CSVParser.CSVRow row, int columnIndex)
+    parameters:
+    - id: row
+      type: Core.Loaders.CSVParser.CSVRow
+    - id: columnIndex
+      type: System.Int32
+    return:
+      type: Unity.Collections.NativeSlice{System.Byte}
+    content.vb: Public Shared Function GetField(row As CSVParser.CSVRow, columnIndex As Integer) As NativeSlice(Of Byte)
+  overload: Core.Loaders.CSVParser.GetField*
+  nameWithType.vb: CSVParser.GetField(CSVParser.CSVRow, Integer)
+  fullName.vb: Core.Loaders.CSVParser.GetField(Core.Loaders.CSVParser.CSVRow, Integer)
+  name.vb: GetField(CSVRow, Integer)
+- uid: Core.Loaders.CSVParser.TryGetInt(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Int32@)
+  commentId: M:Core.Loaders.CSVParser.TryGetInt(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Int32@)
+  id: TryGetInt(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Int32@)
+  parent: Core.Loaders.CSVParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetInt(CSVRow, int, out int)
+  nameWithType: CSVParser.TryGetInt(CSVParser.CSVRow, int, out int)
+  fullName: Core.Loaders.CSVParser.TryGetInt(Core.Loaders.CSVParser.CSVRow, int, out int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetInt
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 263
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Try to parse field as integer
+  example: []
+  syntax:
+    content: public static bool TryGetInt(CSVParser.CSVRow row, int columnIndex, out int value)
+    parameters:
+    - id: row
+      type: Core.Loaders.CSVParser.CSVRow
+    - id: columnIndex
+      type: System.Int32
+    - id: value
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetInt(row As CSVParser.CSVRow, columnIndex As Integer, value As Integer) As Boolean
+  overload: Core.Loaders.CSVParser.TryGetInt*
+  nameWithType.vb: CSVParser.TryGetInt(CSVParser.CSVRow, Integer, Integer)
+  fullName.vb: Core.Loaders.CSVParser.TryGetInt(Core.Loaders.CSVParser.CSVRow, Integer, Integer)
+  name.vb: TryGetInt(CSVRow, Integer, Integer)
+- uid: Core.Loaders.CSVParser.TryGetFloat(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Single@)
+  commentId: M:Core.Loaders.CSVParser.TryGetFloat(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Single@)
+  id: TryGetFloat(Core.Loaders.CSVParser.CSVRow,System.Int32,System.Single@)
+  parent: Core.Loaders.CSVParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetFloat(CSVRow, int, out float)
+  nameWithType: CSVParser.TryGetFloat(CSVParser.CSVRow, int, out float)
+  fullName: Core.Loaders.CSVParser.TryGetFloat(Core.Loaders.CSVParser.CSVRow, int, out float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/CSVParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetFloat
+    path: Scripts/Core/Loaders/CSVParser.cs
+    startLine: 278
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Try to parse field as float
+  example: []
+  syntax:
+    content: public static bool TryGetFloat(CSVParser.CSVRow row, int columnIndex, out float value)
+    parameters:
+    - id: row
+      type: Core.Loaders.CSVParser.CSVRow
+    - id: columnIndex
+      type: System.Int32
+    - id: value
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetFloat(row As CSVParser.CSVRow, columnIndex As Integer, value As Single) As Boolean
+  overload: Core.Loaders.CSVParser.TryGetFloat*
+  nameWithType.vb: CSVParser.TryGetFloat(CSVParser.CSVRow, Integer, Single)
+  fullName.vb: Core.Loaders.CSVParser.TryGetFloat(Core.Loaders.CSVParser.CSVRow, Integer, Single)
+  name.vb: TryGetFloat(CSVRow, Integer, Single)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.CSVParser.Parse*
+  commentId: Overload:Core.Loaders.CSVParser.Parse
+  href: Core.Loaders.CSVParser.html#Core_Loaders_CSVParser_Parse_Unity_Collections_NativeSlice_System_Byte__Unity_Collections_Allocator_System_Boolean_
+  name: Parse
+  nameWithType: CSVParser.Parse
+  fullName: Core.Loaders.CSVParser.Parse
+- uid: Unity.Collections.NativeSlice{System.Byte}
+  commentId: T:Unity.Collections.NativeSlice{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeSlice`1
+  name: NativeSlice<byte>
+  nameWithType: NativeSlice<byte>
+  fullName: Unity.Collections.NativeSlice<byte>
+  nameWithType.vb: NativeSlice(Of Byte)
+  fullName.vb: Unity.Collections.NativeSlice(Of Byte)
+  name.vb: NativeSlice(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Loaders.CSVParser.CSVParseResult
+  commentId: T:Core.Loaders.CSVParser.CSVParseResult
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVParseResult
+  nameWithType: CSVParser.CSVParseResult
+  fullName: Core.Loaders.CSVParser.CSVParseResult
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVParseResult
+    name: CSVParseResult
+    href: Core.Loaders.CSVParser.CSVParseResult.html
+- uid: Unity.Collections.NativeSlice`1
+  commentId: T:Unity.Collections.NativeSlice`1
+  isExternal: true
+  name: NativeSlice<T>
+  nameWithType: NativeSlice<T>
+  fullName: Unity.Collections.NativeSlice<T>
+  nameWithType.vb: NativeSlice(Of T)
+  fullName.vb: Unity.Collections.NativeSlice(Of T)
+  name.vb: NativeSlice(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeSlice`1
+    name: NativeSlice
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Loaders.CSVParser.FindColumnIndex*
+  commentId: Overload:Core.Loaders.CSVParser.FindColumnIndex
+  href: Core.Loaders.CSVParser.html#Core_Loaders_CSVParser_FindColumnIndex_Unity_Collections_NativeArray_System_UInt32__System_UInt32_
+  name: FindColumnIndex
+  nameWithType: CSVParser.FindColumnIndex
+  fullName: Core.Loaders.CSVParser.FindColumnIndex
+- uid: Unity.Collections.NativeArray{System.UInt32}
+  commentId: T:Unity.Collections.NativeArray{System.UInt32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<uint>
+  nameWithType: NativeArray<uint>
+  fullName: Unity.Collections.NativeArray<uint>
+  nameWithType.vb: NativeArray(Of UInteger)
+  fullName.vb: Unity.Collections.NativeArray(Of UInteger)
+  name.vb: NativeArray(Of UInteger)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Loaders.CSVParser.GetField*
+  commentId: Overload:Core.Loaders.CSVParser.GetField
+  href: Core.Loaders.CSVParser.html#Core_Loaders_CSVParser_GetField_Core_Loaders_CSVParser_CSVRow_System_Int32_
+  name: GetField
+  nameWithType: CSVParser.GetField
+  fullName: Core.Loaders.CSVParser.GetField
+- uid: Core.Loaders.CSVParser.CSVRow
+  commentId: T:Core.Loaders.CSVParser.CSVRow
+  parent: Core.Loaders
+  href: Core.Loaders.CSVParser.html
+  name: CSVParser.CSVRow
+  nameWithType: CSVParser.CSVRow
+  fullName: Core.Loaders.CSVParser.CSVRow
+  spec.csharp:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+  spec.vb:
+  - uid: Core.Loaders.CSVParser
+    name: CSVParser
+    href: Core.Loaders.CSVParser.html
+  - name: .
+  - uid: Core.Loaders.CSVParser.CSVRow
+    name: CSVRow
+    href: Core.Loaders.CSVParser.CSVRow.html
+- uid: Core.Loaders.CSVParser.TryGetInt*
+  commentId: Overload:Core.Loaders.CSVParser.TryGetInt
+  href: Core.Loaders.CSVParser.html#Core_Loaders_CSVParser_TryGetInt_Core_Loaders_CSVParser_CSVRow_System_Int32_System_Int32__
+  name: TryGetInt
+  nameWithType: CSVParser.TryGetInt
+  fullName: Core.Loaders.CSVParser.TryGetInt
+- uid: Core.Loaders.CSVParser.TryGetFloat*
+  commentId: Overload:Core.Loaders.CSVParser.TryGetFloat
+  href: Core.Loaders.CSVParser.html#Core_Loaders_CSVParser_TryGetFloat_Core_Loaders_CSVParser_CSVRow_System_Int32_System_Single__
+  name: TryGetFloat
+  nameWithType: CSVParser.TryGetFloat
+  fullName: Core.Loaders.CSVParser.TryGetFloat
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

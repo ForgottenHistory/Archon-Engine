@@ -1,0 +1,172 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Simulation.SimulationMapLoader
+  commentId: T:Map.Simulation.SimulationMapLoader
+  id: SimulationMapLoader
+  parent: Map.Simulation
+  children:
+  - Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap(System.String,System.String,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: SimulationMapLoader
+  nameWithType: SimulationMapLoader
+  fullName: Map.Simulation.SimulationMapLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SimulationMapLoader
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  summary: >-
+    Loads province bitmap data and initializes ProvinceSimulation
+
+    Bridges existing ParadoxParser with new dual-layer architecture
+
+    Task 1.2: Bitmap to Simulation Conversion
+  example: []
+  syntax:
+    content: public static class SimulationMapLoader
+    content.vb: Public Module SimulationMapLoader
+  inheritance:
+  - System.Object
+- uid: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap(System.String,System.String,System.Int32)
+  commentId: M:Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap(System.String,System.String,System.Int32)
+  id: LoadSimulationFromBitmap(System.String,System.String,System.Int32)
+  parent: Map.Simulation.SimulationMapLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadSimulationFromBitmap(string, string, int)
+  nameWithType: SimulationMapLoader.LoadSimulationFromBitmap(string, string, int)
+  fullName: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap(string, string, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Simulation/SimulationMapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadSimulationFromBitmap
+    path: Scripts/Map/Simulation/SimulationMapLoader.cs
+    startLine: 75
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  summary: >-
+    Load provinces.bmp and create ProvinceSimulation with full integration
+
+    Combines Tasks 1.2.1-1.2.6 from texture-based-map-guide.md
+  example: []
+  syntax:
+    content: public static SimulationMapLoader.SimulationLoadResult LoadSimulationFromBitmap(string bmpFilePath, string definitionCsvPath = null, int maxProvinces = 10000)
+    parameters:
+    - id: bmpFilePath
+      type: System.String
+      description: Path to provinces.bmp
+    - id: definitionCsvPath
+      type: System.String
+      description: Path to definition.csv (optional)
+    - id: maxProvinces
+      type: System.Int32
+      description: Maximum provinces to support (default 10000)
+    return:
+      type: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    content.vb: Public Shared Function LoadSimulationFromBitmap(bmpFilePath As String, definitionCsvPath As String = Nothing, maxProvinces As Integer = 10000) As SimulationMapLoader.SimulationLoadResult
+  overload: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap*
+  nameWithType.vb: SimulationMapLoader.LoadSimulationFromBitmap(String, String, Integer)
+  fullName.vb: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap(String, String, Integer)
+  name.vb: LoadSimulationFromBitmap(String, String, Integer)
+references:
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  href: Map.html
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap*
+  commentId: Overload:Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap
+  href: Map.Simulation.SimulationMapLoader.html#Map_Simulation_SimulationMapLoader_LoadSimulationFromBitmap_System_String_System_String_System_Int32_
+  name: LoadSimulationFromBitmap
+  nameWithType: SimulationMapLoader.LoadSimulationFromBitmap
+  fullName: Map.Simulation.SimulationMapLoader.LoadSimulationFromBitmap
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  commentId: T:Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  parent: Map.Simulation
+  href: Map.Simulation.SimulationMapLoader.html
+  name: SimulationMapLoader.SimulationLoadResult
+  nameWithType: SimulationMapLoader.SimulationLoadResult
+  fullName: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+  spec.csharp:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    name: SimulationLoadResult
+    href: Map.Simulation.SimulationMapLoader.SimulationLoadResult.html
+  spec.vb:
+  - uid: Map.Simulation.SimulationMapLoader
+    name: SimulationMapLoader
+    href: Map.Simulation.SimulationMapLoader.html
+  - name: .
+  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
+    name: SimulationLoadResult
+    href: Map.Simulation.SimulationMapLoader.SimulationLoadResult.html

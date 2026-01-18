@@ -1,0 +1,405 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  commentId: T:Core.Diplomacy.DiplomacyOpinionChangedEvent
+  id: DiplomacyOpinionChangedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Core.Data.FixedPoint64,System.UInt16,System.Int32)
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.country1
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.country2
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.modifierType
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.newOpinion
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.oldOpinion
+  - Core.Diplomacy.DiplomacyOpinionChangedEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyOpinionChangedEvent
+  nameWithType: DiplomacyOpinionChangedEvent
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyOpinionChangedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Emitted when opinion changes between two countries
+
+    AI uses this to: detect improving/worsening relations, adjust diplomacy
+
+    UI uses this to: update relations panel, show opinion trends
+  example: []
+  syntax:
+    content: 'public struct DiplomacyOpinionChangedEvent : IGameEvent'
+    content.vb: Public Structure DiplomacyOpinionChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.country1
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.country1
+  id: country1
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: country1
+  nameWithType: DiplomacyOpinionChangedEvent.country1
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.country1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country1
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country1
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country1 As UShort
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.country2
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.country2
+  id: country2
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: country2
+  nameWithType: DiplomacyOpinionChangedEvent.country2
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.country2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: country2
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort country2
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly country2 As UShort
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.oldOpinion
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.oldOpinion
+  id: oldOpinion
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: oldOpinion
+  nameWithType: DiplomacyOpinionChangedEvent.oldOpinion
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.oldOpinion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: oldOpinion
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 69
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly FixedPoint64 oldOpinion
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public ReadOnly oldOpinion As FixedPoint64
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.newOpinion
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.newOpinion
+  id: newOpinion
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: newOpinion
+  nameWithType: DiplomacyOpinionChangedEvent.newOpinion
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.newOpinion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: newOpinion
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly FixedPoint64 newOpinion
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public ReadOnly newOpinion As FixedPoint64
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.modifierType
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.modifierType
+  id: modifierType
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: modifierType
+  nameWithType: DiplomacyOpinionChangedEvent.modifierType
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.modifierType
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: modifierType
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort modifierType
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly modifierType As UShort
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.tick
+  commentId: F:Core.Diplomacy.DiplomacyOpinionChangedEvent.tick
+  id: tick
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: DiplomacyOpinionChangedEvent.tick
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 72
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: DiplomacyOpinionChangedEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Core.Data.FixedPoint64,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Core.Data.FixedPoint64,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,Core.Data.FixedPoint64,Core.Data.FixedPoint64,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.DiplomacyOpinionChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyOpinionChangedEvent(ushort, ushort, FixedPoint64, FixedPoint64, ushort, int)
+  nameWithType: DiplomacyOpinionChangedEvent.DiplomacyOpinionChangedEvent(ushort, ushort, FixedPoint64, FixedPoint64, ushort, int)
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.DiplomacyOpinionChangedEvent(ushort, ushort, Core.Data.FixedPoint64, Core.Data.FixedPoint64, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public DiplomacyOpinionChangedEvent(ushort c1, ushort c2, FixedPoint64 oldOp, FixedPoint64 newOp, ushort modType, int tick)
+    parameters:
+    - id: c1
+      type: System.UInt16
+    - id: c2
+      type: System.UInt16
+    - id: oldOp
+      type: Core.Data.FixedPoint64
+    - id: newOp
+      type: Core.Data.FixedPoint64
+    - id: modType
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(c1 As UShort, c2 As UShort, oldOp As FixedPoint64, newOp As FixedPoint64, modType As UShort, tick As Integer)
+  overload: Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor*
+  nameWithType.vb: DiplomacyOpinionChangedEvent.New(UShort, UShort, FixedPoint64, FixedPoint64, UShort, Integer)
+  fullName.vb: Core.Diplomacy.DiplomacyOpinionChangedEvent.New(UShort, UShort, Core.Data.FixedPoint64, Core.Data.FixedPoint64, UShort, Integer)
+  name.vb: New(UShort, UShort, FixedPoint64, FixedPoint64, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+  href: Core.Diplomacy.DiplomacyOpinionChangedEvent.html#Core_Diplomacy_DiplomacyOpinionChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: DiplomacyOpinionChangedEvent.TimeStamp
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.DiplomacyOpinionChangedEvent.#ctor
+  href: Core.Diplomacy.DiplomacyOpinionChangedEvent.html#Core_Diplomacy_DiplomacyOpinionChangedEvent__ctor_System_UInt16_System_UInt16_Core_Data_FixedPoint64_Core_Data_FixedPoint64_System_UInt16_System_Int32_
+  name: DiplomacyOpinionChangedEvent
+  nameWithType: DiplomacyOpinionChangedEvent.DiplomacyOpinionChangedEvent
+  fullName: Core.Diplomacy.DiplomacyOpinionChangedEvent.DiplomacyOpinionChangedEvent
+  nameWithType.vb: DiplomacyOpinionChangedEvent.New
+  fullName.vb: Core.Diplomacy.DiplomacyOpinionChangedEvent.New
+  name.vb: New

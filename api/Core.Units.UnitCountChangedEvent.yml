@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitCountChangedEvent
+  commentId: T:Core.Units.UnitCountChangedEvent
+  id: UnitCountChangedEvent
+  parent: Core.Units
+  children:
+  - Core.Units.UnitCountChangedEvent.NewCount
+  - Core.Units.UnitCountChangedEvent.OldCount
+  - Core.Units.UnitCountChangedEvent.TimeStamp
+  - Core.Units.UnitCountChangedEvent.UnitID
+  langs:
+  - csharp
+  - vb
+  name: UnitCountChangedEvent
+  nameWithType: UnitCountChangedEvent
+  fullName: Core.Units.UnitCountChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitCountChangedEvent
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Emitted when unit count changes (combat, reinforcement, etc.)
+
+    RISK-style: Simple number changes instead of percentage-based strength/morale
+  example: []
+  syntax:
+    content: 'public struct UnitCountChangedEvent : IGameEvent'
+    content.vb: Public Structure UnitCountChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Units.UnitCountChangedEvent.UnitID
+  commentId: F:Core.Units.UnitCountChangedEvent.UnitID
+  id: UnitID
+  parent: Core.Units.UnitCountChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitID
+  nameWithType: UnitCountChangedEvent.UnitID
+  fullName: Core.Units.UnitCountChangedEvent.UnitID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitID As UShort
+- uid: Core.Units.UnitCountChangedEvent.OldCount
+  commentId: F:Core.Units.UnitCountChangedEvent.OldCount
+  id: OldCount
+  parent: Core.Units.UnitCountChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldCount
+  nameWithType: UnitCountChangedEvent.OldCount
+  fullName: Core.Units.UnitCountChangedEvent.OldCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldCount
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort OldCount
+    return:
+      type: System.UInt16
+    content.vb: Public OldCount As UShort
+- uid: Core.Units.UnitCountChangedEvent.NewCount
+  commentId: F:Core.Units.UnitCountChangedEvent.NewCount
+  id: NewCount
+  parent: Core.Units.UnitCountChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewCount
+  nameWithType: UnitCountChangedEvent.NewCount
+  fullName: Core.Units.UnitCountChangedEvent.NewCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewCount
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort NewCount
+    return:
+      type: System.UInt16
+    content.vb: Public NewCount As UShort
+- uid: Core.Units.UnitCountChangedEvent.TimeStamp
+  commentId: P:Core.Units.UnitCountChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Units.UnitCountChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: UnitCountChangedEvent.TimeStamp
+  fullName: Core.Units.UnitCountChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Units.UnitCountChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitCountChangedEvent.TimeStamp*
+  commentId: Overload:Core.Units.UnitCountChangedEvent.TimeStamp
+  href: Core.Units.UnitCountChangedEvent.html#Core_Units_UnitCountChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: UnitCountChangedEvent.TimeStamp
+  fullName: Core.Units.UnitCountChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

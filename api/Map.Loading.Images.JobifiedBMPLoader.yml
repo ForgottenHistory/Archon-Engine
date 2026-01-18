@@ -1,0 +1,476 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.JobifiedBMPLoader
+  commentId: T:Map.Loading.Images.JobifiedBMPLoader
+  id: JobifiedBMPLoader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData,System.Int32)
+  - Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync(System.String)
+  - Map.Loading.Images.JobifiedBMPLoader.OnProgressUpdate
+  langs:
+  - csharp
+  - vb
+  name: JobifiedBMPLoader
+  nameWithType: JobifiedBMPLoader
+  fullName: Map.Loading.Images.JobifiedBMPLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: JobifiedBMPLoader
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    High-performance generic BMP loader using Unity's Burst job system
+
+    Loads any BMP file (provinces, heightmaps, terrain, rivers, etc.) with optimal performance
+
+    Use ProvinceMapProcessor for province-specific processing with definition.csv
+  example: []
+  syntax:
+    content: public class JobifiedBMPLoader
+    content.vb: Public Class JobifiedBMPLoader
+  inheritance:
+  - System.Object
+- uid: Map.Loading.Images.JobifiedBMPLoader.OnProgressUpdate
+  commentId: E:Map.Loading.Images.JobifiedBMPLoader.OnProgressUpdate
+  id: OnProgressUpdate
+  parent: Map.Loading.Images.JobifiedBMPLoader
+  langs:
+  - csharp
+  - vb
+  name: OnProgressUpdate
+  nameWithType: JobifiedBMPLoader.OnProgressUpdate
+  fullName: Map.Loading.Images.JobifiedBMPLoader.OnProgressUpdate
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProgressUpdate
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public event Action<JobifiedBMPLoader.LoadingProgress> OnProgressUpdate
+    return:
+      type: System.Action{Map.Loading.Images.JobifiedBMPLoader.LoadingProgress}
+    content.vb: Public Event OnProgressUpdate As Action(Of JobifiedBMPLoader.LoadingProgress)
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync(System.String)
+  commentId: M:Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync(System.String)
+  id: LoadBMPAsync(System.String)
+  parent: Map.Loading.Images.JobifiedBMPLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadBMPAsync(string)
+  nameWithType: JobifiedBMPLoader.LoadBMPAsync(string)
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadBMPAsync
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Load and process BMP file with Burst jobs for optimal performance
+
+    Generic method that works with any BMP file type (provinces, heightmaps, terrain, etc.)
+
+    Note: Runs synchronously on main thread due to NativeCollection thread safety
+  example: []
+  syntax:
+    content: public Task<BMPLoadResult> LoadBMPAsync(string bmpFilePath)
+    parameters:
+    - id: bmpFilePath
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{Map.Loading.Images.BMPLoadResult}
+    content.vb: Public Function LoadBMPAsync(bmpFilePath As String) As Task(Of BMPLoadResult)
+  overload: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync*
+  nameWithType.vb: JobifiedBMPLoader.LoadBMPAsync(String)
+  fullName.vb: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync(String)
+  name.vb: LoadBMPAsync(String)
+- uid: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData,System.Int32)
+  commentId: M:Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData,System.Int32)
+  id: FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData,System.Int32)
+  parent: Map.Loading.Images.JobifiedBMPLoader
+  langs:
+  - csharp
+  - vb
+  name: FindPixelsWithColorJob(BMPPixelData, int)
+  nameWithType: JobifiedBMPLoader.FindPixelsWithColorJob(BMPParser.BMPPixelData, int)
+  fullName: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPixelsWithColorJob
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 120
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Find pixels with specific color using Burst-optimized approach
+  example: []
+  syntax:
+    content: public NativeList<PixelCoord> FindPixelsWithColorJob(BMPParser.BMPPixelData pixelData, int targetRGB)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    - id: targetRGB
+      type: System.Int32
+    return:
+      type: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+    content.vb: Public Function FindPixelsWithColorJob(pixelData As BMPParser.BMPPixelData, targetRGB As Integer) As NativeList(Of PixelCoord)
+  overload: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob*
+  nameWithType.vb: JobifiedBMPLoader.FindPixelsWithColorJob(BMPParser.BMPPixelData, Integer)
+  fullName.vb: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob(Map.Loading.Images.BMPParser.BMPPixelData, Integer)
+  name.vb: FindPixelsWithColorJob(BMPPixelData, Integer)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Action{Map.Loading.Images.JobifiedBMPLoader.LoadingProgress}
+  commentId: T:System.Action{Map.Loading.Images.JobifiedBMPLoader.LoadingProgress}
+  parent: System
+  definition: System.Action`1
+  href: Map.Loading.Images.JobifiedBMPLoader.html
+  name: Action<JobifiedBMPLoader.LoadingProgress>
+  nameWithType: Action<JobifiedBMPLoader.LoadingProgress>
+  fullName: System.Action<Map.Loading.Images.JobifiedBMPLoader.LoadingProgress>
+  nameWithType.vb: Action(Of JobifiedBMPLoader.LoadingProgress)
+  fullName.vb: System.Action(Of Map.Loading.Images.JobifiedBMPLoader.LoadingProgress)
+  name.vb: Action(Of JobifiedBMPLoader.LoadingProgress)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.JobifiedBMPLoader
+    name: JobifiedBMPLoader
+    href: Map.Loading.Images.JobifiedBMPLoader.html
+  - name: .
+  - uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+    name: LoadingProgress
+    href: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.JobifiedBMPLoader
+    name: JobifiedBMPLoader
+    href: Map.Loading.Images.JobifiedBMPLoader.html
+  - name: .
+  - uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+    name: LoadingProgress
+    href: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync*
+  commentId: Overload:Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync
+  href: Map.Loading.Images.JobifiedBMPLoader.html#Map_Loading_Images_JobifiedBMPLoader_LoadBMPAsync_System_String_
+  name: LoadBMPAsync
+  nameWithType: JobifiedBMPLoader.LoadBMPAsync
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadBMPAsync
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Threading.Tasks.Task{Map.Loading.Images.BMPLoadResult}
+  commentId: T:System.Threading.Tasks.Task{Map.Loading.Images.BMPLoadResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: Map.Loading.Images.BMPLoadResult.html
+  name: Task<BMPLoadResult>
+  nameWithType: Task<BMPLoadResult>
+  fullName: System.Threading.Tasks.Task<Map.Loading.Images.BMPLoadResult>
+  nameWithType.vb: Task(Of BMPLoadResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Map.Loading.Images.BMPLoadResult)
+  name.vb: Task(Of BMPLoadResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.BMPLoadResult
+    name: BMPLoadResult
+    href: Map.Loading.Images.BMPLoadResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.BMPLoadResult
+    name: BMPLoadResult
+    href: Map.Loading.Images.BMPLoadResult.html
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+- uid: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob*
+  commentId: Overload:Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob
+  href: Map.Loading.Images.JobifiedBMPLoader.html#Map_Loading_Images_JobifiedBMPLoader_FindPixelsWithColorJob_Map_Loading_Images_BMPParser_BMPPixelData_System_Int32_
+  name: FindPixelsWithColorJob
+  nameWithType: JobifiedBMPLoader.FindPixelsWithColorJob
+  fullName: Map.Loading.Images.JobifiedBMPLoader.FindPixelsWithColorJob
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  commentId: T:Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Map.Loading.Images.PixelCoord.html
+  name: NativeList<PixelCoord>
+  nameWithType: NativeList<PixelCoord>
+  fullName: Unity.Collections.NativeList<Map.Loading.Images.PixelCoord>
+  nameWithType.vb: NativeList(Of PixelCoord)
+  fullName.vb: Unity.Collections.NativeList(Of Map.Loading.Images.PixelCoord)
+  name.vb: NativeList(Of PixelCoord)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true

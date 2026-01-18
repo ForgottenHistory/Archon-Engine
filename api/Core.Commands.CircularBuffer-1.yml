@@ -1,0 +1,339 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CircularBuffer`1
+  commentId: T:Core.Commands.CircularBuffer`1
+  id: CircularBuffer`1
+  parent: Core.Commands
+  children:
+  - Core.Commands.CircularBuffer`1.#ctor(System.Int32)
+  - Core.Commands.CircularBuffer`1.Add(`0)
+  - Core.Commands.CircularBuffer`1.Capacity
+  - Core.Commands.CircularBuffer`1.Clear
+  - Core.Commands.CircularBuffer`1.Count
+  - Core.Commands.CircularBuffer`1.Item(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Core.Commands.CircularBuffer<T>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CircularBuffer
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 408
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Circular buffer for efficient storage of state snapshots
+  example: []
+  syntax:
+    content: public class CircularBuffer<T>
+    typeParameters:
+    - id: T
+    content.vb: Public Class CircularBuffer(Of T)
+  inheritance:
+  - System.Object
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Core.Commands.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+- uid: Core.Commands.CircularBuffer`1.#ctor(System.Int32)
+  commentId: M:Core.Commands.CircularBuffer`1.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: CircularBuffer(int)
+  nameWithType: CircularBuffer<T>.CircularBuffer(int)
+  fullName: Core.Commands.CircularBuffer<T>.CircularBuffer(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 415
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CircularBuffer(int capacity)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer)
+  overload: Core.Commands.CircularBuffer`1.#ctor*
+  nameWithType.vb: CircularBuffer(Of T).New(Integer)
+  fullName.vb: Core.Commands.CircularBuffer(Of T).New(Integer)
+  name.vb: New(Integer)
+- uid: Core.Commands.CircularBuffer`1.Count
+  commentId: P:Core.Commands.CircularBuffer`1.Count
+  id: Count
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Core.Commands.CircularBuffer<T>.Count
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Count
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 423
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int Count { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Count As Integer
+  overload: Core.Commands.CircularBuffer`1.Count*
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Count
+- uid: Core.Commands.CircularBuffer`1.Capacity
+  commentId: P:Core.Commands.CircularBuffer`1.Capacity
+  id: Capacity
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Core.Commands.CircularBuffer<T>.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 424
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Core.Commands.CircularBuffer`1.Capacity*
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Capacity
+- uid: Core.Commands.CircularBuffer`1.Add(`0)
+  commentId: M:Core.Commands.CircularBuffer`1.Add(`0)
+  id: Add(`0)
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Add(T)
+  nameWithType: CircularBuffer<T>.Add(T)
+  fullName: Core.Commands.CircularBuffer<T>.Add(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Add
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 426
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public void Add(T item)
+    parameters:
+    - id: item
+      type: '{T}'
+    content.vb: Public Sub Add(item As T)
+  overload: Core.Commands.CircularBuffer`1.Add*
+  nameWithType.vb: CircularBuffer(Of T).Add(T)
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Add(T)
+- uid: Core.Commands.CircularBuffer`1.Item(System.Int32)
+  commentId: P:Core.Commands.CircularBuffer`1.Item(System.Int32)
+  id: Item(System.Int32)
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: this[int]
+  nameWithType: CircularBuffer<T>.this[int]
+  fullName: Core.Commands.CircularBuffer<T>.this[int]
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: this[]
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 435
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public T this[int index] { get; }
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: '{T}'
+    content.vb: Public ReadOnly Default Property this[](index As Integer) As T
+  overload: Core.Commands.CircularBuffer`1.Item*
+  nameWithType.vb: CircularBuffer(Of T).this[](Integer)
+  fullName.vb: Core.Commands.CircularBuffer(Of T).this[](Integer)
+  name.vb: this[](Integer)
+- uid: Core.Commands.CircularBuffer`1.Clear
+  commentId: M:Core.Commands.CircularBuffer`1.Clear
+  id: Clear
+  parent: Core.Commands.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: CircularBuffer<T>.Clear()
+  fullName: Core.Commands.CircularBuffer<T>.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 447
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Commands.CircularBuffer`1.Clear*
+  nameWithType.vb: CircularBuffer(Of T).Clear()
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Clear()
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CircularBuffer`1.#ctor*
+  commentId: Overload:Core.Commands.CircularBuffer`1.#ctor
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1__ctor_System_Int32_
+  name: CircularBuffer
+  nameWithType: CircularBuffer<T>.CircularBuffer
+  fullName: Core.Commands.CircularBuffer<T>.CircularBuffer
+  nameWithType.vb: CircularBuffer(Of T).New
+  fullName.vb: Core.Commands.CircularBuffer(Of T).New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.CircularBuffer`1.Count*
+  commentId: Overload:Core.Commands.CircularBuffer`1.Count
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1_Count
+  name: Count
+  nameWithType: CircularBuffer<T>.Count
+  fullName: Core.Commands.CircularBuffer<T>.Count
+  nameWithType.vb: CircularBuffer(Of T).Count
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Count
+- uid: Core.Commands.CircularBuffer`1.Capacity*
+  commentId: Overload:Core.Commands.CircularBuffer`1.Capacity
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1_Capacity
+  name: Capacity
+  nameWithType: CircularBuffer<T>.Capacity
+  fullName: Core.Commands.CircularBuffer<T>.Capacity
+  nameWithType.vb: CircularBuffer(Of T).Capacity
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Capacity
+- uid: Core.Commands.CircularBuffer`1.Add*
+  commentId: Overload:Core.Commands.CircularBuffer`1.Add
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1_Add__0_
+  name: Add
+  nameWithType: CircularBuffer<T>.Add
+  fullName: Core.Commands.CircularBuffer<T>.Add
+  nameWithType.vb: CircularBuffer(Of T).Add
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Add
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Commands.CircularBuffer`1.Item*
+  commentId: Overload:Core.Commands.CircularBuffer`1.Item
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1_Item_System_Int32_
+  name: this
+  nameWithType: CircularBuffer<T>.this
+  fullName: Core.Commands.CircularBuffer<T>.this
+  nameWithType.vb: CircularBuffer(Of T).this[]
+  fullName.vb: Core.Commands.CircularBuffer(Of T).this[]
+  name.vb: this[]
+- uid: Core.Commands.CircularBuffer`1.Clear*
+  commentId: Overload:Core.Commands.CircularBuffer`1.Clear
+  href: Core.Commands.CircularBuffer-1.html#Core_Commands_CircularBuffer_1_Clear
+  name: Clear
+  nameWithType: CircularBuffer<T>.Clear
+  fullName: Core.Commands.CircularBuffer<T>.Clear
+  nameWithType.vb: CircularBuffer(Of T).Clear
+  fullName.vb: Core.Commands.CircularBuffer(Of T).Clear

@@ -1,0 +1,388 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.Query
+  commentId: T:Core.Queries.Query
+  id: Query
+  parent: Core.Queries
+  children:
+  - Core.Queries.Query.Countries(Core.GameState)
+  - Core.Queries.Query.Countries(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.Queries.Query.Provinces(Core.GameState)
+  - Core.Queries.Query.Provinces(Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  - Core.Queries.Query.Units(Core.Units.UnitSystem)
+  langs:
+  - csharp
+  - vb
+  name: Query
+  nameWithType: Query
+  fullName: Core.Queries.Query
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Query
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Static entry point for fluent query builders.
+
+
+    Usage:
+      using var provinces = Query.Provinces(gameState)
+          .OwnedBy(countryId)
+          .IsLand()
+          .Execute(Allocator.Temp);
+
+      using var countries = Query.Countries(gameState)
+          .WithMinProvinces(5)
+          .Execute(Allocator.Temp);
+
+      using var units = Query.Units(unitSystem)
+          .OwnedBy(countryId)
+          .InProvince(provinceId)
+          .Execute(Allocator.Temp);
+  example: []
+  syntax:
+    content: public static class Query
+    content.vb: Public Module Query
+  inheritance:
+  - System.Object
+- uid: Core.Queries.Query.Provinces(Core.GameState)
+  commentId: M:Core.Queries.Query.Provinces(Core.GameState)
+  id: Provinces(Core.GameState)
+  parent: Core.Queries.Query
+  langs:
+  - csharp
+  - vb
+  name: Provinces(GameState)
+  nameWithType: Query.Provinces(GameState)
+  fullName: Core.Queries.Query.Provinces(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Provinces
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Create a province query builder.
+  example: []
+  syntax:
+    content: public static ProvinceQueryBuilder Provinces(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: Core.Queries.ProvinceQueryBuilder
+    content.vb: Public Shared Function Provinces(gameState As GameState) As ProvinceQueryBuilder
+  overload: Core.Queries.Query.Provinces*
+- uid: Core.Queries.Query.Provinces(Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Queries.Query.Provinces(Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: Provinces(Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  parent: Core.Queries.Query
+  langs:
+  - csharp
+  - vb
+  name: Provinces(ProvinceSystem, AdjacencySystem)
+  nameWithType: Query.Provinces(ProvinceSystem, AdjacencySystem)
+  fullName: Core.Queries.Query.Provinces(Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Provinces
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Create a province query builder with explicit systems.
+  example: []
+  syntax:
+    content: public static ProvinceQueryBuilder Provinces(ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem = null)
+    parameters:
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    return:
+      type: Core.Queries.ProvinceQueryBuilder
+    content.vb: Public Shared Function Provinces(provinceSystem As ProvinceSystem, adjacencySystem As AdjacencySystem = Nothing) As ProvinceQueryBuilder
+  overload: Core.Queries.Query.Provinces*
+- uid: Core.Queries.Query.Countries(Core.GameState)
+  commentId: M:Core.Queries.Query.Countries(Core.GameState)
+  id: Countries(Core.GameState)
+  parent: Core.Queries.Query
+  langs:
+  - csharp
+  - vb
+  name: Countries(GameState)
+  nameWithType: Query.Countries(GameState)
+  fullName: Core.Queries.Query.Countries(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Countries
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Create a country query builder.
+  example: []
+  syntax:
+    content: public static CountryQueryBuilder Countries(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Shared Function Countries(gameState As GameState) As CountryQueryBuilder
+  overload: Core.Queries.Query.Countries*
+- uid: Core.Queries.Query.Countries(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Queries.Query.Countries(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  id: Countries(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
+  parent: Core.Queries.Query
+  langs:
+  - csharp
+  - vb
+  name: Countries(CountrySystem, ProvinceSystem, AdjacencySystem)
+  nameWithType: Query.Countries(CountrySystem, ProvinceSystem, AdjacencySystem)
+  fullName: Core.Queries.Query.Countries(Core.Systems.CountrySystem, Core.Systems.ProvinceSystem, Core.Systems.AdjacencySystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Countries
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Create a country query builder with explicit systems.
+  example: []
+  syntax:
+    content: public static CountryQueryBuilder Countries(CountrySystem countrySystem, ProvinceSystem provinceSystem = null, AdjacencySystem adjacencySystem = null)
+    parameters:
+    - id: countrySystem
+      type: Core.Systems.CountrySystem
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    return:
+      type: Core.Queries.CountryQueryBuilder
+    content.vb: Public Shared Function Countries(countrySystem As CountrySystem, provinceSystem As ProvinceSystem = Nothing, adjacencySystem As AdjacencySystem = Nothing) As CountryQueryBuilder
+  overload: Core.Queries.Query.Countries*
+- uid: Core.Queries.Query.Units(Core.Units.UnitSystem)
+  commentId: M:Core.Queries.Query.Units(Core.Units.UnitSystem)
+  id: Units(Core.Units.UnitSystem)
+  parent: Core.Queries.Query
+  langs:
+  - csharp
+  - vb
+  name: Units(UnitSystem)
+  nameWithType: Query.Units(UnitSystem)
+  fullName: Core.Queries.Query.Units(Core.Units.UnitSystem)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/Query.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Units
+    path: Scripts/Core/Queries/Query.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Create a unit query builder.
+  example: []
+  syntax:
+    content: public static UnitQueryBuilder Units(UnitSystem unitSystem)
+    parameters:
+    - id: unitSystem
+      type: Core.Units.UnitSystem
+    return:
+      type: Core.Queries.UnitQueryBuilder
+    content.vb: Public Shared Function Units(unitSystem As UnitSystem) As UnitQueryBuilder
+  overload: Core.Queries.Query.Units*
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Queries.Query.Provinces*
+  commentId: Overload:Core.Queries.Query.Provinces
+  href: Core.Queries.Query.html#Core_Queries_Query_Provinces_Core_GameState_
+  name: Provinces
+  nameWithType: Query.Provinces
+  fullName: Core.Queries.Query.Provinces
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.Queries.ProvinceQueryBuilder
+  commentId: T:Core.Queries.ProvinceQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueryBuilder.html
+  name: ProvinceQueryBuilder
+  nameWithType: ProvinceQueryBuilder
+  fullName: Core.Queries.ProvinceQueryBuilder
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Queries.Query.Countries*
+  commentId: Overload:Core.Queries.Query.Countries
+  href: Core.Queries.Query.html#Core_Queries_Query_Countries_Core_GameState_
+  name: Countries
+  nameWithType: Query.Countries
+  fullName: Core.Queries.Query.Countries
+- uid: Core.Queries.CountryQueryBuilder
+  commentId: T:Core.Queries.CountryQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.CountryQueryBuilder.html
+  name: CountryQueryBuilder
+  nameWithType: CountryQueryBuilder
+  fullName: Core.Queries.CountryQueryBuilder
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.Queries.Query.Units*
+  commentId: Overload:Core.Queries.Query.Units
+  href: Core.Queries.Query.html#Core_Queries_Query_Units_Core_Units_UnitSystem_
+  name: Units
+  nameWithType: Query.Units
+  fullName: Core.Queries.Query.Units
+- uid: Core.Units.UnitSystem
+  commentId: T:Core.Units.UnitSystem
+  parent: Core.Units
+  href: Core.Units.UnitSystem.html
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: Core.Units.UnitSystem
+- uid: Core.Queries.UnitQueryBuilder
+  commentId: T:Core.Queries.UnitQueryBuilder
+  parent: Core.Queries
+  href: Core.Queries.UnitQueryBuilder.html
+  name: UnitQueryBuilder
+  nameWithType: UnitQueryBuilder
+  fullName: Core.Queries.UnitQueryBuilder
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html

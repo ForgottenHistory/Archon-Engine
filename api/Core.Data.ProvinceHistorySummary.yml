@@ -1,0 +1,245 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceHistorySummary
+  commentId: T:Core.Data.ProvinceHistorySummary
+  id: ProvinceHistorySummary
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceHistorySummary.AverageDevelopment
+  - Core.Data.ProvinceHistorySummary.CompressedEventCount
+  - Core.Data.ProvinceHistorySummary.OwnershipChanges
+  - Core.Data.ProvinceHistorySummary.ProvinceID
+  - Core.Data.ProvinceHistorySummary.RecentEventCount
+  - Core.Data.ProvinceHistorySummary.TotalOwnershipChanges
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistorySummary
+  nameWithType: ProvinceHistorySummary
+  fullName: Core.Data.ProvinceHistorySummary
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceHistorySummary
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 305
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public struct ProvinceHistorySummary
+    content.vb: Public Structure ProvinceHistorySummary
+- uid: Core.Data.ProvinceHistorySummary.ProvinceID
+  commentId: F:Core.Data.ProvinceHistorySummary.ProvinceID
+  id: ProvinceID
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceHistorySummary.ProvinceID
+  fullName: Core.Data.ProvinceHistorySummary.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 307
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ProvinceID
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceID As Integer
+- uid: Core.Data.ProvinceHistorySummary.RecentEventCount
+  commentId: F:Core.Data.ProvinceHistorySummary.RecentEventCount
+  id: RecentEventCount
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: RecentEventCount
+  nameWithType: ProvinceHistorySummary.RecentEventCount
+  fullName: Core.Data.ProvinceHistorySummary.RecentEventCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RecentEventCount
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 308
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int RecentEventCount
+    return:
+      type: System.Int32
+    content.vb: Public RecentEventCount As Integer
+- uid: Core.Data.ProvinceHistorySummary.CompressedEventCount
+  commentId: F:Core.Data.ProvinceHistorySummary.CompressedEventCount
+  id: CompressedEventCount
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: CompressedEventCount
+  nameWithType: ProvinceHistorySummary.CompressedEventCount
+  fullName: Core.Data.ProvinceHistorySummary.CompressedEventCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompressedEventCount
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 309
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int CompressedEventCount
+    return:
+      type: System.Int32
+    content.vb: Public CompressedEventCount As Integer
+- uid: Core.Data.ProvinceHistorySummary.TotalOwnershipChanges
+  commentId: F:Core.Data.ProvinceHistorySummary.TotalOwnershipChanges
+  id: TotalOwnershipChanges
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: TotalOwnershipChanges
+  nameWithType: ProvinceHistorySummary.TotalOwnershipChanges
+  fullName: Core.Data.ProvinceHistorySummary.TotalOwnershipChanges
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalOwnershipChanges
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 310
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int TotalOwnershipChanges
+    return:
+      type: System.Int32
+    content.vb: Public TotalOwnershipChanges As Integer
+- uid: Core.Data.ProvinceHistorySummary.OwnershipChanges
+  commentId: F:Core.Data.ProvinceHistorySummary.OwnershipChanges
+  id: OwnershipChanges
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: OwnershipChanges
+  nameWithType: ProvinceHistorySummary.OwnershipChanges
+  fullName: Core.Data.ProvinceHistorySummary.OwnershipChanges
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnershipChanges
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 311
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int OwnershipChanges
+    return:
+      type: System.Int32
+    content.vb: Public OwnershipChanges As Integer
+- uid: Core.Data.ProvinceHistorySummary.AverageDevelopment
+  commentId: F:Core.Data.ProvinceHistorySummary.AverageDevelopment
+  id: AverageDevelopment
+  parent: Core.Data.ProvinceHistorySummary
+  langs:
+  - csharp
+  - vb
+  name: AverageDevelopment
+  nameWithType: ProvinceHistorySummary.AverageDevelopment
+  fullName: Core.Data.ProvinceHistorySummary.AverageDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 312
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public float AverageDevelopment
+    return:
+      type: System.Single
+    content.vb: Public AverageDevelopment As Single
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

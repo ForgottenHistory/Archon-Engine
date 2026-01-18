@@ -1,0 +1,476 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.LoadingStatistics
+  commentId: T:Core.Data.LoadingStatistics
+  id: LoadingStatistics
+  parent: Core.Data
+  children:
+  - Core.Data.LoadingStatistics.#ctor
+  - Core.Data.LoadingStatistics.FilesProcessed
+  - Core.Data.LoadingStatistics.FilesSkipped
+  - Core.Data.LoadingStatistics.GetPerformanceReport
+  - Core.Data.LoadingStatistics.LoadingTimeMs
+  - Core.Data.LoadingStatistics.MemoryUsedBytes
+  - Core.Data.LoadingStatistics.ParseErrors
+  - Core.Data.LoadingStatistics.Warnings
+  langs:
+  - csharp
+  - vb
+  name: LoadingStatistics
+  nameWithType: LoadingStatistics
+  fullName: Core.Data.LoadingStatistics
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingStatistics
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Loading statistics for performance monitoring
+  example: []
+  syntax:
+    content: public class LoadingStatistics
+    content.vb: Public Class LoadingStatistics
+  inheritance:
+  - System.Object
+- uid: Core.Data.LoadingStatistics.LoadingTimeMs
+  commentId: P:Core.Data.LoadingStatistics.LoadingTimeMs
+  id: LoadingTimeMs
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: LoadingTimeMs
+  nameWithType: LoadingStatistics.LoadingTimeMs
+  fullName: Core.Data.LoadingStatistics.LoadingTimeMs
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadingTimeMs
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public long LoadingTimeMs { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property LoadingTimeMs As Long
+  overload: Core.Data.LoadingStatistics.LoadingTimeMs*
+- uid: Core.Data.LoadingStatistics.FilesProcessed
+  commentId: P:Core.Data.LoadingStatistics.FilesProcessed
+  id: FilesProcessed
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: FilesProcessed
+  nameWithType: LoadingStatistics.FilesProcessed
+  fullName: Core.Data.LoadingStatistics.FilesProcessed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FilesProcessed
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int FilesProcessed { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property FilesProcessed As Integer
+  overload: Core.Data.LoadingStatistics.FilesProcessed*
+- uid: Core.Data.LoadingStatistics.FilesSkipped
+  commentId: P:Core.Data.LoadingStatistics.FilesSkipped
+  id: FilesSkipped
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: FilesSkipped
+  nameWithType: LoadingStatistics.FilesSkipped
+  fullName: Core.Data.LoadingStatistics.FilesSkipped
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FilesSkipped
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int FilesSkipped { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property FilesSkipped As Integer
+  overload: Core.Data.LoadingStatistics.FilesSkipped*
+- uid: Core.Data.LoadingStatistics.ParseErrors
+  commentId: P:Core.Data.LoadingStatistics.ParseErrors
+  id: ParseErrors
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: ParseErrors
+  nameWithType: LoadingStatistics.ParseErrors
+  fullName: Core.Data.LoadingStatistics.ParseErrors
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ParseErrors
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 129
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ParseErrors { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ParseErrors As Integer
+  overload: Core.Data.LoadingStatistics.ParseErrors*
+- uid: Core.Data.LoadingStatistics.MemoryUsedBytes
+  commentId: P:Core.Data.LoadingStatistics.MemoryUsedBytes
+  id: MemoryUsedBytes
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: MemoryUsedBytes
+  nameWithType: LoadingStatistics.MemoryUsedBytes
+  fullName: Core.Data.LoadingStatistics.MemoryUsedBytes
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MemoryUsedBytes
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public long MemoryUsedBytes { get; set; }
+    parameters: []
+    return:
+      type: System.Int64
+    content.vb: Public Property MemoryUsedBytes As Long
+  overload: Core.Data.LoadingStatistics.MemoryUsedBytes*
+- uid: Core.Data.LoadingStatistics.Warnings
+  commentId: P:Core.Data.LoadingStatistics.Warnings
+  id: Warnings
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: Warnings
+  nameWithType: LoadingStatistics.Warnings
+  fullName: Core.Data.LoadingStatistics.Warnings
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Warnings
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public List<string> Warnings { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Property Warnings As List(Of String)
+  overload: Core.Data.LoadingStatistics.Warnings*
+- uid: Core.Data.LoadingStatistics.#ctor
+  commentId: M:Core.Data.LoadingStatistics.#ctor
+  id: '#ctor'
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: LoadingStatistics()
+  nameWithType: LoadingStatistics.LoadingStatistics()
+  fullName: Core.Data.LoadingStatistics.LoadingStatistics()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public LoadingStatistics()
+    content.vb: Public Sub New()
+  overload: Core.Data.LoadingStatistics.#ctor*
+  nameWithType.vb: LoadingStatistics.New()
+  fullName.vb: Core.Data.LoadingStatistics.New()
+  name.vb: New()
+- uid: Core.Data.LoadingStatistics.GetPerformanceReport
+  commentId: M:Core.Data.LoadingStatistics.GetPerformanceReport
+  id: GetPerformanceReport
+  parent: Core.Data.LoadingStatistics
+  langs:
+  - csharp
+  - vb
+  name: GetPerformanceReport()
+  nameWithType: LoadingStatistics.GetPerformanceReport()
+  fullName: Core.Data.LoadingStatistics.GetPerformanceReport()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/CountryDataLoadResult.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPerformanceReport
+    path: Scripts/Core/Data/CountryDataLoadResult.cs
+    startLine: 138
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public string GetPerformanceReport()
+    return:
+      type: System.String
+    content.vb: Public Function GetPerformanceReport() As String
+  overload: Core.Data.LoadingStatistics.GetPerformanceReport*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.LoadingStatistics.LoadingTimeMs*
+  commentId: Overload:Core.Data.LoadingStatistics.LoadingTimeMs
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_LoadingTimeMs
+  name: LoadingTimeMs
+  nameWithType: LoadingStatistics.LoadingTimeMs
+  fullName: Core.Data.LoadingStatistics.LoadingTimeMs
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Core.Data.LoadingStatistics.FilesProcessed*
+  commentId: Overload:Core.Data.LoadingStatistics.FilesProcessed
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_FilesProcessed
+  name: FilesProcessed
+  nameWithType: LoadingStatistics.FilesProcessed
+  fullName: Core.Data.LoadingStatistics.FilesProcessed
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.LoadingStatistics.FilesSkipped*
+  commentId: Overload:Core.Data.LoadingStatistics.FilesSkipped
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_FilesSkipped
+  name: FilesSkipped
+  nameWithType: LoadingStatistics.FilesSkipped
+  fullName: Core.Data.LoadingStatistics.FilesSkipped
+- uid: Core.Data.LoadingStatistics.ParseErrors*
+  commentId: Overload:Core.Data.LoadingStatistics.ParseErrors
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_ParseErrors
+  name: ParseErrors
+  nameWithType: LoadingStatistics.ParseErrors
+  fullName: Core.Data.LoadingStatistics.ParseErrors
+- uid: Core.Data.LoadingStatistics.MemoryUsedBytes*
+  commentId: Overload:Core.Data.LoadingStatistics.MemoryUsedBytes
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_MemoryUsedBytes
+  name: MemoryUsedBytes
+  nameWithType: LoadingStatistics.MemoryUsedBytes
+  fullName: Core.Data.LoadingStatistics.MemoryUsedBytes
+- uid: Core.Data.LoadingStatistics.Warnings*
+  commentId: Overload:Core.Data.LoadingStatistics.Warnings
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_Warnings
+  name: Warnings
+  nameWithType: LoadingStatistics.Warnings
+  fullName: Core.Data.LoadingStatistics.Warnings
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Data.LoadingStatistics.#ctor*
+  commentId: Overload:Core.Data.LoadingStatistics.#ctor
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics__ctor
+  name: LoadingStatistics
+  nameWithType: LoadingStatistics.LoadingStatistics
+  fullName: Core.Data.LoadingStatistics.LoadingStatistics
+  nameWithType.vb: LoadingStatistics.New
+  fullName.vb: Core.Data.LoadingStatistics.New
+  name.vb: New
+- uid: Core.Data.LoadingStatistics.GetPerformanceReport*
+  commentId: Overload:Core.Data.LoadingStatistics.GetPerformanceReport
+  href: Core.Data.LoadingStatistics.html#Core_Data_LoadingStatistics_GetPerformanceReport
+  name: GetPerformanceReport
+  nameWithType: LoadingStatistics.GetPerformanceReport
+  fullName: Core.Data.LoadingStatistics.GetPerformanceReport
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,433 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainStyleParams
+  commentId: T:Map.Rendering.Terrain.TerrainStyleParams
+  id: TerrainStyleParams
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainStyleParams.BlendSharpness
+  - Map.Rendering.Terrain.TerrainStyleParams.Brightness
+  - Map.Rendering.Terrain.TerrainStyleParams.DetailStrength
+  - Map.Rendering.Terrain.TerrainStyleParams.DetailTiling
+  - Map.Rendering.Terrain.TerrainStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  - Map.Rendering.Terrain.TerrainStyleParams.NormalMapAmbient
+  - Map.Rendering.Terrain.TerrainStyleParams.NormalMapHighlight
+  - Map.Rendering.Terrain.TerrainStyleParams.NormalMapStrength
+  - Map.Rendering.Terrain.TerrainStyleParams.SampleRadius
+  - Map.Rendering.Terrain.TerrainStyleParams.Saturation
+  langs:
+  - csharp
+  - vb
+  name: TerrainStyleParams
+  nameWithType: TerrainStyleParams
+  fullName: Map.Rendering.Terrain.TerrainStyleParams
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainStyleParams
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Style parameters for terrain rendering (from VisualStyleConfiguration)
+  example: []
+  syntax:
+    content: public struct TerrainStyleParams
+    content.vb: Public Structure TerrainStyleParams
+- uid: Map.Rendering.Terrain.TerrainStyleParams.Brightness
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.Brightness
+  id: Brightness
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: Brightness
+  nameWithType: TerrainStyleParams.Brightness
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.Brightness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Brightness
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 109
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Brightness adjustment for terrain colors (0.5-2.0)
+  example: []
+  syntax:
+    content: public float Brightness
+    return:
+      type: System.Single
+    content.vb: Public Brightness As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.Saturation
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.Saturation
+  id: Saturation
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: Saturation
+  nameWithType: TerrainStyleParams.Saturation
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.Saturation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Saturation
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 112
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Saturation adjustment for terrain colors (0-2.0)
+  example: []
+  syntax:
+    content: public float Saturation
+    return:
+      type: System.Single
+    content.vb: Public Saturation As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.DetailTiling
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.DetailTiling
+  id: DetailTiling
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: DetailTiling
+  nameWithType: TerrainStyleParams.DetailTiling
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.DetailTiling
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetailTiling
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 115
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: World-space tiling for detail textures
+  example: []
+  syntax:
+    content: public float DetailTiling
+    return:
+      type: System.Single
+    content.vb: Public DetailTiling As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.DetailStrength
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.DetailStrength
+  id: DetailStrength
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: DetailStrength
+  nameWithType: TerrainStyleParams.DetailStrength
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.DetailStrength
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetailStrength
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Strength of detail texture blend (0-1)
+  example: []
+  syntax:
+    content: public float DetailStrength
+    return:
+      type: System.Single
+    content.vb: Public DetailStrength As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.NormalMapStrength
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.NormalMapStrength
+  id: NormalMapStrength
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NormalMapStrength
+  nameWithType: TerrainStyleParams.NormalMapStrength
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.NormalMapStrength
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapStrength
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 121
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Normal map strength
+  example: []
+  syntax:
+    content: public float NormalMapStrength
+    return:
+      type: System.Single
+    content.vb: Public NormalMapStrength As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.NormalMapAmbient
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.NormalMapAmbient
+  id: NormalMapAmbient
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NormalMapAmbient
+  nameWithType: TerrainStyleParams.NormalMapAmbient
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.NormalMapAmbient
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapAmbient
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 124
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Normal map ambient (shadow darkness)
+  example: []
+  syntax:
+    content: public float NormalMapAmbient
+    return:
+      type: System.Single
+    content.vb: Public NormalMapAmbient As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.NormalMapHighlight
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.NormalMapHighlight
+  id: NormalMapHighlight
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NormalMapHighlight
+  nameWithType: TerrainStyleParams.NormalMapHighlight
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.NormalMapHighlight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapHighlight
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 127
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Normal map highlight brightness
+  example: []
+  syntax:
+    content: public float NormalMapHighlight
+    return:
+      type: System.Single
+    content.vb: Public NormalMapHighlight As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.SampleRadius
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.SampleRadius
+  id: SampleRadius
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: SampleRadius
+  nameWithType: TerrainStyleParams.SampleRadius
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.SampleRadius
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SampleRadius
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 130
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Sample radius for terrain blending
+  example: []
+  syntax:
+    content: public int SampleRadius
+    return:
+      type: System.Int32
+    content.vb: Public SampleRadius As Integer
+- uid: Map.Rendering.Terrain.TerrainStyleParams.BlendSharpness
+  commentId: F:Map.Rendering.Terrain.TerrainStyleParams.BlendSharpness
+  id: BlendSharpness
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: BlendSharpness
+  nameWithType: TerrainStyleParams.BlendSharpness
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.BlendSharpness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BlendSharpness
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 133
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Blend sharpness (1.0 = linear, &gt;1 = sharper)
+  example: []
+  syntax:
+    content: public float BlendSharpness
+    return:
+      type: System.Single
+    content.vb: Public BlendSharpness As Single
+- uid: Map.Rendering.Terrain.TerrainStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  commentId: M:Map.Rendering.Terrain.TerrainStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  id: FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  parent: Map.Rendering.Terrain.TerrainStyleParams
+  langs:
+  - csharp
+  - vb
+  name: FromConfig(VisualStyleConfiguration)
+  nameWithType: TerrainStyleParams.FromConfig(VisualStyleConfiguration)
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromConfig
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 138
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Create style params from VisualStyleConfiguration
+  example: []
+  syntax:
+    content: public static TerrainStyleParams FromConfig(VisualStyleConfiguration config)
+    parameters:
+    - id: config
+      type: Archon.Engine.Map.VisualStyleConfiguration
+    return:
+      type: Map.Rendering.Terrain.TerrainStyleParams
+    content.vb: Public Shared Function FromConfig(config As VisualStyleConfiguration) As TerrainStyleParams
+  overload: Map.Rendering.Terrain.TerrainStyleParams.FromConfig*
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Rendering.Terrain.TerrainStyleParams.FromConfig*
+  commentId: Overload:Map.Rendering.Terrain.TerrainStyleParams.FromConfig
+  href: Map.Rendering.Terrain.TerrainStyleParams.html#Map_Rendering_Terrain_TerrainStyleParams_FromConfig_Archon_Engine_Map_VisualStyleConfiguration_
+  name: FromConfig
+  nameWithType: TerrainStyleParams.FromConfig
+  fullName: Map.Rendering.Terrain.TerrainStyleParams.FromConfig
+- uid: Archon.Engine.Map.VisualStyleConfiguration
+  commentId: T:Archon.Engine.Map.VisualStyleConfiguration
+  parent: Archon.Engine.Map
+  name: VisualStyleConfiguration
+  nameWithType: VisualStyleConfiguration
+  fullName: Archon.Engine.Map.VisualStyleConfiguration
+- uid: Map.Rendering.Terrain.TerrainStyleParams
+  commentId: T:Map.Rendering.Terrain.TerrainStyleParams
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainStyleParams.html
+  name: TerrainStyleParams
+  nameWithType: TerrainStyleParams
+  fullName: Map.Rendering.Terrain.TerrainStyleParams
+- uid: Archon.Engine.Map
+  commentId: N:Archon.Engine.Map
+  name: Archon.Engine.Map
+  nameWithType: Archon.Engine.Map
+  fullName: Archon.Engine.Map
+  spec.csharp:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Engine
+    name: Engine
+  - name: .
+  - uid: Archon.Engine.Map
+    name: Map
+  spec.vb:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Engine
+    name: Engine
+  - name: .
+  - uid: Archon.Engine.Map
+    name: Map

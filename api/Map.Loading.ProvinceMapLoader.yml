@@ -1,0 +1,392 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapLoader
+  commentId: T:Map.Loading.ProvinceMapLoader
+  id: ProvinceMapLoader
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapLoader.CreateErrorTexture(System.Int32,System.Int32)
+  - Map.Loading.ProvinceMapLoader.LoadProvinceMap(System.String,Map.Rendering.MapTextureManager,System.String)
+  - Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync(System.String,Map.Rendering.MapTextureManager,System.String)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapLoader
+  nameWithType: ProvinceMapLoader
+  fullName: Map.Loading.ProvinceMapLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapLoader
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Compatibility layer for legacy Map.Loading namespace
+
+    Bridges old ProvinceMapLoader API to new ProvinceMapProcessor system
+  example: []
+  syntax:
+    content: public static class ProvinceMapLoader
+    content.vb: Public Module ProvinceMapLoader
+  inheritance:
+  - System.Object
+- uid: Map.Loading.ProvinceMapLoader.LoadProvinceMap(System.String,Map.Rendering.MapTextureManager,System.String)
+  commentId: M:Map.Loading.ProvinceMapLoader.LoadProvinceMap(System.String,Map.Rendering.MapTextureManager,System.String)
+  id: LoadProvinceMap(System.String,Map.Rendering.MapTextureManager,System.String)
+  parent: Map.Loading.ProvinceMapLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceMap(string, MapTextureManager, string)
+  nameWithType: ProvinceMapLoader.LoadProvinceMap(string, MapTextureManager, string)
+  fullName: Map.Loading.ProvinceMapLoader.LoadProvinceMap(string, Map.Rendering.MapTextureManager, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceMap
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Legacy LoadProvinceMap method - now uses ProvinceMapProcessor internally
+  example: []
+  syntax:
+    content: public static ProvinceMapLoader.LoadResult LoadProvinceMap(string bitmapPath, MapTextureManager textureManager, string definitionCsvPath = null)
+    parameters:
+    - id: bitmapPath
+      type: System.String
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    - id: definitionCsvPath
+      type: System.String
+    return:
+      type: Map.Loading.ProvinceMapLoader.LoadResult
+    content.vb: Public Shared Function LoadProvinceMap(bitmapPath As String, textureManager As MapTextureManager, definitionCsvPath As String = Nothing) As ProvinceMapLoader.LoadResult
+  overload: Map.Loading.ProvinceMapLoader.LoadProvinceMap*
+  nameWithType.vb: ProvinceMapLoader.LoadProvinceMap(String, MapTextureManager, String)
+  fullName.vb: Map.Loading.ProvinceMapLoader.LoadProvinceMap(String, Map.Rendering.MapTextureManager, String)
+  name.vb: LoadProvinceMap(String, MapTextureManager, String)
+- uid: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync(System.String,Map.Rendering.MapTextureManager,System.String)
+  commentId: M:Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync(System.String,Map.Rendering.MapTextureManager,System.String)
+  id: LoadProvinceMapAsync(System.String,Map.Rendering.MapTextureManager,System.String)
+  parent: Map.Loading.ProvinceMapLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceMapAsync(string, MapTextureManager, string)
+  nameWithType: ProvinceMapLoader.LoadProvinceMapAsync(string, MapTextureManager, string)
+  fullName: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync(string, Map.Rendering.MapTextureManager, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceMapAsync
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Async version using new ProvinceMapProcessor
+  example: []
+  syntax:
+    content: public static Task<ProvinceMapLoader.LoadResult> LoadProvinceMapAsync(string bitmapPath, MapTextureManager textureManager, string definitionCsvPath = null)
+    parameters:
+    - id: bitmapPath
+      type: System.String
+    - id: textureManager
+      type: Map.Rendering.MapTextureManager
+    - id: definitionCsvPath
+      type: System.String
+    return:
+      type: System.Threading.Tasks.Task{Map.Loading.ProvinceMapLoader.LoadResult}
+    content.vb: Public Shared Function LoadProvinceMapAsync(bitmapPath As String, textureManager As MapTextureManager, definitionCsvPath As String = Nothing) As Task(Of ProvinceMapLoader.LoadResult)
+  overload: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync*
+  nameWithType.vb: ProvinceMapLoader.LoadProvinceMapAsync(String, MapTextureManager, String)
+  fullName.vb: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync(String, Map.Rendering.MapTextureManager, String)
+  name.vb: LoadProvinceMapAsync(String, MapTextureManager, String)
+- uid: Map.Loading.ProvinceMapLoader.CreateErrorTexture(System.Int32,System.Int32)
+  commentId: M:Map.Loading.ProvinceMapLoader.CreateErrorTexture(System.Int32,System.Int32)
+  id: CreateErrorTexture(System.Int32,System.Int32)
+  parent: Map.Loading.ProvinceMapLoader
+  langs:
+  - csharp
+  - vb
+  name: CreateErrorTexture(int, int)
+  nameWithType: ProvinceMapLoader.CreateErrorTexture(int, int)
+  fullName: Map.Loading.ProvinceMapLoader.CreateErrorTexture(int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateErrorTexture
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 148
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Create error texture - compatibility method
+  example: []
+  syntax:
+    content: public static Texture2D CreateErrorTexture(int width, int height)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Shared Function CreateErrorTexture(width As Integer, height As Integer) As Texture2D
+  overload: Map.Loading.ProvinceMapLoader.CreateErrorTexture*
+  nameWithType.vb: ProvinceMapLoader.CreateErrorTexture(Integer, Integer)
+  fullName.vb: Map.Loading.ProvinceMapLoader.CreateErrorTexture(Integer, Integer)
+  name.vb: CreateErrorTexture(Integer, Integer)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.ProvinceMapLoader.LoadProvinceMap*
+  commentId: Overload:Map.Loading.ProvinceMapLoader.LoadProvinceMap
+  href: Map.Loading.ProvinceMapLoader.html#Map_Loading_ProvinceMapLoader_LoadProvinceMap_System_String_Map_Rendering_MapTextureManager_System_String_
+  name: LoadProvinceMap
+  nameWithType: ProvinceMapLoader.LoadProvinceMap
+  fullName: Map.Loading.ProvinceMapLoader.LoadProvinceMap
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync*
+  commentId: Overload:Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync
+  href: Map.Loading.ProvinceMapLoader.html#Map_Loading_ProvinceMapLoader_LoadProvinceMapAsync_System_String_Map_Rendering_MapTextureManager_System_String_
+  name: LoadProvinceMapAsync
+  nameWithType: ProvinceMapLoader.LoadProvinceMapAsync
+  fullName: Map.Loading.ProvinceMapLoader.LoadProvinceMapAsync
+- uid: System.Threading.Tasks.Task{Map.Loading.ProvinceMapLoader.LoadResult}
+  commentId: T:System.Threading.Tasks.Task{Map.Loading.ProvinceMapLoader.LoadResult}
+  parent: System.Threading.Tasks
+  definition: System.Threading.Tasks.Task`1
+  href: Map.Loading.ProvinceMapLoader.html
+  name: Task<ProvinceMapLoader.LoadResult>
+  nameWithType: Task<ProvinceMapLoader.LoadResult>
+  fullName: System.Threading.Tasks.Task<Map.Loading.ProvinceMapLoader.LoadResult>
+  nameWithType.vb: Task(Of ProvinceMapLoader.LoadResult)
+  fullName.vb: System.Threading.Tasks.Task(Of Map.Loading.ProvinceMapLoader.LoadResult)
+  name.vb: Task(Of ProvinceMapLoader.LoadResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  - name: )
+- uid: System.Threading.Tasks.Task`1
+  commentId: T:System.Threading.Tasks.Task`1
+  isExternal: true
+  name: Task<TResult>
+  nameWithType: Task<TResult>
+  fullName: System.Threading.Tasks.Task<TResult>
+  nameWithType.vb: Task(Of TResult)
+  fullName.vb: System.Threading.Tasks.Task(Of TResult)
+  name.vb: Task(Of TResult)
+  spec.csharp:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Threading.Tasks.Task`1
+    name: Task
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+- uid: Map.Loading.ProvinceMapLoader.CreateErrorTexture*
+  commentId: Overload:Map.Loading.ProvinceMapLoader.CreateErrorTexture
+  href: Map.Loading.ProvinceMapLoader.html#Map_Loading_ProvinceMapLoader_CreateErrorTexture_System_Int32_System_Int32_
+  name: CreateErrorTexture
+  nameWithType: ProvinceMapLoader.CreateErrorTexture
+  fullName: Map.Loading.ProvinceMapLoader.CreateErrorTexture
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

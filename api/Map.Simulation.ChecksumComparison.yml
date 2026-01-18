@@ -1,0 +1,346 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Simulation.ChecksumComparison
+  commentId: T:Map.Simulation.ChecksumComparison
+  id: ChecksumComparison
+  parent: Map.Simulation
+  children:
+  - Map.Simulation.ChecksumComparison.ChecksumA
+  - Map.Simulation.ChecksumComparison.ChecksumB
+  - Map.Simulation.ChecksumComparison.Differences
+  - Map.Simulation.ChecksumComparison.Match
+  - Map.Simulation.ChecksumComparison.ToString
+  langs:
+  - csharp
+  - vb
+  name: ChecksumComparison
+  nameWithType: ChecksumComparison
+  fullName: Map.Simulation.ChecksumComparison
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChecksumComparison
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 391
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  summary: Result of checksum comparison
+  example: []
+  syntax:
+    content: public struct ChecksumComparison
+    content.vb: Public Structure ChecksumComparison
+- uid: Map.Simulation.ChecksumComparison.Match
+  commentId: F:Map.Simulation.ChecksumComparison.Match
+  id: Match
+  parent: Map.Simulation.ChecksumComparison
+  langs:
+  - csharp
+  - vb
+  name: Match
+  nameWithType: ChecksumComparison.Match
+  fullName: Map.Simulation.ChecksumComparison.Match
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Match
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 393
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public bool Match
+    return:
+      type: System.Boolean
+    content.vb: Public Match As Boolean
+- uid: Map.Simulation.ChecksumComparison.ChecksumA
+  commentId: F:Map.Simulation.ChecksumComparison.ChecksumA
+  id: ChecksumA
+  parent: Map.Simulation.ChecksumComparison
+  langs:
+  - csharp
+  - vb
+  name: ChecksumA
+  nameWithType: ChecksumComparison.ChecksumA
+  fullName: Map.Simulation.ChecksumComparison.ChecksumA
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChecksumA
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 394
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public StateChecksum ChecksumA
+    return:
+      type: Map.Simulation.StateChecksum
+    content.vb: Public ChecksumA As StateChecksum
+- uid: Map.Simulation.ChecksumComparison.ChecksumB
+  commentId: F:Map.Simulation.ChecksumComparison.ChecksumB
+  id: ChecksumB
+  parent: Map.Simulation.ChecksumComparison
+  langs:
+  - csharp
+  - vb
+  name: ChecksumB
+  nameWithType: ChecksumComparison.ChecksumB
+  fullName: Map.Simulation.ChecksumComparison.ChecksumB
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChecksumB
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 395
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public StateChecksum ChecksumB
+    return:
+      type: Map.Simulation.StateChecksum
+    content.vb: Public ChecksumB As StateChecksum
+- uid: Map.Simulation.ChecksumComparison.Differences
+  commentId: F:Map.Simulation.ChecksumComparison.Differences
+  id: Differences
+  parent: Map.Simulation.ChecksumComparison
+  langs:
+  - csharp
+  - vb
+  name: Differences
+  nameWithType: ChecksumComparison.Differences
+  fullName: Map.Simulation.ChecksumComparison.Differences
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Differences
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 396
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  syntax:
+    content: public List<string> Differences
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Differences As List(Of String)
+- uid: Map.Simulation.ChecksumComparison.ToString
+  commentId: M:Map.Simulation.ChecksumComparison.ToString
+  id: ToString
+  parent: Map.Simulation.ChecksumComparison
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ChecksumComparison.ToString()
+  fullName: Map.Simulation.ChecksumComparison.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Simulation/StateValidator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Map/Simulation/StateValidator.cs
+    startLine: 398
+  assemblies:
+  - MapAssembly
+  namespace: Map.Simulation
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Map.Simulation.ChecksumComparison.ToString*
+references:
+- uid: Map.Simulation
+  commentId: N:Map.Simulation
+  href: Map.html
+  name: Map.Simulation
+  nameWithType: Map.Simulation
+  fullName: Map.Simulation
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Simulation
+    name: Simulation
+    href: Map.Simulation.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Simulation.StateChecksum
+  commentId: T:Map.Simulation.StateChecksum
+  parent: Map.Simulation
+  href: Map.Simulation.StateChecksum.html
+  name: StateChecksum
+  nameWithType: StateChecksum
+  fullName: Map.Simulation.StateChecksum
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Simulation.ChecksumComparison.ToString*
+  commentId: Overload:Map.Simulation.ChecksumComparison.ToString
+  href: Map.Simulation.ChecksumComparison.html#Map_Simulation_ChecksumComparison_ToString
+  name: ToString
+  nameWithType: ChecksumComparison.ToString
+  fullName: Map.Simulation.ChecksumComparison.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

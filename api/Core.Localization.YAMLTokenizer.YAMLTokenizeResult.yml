@@ -1,0 +1,254 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  id: YAMLTokenizer.YAMLTokenizeResult
+  parent: Core.Localization
+  children:
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.BytesProcessed
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Column
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.HighestError
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.IsSuccess
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Line
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult.TokensGenerated
+  langs:
+  - csharp
+  - vb
+  name: YAMLTokenizer.YAMLTokenizeResult
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YAMLTokenizeResult
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: YAML tokenization result
+  example: []
+  syntax:
+    content: public struct YAMLTokenizer.YAMLTokenizeResult
+    content.vb: Public Structure YAMLTokenizer.YAMLTokenizeResult
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.IsSuccess
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.IsSuccess
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.TokensGenerated
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.TokensGenerated
+  id: TokensGenerated
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: TokensGenerated
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.TokensGenerated
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.TokensGenerated
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TokensGenerated
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int TokensGenerated
+    return:
+      type: System.Int32
+    content.vb: Public TokensGenerated As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.BytesProcessed
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.BytesProcessed
+  id: BytesProcessed
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: BytesProcessed
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.BytesProcessed
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.BytesProcessed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BytesProcessed
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 61
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int BytesProcessed
+    return:
+      type: System.Int32
+    content.vb: Public BytesProcessed As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Line
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Line
+  id: Line
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: Line
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.Line
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Line
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Line
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int Line
+    return:
+      type: System.Int32
+    content.vb: Public Line As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Column
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Column
+  id: Column
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: Column
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.Column
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.Column
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Column
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 63
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int Column
+    return:
+      type: System.Int32
+    content.vb: Public Column As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.HighestError
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLTokenizeResult.HighestError
+  id: HighestError
+  parent: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: HighestError
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult.HighestError
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.HighestError
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighestError
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public ErrorSeverity HighestError
+    return:
+      type: Core.Localization.ErrorSeverity
+    content.vb: Public HighestError As ErrorSeverity
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Localization.ErrorSeverity
+  commentId: T:Core.Localization.ErrorSeverity
+  parent: Core.Localization
+  href: Core.Localization.ErrorSeverity.html
+  name: ErrorSeverity
+  nameWithType: ErrorSeverity
+  fullName: Core.Localization.ErrorSeverity

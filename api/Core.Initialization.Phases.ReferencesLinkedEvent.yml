@@ -1,0 +1,264 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent
+  commentId: T:Core.Initialization.Phases.ReferencesLinkedEvent
+  id: ReferencesLinkedEvent
+  parent: Core.Initialization.Phases
+  children:
+  - Core.Initialization.Phases.ReferencesLinkedEvent.CountriesLinked
+  - Core.Initialization.Phases.ReferencesLinkedEvent.ProvincesLinked
+  - Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+  - Core.Initialization.Phases.ReferencesLinkedEvent.ValidationErrors
+  - Core.Initialization.Phases.ReferencesLinkedEvent.ValidationWarnings
+  langs:
+  - csharp
+  - vb
+  name: ReferencesLinkedEvent
+  nameWithType: ReferencesLinkedEvent
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReferencesLinkedEvent
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 268
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: >-
+    Emitted when all string references have been resolved to numeric IDs
+
+    Indicates the data linking phase is complete
+  example: []
+  syntax:
+    content: 'public struct ReferencesLinkedEvent : IGameEvent'
+    content.vb: Public Structure ReferencesLinkedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.CountriesLinked
+  commentId: F:Core.Initialization.Phases.ReferencesLinkedEvent.CountriesLinked
+  id: CountriesLinked
+  parent: Core.Initialization.Phases.ReferencesLinkedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountriesLinked
+  nameWithType: ReferencesLinkedEvent.CountriesLinked
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.CountriesLinked
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountriesLinked
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 270
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int CountriesLinked
+    return:
+      type: System.Int32
+    content.vb: Public CountriesLinked As Integer
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.ProvincesLinked
+  commentId: F:Core.Initialization.Phases.ReferencesLinkedEvent.ProvincesLinked
+  id: ProvincesLinked
+  parent: Core.Initialization.Phases.ReferencesLinkedEvent
+  langs:
+  - csharp
+  - vb
+  name: ProvincesLinked
+  nameWithType: ReferencesLinkedEvent.ProvincesLinked
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.ProvincesLinked
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesLinked
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 271
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int ProvincesLinked
+    return:
+      type: System.Int32
+    content.vb: Public ProvincesLinked As Integer
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.ValidationErrors
+  commentId: F:Core.Initialization.Phases.ReferencesLinkedEvent.ValidationErrors
+  id: ValidationErrors
+  parent: Core.Initialization.Phases.ReferencesLinkedEvent
+  langs:
+  - csharp
+  - vb
+  name: ValidationErrors
+  nameWithType: ReferencesLinkedEvent.ValidationErrors
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.ValidationErrors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationErrors
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 272
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int ValidationErrors
+    return:
+      type: System.Int32
+    content.vb: Public ValidationErrors As Integer
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.ValidationWarnings
+  commentId: F:Core.Initialization.Phases.ReferencesLinkedEvent.ValidationWarnings
+  id: ValidationWarnings
+  parent: Core.Initialization.Phases.ReferencesLinkedEvent
+  langs:
+  - csharp
+  - vb
+  name: ValidationWarnings
+  nameWithType: ReferencesLinkedEvent.ValidationWarnings
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.ValidationWarnings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationWarnings
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 273
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int ValidationWarnings
+    return:
+      type: System.Int32
+    content.vb: Public ValidationWarnings As Integer
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+  commentId: P:Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Initialization.Phases.ReferencesLinkedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ReferencesLinkedEvent.TimeStamp
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Initialization/Phases/ReferenceLinkingPhase.cs
+    startLine: 274
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Initialization.Phases
+  commentId: N:Core.Initialization.Phases
+  href: Core.html
+  name: Core.Initialization.Phases
+  nameWithType: Core.Initialization.Phases
+  fullName: Core.Initialization.Phases
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp*
+  commentId: Overload:Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+  href: Core.Initialization.Phases.ReferencesLinkedEvent.html#Core_Initialization_Phases_ReferencesLinkedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ReferencesLinkedEvent.TimeStamp
+  fullName: Core.Initialization.Phases.ReferencesLinkedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

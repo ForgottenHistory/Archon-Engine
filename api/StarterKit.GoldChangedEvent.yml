@@ -1,0 +1,228 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.GoldChangedEvent
+  commentId: T:StarterKit.GoldChangedEvent
+  id: GoldChangedEvent
+  parent: StarterKit
+  children:
+  - StarterKit.GoldChangedEvent.CountryId
+  - StarterKit.GoldChangedEvent.NewValue
+  - StarterKit.GoldChangedEvent.OldValue
+  - StarterKit.GoldChangedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: GoldChangedEvent
+  nameWithType: GoldChangedEvent
+  fullName: StarterKit.GoldChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/StarterKit/State/StarterKitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GoldChangedEvent
+    path: Scripts/StarterKit/State/StarterKitEvents.cs
+    startLine: 13
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Events for UI updates and cross-system communication.
+
+    Uses EventBus pattern (zero-allocation structs).
+  example: []
+  syntax:
+    content: 'public struct GoldChangedEvent : IGameEvent'
+    content.vb: Public Structure GoldChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: StarterKit.GoldChangedEvent.CountryId
+  commentId: F:StarterKit.GoldChangedEvent.CountryId
+  id: CountryId
+  parent: StarterKit.GoldChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: GoldChangedEvent.CountryId
+  fullName: StarterKit.GoldChangedEvent.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/State/StarterKitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/StarterKit/State/StarterKitEvents.cs
+    startLine: 16
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The country whose gold changed.
+  example: []
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: StarterKit.GoldChangedEvent.OldValue
+  commentId: F:StarterKit.GoldChangedEvent.OldValue
+  id: OldValue
+  parent: StarterKit.GoldChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldValue
+  nameWithType: GoldChangedEvent.OldValue
+  fullName: StarterKit.GoldChangedEvent.OldValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/State/StarterKitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldValue
+    path: Scripts/StarterKit/State/StarterKitEvents.cs
+    startLine: 19
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Gold amount before the change.
+  example: []
+  syntax:
+    content: public int OldValue
+    return:
+      type: System.Int32
+    content.vb: Public OldValue As Integer
+- uid: StarterKit.GoldChangedEvent.NewValue
+  commentId: F:StarterKit.GoldChangedEvent.NewValue
+  id: NewValue
+  parent: StarterKit.GoldChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewValue
+  nameWithType: GoldChangedEvent.NewValue
+  fullName: StarterKit.GoldChangedEvent.NewValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/State/StarterKitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewValue
+    path: Scripts/StarterKit/State/StarterKitEvents.cs
+    startLine: 22
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Gold amount after the change.
+  example: []
+  syntax:
+    content: public int NewValue
+    return:
+      type: System.Int32
+    content.vb: Public NewValue As Integer
+- uid: StarterKit.GoldChangedEvent.TimeStamp
+  commentId: P:StarterKit.GoldChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: StarterKit.GoldChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: GoldChangedEvent.TimeStamp
+  fullName: StarterKit.GoldChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/State/StarterKitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/StarterKit/State/StarterKitEvents.cs
+    startLine: 25
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: StarterKit.GoldChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.GoldChangedEvent.TimeStamp*
+  commentId: Overload:StarterKit.GoldChangedEvent.TimeStamp
+  href: StarterKit.GoldChangedEvent.html#StarterKit_GoldChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: GoldChangedEvent.TimeStamp
+  fullName: StarterKit.GoldChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization
+  commentId: N:Core.Initialization
+  id: Core.Initialization
+  children:
+  - Core.Initialization.IInitializationPhase
+  - Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: Core.Initialization
+  nameWithType: Core.Initialization
+  fullName: Core.Initialization
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Initialization.InitializationContext
+  commentId: T:Core.Initialization.InitializationContext
+  parent: Core.Initialization
+  href: Core.Initialization.InitializationContext.html
+  name: InitializationContext
+  nameWithType: InitializationContext
+  fullName: Core.Initialization.InitializationContext
+- uid: Core.Initialization.IInitializationPhase
+  commentId: T:Core.Initialization.IInitializationPhase
+  parent: Core.Initialization
+  href: Core.Initialization.IInitializationPhase.html
+  name: IInitializationPhase
+  nameWithType: IInitializationPhase
+  fullName: Core.Initialization.IInitializationPhase
+- uid: Core.Initialization
+  commentId: N:Core.Initialization
+  href: Core.html
+  name: Core.Initialization
+  nameWithType: Core.Initialization
+  fullName: Core.Initialization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html

@@ -1,0 +1,42 @@
+### YamlMime:ManagedReference
+items:
+- uid: Utils
+  commentId: N:Utils
+  id: Utils
+  children:
+  - Utils.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Utils
+  nameWithType: Utils
+  fullName: Utils
+  type: Namespace
+  assemblies:
+  - Utils
+references:
+- uid: Utils.CircularBuffer`1
+  commentId: T:Utils.CircularBuffer`1
+  href: Utils.CircularBuffer-1.html
+  name: CircularBuffer<T>
+  nameWithType: CircularBuffer<T>
+  fullName: Utils.CircularBuffer<T>
+  nameWithType.vb: CircularBuffer(Of T)
+  fullName.vb: Utils.CircularBuffer(Of T)
+  name.vb: CircularBuffer(Of T)
+  spec.csharp:
+  - uid: Utils.CircularBuffer`1
+    name: CircularBuffer
+    href: Utils.CircularBuffer-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Utils.CircularBuffer`1
+    name: CircularBuffer
+    href: Utils.CircularBuffer-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

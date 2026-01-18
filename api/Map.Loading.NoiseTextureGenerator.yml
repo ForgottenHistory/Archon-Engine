@@ -1,0 +1,164 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.NoiseTextureGenerator
+  commentId: T:Map.Loading.NoiseTextureGenerator
+  id: NoiseTextureGenerator
+  parent: Map.Loading
+  children:
+  - Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture(System.Int32,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: NoiseTextureGenerator
+  nameWithType: NoiseTextureGenerator
+  fullName: Map.Loading.NoiseTextureGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/NoiseTextureGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoiseTextureGenerator
+    path: Scripts/Map/Loading/NoiseTextureGenerator.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Generates tileable noise textures for anti-tiling effects
+
+    Used by terrain detail mapping to break up texture repetition
+
+
+    Architecture:
+
+    - Output: Tileable noise texture (R8_UNorm grayscale)
+
+    - Method: Simple value noise with tiling support
+
+    - Purpose: Input for Inigo Quilez anti-tiling technique
+  example: []
+  syntax:
+    content: public static class NoiseTextureGenerator
+    content.vb: Public Module NoiseTextureGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture(System.Int32,System.Boolean)
+  commentId: M:Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture(System.Int32,System.Boolean)
+  id: GenerateNoiseTexture(System.Int32,System.Boolean)
+  parent: Map.Loading.NoiseTextureGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateNoiseTexture(int, bool)
+  nameWithType: NoiseTextureGenerator.GenerateNoiseTexture(int, bool)
+  fullName: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture(int, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/NoiseTextureGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateNoiseTexture
+    path: Scripts/Map/Loading/NoiseTextureGenerator.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Generate tileable noise texture for anti-tiling
+  example: []
+  syntax:
+    content: public static Texture2D GenerateNoiseTexture(int size = 256, bool logProgress = true)
+    parameters:
+    - id: size
+      type: System.Int32
+      description: Texture size (power of 2 recommended)
+    - id: logProgress
+      type: System.Boolean
+      description: Enable progress logging
+    return:
+      type: UnityEngine.Texture2D
+      description: Tileable noise texture (R8_UNorm format)
+    content.vb: Public Shared Function GenerateNoiseTexture(size As Integer = 256, logProgress As Boolean = True) As Texture2D
+  overload: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture*
+  nameWithType.vb: NoiseTextureGenerator.GenerateNoiseTexture(Integer, Boolean)
+  fullName.vb: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture(Integer, Boolean)
+  name.vb: GenerateNoiseTexture(Integer, Boolean)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture*
+  commentId: Overload:Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture
+  href: Map.Loading.NoiseTextureGenerator.html#Map_Loading_NoiseTextureGenerator_GenerateNoiseTexture_System_Int32_System_Boolean_
+  name: GenerateNoiseTexture
+  nameWithType: NoiseTextureGenerator.GenerateNoiseTexture
+  fullName: Map.Loading.NoiseTextureGenerator.GenerateNoiseTexture
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

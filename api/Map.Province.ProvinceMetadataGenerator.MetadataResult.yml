@@ -1,0 +1,298 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  commentId: T:Map.Province.ProvinceMetadataGenerator.MetadataResult
+  id: ProvinceMetadataGenerator.MetadataResult
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose
+  - Map.Province.ProvinceMetadataGenerator.MetadataResult.ErrorMessage
+  - Map.Province.ProvinceMetadataGenerator.MetadataResult.IsSuccess
+  - Map.Province.ProvinceMetadataGenerator.MetadataResult.ProvinceMetadata
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataGenerator.MetadataResult
+  nameWithType: ProvinceMetadataGenerator.MetadataResult
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MetadataResult
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Metadata generation result
+  example: []
+  syntax:
+    content: public struct ProvinceMetadataGenerator.MetadataResult
+    content.vb: Public Structure ProvinceMetadataGenerator.MetadataResult
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult.IsSuccess
+  commentId: F:Map.Province.ProvinceMetadataGenerator.MetadataResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ProvinceMetadataGenerator.MetadataResult.IsSuccess
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 73
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult.ProvinceMetadata
+  commentId: F:Map.Province.ProvinceMetadataGenerator.MetadataResult.ProvinceMetadata
+  id: ProvinceMetadata
+  parent: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadata
+  nameWithType: ProvinceMetadataGenerator.MetadataResult.ProvinceMetadata
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult.ProvinceMetadata
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMetadata
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 74
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public NativeHashMap<ushort, ProvinceMetadataGenerator.ProvinceMetadata> ProvinceMetadata
+    return:
+      type: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceMetadataGenerator.ProvinceMetadata}
+    content.vb: Public ProvinceMetadata As NativeHashMap(Of UShort, ProvinceMetadataGenerator.ProvinceMetadata)
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult.ErrorMessage
+  commentId: F:Map.Province.ProvinceMetadataGenerator.MetadataResult.ErrorMessage
+  id: ErrorMessage
+  parent: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: ProvinceMetadataGenerator.MetadataResult.ErrorMessage
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 75
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose
+  commentId: M:Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose
+  id: Dispose
+  parent: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMetadataGenerator.MetadataResult.Dispose()
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 77
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceMetadataGenerator.ProvinceMetadata}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceMetadataGenerator.ProvinceMetadata}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: NativeHashMap<ushort, ProvinceMetadataGenerator.ProvinceMetadata>
+  nameWithType: NativeHashMap<ushort, ProvinceMetadataGenerator.ProvinceMetadata>
+  fullName: Unity.Collections.NativeHashMap<ushort, Map.Province.ProvinceMetadataGenerator.ProvinceMetadata>
+  nameWithType.vb: NativeHashMap(Of UShort, ProvinceMetadataGenerator.ProvinceMetadata)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  name.vb: NativeHashMap(Of UShort, ProvinceMetadataGenerator.ProvinceMetadata)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose
+  href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html#Map_Province_ProvinceMetadataGenerator_MetadataResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceMetadataGenerator.MetadataResult.Dispose
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult.Dispose

@@ -1,0 +1,290 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.ResourceTransferredEvent
+  commentId: T:Core.Resources.ResourceTransferredEvent
+  id: ResourceTransferredEvent
+  parent: Core.Resources
+  children:
+  - Core.Resources.ResourceTransferredEvent.Amount
+  - Core.Resources.ResourceTransferredEvent.FromCountryId
+  - Core.Resources.ResourceTransferredEvent.ResourceId
+  - Core.Resources.ResourceTransferredEvent.TimeStamp
+  - Core.Resources.ResourceTransferredEvent.ToCountryId
+  langs:
+  - csharp
+  - vb
+  name: ResourceTransferredEvent
+  nameWithType: ResourceTransferredEvent
+  fullName: Core.Resources.ResourceTransferredEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceTransferredEvent
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: 'ENGINE: Event fired when resources are transferred between countries.'
+  example: []
+  syntax:
+    content: 'public struct ResourceTransferredEvent : IGameEvent'
+    content.vb: Public Structure ResourceTransferredEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Resources.ResourceTransferredEvent.FromCountryId
+  commentId: F:Core.Resources.ResourceTransferredEvent.FromCountryId
+  id: FromCountryId
+  parent: Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: FromCountryId
+  nameWithType: ResourceTransferredEvent.FromCountryId
+  fullName: Core.Resources.ResourceTransferredEvent.FromCountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromCountryId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The country that sent the resource
+  example: []
+  syntax:
+    content: public ushort FromCountryId
+    return:
+      type: System.UInt16
+    content.vb: Public FromCountryId As UShort
+- uid: Core.Resources.ResourceTransferredEvent.ToCountryId
+  commentId: F:Core.Resources.ResourceTransferredEvent.ToCountryId
+  id: ToCountryId
+  parent: Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: ToCountryId
+  nameWithType: ResourceTransferredEvent.ToCountryId
+  fullName: Core.Resources.ResourceTransferredEvent.ToCountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToCountryId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The country that received the resource
+  example: []
+  syntax:
+    content: public ushort ToCountryId
+    return:
+      type: System.UInt16
+    content.vb: Public ToCountryId As UShort
+- uid: Core.Resources.ResourceTransferredEvent.ResourceId
+  commentId: F:Core.Resources.ResourceTransferredEvent.ResourceId
+  id: ResourceId
+  parent: Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: ResourceId
+  nameWithType: ResourceTransferredEvent.ResourceId
+  fullName: Core.Resources.ResourceTransferredEvent.ResourceId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceId
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: The resource type transferred
+  example: []
+  syntax:
+    content: public ushort ResourceId
+    return:
+      type: System.UInt16
+    content.vb: Public ResourceId As UShort
+- uid: Core.Resources.ResourceTransferredEvent.Amount
+  commentId: F:Core.Resources.ResourceTransferredEvent.Amount
+  id: Amount
+  parent: Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: Amount
+  nameWithType: ResourceTransferredEvent.Amount
+  fullName: Core.Resources.ResourceTransferredEvent.Amount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Amount
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Amount transferred
+  example: []
+  syntax:
+    content: public FixedPoint64 Amount
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Amount As FixedPoint64
+- uid: Core.Resources.ResourceTransferredEvent.TimeStamp
+  commentId: P:Core.Resources.ResourceTransferredEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ResourceTransferredEvent.TimeStamp
+  fullName: Core.Resources.ResourceTransferredEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/ResourceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Resources/ResourceEvents.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Event timestamp (auto-set by EventBus)
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Resources.ResourceTransferredEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Resources.ResourceTransferredEvent.TimeStamp*
+  commentId: Overload:Core.Resources.ResourceTransferredEvent.TimeStamp
+  href: Core.Resources.ResourceTransferredEvent.html#Core_Resources_ResourceTransferredEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ResourceTransferredEvent.TimeStamp
+  fullName: Core.Resources.ResourceTransferredEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

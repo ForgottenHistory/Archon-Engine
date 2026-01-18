@@ -1,0 +1,1158 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.InitializationContext
+  commentId: T:Core.Initialization.InitializationContext
+  id: InitializationContext
+  parent: Core.Initialization
+  children:
+  - Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+  - Core.Initialization.InitializationContext.CountrySystem
+  - Core.Initialization.InitializationContext.CrossReferenceBuilder
+  - Core.Initialization.InitializationContext.DataValidator
+  - Core.Initialization.InitializationContext.EnableDetailedLogging
+  - Core.Initialization.InitializationContext.ErrorMessage
+  - Core.Initialization.InitializationContext.EventBus
+  - Core.Initialization.InitializationContext.GameState
+  - Core.Initialization.InitializationContext.HasError
+  - Core.Initialization.InitializationContext.OnProgress
+  - Core.Initialization.InitializationContext.ProvinceDefinitions
+  - Core.Initialization.InitializationContext.ProvinceInitialStates
+  - Core.Initialization.InitializationContext.ProvinceSystem
+  - Core.Initialization.InitializationContext.ReferenceResolver
+  - Core.Initialization.InitializationContext.Registries
+  - Core.Initialization.InitializationContext.ReportError(System.String)
+  - Core.Initialization.InitializationContext.ReportProgress(System.Single,System.String)
+  - Core.Initialization.InitializationContext.Settings
+  - Core.Initialization.InitializationContext.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: InitializationContext
+  nameWithType: InitializationContext
+  fullName: Core.Initialization.InitializationContext
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializationContext
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: >-
+    Shared state container passed between initialization phases
+
+    Contains all systems, registries, and loaded data
+  example: []
+  syntax:
+    content: public class InitializationContext
+    content.vb: Public Class InitializationContext
+  inheritance:
+  - System.Object
+- uid: Core.Initialization.InitializationContext.Settings
+  commentId: P:Core.Initialization.InitializationContext.Settings
+  id: Settings
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: Settings
+  nameWithType: InitializationContext.Settings
+  fullName: Core.Initialization.InitializationContext.Settings
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Settings
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public GameSettings Settings { get; set; }
+    parameters: []
+    return:
+      type: Core.GameSettings
+    content.vb: Public Property Settings As GameSettings
+  overload: Core.Initialization.InitializationContext.Settings*
+- uid: Core.Initialization.InitializationContext.EnableDetailedLogging
+  commentId: P:Core.Initialization.InitializationContext.EnableDetailedLogging
+  id: EnableDetailedLogging
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: EnableDetailedLogging
+  nameWithType: InitializationContext.EnableDetailedLogging
+  fullName: Core.Initialization.InitializationContext.EnableDetailedLogging
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableDetailedLogging
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public bool EnableDetailedLogging { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property EnableDetailedLogging As Boolean
+  overload: Core.Initialization.InitializationContext.EnableDetailedLogging*
+- uid: Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+  commentId: P:Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+  id: AdditionalLoaderAssemblies
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: AdditionalLoaderAssemblies
+  nameWithType: InitializationContext.AdditionalLoaderAssemblies
+  fullName: Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdditionalLoaderAssemblies
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: Additional assemblies to scan for loaders (GAME layer uses this).
+  example: []
+  syntax:
+    content: public Assembly[] AdditionalLoaderAssemblies { get; set; }
+    parameters: []
+    return:
+      type: System.Reflection.Assembly[]
+    content.vb: Public Property AdditionalLoaderAssemblies As Assembly()
+  overload: Core.Initialization.InitializationContext.AdditionalLoaderAssemblies*
+- uid: Core.Initialization.InitializationContext.GameState
+  commentId: P:Core.Initialization.InitializationContext.GameState
+  id: GameState
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: GameState
+  nameWithType: InitializationContext.GameState
+  fullName: Core.Initialization.InitializationContext.GameState
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameState
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public GameState GameState { get; set; }
+    parameters: []
+    return:
+      type: Core.GameState
+    content.vb: Public Property GameState As GameState
+  overload: Core.Initialization.InitializationContext.GameState*
+- uid: Core.Initialization.InitializationContext.ProvinceSystem
+  commentId: P:Core.Initialization.InitializationContext.ProvinceSystem
+  id: ProvinceSystem
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSystem
+  nameWithType: InitializationContext.ProvinceSystem
+  fullName: Core.Initialization.InitializationContext.ProvinceSystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSystem
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public ProvinceSystem ProvinceSystem { get; set; }
+    parameters: []
+    return:
+      type: Core.Systems.ProvinceSystem
+    content.vb: Public Property ProvinceSystem As ProvinceSystem
+  overload: Core.Initialization.InitializationContext.ProvinceSystem*
+- uid: Core.Initialization.InitializationContext.CountrySystem
+  commentId: P:Core.Initialization.InitializationContext.CountrySystem
+  id: CountrySystem
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: CountrySystem
+  nameWithType: InitializationContext.CountrySystem
+  fullName: Core.Initialization.InitializationContext.CountrySystem
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySystem
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public CountrySystem CountrySystem { get; set; }
+    parameters: []
+    return:
+      type: Core.Systems.CountrySystem
+    content.vb: Public Property CountrySystem As CountrySystem
+  overload: Core.Initialization.InitializationContext.CountrySystem*
+- uid: Core.Initialization.InitializationContext.TimeManager
+  commentId: P:Core.Initialization.InitializationContext.TimeManager
+  id: TimeManager
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: TimeManager
+  nameWithType: InitializationContext.TimeManager
+  fullName: Core.Initialization.InitializationContext.TimeManager
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeManager
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public TimeManager TimeManager { get; set; }
+    parameters: []
+    return:
+      type: Core.Systems.TimeManager
+    content.vb: Public Property TimeManager As TimeManager
+  overload: Core.Initialization.InitializationContext.TimeManager*
+- uid: Core.Initialization.InitializationContext.EventBus
+  commentId: P:Core.Initialization.InitializationContext.EventBus
+  id: EventBus
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: EventBus
+  nameWithType: InitializationContext.EventBus
+  fullName: Core.Initialization.InitializationContext.EventBus
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EventBus
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public EventBus EventBus { get; set; }
+    parameters: []
+    return:
+      type: Core.EventBus
+    content.vb: Public Property EventBus As EventBus
+  overload: Core.Initialization.InitializationContext.EventBus*
+- uid: Core.Initialization.InitializationContext.Registries
+  commentId: P:Core.Initialization.InitializationContext.Registries
+  id: Registries
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: Registries
+  nameWithType: InitializationContext.Registries
+  fullName: Core.Initialization.InitializationContext.Registries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Registries
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public GameRegistries Registries { get; set; }
+    parameters: []
+    return:
+      type: Core.Registries.GameRegistries
+    content.vb: Public Property Registries As GameRegistries
+  overload: Core.Initialization.InitializationContext.Registries*
+- uid: Core.Initialization.InitializationContext.ProvinceInitialStates
+  commentId: P:Core.Initialization.InitializationContext.ProvinceInitialStates
+  id: ProvinceInitialStates
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceInitialStates
+  nameWithType: InitializationContext.ProvinceInitialStates
+  fullName: Core.Initialization.InitializationContext.ProvinceInitialStates
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceInitialStates
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public ProvinceInitialStateLoadResult ProvinceInitialStates { get; set; }
+    parameters: []
+    return:
+      type: Core.Data.ProvinceInitialStateLoadResult
+    content.vb: Public Property ProvinceInitialStates As ProvinceInitialStateLoadResult
+  overload: Core.Initialization.InitializationContext.ProvinceInitialStates*
+- uid: Core.Initialization.InitializationContext.ProvinceDefinitions
+  commentId: P:Core.Initialization.InitializationContext.ProvinceDefinitions
+  id: ProvinceDefinitions
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDefinitions
+  nameWithType: InitializationContext.ProvinceDefinitions
+  fullName: Core.Initialization.InitializationContext.ProvinceDefinitions
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDefinitions
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public List<DefinitionLoader.DefinitionEntry> ProvinceDefinitions { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+    content.vb: Public Property ProvinceDefinitions As List(Of DefinitionLoader.DefinitionEntry)
+  overload: Core.Initialization.InitializationContext.ProvinceDefinitions*
+- uid: Core.Initialization.InitializationContext.ReferenceResolver
+  commentId: P:Core.Initialization.InitializationContext.ReferenceResolver
+  id: ReferenceResolver
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ReferenceResolver
+  nameWithType: InitializationContext.ReferenceResolver
+  fullName: Core.Initialization.InitializationContext.ReferenceResolver
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReferenceResolver
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public ReferenceResolver ReferenceResolver { get; set; }
+    parameters: []
+    return:
+      type: Core.Linking.ReferenceResolver
+    content.vb: Public Property ReferenceResolver As ReferenceResolver
+  overload: Core.Initialization.InitializationContext.ReferenceResolver*
+- uid: Core.Initialization.InitializationContext.CrossReferenceBuilder
+  commentId: P:Core.Initialization.InitializationContext.CrossReferenceBuilder
+  id: CrossReferenceBuilder
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: CrossReferenceBuilder
+  nameWithType: InitializationContext.CrossReferenceBuilder
+  fullName: Core.Initialization.InitializationContext.CrossReferenceBuilder
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CrossReferenceBuilder
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public CrossReferenceBuilder CrossReferenceBuilder { get; set; }
+    parameters: []
+    return:
+      type: Core.Linking.CrossReferenceBuilder
+    content.vb: Public Property CrossReferenceBuilder As CrossReferenceBuilder
+  overload: Core.Initialization.InitializationContext.CrossReferenceBuilder*
+- uid: Core.Initialization.InitializationContext.DataValidator
+  commentId: P:Core.Initialization.InitializationContext.DataValidator
+  id: DataValidator
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: DataValidator
+  nameWithType: InitializationContext.DataValidator
+  fullName: Core.Initialization.InitializationContext.DataValidator
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DataValidator
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public DataValidator DataValidator { get; set; }
+    parameters: []
+    return:
+      type: Core.Linking.DataValidator
+    content.vb: Public Property DataValidator As DataValidator
+  overload: Core.Initialization.InitializationContext.DataValidator*
+- uid: Core.Initialization.InitializationContext.OnProgress
+  commentId: P:Core.Initialization.InitializationContext.OnProgress
+  id: OnProgress
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: OnProgress
+  nameWithType: InitializationContext.OnProgress
+  fullName: Core.Initialization.InitializationContext.OnProgress
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProgress
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public Action<float, string> OnProgress { get; set; }
+    parameters: []
+    return:
+      type: System.Action{System.Single,System.String}
+    content.vb: Public Property OnProgress As Action(Of Single, String)
+  overload: Core.Initialization.InitializationContext.OnProgress*
+- uid: Core.Initialization.InitializationContext.HasError
+  commentId: P:Core.Initialization.InitializationContext.HasError
+  id: HasError
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: HasError
+  nameWithType: InitializationContext.HasError
+  fullName: Core.Initialization.InitializationContext.HasError
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasError
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public bool HasError { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property HasError As Boolean
+  overload: Core.Initialization.InitializationContext.HasError*
+- uid: Core.Initialization.InitializationContext.ErrorMessage
+  commentId: P:Core.Initialization.InitializationContext.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: InitializationContext.ErrorMessage
+  fullName: Core.Initialization.InitializationContext.ErrorMessage
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  syntax:
+    content: public string ErrorMessage { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property ErrorMessage As String
+  overload: Core.Initialization.InitializationContext.ErrorMessage*
+- uid: Core.Initialization.InitializationContext.ReportProgress(System.Single,System.String)
+  commentId: M:Core.Initialization.InitializationContext.ReportProgress(System.Single,System.String)
+  id: ReportProgress(System.Single,System.String)
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ReportProgress(float, string)
+  nameWithType: InitializationContext.ReportProgress(float, string)
+  fullName: Core.Initialization.InitializationContext.ReportProgress(float, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReportProgress
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: Report progress update (percentage 0-100 and status message)
+  example: []
+  syntax:
+    content: public void ReportProgress(float percentage, string status)
+    parameters:
+    - id: percentage
+      type: System.Single
+    - id: status
+      type: System.String
+    content.vb: Public Sub ReportProgress(percentage As Single, status As String)
+  overload: Core.Initialization.InitializationContext.ReportProgress*
+  nameWithType.vb: InitializationContext.ReportProgress(Single, String)
+  fullName.vb: Core.Initialization.InitializationContext.ReportProgress(Single, String)
+  name.vb: ReportProgress(Single, String)
+- uid: Core.Initialization.InitializationContext.ReportError(System.String)
+  commentId: M:Core.Initialization.InitializationContext.ReportError(System.String)
+  id: ReportError(System.String)
+  parent: Core.Initialization.InitializationContext
+  langs:
+  - csharp
+  - vb
+  name: ReportError(string)
+  nameWithType: InitializationContext.ReportError(string)
+  fullName: Core.Initialization.InitializationContext.ReportError(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Initialization/InitializationContext.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReportError
+    path: Scripts/Core/Initialization/InitializationContext.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Initialization
+  summary: Report error and halt initialization
+  example: []
+  syntax:
+    content: public void ReportError(string error)
+    parameters:
+    - id: error
+      type: System.String
+    content.vb: Public Sub ReportError([error] As String)
+  overload: Core.Initialization.InitializationContext.ReportError*
+  nameWithType.vb: InitializationContext.ReportError(String)
+  fullName.vb: Core.Initialization.InitializationContext.ReportError(String)
+  name.vb: ReportError(String)
+references:
+- uid: Core.Initialization
+  commentId: N:Core.Initialization
+  href: Core.html
+  name: Core.Initialization
+  nameWithType: Core.Initialization
+  fullName: Core.Initialization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Initialization.InitializationContext.Settings*
+  commentId: Overload:Core.Initialization.InitializationContext.Settings
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_Settings
+  name: Settings
+  nameWithType: InitializationContext.Settings
+  fullName: Core.Initialization.InitializationContext.Settings
+- uid: Core.GameSettings
+  commentId: T:Core.GameSettings
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings
+  nameWithType: GameSettings
+  fullName: Core.GameSettings
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Initialization.InitializationContext.EnableDetailedLogging*
+  commentId: Overload:Core.Initialization.InitializationContext.EnableDetailedLogging
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_EnableDetailedLogging
+  name: EnableDetailedLogging
+  nameWithType: InitializationContext.EnableDetailedLogging
+  fullName: Core.Initialization.InitializationContext.EnableDetailedLogging
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Initialization.InitializationContext.AdditionalLoaderAssemblies*
+  commentId: Overload:Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_AdditionalLoaderAssemblies
+  name: AdditionalLoaderAssemblies
+  nameWithType: InitializationContext.AdditionalLoaderAssemblies
+  fullName: Core.Initialization.InitializationContext.AdditionalLoaderAssemblies
+- uid: System.Reflection.Assembly[]
+  isExternal: true
+  name: Assembly[]
+  nameWithType: Assembly[]
+  fullName: System.Reflection.Assembly[]
+  nameWithType.vb: Assembly()
+  fullName.vb: System.Reflection.Assembly()
+  name.vb: Assembly()
+  spec.csharp:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Initialization.InitializationContext.GameState*
+  commentId: Overload:Core.Initialization.InitializationContext.GameState
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_GameState
+  name: GameState
+  nameWithType: InitializationContext.GameState
+  fullName: Core.Initialization.InitializationContext.GameState
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.Initialization.InitializationContext.ProvinceSystem*
+  commentId: Overload:Core.Initialization.InitializationContext.ProvinceSystem
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ProvinceSystem
+  name: ProvinceSystem
+  nameWithType: InitializationContext.ProvinceSystem
+  fullName: Core.Initialization.InitializationContext.ProvinceSystem
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Initialization.InitializationContext.CountrySystem*
+  commentId: Overload:Core.Initialization.InitializationContext.CountrySystem
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_CountrySystem
+  name: CountrySystem
+  nameWithType: InitializationContext.CountrySystem
+  fullName: Core.Initialization.InitializationContext.CountrySystem
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.Initialization.InitializationContext.TimeManager*
+  commentId: Overload:Core.Initialization.InitializationContext.TimeManager
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_TimeManager
+  name: TimeManager
+  nameWithType: InitializationContext.TimeManager
+  fullName: Core.Initialization.InitializationContext.TimeManager
+- uid: Core.Systems.TimeManager
+  commentId: T:Core.Systems.TimeManager
+  parent: Core.Systems
+  href: Core.Systems.TimeManager.html
+  name: TimeManager
+  nameWithType: TimeManager
+  fullName: Core.Systems.TimeManager
+- uid: Core.Initialization.InitializationContext.EventBus*
+  commentId: Overload:Core.Initialization.InitializationContext.EventBus
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_EventBus
+  name: EventBus
+  nameWithType: InitializationContext.EventBus
+  fullName: Core.Initialization.InitializationContext.EventBus
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core.Initialization.InitializationContext.Registries*
+  commentId: Overload:Core.Initialization.InitializationContext.Registries
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_Registries
+  name: Registries
+  nameWithType: InitializationContext.Registries
+  fullName: Core.Initialization.InitializationContext.Registries
+- uid: Core.Registries.GameRegistries
+  commentId: T:Core.Registries.GameRegistries
+  parent: Core.Registries
+  href: Core.Registries.GameRegistries.html
+  name: GameRegistries
+  nameWithType: GameRegistries
+  fullName: Core.Registries.GameRegistries
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: Core.Initialization.InitializationContext.ProvinceInitialStates*
+  commentId: Overload:Core.Initialization.InitializationContext.ProvinceInitialStates
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ProvinceInitialStates
+  name: ProvinceInitialStates
+  nameWithType: InitializationContext.ProvinceInitialStates
+  fullName: Core.Initialization.InitializationContext.ProvinceInitialStates
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialStateLoadResult.html
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Initialization.InitializationContext.ProvinceDefinitions*
+  commentId: Overload:Core.Initialization.InitializationContext.ProvinceDefinitions
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ProvinceDefinitions
+  name: ProvinceDefinitions
+  nameWithType: InitializationContext.ProvinceDefinitions
+  fullName: Core.Initialization.InitializationContext.ProvinceDefinitions
+- uid: System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+  commentId: T:System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Loaders.DefinitionLoader.html
+  name: List<DefinitionLoader.DefinitionEntry>
+  nameWithType: List<DefinitionLoader.DefinitionEntry>
+  fullName: System.Collections.Generic.List<Core.Loaders.DefinitionLoader.DefinitionEntry>
+  nameWithType.vb: List(Of DefinitionLoader.DefinitionEntry)
+  fullName.vb: System.Collections.Generic.List(Of Core.Loaders.DefinitionLoader.DefinitionEntry)
+  name.vb: List(Of DefinitionLoader.DefinitionEntry)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Initialization.InitializationContext.ReferenceResolver*
+  commentId: Overload:Core.Initialization.InitializationContext.ReferenceResolver
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ReferenceResolver
+  name: ReferenceResolver
+  nameWithType: InitializationContext.ReferenceResolver
+  fullName: Core.Initialization.InitializationContext.ReferenceResolver
+- uid: Core.Linking.ReferenceResolver
+  commentId: T:Core.Linking.ReferenceResolver
+  parent: Core.Linking
+  href: Core.Linking.ReferenceResolver.html
+  name: ReferenceResolver
+  nameWithType: ReferenceResolver
+  fullName: Core.Linking.ReferenceResolver
+- uid: Core.Linking
+  commentId: N:Core.Linking
+  href: Core.html
+  name: Core.Linking
+  nameWithType: Core.Linking
+  fullName: Core.Linking
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Linking
+    name: Linking
+    href: Core.Linking.html
+- uid: Core.Initialization.InitializationContext.CrossReferenceBuilder*
+  commentId: Overload:Core.Initialization.InitializationContext.CrossReferenceBuilder
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_CrossReferenceBuilder
+  name: CrossReferenceBuilder
+  nameWithType: InitializationContext.CrossReferenceBuilder
+  fullName: Core.Initialization.InitializationContext.CrossReferenceBuilder
+- uid: Core.Linking.CrossReferenceBuilder
+  commentId: T:Core.Linking.CrossReferenceBuilder
+  parent: Core.Linking
+  href: Core.Linking.CrossReferenceBuilder.html
+  name: CrossReferenceBuilder
+  nameWithType: CrossReferenceBuilder
+  fullName: Core.Linking.CrossReferenceBuilder
+- uid: Core.Initialization.InitializationContext.DataValidator*
+  commentId: Overload:Core.Initialization.InitializationContext.DataValidator
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_DataValidator
+  name: DataValidator
+  nameWithType: InitializationContext.DataValidator
+  fullName: Core.Initialization.InitializationContext.DataValidator
+- uid: Core.Linking.DataValidator
+  commentId: T:Core.Linking.DataValidator
+  parent: Core.Linking
+  href: Core.Linking.DataValidator.html
+  name: DataValidator
+  nameWithType: DataValidator
+  fullName: Core.Linking.DataValidator
+- uid: Core.Initialization.InitializationContext.OnProgress*
+  commentId: Overload:Core.Initialization.InitializationContext.OnProgress
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_OnProgress
+  name: OnProgress
+  nameWithType: InitializationContext.OnProgress
+  fullName: Core.Initialization.InitializationContext.OnProgress
+- uid: System.Action{System.Single,System.String}
+  commentId: T:System.Action{System.Single,System.String}
+  parent: System
+  definition: System.Action`2
+  name: Action<float, string>
+  nameWithType: Action<float, string>
+  fullName: System.Action<float, string>
+  nameWithType.vb: Action(Of Single, String)
+  fullName.vb: System.Action(Of Single, String)
+  name.vb: Action(Of Single, String)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Core.Initialization.InitializationContext.HasError*
+  commentId: Overload:Core.Initialization.InitializationContext.HasError
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_HasError
+  name: HasError
+  nameWithType: InitializationContext.HasError
+  fullName: Core.Initialization.InitializationContext.HasError
+- uid: Core.Initialization.InitializationContext.ErrorMessage*
+  commentId: Overload:Core.Initialization.InitializationContext.ErrorMessage
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ErrorMessage
+  name: ErrorMessage
+  nameWithType: InitializationContext.ErrorMessage
+  fullName: Core.Initialization.InitializationContext.ErrorMessage
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Initialization.InitializationContext.ReportProgress*
+  commentId: Overload:Core.Initialization.InitializationContext.ReportProgress
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ReportProgress_System_Single_System_String_
+  name: ReportProgress
+  nameWithType: InitializationContext.ReportProgress
+  fullName: Core.Initialization.InitializationContext.ReportProgress
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Initialization.InitializationContext.ReportError*
+  commentId: Overload:Core.Initialization.InitializationContext.ReportError
+  href: Core.Initialization.InitializationContext.html#Core_Initialization_InitializationContext_ReportError_System_String_
+  name: ReportError
+  nameWithType: InitializationContext.ReportError
+  fullName: Core.Initialization.InitializationContext.ReportError

@@ -1,0 +1,1098 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyTreatyManager
+  commentId: T:Core.Diplomacy.DiplomacyTreatyManager
+  id: DiplomacyTreatyManager
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyTreatyManager.AreAllied(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.FormAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GetAllies(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  - Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyTreatyManager
+  nameWithType: DiplomacyTreatyManager
+  fullName: Core.Diplomacy.DiplomacyTreatyManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyTreatyManager
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Manages treaties between countries
+
+
+    RESPONSIBILITY:
+
+    - Treaty queries (AreAllied, HasNonAggressionPact, IsGuaranteeing, HasMilitaryAccess)
+
+    - Treaty state changes (Form/Break Alliance, NAP, Guarantee, Military Access)
+
+    - Treaty relationship queries (GetAllies, GetAlliesRecursive, GetGuaranteeing, GetGuaranteedBy)
+
+
+    PATTERN: Stateless manager (receives data references from DiplomacySystem)
+
+    - Does NOT own NativeCollections (passed as parameters)
+
+    - Uses RelationData.treatyFlags bitfield for treaty storage
+
+    - Directional treaties (Guarantee, Military Access) use separate bits for each direction
+
+
+    PERFORMANCE:
+
+    - Treaty checks: O(1) dictionary lookup + bitfield check
+
+    - GetAllies: O(n) where n = total relationships
+
+    - GetAlliesRecursive: O(n) BFS traversal
+  example: []
+  syntax:
+    content: public static class DiplomacyTreatyManager
+    content.vb: Public Module DiplomacyTreatyManager
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacyTreatyManager.AreAllied(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.AreAllied(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: AreAllied(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: AreAllied(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.AreAllied(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.AreAllied(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AreAllied
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Check if two countries have an alliance
+  example: []
+  syntax:
+    content: public static bool AreAllied(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function AreAllied(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As Boolean
+  overload: Core.Diplomacy.DiplomacyTreatyManager.AreAllied*
+  nameWithType.vb: DiplomacyTreatyManager.AreAllied(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.AreAllied(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: AreAllied(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: HasNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: HasNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.HasNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasNonAggressionPact
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Check if two countries have a non-aggression pact
+  example: []
+  syntax:
+    content: public static bool HasNonAggressionPact(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasNonAggressionPact(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As Boolean
+  overload: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact*
+  nameWithType.vb: DiplomacyTreatyManager.HasNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: HasNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: IsGuaranteeing(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: IsGuaranteeing(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.IsGuaranteeing(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsGuaranteeing
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Check if guarantor country guarantees guaranteed country's independence
+
+    Directional check
+  example: []
+  syntax:
+    content: public static bool IsGuaranteeing(ushort guarantor, ushort guaranteed, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: guarantor
+      type: System.UInt16
+    - id: guaranteed
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsGuaranteeing(guarantor As UShort, guaranteed As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As Boolean
+  overload: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing*
+  nameWithType.vb: DiplomacyTreatyManager.IsGuaranteeing(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: IsGuaranteeing(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: HasMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: HasMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.HasMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasMilitaryAccess
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Check if granter grants military access to recipient
+
+    Directional check
+  example: []
+  syntax:
+    content: public static bool HasMilitaryAccess(ushort granter, ushort recipient, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: granter
+      type: System.UInt16
+    - id: recipient
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasMilitaryAccess(granter As UShort, recipient As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As Boolean
+  overload: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess*
+  nameWithType.vb: DiplomacyTreatyManager.HasMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: HasMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetAllies(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GetAllies(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GetAllies(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GetAllies(ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GetAllies(ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetAllies(ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllies
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all allies of a country
+
+    Returns list of country IDs that have alliance with given country
+  example: []
+  syntax:
+    content: public static List<ushort> GetAllies(ushort countryID, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetAllies(countryID As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GetAllies*
+  nameWithType.vb: DiplomacyTreatyManager.GetAllies(UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GetAllies(UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GetAllies(UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GetAlliesRecursive(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GetAlliesRecursive(ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GetAlliesRecursive(ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive(ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAlliesRecursive
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all allies recursively (alliance chain A→B→C)
+
+    Uses BFS traversal to find all connected allies
+
+    CRITICAL for war declaration validation and auto-join
+  example: []
+  syntax:
+    content: public static HashSet<ushort> GetAlliesRecursive(ushort countryID, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    content.vb: Public Shared Function GetAlliesRecursive(countryID As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As HashSet(Of UShort)
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive*
+  nameWithType.vb: DiplomacyTreatyManager.GetAlliesRecursive(UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive(UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GetAlliesRecursive(UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GetGuaranteeing(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GetGuaranteeing(ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GetGuaranteeing(ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing(ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGuaranteeing
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 158
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get all countries that this country guarantees
+  example: []
+  syntax:
+    content: public static List<ushort> GetGuaranteeing(ushort guarantorID, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: guarantorID
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetGuaranteeing(guarantorID As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing*
+  nameWithType.vb: DiplomacyTreatyManager.GetGuaranteeing(UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing(UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GetGuaranteeing(UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GetGuaranteedBy(System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GetGuaranteedBy(ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GetGuaranteedBy(ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy(ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGuaranteedBy
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get all countries that guarantee this country
+  example: []
+  syntax:
+    content: public static List<ushort> GetGuaranteedBy(ushort guaranteedID, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: guaranteedID
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetGuaranteedBy(guaranteedID As UShort, relations As NativeParallelHashMap(Of ULong, RelationData)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy*
+  nameWithType.vb: DiplomacyTreatyManager.GetGuaranteedBy(UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy(UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GetGuaranteedBy(UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.FormAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: FormAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: FormAlliance(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.FormAlliance(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormAlliance
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 227
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Form alliance between two countries
+
+    Called by FormAllianceCommand after validation
+  example: []
+  syntax:
+    content: public static void FormAlliance(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub FormAlliance(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance*
+  nameWithType.vb: DiplomacyTreatyManager.FormAlliance(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: FormAlliance(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: BreakAlliance(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: BreakAlliance(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.BreakAlliance(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BreakAlliance
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 252
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Break alliance between two countries
+  example: []
+  syntax:
+    content: public static void BreakAlliance(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub BreakAlliance(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance*
+  nameWithType.vb: DiplomacyTreatyManager.BreakAlliance(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: BreakAlliance(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: FormNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: FormNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.FormNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormNonAggressionPact
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 271
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Form non-aggression pact between two countries
+  example: []
+  syntax:
+    content: public static void FormNonAggressionPact(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub FormNonAggressionPact(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact*
+  nameWithType.vb: DiplomacyTreatyManager.FormNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: FormNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: BreakNonAggressionPact(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: BreakNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.BreakNonAggressionPact(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BreakNonAggressionPact
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 294
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Break non-aggression pact between two countries
+  example: []
+  syntax:
+    content: public static void BreakNonAggressionPact(ushort country1, ushort country2, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub BreakNonAggressionPact(country1 As UShort, country2 As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact*
+  nameWithType.vb: DiplomacyTreatyManager.BreakNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: BreakNonAggressionPact(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GuaranteeIndependence(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GuaranteeIndependence(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GuaranteeIndependence(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GuaranteeIndependence
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Guarantor guarantees guaranteed country's independence (directional)
+  example: []
+  syntax:
+    content: public static void GuaranteeIndependence(ushort guarantor, ushort guaranteed, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: guarantor
+      type: System.UInt16
+    - id: guaranteed
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub GuaranteeIndependence(guarantor As UShort, guaranteed As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence*
+  nameWithType.vb: DiplomacyTreatyManager.GuaranteeIndependence(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GuaranteeIndependence(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: RevokeGuarantee(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: RevokeGuarantee(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.RevokeGuarantee(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RevokeGuarantee
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 343
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Revoke guarantee of independence
+  example: []
+  syntax:
+    content: public static void RevokeGuarantee(ushort guarantor, ushort guaranteed, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: guarantor
+      type: System.UInt16
+    - id: guaranteed
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub RevokeGuarantee(guarantor As UShort, guaranteed As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee*
+  nameWithType.vb: DiplomacyTreatyManager.RevokeGuarantee(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: RevokeGuarantee(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: GrantMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: GrantMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.GrantMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GrantMilitaryAccess
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 369
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Grant military access (directional)
+  example: []
+  syntax:
+    content: public static void GrantMilitaryAccess(ushort granter, ushort recipient, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: granter
+      type: System.UInt16
+    - id: recipient
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub GrantMilitaryAccess(granter As UShort, recipient As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess*
+  nameWithType.vb: DiplomacyTreatyManager.GrantMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: GrantMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+- uid: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  commentId: M:Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  id: RevokeMilitaryAccess(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData})
+  parent: Core.Diplomacy.DiplomacyTreatyManager
+  langs:
+  - csharp
+  - vb
+  name: RevokeMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  nameWithType: DiplomacyTreatyManager.RevokeMilitaryAccess(ushort, ushort, NativeParallelHashMap<ulong, RelationData>)
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess(ushort, ushort, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RevokeMilitaryAccess
+    path: Scripts/Core/Diplomacy/DiplomacyTreatyManager.cs
+    startLine: 399
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Revoke military access
+  example: []
+  syntax:
+    content: public static void RevokeMilitaryAccess(ushort granter, ushort recipient, NativeParallelHashMap<ulong, RelationData> relations)
+    parameters:
+    - id: granter
+      type: System.UInt16
+    - id: recipient
+      type: System.UInt16
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    content.vb: Public Shared Sub RevokeMilitaryAccess(granter As UShort, recipient As UShort, relations As NativeParallelHashMap(Of ULong, RelationData))
+  overload: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess*
+  nameWithType.vb: DiplomacyTreatyManager.RevokeMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+  fullName.vb: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess(UShort, UShort, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData))
+  name.vb: RevokeMilitaryAccess(UShort, UShort, NativeParallelHashMap(Of ULong, RelationData))
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacyTreatyManager.AreAllied*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.AreAllied
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_AreAllied_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: AreAllied
+  nameWithType: DiplomacyTreatyManager.AreAllied
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.AreAllied
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  href: Core.Diplomacy.RelationData.html
+  name: NativeParallelHashMap<ulong, RelationData>
+  nameWithType: NativeParallelHashMap<ulong, RelationData>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, RelationData)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData)
+  name.vb: NativeParallelHashMap(Of ULong, RelationData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Unity.Collections.NativeParallelHashMap`2
+  commentId: T:Unity.Collections.NativeParallelHashMap`2
+  isExternal: true
+  name: NativeParallelHashMap<TKey, TValue>
+  nameWithType: NativeParallelHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of TKey, TValue)
+  name.vb: NativeParallelHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_HasNonAggressionPact_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: HasNonAggressionPact
+  nameWithType: DiplomacyTreatyManager.HasNonAggressionPact
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.HasNonAggressionPact
+- uid: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_IsGuaranteeing_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: IsGuaranteeing
+  nameWithType: DiplomacyTreatyManager.IsGuaranteeing
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.IsGuaranteeing
+- uid: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_HasMilitaryAccess_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: HasMilitaryAccess
+  nameWithType: DiplomacyTreatyManager.HasMilitaryAccess
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.HasMilitaryAccess
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetAllies*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GetAllies
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GetAllies_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GetAllies
+  nameWithType: DiplomacyTreatyManager.GetAllies
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetAllies
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GetAlliesRecursive_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GetAlliesRecursive
+  nameWithType: DiplomacyTreatyManager.GetAlliesRecursive
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetAlliesRecursive
+- uid: System.Collections.Generic.HashSet{System.UInt16}
+  commentId: T:System.Collections.Generic.HashSet{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<ushort>
+  nameWithType: HashSet<ushort>
+  fullName: System.Collections.Generic.HashSet<ushort>
+  nameWithType.vb: HashSet(Of UShort)
+  fullName.vb: System.Collections.Generic.HashSet(Of UShort)
+  name.vb: HashSet(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GetGuaranteeing_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GetGuaranteeing
+  nameWithType: DiplomacyTreatyManager.GetGuaranteeing
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteeing
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GetGuaranteedBy_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GetGuaranteedBy
+  nameWithType: DiplomacyTreatyManager.GetGuaranteedBy
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GetGuaranteedBy
+- uid: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.FormAlliance
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_FormAlliance_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: FormAlliance
+  nameWithType: DiplomacyTreatyManager.FormAlliance
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.FormAlliance
+- uid: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_BreakAlliance_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: BreakAlliance
+  nameWithType: DiplomacyTreatyManager.BreakAlliance
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.BreakAlliance
+- uid: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_FormNonAggressionPact_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: FormNonAggressionPact
+  nameWithType: DiplomacyTreatyManager.FormNonAggressionPact
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.FormNonAggressionPact
+- uid: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_BreakNonAggressionPact_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: BreakNonAggressionPact
+  nameWithType: DiplomacyTreatyManager.BreakNonAggressionPact
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.BreakNonAggressionPact
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GuaranteeIndependence_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GuaranteeIndependence
+  nameWithType: DiplomacyTreatyManager.GuaranteeIndependence
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GuaranteeIndependence
+- uid: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_RevokeGuarantee_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: RevokeGuarantee
+  nameWithType: DiplomacyTreatyManager.RevokeGuarantee
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.RevokeGuarantee
+- uid: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_GrantMilitaryAccess_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: GrantMilitaryAccess
+  nameWithType: DiplomacyTreatyManager.GrantMilitaryAccess
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.GrantMilitaryAccess
+- uid: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess*
+  commentId: Overload:Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess
+  href: Core.Diplomacy.DiplomacyTreatyManager.html#Core_Diplomacy_DiplomacyTreatyManager_RevokeMilitaryAccess_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__
+  name: RevokeMilitaryAccess
+  nameWithType: DiplomacyTreatyManager.RevokeMilitaryAccess
+  fullName: Core.Diplomacy.DiplomacyTreatyManager.RevokeMilitaryAccess

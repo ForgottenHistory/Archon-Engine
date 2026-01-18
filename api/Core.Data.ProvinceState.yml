@@ -1,0 +1,797 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  id: ProvinceState
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceState.CreateDefault(System.UInt16,System.UInt16)
+  - Core.Data.ProvinceState.CreateOcean(System.UInt16)
+  - Core.Data.ProvinceState.CreateOwned(System.UInt16,System.UInt16,System.UInt16)
+  - Core.Data.ProvinceState.Equals(System.Object)
+  - Core.Data.ProvinceState.FromBytes(System.Byte[])
+  - Core.Data.ProvinceState.GetHashCode
+  - Core.Data.ProvinceState.IsOccupied
+  - Core.Data.ProvinceState.IsOcean
+  - Core.Data.ProvinceState.IsOwned
+  - Core.Data.ProvinceState.ToBytes
+  - Core.Data.ProvinceState.ToString
+  - Core.Data.ProvinceState.controllerID
+  - Core.Data.ProvinceState.gameDataSlot
+  - Core.Data.ProvinceState.ownerID
+  - Core.Data.ProvinceState.terrainType
+  langs:
+  - csharp
+  - vb
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceState
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: >-
+    ENGINE LAYER - Core province simulation state - EXACTLY 8 bytes
+
+    This is the foundation of the dual-layer architecture
+
+
+    ARCHITECTURE: Engine provides MECHANISM (how ownership works)
+
+    Game layer provides POLICY (what game-specific data means)
+
+
+    This struct contains ONLY generic engine primitives:
+
+    - Ownership (who owns this province)
+
+    - Control (who controls it militarily)
+
+    - Terrain (what type of land)
+
+    - Game data slot (index into game-specific data)
+
+
+    Game-specific fields (development, forts, etc.) belong in Game layer.
+
+
+    CRITICAL: Never change the size of this struct - it must remain exactly 8 bytes
+
+    for performance targets (10,000 provinces × 8 bytes = 80KB total)
+  example: []
+  syntax:
+    content: public struct ProvinceState
+    content.vb: Public Structure ProvinceState
+- uid: Core.Data.ProvinceState.ownerID
+  commentId: F:Core.Data.ProvinceState.ownerID
+  id: ownerID
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: ownerID
+  nameWithType: ProvinceState.ownerID
+  fullName: Core.Data.ProvinceState.ownerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ownerID
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort ownerID
+    return:
+      type: System.UInt16
+    content.vb: Public ownerID As UShort
+- uid: Core.Data.ProvinceState.controllerID
+  commentId: F:Core.Data.ProvinceState.controllerID
+  id: controllerID
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: controllerID
+  nameWithType: ProvinceState.controllerID
+  fullName: Core.Data.ProvinceState.controllerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: controllerID
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort controllerID
+    return:
+      type: System.UInt16
+    content.vb: Public controllerID As UShort
+- uid: Core.Data.ProvinceState.terrainType
+  commentId: F:Core.Data.ProvinceState.terrainType
+  id: terrainType
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: terrainType
+  nameWithType: ProvinceState.terrainType
+  fullName: Core.Data.ProvinceState.terrainType
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: terrainType
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort terrainType
+    return:
+      type: System.UInt16
+    content.vb: Public terrainType As UShort
+- uid: Core.Data.ProvinceState.gameDataSlot
+  commentId: F:Core.Data.ProvinceState.gameDataSlot
+  id: gameDataSlot
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: gameDataSlot
+  nameWithType: ProvinceState.gameDataSlot
+  fullName: Core.Data.ProvinceState.gameDataSlot
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameDataSlot
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public ushort gameDataSlot
+    return:
+      type: System.UInt16
+    content.vb: Public gameDataSlot As UShort
+- uid: Core.Data.ProvinceState.CreateDefault(System.UInt16,System.UInt16)
+  commentId: M:Core.Data.ProvinceState.CreateDefault(System.UInt16,System.UInt16)
+  id: CreateDefault(System.UInt16,System.UInt16)
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: CreateDefault(ushort, ushort)
+  nameWithType: ProvinceState.CreateDefault(ushort, ushort)
+  fullName: Core.Data.ProvinceState.CreateDefault(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateDefault
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create a default province state (unowned, undeveloped)
+  example: []
+  syntax:
+    content: public static ProvinceState CreateDefault(ushort terrainType = 1, ushort gameSlot = 0)
+    parameters:
+    - id: terrainType
+      type: System.UInt16
+    - id: gameSlot
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Shared Function CreateDefault(terrainType As UShort = 1, gameSlot As UShort = 0) As ProvinceState
+  overload: Core.Data.ProvinceState.CreateDefault*
+  nameWithType.vb: ProvinceState.CreateDefault(UShort, UShort)
+  fullName.vb: Core.Data.ProvinceState.CreateDefault(UShort, UShort)
+  name.vb: CreateDefault(UShort, UShort)
+- uid: Core.Data.ProvinceState.CreateOwned(System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Data.ProvinceState.CreateOwned(System.UInt16,System.UInt16,System.UInt16)
+  id: CreateOwned(System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: CreateOwned(ushort, ushort, ushort)
+  nameWithType: ProvinceState.CreateOwned(ushort, ushort, ushort)
+  fullName: Core.Data.ProvinceState.CreateOwned(ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateOwned
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create province state with initial owner
+  example: []
+  syntax:
+    content: public static ProvinceState CreateOwned(ushort owner, ushort terrainType = 1, ushort gameSlot = 0)
+    parameters:
+    - id: owner
+      type: System.UInt16
+    - id: terrainType
+      type: System.UInt16
+    - id: gameSlot
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Shared Function CreateOwned(owner As UShort, terrainType As UShort = 1, gameSlot As UShort = 0) As ProvinceState
+  overload: Core.Data.ProvinceState.CreateOwned*
+  nameWithType.vb: ProvinceState.CreateOwned(UShort, UShort, UShort)
+  fullName.vb: Core.Data.ProvinceState.CreateOwned(UShort, UShort, UShort)
+  name.vb: CreateOwned(UShort, UShort, UShort)
+- uid: Core.Data.ProvinceState.CreateOcean(System.UInt16)
+  commentId: M:Core.Data.ProvinceState.CreateOcean(System.UInt16)
+  id: CreateOcean(System.UInt16)
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: CreateOcean(ushort)
+  nameWithType: ProvinceState.CreateOcean(ushort)
+  fullName: Core.Data.ProvinceState.CreateOcean(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateOcean
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Create province state for ocean/water
+  example: []
+  syntax:
+    content: public static ProvinceState CreateOcean(ushort gameSlot = 0)
+    parameters:
+    - id: gameSlot
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Shared Function CreateOcean(gameSlot As UShort = 0) As ProvinceState
+  overload: Core.Data.ProvinceState.CreateOcean*
+  nameWithType.vb: ProvinceState.CreateOcean(UShort)
+  fullName.vb: Core.Data.ProvinceState.CreateOcean(UShort)
+  name.vb: CreateOcean(UShort)
+- uid: Core.Data.ProvinceState.IsOwned
+  commentId: P:Core.Data.ProvinceState.IsOwned
+  id: IsOwned
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: IsOwned
+  nameWithType: ProvinceState.IsOwned
+  fullName: Core.Data.ProvinceState.IsOwned
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOwned
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Check if province is owned by anyone
+  example: []
+  syntax:
+    content: public bool IsOwned { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsOwned As Boolean
+  overload: Core.Data.ProvinceState.IsOwned*
+- uid: Core.Data.ProvinceState.IsOccupied
+  commentId: P:Core.Data.ProvinceState.IsOccupied
+  id: IsOccupied
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: IsOccupied
+  nameWithType: ProvinceState.IsOccupied
+  fullName: Core.Data.ProvinceState.IsOccupied
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOccupied
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Check if province is controlled by someone different than owner (occupied)
+  example: []
+  syntax:
+    content: public bool IsOccupied { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsOccupied As Boolean
+  overload: Core.Data.ProvinceState.IsOccupied*
+- uid: Core.Data.ProvinceState.IsOcean
+  commentId: P:Core.Data.ProvinceState.IsOcean
+  id: IsOcean
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: IsOcean
+  nameWithType: ProvinceState.IsOcean
+  fullName: Core.Data.ProvinceState.IsOcean
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOcean
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Check if province is ocean/water (terrain type 0)
+  example: []
+  syntax:
+    content: public bool IsOcean { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsOcean As Boolean
+  overload: Core.Data.ProvinceState.IsOcean*
+- uid: Core.Data.ProvinceState.ToBytes
+  commentId: M:Core.Data.ProvinceState.ToBytes
+  id: ToBytes
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: ToBytes()
+  nameWithType: ProvinceState.ToBytes()
+  fullName: Core.Data.ProvinceState.ToBytes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToBytes
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Serialize to bytes for networking (8 bytes exactly)
+  example: []
+  syntax:
+    content: public byte[] ToBytes()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function ToBytes() As Byte()
+  overload: Core.Data.ProvinceState.ToBytes*
+- uid: Core.Data.ProvinceState.FromBytes(System.Byte[])
+  commentId: M:Core.Data.ProvinceState.FromBytes(System.Byte[])
+  id: FromBytes(System.Byte[])
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: FromBytes(byte[])
+  nameWithType: ProvinceState.FromBytes(byte[])
+  fullName: Core.Data.ProvinceState.FromBytes(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromBytes
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Deserialize from bytes for networking
+  example: []
+  syntax:
+    content: public static ProvinceState FromBytes(byte[] bytes)
+    parameters:
+    - id: bytes
+      type: System.Byte[]
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Shared Function FromBytes(bytes As Byte()) As ProvinceState
+  overload: Core.Data.ProvinceState.FromBytes*
+  nameWithType.vb: ProvinceState.FromBytes(Byte())
+  fullName.vb: Core.Data.ProvinceState.FromBytes(Byte())
+  name.vb: FromBytes(Byte())
+- uid: Core.Data.ProvinceState.GetHashCode
+  commentId: M:Core.Data.ProvinceState.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: ProvinceState.GetHashCode()
+  fullName: Core.Data.ProvinceState.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 143
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Calculate hash for state validation/checksums (deterministic for multiplayer)
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.ProvinceState.GetHashCode*
+- uid: Core.Data.ProvinceState.Equals(System.Object)
+  commentId: M:Core.Data.ProvinceState.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: ProvinceState.Equals(object)
+  fullName: Core.Data.ProvinceState.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 164
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Equality comparison for deterministic validation
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.ProvinceState.Equals*
+  nameWithType.vb: ProvinceState.Equals(Object)
+  fullName.vb: Core.Data.ProvinceState.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.ProvinceState.ToString
+  commentId: M:Core.Data.ProvinceState.ToString
+  id: ToString
+  parent: Core.Data.ProvinceState
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ProvinceState.ToString()
+  fullName: Core.Data.ProvinceState.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/ProvinceState.cs
+    startLine: 179
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Debug string representation
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.ProvinceState.ToString*
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.ProvinceState.CreateDefault*
+  commentId: Overload:Core.Data.ProvinceState.CreateDefault
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_CreateDefault_System_UInt16_System_UInt16_
+  name: CreateDefault
+  nameWithType: ProvinceState.CreateDefault
+  fullName: Core.Data.ProvinceState.CreateDefault
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Data.ProvinceState.CreateOwned*
+  commentId: Overload:Core.Data.ProvinceState.CreateOwned
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_CreateOwned_System_UInt16_System_UInt16_System_UInt16_
+  name: CreateOwned
+  nameWithType: ProvinceState.CreateOwned
+  fullName: Core.Data.ProvinceState.CreateOwned
+- uid: Core.Data.ProvinceState.CreateOcean*
+  commentId: Overload:Core.Data.ProvinceState.CreateOcean
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_CreateOcean_System_UInt16_
+  name: CreateOcean
+  nameWithType: ProvinceState.CreateOcean
+  fullName: Core.Data.ProvinceState.CreateOcean
+- uid: Core.Data.ProvinceState.IsOwned*
+  commentId: Overload:Core.Data.ProvinceState.IsOwned
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_IsOwned
+  name: IsOwned
+  nameWithType: ProvinceState.IsOwned
+  fullName: Core.Data.ProvinceState.IsOwned
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.ProvinceState.IsOccupied*
+  commentId: Overload:Core.Data.ProvinceState.IsOccupied
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_IsOccupied
+  name: IsOccupied
+  nameWithType: ProvinceState.IsOccupied
+  fullName: Core.Data.ProvinceState.IsOccupied
+- uid: Core.Data.ProvinceState.IsOcean*
+  commentId: Overload:Core.Data.ProvinceState.IsOcean
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_IsOcean
+  name: IsOcean
+  nameWithType: ProvinceState.IsOcean
+  fullName: Core.Data.ProvinceState.IsOcean
+- uid: Core.Data.ProvinceState.ToBytes*
+  commentId: Overload:Core.Data.ProvinceState.ToBytes
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_ToBytes
+  name: ToBytes
+  nameWithType: ProvinceState.ToBytes
+  fullName: Core.Data.ProvinceState.ToBytes
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.ProvinceState.FromBytes*
+  commentId: Overload:Core.Data.ProvinceState.FromBytes
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_FromBytes_System_Byte___
+  name: FromBytes
+  nameWithType: ProvinceState.FromBytes
+  fullName: Core.Data.ProvinceState.FromBytes
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.ProvinceState.GetHashCode*
+  commentId: Overload:Core.Data.ProvinceState.GetHashCode
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_GetHashCode
+  name: GetHashCode
+  nameWithType: ProvinceState.GetHashCode
+  fullName: Core.Data.ProvinceState.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Core.Data.ProvinceState.Equals*
+  commentId: Overload:Core.Data.ProvinceState.Equals
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_Equals_System_Object_
+  name: Equals
+  nameWithType: ProvinceState.Equals
+  fullName: Core.Data.ProvinceState.Equals
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.ProvinceState.ToString*
+  commentId: Overload:Core.Data.ProvinceState.ToString
+  href: Core.Data.ProvinceState.html#Core_Data_ProvinceState_ToString
+  name: ToString
+  nameWithType: ProvinceState.ToString
+  fullName: Core.Data.ProvinceState.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,54 @@
+- name: Architecture Overview
+  href: ARCHITECTURE_OVERVIEW.md
+- name: Master Architecture Document
+  href: master-architecture-document.md
+- name: Core Systems
+  items:
+    - name: Engine-Game Separation
+      href: engine-game-separation.md
+    - name: Command System
+      href: command-system-architecture.md
+    - name: Event-Driven Architecture
+      href: event-driven-architecture.md
+    - name: Time System
+      href: time-system-architecture.md
+    - name: Save/Load Architecture
+      href: save-load-architecture.md
+- name: Data Architecture
+  items:
+    - name: Data Flow
+      href: data-flow-architecture.md
+    - name: Data Loading
+      href: data-loading-architecture.md
+    - name: Data Linking
+      href: data-linking-architecture.md
+    - name: Core Data Access Guide
+      href: core-data-access-guide.md
+    - name: Sparse Data Structures
+      href: sparse-data-structures-design.md
+    - name: Flat Storage Burst
+      href: flat-storage-burst-architecture.md
+- name: Rendering & UI
+  items:
+    - name: Map System
+      href: map-system-architecture.md
+    - name: UI Architecture
+      href: ui-architecture.md
+    - name: Visual Styles
+      href: visual-styles-architecture.md
+    - name: Vector Curve Rendering
+      href: vector-curve-rendering-pattern.md
+- name: Systems
+  items:
+    - name: Modifier System
+      href: modifier-system.md
+- name: Performance
+  items:
+    - name: Performance Architecture Guide
+      href: performance-architecture-guide.md
+- name: Standards
+  items:
+    - name: Architecture Patterns
+      href: architecture-patterns.md
+    - name: Architecture Doc Standards
+      href: architecture-doc-standards.md

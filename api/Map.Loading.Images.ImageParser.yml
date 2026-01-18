@@ -1,0 +1,766 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ImageParser
+  commentId: T:Map.Loading.Images.ImageParser
+  id: ImageParser
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ImageParser.CollectUniqueColors(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.Allocator)
+  - Map.Loading.Images.ImageParser.DetectFormat(Unity.Collections.NativeArray{System.Byte})
+  - Map.Loading.Images.ImageParser.FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,Unity.Collections.Allocator)
+  - Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray{System.Byte},Map.Loading.Images.ImageParser.ImageHeader)
+  - Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  - Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  - Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  - Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Int32@)
+  langs:
+  - csharp
+  - vb
+  name: ImageParser
+  nameWithType: ImageParser
+  fullName: Map.Loading.Images.ImageParser
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ImageParser
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Unified image parser that automatically detects and parses BMP or PNG files
+
+    Provides a common interface for both formats
+  example: []
+  syntax:
+    content: public static class ImageParser
+    content.vb: Public Module ImageParser
+  inheritance:
+  - System.Object
+- uid: Map.Loading.Images.ImageParser.DetectFormat(Unity.Collections.NativeArray{System.Byte})
+  commentId: M:Map.Loading.Images.ImageParser.DetectFormat(Unity.Collections.NativeArray{System.Byte})
+  id: DetectFormat(Unity.Collections.NativeArray{System.Byte})
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: DetectFormat(NativeArray<byte>)
+  nameWithType: ImageParser.DetectFormat(NativeArray<byte>)
+  fullName: Map.Loading.Images.ImageParser.DetectFormat(Unity.Collections.NativeArray<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectFormat
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 73
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Detect image format from file data
+  example: []
+  syntax:
+    content: public static ImageParser.ImageFormat DetectFormat(NativeArray<byte> fileData)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+    content.vb: Public Shared Function DetectFormat(fileData As NativeArray(Of Byte)) As ImageParser.ImageFormat
+  overload: Map.Loading.Images.ImageParser.DetectFormat*
+  nameWithType.vb: ImageParser.DetectFormat(NativeArray(Of Byte))
+  fullName.vb: Map.Loading.Images.ImageParser.DetectFormat(Unity.Collections.NativeArray(Of Byte))
+  name.vb: DetectFormat(NativeArray(Of Byte))
+- uid: Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  commentId: M:Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  id: ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: ParseHeader(NativeArray<byte>)
+  nameWithType: ImageParser.ParseHeader(NativeArray<byte>)
+  fullName: Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ParseHeader
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 97
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Parse image header (auto-detects format)
+  example: []
+  syntax:
+    content: public static ImageParser.ImageHeader ParseHeader(NativeArray<byte> fileData)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    return:
+      type: Map.Loading.Images.ImageParser.ImageHeader
+    content.vb: Public Shared Function ParseHeader(fileData As NativeArray(Of Byte)) As ImageParser.ImageHeader
+  overload: Map.Loading.Images.ImageParser.ParseHeader*
+  nameWithType.vb: ImageParser.ParseHeader(NativeArray(Of Byte))
+  fullName.vb: Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray(Of Byte))
+  name.vb: ParseHeader(NativeArray(Of Byte))
+- uid: Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  id: Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: Parse(NativeArray<byte>, Allocator)
+  nameWithType: ImageParser.Parse(NativeArray<byte>, Allocator)
+  fullName: Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray<byte>, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Parse
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 137
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Parse entire image file (auto-detects format)
+  example: []
+  syntax:
+    content: public static ImageParser.ImagePixelData Parse(NativeArray<byte> fileData, Allocator allocator)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    content.vb: Public Shared Function Parse(fileData As NativeArray(Of Byte), allocator As Allocator) As ImageParser.ImagePixelData
+  overload: Map.Loading.Images.ImageParser.Parse*
+  nameWithType.vb: ImageParser.Parse(NativeArray(Of Byte), Allocator)
+  fullName.vb: Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray(Of Byte), Unity.Collections.Allocator)
+  name.vb: Parse(NativeArray(Of Byte), Allocator)
+- uid: Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  commentId: M:Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  id: TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetPixelRGB(ImagePixelData, int, int, out byte, out byte, out byte)
+  nameWithType: ImageParser.TryGetPixelRGB(ImageParser.ImagePixelData, int, int, out byte, out byte, out byte)
+  fullName: Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData, int, int, out byte, out byte, out byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetPixelRGB
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 195
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get RGB color at specific pixel coordinates (works for both BMP and PNG)
+  example: []
+  syntax:
+    content: public static bool TryGetPixelRGB(ImageParser.ImagePixelData pixelData, int x, int y, out byte r, out byte g, out byte b)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: r
+      type: System.Byte
+    - id: g
+      type: System.Byte
+    - id: b
+      type: System.Byte
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetPixelRGB(pixelData As ImageParser.ImagePixelData, x As Integer, y As Integer, r As Byte, g As Byte, b As Byte) As Boolean
+  overload: Map.Loading.Images.ImageParser.TryGetPixelRGB*
+  nameWithType.vb: ImageParser.TryGetPixelRGB(ImageParser.ImagePixelData, Integer, Integer, Byte, Byte, Byte)
+  fullName.vb: Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData, Integer, Integer, Byte, Byte, Byte)
+  name.vb: TryGetPixelRGB(ImagePixelData, Integer, Integer, Byte, Byte, Byte)
+- uid: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Int32@)
+  commentId: M:Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Int32@)
+  id: TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Int32@)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetPixelRGBPacked(ImagePixelData, int, int, out int)
+  nameWithType: ImageParser.TryGetPixelRGBPacked(ImageParser.ImagePixelData, int, int, out int)
+  fullName: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData, int, int, out int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetPixelRGBPacked
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 215
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get packed RGB color (0xRRGGBB) at specific coordinates
+  example: []
+  syntax:
+    content: public static bool TryGetPixelRGBPacked(ImageParser.ImagePixelData pixelData, int x, int y, out int rgb)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: rgb
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function TryGetPixelRGBPacked(pixelData As ImageParser.ImagePixelData, x As Integer, y As Integer, rgb As Integer) As Boolean
+  overload: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked*
+  nameWithType.vb: ImageParser.TryGetPixelRGBPacked(ImageParser.ImagePixelData, Integer, Integer, Integer)
+  fullName.vb: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData, Integer, Integer, Integer)
+  name.vb: TryGetPixelRGBPacked(ImagePixelData, Integer, Integer, Integer)
+- uid: Map.Loading.Images.ImageParser.CollectUniqueColors(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.ImageParser.CollectUniqueColors(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.Allocator)
+  id: CollectUniqueColors(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.Allocator)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: CollectUniqueColors(ImagePixelData, Allocator)
+  nameWithType: ImageParser.CollectUniqueColors(ImageParser.ImagePixelData, Allocator)
+  fullName: Map.Loading.Images.ImageParser.CollectUniqueColors(Map.Loading.Images.ImageParser.ImagePixelData, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CollectUniqueColors
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 231
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Scan all pixels and collect unique RGB values
+  example: []
+  syntax:
+    content: public static NativeHashSet<int> CollectUniqueColors(ImageParser.ImagePixelData pixelData, Allocator allocator)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeHashSet{System.Int32}
+    content.vb: Public Shared Function CollectUniqueColors(pixelData As ImageParser.ImagePixelData, allocator As Allocator) As NativeHashSet(Of Integer)
+  overload: Map.Loading.Images.ImageParser.CollectUniqueColors*
+- uid: Map.Loading.Images.ImageParser.FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.ImageParser.FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,Unity.Collections.Allocator)
+  id: FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,Unity.Collections.Allocator)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: FindPixelsWithColor(ImagePixelData, int, Allocator)
+  nameWithType: ImageParser.FindPixelsWithColor(ImageParser.ImagePixelData, int, Allocator)
+  fullName: Map.Loading.Images.ImageParser.FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData, int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPixelsWithColor
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 249
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Find all pixels with a specific RGB color
+  example: []
+  syntax:
+    content: public static NativeList<PixelCoord> FindPixelsWithColor(ImageParser.ImagePixelData pixelData, int targetRGB, Allocator allocator)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    - id: targetRGB
+      type: System.Int32
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+    content.vb: Public Shared Function FindPixelsWithColor(pixelData As ImageParser.ImagePixelData, targetRGB As Integer, allocator As Allocator) As NativeList(Of PixelCoord)
+  overload: Map.Loading.Images.ImageParser.FindPixelsWithColor*
+  nameWithType.vb: ImageParser.FindPixelsWithColor(ImageParser.ImagePixelData, Integer, Allocator)
+  fullName.vb: Map.Loading.Images.ImageParser.FindPixelsWithColor(Map.Loading.Images.ImageParser.ImagePixelData, Integer, Unity.Collections.Allocator)
+  name.vb: FindPixelsWithColor(ImagePixelData, Integer, Allocator)
+- uid: Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray{System.Byte},Map.Loading.Images.ImageParser.ImageHeader)
+  commentId: M:Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray{System.Byte},Map.Loading.Images.ImageParser.ImageHeader)
+  id: GetPalette(Unity.Collections.NativeArray{System.Byte},Map.Loading.Images.ImageParser.ImageHeader)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: GetPalette(NativeArray<byte>, ImageHeader)
+  nameWithType: ImageParser.GetPalette(NativeArray<byte>, ImageParser.ImageHeader)
+  fullName: Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray<byte>, Map.Loading.Images.ImageParser.ImageHeader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPalette
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 268
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Get the palette from an indexed image (8-bit BMP or indexed PNG)
+
+    Returns null if image doesn't have a palette
+  example: []
+  syntax:
+    content: public static Color32[] GetPalette(NativeArray<byte> fileData, ImageParser.ImageHeader header)
+    parameters:
+    - id: fileData
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: header
+      type: Map.Loading.Images.ImageParser.ImageHeader
+    return:
+      type: UnityEngine.Color32[]
+    content.vb: Public Shared Function GetPalette(fileData As NativeArray(Of Byte), header As ImageParser.ImageHeader) As Color32()
+  overload: Map.Loading.Images.ImageParser.GetPalette*
+  nameWithType.vb: ImageParser.GetPalette(NativeArray(Of Byte), ImageParser.ImageHeader)
+  fullName.vb: Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray(Of Byte), Map.Loading.Images.ImageParser.ImageHeader)
+  name.vb: GetPalette(NativeArray(Of Byte), ImageHeader)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.ImageParser.DetectFormat*
+  commentId: Overload:Map.Loading.Images.ImageParser.DetectFormat
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_DetectFormat_Unity_Collections_NativeArray_System_Byte__
+  name: DetectFormat
+  nameWithType: ImageParser.DetectFormat
+  fullName: Map.Loading.Images.ImageParser.DetectFormat
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.Images.ImageParser.ParseHeader*
+  commentId: Overload:Map.Loading.Images.ImageParser.ParseHeader
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_ParseHeader_Unity_Collections_NativeArray_System_Byte__
+  name: ParseHeader
+  nameWithType: ImageParser.ParseHeader
+  fullName: Map.Loading.Images.ImageParser.ParseHeader
+- uid: Map.Loading.Images.ImageParser.ImageHeader
+  commentId: T:Map.Loading.Images.ImageParser.ImageHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageHeader
+  nameWithType: ImageParser.ImageHeader
+  fullName: Map.Loading.Images.ImageParser.ImageHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageHeader
+    name: ImageHeader
+    href: Map.Loading.Images.ImageParser.ImageHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageHeader
+    name: ImageHeader
+    href: Map.Loading.Images.ImageParser.ImageHeader.html
+- uid: Map.Loading.Images.ImageParser.Parse*
+  commentId: Overload:Map.Loading.Images.ImageParser.Parse
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_Parse_Unity_Collections_NativeArray_System_Byte__Unity_Collections_Allocator_
+  name: Parse
+  nameWithType: ImageParser.Parse
+  fullName: Map.Loading.Images.ImageParser.Parse
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Map.Loading.Images.ImageParser.ImagePixelData
+  commentId: T:Map.Loading.Images.ImageParser.ImagePixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImagePixelData
+  nameWithType: ImageParser.ImagePixelData
+  fullName: Map.Loading.Images.ImageParser.ImagePixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+- uid: Map.Loading.Images.ImageParser.TryGetPixelRGB*
+  commentId: Overload:Map.Loading.Images.ImageParser.TryGetPixelRGB
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_TryGetPixelRGB_Map_Loading_Images_ImageParser_ImagePixelData_System_Int32_System_Int32_System_Byte__System_Byte__System_Byte__
+  name: TryGetPixelRGB
+  nameWithType: ImageParser.TryGetPixelRGB
+  fullName: Map.Loading.Images.ImageParser.TryGetPixelRGB
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked*
+  commentId: Overload:Map.Loading.Images.ImageParser.TryGetPixelRGBPacked
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_TryGetPixelRGBPacked_Map_Loading_Images_ImageParser_ImagePixelData_System_Int32_System_Int32_System_Int32__
+  name: TryGetPixelRGBPacked
+  nameWithType: ImageParser.TryGetPixelRGBPacked
+  fullName: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked
+- uid: Map.Loading.Images.ImageParser.CollectUniqueColors*
+  commentId: Overload:Map.Loading.Images.ImageParser.CollectUniqueColors
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_CollectUniqueColors_Map_Loading_Images_ImageParser_ImagePixelData_Unity_Collections_Allocator_
+  name: CollectUniqueColors
+  nameWithType: ImageParser.CollectUniqueColors
+  fullName: Map.Loading.Images.ImageParser.CollectUniqueColors
+- uid: Unity.Collections.NativeHashSet{System.Int32}
+  commentId: T:Unity.Collections.NativeHashSet{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashSet`1
+  name: NativeHashSet<int>
+  nameWithType: NativeHashSet<int>
+  fullName: Unity.Collections.NativeHashSet<int>
+  nameWithType.vb: NativeHashSet(Of Integer)
+  fullName.vb: Unity.Collections.NativeHashSet(Of Integer)
+  name.vb: NativeHashSet(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashSet`1
+  commentId: T:Unity.Collections.NativeHashSet`1
+  isExternal: true
+  name: NativeHashSet<T>
+  nameWithType: NativeHashSet<T>
+  fullName: Unity.Collections.NativeHashSet<T>
+  nameWithType.vb: NativeHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeHashSet(Of T)
+  name.vb: NativeHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.Images.ImageParser.FindPixelsWithColor*
+  commentId: Overload:Map.Loading.Images.ImageParser.FindPixelsWithColor
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_FindPixelsWithColor_Map_Loading_Images_ImageParser_ImagePixelData_System_Int32_Unity_Collections_Allocator_
+  name: FindPixelsWithColor
+  nameWithType: ImageParser.FindPixelsWithColor
+  fullName: Map.Loading.Images.ImageParser.FindPixelsWithColor
+- uid: Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  commentId: T:Unity.Collections.NativeList{Map.Loading.Images.PixelCoord}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  href: Map.Loading.Images.PixelCoord.html
+  name: NativeList<PixelCoord>
+  nameWithType: NativeList<PixelCoord>
+  fullName: Unity.Collections.NativeList<Map.Loading.Images.PixelCoord>
+  nameWithType.vb: NativeList(Of PixelCoord)
+  fullName.vb: Unity.Collections.NativeList(Of Map.Loading.Images.PixelCoord)
+  name.vb: NativeList(Of PixelCoord)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Loading.Images.PixelCoord
+    name: PixelCoord
+    href: Map.Loading.Images.PixelCoord.html
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Loading.Images.ImageParser.GetPalette*
+  commentId: Overload:Map.Loading.Images.ImageParser.GetPalette
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_GetPalette_Unity_Collections_NativeArray_System_Byte__Map_Loading_Images_ImageParser_ImageHeader_
+  name: GetPalette
+  nameWithType: ImageParser.GetPalette
+  fullName: Map.Loading.Images.ImageParser.GetPalette
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )

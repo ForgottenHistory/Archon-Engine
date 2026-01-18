@@ -1,0 +1,294 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.PersistentBMPPixelData
+  commentId: T:Map.Loading.Images.PersistentBMPPixelData
+  id: PersistentBMPPixelData
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.PersistentBMPPixelData.Dispose
+  - Map.Loading.Images.PersistentBMPPixelData.Header
+  - Map.Loading.Images.PersistentBMPPixelData.IsSuccess
+  - Map.Loading.Images.PersistentBMPPixelData.RawData
+  langs:
+  - csharp
+  - vb
+  name: PersistentBMPPixelData
+  nameWithType: PersistentBMPPixelData
+  fullName: Map.Loading.Images.PersistentBMPPixelData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PersistentBMPPixelData
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 202
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Persistent pixel data that owns its memory allocation
+  example: []
+  syntax:
+    content: public struct PersistentBMPPixelData
+    content.vb: Public Structure PersistentBMPPixelData
+- uid: Map.Loading.Images.PersistentBMPPixelData.RawData
+  commentId: F:Map.Loading.Images.PersistentBMPPixelData.RawData
+  id: RawData
+  parent: Map.Loading.Images.PersistentBMPPixelData
+  langs:
+  - csharp
+  - vb
+  name: RawData
+  nameWithType: PersistentBMPPixelData.RawData
+  fullName: Map.Loading.Images.PersistentBMPPixelData.RawData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RawData
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 204
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<byte> RawData
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public RawData As NativeArray(Of Byte)
+- uid: Map.Loading.Images.PersistentBMPPixelData.Header
+  commentId: F:Map.Loading.Images.PersistentBMPPixelData.Header
+  id: Header
+  parent: Map.Loading.Images.PersistentBMPPixelData
+  langs:
+  - csharp
+  - vb
+  name: Header
+  nameWithType: PersistentBMPPixelData.Header
+  fullName: Map.Loading.Images.PersistentBMPPixelData.Header
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Header
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 205
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public BMPParser.BMPHeader Header
+    return:
+      type: Map.Loading.Images.BMPParser.BMPHeader
+    content.vb: Public Header As BMPParser.BMPHeader
+- uid: Map.Loading.Images.PersistentBMPPixelData.IsSuccess
+  commentId: F:Map.Loading.Images.PersistentBMPPixelData.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.PersistentBMPPixelData
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: PersistentBMPPixelData.IsSuccess
+  fullName: Map.Loading.Images.PersistentBMPPixelData.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 206
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.PersistentBMPPixelData.Dispose
+  commentId: M:Map.Loading.Images.PersistentBMPPixelData.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.PersistentBMPPixelData
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: PersistentBMPPixelData.Dispose()
+  fullName: Map.Loading.Images.PersistentBMPPixelData.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 208
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.PersistentBMPPixelData.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.Images.BMPParser.BMPHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPHeader
+  nameWithType: BMPParser.BMPHeader
+  fullName: Map.Loading.Images.BMPParser.BMPHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.PersistentBMPPixelData.Dispose*
+  commentId: Overload:Map.Loading.Images.PersistentBMPPixelData.Dispose
+  href: Map.Loading.Images.PersistentBMPPixelData.html#Map_Loading_Images_PersistentBMPPixelData_Dispose
+  name: Dispose
+  nameWithType: PersistentBMPPixelData.Dispose
+  fullName: Map.Loading.Images.PersistentBMPPixelData.Dispose

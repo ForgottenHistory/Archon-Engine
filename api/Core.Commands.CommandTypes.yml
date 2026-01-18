@@ -1,0 +1,252 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandTypes
+  commentId: T:Core.Commands.CommandTypes
+  id: CommandTypes
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandTypes.BatchUpdate
+  - Core.Commands.CommandTypes.ChangeController
+  - Core.Commands.CommandTypes.ChangeDevelopment
+  - Core.Commands.CommandTypes.ChangeFortification
+  - Core.Commands.CommandTypes.ChangeOwner
+  - Core.Commands.CommandTypes.SetFlags
+  langs:
+  - csharp
+  - vb
+  name: CommandTypes
+  nameWithType: CommandTypes
+  fullName: Core.Commands.CommandTypes
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandTypes
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Command type identifiers - must remain stable across versions
+
+    Used for serialization and network protocol
+  example: []
+  syntax:
+    content: public static class CommandTypes
+    content.vb: Public Module CommandTypes
+  inheritance:
+  - System.Object
+- uid: Core.Commands.CommandTypes.ChangeOwner
+  commentId: F:Core.Commands.CommandTypes.ChangeOwner
+  id: ChangeOwner
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: ChangeOwner
+  nameWithType: CommandTypes.ChangeOwner
+  fullName: Core.Commands.CommandTypes.ChangeOwner
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeOwner
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte ChangeOwner = 1
+    return:
+      type: System.Byte
+    content.vb: Public Const ChangeOwner As Byte = 1
+- uid: Core.Commands.CommandTypes.ChangeController
+  commentId: F:Core.Commands.CommandTypes.ChangeController
+  id: ChangeController
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: ChangeController
+  nameWithType: CommandTypes.ChangeController
+  fullName: Core.Commands.CommandTypes.ChangeController
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeController
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte ChangeController = 2
+    return:
+      type: System.Byte
+    content.vb: Public Const ChangeController As Byte = 2
+- uid: Core.Commands.CommandTypes.ChangeDevelopment
+  commentId: F:Core.Commands.CommandTypes.ChangeDevelopment
+  id: ChangeDevelopment
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: ChangeDevelopment
+  nameWithType: CommandTypes.ChangeDevelopment
+  fullName: Core.Commands.CommandTypes.ChangeDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeDevelopment
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte ChangeDevelopment = 3
+    return:
+      type: System.Byte
+    content.vb: Public Const ChangeDevelopment As Byte = 3
+- uid: Core.Commands.CommandTypes.ChangeFortification
+  commentId: F:Core.Commands.CommandTypes.ChangeFortification
+  id: ChangeFortification
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: ChangeFortification
+  nameWithType: CommandTypes.ChangeFortification
+  fullName: Core.Commands.CommandTypes.ChangeFortification
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChangeFortification
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte ChangeFortification = 4
+    return:
+      type: System.Byte
+    content.vb: Public Const ChangeFortification As Byte = 4
+- uid: Core.Commands.CommandTypes.SetFlags
+  commentId: F:Core.Commands.CommandTypes.SetFlags
+  id: SetFlags
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: SetFlags
+  nameWithType: CommandTypes.SetFlags
+  fullName: Core.Commands.CommandTypes.SetFlags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetFlags
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte SetFlags = 5
+    return:
+      type: System.Byte
+    content.vb: Public Const SetFlags As Byte = 5
+- uid: Core.Commands.CommandTypes.BatchUpdate
+  commentId: F:Core.Commands.CommandTypes.BatchUpdate
+  id: BatchUpdate
+  parent: Core.Commands.CommandTypes
+  langs:
+  - csharp
+  - vb
+  name: BatchUpdate
+  nameWithType: CommandTypes.BatchUpdate
+  fullName: Core.Commands.CommandTypes.BatchUpdate
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BatchUpdate
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public const byte BatchUpdate = 6
+    return:
+      type: System.Byte
+    content.vb: Public Const BatchUpdate As Byte = 6
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte

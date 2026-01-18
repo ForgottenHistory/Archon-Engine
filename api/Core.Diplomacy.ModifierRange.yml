@@ -1,0 +1,237 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.ModifierRange
+  commentId: T:Core.Diplomacy.ModifierRange
+  id: ModifierRange
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.ModifierRange.Empty
+  - Core.Diplomacy.ModifierRange.IsEmpty
+  - Core.Diplomacy.ModifierRange.count
+  - Core.Diplomacy.ModifierRange.startIndex
+  langs:
+  - csharp
+  - vb
+  name: ModifierRange
+  nameWithType: ModifierRange
+  fullName: Core.Diplomacy.ModifierRange
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierRange.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierRange
+    path: Scripts/Core/Diplomacy/ModifierRange.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Tracks the range of modifiers for a single relationship in the flat modifier array
+
+
+    DETERMINISM GUARANTEE:
+
+    - Modifiers for each relationship stored in STABLE order (insertion order preserved)
+
+    - Compaction is SEQUENTIAL on main thread (deterministic)
+
+    - Parallel Burst job ONLY marks decayed (read-only, no order dependency)
+
+
+    Architecture:
+
+    allModifiers[startIndex ... startIndex+count-1] = this relationship's modifiers
+  example: []
+  syntax:
+    content: public struct ModifierRange
+    content.vb: Public Structure ModifierRange
+- uid: Core.Diplomacy.ModifierRange.startIndex
+  commentId: F:Core.Diplomacy.ModifierRange.startIndex
+  id: startIndex
+  parent: Core.Diplomacy.ModifierRange
+  langs:
+  - csharp
+  - vb
+  name: startIndex
+  nameWithType: ModifierRange.startIndex
+  fullName: Core.Diplomacy.ModifierRange.startIndex
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierRange.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: startIndex
+    path: Scripts/Core/Diplomacy/ModifierRange.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Index in allModifiers where this relationship's modifiers start
+  example: []
+  syntax:
+    content: public int startIndex
+    return:
+      type: System.Int32
+    content.vb: Public startIndex As Integer
+- uid: Core.Diplomacy.ModifierRange.count
+  commentId: F:Core.Diplomacy.ModifierRange.count
+  id: count
+  parent: Core.Diplomacy.ModifierRange
+  langs:
+  - csharp
+  - vb
+  name: count
+  nameWithType: ModifierRange.count
+  fullName: Core.Diplomacy.ModifierRange.count
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierRange.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: count
+    path: Scripts/Core/Diplomacy/ModifierRange.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Number of active modifiers for this relationship
+  example: []
+  syntax:
+    content: public int count
+    return:
+      type: System.Int32
+    content.vb: Public count As Integer
+- uid: Core.Diplomacy.ModifierRange.Empty
+  commentId: P:Core.Diplomacy.ModifierRange.Empty
+  id: Empty
+  parent: Core.Diplomacy.ModifierRange
+  langs:
+  - csharp
+  - vb
+  name: Empty
+  nameWithType: ModifierRange.Empty
+  fullName: Core.Diplomacy.ModifierRange.Empty
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierRange.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Empty
+    path: Scripts/Core/Diplomacy/ModifierRange.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Empty range (no modifiers)
+  example: []
+  syntax:
+    content: public static ModifierRange Empty { get; }
+    parameters: []
+    return:
+      type: Core.Diplomacy.ModifierRange
+    content.vb: Public Shared ReadOnly Property Empty As ModifierRange
+  overload: Core.Diplomacy.ModifierRange.Empty*
+- uid: Core.Diplomacy.ModifierRange.IsEmpty
+  commentId: P:Core.Diplomacy.ModifierRange.IsEmpty
+  id: IsEmpty
+  parent: Core.Diplomacy.ModifierRange
+  langs:
+  - csharp
+  - vb
+  name: IsEmpty
+  nameWithType: ModifierRange.IsEmpty
+  fullName: Core.Diplomacy.ModifierRange.IsEmpty
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/ModifierRange.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsEmpty
+    path: Scripts/Core/Diplomacy/ModifierRange.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Check if this range is empty
+  example: []
+  syntax:
+    content: public bool IsEmpty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsEmpty As Boolean
+  overload: Core.Diplomacy.ModifierRange.IsEmpty*
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.ModifierRange.Empty*
+  commentId: Overload:Core.Diplomacy.ModifierRange.Empty
+  href: Core.Diplomacy.ModifierRange.html#Core_Diplomacy_ModifierRange_Empty
+  name: Empty
+  nameWithType: ModifierRange.Empty
+  fullName: Core.Diplomacy.ModifierRange.Empty
+- uid: Core.Diplomacy.ModifierRange
+  commentId: T:Core.Diplomacy.ModifierRange
+  parent: Core.Diplomacy
+  href: Core.Diplomacy.ModifierRange.html
+  name: ModifierRange
+  nameWithType: ModifierRange
+  fullName: Core.Diplomacy.ModifierRange
+- uid: Core.Diplomacy.ModifierRange.IsEmpty*
+  commentId: Overload:Core.Diplomacy.ModifierRange.IsEmpty
+  href: Core.Diplomacy.ModifierRange.html#Core_Diplomacy_ModifierRange_IsEmpty
+  name: IsEmpty
+  nameWithType: ModifierRange.IsEmpty
+  fullName: Core.Diplomacy.ModifierRange.IsEmpty
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

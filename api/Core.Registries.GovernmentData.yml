@@ -1,0 +1,151 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.GovernmentData
+  commentId: T:Core.Registries.GovernmentData
+  id: GovernmentData
+  parent: Core.Registries
+  children:
+  - Core.Registries.GovernmentData.Name
+  - Core.Registries.GovernmentData.Type
+  langs:
+  - csharp
+  - vb
+  name: GovernmentData
+  nameWithType: GovernmentData
+  fullName: Core.Registries.GovernmentData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GovernmentData
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public class GovernmentData
+    content.vb: Public Class GovernmentData
+  inheritance:
+  - System.Object
+- uid: Core.Registries.GovernmentData.Name
+  commentId: P:Core.Registries.GovernmentData.Name
+  id: Name
+  parent: Core.Registries.GovernmentData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: GovernmentData.Name
+  fullName: Core.Registries.GovernmentData.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 115
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Core.Registries.GovernmentData.Name*
+- uid: Core.Registries.GovernmentData.Type
+  commentId: P:Core.Registries.GovernmentData.Type
+  id: Type
+  parent: Core.Registries.GovernmentData
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: GovernmentData.Type
+  fullName: Core.Registries.GovernmentData.Type
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 116
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string Type { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Type As String
+  overload: Core.Registries.GovernmentData.Type*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.GovernmentData.Name*
+  commentId: Overload:Core.Registries.GovernmentData.Name
+  href: Core.Registries.GovernmentData.html#Core_Registries_GovernmentData_Name
+  name: Name
+  nameWithType: GovernmentData.Name
+  fullName: Core.Registries.GovernmentData.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.GovernmentData.Type*
+  commentId: Overload:Core.Registries.GovernmentData.Type
+  href: Core.Registries.GovernmentData.html#Core_Registries_GovernmentData_Type
+  name: Type
+  nameWithType: GovernmentData.Type
+  fullName: Core.Registries.GovernmentData.Type

@@ -1,0 +1,195 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.ProvinceInitialStatesLoadedEvent
+  commentId: T:Core.Systems.ProvinceInitialStatesLoadedEvent
+  id: ProvinceInitialStatesLoadedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.ProvinceInitialStatesLoadedEvent.FailedCount
+  - Core.Systems.ProvinceInitialStatesLoadedEvent.LoadedCount
+  - Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: ProvinceInitialStatesLoadedEvent
+  nameWithType: ProvinceInitialStatesLoadedEvent
+  fullName: Core.Systems.ProvinceInitialStatesLoadedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceInitialStatesLoadedEvent
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: 'public struct ProvinceInitialStatesLoadedEvent : IGameEvent'
+    content.vb: Public Structure ProvinceInitialStatesLoadedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.ProvinceInitialStatesLoadedEvent.LoadedCount
+  commentId: F:Core.Systems.ProvinceInitialStatesLoadedEvent.LoadedCount
+  id: LoadedCount
+  parent: Core.Systems.ProvinceInitialStatesLoadedEvent
+  langs:
+  - csharp
+  - vb
+  name: LoadedCount
+  nameWithType: ProvinceInitialStatesLoadedEvent.LoadedCount
+  fullName: Core.Systems.ProvinceInitialStatesLoadedEvent.LoadedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadedCount
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int LoadedCount
+    return:
+      type: System.Int32
+    content.vb: Public LoadedCount As Integer
+- uid: Core.Systems.ProvinceInitialStatesLoadedEvent.FailedCount
+  commentId: F:Core.Systems.ProvinceInitialStatesLoadedEvent.FailedCount
+  id: FailedCount
+  parent: Core.Systems.ProvinceInitialStatesLoadedEvent
+  langs:
+  - csharp
+  - vb
+  name: FailedCount
+  nameWithType: ProvinceInitialStatesLoadedEvent.FailedCount
+  fullName: Core.Systems.ProvinceInitialStatesLoadedEvent.FailedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FailedCount
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int FailedCount
+    return:
+      type: System.Int32
+    content.vb: Public FailedCount As Integer
+- uid: Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+  commentId: P:Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.ProvinceInitialStatesLoadedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ProvinceInitialStatesLoadedEvent.TimeStamp
+  fullName: Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+  href: Core.Systems.ProvinceInitialStatesLoadedEvent.html#Core_Systems_ProvinceInitialStatesLoadedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ProvinceInitialStatesLoadedEvent.TimeStamp
+  fullName: Core.Systems.ProvinceInitialStatesLoadedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

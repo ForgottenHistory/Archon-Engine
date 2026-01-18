@@ -1,0 +1,555 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AIScheduler
+  commentId: T:Core.AI.AIScheduler
+  id: AIScheduler
+  parent: Core.AI
+  children:
+  - Core.AI.AIScheduler.#ctor(Core.AI.AIGoalRegistry,Core.AI.AISchedulingConfig)
+  - Core.AI.AIScheduler.CalculateHourOfYear(System.Int32,System.Int32,System.Int32)
+  - Core.AI.AIScheduler.ProcessHourlyTick(System.UInt16,Unity.Collections.NativeArray{Core.AI.AIState},Core.GameState)
+  - Core.AI.AIScheduler.SetConfig(Core.AI.AISchedulingConfig)
+  - Core.AI.AIScheduler.SetExecutionTimeout(System.Int64)
+  - Core.AI.AIScheduler.SetGoalSelector(Core.AI.IGoalSelector)
+  - Core.AI.AIScheduler.Statistics
+  langs:
+  - csharp
+  - vb
+  name: AIScheduler
+  nameWithType: AIScheduler
+  fullName: Core.AI.AIScheduler
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AIScheduler
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    AI scheduler - handles tier-based processing and goal evaluation.
+
+
+    Design:
+
+    - Tier-based: Countries assigned tiers based on distance from player
+
+    - Interval-based: Each tier has configurable processing interval (hours)
+
+    - Goal Evaluation: Evaluate goals, apply constraints, use IGoalSelector
+
+    - Timeout: Execution timeout prevents runaway goals
+
+
+    Performance Target:
+
+    - &lt;5ms per hourly tick for typical load
+
+    - Near AI processed frequently, far AI processed rarely
+
+
+    Scheduling Strategy:
+
+    - Tiers defined by AISchedulingConfig (GAME provides policy)
+
+    - Each hour: Process AI whose interval has elapsed
+
+    - Example: Tier 0 (neighbors) every hour, Tier 3 (far) every 72 hours
+
+
+    Hour-of-year tracking:
+
+    - 365 days × 24 hours = 8760 hours per year
+
+    - lastProcessedHour wraps at HOURS_PER_YEAR
+
+    - Handles year wrap correctly
+  example: []
+  syntax:
+    content: public class AIScheduler
+    content.vb: Public Class AIScheduler
+  inheritance:
+  - System.Object
+- uid: Core.AI.AIScheduler.#ctor(Core.AI.AIGoalRegistry,Core.AI.AISchedulingConfig)
+  commentId: M:Core.AI.AIScheduler.#ctor(Core.AI.AIGoalRegistry,Core.AI.AISchedulingConfig)
+  id: '#ctor(Core.AI.AIGoalRegistry,Core.AI.AISchedulingConfig)'
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: AIScheduler(AIGoalRegistry, AISchedulingConfig)
+  nameWithType: AIScheduler.AIScheduler(AIGoalRegistry, AISchedulingConfig)
+  fullName: Core.AI.AIScheduler.AIScheduler(Core.AI.AIGoalRegistry, Core.AI.AISchedulingConfig)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AIScheduler(AIGoalRegistry goalRegistry, AISchedulingConfig config)
+    parameters:
+    - id: goalRegistry
+      type: Core.AI.AIGoalRegistry
+    - id: config
+      type: Core.AI.AISchedulingConfig
+    content.vb: Public Sub New(goalRegistry As AIGoalRegistry, config As AISchedulingConfig)
+  overload: Core.AI.AIScheduler.#ctor*
+  nameWithType.vb: AIScheduler.New(AIGoalRegistry, AISchedulingConfig)
+  fullName.vb: Core.AI.AIScheduler.New(Core.AI.AIGoalRegistry, Core.AI.AISchedulingConfig)
+  name.vb: New(AIGoalRegistry, AISchedulingConfig)
+- uid: Core.AI.AIScheduler.SetConfig(Core.AI.AISchedulingConfig)
+  commentId: M:Core.AI.AIScheduler.SetConfig(Core.AI.AISchedulingConfig)
+  id: SetConfig(Core.AI.AISchedulingConfig)
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: SetConfig(AISchedulingConfig)
+  nameWithType: AIScheduler.SetConfig(AISchedulingConfig)
+  fullName: Core.AI.AIScheduler.SetConfig(Core.AI.AISchedulingConfig)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetConfig
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Update scheduling config (e.g., when GAME layer provides custom config).
+  example: []
+  syntax:
+    content: public void SetConfig(AISchedulingConfig newConfig)
+    parameters:
+    - id: newConfig
+      type: Core.AI.AISchedulingConfig
+    content.vb: Public Sub SetConfig(newConfig As AISchedulingConfig)
+  overload: Core.AI.AIScheduler.SetConfig*
+- uid: Core.AI.AIScheduler.SetGoalSelector(Core.AI.IGoalSelector)
+  commentId: M:Core.AI.AIScheduler.SetGoalSelector(Core.AI.IGoalSelector)
+  id: SetGoalSelector(Core.AI.IGoalSelector)
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: SetGoalSelector(IGoalSelector)
+  nameWithType: AIScheduler.SetGoalSelector(IGoalSelector)
+  fullName: Core.AI.AIScheduler.SetGoalSelector(Core.AI.IGoalSelector)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetGoalSelector
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: 'Set custom goal selector (default: HighestScoreSelector).'
+  example: []
+  syntax:
+    content: public void SetGoalSelector(IGoalSelector selector)
+    parameters:
+    - id: selector
+      type: Core.AI.IGoalSelector
+    content.vb: Public Sub SetGoalSelector(selector As IGoalSelector)
+  overload: Core.AI.AIScheduler.SetGoalSelector*
+- uid: Core.AI.AIScheduler.SetExecutionTimeout(System.Int64)
+  commentId: M:Core.AI.AIScheduler.SetExecutionTimeout(System.Int64)
+  id: SetExecutionTimeout(System.Int64)
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: SetExecutionTimeout(long)
+  nameWithType: AIScheduler.SetExecutionTimeout(long)
+  fullName: Core.AI.AIScheduler.SetExecutionTimeout(long)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetExecutionTimeout
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Set execution timeout in milliseconds.
+  example: []
+  syntax:
+    content: public void SetExecutionTimeout(long timeoutMs)
+    parameters:
+    - id: timeoutMs
+      type: System.Int64
+    content.vb: Public Sub SetExecutionTimeout(timeoutMs As Long)
+  overload: Core.AI.AIScheduler.SetExecutionTimeout*
+  nameWithType.vb: AIScheduler.SetExecutionTimeout(Long)
+  fullName.vb: Core.AI.AIScheduler.SetExecutionTimeout(Long)
+  name.vb: SetExecutionTimeout(Long)
+- uid: Core.AI.AIScheduler.Statistics
+  commentId: P:Core.AI.AIScheduler.Statistics
+  id: Statistics
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: Statistics
+  nameWithType: AIScheduler.Statistics
+  fullName: Core.AI.AIScheduler.Statistics
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Statistics
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 82
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get statistics for debugging.
+  example: []
+  syntax:
+    content: public AIStatistics Statistics { get; }
+    parameters: []
+    return:
+      type: Core.AI.AIStatistics
+    content.vb: Public ReadOnly Property Statistics As AIStatistics
+  overload: Core.AI.AIScheduler.Statistics*
+- uid: Core.AI.AIScheduler.ProcessHourlyTick(System.UInt16,Unity.Collections.NativeArray{Core.AI.AIState},Core.GameState)
+  commentId: M:Core.AI.AIScheduler.ProcessHourlyTick(System.UInt16,Unity.Collections.NativeArray{Core.AI.AIState},Core.GameState)
+  id: ProcessHourlyTick(System.UInt16,Unity.Collections.NativeArray{Core.AI.AIState},Core.GameState)
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: ProcessHourlyTick(ushort, NativeArray<AIState>, GameState)
+  nameWithType: AIScheduler.ProcessHourlyTick(ushort, NativeArray<AIState>, GameState)
+  fullName: Core.AI.AIScheduler.ProcessHourlyTick(ushort, Unity.Collections.NativeArray<Core.AI.AIState>, Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProcessHourlyTick
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Process AI for the current hour based on tier intervals.
+
+
+    Called once per game hour from AISystem.ProcessHourlyAI().
+  example: []
+  syntax:
+    content: public void ProcessHourlyTick(ushort currentHourOfYear, NativeArray<AIState> aiStates, GameState gameState)
+    parameters:
+    - id: currentHourOfYear
+      type: System.UInt16
+    - id: aiStates
+      type: Unity.Collections.NativeArray{Core.AI.AIState}
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Sub ProcessHourlyTick(currentHourOfYear As UShort, aiStates As NativeArray(Of AIState), gameState As GameState)
+  overload: Core.AI.AIScheduler.ProcessHourlyTick*
+  nameWithType.vb: AIScheduler.ProcessHourlyTick(UShort, NativeArray(Of AIState), GameState)
+  fullName.vb: Core.AI.AIScheduler.ProcessHourlyTick(UShort, Unity.Collections.NativeArray(Of Core.AI.AIState), Core.GameState)
+  name.vb: ProcessHourlyTick(UShort, NativeArray(Of AIState), GameState)
+- uid: Core.AI.AIScheduler.CalculateHourOfYear(System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.AI.AIScheduler.CalculateHourOfYear(System.Int32,System.Int32,System.Int32)
+  id: CalculateHourOfYear(System.Int32,System.Int32,System.Int32)
+  parent: Core.AI.AIScheduler
+  langs:
+  - csharp
+  - vb
+  name: CalculateHourOfYear(int, int, int)
+  nameWithType: AIScheduler.CalculateHourOfYear(int, int, int)
+  fullName: Core.AI.AIScheduler.CalculateHourOfYear(int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AIScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateHourOfYear
+    path: Scripts/Core/AI/AIScheduler.cs
+    startLine: 208
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Calculate hour-of-year from month, day, and hour.
+
+    Uses real month lengths via CalendarConstants.
+  example: []
+  syntax:
+    content: public static ushort CalculateHourOfYear(int month, int day, int hour)
+    parameters:
+    - id: month
+      type: System.Int32
+    - id: day
+      type: System.Int32
+    - id: hour
+      type: System.Int32
+    return:
+      type: System.UInt16
+    content.vb: Public Shared Function CalculateHourOfYear(month As Integer, day As Integer, hour As Integer) As UShort
+  overload: Core.AI.AIScheduler.CalculateHourOfYear*
+  nameWithType.vb: AIScheduler.CalculateHourOfYear(Integer, Integer, Integer)
+  fullName.vb: Core.AI.AIScheduler.CalculateHourOfYear(Integer, Integer, Integer)
+  name.vb: CalculateHourOfYear(Integer, Integer, Integer)
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.AI.AIScheduler.#ctor*
+  commentId: Overload:Core.AI.AIScheduler.#ctor
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler__ctor_Core_AI_AIGoalRegistry_Core_AI_AISchedulingConfig_
+  name: AIScheduler
+  nameWithType: AIScheduler.AIScheduler
+  fullName: Core.AI.AIScheduler.AIScheduler
+  nameWithType.vb: AIScheduler.New
+  fullName.vb: Core.AI.AIScheduler.New
+  name.vb: New
+- uid: Core.AI.AIGoalRegistry
+  commentId: T:Core.AI.AIGoalRegistry
+  parent: Core.AI
+  href: Core.AI.AIGoalRegistry.html
+  name: AIGoalRegistry
+  nameWithType: AIGoalRegistry
+  fullName: Core.AI.AIGoalRegistry
+- uid: Core.AI.AISchedulingConfig
+  commentId: T:Core.AI.AISchedulingConfig
+  parent: Core.AI
+  href: Core.AI.AISchedulingConfig.html
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig
+- uid: Core.AI.AIScheduler.SetConfig*
+  commentId: Overload:Core.AI.AIScheduler.SetConfig
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_SetConfig_Core_AI_AISchedulingConfig_
+  name: SetConfig
+  nameWithType: AIScheduler.SetConfig
+  fullName: Core.AI.AIScheduler.SetConfig
+- uid: Core.AI.AIScheduler.SetGoalSelector*
+  commentId: Overload:Core.AI.AIScheduler.SetGoalSelector
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_SetGoalSelector_Core_AI_IGoalSelector_
+  name: SetGoalSelector
+  nameWithType: AIScheduler.SetGoalSelector
+  fullName: Core.AI.AIScheduler.SetGoalSelector
+- uid: Core.AI.IGoalSelector
+  commentId: T:Core.AI.IGoalSelector
+  parent: Core.AI
+  href: Core.AI.IGoalSelector.html
+  name: IGoalSelector
+  nameWithType: IGoalSelector
+  fullName: Core.AI.IGoalSelector
+- uid: Core.AI.AIScheduler.SetExecutionTimeout*
+  commentId: Overload:Core.AI.AIScheduler.SetExecutionTimeout
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_SetExecutionTimeout_System_Int64_
+  name: SetExecutionTimeout
+  nameWithType: AIScheduler.SetExecutionTimeout
+  fullName: Core.AI.AIScheduler.SetExecutionTimeout
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Core.AI.AIScheduler.Statistics*
+  commentId: Overload:Core.AI.AIScheduler.Statistics
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_Statistics
+  name: Statistics
+  nameWithType: AIScheduler.Statistics
+  fullName: Core.AI.AIScheduler.Statistics
+- uid: Core.AI.AIStatistics
+  commentId: T:Core.AI.AIStatistics
+  parent: Core.AI
+  href: Core.AI.AIStatistics.html
+  name: AIStatistics
+  nameWithType: AIStatistics
+  fullName: Core.AI.AIStatistics
+- uid: Core.AI.AIScheduler.ProcessHourlyTick*
+  commentId: Overload:Core.AI.AIScheduler.ProcessHourlyTick
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_ProcessHourlyTick_System_UInt16_Unity_Collections_NativeArray_Core_AI_AIState__Core_GameState_
+  name: ProcessHourlyTick
+  nameWithType: AIScheduler.ProcessHourlyTick
+  fullName: Core.AI.AIScheduler.ProcessHourlyTick
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Unity.Collections.NativeArray{Core.AI.AIState}
+  commentId: T:Unity.Collections.NativeArray{Core.AI.AIState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.AI.AIState.html
+  name: NativeArray<AIState>
+  nameWithType: NativeArray<AIState>
+  fullName: Unity.Collections.NativeArray<Core.AI.AIState>
+  nameWithType.vb: NativeArray(Of AIState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.AI.AIState)
+  name.vb: NativeArray(Of AIState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.AI.AIState
+    name: AIState
+    href: Core.AI.AIState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.AI.AIState
+    name: AIState
+    href: Core.AI.AIState.html
+  - name: )
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.AI.AIScheduler.CalculateHourOfYear*
+  commentId: Overload:Core.AI.AIScheduler.CalculateHourOfYear
+  href: Core.AI.AIScheduler.html#Core_AI_AIScheduler_CalculateHourOfYear_System_Int32_System_Int32_System_Int32_
+  name: CalculateHourOfYear
+  nameWithType: AIScheduler.CalculateHourOfYear
+  fullName: Core.AI.AIScheduler.CalculateHourOfYear
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

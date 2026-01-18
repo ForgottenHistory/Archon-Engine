@@ -1,0 +1,288 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.ModifierTypeHelper
+  commentId: T:StarterKit.ModifierTypeHelper
+  id: ModifierTypeHelper
+  parent: StarterKit
+  children:
+  - StarterKit.ModifierTypeHelper.FromKey(System.String)
+  - StarterKit.ModifierTypeHelper.IsCountryWide(StarterKit.ModifierType)
+  - StarterKit.ModifierTypeHelper.IsMultiplicative(StarterKit.ModifierType)
+  - StarterKit.ModifierTypeHelper.ToKey(StarterKit.ModifierType)
+  langs:
+  - csharp
+  - vb
+  name: ModifierTypeHelper
+  nameWithType: ModifierTypeHelper
+  fullName: StarterKit.ModifierTypeHelper
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierTypeHelper
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 32
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Helper methods for modifier types
+  example: []
+  syntax:
+    content: public static class ModifierTypeHelper
+    content.vb: Public Module ModifierTypeHelper
+  inheritance:
+  - System.Object
+- uid: StarterKit.ModifierTypeHelper.FromKey(System.String)
+  commentId: M:StarterKit.ModifierTypeHelper.FromKey(System.String)
+  id: FromKey(System.String)
+  parent: StarterKit.ModifierTypeHelper
+  langs:
+  - csharp
+  - vb
+  name: FromKey(string)
+  nameWithType: ModifierTypeHelper.FromKey(string)
+  fullName: StarterKit.ModifierTypeHelper.FromKey(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromKey
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 37
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Convert string key (from JSON5) to ModifierType
+  example: []
+  syntax:
+    content: public static ModifierType? FromKey(string key)
+    parameters:
+    - id: key
+      type: System.String
+    return:
+      type: System.Nullable{StarterKit.ModifierType}
+    content.vb: Public Shared Function FromKey(key As String) As ModifierType?
+  overload: StarterKit.ModifierTypeHelper.FromKey*
+  nameWithType.vb: ModifierTypeHelper.FromKey(String)
+  fullName.vb: StarterKit.ModifierTypeHelper.FromKey(String)
+  name.vb: FromKey(String)
+- uid: StarterKit.ModifierTypeHelper.ToKey(StarterKit.ModifierType)
+  commentId: M:StarterKit.ModifierTypeHelper.ToKey(StarterKit.ModifierType)
+  id: ToKey(StarterKit.ModifierType)
+  parent: StarterKit.ModifierTypeHelper
+  langs:
+  - csharp
+  - vb
+  name: ToKey(ModifierType)
+  nameWithType: ModifierTypeHelper.ToKey(ModifierType)
+  fullName: StarterKit.ModifierTypeHelper.ToKey(StarterKit.ModifierType)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToKey
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 51
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get string key for a ModifierType
+  example: []
+  syntax:
+    content: public static string ToKey(ModifierType type)
+    parameters:
+    - id: type
+      type: StarterKit.ModifierType
+    return:
+      type: System.String
+    content.vb: Public Shared Function ToKey(type As ModifierType) As String
+  overload: StarterKit.ModifierTypeHelper.ToKey*
+- uid: StarterKit.ModifierTypeHelper.IsMultiplicative(StarterKit.ModifierType)
+  commentId: M:StarterKit.ModifierTypeHelper.IsMultiplicative(StarterKit.ModifierType)
+  id: IsMultiplicative(StarterKit.ModifierType)
+  parent: StarterKit.ModifierTypeHelper
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplicative(ModifierType)
+  nameWithType: ModifierTypeHelper.IsMultiplicative(ModifierType)
+  fullName: StarterKit.ModifierTypeHelper.IsMultiplicative(StarterKit.ModifierType)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsMultiplicative
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 65
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a modifier type is multiplicative (percentage) or additive (flat)
+  example: []
+  syntax:
+    content: public static bool IsMultiplicative(ModifierType type)
+    parameters:
+    - id: type
+      type: StarterKit.ModifierType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsMultiplicative(type As ModifierType) As Boolean
+  overload: StarterKit.ModifierTypeHelper.IsMultiplicative*
+- uid: StarterKit.ModifierTypeHelper.IsCountryWide(StarterKit.ModifierType)
+  commentId: M:StarterKit.ModifierTypeHelper.IsCountryWide(StarterKit.ModifierType)
+  id: IsCountryWide(StarterKit.ModifierType)
+  parent: StarterKit.ModifierTypeHelper
+  langs:
+  - csharp
+  - vb
+  name: IsCountryWide(ModifierType)
+  nameWithType: ModifierTypeHelper.IsCountryWide(ModifierType)
+  fullName: StarterKit.ModifierTypeHelper.IsCountryWide(StarterKit.ModifierType)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ModifierType.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCountryWide
+    path: Scripts/StarterKit/Data/ModifierType.cs
+    startLine: 80
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a modifier is province-local or country-wide
+  example: []
+  syntax:
+    content: public static bool IsCountryWide(ModifierType type)
+    parameters:
+    - id: type
+      type: StarterKit.ModifierType
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsCountryWide(type As ModifierType) As Boolean
+  overload: StarterKit.ModifierTypeHelper.IsCountryWide*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.ModifierTypeHelper.FromKey*
+  commentId: Overload:StarterKit.ModifierTypeHelper.FromKey
+  href: StarterKit.ModifierTypeHelper.html#StarterKit_ModifierTypeHelper_FromKey_System_String_
+  name: FromKey
+  nameWithType: ModifierTypeHelper.FromKey
+  fullName: StarterKit.ModifierTypeHelper.FromKey
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Nullable{StarterKit.ModifierType}
+  commentId: T:System.Nullable{StarterKit.ModifierType}
+  parent: System
+  definition: System.Nullable`1
+  href: StarterKit.ModifierType.html
+  name: ModifierType?
+  nameWithType: ModifierType?
+  fullName: StarterKit.ModifierType?
+  spec.csharp:
+  - uid: StarterKit.ModifierType
+    name: ModifierType
+    href: StarterKit.ModifierType.html
+  - name: '?'
+  spec.vb:
+  - uid: StarterKit.ModifierType
+    name: ModifierType
+    href: StarterKit.ModifierType.html
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: StarterKit.ModifierTypeHelper.ToKey*
+  commentId: Overload:StarterKit.ModifierTypeHelper.ToKey
+  href: StarterKit.ModifierTypeHelper.html#StarterKit_ModifierTypeHelper_ToKey_StarterKit_ModifierType_
+  name: ToKey
+  nameWithType: ModifierTypeHelper.ToKey
+  fullName: StarterKit.ModifierTypeHelper.ToKey
+- uid: StarterKit.ModifierType
+  commentId: T:StarterKit.ModifierType
+  parent: StarterKit
+  href: StarterKit.ModifierType.html
+  name: ModifierType
+  nameWithType: ModifierType
+  fullName: StarterKit.ModifierType
+- uid: StarterKit.ModifierTypeHelper.IsMultiplicative*
+  commentId: Overload:StarterKit.ModifierTypeHelper.IsMultiplicative
+  href: StarterKit.ModifierTypeHelper.html#StarterKit_ModifierTypeHelper_IsMultiplicative_StarterKit_ModifierType_
+  name: IsMultiplicative
+  nameWithType: ModifierTypeHelper.IsMultiplicative
+  fullName: StarterKit.ModifierTypeHelper.IsMultiplicative
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.ModifierTypeHelper.IsCountryWide*
+  commentId: Overload:StarterKit.ModifierTypeHelper.IsCountryWide
+  href: StarterKit.ModifierTypeHelper.html#StarterKit_ModifierTypeHelper_IsCountryWide_StarterKit_ModifierType_
+  name: IsCountryWide
+  nameWithType: ModifierTypeHelper.IsCountryWide
+  fullName: StarterKit.ModifierTypeHelper.IsCountryWide

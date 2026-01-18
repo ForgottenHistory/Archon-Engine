@@ -1,0 +1,229 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandExecutionRecord
+  commentId: T:Core.Commands.CommandExecutionRecord
+  id: CommandExecutionRecord
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandExecutionRecord.Checksum
+  - Core.Commands.CommandExecutionRecord.CommandType
+  - Core.Commands.CommandExecutionRecord.PlayerID
+  - Core.Commands.CommandExecutionRecord.StateChecksumAfter
+  - Core.Commands.CommandExecutionRecord.Tick
+  langs:
+  - csharp
+  - vb
+  name: CommandExecutionRecord
+  nameWithType: CommandExecutionRecord
+  fullName: Core.Commands.CommandExecutionRecord
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandExecutionRecord
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 299
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Record of command execution for history/debugging
+  example: []
+  syntax:
+    content: public struct CommandExecutionRecord
+    content.vb: Public Structure CommandExecutionRecord
+- uid: Core.Commands.CommandExecutionRecord.Tick
+  commentId: F:Core.Commands.CommandExecutionRecord.Tick
+  id: Tick
+  parent: Core.Commands.CommandExecutionRecord
+  langs:
+  - csharp
+  - vb
+  name: Tick
+  nameWithType: CommandExecutionRecord.Tick
+  fullName: Core.Commands.CommandExecutionRecord.Tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tick
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 301
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Tick
+    return:
+      type: System.UInt32
+    content.vb: Public Tick As UInteger
+- uid: Core.Commands.CommandExecutionRecord.CommandType
+  commentId: F:Core.Commands.CommandExecutionRecord.CommandType
+  id: CommandType
+  parent: Core.Commands.CommandExecutionRecord
+  langs:
+  - csharp
+  - vb
+  name: CommandType
+  nameWithType: CommandExecutionRecord.CommandType
+  fullName: Core.Commands.CommandExecutionRecord.CommandType
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandType
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 302
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public byte CommandType
+    return:
+      type: System.Byte
+    content.vb: Public CommandType As Byte
+- uid: Core.Commands.CommandExecutionRecord.PlayerID
+  commentId: F:Core.Commands.CommandExecutionRecord.PlayerID
+  id: PlayerID
+  parent: Core.Commands.CommandExecutionRecord
+  langs:
+  - csharp
+  - vb
+  name: PlayerID
+  nameWithType: CommandExecutionRecord.PlayerID
+  fullName: Core.Commands.CommandExecutionRecord.PlayerID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerID
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 303
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public ushort PlayerID
+    return:
+      type: System.UInt16
+    content.vb: Public PlayerID As UShort
+- uid: Core.Commands.CommandExecutionRecord.Checksum
+  commentId: F:Core.Commands.CommandExecutionRecord.Checksum
+  id: Checksum
+  parent: Core.Commands.CommandExecutionRecord
+  langs:
+  - csharp
+  - vb
+  name: Checksum
+  nameWithType: CommandExecutionRecord.Checksum
+  fullName: Core.Commands.CommandExecutionRecord.Checksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Checksum
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 304
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint Checksum
+    return:
+      type: System.UInt32
+    content.vb: Public Checksum As UInteger
+- uid: Core.Commands.CommandExecutionRecord.StateChecksumAfter
+  commentId: F:Core.Commands.CommandExecutionRecord.StateChecksumAfter
+  id: StateChecksumAfter
+  parent: Core.Commands.CommandExecutionRecord
+  langs:
+  - csharp
+  - vb
+  name: StateChecksumAfter
+  nameWithType: CommandExecutionRecord.StateChecksumAfter
+  fullName: Core.Commands.CommandExecutionRecord.StateChecksumAfter
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateChecksumAfter
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 305
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public uint StateChecksumAfter
+    return:
+      type: System.UInt32
+    content.vb: Public StateChecksumAfter As UInteger
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort

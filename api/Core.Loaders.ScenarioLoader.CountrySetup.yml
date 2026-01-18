@@ -1,0 +1,380 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader.CountrySetup
+  commentId: T:Core.Loaders.ScenarioLoader.CountrySetup
+  id: ScenarioLoader.CountrySetup
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.CountrySetup.Capital
+  - Core.Loaders.ScenarioLoader.CountrySetup.CountryId
+  - Core.Loaders.ScenarioLoader.CountrySetup.Government
+  - Core.Loaders.ScenarioLoader.CountrySetup.Name
+  - Core.Loaders.ScenarioLoader.CountrySetup.PrimaryCulture
+  - Core.Loaders.ScenarioLoader.CountrySetup.Religion
+  - Core.Loaders.ScenarioLoader.CountrySetup.Tag
+  - Core.Loaders.ScenarioLoader.CountrySetup.Technology
+  - Core.Loaders.ScenarioLoader.CountrySetup.Treasury
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader.CountrySetup
+  nameWithType: ScenarioLoader.CountrySetup
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySetup
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Initial setup for a country
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct ScenarioLoader.CountrySetup
+    content.vb: >-
+      <Serializable>
+
+      Public Structure ScenarioLoader.CountrySetup
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.CountryId
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.CountryId
+  id: CountryId
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: ScenarioLoader.CountrySetup.CountryId
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.CountryId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort CountryId
+    return:
+      type: System.UInt16
+    content.vb: Public CountryId As UShort
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Tag
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Tag
+  id: Tag
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Tag
+  nameWithType: ScenarioLoader.CountrySetup.Tag
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Tag
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Tag
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Tag
+    return:
+      type: System.String
+    content.vb: Public Tag As String
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Name
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Name
+  id: Name
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ScenarioLoader.CountrySetup.Name
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Name
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Name
+    return:
+      type: System.String
+    content.vb: Public Name As String
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Treasury
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Treasury
+  id: Treasury
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Treasury
+  nameWithType: ScenarioLoader.CountrySetup.Treasury
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Treasury
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Treasury
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public FixedPoint64 Treasury
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Treasury As FixedPoint64
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Technology
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Technology
+  id: Technology
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Technology
+  nameWithType: ScenarioLoader.CountrySetup.Technology
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Technology
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Technology
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 88
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public byte Technology
+    return:
+      type: System.Byte
+    content.vb: Public Technology As Byte
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Government
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Government
+  id: Government
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Government
+  nameWithType: ScenarioLoader.CountrySetup.Government
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Government
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Government
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Government
+    return:
+      type: System.String
+    content.vb: Public Government As String
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Religion
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Religion
+  id: Religion
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Religion
+  nameWithType: ScenarioLoader.CountrySetup.Religion
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Religion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Religion
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Religion
+    return:
+      type: System.String
+    content.vb: Public Religion As String
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.PrimaryCulture
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.PrimaryCulture
+  id: PrimaryCulture
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: PrimaryCulture
+  nameWithType: ScenarioLoader.CountrySetup.PrimaryCulture
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.PrimaryCulture
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PrimaryCulture
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string PrimaryCulture
+    return:
+      type: System.String
+    content.vb: Public PrimaryCulture As String
+- uid: Core.Loaders.ScenarioLoader.CountrySetup.Capital
+  commentId: F:Core.Loaders.ScenarioLoader.CountrySetup.Capital
+  id: Capital
+  parent: Core.Loaders.ScenarioLoader.CountrySetup
+  langs:
+  - csharp
+  - vb
+  name: Capital
+  nameWithType: ScenarioLoader.CountrySetup.Capital
+  fullName: Core.Loaders.ScenarioLoader.CountrySetup.Capital
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capital
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 92
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ushort Capital
+    return:
+      type: System.UInt16
+    content.vb: Public Capital As UShort
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte

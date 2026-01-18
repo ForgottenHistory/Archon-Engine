@@ -1,0 +1,255 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandValidationResult
+  commentId: T:Core.Commands.CommandValidationResult
+  id: CommandValidationResult
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandValidationResult.Error
+  - Core.Commands.CommandValidationResult.ErrorMessage
+  - Core.Commands.CommandValidationResult.Fail(Core.Commands.CommandValidationError,System.String)
+  - Core.Commands.CommandValidationResult.IsValid
+  - Core.Commands.CommandValidationResult.Success
+  langs:
+  - csharp
+  - vb
+  name: CommandValidationResult
+  nameWithType: CommandValidationResult
+  fullName: Core.Commands.CommandValidationResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandValidationResult
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Result of command validation
+  example: []
+  syntax:
+    content: public struct CommandValidationResult
+    content.vb: Public Structure CommandValidationResult
+- uid: Core.Commands.CommandValidationResult.IsValid
+  commentId: F:Core.Commands.CommandValidationResult.IsValid
+  id: IsValid
+  parent: Core.Commands.CommandValidationResult
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: CommandValidationResult.IsValid
+  fullName: Core.Commands.CommandValidationResult.IsValid
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 82
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public bool IsValid
+    return:
+      type: System.Boolean
+    content.vb: Public IsValid As Boolean
+- uid: Core.Commands.CommandValidationResult.Error
+  commentId: F:Core.Commands.CommandValidationResult.Error
+  id: Error
+  parent: Core.Commands.CommandValidationResult
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: CommandValidationResult.Error
+  fullName: Core.Commands.CommandValidationResult.Error
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Error
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 83
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandValidationError Error
+    return:
+      type: Core.Commands.CommandValidationError
+    content.vb: Public [Error] As CommandValidationError
+- uid: Core.Commands.CommandValidationResult.ErrorMessage
+  commentId: F:Core.Commands.CommandValidationResult.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Commands.CommandValidationResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: CommandValidationResult.ErrorMessage
+  fullName: Core.Commands.CommandValidationResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Core.Commands.CommandValidationResult.Success
+  commentId: M:Core.Commands.CommandValidationResult.Success
+  id: Success
+  parent: Core.Commands.CommandValidationResult
+  langs:
+  - csharp
+  - vb
+  name: Success()
+  nameWithType: CommandValidationResult.Success()
+  fullName: Core.Commands.CommandValidationResult.Success()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static CommandValidationResult Success()
+    return:
+      type: Core.Commands.CommandValidationResult
+    content.vb: Public Shared Function Success() As CommandValidationResult
+  overload: Core.Commands.CommandValidationResult.Success*
+- uid: Core.Commands.CommandValidationResult.Fail(Core.Commands.CommandValidationError,System.String)
+  commentId: M:Core.Commands.CommandValidationResult.Fail(Core.Commands.CommandValidationError,System.String)
+  id: Fail(Core.Commands.CommandValidationError,System.String)
+  parent: Core.Commands.CommandValidationResult
+  langs:
+  - csharp
+  - vb
+  name: Fail(CommandValidationError, string)
+  nameWithType: CommandValidationResult.Fail(CommandValidationError, string)
+  fullName: Core.Commands.CommandValidationResult.Fail(Core.Commands.CommandValidationError, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Fail
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static CommandValidationResult Fail(CommandValidationError error, string message = null)
+    parameters:
+    - id: error
+      type: Core.Commands.CommandValidationError
+    - id: message
+      type: System.String
+    return:
+      type: Core.Commands.CommandValidationResult
+    content.vb: Public Shared Function Fail([error] As CommandValidationError, message As String = Nothing) As CommandValidationResult
+  overload: Core.Commands.CommandValidationResult.Fail*
+  nameWithType.vb: CommandValidationResult.Fail(CommandValidationError, String)
+  fullName.vb: Core.Commands.CommandValidationResult.Fail(Core.Commands.CommandValidationError, String)
+  name.vb: Fail(CommandValidationError, String)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandValidationError
+  commentId: T:Core.Commands.CommandValidationError
+  parent: Core.Commands
+  href: Core.Commands.CommandValidationError.html
+  name: CommandValidationError
+  nameWithType: CommandValidationError
+  fullName: Core.Commands.CommandValidationError
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.CommandValidationResult.Success*
+  commentId: Overload:Core.Commands.CommandValidationResult.Success
+  href: Core.Commands.CommandValidationResult.html#Core_Commands_CommandValidationResult_Success
+  name: Success
+  nameWithType: CommandValidationResult.Success
+  fullName: Core.Commands.CommandValidationResult.Success
+- uid: Core.Commands.CommandValidationResult
+  commentId: T:Core.Commands.CommandValidationResult
+  parent: Core.Commands
+  href: Core.Commands.CommandValidationResult.html
+  name: CommandValidationResult
+  nameWithType: CommandValidationResult
+  fullName: Core.Commands.CommandValidationResult
+- uid: Core.Commands.CommandValidationResult.Fail*
+  commentId: Overload:Core.Commands.CommandValidationResult.Fail
+  href: Core.Commands.CommandValidationResult.html#Core_Commands_CommandValidationResult_Fail_Core_Commands_CommandValidationError_System_String_
+  name: Fail
+  nameWithType: CommandValidationResult.Fail
+  fullName: Core.Commands.CommandValidationResult.Fail

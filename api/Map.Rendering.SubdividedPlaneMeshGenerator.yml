@@ -1,0 +1,183 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.SubdividedPlaneMeshGenerator
+  commentId: T:Map.Rendering.SubdividedPlaneMeshGenerator
+  id: SubdividedPlaneMeshGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh(System.Int32)
+  - Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+  langs:
+  - csharp
+  - vb
+  name: SubdividedPlaneMeshGenerator
+  nameWithType: SubdividedPlaneMeshGenerator
+  fullName: Map.Rendering.SubdividedPlaneMeshGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SubdividedPlaneMeshGenerator
+    path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Utility to generate subdivided plane meshes for tessellation
+
+    Use via menu: Tools/Archon/Generate Subdivided Plane Mesh
+  example: []
+  syntax:
+    content: public static class SubdividedPlaneMeshGenerator
+    content.vb: Public Module SubdividedPlaneMeshGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+  commentId: M:Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+  id: GenerateSubdividedPlaneMesh
+  parent: Map.Rendering.SubdividedPlaneMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateSubdividedPlaneMesh()
+  nameWithType: SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh()
+  fullName: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateSubdividedPlaneMesh
+    path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: >-
+      [MenuItem("Tools/Archon/Generate Subdivided Plane Mesh")]
+
+      public static void GenerateSubdividedPlaneMesh()
+    content.vb: >-
+      <MenuItem("Tools/Archon/Generate Subdivided Plane Mesh")>
+
+      Public Shared Sub GenerateSubdividedPlaneMesh()
+  overload: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh*
+  attributes:
+  - type: UnityEditor.MenuItem
+    ctor: UnityEditor.MenuItem.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Tools/Archon/Generate Subdivided Plane Mesh
+- uid: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh(System.Int32)
+  commentId: M:Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh(System.Int32)
+  id: GenerateMesh(System.Int32)
+  parent: Map.Rendering.SubdividedPlaneMeshGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateMesh(int)
+  nameWithType: SubdividedPlaneMeshGenerator.GenerateMesh(int)
+  fullName: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateMesh
+    path: Scripts/Map/SubdividedPlaneMeshGenerator.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static Mesh GenerateMesh(int subdivisions)
+    parameters:
+    - id: subdivisions
+      type: System.Int32
+    return:
+      type: UnityEngine.Mesh
+    content.vb: Public Shared Function GenerateMesh(subdivisions As Integer) As Mesh
+  overload: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh*
+  nameWithType.vb: SubdividedPlaneMeshGenerator.GenerateMesh(Integer)
+  fullName.vb: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh(Integer)
+  name.vb: GenerateMesh(Integer)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh*
+  commentId: Overload:Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+  href: Map.Rendering.SubdividedPlaneMeshGenerator.html#Map_Rendering_SubdividedPlaneMeshGenerator_GenerateSubdividedPlaneMesh
+  name: GenerateSubdividedPlaneMesh
+  nameWithType: SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+  fullName: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateSubdividedPlaneMesh
+- uid: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh*
+  commentId: Overload:Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh
+  href: Map.Rendering.SubdividedPlaneMeshGenerator.html#Map_Rendering_SubdividedPlaneMeshGenerator_GenerateMesh_System_Int32_
+  name: GenerateMesh
+  nameWithType: SubdividedPlaneMeshGenerator.GenerateMesh
+  fullName: Map.Rendering.SubdividedPlaneMeshGenerator.GenerateMesh
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.Mesh
+  commentId: T:UnityEngine.Mesh
+  parent: UnityEngine
+  isExternal: true
+  name: Mesh
+  nameWithType: Mesh
+  fullName: UnityEngine.Mesh
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

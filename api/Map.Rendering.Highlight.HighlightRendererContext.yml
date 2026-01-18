@@ -1,0 +1,159 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Highlight.HighlightRendererContext
+  commentId: T:Map.Rendering.Highlight.HighlightRendererContext
+  id: HighlightRendererContext
+  parent: Map.Rendering.Highlight
+  children:
+  - Map.Rendering.Highlight.HighlightRendererContext.HighlightCompute
+  - Map.Rendering.Highlight.HighlightRendererContext.ProvinceMapping
+  langs:
+  - csharp
+  - vb
+  name: HighlightRendererContext
+  nameWithType: HighlightRendererContext
+  fullName: Map.Rendering.Highlight.HighlightRendererContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightRendererContext
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  summary: Context provided to highlight renderers during initialization.
+  example: []
+  syntax:
+    content: public struct HighlightRendererContext
+    content.vb: Public Structure HighlightRendererContext
+- uid: Map.Rendering.Highlight.HighlightRendererContext.HighlightCompute
+  commentId: F:Map.Rendering.Highlight.HighlightRendererContext.HighlightCompute
+  id: HighlightCompute
+  parent: Map.Rendering.Highlight.HighlightRendererContext
+  langs:
+  - csharp
+  - vb
+  name: HighlightCompute
+  nameWithType: HighlightRendererContext.HighlightCompute
+  fullName: Map.Rendering.Highlight.HighlightRendererContext.HighlightCompute
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightCompute
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 95
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  syntax:
+    content: public ComputeShader HighlightCompute
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public HighlightCompute As ComputeShader
+- uid: Map.Rendering.Highlight.HighlightRendererContext.ProvinceMapping
+  commentId: F:Map.Rendering.Highlight.HighlightRendererContext.ProvinceMapping
+  id: ProvinceMapping
+  parent: Map.Rendering.Highlight.HighlightRendererContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapping
+  nameWithType: HighlightRendererContext.ProvinceMapping
+  fullName: Map.Rendering.Highlight.HighlightRendererContext.ProvinceMapping
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMapping
+    path: Scripts/Map/Rendering/Highlight/IHighlightRenderer.cs
+    startLine: 96
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Highlight
+  syntax:
+    content: public ProvinceMapping ProvinceMapping
+    return:
+      type: Map.Rendering.ProvinceMapping
+    content.vb: Public ProvinceMapping As ProvinceMapping
+references:
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html

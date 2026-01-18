@@ -1,0 +1,140 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  commentId: T:Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  id: ProvinceMapProcessor.BMPPixelDataWrapper
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapProcessor.BMPPixelDataWrapper
+  nameWithType: ProvinceMapProcessor.BMPPixelDataWrapper
+  fullName: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPPixelDataWrapper
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Wrapper for pixel data access (supports both BMP and PNG)
+  example: []
+  syntax:
+    content: public struct ProvinceMapProcessor.BMPPixelDataWrapper
+    content.vb: Public Structure ProvinceMapProcessor.BMPPixelDataWrapper
+- uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  commentId: M:Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  id: TryGetPixelRGB(System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
+  parent: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper
+  langs:
+  - csharp
+  - vb
+  name: TryGetPixelRGB(int, int, out byte, out byte, out byte)
+  nameWithType: ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(int, int, out byte, out byte, out byte)
+  fullName: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(int, int, out byte, out byte, out byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetPixelRGB
+    path: Scripts/Map/Loading/ProvinceMapProcessor.cs
+    startLine: 127
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Try to get RGB values at pixel coordinates
+  example: []
+  syntax:
+    content: public bool TryGetPixelRGB(int x, int y, out byte r, out byte g, out byte b)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    - id: r
+      type: System.Byte
+    - id: g
+      type: System.Byte
+    - id: b
+      type: System.Byte
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGetPixelRGB(x As Integer, y As Integer, r As Byte, g As Byte, b As Byte) As Boolean
+  overload: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB*
+  nameWithType.vb: ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(Integer, Integer, Byte, Byte, Byte)
+  fullName.vb: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB(Integer, Integer, Byte, Byte, Byte)
+  name.vb: TryGetPixelRGB(Integer, Integer, Byte, Byte, Byte)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB*
+  commentId: Overload:Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB
+  href: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.html#Map_Loading_ProvinceMapProcessor_BMPPixelDataWrapper_TryGetPixelRGB_System_Int32_System_Int32_System_Byte__System_Byte__System_Byte__
+  name: TryGetPixelRGB
+  nameWithType: ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB
+  fullName: Map.Loading.ProvinceMapProcessor.BMPPixelDataWrapper.TryGetPixelRGB
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

@@ -1,0 +1,245 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyKeyHelper
+  commentId: T:Core.Diplomacy.DiplomacyKeyHelper
+  id: DiplomacyKeyHelper
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyKeyHelper.GetKey(System.UInt16,System.UInt16)
+  - Core.Diplomacy.DiplomacyKeyHelper.UnpackKey(System.UInt64)
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyKeyHelper
+  nameWithType: DiplomacyKeyHelper
+  fullName: Core.Diplomacy.DiplomacyKeyHelper
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyKeyHelper
+    path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Helper for packing/unpacking country pairs into relationship keys.
+
+    PATTERN: Static utility class (no state).
+
+    Ensures consistent key generation (always smaller ID first).
+
+    Prevents duplicate relationships (A to B and B to A use same key).
+
+    KEY FORMAT: ulong 64 bits, country1 always less than country2 (normalized order).
+  example: []
+  syntax:
+    content: public static class DiplomacyKeyHelper
+    content.vb: Public Module DiplomacyKeyHelper
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacyKeyHelper.GetKey(System.UInt16,System.UInt16)
+  commentId: M:Core.Diplomacy.DiplomacyKeyHelper.GetKey(System.UInt16,System.UInt16)
+  id: GetKey(System.UInt16,System.UInt16)
+  parent: Core.Diplomacy.DiplomacyKeyHelper
+  langs:
+  - csharp
+  - vb
+  name: GetKey(ushort, ushort)
+  nameWithType: DiplomacyKeyHelper.GetKey(ushort, ushort)
+  fullName: Core.Diplomacy.DiplomacyKeyHelper.GetKey(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetKey
+    path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Pack two country IDs into a single ulong key
+
+    Ensures country1 is less than country2 for consistent ordering
+  example: []
+  syntax:
+    content: public static ulong GetKey(ushort country1, ushort country2)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    return:
+      type: System.UInt64
+    content.vb: Public Shared Function GetKey(country1 As UShort, country2 As UShort) As ULong
+  overload: Core.Diplomacy.DiplomacyKeyHelper.GetKey*
+  nameWithType.vb: DiplomacyKeyHelper.GetKey(UShort, UShort)
+  fullName.vb: Core.Diplomacy.DiplomacyKeyHelper.GetKey(UShort, UShort)
+  name.vb: GetKey(UShort, UShort)
+- uid: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey(System.UInt64)
+  commentId: M:Core.Diplomacy.DiplomacyKeyHelper.UnpackKey(System.UInt64)
+  id: UnpackKey(System.UInt64)
+  parent: Core.Diplomacy.DiplomacyKeyHelper
+  langs:
+  - csharp
+  - vb
+  name: UnpackKey(ulong)
+  nameWithType: DiplomacyKeyHelper.UnpackKey(ulong)
+  fullName: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey(ulong)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnpackKey
+    path: Scripts/Core/Diplomacy/DiplomacyKeyHelper.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Unpack a relationship key into two country IDs
+
+    Returns (country1, country2) where country1 is less than country2
+  example: []
+  syntax:
+    content: public static (ushort, ushort) UnpackKey(ulong key)
+    parameters:
+    - id: key
+      type: System.UInt64
+    return:
+      type: System.ValueTuple{System.UInt16,System.UInt16}
+    content.vb: Public Shared Function UnpackKey(key As ULong) As (UShort, UShort)
+  overload: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey*
+  nameWithType.vb: DiplomacyKeyHelper.UnpackKey(ULong)
+  fullName.vb: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey(ULong)
+  name.vb: UnpackKey(ULong)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacyKeyHelper.GetKey*
+  commentId: Overload:Core.Diplomacy.DiplomacyKeyHelper.GetKey
+  href: Core.Diplomacy.DiplomacyKeyHelper.html#Core_Diplomacy_DiplomacyKeyHelper_GetKey_System_UInt16_System_UInt16_
+  name: GetKey
+  nameWithType: DiplomacyKeyHelper.GetKey
+  fullName: Core.Diplomacy.DiplomacyKeyHelper.GetKey
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey*
+  commentId: Overload:Core.Diplomacy.DiplomacyKeyHelper.UnpackKey
+  href: Core.Diplomacy.DiplomacyKeyHelper.html#Core_Diplomacy_DiplomacyKeyHelper_UnpackKey_System_UInt64_
+  name: UnpackKey
+  nameWithType: DiplomacyKeyHelper.UnpackKey
+  fullName: Core.Diplomacy.DiplomacyKeyHelper.UnpackKey
+- uid: System.ValueTuple{System.UInt16,System.UInt16}
+  commentId: T:System.ValueTuple{System.UInt16,System.UInt16}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (ushort, ushort)
+  nameWithType: (ushort, ushort)
+  fullName: (ushort, ushort)
+  nameWithType.vb: (UShort, UShort)
+  fullName.vb: (UShort, UShort)
+  name.vb: (UShort, UShort)
+  spec.csharp:
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )

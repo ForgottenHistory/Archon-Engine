@@ -1,0 +1,371 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Jobs.CountryProcessingJob
+  commentId: T:Core.Jobs.CountryProcessingJob
+  id: CountryProcessingJob
+  parent: Core.Jobs
+  children:
+  - Core.Jobs.CountryProcessingJob.Execute(System.Int32)
+  - Core.Jobs.CountryProcessingJob.applyDefaults
+  - Core.Jobs.CountryProcessingJob.hotResults
+  - Core.Jobs.CountryProcessingJob.rawData
+  - Core.Jobs.CountryProcessingJob.validateData
+  langs:
+  - csharp
+  - vb
+  name: CountryProcessingJob
+  nameWithType: CountryProcessingJob
+  fullName: Core.Jobs.CountryProcessingJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryProcessingJob
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    Burst-compiled job for processing country data
+
+    Phase 2 of the hybrid JSON5 + Burst architecture for countries
+
+    Converts RawCountryData to final CountryData
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile(OptimizeFor = OptimizeFor.Performance)]
+
+      public struct CountryProcessingJob
+    content.vb: >-
+      <BurstCompile(OptimizeFor:=OptimizeFor.Performance)>
+
+      Public Structure CountryProcessingJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+    namedArguments:
+    - name: OptimizeFor
+      type: Unity.Burst.OptimizeFor
+      value: 1
+- uid: Core.Jobs.CountryProcessingJob.rawData
+  commentId: F:Core.Jobs.CountryProcessingJob.rawData
+  id: rawData
+  parent: Core.Jobs.CountryProcessingJob
+  langs:
+  - csharp
+  - vb
+  name: rawData
+  nameWithType: CountryProcessingJob.rawData
+  fullName: Core.Jobs.CountryProcessingJob.rawData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: rawData
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public NativeArray<RawCountryData> rawData
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.RawCountryData}
+    content.vb: Public rawData As NativeArray(Of RawCountryData)
+- uid: Core.Jobs.CountryProcessingJob.hotResults
+  commentId: F:Core.Jobs.CountryProcessingJob.hotResults
+  id: hotResults
+  parent: Core.Jobs.CountryProcessingJob
+  langs:
+  - csharp
+  - vb
+  name: hotResults
+  nameWithType: CountryProcessingJob.hotResults
+  fullName: Core.Jobs.CountryProcessingJob.hotResults
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: hotResults
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: >-
+      [WriteOnly]
+
+      public NativeArray<CountryHotData> hotResults
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.CountryHotData}
+    content.vb: >-
+      <WriteOnly>
+
+      Public hotResults As NativeArray(Of CountryHotData)
+  attributes:
+  - type: Unity.Collections.WriteOnlyAttribute
+    ctor: Unity.Collections.WriteOnlyAttribute.#ctor
+    arguments: []
+- uid: Core.Jobs.CountryProcessingJob.validateData
+  commentId: F:Core.Jobs.CountryProcessingJob.validateData
+  id: validateData
+  parent: Core.Jobs.CountryProcessingJob
+  langs:
+  - csharp
+  - vb
+  name: validateData
+  nameWithType: CountryProcessingJob.validateData
+  fullName: Core.Jobs.CountryProcessingJob.validateData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: validateData
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public bool validateData
+    return:
+      type: System.Boolean
+    content.vb: Public validateData As Boolean
+- uid: Core.Jobs.CountryProcessingJob.applyDefaults
+  commentId: F:Core.Jobs.CountryProcessingJob.applyDefaults
+  id: applyDefaults
+  parent: Core.Jobs.CountryProcessingJob
+  langs:
+  - csharp
+  - vb
+  name: applyDefaults
+  nameWithType: CountryProcessingJob.applyDefaults
+  fullName: Core.Jobs.CountryProcessingJob.applyDefaults
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: applyDefaults
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  syntax:
+    content: public bool applyDefaults
+    return:
+      type: System.Boolean
+    content.vb: Public applyDefaults As Boolean
+- uid: Core.Jobs.CountryProcessingJob.Execute(System.Int32)
+  commentId: M:Core.Jobs.CountryProcessingJob.Execute(System.Int32)
+  id: Execute(System.Int32)
+  parent: Core.Jobs.CountryProcessingJob
+  langs:
+  - csharp
+  - vb
+  name: Execute(int)
+  nameWithType: CountryProcessingJob.Execute(int)
+  fullName: Core.Jobs.CountryProcessingJob.Execute(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/CountryProcessingJob.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Jobs/CountryProcessingJob.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: <p>Performs work against a specific iteration index.</p>
+  example: []
+  syntax:
+    content: public void Execute(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The index of the Parallel for loop at which to perform work.
+    content.vb: Public Sub Execute(index As Integer)
+  overload: Core.Jobs.CountryProcessingJob.Execute*
+  nameWithType.vb: CountryProcessingJob.Execute(Integer)
+  fullName.vb: Core.Jobs.CountryProcessingJob.Execute(Integer)
+  name.vb: Execute(Integer)
+references:
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  href: Core.html
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+- uid: Unity.Collections.NativeArray{Core.Data.RawCountryData}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.RawCountryData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.RawCountryData.html
+  name: NativeArray<RawCountryData>
+  nameWithType: NativeArray<RawCountryData>
+  fullName: Unity.Collections.NativeArray<Core.Data.RawCountryData>
+  nameWithType.vb: NativeArray(Of RawCountryData)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.RawCountryData)
+  name.vb: NativeArray(Of RawCountryData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.RawCountryData
+    name: RawCountryData
+    href: Core.Data.RawCountryData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.RawCountryData
+    name: RawCountryData
+    href: Core.Data.RawCountryData.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray{Core.Data.CountryHotData}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.CountryHotData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.CountryHotData.html
+  name: NativeArray<CountryHotData>
+  nameWithType: NativeArray<CountryHotData>
+  fullName: Unity.Collections.NativeArray<Core.Data.CountryHotData>
+  nameWithType.vb: NativeArray(Of CountryHotData)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.CountryHotData)
+  name.vb: NativeArray(Of CountryHotData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.CountryHotData
+    name: CountryHotData
+    href: Core.Data.CountryHotData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.CountryHotData
+    name: CountryHotData
+    href: Core.Data.CountryHotData.html
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Jobs.CountryProcessingJob.Execute*
+  commentId: Overload:Core.Jobs.CountryProcessingJob.Execute
+  href: Core.Jobs.CountryProcessingJob.html#Core_Jobs_CountryProcessingJob_Execute_System_Int32_
+  name: Execute
+  nameWithType: CountryProcessingJob.Execute
+  fullName: Core.Jobs.CountryProcessingJob.Execute
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

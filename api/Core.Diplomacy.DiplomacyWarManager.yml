@@ -1,0 +1,838 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.DiplomacyWarManager
+  commentId: T:Core.Diplomacy.DiplomacyWarManager
+  id: DiplomacyWarManager
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.DiplomacyWarManager.DeclareWar(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  - Core.Diplomacy.DiplomacyWarManager.GetAllWars(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  - Core.Diplomacy.DiplomacyWarManager.GetEnemies(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  - Core.Diplomacy.DiplomacyWarManager.GetWarCount(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  - Core.Diplomacy.DiplomacyWarManager.HasAnyWar(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  - Core.Diplomacy.DiplomacyWarManager.IsAtWar(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashSet{System.UInt64})
+  - Core.Diplomacy.DiplomacyWarManager.MakePeace(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: DiplomacyWarManager
+  nameWithType: DiplomacyWarManager
+  fullName: Core.Diplomacy.DiplomacyWarManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiplomacyWarManager
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Manages war state and war-related queries
+
+
+    RESPONSIBILITY:
+
+    - War state queries (IsAtWar, GetEnemies, GetAllWars)
+
+    - War declarations and peace treaties
+
+    - War index management (warsByCountry for fast lookups)
+
+
+    PATTERN: Stateless manager (receives data references from DiplomacySystem)
+
+    - Does NOT own NativeCollections (passed as parameters)
+
+    - Manages activeWars HashSet and warsByCountry index
+
+    - Emits events through GameState.EventBus
+
+
+    PERFORMANCE:
+
+    - IsAtWar: O(1) HashSet lookup
+
+    - GetEnemies: O(k) where k = enemies for this country
+
+    - DeclareWar: O(1) + event emission
+  example: []
+  syntax:
+    content: public static class DiplomacyWarManager
+    content.vb: Public Module DiplomacyWarManager
+  inheritance:
+  - System.Object
+- uid: Core.Diplomacy.DiplomacyWarManager.IsAtWar(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashSet{System.UInt64})
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.IsAtWar(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashSet{System.UInt64})
+  id: IsAtWar(System.UInt16,System.UInt16,Unity.Collections.NativeParallelHashSet{System.UInt64})
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: IsAtWar(ushort, ushort, NativeParallelHashSet<ulong>)
+  nameWithType: DiplomacyWarManager.IsAtWar(ushort, ushort, NativeParallelHashSet<ulong>)
+  fullName: Core.Diplomacy.DiplomacyWarManager.IsAtWar(ushort, ushort, Unity.Collections.NativeParallelHashSet<ulong>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsAtWar
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Check if two countries are at war
+
+    O(1) HashSet lookup
+  example: []
+  syntax:
+    content: public static bool IsAtWar(ushort country1, ushort country2, NativeParallelHashSet<ulong> activeWars)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsAtWar(country1 As UShort, country2 As UShort, activeWars As NativeParallelHashSet(Of ULong)) As Boolean
+  overload: Core.Diplomacy.DiplomacyWarManager.IsAtWar*
+  nameWithType.vb: DiplomacyWarManager.IsAtWar(UShort, UShort, NativeParallelHashSet(Of ULong))
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.IsAtWar(UShort, UShort, Unity.Collections.NativeParallelHashSet(Of ULong))
+  name.vb: IsAtWar(UShort, UShort, NativeParallelHashSet(Of ULong))
+- uid: Core.Diplomacy.DiplomacyWarManager.GetEnemies(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.GetEnemies(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  id: GetEnemies(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: GetEnemies(ushort, NativeParallelMultiHashMap<ushort, ushort>)
+  nameWithType: DiplomacyWarManager.GetEnemies(ushort, NativeParallelMultiHashMap<ushort, ushort>)
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetEnemies(ushort, Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetEnemies
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all countries at war with the given country
+
+    Optimized with warsByCountry index
+  example: []
+  syntax:
+    content: public static List<ushort> GetEnemies(ushort countryID, NativeParallelMultiHashMap<ushort, ushort> warsByCountry)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: warsByCountry
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Shared Function GetEnemies(countryID As UShort, warsByCountry As NativeParallelMultiHashMap(Of UShort, UShort)) As List(Of UShort)
+  overload: Core.Diplomacy.DiplomacyWarManager.GetEnemies*
+  nameWithType.vb: DiplomacyWarManager.GetEnemies(UShort, NativeParallelMultiHashMap(Of UShort, UShort))
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.GetEnemies(UShort, Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort))
+  name.vb: GetEnemies(UShort, NativeParallelMultiHashMap(Of UShort, UShort))
+- uid: Core.Diplomacy.DiplomacyWarManager.GetAllWars(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.GetAllWars(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  id: GetAllWars(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: GetAllWars(NativeParallelHashSet<ulong>)
+  nameWithType: DiplomacyWarManager.GetAllWars(NativeParallelHashSet<ulong>)
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetAllWars(Unity.Collections.NativeParallelHashSet<ulong>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllWars
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get all active wars as country pairs
+
+    Used for debugging and UI
+  example: []
+  syntax:
+    content: public static List<(ushort, ushort)> GetAllWars(NativeParallelHashSet<ulong> activeWars)
+    parameters:
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    return:
+      type: System.Collections.Generic.List{System.ValueTuple{System.UInt16,System.UInt16}}
+    content.vb: Public Shared Function GetAllWars(activeWars As NativeParallelHashSet(Of ULong)) As List(Of (UShort, UShort))
+  overload: Core.Diplomacy.DiplomacyWarManager.GetAllWars*
+  nameWithType.vb: DiplomacyWarManager.GetAllWars(NativeParallelHashSet(Of ULong))
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.GetAllWars(Unity.Collections.NativeParallelHashSet(Of ULong))
+  name.vb: GetAllWars(NativeParallelHashSet(Of ULong))
+- uid: Core.Diplomacy.DiplomacyWarManager.GetWarCount(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.GetWarCount(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  id: GetWarCount(Unity.Collections.NativeParallelHashSet{System.UInt64})
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: GetWarCount(NativeParallelHashSet<ulong>)
+  nameWithType: DiplomacyWarManager.GetWarCount(NativeParallelHashSet<ulong>)
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetWarCount(Unity.Collections.NativeParallelHashSet<ulong>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetWarCount
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Get count of active wars
+  example: []
+  syntax:
+    content: public static int GetWarCount(NativeParallelHashSet<ulong> activeWars)
+    parameters:
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function GetWarCount(activeWars As NativeParallelHashSet(Of ULong)) As Integer
+  overload: Core.Diplomacy.DiplomacyWarManager.GetWarCount*
+  nameWithType.vb: DiplomacyWarManager.GetWarCount(NativeParallelHashSet(Of ULong))
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.GetWarCount(Unity.Collections.NativeParallelHashSet(Of ULong))
+  name.vb: GetWarCount(NativeParallelHashSet(Of ULong))
+- uid: Core.Diplomacy.DiplomacyWarManager.HasAnyWar(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.HasAnyWar(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  id: HasAnyWar(System.UInt16,Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16})
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: HasAnyWar(ushort, NativeParallelMultiHashMap<ushort, ushort>)
+  nameWithType: DiplomacyWarManager.HasAnyWar(ushort, NativeParallelMultiHashMap<ushort, ushort>)
+  fullName: Core.Diplomacy.DiplomacyWarManager.HasAnyWar(ushort, Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasAnyWar
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 96
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Check if a country is at war with anyone.
+
+    O(1) check using warsByCountry index.
+  example: []
+  syntax:
+    content: public static bool HasAnyWar(ushort countryID, NativeParallelMultiHashMap<ushort, ushort> warsByCountry)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    - id: warsByCountry
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasAnyWar(countryID As UShort, warsByCountry As NativeParallelMultiHashMap(Of UShort, UShort)) As Boolean
+  overload: Core.Diplomacy.DiplomacyWarManager.HasAnyWar*
+  nameWithType.vb: DiplomacyWarManager.HasAnyWar(UShort, NativeParallelMultiHashMap(Of UShort, UShort))
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.HasAnyWar(UShort, Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort))
+  name.vb: HasAnyWar(UShort, NativeParallelMultiHashMap(Of UShort, UShort))
+- uid: Core.Diplomacy.DiplomacyWarManager.DeclareWar(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.DeclareWar(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  id: DeclareWar(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: DeclareWar(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, GameState)
+  nameWithType: DiplomacyWarManager.DeclareWar(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, GameState)
+  fullName: Core.Diplomacy.DiplomacyWarManager.DeclareWar(ushort, ushort, int, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeParallelHashSet<ulong>, Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>, Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeclareWar
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Declare war between two countries
+
+    Called by DeclareWarCommand after validation
+  example: []
+  syntax:
+    content: public static void DeclareWar(ushort attackerID, ushort defenderID, int currentTick, NativeParallelHashMap<ulong, RelationData> relations, NativeParallelHashSet<ulong> activeWars, NativeParallelMultiHashMap<ushort, ushort> warsByCountry, GameState gameState)
+    parameters:
+    - id: attackerID
+      type: System.UInt16
+    - id: defenderID
+      type: System.UInt16
+    - id: currentTick
+      type: System.Int32
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    - id: warsByCountry
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Shared Sub DeclareWar(attackerID As UShort, defenderID As UShort, currentTick As Integer, relations As NativeParallelHashMap(Of ULong, RelationData), activeWars As NativeParallelHashSet(Of ULong), warsByCountry As NativeParallelMultiHashMap(Of UShort, UShort), gameState As GameState)
+  overload: Core.Diplomacy.DiplomacyWarManager.DeclareWar*
+  nameWithType.vb: DiplomacyWarManager.DeclareWar(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), GameState)
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.DeclareWar(UShort, UShort, Integer, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeParallelHashSet(Of ULong), Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort), Core.GameState)
+  name.vb: DeclareWar(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), GameState)
+- uid: Core.Diplomacy.DiplomacyWarManager.MakePeace(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  commentId: M:Core.Diplomacy.DiplomacyWarManager.MakePeace(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  id: MakePeace(System.UInt16,System.UInt16,System.Int32,Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData},Unity.Collections.NativeParallelHashSet{System.UInt64},Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16},Core.GameState)
+  parent: Core.Diplomacy.DiplomacyWarManager
+  langs:
+  - csharp
+  - vb
+  name: MakePeace(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, GameState)
+  nameWithType: DiplomacyWarManager.MakePeace(ushort, ushort, int, NativeParallelHashMap<ulong, RelationData>, NativeParallelHashSet<ulong>, NativeParallelMultiHashMap<ushort, ushort>, GameState)
+  fullName: Core.Diplomacy.DiplomacyWarManager.MakePeace(ushort, ushort, int, Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>, Unity.Collections.NativeParallelHashSet<ulong>, Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>, Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MakePeace
+    path: Scripts/Core/Diplomacy/DiplomacyWarManager.cs
+    startLine: 151
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Make peace between two countries
+
+    Called by MakePeaceCommand after validation
+  example: []
+  syntax:
+    content: public static void MakePeace(ushort country1, ushort country2, int currentTick, NativeParallelHashMap<ulong, RelationData> relations, NativeParallelHashSet<ulong> activeWars, NativeParallelMultiHashMap<ushort, ushort> warsByCountry, GameState gameState)
+    parameters:
+    - id: country1
+      type: System.UInt16
+    - id: country2
+      type: System.UInt16
+    - id: currentTick
+      type: System.Int32
+    - id: relations
+      type: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+    - id: activeWars
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}
+    - id: warsByCountry
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Shared Sub MakePeace(country1 As UShort, country2 As UShort, currentTick As Integer, relations As NativeParallelHashMap(Of ULong, RelationData), activeWars As NativeParallelHashSet(Of ULong), warsByCountry As NativeParallelMultiHashMap(Of UShort, UShort), gameState As GameState)
+  overload: Core.Diplomacy.DiplomacyWarManager.MakePeace*
+  nameWithType.vb: DiplomacyWarManager.MakePeace(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), GameState)
+  fullName.vb: Core.Diplomacy.DiplomacyWarManager.MakePeace(UShort, UShort, Integer, Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData), Unity.Collections.NativeParallelHashSet(Of ULong), Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort), Core.GameState)
+  name.vb: MakePeace(UShort, UShort, Integer, NativeParallelHashMap(Of ULong, RelationData), NativeParallelHashSet(Of ULong), NativeParallelMultiHashMap(Of UShort, UShort), GameState)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Diplomacy.DiplomacyWarManager.IsAtWar*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.IsAtWar
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_IsAtWar_System_UInt16_System_UInt16_Unity_Collections_NativeParallelHashSet_System_UInt64__
+  name: IsAtWar
+  nameWithType: DiplomacyWarManager.IsAtWar
+  fullName: Core.Diplomacy.DiplomacyWarManager.IsAtWar
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Unity.Collections.NativeParallelHashSet{System.UInt64}
+  commentId: T:Unity.Collections.NativeParallelHashSet{System.UInt64}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashSet`1
+  name: NativeParallelHashSet<ulong>
+  nameWithType: NativeParallelHashSet<ulong>
+  fullName: Unity.Collections.NativeParallelHashSet<ulong>
+  nameWithType.vb: NativeParallelHashSet(Of ULong)
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of ULong)
+  name.vb: NativeParallelHashSet(Of ULong)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Unity.Collections.NativeParallelHashSet`1
+  commentId: T:Unity.Collections.NativeParallelHashSet`1
+  isExternal: true
+  name: NativeParallelHashSet<T>
+  nameWithType: NativeParallelHashSet<T>
+  fullName: Unity.Collections.NativeParallelHashSet<T>
+  nameWithType.vb: NativeParallelHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of T)
+  name.vb: NativeParallelHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Diplomacy.DiplomacyWarManager.GetEnemies*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.GetEnemies
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_GetEnemies_System_UInt16_Unity_Collections_NativeParallelMultiHashMap_System_UInt16_System_UInt16__
+  name: GetEnemies
+  nameWithType: DiplomacyWarManager.GetEnemies
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetEnemies
+- uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelMultiHashMap`2
+  name: NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType: NativeParallelMultiHashMap<ushort, ushort>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort)
+  name.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeParallelMultiHashMap`2
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap`2
+  isExternal: true
+  name: NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType: NativeParallelMultiHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of TKey, TValue)
+  name.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Diplomacy.DiplomacyWarManager.GetAllWars*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.GetAllWars
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_GetAllWars_Unity_Collections_NativeParallelHashSet_System_UInt64__
+  name: GetAllWars
+  nameWithType: DiplomacyWarManager.GetAllWars
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetAllWars
+- uid: System.Collections.Generic.List{System.ValueTuple{System.UInt16,System.UInt16}}
+  commentId: T:System.Collections.Generic.List{System.ValueTuple{System.UInt16,System.UInt16}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<(ushort, ushort)>
+  nameWithType: List<(ushort, ushort)>
+  fullName: System.Collections.Generic.List<(ushort, ushort)>
+  nameWithType.vb: List(Of (UShort, UShort))
+  fullName.vb: System.Collections.Generic.List(Of (UShort, UShort))
+  name.vb: List(Of (UShort, UShort))
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Core.Diplomacy.DiplomacyWarManager.GetWarCount*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.GetWarCount
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_GetWarCount_Unity_Collections_NativeParallelHashSet_System_UInt64__
+  name: GetWarCount
+  nameWithType: DiplomacyWarManager.GetWarCount
+  fullName: Core.Diplomacy.DiplomacyWarManager.GetWarCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.DiplomacyWarManager.HasAnyWar*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.HasAnyWar
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_HasAnyWar_System_UInt16_Unity_Collections_NativeParallelMultiHashMap_System_UInt16_System_UInt16__
+  name: HasAnyWar
+  nameWithType: DiplomacyWarManager.HasAnyWar
+  fullName: Core.Diplomacy.DiplomacyWarManager.HasAnyWar
+- uid: Core.Diplomacy.DiplomacyWarManager.DeclareWar*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.DeclareWar
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_DeclareWar_System_UInt16_System_UInt16_System_Int32_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeParallelHashSet_System_UInt64__Unity_Collections_NativeParallelMultiHashMap_System_UInt16_System_UInt16__Core_GameState_
+  name: DeclareWar
+  nameWithType: DiplomacyWarManager.DeclareWar
+  fullName: Core.Diplomacy.DiplomacyWarManager.DeclareWar
+- uid: Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  commentId: T:Unity.Collections.NativeParallelHashMap{System.UInt64,Core.Diplomacy.RelationData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashMap`2
+  href: Core.Diplomacy.RelationData.html
+  name: NativeParallelHashMap<ulong, RelationData>
+  nameWithType: NativeParallelHashMap<ulong, RelationData>
+  fullName: Unity.Collections.NativeParallelHashMap<ulong, Core.Diplomacy.RelationData>
+  nameWithType.vb: NativeParallelHashMap(Of ULong, RelationData)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of ULong, Core.Diplomacy.RelationData)
+  name.vb: NativeParallelHashMap(Of ULong, RelationData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Diplomacy.RelationData
+    name: RelationData
+    href: Core.Diplomacy.RelationData.html
+  - name: )
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Unity.Collections.NativeParallelHashMap`2
+  commentId: T:Unity.Collections.NativeParallelHashMap`2
+  isExternal: true
+  name: NativeParallelHashMap<TKey, TValue>
+  nameWithType: NativeParallelHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelHashMap(Of TKey, TValue)
+  name.vb: NativeParallelHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashMap`2
+    name: NativeParallelHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Diplomacy.DiplomacyWarManager.MakePeace*
+  commentId: Overload:Core.Diplomacy.DiplomacyWarManager.MakePeace
+  href: Core.Diplomacy.DiplomacyWarManager.html#Core_Diplomacy_DiplomacyWarManager_MakePeace_System_UInt16_System_UInt16_System_Int32_Unity_Collections_NativeParallelHashMap_System_UInt64_Core_Diplomacy_RelationData__Unity_Collections_NativeParallelHashSet_System_UInt64__Unity_Collections_NativeParallelMultiHashMap_System_UInt16_System_UInt16__Core_GameState_
+  name: MakePeace
+  nameWithType: DiplomacyWarManager.MakePeace
+  fullName: Core.Diplomacy.DiplomacyWarManager.MakePeace

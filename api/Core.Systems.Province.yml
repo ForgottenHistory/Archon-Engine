@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.Province
+  commentId: N:Core.Systems.Province
+  id: Core.Systems.Province
+  children:
+  - Core.Systems.Province.ProvinceDataManager
+  - Core.Systems.Province.ProvinceStateLoader
+  langs:
+  - csharp
+  - vb
+  name: Core.Systems.Province
+  nameWithType: Core.Systems.Province
+  fullName: Core.Systems.Province
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Systems.Province.ProvinceDataManager
+  commentId: T:Core.Systems.Province.ProvinceDataManager
+  parent: Core.Systems.Province
+  href: Core.Systems.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Core.Systems.Province.ProvinceDataManager
+- uid: Core.Systems.Province.ProvinceStateLoader
+  commentId: T:Core.Systems.Province.ProvinceStateLoader
+  href: Core.Systems.Province.ProvinceStateLoader.html
+  name: ProvinceStateLoader
+  nameWithType: ProvinceStateLoader
+  fullName: Core.Systems.Province.ProvinceStateLoader
+- uid: Core.Systems.Province
+  commentId: N:Core.Systems.Province
+  href: Core.html
+  name: Core.Systems.Province
+  nameWithType: Core.Systems.Province
+  fullName: Core.Systems.Province
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  - name: .
+  - uid: Core.Systems.Province
+    name: Province
+    href: Core.Systems.Province.html

@@ -1,0 +1,218 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.TerrainImageLoader
+  commentId: T:Map.Loading.Images.TerrainImageLoader
+  id: TerrainImageLoader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.TerrainImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  - Map.Loading.Images.TerrainImageLoader.LoadAndPopulate(System.String)
+  langs:
+  - csharp
+  - vb
+  name: TerrainImageLoader
+  nameWithType: TerrainImageLoader
+  fullName: Map.Loading.Images.TerrainImageLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainImageLoader
+    path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Loads terrain.png (or terrain.bmp) and populates the terrain texture.
+
+    Uses ImageParser for unified BMP/PNG support.
+
+    Terrain colors from the image are used directly - TerrainRGBLookup converts to indices later.
+  example: []
+  syntax:
+    content: public class TerrainImageLoader
+    content.vb: Public Class TerrainImageLoader
+  inheritance:
+  - System.Object
+- uid: Map.Loading.Images.TerrainImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  commentId: M:Map.Loading.Images.TerrainImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  id: Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  parent: Map.Loading.Images.TerrainImageLoader
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager, bool)
+  nameWithType: TerrainImageLoader.Initialize(MapTextureManager, bool)
+  fullName: Map.Loading.Images.TerrainImageLoader.Initialize(Map.Rendering.MapTextureManager, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Initialize(MapTextureManager textures, bool enableLogging = true)
+    parameters:
+    - id: textures
+      type: Map.Rendering.MapTextureManager
+    - id: enableLogging
+      type: System.Boolean
+    content.vb: Public Sub Initialize(textures As MapTextureManager, enableLogging As Boolean = True)
+  overload: Map.Loading.Images.TerrainImageLoader.Initialize*
+  nameWithType.vb: TerrainImageLoader.Initialize(MapTextureManager, Boolean)
+  fullName.vb: Map.Loading.Images.TerrainImageLoader.Initialize(Map.Rendering.MapTextureManager, Boolean)
+  name.vb: Initialize(MapTextureManager, Boolean)
+- uid: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate(System.String)
+  commentId: M:Map.Loading.Images.TerrainImageLoader.LoadAndPopulate(System.String)
+  id: LoadAndPopulate(System.String)
+  parent: Map.Loading.Images.TerrainImageLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadAndPopulate(string)
+  nameWithType: TerrainImageLoader.LoadAndPopulate(string)
+  fullName: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadAndPopulate
+    path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Load terrain image and populate terrain texture.
+
+    Tries terrain.png first, falls back to terrain.bmp.
+  example: []
+  syntax:
+    content: public void LoadAndPopulate(string mapDirectory)
+    parameters:
+    - id: mapDirectory
+      type: System.String
+    content.vb: Public Sub LoadAndPopulate(mapDirectory As String)
+  overload: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate*
+  nameWithType.vb: TerrainImageLoader.LoadAndPopulate(String)
+  fullName.vb: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate(String)
+  name.vb: LoadAndPopulate(String)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.TerrainImageLoader.Initialize*
+  commentId: Overload:Map.Loading.Images.TerrainImageLoader.Initialize
+  href: Map.Loading.Images.TerrainImageLoader.html#Map_Loading_Images_TerrainImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  name: Initialize
+  nameWithType: TerrainImageLoader.Initialize
+  fullName: Map.Loading.Images.TerrainImageLoader.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate*
+  commentId: Overload:Map.Loading.Images.TerrainImageLoader.LoadAndPopulate
+  href: Map.Loading.Images.TerrainImageLoader.html#Map_Loading_Images_TerrainImageLoader_LoadAndPopulate_System_String_
+  name: LoadAndPopulate
+  nameWithType: TerrainImageLoader.LoadAndPopulate
+  fullName: Map.Loading.Images.TerrainImageLoader.LoadAndPopulate
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,177 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.PixelCoord
+  commentId: T:Map.Loading.Images.PixelCoord
+  id: PixelCoord
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.PixelCoord.#ctor(System.Int32,System.Int32)
+  - Map.Loading.Images.PixelCoord.x
+  - Map.Loading.Images.PixelCoord.y
+  langs:
+  - csharp
+  - vb
+  name: PixelCoord
+  nameWithType: PixelCoord
+  fullName: Map.Loading.Images.PixelCoord
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelCoord
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 363
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Simple 2D integer vector for pixel coordinates
+  example: []
+  syntax:
+    content: public struct PixelCoord
+    content.vb: Public Structure PixelCoord
+- uid: Map.Loading.Images.PixelCoord.x
+  commentId: F:Map.Loading.Images.PixelCoord.x
+  id: x
+  parent: Map.Loading.Images.PixelCoord
+  langs:
+  - csharp
+  - vb
+  name: x
+  nameWithType: PixelCoord.x
+  fullName: Map.Loading.Images.PixelCoord.x
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: x
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 365
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int x
+    return:
+      type: System.Int32
+    content.vb: Public x As Integer
+- uid: Map.Loading.Images.PixelCoord.y
+  commentId: F:Map.Loading.Images.PixelCoord.y
+  id: y
+  parent: Map.Loading.Images.PixelCoord
+  langs:
+  - csharp
+  - vb
+  name: y
+  nameWithType: PixelCoord.y
+  fullName: Map.Loading.Images.PixelCoord.y
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: y
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 365
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int y
+    return:
+      type: System.Int32
+    content.vb: Public y As Integer
+- uid: Map.Loading.Images.PixelCoord.#ctor(System.Int32,System.Int32)
+  commentId: M:Map.Loading.Images.PixelCoord.#ctor(System.Int32,System.Int32)
+  id: '#ctor(System.Int32,System.Int32)'
+  parent: Map.Loading.Images.PixelCoord
+  langs:
+  - csharp
+  - vb
+  name: PixelCoord(int, int)
+  nameWithType: PixelCoord.PixelCoord(int, int)
+  fullName: Map.Loading.Images.PixelCoord.PixelCoord(int, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 367
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public PixelCoord(int x, int y)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    content.vb: Public Sub New(x As Integer, y As Integer)
+  overload: Map.Loading.Images.PixelCoord.#ctor*
+  nameWithType.vb: PixelCoord.New(Integer, Integer)
+  fullName.vb: Map.Loading.Images.PixelCoord.New(Integer, Integer)
+  name.vb: New(Integer, Integer)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.PixelCoord.#ctor*
+  commentId: Overload:Map.Loading.Images.PixelCoord.#ctor
+  href: Map.Loading.Images.PixelCoord.html#Map_Loading_Images_PixelCoord__ctor_System_Int32_System_Int32_
+  name: PixelCoord
+  nameWithType: PixelCoord.PixelCoord
+  fullName: Map.Loading.Images.PixelCoord.PixelCoord
+  nameWithType.vb: PixelCoord.New
+  fullName.vb: Map.Loading.Images.PixelCoord.New
+  name.vb: New

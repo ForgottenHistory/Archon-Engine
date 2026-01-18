@@ -1,0 +1,209 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarRendererContext
+  id: FogOfWarRendererContext
+  parent: Map.Rendering.FogOfWar
+  children:
+  - Map.Rendering.FogOfWar.FogOfWarRendererContext.FogOfWarCompute
+  - Map.Rendering.FogOfWar.FogOfWarRendererContext.MaxProvinces
+  - Map.Rendering.FogOfWar.FogOfWarRendererContext.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: FogOfWarRendererContext
+  nameWithType: FogOfWarRendererContext
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FogOfWarRendererContext
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 105
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Context provided during renderer initialization
+  example: []
+  syntax:
+    content: public struct FogOfWarRendererContext
+    content.vb: Public Structure FogOfWarRendererContext
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererContext.FogOfWarCompute
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererContext.FogOfWarCompute
+  id: FogOfWarCompute
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  langs:
+  - csharp
+  - vb
+  name: FogOfWarCompute
+  nameWithType: FogOfWarRendererContext.FogOfWarCompute
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererContext.FogOfWarCompute
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FogOfWarCompute
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 108
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Compute shader for fog texture generation
+  example: []
+  syntax:
+    content: public ComputeShader FogOfWarCompute
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public FogOfWarCompute As ComputeShader
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererContext.ProvinceQueries
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererContext.ProvinceQueries
+  id: ProvinceQueries
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  langs:
+  - csharp
+  - vb
+  name: ProvinceQueries
+  nameWithType: FogOfWarRendererContext.ProvinceQueries
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererContext.ProvinceQueries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceQueries
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 111
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Province queries for ownership lookups
+  example: []
+  syntax:
+    content: public ProvinceQueries ProvinceQueries
+    return:
+      type: Core.Queries.ProvinceQueries
+    content.vb: Public ProvinceQueries As ProvinceQueries
+- uid: Map.Rendering.FogOfWar.FogOfWarRendererContext.MaxProvinces
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarRendererContext.MaxProvinces
+  id: MaxProvinces
+  parent: Map.Rendering.FogOfWar.FogOfWarRendererContext
+  langs:
+  - csharp
+  - vb
+  name: MaxProvinces
+  nameWithType: FogOfWarRendererContext.MaxProvinces
+  fullName: Map.Rendering.FogOfWar.FogOfWarRendererContext.MaxProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxProvinces
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 114
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Maximum number of provinces
+  example: []
+  syntax:
+    content: public int MaxProvinces
+    return:
+      type: System.Int32
+    content.vb: Public MaxProvinces As Integer
+references:
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

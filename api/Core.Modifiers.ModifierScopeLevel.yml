@@ -1,0 +1,141 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierScopeLevel
+  commentId: T:Core.Modifiers.ModifierScopeLevel
+  id: ModifierScopeLevel
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierScopeLevel.Country
+  - Core.Modifiers.ModifierScopeLevel.Global
+  - Core.Modifiers.ModifierScopeLevel.Province
+  langs:
+  - csharp
+  - vb
+  name: ModifierScopeLevel
+  nameWithType: ModifierScopeLevel
+  fullName: Core.Modifiers.ModifierScopeLevel
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierScopeLevel
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Identifies the scope level a modifier comes from (for tooltips)
+  example: []
+  syntax:
+    content: 'public enum ModifierScopeLevel : byte'
+    content.vb: Public Enum ModifierScopeLevel As Byte
+- uid: Core.Modifiers.ModifierScopeLevel.Province
+  commentId: F:Core.Modifiers.ModifierScopeLevel.Province
+  id: Province
+  parent: Core.Modifiers.ModifierScopeLevel
+  langs:
+  - csharp
+  - vb
+  name: Province
+  nameWithType: ModifierScopeLevel.Province
+  fullName: Core.Modifiers.ModifierScopeLevel.Province
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Province
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Province = 0
+    return:
+      type: Core.Modifiers.ModifierScopeLevel
+- uid: Core.Modifiers.ModifierScopeLevel.Country
+  commentId: F:Core.Modifiers.ModifierScopeLevel.Country
+  id: Country
+  parent: Core.Modifiers.ModifierScopeLevel
+  langs:
+  - csharp
+  - vb
+  name: Country
+  nameWithType: ModifierScopeLevel.Country
+  fullName: Core.Modifiers.ModifierScopeLevel.Country
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Country = 1
+    return:
+      type: Core.Modifiers.ModifierScopeLevel
+- uid: Core.Modifiers.ModifierScopeLevel.Global
+  commentId: F:Core.Modifiers.ModifierScopeLevel.Global
+  id: Global
+  parent: Core.Modifiers.ModifierScopeLevel
+  langs:
+  - csharp
+  - vb
+  name: Global
+  nameWithType: ModifierScopeLevel.Global
+  fullName: Core.Modifiers.ModifierScopeLevel.Global
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Global
+    path: Scripts/Core/Modifiers/ModifierSystem.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: Global = 2
+    return:
+      type: Core.Modifiers.ModifierScopeLevel
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.Modifiers.ModifierScopeLevel
+  commentId: T:Core.Modifiers.ModifierScopeLevel
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierScopeLevel.html
+  name: ModifierScopeLevel
+  nameWithType: ModifierScopeLevel
+  fullName: Core.Modifiers.ModifierScopeLevel

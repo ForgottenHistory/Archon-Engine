@@ -1,0 +1,924 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.GradientMapModeColorizer
+  id: GradientMapModeColorizer
+  parent: Map.MapModes.Colorization
+  children:
+  - Map.MapModes.Colorization.GradientMapModeColorizer.#ctor
+  - Map.MapModes.Colorization.GradientMapModeColorizer.#ctor(UnityEngine.ComputeShader)
+  - Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+  - Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+  - Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources
+  - Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  - Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer
+  langs:
+  - csharp
+  - vb
+  name: GradientMapModeColorizer
+  nameWithType: GradientMapModeColorizer
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GradientMapModeColorizer
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    ENGINE: Default map mode colorizer using 3-color gradient interpolation.
+
+
+    Algorithm:
+
+    - Sample gradient at 3 points (low=0, mid=0.5, high=1.0)
+
+    - GPU compute shader interpolates based on province values
+
+    - Provinces with negative values use ocean color
+
+
+    This is the ENGINE default colorizer - wraps existing GradientMapMode.compute logic.
+
+    GAME layer can register alternatives (DiscreteColorBands, MultiGradient, etc.)
+  example: []
+  syntax:
+    content: 'public class GradientMapModeColorizer : MapModeColorizerBase, IMapModeColorizer'
+    content.vb: Public Class GradientMapModeColorizer Inherits MapModeColorizerBase Implements IMapModeColorizer
+  inheritance:
+  - System.Object
+  - Map.MapModes.Colorization.MapModeColorizerBase
+  implements:
+  - Map.MapModes.Colorization.IMapModeColorizer
+  inheritedMembers:
+  - Map.MapModes.Colorization.MapModeColorizerBase.context
+  - Map.MapModes.Colorization.MapModeColorizerBase.isInitialized
+  - Map.MapModes.Colorization.MapModeColorizerBase.THREAD_GROUP_SIZE
+  - Map.MapModes.Colorization.MapModeColorizerBase.RequiresPerFrameUpdate
+  - Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  - Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  - Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame
+  - Map.MapModes.Colorization.MapModeColorizerBase.Dispose
+  - Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(System.Int32,System.Int32)
+  - Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  - Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  - Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer,Map.MapModes.ColorGradient,System.Int32)
+  - Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+  commentId: P:Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+  id: ColorizerId
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: ColorizerId
+  nameWithType: GradientMapModeColorizer.ColorizerId
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorizerId
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Unique identifier for this colorizer (e.g., "Gradient", "DiscreteBands", "MultiColor")
+  example: []
+  syntax:
+    content: public override string ColorizerId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property ColorizerId As String
+  overridden: Map.MapModes.Colorization.MapModeColorizerBase.ColorizerId
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId*
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+  commentId: P:Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+  id: DisplayName
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: GradientMapModeColorizer.DisplayName
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Human-readable name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.MapModes.Colorization.MapModeColorizerBase.DisplayName
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName*
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.#ctor
+  commentId: M:Map.MapModes.Colorization.GradientMapModeColorizer.#ctor
+  id: '#ctor'
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: GradientMapModeColorizer()
+  nameWithType: GradientMapModeColorizer.GradientMapModeColorizer()
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.GradientMapModeColorizer()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  syntax:
+    content: public GradientMapModeColorizer()
+    content.vb: Public Sub New()
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.#ctor*
+  nameWithType.vb: GradientMapModeColorizer.New()
+  fullName.vb: Map.MapModes.Colorization.GradientMapModeColorizer.New()
+  name.vb: New()
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.#ctor(UnityEngine.ComputeShader)
+  commentId: M:Map.MapModes.Colorization.GradientMapModeColorizer.#ctor(UnityEngine.ComputeShader)
+  id: '#ctor(UnityEngine.ComputeShader)'
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: GradientMapModeColorizer(ComputeShader)
+  nameWithType: GradientMapModeColorizer.GradientMapModeColorizer(ComputeShader)
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.GradientMapModeColorizer(UnityEngine.ComputeShader)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Constructor with pre-loaded compute shader (for testing or direct use).
+  example: []
+  syntax:
+    content: public GradientMapModeColorizer(ComputeShader computeShader)
+    parameters:
+    - id: computeShader
+      type: UnityEngine.ComputeShader
+    content.vb: Public Sub New(computeShader As ComputeShader)
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.#ctor*
+  nameWithType.vb: GradientMapModeColorizer.New(ComputeShader)
+  fullName.vb: Map.MapModes.Colorization.GradientMapModeColorizer.New(UnityEngine.ComputeShader)
+  name.vb: New(ComputeShader)
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer
+  commentId: M:Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer
+  id: InitializeColorizer
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: InitializeColorizer()
+  nameWithType: GradientMapModeColorizer.InitializeColorizer()
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeColorizer
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Subclass initialization hook.
+
+    Load compute shaders, create buffers, etc.
+  example: []
+  syntax:
+    content: protected override void InitializeColorizer()
+    content.vb: Protected Overrides Sub InitializeColorizer()
+  overridden: Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer*
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  commentId: M:Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  id: DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: DoColorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  nameWithType: GradientMapModeColorizer.DoColorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, float[], Map.MapModes.Colorization.ColorizationStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DoColorize
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 67
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Subclass colorization implementation.
+
+    Dispatch compute shader with appropriate parameters.
+  example: []
+  syntax:
+    content: protected override void DoColorize(RenderTexture provinceIDTexture, RenderTexture outputTexture, float[] provinceValues, ColorizationStyleParams styleParams)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+    - id: outputTexture
+      type: UnityEngine.RenderTexture
+    - id: provinceValues
+      type: System.Single[]
+    - id: styleParams
+      type: Map.MapModes.Colorization.ColorizationStyleParams
+    content.vb: Protected Overrides Sub DoColorize(provinceIDTexture As RenderTexture, outputTexture As RenderTexture, provinceValues As Single(), styleParams As ColorizationStyleParams)
+  overridden: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize*
+  nameWithType.vb: GradientMapModeColorizer.DoColorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  fullName.vb: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, Single(), Map.MapModes.Colorization.ColorizationStyleParams)
+  name.vb: DoColorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources
+  commentId: M:Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources
+  id: DisposeResources
+  parent: Map.MapModes.Colorization.GradientMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: DisposeResources()
+  nameWithType: GradientMapModeColorizer.DisposeResources()
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisposeResources
+    path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
+    startLine: 110
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Subclass resource cleanup.
+
+    Release compute buffers, etc.
+  example: []
+  syntax:
+    content: protected override void DisposeResources()
+    content.vb: Protected Overrides Sub DisposeResources()
+  overridden: Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources
+  overload: Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources*
+references:
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  href: Map.html
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.MapModes.Colorization.MapModeColorizerBase
+  commentId: T:Map.MapModes.Colorization.MapModeColorizerBase
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html
+  name: MapModeColorizerBase
+  nameWithType: MapModeColorizerBase
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase
+- uid: Map.MapModes.Colorization.IMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.IMapModeColorizer
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.IMapModeColorizer.html
+  name: IMapModeColorizer
+  nameWithType: IMapModeColorizer
+  fullName: Map.MapModes.Colorization.IMapModeColorizer
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.context
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerBase.context
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_context
+  name: context
+  nameWithType: MapModeColorizerBase.context
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.context
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.isInitialized
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerBase.isInitialized
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_isInitialized
+  name: isInitialized
+  nameWithType: MapModeColorizerBase.isInitialized
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.isInitialized
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.THREAD_GROUP_SIZE
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerBase.THREAD_GROUP_SIZE
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: MapModeColorizerBase.THREAD_GROUP_SIZE
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.THREAD_GROUP_SIZE
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.RequiresPerFrameUpdate
+  commentId: P:Map.MapModes.Colorization.MapModeColorizerBase.RequiresPerFrameUpdate
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: MapModeColorizerBase.RequiresPerFrameUpdate
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.RequiresPerFrameUpdate
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Initialize_Map_MapModes_Colorization_MapModeColorizerContext_
+  name: Initialize(MapModeColorizerContext)
+  nameWithType: MapModeColorizerBase.Initialize(MapModeColorizerContext)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+    name: Initialize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Initialize_Map_MapModes_Colorization_MapModeColorizerContext_
+  - name: (
+  - uid: Map.MapModes.Colorization.MapModeColorizerContext
+    name: MapModeColorizerContext
+    href: Map.MapModes.Colorization.MapModeColorizerContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+    name: Initialize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Initialize_Map_MapModes_Colorization_MapModeColorizerContext_
+  - name: (
+  - uid: Map.MapModes.Colorization.MapModeColorizerContext
+    name: MapModeColorizerContext
+    href: Map.MapModes.Colorization.MapModeColorizerContext.html
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Colorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  name: Colorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  nameWithType: MapModeColorizerBase.Colorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, float[], Map.MapModes.Colorization.ColorizationStyleParams)
+  nameWithType.vb: MapModeColorizerBase.Colorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, Single(), Map.MapModes.Colorization.ColorizationStyleParams)
+  name.vb: Colorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+    name: Colorize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Colorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.Colorization.ColorizationStyleParams
+    name: ColorizationStyleParams
+    href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+    name: Colorize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Colorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.Colorization.ColorizationStyleParams
+    name: ColorizationStyleParams
+    href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: MapModeColorizerBase.OnRenderFrame()
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.Dispose
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.Dispose
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Dispose
+  name: Dispose()
+  nameWithType: MapModeColorizerBase.Dispose()
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.Dispose()
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Dispose
+    name: Dispose
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.Dispose
+    name: Dispose
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: MapModeColorizerBase.CalculateThreadGroups(int, int)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: MapModeColorizerBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureProvinceValueBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  name: EnsureProvinceValueBuffer(ComputeBuffer, int)
+  nameWithType: MapModeColorizerBase.EnsureProvinceValueBuffer(ComputeBuffer, int)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer, int)
+  nameWithType.vb: MapModeColorizerBase.EnsureProvinceValueBuffer(ComputeBuffer, Integer)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer, Integer)
+  name.vb: EnsureProvinceValueBuffer(ComputeBuffer, Integer)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer,System.Int32)
+    name: EnsureProvinceValueBuffer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureProvinceValueBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureProvinceValueBuffer(UnityEngine.ComputeBuffer,System.Int32)
+    name: EnsureProvinceValueBuffer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureProvinceValueBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer,System.Int32)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureGradientBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  name: EnsureGradientBuffer(ComputeBuffer, int)
+  nameWithType: MapModeColorizerBase.EnsureGradientBuffer(ComputeBuffer, int)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer, int)
+  nameWithType.vb: MapModeColorizerBase.EnsureGradientBuffer(ComputeBuffer, Integer)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer, Integer)
+  name.vb: EnsureGradientBuffer(ComputeBuffer, Integer)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer,System.Int32)
+    name: EnsureGradientBuffer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureGradientBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.EnsureGradientBuffer(UnityEngine.ComputeBuffer,System.Int32)
+    name: EnsureGradientBuffer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_EnsureGradientBuffer_UnityEngine_ComputeBuffer_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer,Map.MapModes.ColorGradient,System.Int32)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer,Map.MapModes.ColorGradient,System.Int32)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_UploadGradientColors_UnityEngine_ComputeBuffer_Map_MapModes_ColorGradient_System_Int32_
+  name: UploadGradientColors(ComputeBuffer, ColorGradient, int)
+  nameWithType: MapModeColorizerBase.UploadGradientColors(ComputeBuffer, ColorGradient, int)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer, Map.MapModes.ColorGradient, int)
+  nameWithType.vb: MapModeColorizerBase.UploadGradientColors(ComputeBuffer, ColorGradient, Integer)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer, Map.MapModes.ColorGradient, Integer)
+  name.vb: UploadGradientColors(ComputeBuffer, ColorGradient, Integer)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer,Map.MapModes.ColorGradient,System.Int32)
+    name: UploadGradientColors
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_UploadGradientColors_UnityEngine_ComputeBuffer_Map_MapModes_ColorGradient_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.ColorGradient
+    name: ColorGradient
+    href: Map.MapModes.ColorGradient.html
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.UploadGradientColors(UnityEngine.ComputeBuffer,Map.MapModes.ColorGradient,System.Int32)
+    name: UploadGradientColors
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_UploadGradientColors_UnityEngine_ComputeBuffer_Map_MapModes_ColorGradient_System_Int32_
+  - name: (
+  - uid: UnityEngine.ComputeBuffer
+    name: ComputeBuffer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.ColorGradient
+    name: ColorGradient
+    href: Map.MapModes.ColorGradient.html
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_ColorToVector4_UnityEngine_Color_
+  name: ColorToVector4(Color)
+  nameWithType: MapModeColorizerBase.ColorToVector4(Color)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+    name: ColorToVector4
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_ColorToVector4_UnityEngine_Color_
+  - name: (
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.ColorToVector4(UnityEngine.Color)
+    name: ColorToVector4
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_ColorToVector4_UnityEngine_Color_
+  - name: (
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.ColorizerId
+  commentId: P:Map.MapModes.Colorization.MapModeColorizerBase.ColorizerId
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_ColorizerId
+  name: ColorizerId
+  nameWithType: MapModeColorizerBase.ColorizerId
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.ColorizerId
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer_ColorizerId
+  name: ColorizerId
+  nameWithType: GradientMapModeColorizer.ColorizerId
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.ColorizerId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.DisplayName
+  commentId: P:Map.MapModes.Colorization.MapModeColorizerBase.DisplayName
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DisplayName
+  name: DisplayName
+  nameWithType: MapModeColorizerBase.DisplayName
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.DisplayName
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer_DisplayName
+  name: DisplayName
+  nameWithType: GradientMapModeColorizer.DisplayName
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DisplayName
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.#ctor*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.#ctor
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer__ctor
+  name: GradientMapModeColorizer
+  nameWithType: GradientMapModeColorizer.GradientMapModeColorizer
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.GradientMapModeColorizer
+  nameWithType.vb: GradientMapModeColorizer.New
+  fullName.vb: Map.MapModes.Colorization.GradientMapModeColorizer.New
+  name.vb: New
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_InitializeColorizer
+  name: InitializeColorizer()
+  nameWithType: MapModeColorizerBase.InitializeColorizer()
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer()
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer
+    name: InitializeColorizer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_InitializeColorizer
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.InitializeColorizer
+    name: InitializeColorizer
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_InitializeColorizer
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer_InitializeColorizer
+  name: InitializeColorizer
+  nameWithType: GradientMapModeColorizer.InitializeColorizer
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.InitializeColorizer
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  isExternal: true
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DoColorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  name: DoColorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  nameWithType: MapModeColorizerBase.DoColorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, float[], Map.MapModes.Colorization.ColorizationStyleParams)
+  nameWithType.vb: MapModeColorizerBase.DoColorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  fullName.vb: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, Single(), Map.MapModes.Colorization.ColorizationStyleParams)
+  name.vb: DoColorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+    name: DoColorize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DoColorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.Colorization.ColorizationStyleParams
+    name: ColorizationStyleParams
+    href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.DoColorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+    name: DoColorize
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DoColorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  - name: (
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.RenderTexture
+    name: RenderTexture
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.Colorization.ColorizationStyleParams
+    name: ColorizationStyleParams
+    href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  - name: )
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer_DoColorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  name: DoColorize
+  nameWithType: GradientMapModeColorizer.DoColorize
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DoColorize
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: System.Single[]
+  isExternal: true
+  name: float[]
+  nameWithType: float[]
+  fullName: float[]
+  nameWithType.vb: Single()
+  fullName.vb: Single()
+  name.vb: Single()
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.ColorizationStyleParams
+  commentId: T:Map.MapModes.Colorization.ColorizationStyleParams
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  name: ColorizationStyleParams
+  nameWithType: ColorizationStyleParams
+  fullName: Map.MapModes.Colorization.ColorizationStyleParams
+- uid: Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources
+  commentId: M:Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources
+  parent: Map.MapModes.Colorization.MapModeColorizerBase
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DisposeResources
+  name: DisposeResources()
+  nameWithType: MapModeColorizerBase.DisposeResources()
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources()
+  spec.csharp:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources
+    name: DisposeResources
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DisposeResources
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.Colorization.MapModeColorizerBase.DisposeResources
+    name: DisposeResources
+    href: Map.MapModes.Colorization.MapModeColorizerBase.html#Map_MapModes_Colorization_MapModeColorizerBase_DisposeResources
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources*
+  commentId: Overload:Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html#Map_MapModes_Colorization_GradientMapModeColorizer_DisposeResources
+  name: DisposeResources
+  nameWithType: GradientMapModeColorizer.DisposeResources
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer.DisposeResources

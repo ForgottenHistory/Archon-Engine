@@ -1,0 +1,1228 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  id: CountrySystem
+  parent: Core.Systems
+  children:
+  - Core.Systems.CountrySystem.ActiveCountryIds
+  - Core.Systems.CountrySystem.Capacity
+  - Core.Systems.CountrySystem.CountryCount
+  - Core.Systems.CountrySystem.Dispose
+  - Core.Systems.CountrySystem.GetAllCountryIds(Unity.Collections.Allocator)
+  - Core.Systems.CountrySystem.GetCountryColdData(System.UInt16)
+  - Core.Systems.CountrySystem.GetCountryColor(System.UInt16)
+  - Core.Systems.CountrySystem.GetCountryGraphicalCulture(System.UInt16)
+  - Core.Systems.CountrySystem.GetCountryHotData(System.UInt16)
+  - Core.Systems.CountrySystem.GetCountryIdFromTag(System.String)
+  - Core.Systems.CountrySystem.GetCountryTag(System.UInt16)
+  - Core.Systems.CountrySystem.HasCountry(System.UInt16)
+  - Core.Systems.CountrySystem.HasCountryFlag(System.UInt16,System.Byte)
+  - Core.Systems.CountrySystem.HasTag(System.String)
+  - Core.Systems.CountrySystem.Initialize(Core.EventBus)
+  - Core.Systems.CountrySystem.InitializeEmpty
+  - Core.Systems.CountrySystem.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  - Core.Systems.CountrySystem.IsInitialized
+  - Core.Systems.CountrySystem.LoadState(System.IO.BinaryReader)
+  - Core.Systems.CountrySystem.SaveState(System.IO.BinaryWriter)
+  - Core.Systems.CountrySystem.SetCountryColor(System.UInt16,UnityEngine.Color32)
+  langs:
+  - csharp
+  - vb
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountrySystem
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Single source of truth for all country/nation data
+
+    Manages CountryHotData (8-byte) array for frequently accessed data
+
+    Lazy-loads CountryColdData for detailed information
+
+    Performance: Structure of Arrays, hot/cold separation, zero allocations
+  example: []
+  syntax:
+    content: 'public class CountrySystem : MonoBehaviour'
+    content.vb: Public Class CountrySystem Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.Systems.CountrySystem.CountryCount
+  commentId: P:Core.Systems.CountrySystem.CountryCount
+  id: CountryCount
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: CountryCount
+  nameWithType: CountrySystem.CountryCount
+  fullName: Core.Systems.CountrySystem.CountryCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryCount
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CountryCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CountryCount As Integer
+  overload: Core.Systems.CountrySystem.CountryCount*
+- uid: Core.Systems.CountrySystem.Capacity
+  commentId: P:Core.Systems.CountrySystem.Capacity
+  id: Capacity
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: Capacity
+  nameWithType: CountrySystem.Capacity
+  fullName: Core.Systems.CountrySystem.Capacity
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Capacity
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int Capacity { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Capacity As Integer
+  overload: Core.Systems.CountrySystem.Capacity*
+- uid: Core.Systems.CountrySystem.IsInitialized
+  commentId: P:Core.Systems.CountrySystem.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: CountrySystem.IsInitialized
+  fullName: Core.Systems.CountrySystem.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Systems.CountrySystem.IsInitialized*
+- uid: Core.Systems.CountrySystem.ActiveCountryIds
+  commentId: P:Core.Systems.CountrySystem.ActiveCountryIds
+  id: ActiveCountryIds
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: ActiveCountryIds
+  nameWithType: CountrySystem.ActiveCountryIds
+  fullName: Core.Systems.CountrySystem.ActiveCountryIds
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ActiveCountryIds
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeList<ushort> ActiveCountryIds { get; }
+    parameters: []
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public ReadOnly Property ActiveCountryIds As NativeList(Of UShort)
+  overload: Core.Systems.CountrySystem.ActiveCountryIds*
+- uid: Core.Systems.CountrySystem.Initialize(Core.EventBus)
+  commentId: M:Core.Systems.CountrySystem.Initialize(Core.EventBus)
+  id: Initialize(Core.EventBus)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: Initialize(EventBus)
+  nameWithType: CountrySystem.Initialize(EventBus)
+  fullName: Core.Systems.CountrySystem.Initialize(Core.EventBus)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Initialize the country system with event bus
+  example: []
+  syntax:
+    content: public void Initialize(EventBus eventBus)
+    parameters:
+    - id: eventBus
+      type: Core.EventBus
+    content.vb: Public Sub Initialize(eventBus As EventBus)
+  overload: Core.Systems.CountrySystem.Initialize*
+- uid: Core.Systems.CountrySystem.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  commentId: M:Core.Systems.CountrySystem.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  id: InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: InitializeFromCountryData(CountryDataLoadResult)
+  nameWithType: CountrySystem.InitializeFromCountryData(CountryDataLoadResult)
+  fullName: Core.Systems.CountrySystem.InitializeFromCountryData(Core.Data.CountryDataLoadResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeFromCountryData
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public void InitializeFromCountryData(CountryDataLoadResult countryDataResult)
+    parameters:
+    - id: countryDataResult
+      type: Core.Data.CountryDataLoadResult
+    content.vb: Public Sub InitializeFromCountryData(countryDataResult As CountryDataLoadResult)
+  overload: Core.Systems.CountrySystem.InitializeFromCountryData*
+- uid: Core.Systems.CountrySystem.InitializeEmpty
+  commentId: M:Core.Systems.CountrySystem.InitializeEmpty
+  id: InitializeEmpty
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: InitializeEmpty()
+  nameWithType: CountrySystem.InitializeEmpty()
+  fullName: Core.Systems.CountrySystem.InitializeEmpty()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeEmpty
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 111
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Initialize empty country system for map-only mode
+
+    No country data loaded
+  example: []
+  syntax:
+    content: public void InitializeEmpty()
+    content.vb: Public Sub InitializeEmpty()
+  overload: Core.Systems.CountrySystem.InitializeEmpty*
+- uid: Core.Systems.CountrySystem.GetCountryColor(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.GetCountryColor(System.UInt16)
+  id: GetCountryColor(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryColor(ushort)
+  nameWithType: CountrySystem.GetCountryColor(ushort)
+  fullName: Core.Systems.CountrySystem.GetCountryColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryColor
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 125
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public Color32 GetCountryColor(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetCountryColor(countryId As UShort) As Color32
+  overload: Core.Systems.CountrySystem.GetCountryColor*
+  nameWithType.vb: CountrySystem.GetCountryColor(UShort)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryColor(UShort)
+  name.vb: GetCountryColor(UShort)
+- uid: Core.Systems.CountrySystem.GetCountryTag(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.GetCountryTag(System.UInt16)
+  id: GetCountryTag(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryTag(ushort)
+  nameWithType: CountrySystem.GetCountryTag(ushort)
+  fullName: Core.Systems.CountrySystem.GetCountryTag(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryTag
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 126
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public string GetCountryTag(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.String
+    content.vb: Public Function GetCountryTag(countryId As UShort) As String
+  overload: Core.Systems.CountrySystem.GetCountryTag*
+  nameWithType.vb: CountrySystem.GetCountryTag(UShort)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryTag(UShort)
+  name.vb: GetCountryTag(UShort)
+- uid: Core.Systems.CountrySystem.GetCountryIdFromTag(System.String)
+  commentId: M:Core.Systems.CountrySystem.GetCountryIdFromTag(System.String)
+  id: GetCountryIdFromTag(System.String)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryIdFromTag(string)
+  nameWithType: CountrySystem.GetCountryIdFromTag(string)
+  fullName: Core.Systems.CountrySystem.GetCountryIdFromTag(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryIdFromTag
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ushort GetCountryIdFromTag(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetCountryIdFromTag(tag As String) As UShort
+  overload: Core.Systems.CountrySystem.GetCountryIdFromTag*
+  nameWithType.vb: CountrySystem.GetCountryIdFromTag(String)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryIdFromTag(String)
+  name.vb: GetCountryIdFromTag(String)
+- uid: Core.Systems.CountrySystem.GetCountryHotData(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.GetCountryHotData(System.UInt16)
+  id: GetCountryHotData(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryHotData(ushort)
+  nameWithType: CountrySystem.GetCountryHotData(ushort)
+  fullName: Core.Systems.CountrySystem.GetCountryHotData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryHotData
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public CountryHotData GetCountryHotData(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.CountryHotData
+    content.vb: Public Function GetCountryHotData(countryId As UShort) As CountryHotData
+  overload: Core.Systems.CountrySystem.GetCountryHotData*
+  nameWithType.vb: CountrySystem.GetCountryHotData(UShort)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryHotData(UShort)
+  name.vb: GetCountryHotData(UShort)
+- uid: Core.Systems.CountrySystem.GetCountryColdData(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.GetCountryColdData(System.UInt16)
+  id: GetCountryColdData(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryColdData(ushort)
+  nameWithType: CountrySystem.GetCountryColdData(ushort)
+  fullName: Core.Systems.CountrySystem.GetCountryColdData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryColdData
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 129
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public CountryColdData GetCountryColdData(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.CountryColdData
+    content.vb: Public Function GetCountryColdData(countryId As UShort) As CountryColdData
+  overload: Core.Systems.CountrySystem.GetCountryColdData*
+  nameWithType.vb: CountrySystem.GetCountryColdData(UShort)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryColdData(UShort)
+  name.vb: GetCountryColdData(UShort)
+- uid: Core.Systems.CountrySystem.GetCountryGraphicalCulture(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.GetCountryGraphicalCulture(System.UInt16)
+  id: GetCountryGraphicalCulture(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryGraphicalCulture(ushort)
+  nameWithType: CountrySystem.GetCountryGraphicalCulture(ushort)
+  fullName: Core.Systems.CountrySystem.GetCountryGraphicalCulture(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryGraphicalCulture
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 130
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public byte GetCountryGraphicalCulture(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetCountryGraphicalCulture(countryId As UShort) As Byte
+  overload: Core.Systems.CountrySystem.GetCountryGraphicalCulture*
+  nameWithType.vb: CountrySystem.GetCountryGraphicalCulture(UShort)
+  fullName.vb: Core.Systems.CountrySystem.GetCountryGraphicalCulture(UShort)
+  name.vb: GetCountryGraphicalCulture(UShort)
+- uid: Core.Systems.CountrySystem.HasCountryFlag(System.UInt16,System.Byte)
+  commentId: M:Core.Systems.CountrySystem.HasCountryFlag(System.UInt16,System.Byte)
+  id: HasCountryFlag(System.UInt16,System.Byte)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: HasCountryFlag(ushort, byte)
+  nameWithType: CountrySystem.HasCountryFlag(ushort, byte)
+  fullName: Core.Systems.CountrySystem.HasCountryFlag(ushort, byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasCountryFlag
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 131
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool HasCountryFlag(ushort countryId, byte flag)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: flag
+      type: System.Byte
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasCountryFlag(countryId As UShort, flag As Byte) As Boolean
+  overload: Core.Systems.CountrySystem.HasCountryFlag*
+  nameWithType.vb: CountrySystem.HasCountryFlag(UShort, Byte)
+  fullName.vb: Core.Systems.CountrySystem.HasCountryFlag(UShort, Byte)
+  name.vb: HasCountryFlag(UShort, Byte)
+- uid: Core.Systems.CountrySystem.GetAllCountryIds(Unity.Collections.Allocator)
+  commentId: M:Core.Systems.CountrySystem.GetAllCountryIds(Unity.Collections.Allocator)
+  id: GetAllCountryIds(Unity.Collections.Allocator)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: GetAllCountryIds(Allocator)
+  nameWithType: CountrySystem.GetAllCountryIds(Allocator)
+  fullName: Core.Systems.CountrySystem.GetAllCountryIds(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllCountryIds
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeArray<ushort> GetAllCountryIds(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetAllCountryIds(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Systems.CountrySystem.GetAllCountryIds*
+- uid: Core.Systems.CountrySystem.HasCountry(System.UInt16)
+  commentId: M:Core.Systems.CountrySystem.HasCountry(System.UInt16)
+  id: HasCountry(System.UInt16)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: HasCountry(ushort)
+  nameWithType: CountrySystem.HasCountry(ushort)
+  fullName: Core.Systems.CountrySystem.HasCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasCountry
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool HasCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasCountry(countryId As UShort) As Boolean
+  overload: Core.Systems.CountrySystem.HasCountry*
+  nameWithType.vb: CountrySystem.HasCountry(UShort)
+  fullName.vb: Core.Systems.CountrySystem.HasCountry(UShort)
+  name.vb: HasCountry(UShort)
+- uid: Core.Systems.CountrySystem.HasTag(System.String)
+  commentId: M:Core.Systems.CountrySystem.HasTag(System.String)
+  id: HasTag(System.String)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: HasTag(string)
+  nameWithType: CountrySystem.HasTag(string)
+  fullName: Core.Systems.CountrySystem.HasTag(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasTag
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 134
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool HasTag(string tag)
+    parameters:
+    - id: tag
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasTag(tag As String) As Boolean
+  overload: Core.Systems.CountrySystem.HasTag*
+  nameWithType.vb: CountrySystem.HasTag(String)
+  fullName.vb: Core.Systems.CountrySystem.HasTag(String)
+  name.vb: HasTag(String)
+- uid: Core.Systems.CountrySystem.SetCountryColor(System.UInt16,UnityEngine.Color32)
+  commentId: M:Core.Systems.CountrySystem.SetCountryColor(System.UInt16,UnityEngine.Color32)
+  id: SetCountryColor(System.UInt16,UnityEngine.Color32)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: SetCountryColor(ushort, Color32)
+  nameWithType: CountrySystem.SetCountryColor(ushort, Color32)
+  fullName: Core.Systems.CountrySystem.SetCountryColor(ushort, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetCountryColor
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 135
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public void SetCountryColor(ushort countryId, Color32 newColor)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: newColor
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetCountryColor(countryId As UShort, newColor As Color32)
+  overload: Core.Systems.CountrySystem.SetCountryColor*
+  nameWithType.vb: CountrySystem.SetCountryColor(UShort, Color32)
+  fullName.vb: Core.Systems.CountrySystem.SetCountryColor(UShort, UnityEngine.Color32)
+  name.vb: SetCountryColor(UShort, Color32)
+- uid: Core.Systems.CountrySystem.SaveState(System.IO.BinaryWriter)
+  commentId: M:Core.Systems.CountrySystem.SaveState(System.IO.BinaryWriter)
+  id: SaveState(System.IO.BinaryWriter)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: SaveState(BinaryWriter)
+  nameWithType: CountrySystem.SaveState(BinaryWriter)
+  fullName: Core.Systems.CountrySystem.SaveState(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveState
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 170
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Save CountrySystem state to binary writer
+
+    Serializes: capacity, hot data arrays, id mappings, tags, cold data cache
+  example: []
+  syntax:
+    content: public void SaveState(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    content.vb: Public Sub SaveState(writer As BinaryWriter)
+  overload: Core.Systems.CountrySystem.SaveState*
+- uid: Core.Systems.CountrySystem.LoadState(System.IO.BinaryReader)
+  commentId: M:Core.Systems.CountrySystem.LoadState(System.IO.BinaryReader)
+  id: LoadState(System.IO.BinaryReader)
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: LoadState(BinaryReader)
+  nameWithType: CountrySystem.LoadState(BinaryReader)
+  fullName: Core.Systems.CountrySystem.LoadState(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadState
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 245
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Load CountrySystem state from binary reader
+
+    Restores: capacity, hot data arrays, id mappings, tags, cold data cache
+
+    Note: Must be called AFTER Initialize() but BEFORE any country operations
+  example: []
+  syntax:
+    content: public void LoadState(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    content.vb: Public Sub LoadState(reader As BinaryReader)
+  overload: Core.Systems.CountrySystem.LoadState*
+- uid: Core.Systems.CountrySystem.Dispose
+  commentId: M:Core.Systems.CountrySystem.Dispose
+  id: Dispose
+  parent: Core.Systems.CountrySystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CountrySystem.Dispose()
+  fullName: Core.Systems.CountrySystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/CountrySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Systems/CountrySystem.cs
+    startLine: 407
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Systems.CountrySystem.Dispose*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Systems.CountrySystem.CountryCount*
+  commentId: Overload:Core.Systems.CountrySystem.CountryCount
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_CountryCount
+  name: CountryCount
+  nameWithType: CountrySystem.CountryCount
+  fullName: Core.Systems.CountrySystem.CountryCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.CountrySystem.Capacity*
+  commentId: Overload:Core.Systems.CountrySystem.Capacity
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_Capacity
+  name: Capacity
+  nameWithType: CountrySystem.Capacity
+  fullName: Core.Systems.CountrySystem.Capacity
+- uid: Core.Systems.CountrySystem.IsInitialized*
+  commentId: Overload:Core.Systems.CountrySystem.IsInitialized
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_IsInitialized
+  name: IsInitialized
+  nameWithType: CountrySystem.IsInitialized
+  fullName: Core.Systems.CountrySystem.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.CountrySystem.ActiveCountryIds*
+  commentId: Overload:Core.Systems.CountrySystem.ActiveCountryIds
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_ActiveCountryIds
+  name: ActiveCountryIds
+  nameWithType: CountrySystem.ActiveCountryIds
+  fullName: Core.Systems.CountrySystem.ActiveCountryIds
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Systems.CountrySystem.Initialize*
+  commentId: Overload:Core.Systems.CountrySystem.Initialize
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_Initialize_Core_EventBus_
+  name: Initialize
+  nameWithType: CountrySystem.Initialize
+  fullName: Core.Systems.CountrySystem.Initialize
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.CountrySystem.InitializeFromCountryData*
+  commentId: Overload:Core.Systems.CountrySystem.InitializeFromCountryData
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_InitializeFromCountryData_Core_Data_CountryDataLoadResult_
+  name: InitializeFromCountryData
+  nameWithType: CountrySystem.InitializeFromCountryData
+  fullName: Core.Systems.CountrySystem.InitializeFromCountryData
+- uid: Core.Data.CountryDataLoadResult
+  commentId: T:Core.Data.CountryDataLoadResult
+  parent: Core.Data
+  href: Core.Data.CountryDataLoadResult.html
+  name: CountryDataLoadResult
+  nameWithType: CountryDataLoadResult
+  fullName: Core.Data.CountryDataLoadResult
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.CountrySystem.InitializeEmpty*
+  commentId: Overload:Core.Systems.CountrySystem.InitializeEmpty
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_InitializeEmpty
+  name: InitializeEmpty
+  nameWithType: CountrySystem.InitializeEmpty
+  fullName: Core.Systems.CountrySystem.InitializeEmpty
+- uid: Core.Systems.CountrySystem.GetCountryColor*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryColor
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryColor_System_UInt16_
+  name: GetCountryColor
+  nameWithType: CountrySystem.GetCountryColor
+  fullName: Core.Systems.CountrySystem.GetCountryColor
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Core.Systems.CountrySystem.GetCountryTag*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryTag
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryTag_System_UInt16_
+  name: GetCountryTag
+  nameWithType: CountrySystem.GetCountryTag
+  fullName: Core.Systems.CountrySystem.GetCountryTag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.CountrySystem.GetCountryIdFromTag*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryIdFromTag
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryIdFromTag_System_String_
+  name: GetCountryIdFromTag
+  nameWithType: CountrySystem.GetCountryIdFromTag
+  fullName: Core.Systems.CountrySystem.GetCountryIdFromTag
+- uid: Core.Systems.CountrySystem.GetCountryHotData*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryHotData
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryHotData_System_UInt16_
+  name: GetCountryHotData
+  nameWithType: CountrySystem.GetCountryHotData
+  fullName: Core.Systems.CountrySystem.GetCountryHotData
+- uid: Core.Data.CountryHotData
+  commentId: T:Core.Data.CountryHotData
+  parent: Core.Data
+  href: Core.Data.CountryHotData.html
+  name: CountryHotData
+  nameWithType: CountryHotData
+  fullName: Core.Data.CountryHotData
+- uid: Core.Systems.CountrySystem.GetCountryColdData*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryColdData
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryColdData_System_UInt16_
+  name: GetCountryColdData
+  nameWithType: CountrySystem.GetCountryColdData
+  fullName: Core.Systems.CountrySystem.GetCountryColdData
+- uid: Core.Data.CountryColdData
+  commentId: T:Core.Data.CountryColdData
+  parent: Core.Data
+  href: Core.Data.CountryColdData.html
+  name: CountryColdData
+  nameWithType: CountryColdData
+  fullName: Core.Data.CountryColdData
+- uid: Core.Systems.CountrySystem.GetCountryGraphicalCulture*
+  commentId: Overload:Core.Systems.CountrySystem.GetCountryGraphicalCulture
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetCountryGraphicalCulture_System_UInt16_
+  name: GetCountryGraphicalCulture
+  nameWithType: CountrySystem.GetCountryGraphicalCulture
+  fullName: Core.Systems.CountrySystem.GetCountryGraphicalCulture
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Systems.CountrySystem.HasCountryFlag*
+  commentId: Overload:Core.Systems.CountrySystem.HasCountryFlag
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_HasCountryFlag_System_UInt16_System_Byte_
+  name: HasCountryFlag
+  nameWithType: CountrySystem.HasCountryFlag
+  fullName: Core.Systems.CountrySystem.HasCountryFlag
+- uid: Core.Systems.CountrySystem.GetAllCountryIds*
+  commentId: Overload:Core.Systems.CountrySystem.GetAllCountryIds
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_GetAllCountryIds_Unity_Collections_Allocator_
+  name: GetAllCountryIds
+  nameWithType: CountrySystem.GetAllCountryIds
+  fullName: Core.Systems.CountrySystem.GetAllCountryIds
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.CountrySystem.HasCountry*
+  commentId: Overload:Core.Systems.CountrySystem.HasCountry
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_HasCountry_System_UInt16_
+  name: HasCountry
+  nameWithType: CountrySystem.HasCountry
+  fullName: Core.Systems.CountrySystem.HasCountry
+- uid: Core.Systems.CountrySystem.HasTag*
+  commentId: Overload:Core.Systems.CountrySystem.HasTag
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_HasTag_System_String_
+  name: HasTag
+  nameWithType: CountrySystem.HasTag
+  fullName: Core.Systems.CountrySystem.HasTag
+- uid: Core.Systems.CountrySystem.SetCountryColor*
+  commentId: Overload:Core.Systems.CountrySystem.SetCountryColor
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_SetCountryColor_System_UInt16_UnityEngine_Color32_
+  name: SetCountryColor
+  nameWithType: CountrySystem.SetCountryColor
+  fullName: Core.Systems.CountrySystem.SetCountryColor
+- uid: Core.Systems.CountrySystem.SaveState*
+  commentId: Overload:Core.Systems.CountrySystem.SaveState
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_SaveState_System_IO_BinaryWriter_
+  name: SaveState
+  nameWithType: CountrySystem.SaveState
+  fullName: Core.Systems.CountrySystem.SaveState
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Systems.CountrySystem.LoadState*
+  commentId: Overload:Core.Systems.CountrySystem.LoadState
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_LoadState_System_IO_BinaryReader_
+  name: LoadState
+  nameWithType: CountrySystem.LoadState
+  fullName: Core.Systems.CountrySystem.LoadState
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.Systems.CountrySystem.Dispose*
+  commentId: Overload:Core.Systems.CountrySystem.Dispose
+  href: Core.Systems.CountrySystem.html#Core_Systems_CountrySystem_Dispose
+  name: Dispose
+  nameWithType: CountrySystem.Dispose
+  fullName: Core.Systems.CountrySystem.Dispose

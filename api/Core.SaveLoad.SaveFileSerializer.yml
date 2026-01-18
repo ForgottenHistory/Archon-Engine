@@ -1,0 +1,263 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SaveFileSerializer
+  commentId: T:Core.SaveLoad.SaveFileSerializer
+  id: SaveFileSerializer
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SaveFileSerializer.ReadFromDisk(System.String)
+  - Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData,System.String)
+  - Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
+  langs:
+  - csharp
+  - vb
+  name: SaveFileSerializer
+  nameWithType: SaveFileSerializer
+  fullName: Core.SaveLoad.SaveFileSerializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveFileSerializer
+    path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Binary save file format serializer
+
+
+    Responsibilities:
+
+    - Write SaveGameData to binary file format
+
+    - Read SaveGameData from binary file format
+
+    - Handle file format: magic bytes, headers, metadata
+
+    - Atomic writes (temp file → rename) to prevent corruption
+
+    - Version validation
+
+
+    File Format:
+
+    - Magic bytes: "HGSV" (4 bytes)
+
+    - Metadata: version, save name, date, tick, speed, scenario
+
+    - System data: count + (name, bytes) pairs
+
+    - Command log: count + bytes[]
+
+    - Checksum: uint32
+
+
+    Usage:
+
+    SaveFileSerializer.WriteToDisk(saveData, filePath);
+
+    SaveGameData data = SaveFileSerializer.ReadFromDisk(filePath);
+  example: []
+  syntax:
+    content: public static class SaveFileSerializer
+    content.vb: Public Module SaveFileSerializer
+  inheritance:
+  - System.Object
+- uid: Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
+  commentId: M:Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
+  id: WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
+  parent: Core.SaveLoad.SaveFileSerializer
+  langs:
+  - csharp
+  - vb
+  name: WriteToDisk(SaveGameData, string)
+  nameWithType: SaveFileSerializer.WriteToDisk(SaveGameData, string)
+  fullName: Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteToDisk
+    path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Write SaveGameData to disk with atomic write (temp file → rename)
+  example: []
+  syntax:
+    content: public static void WriteToDisk(SaveGameData saveData, string filePath)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: filePath
+      type: System.String
+    content.vb: Public Shared Sub WriteToDisk(saveData As SaveGameData, filePath As String)
+  overload: Core.SaveLoad.SaveFileSerializer.WriteToDisk*
+  nameWithType.vb: SaveFileSerializer.WriteToDisk(SaveGameData, String)
+  fullName.vb: Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData, String)
+  name.vb: WriteToDisk(SaveGameData, String)
+- uid: Core.SaveLoad.SaveFileSerializer.ReadFromDisk(System.String)
+  commentId: M:Core.SaveLoad.SaveFileSerializer.ReadFromDisk(System.String)
+  id: ReadFromDisk(System.String)
+  parent: Core.SaveLoad.SaveFileSerializer
+  langs:
+  - csharp
+  - vb
+  name: ReadFromDisk(string)
+  nameWithType: SaveFileSerializer.ReadFromDisk(string)
+  fullName: Core.SaveLoad.SaveFileSerializer.ReadFromDisk(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadFromDisk
+    path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Read SaveGameData from disk
+  example: []
+  syntax:
+    content: public static SaveGameData ReadFromDisk(string filePath)
+    parameters:
+    - id: filePath
+      type: System.String
+    return:
+      type: Core.SaveLoad.SaveGameData
+    content.vb: Public Shared Function ReadFromDisk(filePath As String) As SaveGameData
+  overload: Core.SaveLoad.SaveFileSerializer.ReadFromDisk*
+  nameWithType.vb: SaveFileSerializer.ReadFromDisk(String)
+  fullName.vb: Core.SaveLoad.SaveFileSerializer.ReadFromDisk(String)
+  name.vb: ReadFromDisk(String)
+- uid: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData,System.String)
+  commentId: M:Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData,System.String)
+  id: VerifyVersionCompatibility(Core.SaveLoad.SaveGameData,System.String)
+  parent: Core.SaveLoad.SaveFileSerializer
+  langs:
+  - csharp
+  - vb
+  name: VerifyVersionCompatibility(SaveGameData, string)
+  nameWithType: SaveFileSerializer.VerifyVersionCompatibility(SaveGameData, string)
+  fullName: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: VerifyVersionCompatibility
+    path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Verify version compatibility
+  example: []
+  syntax:
+    content: public static bool VerifyVersionCompatibility(SaveGameData saveData, string currentVersion)
+    parameters:
+    - id: saveData
+      type: Core.SaveLoad.SaveGameData
+    - id: currentVersion
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function VerifyVersionCompatibility(saveData As SaveGameData, currentVersion As String) As Boolean
+  overload: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility*
+  nameWithType.vb: SaveFileSerializer.VerifyVersionCompatibility(SaveGameData, String)
+  fullName.vb: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData, String)
+  name.vb: VerifyVersionCompatibility(SaveGameData, String)
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.SaveLoad.SaveFileSerializer.WriteToDisk*
+  commentId: Overload:Core.SaveLoad.SaveFileSerializer.WriteToDisk
+  href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_WriteToDisk_Core_SaveLoad_SaveGameData_System_String_
+  name: WriteToDisk
+  nameWithType: SaveFileSerializer.WriteToDisk
+  fullName: Core.SaveLoad.SaveFileSerializer.WriteToDisk
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveGameData.html
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.SaveLoad.SaveFileSerializer.ReadFromDisk*
+  commentId: Overload:Core.SaveLoad.SaveFileSerializer.ReadFromDisk
+  href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_ReadFromDisk_System_String_
+  name: ReadFromDisk
+  nameWithType: SaveFileSerializer.ReadFromDisk
+  fullName: Core.SaveLoad.SaveFileSerializer.ReadFromDisk
+- uid: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility*
+  commentId: Overload:Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility
+  href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_VerifyVersionCompatibility_Core_SaveLoad_SaveGameData_System_String_
+  name: VerifyVersionCompatibility
+  nameWithType: SaveFileSerializer.VerifyVersionCompatibility
+  fullName: Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

@@ -1,0 +1,1183 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitSystem
+  commentId: T:Core.Units.UnitSystem
+  id: UnitSystem
+  parent: Core.Units
+  children:
+  - Core.Units.UnitSystem.#ctor(System.Int32,Core.EventBus)
+  - Core.Units.UnitSystem.AddTroops(System.UInt16,System.UInt16)
+  - Core.Units.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Units.UnitSystem.CreateUnitWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Units.UnitSystem.DisbandUnit(System.UInt16,Core.Units.DestructionReason)
+  - Core.Units.UnitSystem.Dispose
+  - Core.Units.UnitSystem.GetColdData(System.UInt16)
+  - Core.Units.UnitSystem.GetCountryUnitCount(System.UInt16)
+  - Core.Units.UnitSystem.GetCountryUnits(System.UInt16)
+  - Core.Units.UnitSystem.GetUnit(System.UInt16)
+  - Core.Units.UnitSystem.GetUnitCount
+  - Core.Units.UnitSystem.GetUnitCountInProvince(System.UInt16)
+  - Core.Units.UnitSystem.GetUnitsInProvince(System.UInt16)
+  - Core.Units.UnitSystem.HasColdData(System.UInt16)
+  - Core.Units.UnitSystem.HasUnit(System.UInt16)
+  - Core.Units.UnitSystem.LoadState(System.IO.BinaryReader)
+  - Core.Units.UnitSystem.MoveUnit(System.UInt16,System.UInt16)
+  - Core.Units.UnitSystem.MovementQueue
+  - Core.Units.UnitSystem.RemoveTroops(System.UInt16,System.UInt16)
+  - Core.Units.UnitSystem.SaveState(System.IO.BinaryWriter)
+  - Core.Units.UnitSystem.SetUnitCount(System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: UnitSystem
+  nameWithType: UnitSystem
+  fullName: Core.Units.UnitSystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitSystem
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Central manager for all units in the game.
+
+
+    ARCHITECTURE:
+
+    - Hot data: NativeArray of UnitState (8 bytes each)
+
+    - Sparse mapping: Province → Unit IDs (scales with actual units, not possible units)
+
+    - Cold data: Dictionary for rare data (custom names, history, etc.)
+
+    - Movement data: Separate NativeArray for movement points (2 bytes per unit)
+
+
+    PERFORMANCE:
+
+    - 10k units × 8 bytes = 80KB hot data
+
+    - 10k units × 2 bytes = 20KB movement data
+
+    - Sparse collections scale with usage (not possibility)
+
+    - GetUnitsInProvince() is O(m) where m = units in province (typically 1-10)
+
+
+    PERSISTENCE:
+
+    - SaveState/LoadState for all data
+
+    - Atomic unit ID assignment (deterministic)
+
+    - Command pattern ensures multiplayer safety
+  example: []
+  syntax:
+    content: public class UnitSystem
+    content.vb: Public Class UnitSystem
+  inheritance:
+  - System.Object
+- uid: Core.Units.UnitSystem.#ctor(System.Int32,Core.EventBus)
+  commentId: M:Core.Units.UnitSystem.#ctor(System.Int32,Core.EventBus)
+  id: '#ctor(System.Int32,Core.EventBus)'
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: UnitSystem(int, EventBus)
+  nameWithType: UnitSystem.UnitSystem(int, EventBus)
+  fullName: Core.Units.UnitSystem.UnitSystem(int, Core.EventBus)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public UnitSystem(int initialCapacity = 10000, EventBus eventBus = null)
+    parameters:
+    - id: initialCapacity
+      type: System.Int32
+    - id: eventBus
+      type: Core.EventBus
+    content.vb: Public Sub New(initialCapacity As Integer = 10000, eventBus As EventBus = Nothing)
+  overload: Core.Units.UnitSystem.#ctor*
+  nameWithType.vb: UnitSystem.New(Integer, EventBus)
+  fullName.vb: Core.Units.UnitSystem.New(Integer, Core.EventBus)
+  name.vb: New(Integer, EventBus)
+- uid: Core.Units.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: CreateUnit(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: CreateUnit(ushort, ushort, ushort, ushort)
+  nameWithType: UnitSystem.CreateUnit(ushort, ushort, ushort, ushort)
+  fullName: Core.Units.UnitSystem.CreateUnit(ushort, ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateUnit
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Create a new unit with specified troop count (RISK-style).
+
+    Returns the assigned unit ID (1-65535).
+  example: []
+  syntax:
+    content: public ushort CreateUnit(ushort provinceID, ushort countryID, ushort unitTypeID, ushort troopCount = 1)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: countryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    - id: troopCount
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function CreateUnit(provinceID As UShort, countryID As UShort, unitTypeID As UShort, troopCount As UShort = 1) As UShort
+  overload: Core.Units.UnitSystem.CreateUnit*
+  nameWithType.vb: UnitSystem.CreateUnit(UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.CreateUnit(UShort, UShort, UShort, UShort)
+  name.vb: CreateUnit(UShort, UShort, UShort, UShort)
+- uid: Core.Units.UnitSystem.CreateUnitWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.CreateUnitWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: CreateUnitWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: CreateUnitWithStats(ushort, ushort, ushort, ushort)
+  nameWithType: UnitSystem.CreateUnitWithStats(ushort, ushort, ushort, ushort)
+  fullName: Core.Units.UnitSystem.CreateUnitWithStats(ushort, ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateUnitWithStats
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 145
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Create a unit with custom stats (for loading saves, reinforcements, etc.)
+  example: []
+  syntax:
+    content: public ushort CreateUnitWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: countryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    - id: unitCount
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function CreateUnitWithStats(provinceID As UShort, countryID As UShort, unitTypeID As UShort, unitCount As UShort) As UShort
+  overload: Core.Units.UnitSystem.CreateUnitWithStats*
+  nameWithType.vb: UnitSystem.CreateUnitWithStats(UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.CreateUnitWithStats(UShort, UShort, UShort, UShort)
+  name.vb: CreateUnitWithStats(UShort, UShort, UShort, UShort)
+- uid: Core.Units.UnitSystem.DisbandUnit(System.UInt16,Core.Units.DestructionReason)
+  commentId: M:Core.Units.UnitSystem.DisbandUnit(System.UInt16,Core.Units.DestructionReason)
+  id: DisbandUnit(System.UInt16,Core.Units.DestructionReason)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: DisbandUnit(ushort, DestructionReason)
+  nameWithType: UnitSystem.DisbandUnit(ushort, DestructionReason)
+  fullName: Core.Units.UnitSystem.DisbandUnit(ushort, Core.Units.DestructionReason)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisbandUnit
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 167
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Disband a unit and recycle its ID.
+  example: []
+  syntax:
+    content: public void DisbandUnit(ushort unitID, DestructionReason reason = DestructionReason.Disbanded)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: reason
+      type: Core.Units.DestructionReason
+    content.vb: Public Sub DisbandUnit(unitID As UShort, reason As DestructionReason = DestructionReason.Disbanded)
+  overload: Core.Units.UnitSystem.DisbandUnit*
+  nameWithType.vb: UnitSystem.DisbandUnit(UShort, DestructionReason)
+  fullName.vb: Core.Units.UnitSystem.DisbandUnit(UShort, Core.Units.DestructionReason)
+  name.vb: DisbandUnit(UShort, DestructionReason)
+- uid: Core.Units.UnitSystem.GetUnit(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetUnit(System.UInt16)
+  id: GetUnit(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetUnit(ushort)
+  nameWithType: UnitSystem.GetUnit(ushort)
+  fullName: Core.Units.UnitSystem.GetUnit(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUnit
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 210
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get unit state by ID
+  example: []
+  syntax:
+    content: public UnitState GetUnit(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: Core.Units.UnitState
+    content.vb: Public Function GetUnit(unitID As UShort) As UnitState
+  overload: Core.Units.UnitSystem.GetUnit*
+  nameWithType.vb: UnitSystem.GetUnit(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetUnit(UShort)
+  name.vb: GetUnit(UShort)
+- uid: Core.Units.UnitSystem.HasUnit(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.HasUnit(System.UInt16)
+  id: HasUnit(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: HasUnit(ushort)
+  nameWithType: UnitSystem.HasUnit(ushort)
+  fullName: Core.Units.UnitSystem.HasUnit(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasUnit
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 218
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Does this unit exist?
+  example: []
+  syntax:
+    content: public bool HasUnit(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasUnit(unitID As UShort) As Boolean
+  overload: Core.Units.UnitSystem.HasUnit*
+  nameWithType.vb: UnitSystem.HasUnit(UShort)
+  fullName.vb: Core.Units.UnitSystem.HasUnit(UShort)
+  name.vb: HasUnit(UShort)
+- uid: Core.Units.UnitSystem.GetUnitsInProvince(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetUnitsInProvince(System.UInt16)
+  id: GetUnitsInProvince(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetUnitsInProvince(ushort)
+  nameWithType: UnitSystem.GetUnitsInProvince(ushort)
+  fullName: Core.Units.UnitSystem.GetUnitsInProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUnitsInProvince
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 226
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get all unit IDs in a province (O(m) where m = units in province)
+  example: []
+  syntax:
+    content: public List<ushort> GetUnitsInProvince(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetUnitsInProvince(provinceID As UShort) As List(Of UShort)
+  overload: Core.Units.UnitSystem.GetUnitsInProvince*
+  nameWithType.vb: UnitSystem.GetUnitsInProvince(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetUnitsInProvince(UShort)
+  name.vb: GetUnitsInProvince(UShort)
+- uid: Core.Units.UnitSystem.GetUnitCountInProvince(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetUnitCountInProvince(System.UInt16)
+  id: GetUnitCountInProvince(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetUnitCountInProvince(ushort)
+  nameWithType: UnitSystem.GetUnitCountInProvince(ushort)
+  fullName: Core.Units.UnitSystem.GetUnitCountInProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUnitCountInProvince
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 234
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get count of units in a province
+  example: []
+  syntax:
+    content: public int GetUnitCountInProvince(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetUnitCountInProvince(provinceID As UShort) As Integer
+  overload: Core.Units.UnitSystem.GetUnitCountInProvince*
+  nameWithType.vb: UnitSystem.GetUnitCountInProvince(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetUnitCountInProvince(UShort)
+  name.vb: GetUnitCountInProvince(UShort)
+- uid: Core.Units.UnitSystem.GetCountryUnits(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetCountryUnits(System.UInt16)
+  id: GetCountryUnits(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryUnits(ushort)
+  nameWithType: UnitSystem.GetCountryUnits(ushort)
+  fullName: Core.Units.UnitSystem.GetCountryUnits(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryUnits
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 240
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get all unit IDs owned by a country
+  example: []
+  syntax:
+    content: public List<ushort> GetCountryUnits(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetCountryUnits(countryID As UShort) As List(Of UShort)
+  overload: Core.Units.UnitSystem.GetCountryUnits*
+  nameWithType.vb: UnitSystem.GetCountryUnits(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetCountryUnits(UShort)
+  name.vb: GetCountryUnits(UShort)
+- uid: Core.Units.UnitSystem.GetCountryUnitCount(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetCountryUnitCount(System.UInt16)
+  id: GetCountryUnitCount(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryUnitCount(ushort)
+  nameWithType: UnitSystem.GetCountryUnitCount(ushort)
+  fullName: Core.Units.UnitSystem.GetCountryUnitCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryUnitCount
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 248
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get count of units owned by a country
+  example: []
+  syntax:
+    content: public int GetCountryUnitCount(ushort countryID)
+    parameters:
+    - id: countryID
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCountryUnitCount(countryID As UShort) As Integer
+  overload: Core.Units.UnitSystem.GetCountryUnitCount*
+  nameWithType.vb: UnitSystem.GetCountryUnitCount(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetCountryUnitCount(UShort)
+  name.vb: GetCountryUnitCount(UShort)
+- uid: Core.Units.UnitSystem.GetUnitCount
+  commentId: M:Core.Units.UnitSystem.GetUnitCount
+  id: GetUnitCount
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetUnitCount()
+  nameWithType: UnitSystem.GetUnitCount()
+  fullName: Core.Units.UnitSystem.GetUnitCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUnitCount
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 254
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get total unit count in the game
+  example: []
+  syntax:
+    content: public int GetUnitCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetUnitCount() As Integer
+  overload: Core.Units.UnitSystem.GetUnitCount*
+- uid: Core.Units.UnitSystem.MovementQueue
+  commentId: P:Core.Units.UnitSystem.MovementQueue
+  id: MovementQueue
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: MovementQueue
+  nameWithType: UnitSystem.MovementQueue
+  fullName: Core.Units.UnitSystem.MovementQueue
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MovementQueue
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 259
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get the movement queue for time-based movement
+  example: []
+  syntax:
+    content: public UnitMovementQueue MovementQueue { get; }
+    parameters: []
+    return:
+      type: Core.Units.UnitMovementQueue
+    content.vb: Public ReadOnly Property MovementQueue As UnitMovementQueue
+  overload: Core.Units.UnitSystem.MovementQueue*
+- uid: Core.Units.UnitSystem.SetUnitCount(System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.SetUnitCount(System.UInt16,System.UInt16)
+  id: SetUnitCount(System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: SetUnitCount(ushort, ushort)
+  nameWithType: UnitSystem.SetUnitCount(ushort, ushort)
+  fullName: Core.Units.UnitSystem.SetUnitCount(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetUnitCount
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 264
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Set unit count (RISK-style troop count)
+  example: []
+  syntax:
+    content: public void SetUnitCount(ushort unitID, ushort count)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: count
+      type: System.UInt16
+    content.vb: Public Sub SetUnitCount(unitID As UShort, count As UShort)
+  overload: Core.Units.UnitSystem.SetUnitCount*
+  nameWithType.vb: UnitSystem.SetUnitCount(UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.SetUnitCount(UShort, UShort)
+  name.vb: SetUnitCount(UShort, UShort)
+- uid: Core.Units.UnitSystem.AddTroops(System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.AddTroops(System.UInt16,System.UInt16)
+  id: AddTroops(System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: AddTroops(ushort, ushort)
+  nameWithType: UnitSystem.AddTroops(ushort, ushort)
+  fullName: Core.Units.UnitSystem.AddTroops(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddTroops
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 292
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Add troops to unit (reinforcement)
+  example: []
+  syntax:
+    content: public void AddTroops(ushort unitID, ushort amount)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: amount
+      type: System.UInt16
+    content.vb: Public Sub AddTroops(unitID As UShort, amount As UShort)
+  overload: Core.Units.UnitSystem.AddTroops*
+  nameWithType.vb: UnitSystem.AddTroops(UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.AddTroops(UShort, UShort)
+  name.vb: AddTroops(UShort, UShort)
+- uid: Core.Units.UnitSystem.RemoveTroops(System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.RemoveTroops(System.UInt16,System.UInt16)
+  id: RemoveTroops(System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveTroops(ushort, ushort)
+  nameWithType: UnitSystem.RemoveTroops(ushort, ushort)
+  fullName: Core.Units.UnitSystem.RemoveTroops(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveTroops
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 301
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Remove troops from unit (combat losses)
+  example: []
+  syntax:
+    content: public void RemoveTroops(ushort unitID, ushort amount)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: amount
+      type: System.UInt16
+    content.vb: Public Sub RemoveTroops(unitID As UShort, amount As UShort)
+  overload: Core.Units.UnitSystem.RemoveTroops*
+  nameWithType.vb: UnitSystem.RemoveTroops(UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.RemoveTroops(UShort, UShort)
+  name.vb: RemoveTroops(UShort, UShort)
+- uid: Core.Units.UnitSystem.MoveUnit(System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitSystem.MoveUnit(System.UInt16,System.UInt16)
+  id: MoveUnit(System.UInt16,System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: MoveUnit(ushort, ushort)
+  nameWithType: UnitSystem.MoveUnit(ushort, ushort)
+  fullName: Core.Units.UnitSystem.MoveUnit(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MoveUnit
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 313
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Move unit to a new province.
+
+    Updates sparse mappings automatically.
+  example: []
+  syntax:
+    content: public void MoveUnit(ushort unitID, ushort newProvinceID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    - id: newProvinceID
+      type: System.UInt16
+    content.vb: Public Sub MoveUnit(unitID As UShort, newProvinceID As UShort)
+  overload: Core.Units.UnitSystem.MoveUnit*
+  nameWithType.vb: UnitSystem.MoveUnit(UShort, UShort)
+  fullName.vb: Core.Units.UnitSystem.MoveUnit(UShort, UShort)
+  name.vb: MoveUnit(UShort, UShort)
+- uid: Core.Units.UnitSystem.GetColdData(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.GetColdData(System.UInt16)
+  id: GetColdData(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: GetColdData(ushort)
+  nameWithType: UnitSystem.GetColdData(ushort)
+  fullName: Core.Units.UnitSystem.GetColdData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColdData
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 352
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Get or create cold data for a unit
+  example: []
+  syntax:
+    content: public UnitColdData GetColdData(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: Core.Units.UnitColdData
+    content.vb: Public Function GetColdData(unitID As UShort) As UnitColdData
+  overload: Core.Units.UnitSystem.GetColdData*
+  nameWithType.vb: UnitSystem.GetColdData(UShort)
+  fullName.vb: Core.Units.UnitSystem.GetColdData(UShort)
+  name.vb: GetColdData(UShort)
+- uid: Core.Units.UnitSystem.HasColdData(System.UInt16)
+  commentId: M:Core.Units.UnitSystem.HasColdData(System.UInt16)
+  id: HasColdData(System.UInt16)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: HasColdData(ushort)
+  nameWithType: UnitSystem.HasColdData(ushort)
+  fullName: Core.Units.UnitSystem.HasColdData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasColdData
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 363
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Check if unit has cold data
+  example: []
+  syntax:
+    content: public bool HasColdData(ushort unitID)
+    parameters:
+    - id: unitID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasColdData(unitID As UShort) As Boolean
+  overload: Core.Units.UnitSystem.HasColdData*
+  nameWithType.vb: UnitSystem.HasColdData(UShort)
+  fullName.vb: Core.Units.UnitSystem.HasColdData(UShort)
+  name.vb: HasColdData(UShort)
+- uid: Core.Units.UnitSystem.SaveState(System.IO.BinaryWriter)
+  commentId: M:Core.Units.UnitSystem.SaveState(System.IO.BinaryWriter)
+  id: SaveState(System.IO.BinaryWriter)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: SaveState(BinaryWriter)
+  nameWithType: UnitSystem.SaveState(BinaryWriter)
+  fullName: Core.Units.UnitSystem.SaveState(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveState
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 399
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public void SaveState(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    content.vb: Public Sub SaveState(writer As BinaryWriter)
+  overload: Core.Units.UnitSystem.SaveState*
+- uid: Core.Units.UnitSystem.LoadState(System.IO.BinaryReader)
+  commentId: M:Core.Units.UnitSystem.LoadState(System.IO.BinaryReader)
+  id: LoadState(System.IO.BinaryReader)
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: LoadState(BinaryReader)
+  nameWithType: UnitSystem.LoadState(BinaryReader)
+  fullName: Core.Units.UnitSystem.LoadState(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadState
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 438
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public void LoadState(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    content.vb: Public Sub LoadState(reader As BinaryReader)
+  overload: Core.Units.UnitSystem.LoadState*
+- uid: Core.Units.UnitSystem.Dispose
+  commentId: M:Core.Units.UnitSystem.Dispose
+  id: Dispose
+  parent: Core.Units.UnitSystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: UnitSystem.Dispose()
+  fullName: Core.Units.UnitSystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Units/UnitSystem.cs
+    startLine: 559
+  assemblies:
+  - Core
+  namespace: Core.Units
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Units.UnitSystem.Dispose*
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitSystem.#ctor*
+  commentId: Overload:Core.Units.UnitSystem.#ctor
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem__ctor_System_Int32_Core_EventBus_
+  name: UnitSystem
+  nameWithType: UnitSystem.UnitSystem
+  fullName: Core.Units.UnitSystem.UnitSystem
+  nameWithType.vb: UnitSystem.New
+  fullName.vb: Core.Units.UnitSystem.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Units.UnitSystem.CreateUnit*
+  commentId: Overload:Core.Units.UnitSystem.CreateUnit
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_CreateUnit_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: CreateUnit
+  nameWithType: UnitSystem.CreateUnit
+  fullName: Core.Units.UnitSystem.CreateUnit
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Units.UnitSystem.CreateUnitWithStats*
+  commentId: Overload:Core.Units.UnitSystem.CreateUnitWithStats
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_CreateUnitWithStats_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: CreateUnitWithStats
+  nameWithType: UnitSystem.CreateUnitWithStats
+  fullName: Core.Units.UnitSystem.CreateUnitWithStats
+- uid: Core.Units.UnitSystem.DisbandUnit*
+  commentId: Overload:Core.Units.UnitSystem.DisbandUnit
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_DisbandUnit_System_UInt16_Core_Units_DestructionReason_
+  name: DisbandUnit
+  nameWithType: UnitSystem.DisbandUnit
+  fullName: Core.Units.UnitSystem.DisbandUnit
+- uid: Core.Units.DestructionReason
+  commentId: T:Core.Units.DestructionReason
+  parent: Core.Units
+  href: Core.Units.DestructionReason.html
+  name: DestructionReason
+  nameWithType: DestructionReason
+  fullName: Core.Units.DestructionReason
+- uid: Core.Units.UnitSystem.GetUnit*
+  commentId: Overload:Core.Units.UnitSystem.GetUnit
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetUnit_System_UInt16_
+  name: GetUnit
+  nameWithType: UnitSystem.GetUnit
+  fullName: Core.Units.UnitSystem.GetUnit
+- uid: Core.Units.UnitState
+  commentId: T:Core.Units.UnitState
+  parent: Core.Units
+  href: Core.Units.UnitState.html
+  name: UnitState
+  nameWithType: UnitState
+  fullName: Core.Units.UnitState
+- uid: Core.Units.UnitSystem.HasUnit*
+  commentId: Overload:Core.Units.UnitSystem.HasUnit
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_HasUnit_System_UInt16_
+  name: HasUnit
+  nameWithType: UnitSystem.HasUnit
+  fullName: Core.Units.UnitSystem.HasUnit
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Units.UnitSystem.GetUnitsInProvince*
+  commentId: Overload:Core.Units.UnitSystem.GetUnitsInProvince
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetUnitsInProvince_System_UInt16_
+  name: GetUnitsInProvince
+  nameWithType: UnitSystem.GetUnitsInProvince
+  fullName: Core.Units.UnitSystem.GetUnitsInProvince
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Units.UnitSystem.GetUnitCountInProvince*
+  commentId: Overload:Core.Units.UnitSystem.GetUnitCountInProvince
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetUnitCountInProvince_System_UInt16_
+  name: GetUnitCountInProvince
+  nameWithType: UnitSystem.GetUnitCountInProvince
+  fullName: Core.Units.UnitSystem.GetUnitCountInProvince
+- uid: Core.Units.UnitSystem.GetCountryUnits*
+  commentId: Overload:Core.Units.UnitSystem.GetCountryUnits
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetCountryUnits_System_UInt16_
+  name: GetCountryUnits
+  nameWithType: UnitSystem.GetCountryUnits
+  fullName: Core.Units.UnitSystem.GetCountryUnits
+- uid: Core.Units.UnitSystem.GetCountryUnitCount*
+  commentId: Overload:Core.Units.UnitSystem.GetCountryUnitCount
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetCountryUnitCount_System_UInt16_
+  name: GetCountryUnitCount
+  nameWithType: UnitSystem.GetCountryUnitCount
+  fullName: Core.Units.UnitSystem.GetCountryUnitCount
+- uid: Core.Units.UnitSystem.GetUnitCount*
+  commentId: Overload:Core.Units.UnitSystem.GetUnitCount
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetUnitCount
+  name: GetUnitCount
+  nameWithType: UnitSystem.GetUnitCount
+  fullName: Core.Units.UnitSystem.GetUnitCount
+- uid: Core.Units.UnitSystem.MovementQueue*
+  commentId: Overload:Core.Units.UnitSystem.MovementQueue
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_MovementQueue
+  name: MovementQueue
+  nameWithType: UnitSystem.MovementQueue
+  fullName: Core.Units.UnitSystem.MovementQueue
+- uid: Core.Units.UnitMovementQueue
+  commentId: T:Core.Units.UnitMovementQueue
+  parent: Core.Units
+  href: Core.Units.UnitMovementQueue.html
+  name: UnitMovementQueue
+  nameWithType: UnitMovementQueue
+  fullName: Core.Units.UnitMovementQueue
+- uid: Core.Units.UnitSystem.SetUnitCount*
+  commentId: Overload:Core.Units.UnitSystem.SetUnitCount
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_SetUnitCount_System_UInt16_System_UInt16_
+  name: SetUnitCount
+  nameWithType: UnitSystem.SetUnitCount
+  fullName: Core.Units.UnitSystem.SetUnitCount
+- uid: Core.Units.UnitSystem.AddTroops*
+  commentId: Overload:Core.Units.UnitSystem.AddTroops
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_AddTroops_System_UInt16_System_UInt16_
+  name: AddTroops
+  nameWithType: UnitSystem.AddTroops
+  fullName: Core.Units.UnitSystem.AddTroops
+- uid: Core.Units.UnitSystem.RemoveTroops*
+  commentId: Overload:Core.Units.UnitSystem.RemoveTroops
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_RemoveTroops_System_UInt16_System_UInt16_
+  name: RemoveTroops
+  nameWithType: UnitSystem.RemoveTroops
+  fullName: Core.Units.UnitSystem.RemoveTroops
+- uid: Core.Units.UnitSystem.MoveUnit*
+  commentId: Overload:Core.Units.UnitSystem.MoveUnit
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_MoveUnit_System_UInt16_System_UInt16_
+  name: MoveUnit
+  nameWithType: UnitSystem.MoveUnit
+  fullName: Core.Units.UnitSystem.MoveUnit
+- uid: Core.Units.UnitSystem.GetColdData*
+  commentId: Overload:Core.Units.UnitSystem.GetColdData
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_GetColdData_System_UInt16_
+  name: GetColdData
+  nameWithType: UnitSystem.GetColdData
+  fullName: Core.Units.UnitSystem.GetColdData
+- uid: Core.Units.UnitColdData
+  commentId: T:Core.Units.UnitColdData
+  parent: Core.Units
+  href: Core.Units.UnitColdData.html
+  name: UnitColdData
+  nameWithType: UnitColdData
+  fullName: Core.Units.UnitColdData
+- uid: Core.Units.UnitSystem.HasColdData*
+  commentId: Overload:Core.Units.UnitSystem.HasColdData
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_HasColdData_System_UInt16_
+  name: HasColdData
+  nameWithType: UnitSystem.HasColdData
+  fullName: Core.Units.UnitSystem.HasColdData
+- uid: Core.Units.UnitSystem.SaveState*
+  commentId: Overload:Core.Units.UnitSystem.SaveState
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_SaveState_System_IO_BinaryWriter_
+  name: SaveState
+  nameWithType: UnitSystem.SaveState
+  fullName: Core.Units.UnitSystem.SaveState
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Units.UnitSystem.LoadState*
+  commentId: Overload:Core.Units.UnitSystem.LoadState
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_LoadState_System_IO_BinaryReader_
+  name: LoadState
+  nameWithType: UnitSystem.LoadState
+  fullName: Core.Units.UnitSystem.LoadState
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.Units.UnitSystem.Dispose*
+  commentId: Overload:Core.Units.UnitSystem.Dispose
+  href: Core.Units.UnitSystem.html#Core_Units_UnitSystem_Dispose
+  name: Dispose
+  nameWithType: UnitSystem.Dispose
+  fullName: Core.Units.UnitSystem.Dispose

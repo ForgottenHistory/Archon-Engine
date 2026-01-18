@@ -1,0 +1,216 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandBufferResult
+  commentId: T:Core.Commands.CommandBufferResult
+  id: CommandBufferResult
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandBufferResult.ErrorMessage
+  - Core.Commands.CommandBufferResult.Failure(System.String)
+  - Core.Commands.CommandBufferResult.IsSuccess
+  - Core.Commands.CommandBufferResult.Success
+  langs:
+  - csharp
+  - vb
+  name: CommandBufferResult
+  nameWithType: CommandBufferResult
+  fullName: Core.Commands.CommandBufferResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandBufferResult
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 455
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public struct CommandBufferResult
+    content.vb: Public Structure CommandBufferResult
+- uid: Core.Commands.CommandBufferResult.IsSuccess
+  commentId: F:Core.Commands.CommandBufferResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Commands.CommandBufferResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: CommandBufferResult.IsSuccess
+  fullName: Core.Commands.CommandBufferResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 457
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Commands.CommandBufferResult.ErrorMessage
+  commentId: F:Core.Commands.CommandBufferResult.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Commands.CommandBufferResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: CommandBufferResult.ErrorMessage
+  fullName: Core.Commands.CommandBufferResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 458
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Core.Commands.CommandBufferResult.Success
+  commentId: M:Core.Commands.CommandBufferResult.Success
+  id: Success
+  parent: Core.Commands.CommandBufferResult
+  langs:
+  - csharp
+  - vb
+  name: Success()
+  nameWithType: CommandBufferResult.Success()
+  fullName: Core.Commands.CommandBufferResult.Success()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 460
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static CommandBufferResult Success()
+    return:
+      type: Core.Commands.CommandBufferResult
+    content.vb: Public Shared Function Success() As CommandBufferResult
+  overload: Core.Commands.CommandBufferResult.Success*
+- uid: Core.Commands.CommandBufferResult.Failure(System.String)
+  commentId: M:Core.Commands.CommandBufferResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Commands.CommandBufferResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: CommandBufferResult.Failure(string)
+  fullName: Core.Commands.CommandBufferResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandBuffer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Commands/CommandBuffer.cs
+    startLine: 461
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static CommandBufferResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Commands.CommandBufferResult
+    content.vb: Public Shared Function Failure([error] As String) As CommandBufferResult
+  overload: Core.Commands.CommandBufferResult.Failure*
+  nameWithType.vb: CommandBufferResult.Failure(String)
+  fullName.vb: Core.Commands.CommandBufferResult.Failure(String)
+  name.vb: Failure(String)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.CommandBufferResult.Success*
+  commentId: Overload:Core.Commands.CommandBufferResult.Success
+  href: Core.Commands.CommandBufferResult.html#Core_Commands_CommandBufferResult_Success
+  name: Success
+  nameWithType: CommandBufferResult.Success
+  fullName: Core.Commands.CommandBufferResult.Success
+- uid: Core.Commands.CommandBufferResult
+  commentId: T:Core.Commands.CommandBufferResult
+  parent: Core.Commands
+  href: Core.Commands.CommandBufferResult.html
+  name: CommandBufferResult
+  nameWithType: CommandBufferResult
+  fullName: Core.Commands.CommandBufferResult
+- uid: Core.Commands.CommandBufferResult.Failure*
+  commentId: Overload:Core.Commands.CommandBufferResult.Failure
+  href: Core.Commands.CommandBufferResult.html#Core_Commands_CommandBufferResult_Failure_System_String_
+  name: Failure
+  nameWithType: CommandBufferResult.Failure
+  fullName: Core.Commands.CommandBufferResult.Failure

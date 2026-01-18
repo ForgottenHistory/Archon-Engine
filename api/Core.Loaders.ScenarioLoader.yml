@@ -1,0 +1,441 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ScenarioLoader
+  commentId: T:Core.Loaders.ScenarioLoader
+  id: ScenarioLoader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ScenarioLoader.ApplyScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  - Core.Loaders.ScenarioLoader.CreateDefaultScenario
+  - Core.Loaders.ScenarioLoader.CreateExampleScenario
+  - Core.Loaders.ScenarioLoader.LoadFromFile(System.String)
+  - Core.Loaders.ScenarioLoader.ValidateScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: ScenarioLoader
+  nameWithType: ScenarioLoader
+  fullName: Core.Loaders.ScenarioLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScenarioLoader
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Loads and applies scenario data for initial game state
+
+    Handles start dates like 1444, 1836, or custom scenarios
+
+    Applies province ownership, country treasuries, armies, etc.
+  example: []
+  syntax:
+    content: public class ScenarioLoader
+    content.vb: Public Class ScenarioLoader
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.ScenarioLoader.LoadFromFile(System.String)
+  commentId: M:Core.Loaders.ScenarioLoader.LoadFromFile(System.String)
+  id: LoadFromFile(System.String)
+  parent: Core.Loaders.ScenarioLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadFromFile(string)
+  nameWithType: ScenarioLoader.LoadFromFile(string)
+  fullName: Core.Loaders.ScenarioLoader.LoadFromFile(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadFromFile
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load scenario from JSON file
+  example: []
+  syntax:
+    content: public static ScenarioLoader.ScenarioLoadResult LoadFromFile(string filePath)
+    parameters:
+    - id: filePath
+      type: System.String
+    return:
+      type: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    content.vb: Public Shared Function LoadFromFile(filePath As String) As ScenarioLoader.ScenarioLoadResult
+  overload: Core.Loaders.ScenarioLoader.LoadFromFile*
+  nameWithType.vb: ScenarioLoader.LoadFromFile(String)
+  fullName.vb: Core.Loaders.ScenarioLoader.LoadFromFile(String)
+  name.vb: LoadFromFile(String)
+- uid: Core.Loaders.ScenarioLoader.CreateDefaultScenario
+  commentId: M:Core.Loaders.ScenarioLoader.CreateDefaultScenario
+  id: CreateDefaultScenario
+  parent: Core.Loaders.ScenarioLoader
+  langs:
+  - csharp
+  - vb
+  name: CreateDefaultScenario()
+  nameWithType: ScenarioLoader.CreateDefaultScenario()
+  fullName: Core.Loaders.ScenarioLoader.CreateDefaultScenario()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateDefaultScenario
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 171
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Create a default empty scenario
+  example: []
+  syntax:
+    content: public static ScenarioLoader.ScenarioLoadResult CreateDefaultScenario()
+    return:
+      type: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    content.vb: Public Shared Function CreateDefaultScenario() As ScenarioLoader.ScenarioLoadResult
+  overload: Core.Loaders.ScenarioLoader.CreateDefaultScenario*
+- uid: Core.Loaders.ScenarioLoader.ApplyScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  commentId: M:Core.Loaders.ScenarioLoader.ApplyScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  id: ApplyScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  parent: Core.Loaders.ScenarioLoader
+  langs:
+  - csharp
+  - vb
+  name: ApplyScenario(ScenarioData, GameState)
+  nameWithType: ScenarioLoader.ApplyScenario(ScenarioLoader.ScenarioData, GameState)
+  fullName: Core.Loaders.ScenarioLoader.ApplyScenario(Core.Loaders.ScenarioLoader.ScenarioData, Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyScenario
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 192
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Apply scenario data to game state
+  example: []
+  syntax:
+    content: public static bool ApplyScenario(ScenarioLoader.ScenarioData scenario, GameState gameState)
+    parameters:
+    - id: scenario
+      type: Core.Loaders.ScenarioLoader.ScenarioData
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function ApplyScenario(scenario As ScenarioLoader.ScenarioData, gameState As GameState) As Boolean
+  overload: Core.Loaders.ScenarioLoader.ApplyScenario*
+- uid: Core.Loaders.ScenarioLoader.ValidateScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  commentId: M:Core.Loaders.ScenarioLoader.ValidateScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  id: ValidateScenario(Core.Loaders.ScenarioLoader.ScenarioData,Core.GameState)
+  parent: Core.Loaders.ScenarioLoader
+  langs:
+  - csharp
+  - vb
+  name: ValidateScenario(ScenarioData, GameState)
+  nameWithType: ScenarioLoader.ValidateScenario(ScenarioLoader.ScenarioData, GameState)
+  fullName: Core.Loaders.ScenarioLoader.ValidateScenario(Core.Loaders.ScenarioLoader.ScenarioData, Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateScenario
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 301
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Validate scenario data
+  example: []
+  syntax:
+    content: public static List<string> ValidateScenario(ScenarioLoader.ScenarioData scenario, GameState gameState)
+    parameters:
+    - id: scenario
+      type: Core.Loaders.ScenarioLoader.ScenarioData
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.Collections.Generic.List{System.String}
+    content.vb: Public Shared Function ValidateScenario(scenario As ScenarioLoader.ScenarioData, gameState As GameState) As List(Of String)
+  overload: Core.Loaders.ScenarioLoader.ValidateScenario*
+- uid: Core.Loaders.ScenarioLoader.CreateExampleScenario
+  commentId: M:Core.Loaders.ScenarioLoader.CreateExampleScenario
+  id: CreateExampleScenario
+  parent: Core.Loaders.ScenarioLoader
+  langs:
+  - csharp
+  - vb
+  name: CreateExampleScenario()
+  nameWithType: ScenarioLoader.CreateExampleScenario()
+  fullName: Core.Loaders.ScenarioLoader.CreateExampleScenario()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ScenarioLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateExampleScenario
+    path: Scripts/Core/Loaders/ScenarioLoader.cs
+    startLine: 351
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Create example scenario for testing
+  example: []
+  syntax:
+    content: public static ScenarioLoader.ScenarioData CreateExampleScenario()
+    return:
+      type: Core.Loaders.ScenarioLoader.ScenarioData
+    content.vb: Public Shared Function CreateExampleScenario() As ScenarioLoader.ScenarioData
+  overload: Core.Loaders.ScenarioLoader.CreateExampleScenario*
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.ScenarioLoader.LoadFromFile*
+  commentId: Overload:Core.Loaders.ScenarioLoader.LoadFromFile
+  href: Core.Loaders.ScenarioLoader.html#Core_Loaders_ScenarioLoader_LoadFromFile_System_String_
+  name: LoadFromFile
+  nameWithType: ScenarioLoader.LoadFromFile
+  fullName: Core.Loaders.ScenarioLoader.LoadFromFile
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  commentId: T:Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.ScenarioLoadResult
+  nameWithType: ScenarioLoader.ScenarioLoadResult
+  fullName: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    name: ScenarioLoadResult
+    href: Core.Loaders.ScenarioLoader.ScenarioLoadResult.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioLoadResult
+    name: ScenarioLoadResult
+    href: Core.Loaders.ScenarioLoader.ScenarioLoadResult.html
+- uid: Core.Loaders.ScenarioLoader.CreateDefaultScenario*
+  commentId: Overload:Core.Loaders.ScenarioLoader.CreateDefaultScenario
+  href: Core.Loaders.ScenarioLoader.html#Core_Loaders_ScenarioLoader_CreateDefaultScenario
+  name: CreateDefaultScenario
+  nameWithType: ScenarioLoader.CreateDefaultScenario
+  fullName: Core.Loaders.ScenarioLoader.CreateDefaultScenario
+- uid: Core.Loaders.ScenarioLoader.ApplyScenario*
+  commentId: Overload:Core.Loaders.ScenarioLoader.ApplyScenario
+  href: Core.Loaders.ScenarioLoader.html#Core_Loaders_ScenarioLoader_ApplyScenario_Core_Loaders_ScenarioLoader_ScenarioData_Core_GameState_
+  name: ApplyScenario
+  nameWithType: ScenarioLoader.ApplyScenario
+  fullName: Core.Loaders.ScenarioLoader.ApplyScenario
+- uid: Core.Loaders.ScenarioLoader.ScenarioData
+  commentId: T:Core.Loaders.ScenarioLoader.ScenarioData
+  parent: Core.Loaders
+  href: Core.Loaders.ScenarioLoader.html
+  name: ScenarioLoader.ScenarioData
+  nameWithType: ScenarioLoader.ScenarioData
+  fullName: Core.Loaders.ScenarioLoader.ScenarioData
+  spec.csharp:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioData
+    name: ScenarioData
+    href: Core.Loaders.ScenarioLoader.ScenarioData.html
+  spec.vb:
+  - uid: Core.Loaders.ScenarioLoader
+    name: ScenarioLoader
+    href: Core.Loaders.ScenarioLoader.html
+  - name: .
+  - uid: Core.Loaders.ScenarioLoader.ScenarioData
+    name: ScenarioData
+    href: Core.Loaders.ScenarioLoader.ScenarioData.html
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Loaders.ScenarioLoader.ValidateScenario*
+  commentId: Overload:Core.Loaders.ScenarioLoader.ValidateScenario
+  href: Core.Loaders.ScenarioLoader.html#Core_Loaders_ScenarioLoader_ValidateScenario_Core_Loaders_ScenarioLoader_ScenarioData_Core_GameState_
+  name: ValidateScenario
+  nameWithType: ScenarioLoader.ValidateScenario
+  fullName: Core.Loaders.ScenarioLoader.ValidateScenario
+- uid: System.Collections.Generic.List{System.String}
+  commentId: T:System.Collections.Generic.List{System.String}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<string>
+  nameWithType: List<string>
+  fullName: System.Collections.Generic.List<string>
+  nameWithType.vb: List(Of String)
+  fullName.vb: System.Collections.Generic.List(Of String)
+  name.vb: List(Of String)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Loaders.ScenarioLoader.CreateExampleScenario*
+  commentId: Overload:Core.Loaders.ScenarioLoader.CreateExampleScenario
+  href: Core.Loaders.ScenarioLoader.html#Core_Loaders_ScenarioLoader_CreateExampleScenario
+  name: CreateExampleScenario
+  nameWithType: ScenarioLoader.CreateExampleScenario
+  fullName: Core.Loaders.ScenarioLoader.CreateExampleScenario

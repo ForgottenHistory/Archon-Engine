@@ -1,0 +1,457 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Validation.StarterKitValidationExtensions
+  commentId: T:StarterKit.Validation.StarterKitValidationExtensions
+  id: StarterKitValidationExtensions
+  parent: StarterKit.Validation
+  children:
+  - StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder,System.String)
+  - StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String)
+  - StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
+  - StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId)
+  - StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder,System.UInt16)
+  - StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder,System.String)
+  langs:
+  - csharp
+  - vb
+  name: StarterKitValidationExtensions
+  nameWithType: StarterKitValidationExtensions
+  fullName: StarterKit.Validation.StarterKitValidationExtensions
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StarterKitValidationExtensions
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 18
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: >-
+    STARTERKIT - Extension methods for ValidationBuilder.
+
+    Demonstrates how GAME layer can extend ENGINE's fluent validation.
+
+    Uses type-safe ProvinceId wrappers for compile-time safety.
+
+
+    Usage in commands:
+
+    public override bool Validate(GameState gs) =&gt;
+        Validate.For(gs)
+                .Province(provinceId)
+                .UnitExists(unitId)
+                .ProvinceOwnedByPlayer(provinceId)
+                .Result(out var reason);
+  example: []
+  syntax:
+    content: public static class StarterKitValidationExtensions
+    content.vb: Public Module StarterKitValidationExtensions
+  inheritance:
+  - System.Object
+- uid: StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder,System.UInt16)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder,System.UInt16)
+  id: UnitExists(Core.Validation.ValidationBuilder,System.UInt16)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: UnitExists(ValidationBuilder, ushort)
+  nameWithType: StarterKitValidationExtensions.UnitExists(ValidationBuilder, ushort)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitExists
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 23
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that a unit exists and is alive.
+  example: []
+  syntax:
+    content: public static ValidationBuilder UnitExists(this ValidationBuilder v, ushort unitId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: unitId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function UnitExists(v As ValidationBuilder, unitId As UShort) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.UnitExists*
+  nameWithType.vb: StarterKitValidationExtensions.UnitExists(ValidationBuilder, UShort)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder, UShort)
+  name.vb: UnitExists(ValidationBuilder, UShort)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder,System.String)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder,System.String)
+  id: UnitTypeExists(Core.Validation.ValidationBuilder,System.String)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: UnitTypeExists(ValidationBuilder, string)
+  nameWithType: StarterKitValidationExtensions.UnitTypeExists(ValidationBuilder, string)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitTypeExists
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 43
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that a unit type ID is valid.
+  example: []
+  syntax:
+    content: public static ValidationBuilder UnitTypeExists(this ValidationBuilder v, string unitTypeId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: unitTypeId
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function UnitTypeExists(v As ValidationBuilder, unitTypeId As String) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists*
+  nameWithType.vb: StarterKitValidationExtensions.UnitTypeExists(ValidationBuilder, String)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder, String)
+  name.vb: UnitTypeExists(ValidationBuilder, String)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId)
+  id: ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnedByPlayer(ValidationBuilder, ProvinceId)
+  nameWithType: StarterKitValidationExtensions.ProvinceOwnedByPlayer(ValidationBuilder, ProvinceId)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnedByPlayer
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 62
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that a province is owned by the current player.
+  example: []
+  syntax:
+    content: public static ValidationBuilder ProvinceOwnedByPlayer(this ValidationBuilder v, ProvinceId provinceId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: provinceId
+      type: Core.Data.Ids.ProvinceId
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function ProvinceOwnedByPlayer(v As ValidationBuilder, provinceId As ProvinceId) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer*
+- uid: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder,System.String)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder,System.String)
+  id: BuildingTypeExists(Core.Validation.ValidationBuilder,System.String)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: BuildingTypeExists(ValidationBuilder, string)
+  nameWithType: StarterKitValidationExtensions.BuildingTypeExists(ValidationBuilder, string)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BuildingTypeExists
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 81
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that a building type ID is valid.
+  example: []
+  syntax:
+    content: public static ValidationBuilder BuildingTypeExists(this ValidationBuilder v, string buildingTypeId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: buildingTypeId
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function BuildingTypeExists(v As ValidationBuilder, buildingTypeId As String) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists*
+  nameWithType.vb: StarterKitValidationExtensions.BuildingTypeExists(ValidationBuilder, String)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder, String)
+  name.vb: BuildingTypeExists(ValidationBuilder, String)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String)
+  id: CanConstructBuilding(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: CanConstructBuilding(ValidationBuilder, ProvinceId, string)
+  nameWithType: StarterKitValidationExtensions.CanConstructBuilding(ValidationBuilder, ProvinceId, string)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanConstructBuilding
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 100
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that a building can be constructed in a province.
+  example: []
+  syntax:
+    content: public static ValidationBuilder CanConstructBuilding(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: provinceId
+      type: Core.Data.Ids.ProvinceId
+    - id: buildingTypeId
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function CanConstructBuilding(v As ValidationBuilder, provinceId As ProvinceId, buildingTypeId As String) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding*
+  nameWithType.vb: StarterKitValidationExtensions.CanConstructBuilding(ValidationBuilder, ProvinceId, String)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, String)
+  name.vb: CanConstructBuilding(ValidationBuilder, ProvinceId, String)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
+  id: HasGold(Core.Validation.ValidationBuilder,System.Int32)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: HasGold(ValidationBuilder, int)
+  nameWithType: StarterKitValidationExtensions.HasGold(ValidationBuilder, int)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasGold
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 119
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: Validate that the player has sufficient gold.
+  example: []
+  syntax:
+    content: public static ValidationBuilder HasGold(this ValidationBuilder v, int amount)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: amount
+      type: System.Int32
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function HasGold(v As ValidationBuilder, amount As Integer) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.HasGold*
+  nameWithType.vb: StarterKitValidationExtensions.HasGold(ValidationBuilder, Integer)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder, Integer)
+  name.vb: HasGold(ValidationBuilder, Integer)
+references:
+- uid: StarterKit.Validation
+  commentId: N:StarterKit.Validation
+  href: StarterKit.html
+  name: StarterKit.Validation
+  nameWithType: StarterKit.Validation
+  fullName: StarterKit.Validation
+  spec.csharp:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Validation
+    name: Validation
+    href: StarterKit.Validation.html
+  spec.vb:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Validation
+    name: Validation
+    href: StarterKit.Validation.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.Validation.StarterKitValidationExtensions.UnitExists*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.UnitExists
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_UnitExists_Core_Validation_ValidationBuilder_System_UInt16_
+  name: UnitExists
+  nameWithType: StarterKitValidationExtensions.UnitExists
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.UnitExists
+- uid: Core.Validation.ValidationBuilder
+  commentId: T:Core.Validation.ValidationBuilder
+  parent: Core.Validation
+  href: Core.Validation.ValidationBuilder.html
+  name: ValidationBuilder
+  nameWithType: ValidationBuilder
+  fullName: Core.Validation.ValidationBuilder
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Validation
+  commentId: N:Core.Validation
+  href: Core.html
+  name: Core.Validation
+  nameWithType: Core.Validation
+  fullName: Core.Validation
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+- uid: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_UnitTypeExists_Core_Validation_ValidationBuilder_System_String_
+  name: UnitTypeExists
+  nameWithType: StarterKitValidationExtensions.UnitTypeExists
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_ProvinceOwnedByPlayer_Core_Validation_ValidationBuilder_Core_Data_Ids_ProvinceId_
+  name: ProvinceOwnedByPlayer
+  nameWithType: StarterKitValidationExtensions.ProvinceOwnedByPlayer
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer
+- uid: Core.Data.Ids.ProvinceId
+  commentId: T:Core.Data.Ids.ProvinceId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.ProvinceId.html
+  name: ProvinceId
+  nameWithType: ProvinceId
+  fullName: Core.Data.Ids.ProvinceId
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+- uid: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_BuildingTypeExists_Core_Validation_ValidationBuilder_System_String_
+  name: BuildingTypeExists
+  nameWithType: StarterKitValidationExtensions.BuildingTypeExists
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists
+- uid: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_CanConstructBuilding_Core_Validation_ValidationBuilder_Core_Data_Ids_ProvinceId_System_String_
+  name: CanConstructBuilding
+  nameWithType: StarterKitValidationExtensions.CanConstructBuilding
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding
+- uid: StarterKit.Validation.StarterKitValidationExtensions.HasGold*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.HasGold
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_HasGold_Core_Validation_ValidationBuilder_System_Int32_
+  name: HasGold
+  nameWithType: StarterKitValidationExtensions.HasGold
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.HasGold
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

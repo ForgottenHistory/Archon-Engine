@@ -1,0 +1,582 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  commentId: T:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  id: ProvinceMapParser.UnifiedProvinceMapResult
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ColorToProvinceID
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Format
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.IsSuccess
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.PixelData
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceCount
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceIDToColor
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.UniqueProvinceIDs
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapParser.UnifiedProvinceMapResult
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnifiedProvinceMapResult
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Province map parsing result that supports both BMP and PNG formats
+  example: []
+  syntax:
+    content: public struct ProvinceMapParser.UnifiedProvinceMapResult
+    content.vb: Public Structure ProvinceMapParser.UnifiedProvinceMapResult
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.PixelData
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.PixelData
+  id: PixelData
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: PixelData
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.PixelData
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.PixelData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelData
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ImageParser.ImagePixelData PixelData
+    return:
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    content.vb: Public PixelData As ImageParser.ImagePixelData
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ColorToProvinceID
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ColorToProvinceID
+  id: ColorToProvinceID
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: ColorToProvinceID
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.ColorToProvinceID
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ColorToProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorToProvinceID
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeHashMap<int, int> ColorToProvinceID
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: Public ColorToProvinceID As NativeHashMap(Of Integer, Integer)
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceIDToColor
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceIDToColor
+  id: ProvinceIDToColor
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDToColor
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.ProvinceIDToColor
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceIDToColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDToColor
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeHashMap<int, int> ProvinceIDToColor
+    return:
+      type: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+    content.vb: Public ProvinceIDToColor As NativeHashMap(Of Integer, Integer)
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.UniqueProvinceIDs
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.UniqueProvinceIDs
+  id: UniqueProvinceIDs
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: UniqueProvinceIDs
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.UniqueProvinceIDs
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.UniqueProvinceIDs
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UniqueProvinceIDs
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<int> UniqueProvinceIDs
+    return:
+      type: Unity.Collections.NativeArray{System.Int32}
+    content.vb: Public UniqueProvinceIDs As NativeArray(Of Integer)
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceCount
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceCount
+  id: ProvinceCount
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.ProvinceCount
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.ProvinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int ProvinceCount
+    return:
+      type: System.Int32
+    content.vb: Public ProvinceCount As Integer
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.IsSuccess
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.IsSuccess
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Format
+  commentId: F:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Format
+  id: Format
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Format
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Format
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Format
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Format
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ImageParser.ImageFormat Format
+    return:
+      type: Map.Loading.Images.ImageParser.ImageFormat
+    content.vb: Public Format As ImageParser.ImageFormat
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+  commentId: P:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+  id: Width
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Width
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Width As Integer
+  overload: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width*
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+  commentId: P:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+  id: Height
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Height
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Height As Integer
+  overload: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height*
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose
+  commentId: M:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Dispose()
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 51
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Map.Loading.Images.ImageParser.ImagePixelData
+  commentId: T:Map.Loading.Images.ImageParser.ImagePixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImagePixelData
+  nameWithType: ImageParser.ImagePixelData
+  fullName: Map.Loading.Images.ImageParser.ImagePixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+- uid: Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  commentId: T:Unity.Collections.NativeHashMap{System.Int32,System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  name: NativeHashMap<int, int>
+  nameWithType: NativeHashMap<int, int>
+  fullName: Unity.Collections.NativeHashMap<int, int>
+  nameWithType.vb: NativeHashMap(Of Integer, Integer)
+  fullName.vb: Unity.Collections.NativeHashMap(Of Integer, Integer)
+  name.vb: NativeHashMap(Of Integer, Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray{System.Int32}
+  commentId: T:Unity.Collections.NativeArray{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int>
+  nameWithType: NativeArray<int>
+  fullName: Unity.Collections.NativeArray<int>
+  nameWithType.vb: NativeArray(Of Integer)
+  fullName.vb: Unity.Collections.NativeArray(Of Integer)
+  name.vb: NativeArray(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+  href: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.html#Map_Loading_Images_ProvinceMapParser_UnifiedProvinceMapResult_Width
+  name: Width
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Width
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Width
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+  href: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.html#Map_Loading_Images_ProvinceMapParser_UnifiedProvinceMapResult_Height
+  name: Height
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Height
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Height
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose
+  href: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.html#Map_Loading_Images_ProvinceMapParser_UnifiedProvinceMapResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult.Dispose
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.Dispose

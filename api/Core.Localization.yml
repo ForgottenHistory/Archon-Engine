@@ -1,0 +1,483 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  id: Core.Localization
+  children:
+  - Core.Localization.ColoredTextMarkup
+  - Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  - Core.Localization.ColoredTextMarkup.MarkupResult
+  - Core.Localization.ColoredTextMarkup.TextStyle
+  - Core.Localization.DynamicKeyResolver
+  - Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  - Core.Localization.DynamicKeyResolver.ResolutionContext
+  - Core.Localization.DynamicKeyResolver.ResolutionResult
+  - Core.Localization.ErrorSeverity
+  - Core.Localization.LocalizationFallbackChain
+  - Core.Localization.LocalizationFallbackChain.FallbackChain
+  - Core.Localization.LocalizationFallbackChain.FallbackResult
+  - Core.Localization.LocalizationManager
+  - Core.Localization.MultiLanguageExtractor
+  - Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  - Core.Localization.StringReplacementSystem
+  - Core.Localization.StringReplacementSystem.ReplacementContext
+  - Core.Localization.StringReplacementSystem.ReplacementParam
+  - Core.Localization.StringReplacementSystem.ReplacementResult
+  - Core.Localization.YAMLParser
+  - Core.Localization.YAMLParser.YAMLParseResult
+  - Core.Localization.YAMLTokenizer
+  - Core.Localization.YAMLTokenizer.YAMLToken
+  - Core.Localization.YAMLTokenizer.YAMLTokenType
+  - Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  langs:
+  - csharp
+  - vb
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Localization.StringReplacementSystem
+  commentId: T:Core.Localization.StringReplacementSystem
+  href: Core.Localization.StringReplacementSystem.html
+  name: StringReplacementSystem
+  nameWithType: StringReplacementSystem
+  fullName: Core.Localization.StringReplacementSystem
+- uid: Core.Localization.StringReplacementSystem.ReplacementParam
+  commentId: T:Core.Localization.StringReplacementSystem.ReplacementParam
+  href: Core.Localization.StringReplacementSystem.html
+  name: StringReplacementSystem.ReplacementParam
+  nameWithType: StringReplacementSystem.ReplacementParam
+  fullName: Core.Localization.StringReplacementSystem.ReplacementParam
+  spec.csharp:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementParam
+    name: ReplacementParam
+    href: Core.Localization.StringReplacementSystem.ReplacementParam.html
+  spec.vb:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementParam
+    name: ReplacementParam
+    href: Core.Localization.StringReplacementSystem.ReplacementParam.html
+- uid: Core.Localization.StringReplacementSystem.ReplacementContext
+  commentId: T:Core.Localization.StringReplacementSystem.ReplacementContext
+  parent: Core.Localization
+  href: Core.Localization.StringReplacementSystem.html
+  name: StringReplacementSystem.ReplacementContext
+  nameWithType: StringReplacementSystem.ReplacementContext
+  fullName: Core.Localization.StringReplacementSystem.ReplacementContext
+  spec.csharp:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementContext
+    name: ReplacementContext
+    href: Core.Localization.StringReplacementSystem.ReplacementContext.html
+  spec.vb:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementContext
+    name: ReplacementContext
+    href: Core.Localization.StringReplacementSystem.ReplacementContext.html
+- uid: Core.Localization.StringReplacementSystem.ReplacementResult
+  commentId: T:Core.Localization.StringReplacementSystem.ReplacementResult
+  parent: Core.Localization
+  href: Core.Localization.StringReplacementSystem.html
+  name: StringReplacementSystem.ReplacementResult
+  nameWithType: StringReplacementSystem.ReplacementResult
+  fullName: Core.Localization.StringReplacementSystem.ReplacementResult
+  spec.csharp:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementResult
+    name: ReplacementResult
+    href: Core.Localization.StringReplacementSystem.ReplacementResult.html
+  spec.vb:
+  - uid: Core.Localization.StringReplacementSystem
+    name: StringReplacementSystem
+    href: Core.Localization.StringReplacementSystem.html
+  - name: .
+  - uid: Core.Localization.StringReplacementSystem.ReplacementResult
+    name: ReplacementResult
+    href: Core.Localization.StringReplacementSystem.ReplacementResult.html
+- uid: Core.Localization.LocalizationManager
+  commentId: T:Core.Localization.LocalizationManager
+  href: Core.Localization.LocalizationManager.html
+  name: LocalizationManager
+  nameWithType: LocalizationManager
+  fullName: Core.Localization.LocalizationManager
+- uid: Core.Localization.DynamicKeyResolver
+  commentId: T:Core.Localization.DynamicKeyResolver
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver
+  nameWithType: DynamicKeyResolver
+  fullName: Core.Localization.DynamicKeyResolver
+- uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+  commentId: T:Core.Localization.DynamicKeyResolver.ResolutionContext
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.ResolutionContext
+  nameWithType: DynamicKeyResolver.ResolutionContext
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionContext
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+    name: ResolutionContext
+    href: Core.Localization.DynamicKeyResolver.ResolutionContext.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionContext
+    name: ResolutionContext
+    href: Core.Localization.DynamicKeyResolver.ResolutionContext.html
+- uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  commentId: T:Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.DynamicKeyPattern
+  nameWithType: DynamicKeyResolver.DynamicKeyPattern
+  fullName: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    name: DynamicKeyPattern
+    href: Core.Localization.DynamicKeyResolver.DynamicKeyPattern.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.DynamicKeyPattern
+    name: DynamicKeyPattern
+    href: Core.Localization.DynamicKeyResolver.DynamicKeyPattern.html
+- uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+  commentId: T:Core.Localization.DynamicKeyResolver.ResolutionResult
+  parent: Core.Localization
+  href: Core.Localization.DynamicKeyResolver.html
+  name: DynamicKeyResolver.ResolutionResult
+  nameWithType: DynamicKeyResolver.ResolutionResult
+  fullName: Core.Localization.DynamicKeyResolver.ResolutionResult
+  spec.csharp:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+  spec.vb:
+  - uid: Core.Localization.DynamicKeyResolver
+    name: DynamicKeyResolver
+    href: Core.Localization.DynamicKeyResolver.html
+  - name: .
+  - uid: Core.Localization.DynamicKeyResolver.ResolutionResult
+    name: ResolutionResult
+    href: Core.Localization.DynamicKeyResolver.ResolutionResult.html
+- uid: Core.Localization.YAMLParser
+  commentId: T:Core.Localization.YAMLParser
+  href: Core.Localization.YAMLParser.html
+  name: YAMLParser
+  nameWithType: YAMLParser
+  fullName: Core.Localization.YAMLParser
+- uid: Core.Localization.YAMLParser.YAMLParseResult
+  commentId: T:Core.Localization.YAMLParser.YAMLParseResult
+  parent: Core.Localization
+  href: Core.Localization.YAMLParser.html
+  name: YAMLParser.YAMLParseResult
+  nameWithType: YAMLParser.YAMLParseResult
+  fullName: Core.Localization.YAMLParser.YAMLParseResult
+  spec.csharp:
+  - uid: Core.Localization.YAMLParser
+    name: YAMLParser
+    href: Core.Localization.YAMLParser.html
+  - name: .
+  - uid: Core.Localization.YAMLParser.YAMLParseResult
+    name: YAMLParseResult
+    href: Core.Localization.YAMLParser.YAMLParseResult.html
+  spec.vb:
+  - uid: Core.Localization.YAMLParser
+    name: YAMLParser
+    href: Core.Localization.YAMLParser.html
+  - name: .
+  - uid: Core.Localization.YAMLParser.YAMLParseResult
+    name: YAMLParseResult
+    href: Core.Localization.YAMLParser.YAMLParseResult.html
+- uid: Core.Localization.ErrorSeverity
+  commentId: T:Core.Localization.ErrorSeverity
+  parent: Core.Localization
+  href: Core.Localization.ErrorSeverity.html
+  name: ErrorSeverity
+  nameWithType: ErrorSeverity
+  fullName: Core.Localization.ErrorSeverity
+- uid: Core.Localization.YAMLTokenizer
+  commentId: T:Core.Localization.YAMLTokenizer
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer
+  nameWithType: YAMLTokenizer
+  fullName: Core.Localization.YAMLTokenizer
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLTokenType
+  parent: Core.Localization
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer.YAMLTokenType
+  nameWithType: YAMLTokenizer.YAMLTokenType
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenType
+  spec.csharp:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+    name: YAMLTokenType
+    href: Core.Localization.YAMLTokenizer.YAMLTokenType.html
+  spec.vb:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+    name: YAMLTokenType
+    href: Core.Localization.YAMLTokenizer.YAMLTokenType.html
+- uid: Core.Localization.YAMLTokenizer.YAMLToken
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLToken
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer.YAMLToken
+  nameWithType: YAMLTokenizer.YAMLToken
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken
+  spec.csharp:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLToken
+    name: YAMLToken
+    href: Core.Localization.YAMLTokenizer.YAMLToken.html
+  spec.vb:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLToken
+    name: YAMLToken
+    href: Core.Localization.YAMLTokenizer.YAMLToken.html
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  parent: Core.Localization
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer.YAMLTokenizeResult
+  nameWithType: YAMLTokenizer.YAMLTokenizeResult
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+  spec.csharp:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    name: YAMLTokenizeResult
+    href: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.html
+  spec.vb:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
+    name: YAMLTokenizeResult
+    href: Core.Localization.YAMLTokenizer.YAMLTokenizeResult.html
+- uid: Core.Localization.LocalizationFallbackChain
+  commentId: T:Core.Localization.LocalizationFallbackChain
+  href: Core.Localization.LocalizationFallbackChain.html
+  name: LocalizationFallbackChain
+  nameWithType: LocalizationFallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain
+- uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackChain
+  parent: Core.Localization
+  href: Core.Localization.LocalizationFallbackChain.html
+  name: LocalizationFallbackChain.FallbackChain
+  nameWithType: LocalizationFallbackChain.FallbackChain
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackChain
+  spec.csharp:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+    name: FallbackChain
+    href: Core.Localization.LocalizationFallbackChain.FallbackChain.html
+  spec.vb:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackChain
+    name: FallbackChain
+    href: Core.Localization.LocalizationFallbackChain.FallbackChain.html
+- uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+  commentId: T:Core.Localization.LocalizationFallbackChain.FallbackResult
+  parent: Core.Localization
+  href: Core.Localization.LocalizationFallbackChain.html
+  name: LocalizationFallbackChain.FallbackResult
+  nameWithType: LocalizationFallbackChain.FallbackResult
+  fullName: Core.Localization.LocalizationFallbackChain.FallbackResult
+  spec.csharp:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+    name: FallbackResult
+    href: Core.Localization.LocalizationFallbackChain.FallbackResult.html
+  spec.vb:
+  - uid: Core.Localization.LocalizationFallbackChain
+    name: LocalizationFallbackChain
+    href: Core.Localization.LocalizationFallbackChain.html
+  - name: .
+  - uid: Core.Localization.LocalizationFallbackChain.FallbackResult
+    name: FallbackResult
+    href: Core.Localization.LocalizationFallbackChain.FallbackResult.html
+- uid: Core.Localization.MultiLanguageExtractor
+  commentId: T:Core.Localization.MultiLanguageExtractor
+  href: Core.Localization.MultiLanguageExtractor.html
+  name: MultiLanguageExtractor
+  nameWithType: MultiLanguageExtractor
+  fullName: Core.Localization.MultiLanguageExtractor
+- uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  commentId: T:Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  parent: Core.Localization
+  href: Core.Localization.MultiLanguageExtractor.html
+  name: MultiLanguageExtractor.MultiLanguageResult
+  nameWithType: MultiLanguageExtractor.MultiLanguageResult
+  fullName: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+  spec.csharp:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+  spec.vb:
+  - uid: Core.Localization.MultiLanguageExtractor
+    name: MultiLanguageExtractor
+    href: Core.Localization.MultiLanguageExtractor.html
+  - name: .
+  - uid: Core.Localization.MultiLanguageExtractor.MultiLanguageResult
+    name: MultiLanguageResult
+    href: Core.Localization.MultiLanguageExtractor.MultiLanguageResult.html
+- uid: Core.Localization.ColoredTextMarkup
+  commentId: T:Core.Localization.ColoredTextMarkup
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup
+  nameWithType: ColoredTextMarkup
+  fullName: Core.Localization.ColoredTextMarkup
+- uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  commentId: T:Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.ColoredTextSegment
+  nameWithType: ColoredTextMarkup.ColoredTextSegment
+  fullName: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+    name: ColoredTextSegment
+    href: Core.Localization.ColoredTextMarkup.ColoredTextSegment.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.ColoredTextSegment
+    name: ColoredTextSegment
+    href: Core.Localization.ColoredTextMarkup.ColoredTextSegment.html
+- uid: Core.Localization.ColoredTextMarkup.TextStyle
+  commentId: T:Core.Localization.ColoredTextMarkup.TextStyle
+  parent: Core.Localization
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.TextStyle
+  nameWithType: ColoredTextMarkup.TextStyle
+  fullName: Core.Localization.ColoredTextMarkup.TextStyle
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.TextStyle
+    name: TextStyle
+    href: Core.Localization.ColoredTextMarkup.TextStyle.html
+- uid: Core.Localization.ColoredTextMarkup.MarkupResult
+  commentId: T:Core.Localization.ColoredTextMarkup.MarkupResult
+  parent: Core.Localization
+  href: Core.Localization.ColoredTextMarkup.html
+  name: ColoredTextMarkup.MarkupResult
+  nameWithType: ColoredTextMarkup.MarkupResult
+  fullName: Core.Localization.ColoredTextMarkup.MarkupResult
+  spec.csharp:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.MarkupResult
+    name: MarkupResult
+    href: Core.Localization.ColoredTextMarkup.MarkupResult.html
+  spec.vb:
+  - uid: Core.Localization.ColoredTextMarkup
+    name: ColoredTextMarkup
+    href: Core.Localization.ColoredTextMarkup.html
+  - name: .
+  - uid: Core.Localization.ColoredTextMarkup.MarkupResult
+    name: MarkupResult
+    href: Core.Localization.ColoredTextMarkup.MarkupResult.html
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html

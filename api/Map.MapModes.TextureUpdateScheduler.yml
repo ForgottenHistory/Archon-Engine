@@ -1,0 +1,373 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.TextureUpdateScheduler
+  commentId: T:Map.MapModes.TextureUpdateScheduler
+  id: TextureUpdateScheduler
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.TextureUpdateScheduler.Dispose
+  - Map.MapModes.TextureUpdateScheduler.ForceUpdate(Map.MapModes.IMapModeHandler)
+  - Map.MapModes.TextureUpdateScheduler.OnModeChanged(Map.MapModes.IMapModeHandler)
+  - Map.MapModes.TextureUpdateScheduler.RegisterHandler(Map.MapModes.IMapModeHandler,Map.MapModes.UpdateFrequency,System.Action{Map.MapModes.IMapModeHandler})
+  - Map.MapModes.TextureUpdateScheduler.SetActiveHandler(Map.MapModes.IMapModeHandler)
+  - Map.MapModes.TextureUpdateScheduler.Update
+  langs:
+  - csharp
+  - vb
+  name: TextureUpdateScheduler
+  nameWithType: TextureUpdateScheduler
+  fullName: Map.MapModes.TextureUpdateScheduler
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextureUpdateScheduler
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Schedules texture updates for map mode handlers based on their update frequency
+
+    Prevents unnecessary texture updates and optimizes performance
+  example: []
+  syntax:
+    content: public class TextureUpdateScheduler
+    content.vb: Public Class TextureUpdateScheduler
+  inheritance:
+  - System.Object
+- uid: Map.MapModes.TextureUpdateScheduler.SetActiveHandler(Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.TextureUpdateScheduler.SetActiveHandler(Map.MapModes.IMapModeHandler)
+  id: SetActiveHandler(Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: SetActiveHandler(IMapModeHandler)
+  nameWithType: TextureUpdateScheduler.SetActiveHandler(IMapModeHandler)
+  fullName: Map.MapModes.TextureUpdateScheduler.SetActiveHandler(Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetActiveHandler
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Set the currently active handler (only this handler will receive updates)
+  example: []
+  syntax:
+    content: public void SetActiveHandler(IMapModeHandler handler)
+    parameters:
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub SetActiveHandler(handler As IMapModeHandler)
+  overload: Map.MapModes.TextureUpdateScheduler.SetActiveHandler*
+- uid: Map.MapModes.TextureUpdateScheduler.RegisterHandler(Map.MapModes.IMapModeHandler,Map.MapModes.UpdateFrequency,System.Action{Map.MapModes.IMapModeHandler})
+  commentId: M:Map.MapModes.TextureUpdateScheduler.RegisterHandler(Map.MapModes.IMapModeHandler,Map.MapModes.UpdateFrequency,System.Action{Map.MapModes.IMapModeHandler})
+  id: RegisterHandler(Map.MapModes.IMapModeHandler,Map.MapModes.UpdateFrequency,System.Action{Map.MapModes.IMapModeHandler})
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: RegisterHandler(IMapModeHandler, UpdateFrequency, Action<IMapModeHandler>)
+  nameWithType: TextureUpdateScheduler.RegisterHandler(IMapModeHandler, UpdateFrequency, Action<IMapModeHandler>)
+  fullName: Map.MapModes.TextureUpdateScheduler.RegisterHandler(Map.MapModes.IMapModeHandler, Map.MapModes.UpdateFrequency, System.Action<Map.MapModes.IMapModeHandler>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterHandler
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Register a handler for scheduled updates
+  example: []
+  syntax:
+    content: public void RegisterHandler(IMapModeHandler handler, UpdateFrequency frequency, Action<IMapModeHandler> updateAction)
+    parameters:
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    - id: frequency
+      type: Map.MapModes.UpdateFrequency
+    - id: updateAction
+      type: System.Action{Map.MapModes.IMapModeHandler}
+    content.vb: Public Sub RegisterHandler(handler As IMapModeHandler, frequency As UpdateFrequency, updateAction As Action(Of IMapModeHandler))
+  overload: Map.MapModes.TextureUpdateScheduler.RegisterHandler*
+  nameWithType.vb: TextureUpdateScheduler.RegisterHandler(IMapModeHandler, UpdateFrequency, Action(Of IMapModeHandler))
+  fullName.vb: Map.MapModes.TextureUpdateScheduler.RegisterHandler(Map.MapModes.IMapModeHandler, Map.MapModes.UpdateFrequency, System.Action(Of Map.MapModes.IMapModeHandler))
+  name.vb: RegisterHandler(IMapModeHandler, UpdateFrequency, Action(Of IMapModeHandler))
+- uid: Map.MapModes.TextureUpdateScheduler.Update
+  commentId: M:Map.MapModes.TextureUpdateScheduler.Update
+  id: Update
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: Update()
+  nameWithType: TextureUpdateScheduler.Update()
+  fullName: Map.MapModes.TextureUpdateScheduler.Update()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Update
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 54
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Update only the currently active handler (architecture compliance)
+  example: []
+  syntax:
+    content: public void Update()
+    content.vb: Public Sub Update()
+  overload: Map.MapModes.TextureUpdateScheduler.Update*
+- uid: Map.MapModes.TextureUpdateScheduler.OnModeChanged(Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.TextureUpdateScheduler.OnModeChanged(Map.MapModes.IMapModeHandler)
+  id: OnModeChanged(Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: OnModeChanged(IMapModeHandler)
+  nameWithType: TextureUpdateScheduler.OnModeChanged(IMapModeHandler)
+  fullName: Map.MapModes.TextureUpdateScheduler.OnModeChanged(Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnModeChanged
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Notify when map mode changes (for immediate updates)
+  example: []
+  syntax:
+    content: public void OnModeChanged(IMapModeHandler newHandler)
+    parameters:
+    - id: newHandler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub OnModeChanged(newHandler As IMapModeHandler)
+  overload: Map.MapModes.TextureUpdateScheduler.OnModeChanged*
+- uid: Map.MapModes.TextureUpdateScheduler.ForceUpdate(Map.MapModes.IMapModeHandler)
+  commentId: M:Map.MapModes.TextureUpdateScheduler.ForceUpdate(Map.MapModes.IMapModeHandler)
+  id: ForceUpdate(Map.MapModes.IMapModeHandler)
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: ForceUpdate(IMapModeHandler)
+  nameWithType: TextureUpdateScheduler.ForceUpdate(IMapModeHandler)
+  fullName: Map.MapModes.TextureUpdateScheduler.ForceUpdate(Map.MapModes.IMapModeHandler)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceUpdate
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 126
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Force update for a specific handler
+  example: []
+  syntax:
+    content: public void ForceUpdate(IMapModeHandler handler)
+    parameters:
+    - id: handler
+      type: Map.MapModes.IMapModeHandler
+    content.vb: Public Sub ForceUpdate(handler As IMapModeHandler)
+  overload: Map.MapModes.TextureUpdateScheduler.ForceUpdate*
+- uid: Map.MapModes.TextureUpdateScheduler.Dispose
+  commentId: M:Map.MapModes.TextureUpdateScheduler.Dispose
+  id: Dispose
+  parent: Map.MapModes.TextureUpdateScheduler
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: TextureUpdateScheduler.Dispose()
+  fullName: Map.MapModes.TextureUpdateScheduler.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/MapModes/TextureUpdateScheduler.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Clean up resources
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.MapModes.TextureUpdateScheduler.Dispose*
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.TextureUpdateScheduler.SetActiveHandler*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.SetActiveHandler
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_SetActiveHandler_Map_MapModes_IMapModeHandler_
+  name: SetActiveHandler
+  nameWithType: TextureUpdateScheduler.SetActiveHandler
+  fullName: Map.MapModes.TextureUpdateScheduler.SetActiveHandler
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.TextureUpdateScheduler.RegisterHandler*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.RegisterHandler
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_RegisterHandler_Map_MapModes_IMapModeHandler_Map_MapModes_UpdateFrequency_System_Action_Map_MapModes_IMapModeHandler__
+  name: RegisterHandler
+  nameWithType: TextureUpdateScheduler.RegisterHandler
+  fullName: Map.MapModes.TextureUpdateScheduler.RegisterHandler
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+- uid: System.Action{Map.MapModes.IMapModeHandler}
+  commentId: T:System.Action{Map.MapModes.IMapModeHandler}
+  parent: System
+  definition: System.Action`1
+  href: Map.MapModes.IMapModeHandler.html
+  name: Action<IMapModeHandler>
+  nameWithType: Action<IMapModeHandler>
+  fullName: System.Action<Map.MapModes.IMapModeHandler>
+  nameWithType.vb: Action(Of IMapModeHandler)
+  fullName.vb: System.Action(Of Map.MapModes.IMapModeHandler)
+  name.vb: Action(Of IMapModeHandler)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: Map.MapModes.IMapModeHandler
+    name: IMapModeHandler
+    href: Map.MapModes.IMapModeHandler.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.MapModes.IMapModeHandler
+    name: IMapModeHandler
+    href: Map.MapModes.IMapModeHandler.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.MapModes.TextureUpdateScheduler.Update*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.Update
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_Update
+  name: Update
+  nameWithType: TextureUpdateScheduler.Update
+  fullName: Map.MapModes.TextureUpdateScheduler.Update
+- uid: Map.MapModes.TextureUpdateScheduler.OnModeChanged*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.OnModeChanged
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_OnModeChanged_Map_MapModes_IMapModeHandler_
+  name: OnModeChanged
+  nameWithType: TextureUpdateScheduler.OnModeChanged
+  fullName: Map.MapModes.TextureUpdateScheduler.OnModeChanged
+- uid: Map.MapModes.TextureUpdateScheduler.ForceUpdate*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.ForceUpdate
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_ForceUpdate_Map_MapModes_IMapModeHandler_
+  name: ForceUpdate
+  nameWithType: TextureUpdateScheduler.ForceUpdate
+  fullName: Map.MapModes.TextureUpdateScheduler.ForceUpdate
+- uid: Map.MapModes.TextureUpdateScheduler.Dispose*
+  commentId: Overload:Map.MapModes.TextureUpdateScheduler.Dispose
+  href: Map.MapModes.TextureUpdateScheduler.html#Map_MapModes_TextureUpdateScheduler_Dispose
+  name: Dispose
+  nameWithType: TextureUpdateScheduler.Dispose
+  fullName: Map.MapModes.TextureUpdateScheduler.Dispose

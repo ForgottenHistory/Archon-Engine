@@ -1,0 +1,195 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.DestructionReason
+  commentId: T:Core.Units.DestructionReason
+  id: DestructionReason
+  parent: Core.Units
+  children:
+  - Core.Units.DestructionReason.Attrition
+  - Core.Units.DestructionReason.Combat
+  - Core.Units.DestructionReason.Disbanded
+  - Core.Units.DestructionReason.Event
+  - Core.Units.DestructionReason.Merged
+  langs:
+  - csharp
+  - vb
+  name: DestructionReason
+  nameWithType: DestructionReason
+  fullName: Core.Units.DestructionReason
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DestructionReason
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Reason for unit destruction (for statistics, events, etc.)
+  example: []
+  syntax:
+    content: public enum DestructionReason
+    content.vb: Public Enum DestructionReason
+- uid: Core.Units.DestructionReason.Disbanded
+  commentId: F:Core.Units.DestructionReason.Disbanded
+  id: Disbanded
+  parent: Core.Units.DestructionReason
+  langs:
+  - csharp
+  - vb
+  name: Disbanded
+  nameWithType: DestructionReason.Disbanded
+  fullName: Core.Units.DestructionReason.Disbanded
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Disbanded
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 55
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: Disbanded = 0
+    return:
+      type: Core.Units.DestructionReason
+- uid: Core.Units.DestructionReason.Combat
+  commentId: F:Core.Units.DestructionReason.Combat
+  id: Combat
+  parent: Core.Units.DestructionReason
+  langs:
+  - csharp
+  - vb
+  name: Combat
+  nameWithType: DestructionReason.Combat
+  fullName: Core.Units.DestructionReason.Combat
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Combat
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: Combat = 1
+    return:
+      type: Core.Units.DestructionReason
+- uid: Core.Units.DestructionReason.Attrition
+  commentId: F:Core.Units.DestructionReason.Attrition
+  id: Attrition
+  parent: Core.Units.DestructionReason
+  langs:
+  - csharp
+  - vb
+  name: Attrition
+  nameWithType: DestructionReason.Attrition
+  fullName: Core.Units.DestructionReason.Attrition
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Attrition
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: Attrition = 2
+    return:
+      type: Core.Units.DestructionReason
+- uid: Core.Units.DestructionReason.Merged
+  commentId: F:Core.Units.DestructionReason.Merged
+  id: Merged
+  parent: Core.Units.DestructionReason
+  langs:
+  - csharp
+  - vb
+  name: Merged
+  nameWithType: DestructionReason.Merged
+  fullName: Core.Units.DestructionReason.Merged
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Merged
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: Merged = 3
+    return:
+      type: Core.Units.DestructionReason
+- uid: Core.Units.DestructionReason.Event
+  commentId: F:Core.Units.DestructionReason.Event
+  id: Event
+  parent: Core.Units.DestructionReason
+  langs:
+  - csharp
+  - vb
+  name: Event
+  nameWithType: DestructionReason.Event
+  fullName: Core.Units.DestructionReason.Event
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Event
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: Event = 4
+    return:
+      type: Core.Units.DestructionReason
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.Units.DestructionReason
+  commentId: T:Core.Units.DestructionReason
+  parent: Core.Units
+  href: Core.Units.DestructionReason.html
+  name: DestructionReason
+  nameWithType: DestructionReason
+  fullName: Core.Units.DestructionReason

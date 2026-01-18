@@ -1,0 +1,411 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Common.FrameCacheValue`1
+  commentId: T:Core.Common.FrameCacheValue`1
+  id: FrameCacheValue`1
+  parent: Core.Common
+  children:
+  - Core.Common.FrameCacheValue`1.#ctor
+  - Core.Common.FrameCacheValue`1.Clear
+  - Core.Common.FrameCacheValue`1.GetOrCompute(System.Func{`0})
+  - Core.Common.FrameCacheValue`1.HasValue
+  - Core.Common.FrameCacheValue`1.Set(`0)
+  - Core.Common.FrameCacheValue`1.TryGet(`0@)
+  langs:
+  - csharp
+  - vb
+  name: FrameCacheValue<TValue>
+  nameWithType: FrameCacheValue<TValue>
+  fullName: Core.Common.FrameCacheValue<TValue>
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FrameCacheValue
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: >-
+    Frame-coherent cache for single values (no key).
+
+    Use when caching a single expensive calculation per frame.
+
+
+    Usage:
+      private FrameCacheValue{int} totalProvinces = new();
+
+      public int GetTotalProvinces()
+      {
+          return totalProvinces.GetOrCompute(() =&gt; CountAllProvinces());
+      }
+  example: []
+  syntax:
+    content: public class FrameCacheValue<TValue>
+    typeParameters:
+    - id: TValue
+    content.vb: Public Class FrameCacheValue(Of TValue)
+  inheritance:
+  - System.Object
+  nameWithType.vb: FrameCacheValue(Of TValue)
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue)
+  name.vb: FrameCacheValue(Of TValue)
+- uid: Core.Common.FrameCacheValue`1.#ctor
+  commentId: M:Core.Common.FrameCacheValue`1.#ctor
+  id: '#ctor'
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: FrameCacheValue()
+  nameWithType: FrameCacheValue<TValue>.FrameCacheValue()
+  fullName: Core.Common.FrameCacheValue<TValue>.FrameCacheValue()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 133
+  assemblies:
+  - Core
+  namespace: Core.Common
+  syntax:
+    content: public FrameCacheValue()
+    content.vb: Public Sub New()
+  overload: Core.Common.FrameCacheValue`1.#ctor*
+  nameWithType.vb: FrameCacheValue(Of TValue).New()
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).New()
+  name.vb: New()
+- uid: Core.Common.FrameCacheValue`1.GetOrCompute(System.Func{`0})
+  commentId: M:Core.Common.FrameCacheValue`1.GetOrCompute(System.Func{`0})
+  id: GetOrCompute(System.Func{`0})
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: GetOrCompute(Func<TValue>)
+  nameWithType: FrameCacheValue<TValue>.GetOrCompute(Func<TValue>)
+  fullName: Core.Common.FrameCacheValue<TValue>.GetOrCompute(System.Func<TValue>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOrCompute
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Get cached value or compute and cache it.
+  example: []
+  syntax:
+    content: public TValue GetOrCompute(Func<TValue> computeFunc)
+    parameters:
+    - id: computeFunc
+      type: System.Func{{TValue}}
+    return:
+      type: '{TValue}'
+    content.vb: Public Function GetOrCompute(computeFunc As Func(Of TValue)) As TValue
+  overload: Core.Common.FrameCacheValue`1.GetOrCompute*
+  nameWithType.vb: FrameCacheValue(Of TValue).GetOrCompute(Func(Of TValue))
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).GetOrCompute(System.Func(Of TValue))
+  name.vb: GetOrCompute(Func(Of TValue))
+- uid: Core.Common.FrameCacheValue`1.TryGet(`0@)
+  commentId: M:Core.Common.FrameCacheValue`1.TryGet(`0@)
+  id: TryGet(`0@)
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: TryGet(out TValue)
+  nameWithType: FrameCacheValue<TValue>.TryGet(out TValue)
+  fullName: Core.Common.FrameCacheValue<TValue>.TryGet(out TValue)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGet
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 159
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Try to get cached value.
+  example: []
+  syntax:
+    content: public bool TryGet(out TValue value)
+    parameters:
+    - id: value
+      type: '{TValue}'
+    return:
+      type: System.Boolean
+    content.vb: Public Function TryGet(value As TValue) As Boolean
+  overload: Core.Common.FrameCacheValue`1.TryGet*
+  nameWithType.vb: FrameCacheValue(Of TValue).TryGet(TValue)
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).TryGet(TValue)
+  name.vb: TryGet(TValue)
+- uid: Core.Common.FrameCacheValue`1.Set(`0)
+  commentId: M:Core.Common.FrameCacheValue`1.Set(`0)
+  id: Set(`0)
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: Set(TValue)
+  nameWithType: FrameCacheValue<TValue>.Set(TValue)
+  fullName: Core.Common.FrameCacheValue<TValue>.Set(TValue)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Set
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 169
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Manually set the cached value.
+  example: []
+  syntax:
+    content: public void Set(TValue value)
+    parameters:
+    - id: value
+      type: '{TValue}'
+    content.vb: Public Sub [Set](value As TValue)
+  overload: Core.Common.FrameCacheValue`1.Set*
+  nameWithType.vb: FrameCacheValue(Of TValue).Set(TValue)
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).Set(TValue)
+- uid: Core.Common.FrameCacheValue`1.HasValue
+  commentId: P:Core.Common.FrameCacheValue`1.HasValue
+  id: HasValue
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: HasValue
+  nameWithType: FrameCacheValue<TValue>.HasValue
+  fullName: Core.Common.FrameCacheValue<TValue>.HasValue
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasValue
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 179
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Check if value is cached (this frame).
+  example: []
+  syntax:
+    content: public bool HasValue { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasValue As Boolean
+  overload: Core.Common.FrameCacheValue`1.HasValue*
+  nameWithType.vb: FrameCacheValue(Of TValue).HasValue
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).HasValue
+- uid: Core.Common.FrameCacheValue`1.Clear
+  commentId: M:Core.Common.FrameCacheValue`1.Clear
+  id: Clear
+  parent: Core.Common.FrameCacheValue`1
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: FrameCacheValue<TValue>.Clear()
+  fullName: Core.Common.FrameCacheValue<TValue>.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Common/FrameCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Core/Common/FrameCache.cs
+    startLine: 191
+  assemblies:
+  - Core
+  namespace: Core.Common
+  summary: Manually clear the cache.
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Core.Common.FrameCacheValue`1.Clear*
+  nameWithType.vb: FrameCacheValue(Of TValue).Clear()
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).Clear()
+references:
+- uid: Core.Common
+  commentId: N:Core.Common
+  href: Core.html
+  name: Core.Common
+  nameWithType: Core.Common
+  fullName: Core.Common
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Common
+    name: Common
+    href: Core.Common.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Common.FrameCacheValue`1.#ctor*
+  commentId: Overload:Core.Common.FrameCacheValue`1.#ctor
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1__ctor
+  name: FrameCacheValue
+  nameWithType: FrameCacheValue<TValue>.FrameCacheValue
+  fullName: Core.Common.FrameCacheValue<TValue>.FrameCacheValue
+  nameWithType.vb: FrameCacheValue(Of TValue).New
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).New
+  name.vb: New
+- uid: Core.Common.FrameCacheValue`1.GetOrCompute*
+  commentId: Overload:Core.Common.FrameCacheValue`1.GetOrCompute
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1_GetOrCompute_System_Func__0__
+  name: GetOrCompute
+  nameWithType: FrameCacheValue<TValue>.GetOrCompute
+  fullName: Core.Common.FrameCacheValue<TValue>.GetOrCompute
+  nameWithType.vb: FrameCacheValue(Of TValue).GetOrCompute
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).GetOrCompute
+- uid: System.Func{{TValue}}
+  commentId: T:System.Func{`1}
+  parent: System
+  definition: System.Func`1
+  name: Func<TValue>
+  nameWithType: Func<TValue>
+  fullName: System.Func<TValue>
+  nameWithType.vb: Func(Of TValue)
+  fullName.vb: System.Func(Of TValue)
+  name.vb: Func(Of TValue)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: '{TValue}'
+  commentId: '!:TValue'
+  definition: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )
+- uid: TValue
+  name: TValue
+  nameWithType: TValue
+  fullName: TValue
+- uid: Core.Common.FrameCacheValue`1.TryGet*
+  commentId: Overload:Core.Common.FrameCacheValue`1.TryGet
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1_TryGet__0__
+  name: TryGet
+  nameWithType: FrameCacheValue<TValue>.TryGet
+  fullName: Core.Common.FrameCacheValue<TValue>.TryGet
+  nameWithType.vb: FrameCacheValue(Of TValue).TryGet
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).TryGet
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Common.FrameCacheValue`1.Set*
+  commentId: Overload:Core.Common.FrameCacheValue`1.Set
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1_Set__0_
+  name: Set
+  nameWithType: FrameCacheValue<TValue>.Set
+  fullName: Core.Common.FrameCacheValue<TValue>.Set
+  nameWithType.vb: FrameCacheValue(Of TValue).Set
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).Set
+- uid: Core.Common.FrameCacheValue`1.HasValue*
+  commentId: Overload:Core.Common.FrameCacheValue`1.HasValue
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1_HasValue
+  name: HasValue
+  nameWithType: FrameCacheValue<TValue>.HasValue
+  fullName: Core.Common.FrameCacheValue<TValue>.HasValue
+  nameWithType.vb: FrameCacheValue(Of TValue).HasValue
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).HasValue
+- uid: Core.Common.FrameCacheValue`1.Clear*
+  commentId: Overload:Core.Common.FrameCacheValue`1.Clear
+  href: Core.Common.FrameCacheValue-1.html#Core_Common_FrameCacheValue_1_Clear
+  name: Clear
+  nameWithType: FrameCacheValue<TValue>.Clear
+  fullName: Core.Common.FrameCacheValue<TValue>.Clear
+  nameWithType.vb: FrameCacheValue(Of TValue).Clear
+  fullName.vb: Core.Common.FrameCacheValue(Of TValue).Clear

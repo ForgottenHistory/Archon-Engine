@@ -1,0 +1,151 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Registries.TechnologyData
+  commentId: T:Core.Registries.TechnologyData
+  id: TechnologyData
+  parent: Core.Registries
+  children:
+  - Core.Registries.TechnologyData.Name
+  - Core.Registries.TechnologyData.TechGroup
+  langs:
+  - csharp
+  - vb
+  name: TechnologyData
+  nameWithType: TechnologyData
+  fullName: Core.Registries.TechnologyData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TechnologyData
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public class TechnologyData
+    content.vb: Public Class TechnologyData
+  inheritance:
+  - System.Object
+- uid: Core.Registries.TechnologyData.Name
+  commentId: P:Core.Registries.TechnologyData.Name
+  id: Name
+  parent: Core.Registries.TechnologyData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: TechnologyData.Name
+  fullName: Core.Registries.TechnologyData.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 109
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: Core.Registries.TechnologyData.Name*
+- uid: Core.Registries.TechnologyData.TechGroup
+  commentId: P:Core.Registries.TechnologyData.TechGroup
+  id: TechGroup
+  parent: Core.Registries.TechnologyData
+  langs:
+  - csharp
+  - vb
+  name: TechGroup
+  nameWithType: TechnologyData.TechGroup
+  fullName: Core.Registries.TechnologyData.TechGroup
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Registries/GameRegistries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TechGroup
+    path: Scripts/Core/Registries/GameRegistries.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Registries
+  syntax:
+    content: public string TechGroup { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TechGroup As String
+  overload: Core.Registries.TechnologyData.TechGroup*
+references:
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Registries.TechnologyData.Name*
+  commentId: Overload:Core.Registries.TechnologyData.Name
+  href: Core.Registries.TechnologyData.html#Core_Registries_TechnologyData_Name
+  name: Name
+  nameWithType: TechnologyData.Name
+  fullName: Core.Registries.TechnologyData.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.TechnologyData.TechGroup*
+  commentId: Overload:Core.Registries.TechnologyData.TechGroup
+  href: Core.Registries.TechnologyData.html#Core_Registries_TechnologyData_TechGroup
+  name: TechGroup
+  nameWithType: TechnologyData.TechGroup
+  fullName: Core.Registries.TechnologyData.TechGroup

@@ -1,0 +1,332 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modifiers.ModifierValue
+  commentId: T:Core.Modifiers.ModifierValue
+  id: ModifierValue
+  parent: Core.Modifiers
+  children:
+  - Core.Modifiers.ModifierValue.Additive
+  - Core.Modifiers.ModifierValue.Apply(Core.Data.FixedPoint64)
+  - Core.Modifiers.ModifierValue.Multiplicative
+  - Core.Modifiers.ModifierValue.ToString
+  - Core.Modifiers.ModifierValue.op_Addition(Core.Modifiers.ModifierValue,Core.Modifiers.ModifierValue)
+  langs:
+  - csharp
+  - vb
+  name: ModifierValue
+  nameWithType: ModifierValue
+  fullName: Core.Modifiers.ModifierValue
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModifierValue
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    ENGINE: Modifier value with additive and multiplicative components
+
+    Pattern used by: EU4, CK3, Stellaris, Victoria 3
+
+
+    Formula: (base + additive) * (1 + multiplicative)
+
+    Example: base=10, additive=+5, multiplicative=+0.5 → (10+5)*(1+0.5) = 22.5
+
+
+    DETERMINISM: Uses FixedPoint64 for cross-platform multiplayer compatibility
+  example: []
+  syntax:
+    content: public struct ModifierValue
+    content.vb: Public Structure ModifierValue
+- uid: Core.Modifiers.ModifierValue.Additive
+  commentId: F:Core.Modifiers.ModifierValue.Additive
+  id: Additive
+  parent: Core.Modifiers.ModifierValue
+  langs:
+  - csharp
+  - vb
+  name: Additive
+  nameWithType: ModifierValue.Additive
+  fullName: Core.Modifiers.ModifierValue.Additive
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Additive
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public FixedPoint64 Additive
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Additive As FixedPoint64
+- uid: Core.Modifiers.ModifierValue.Multiplicative
+  commentId: F:Core.Modifiers.ModifierValue.Multiplicative
+  id: Multiplicative
+  parent: Core.Modifiers.ModifierValue
+  langs:
+  - csharp
+  - vb
+  name: Multiplicative
+  nameWithType: ModifierValue.Multiplicative
+  fullName: Core.Modifiers.ModifierValue.Multiplicative
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Multiplicative
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  syntax:
+    content: public FixedPoint64 Multiplicative
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Multiplicative As FixedPoint64
+- uid: Core.Modifiers.ModifierValue.Apply(Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ModifierValue.Apply(Core.Data.FixedPoint64)
+  id: Apply(Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ModifierValue
+  langs:
+  - csharp
+  - vb
+  name: Apply(FixedPoint64)
+  nameWithType: ModifierValue.Apply(FixedPoint64)
+  fullName: Core.Modifiers.ModifierValue.Apply(Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Apply
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Apply this modifier to a base value
+
+    Formula: (base + additive) * (1 + multiplicative)
+  example: []
+  syntax:
+    content: public FixedPoint64 Apply(FixedPoint64 baseValue)
+    parameters:
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function Apply(baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ModifierValue.Apply*
+- uid: Core.Modifiers.ModifierValue.op_Addition(Core.Modifiers.ModifierValue,Core.Modifiers.ModifierValue)
+  commentId: M:Core.Modifiers.ModifierValue.op_Addition(Core.Modifiers.ModifierValue,Core.Modifiers.ModifierValue)
+  id: op_Addition(Core.Modifiers.ModifierValue,Core.Modifiers.ModifierValue)
+  parent: Core.Modifiers.ModifierValue
+  langs:
+  - csharp
+  - vb
+  name: operator +(ModifierValue, ModifierValue)
+  nameWithType: ModifierValue.operator +(ModifierValue, ModifierValue)
+  fullName: Core.Modifiers.ModifierValue.operator +(Core.Modifiers.ModifierValue, Core.Modifiers.ModifierValue)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Addition
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Combine two modifier values (stacking)
+  example: []
+  syntax:
+    content: public static ModifierValue operator +(ModifierValue a, ModifierValue b)
+    parameters:
+    - id: a
+      type: Core.Modifiers.ModifierValue
+    - id: b
+      type: Core.Modifiers.ModifierValue
+    return:
+      type: Core.Modifiers.ModifierValue
+    content.vb: Public Shared Operator +(a As ModifierValue, b As ModifierValue) As ModifierValue
+  overload: Core.Modifiers.ModifierValue.op_Addition*
+  nameWithType.vb: ModifierValue.+(ModifierValue, ModifierValue)
+  fullName.vb: Core.Modifiers.ModifierValue.+(Core.Modifiers.ModifierValue, Core.Modifiers.ModifierValue)
+  name.vb: +(ModifierValue, ModifierValue)
+- uid: Core.Modifiers.ModifierValue.ToString
+  commentId: M:Core.Modifiers.ModifierValue.ToString
+  id: ToString
+  parent: Core.Modifiers.ModifierValue
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: ModifierValue.ToString()
+  fullName: Core.Modifiers.ModifierValue.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierValue.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Modifiers/ModifierValue.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Modifiers.ModifierValue.ToString*
+references:
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Modifiers.ModifierValue.Apply*
+  commentId: Overload:Core.Modifiers.ModifierValue.Apply
+  href: Core.Modifiers.ModifierValue.html#Core_Modifiers_ModifierValue_Apply_Core_Data_FixedPoint64_
+  name: Apply
+  nameWithType: ModifierValue.Apply
+  fullName: Core.Modifiers.ModifierValue.Apply
+- uid: Core.Modifiers.ModifierValue.op_Addition*
+  commentId: Overload:Core.Modifiers.ModifierValue.op_Addition
+  href: Core.Modifiers.ModifierValue.html#Core_Modifiers_ModifierValue_op_Addition_Core_Modifiers_ModifierValue_Core_Modifiers_ModifierValue_
+  name: operator +
+  nameWithType: ModifierValue.operator +
+  fullName: Core.Modifiers.ModifierValue.operator +
+  nameWithType.vb: ModifierValue.+
+  fullName.vb: Core.Modifiers.ModifierValue.+
+  name.vb: +
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Modifiers.ModifierValue.op_Addition*
+    name: +
+    href: Core.Modifiers.ModifierValue.html#Core_Modifiers_ModifierValue_op_Addition_Core_Modifiers_ModifierValue_Core_Modifiers_ModifierValue_
+- uid: Core.Modifiers.ModifierValue
+  commentId: T:Core.Modifiers.ModifierValue
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierValue.html
+  name: ModifierValue
+  nameWithType: ModifierValue
+  fullName: Core.Modifiers.ModifierValue
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Modifiers.ModifierValue.ToString*
+  commentId: Overload:Core.Modifiers.ModifierValue.ToString
+  href: Core.Modifiers.ModifierValue.html#Core_Modifiers_ModifierValue_ToString
+  name: ToString
+  nameWithType: ModifierValue.ToString
+  fullName: Core.Modifiers.ModifierValue.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

@@ -1,0 +1,342 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.PNGParser.PNGPixelData
+  commentId: T:Map.Loading.Images.PNGParser.PNGPixelData
+  id: PNGParser.PNGPixelData
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.PNGParser.PNGPixelData.DecodedPixels
+  - Map.Loading.Images.PNGParser.PNGPixelData.Dispose
+  - Map.Loading.Images.PNGParser.PNGPixelData.Header
+  - Map.Loading.Images.PNGParser.PNGPixelData.IsSuccess
+  - Map.Loading.Images.PNGParser.PNGPixelData.Palette
+  langs:
+  - csharp
+  - vb
+  name: PNGParser.PNGPixelData
+  nameWithType: PNGParser.PNGPixelData
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PNGPixelData
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: PNG pixel data result - mirrors BMPParser.BMPPixelData for compatibility
+  example: []
+  syntax:
+    content: public struct PNGParser.PNGPixelData
+    content.vb: Public Structure PNGParser.PNGPixelData
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.DecodedPixels
+  commentId: F:Map.Loading.Images.PNGParser.PNGPixelData.DecodedPixels
+  id: DecodedPixels
+  parent: Map.Loading.Images.PNGParser.PNGPixelData
+  langs:
+  - csharp
+  - vb
+  name: DecodedPixels
+  nameWithType: PNGParser.PNGPixelData.DecodedPixels
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.DecodedPixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DecodedPixels
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 55
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeArray<byte> DecodedPixels
+    return:
+      type: Unity.Collections.NativeArray{System.Byte}
+    content.vb: Public DecodedPixels As NativeArray(Of Byte)
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.Header
+  commentId: F:Map.Loading.Images.PNGParser.PNGPixelData.Header
+  id: Header
+  parent: Map.Loading.Images.PNGParser.PNGPixelData
+  langs:
+  - csharp
+  - vb
+  name: Header
+  nameWithType: PNGParser.PNGPixelData.Header
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.Header
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Header
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 56
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public PNGParser.PNGHeader Header
+    return:
+      type: Map.Loading.Images.PNGParser.PNGHeader
+    content.vb: Public Header As PNGParser.PNGHeader
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.Palette
+  commentId: F:Map.Loading.Images.PNGParser.PNGPixelData.Palette
+  id: Palette
+  parent: Map.Loading.Images.PNGParser.PNGPixelData
+  langs:
+  - csharp
+  - vb
+  name: Palette
+  nameWithType: PNGParser.PNGPixelData.Palette
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.Palette
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Palette
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public Color32[] Palette
+    return:
+      type: UnityEngine.Color32[]
+    content.vb: Public Palette As Color32()
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.IsSuccess
+  commentId: F:Map.Loading.Images.PNGParser.PNGPixelData.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.PNGParser.PNGPixelData
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: PNGParser.PNGPixelData.IsSuccess
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 58
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.Dispose
+  commentId: M:Map.Loading.Images.PNGParser.PNGPixelData.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.PNGParser.PNGPixelData
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: PNGParser.PNGPixelData.Dispose()
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.PNGParser.PNGPixelData.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Loading.Images.PNGParser.PNGHeader
+  commentId: T:Map.Loading.Images.PNGParser.PNGHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGHeader
+  nameWithType: PNGParser.PNGHeader
+  fullName: Map.Loading.Images.PNGParser.PNGHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.Images.PNGParser.PNGPixelData.Dispose*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGPixelData.Dispose
+  href: Map.Loading.Images.PNGParser.PNGPixelData.html#Map_Loading_Images_PNGParser_PNGPixelData_Dispose
+  name: Dispose
+  nameWithType: PNGParser.PNGPixelData.Dispose
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData.Dispose

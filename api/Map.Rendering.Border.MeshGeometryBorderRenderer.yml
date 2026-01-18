@@ -1,0 +1,908 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer
+  commentId: T:Map.Rendering.Border.MeshGeometryBorderRenderer
+  id: MeshGeometryBorderRenderer
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor(System.Single)
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth(System.Single)
+  - Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles
+  langs:
+  - csharp
+  - vb
+  name: MeshGeometryBorderRenderer
+  nameWithType: MeshGeometryBorderRenderer
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MeshGeometryBorderRenderer
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    ENGINE: Mesh-based border renderer implementation.
+
+    Generates actual geometry for borders using CPU curve extraction.
+
+
+    Best for 3D map effects where borders need depth/thickness.
+
+    Requires per-frame rendering via OnRenderFrame().
+  example: []
+  syntax:
+    content: 'public class MeshGeometryBorderRenderer : BorderRendererBase, IBorderRenderer'
+    content.vb: Public Class MeshGeometryBorderRenderer Inherits BorderRendererBase Implements IBorderRenderer
+  inheritance:
+  - System.Object
+  - Map.Rendering.Border.BorderRendererBase
+  implements:
+  - Map.Rendering.Border.IBorderRenderer
+  inheritedMembers:
+  - Map.Rendering.Border.BorderRendererBase.textureManager
+  - Map.Rendering.Border.BorderRendererBase.context
+  - Map.Rendering.Border.BorderRendererBase.isInitialized
+  - Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  - Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  - Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  - Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  - Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+  commentId: P:Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+  id: RendererId
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RendererId
+  nameWithType: MeshGeometryBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RendererId
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Unique identifier for this renderer (e.g., "DistanceField", "PixelPerfect", "MyCustom")
+  example: []
+  syntax:
+    content: public override string RendererId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property RendererId As String
+  overridden: Map.Rendering.Border.BorderRendererBase.RendererId
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+  commentId: P:Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: MeshGeometryBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Display name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.Border.BorderRendererBase.DisplayName
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  id: RequiresPerFrameUpdate
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: RequiresPerFrameUpdate
+  nameWithType: MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresPerFrameUpdate
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Whether this renderer requires per-frame updates (e.g., MeshGeometry needs OnRenderFrame)
+  example: []
+  syntax:
+    content: public override bool RequiresPerFrameUpdate { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides ReadOnly Property RequiresPerFrameUpdate As Boolean
+  overridden: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor(System.Single)
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor(System.Single)
+  id: '#ctor(System.Single)'
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: MeshGeometryBorderRenderer(float)
+  nameWithType: MeshGeometryBorderRenderer.MeshGeometryBorderRenderer(float)
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.MeshGeometryBorderRenderer(float)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public MeshGeometryBorderRenderer(float width = 1)
+    parameters:
+    - id: width
+      type: System.Single
+    content.vb: Public Sub New(width As Single = 1)
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor*
+  nameWithType.vb: MeshGeometryBorderRenderer.New(Single)
+  fullName.vb: Map.Rendering.Border.MeshGeometryBorderRenderer.New(Single)
+  name.vb: New(Single)
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize
+  id: OnInitialize
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnInitialize()
+  nameWithType: MeshGeometryBorderRenderer.OnInitialize()
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnInitialize
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Override for custom initialization logic.
+
+    Called after textureManager and context are set.
+  example: []
+  syntax:
+    content: protected override void OnInitialize()
+    content.vb: Protected Overrides Sub OnInitialize()
+  overridden: Map.Rendering.Border.BorderRendererBase.OnInitialize
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  id: GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: GenerateBorders(BorderGenerationParams)
+  nameWithType: MeshGeometryBorderRenderer.GenerateBorders(BorderGenerationParams)
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateBorders
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Generate/update borders. Called when borders are dirty or ownership changes.
+  example: []
+  syntax:
+    content: public override void GenerateBorders(BorderGenerationParams parameters)
+    parameters:
+    - id: parameters
+      type: Map.Rendering.Border.BorderGenerationParams
+    content.vb: Public Overrides Sub GenerateBorders(parameters As BorderGenerationParams)
+  overridden: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame
+  id: OnRenderFrame
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: OnRenderFrame()
+  nameWithType: MeshGeometryBorderRenderer.OnRenderFrame()
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnRenderFrame
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Called per-frame for renderers that need continuous updates.
+
+    Only called if RequiresPerFrameUpdate is true.
+  example: []
+  syntax:
+    content: public override void OnRenderFrame()
+    content.vb: Public Overrides Sub OnRenderFrame()
+  overridden: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  id: ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: ApplyToMaterial(Material, BorderStyleParams)
+  nameWithType: MeshGeometryBorderRenderer.ApplyToMaterial(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyToMaterial
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Apply visual parameters to the material (colors, widths, etc.)
+
+    Called when visual style parameters change.
+  example: []
+  syntax:
+    content: public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    - id: styleParams
+      type: Map.Rendering.Border.BorderStyleParams
+    content.vb: Public Overrides Sub ApplyToMaterial(material As Material, styleParams As BorderStyleParams)
+  overridden: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles
+  id: UpdateBorderStyles
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: UpdateBorderStyles()
+  nameWithType: MeshGeometryBorderRenderer.UpdateBorderStyles()
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateBorderStyles
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 123
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Update border styles when ownership changes.
+  example: []
+  syntax:
+    content: public void UpdateBorderStyles()
+    content.vb: Public Sub UpdateBorderStyles()
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles*
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth(System.Single)
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth(System.Single)
+  id: SetBorderWidth(System.Single)
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetBorderWidth(float)
+  nameWithType: MeshGeometryBorderRenderer.SetBorderWidth(float)
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderWidth
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 131
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Set the border width for mesh generation.
+  example: []
+  syntax:
+    content: public void SetBorderWidth(float width)
+    parameters:
+    - id: width
+      type: System.Single
+    content.vb: Public Sub SetBorderWidth(width As Single)
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth*
+  nameWithType.vb: MeshGeometryBorderRenderer.SetBorderWidth(Single)
+  fullName.vb: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth(Single)
+  name.vb: SetBorderWidth(Single)
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose
+  commentId: M:Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose
+  id: Dispose
+  parent: Map.Rendering.Border.MeshGeometryBorderRenderer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: MeshGeometryBorderRenderer.Dispose()
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
+    startLine: 140
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Cleanup resources when renderer is deactivated or destroyed.
+  example: []
+  syntax:
+    content: public override void Dispose()
+    content.vb: Public Overrides Sub Dispose()
+  overridden: Map.Rendering.Border.BorderRendererBase.Dispose
+  overload: Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose*
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.Border.BorderRendererBase
+  commentId: T:Map.Rendering.Border.BorderRendererBase
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderRendererBase.html
+  name: BorderRendererBase
+  nameWithType: BorderRendererBase
+  fullName: Map.Rendering.Border.BorderRendererBase
+- uid: Map.Rendering.Border.IBorderRenderer
+  commentId: T:Map.Rendering.Border.IBorderRenderer
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.IBorderRenderer.html
+  name: IBorderRenderer
+  nameWithType: IBorderRenderer
+  fullName: Map.Rendering.Border.IBorderRenderer
+- uid: Map.Rendering.Border.BorderRendererBase.textureManager
+  commentId: F:Map.Rendering.Border.BorderRendererBase.textureManager
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_textureManager
+  name: textureManager
+  nameWithType: BorderRendererBase.textureManager
+  fullName: Map.Rendering.Border.BorderRendererBase.textureManager
+- uid: Map.Rendering.Border.BorderRendererBase.context
+  commentId: F:Map.Rendering.Border.BorderRendererBase.context
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_context
+  name: context
+  nameWithType: BorderRendererBase.context
+  fullName: Map.Rendering.Border.BorderRendererBase.context
+- uid: Map.Rendering.Border.BorderRendererBase.isInitialized
+  commentId: F:Map.Rendering.Border.BorderRendererBase.isInitialized
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_isInitialized
+  name: isInitialized
+  nameWithType: BorderRendererBase.isInitialized
+  fullName: Map.Rendering.Border.BorderRendererBase.isInitialized
+- uid: Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  commentId: F:Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_THREAD_GROUP_SIZE
+  name: THREAD_GROUP_SIZE
+  nameWithType: BorderRendererBase.THREAD_GROUP_SIZE
+  fullName: Map.Rendering.Border.BorderRendererBase.THREAD_GROUP_SIZE
+- uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  name: Initialize(MapTextureManager, BorderRendererContext)
+  nameWithType: BorderRendererBase.Initialize(MapTextureManager, BorderRendererContext)
+  fullName: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager, Map.Rendering.Border.BorderRendererContext)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+    name: Initialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderRendererContext
+    name: BorderRendererContext
+    href: Map.Rendering.Border.BorderRendererContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.Initialize(Map.Rendering.MapTextureManager,Map.Rendering.Border.BorderRendererContext)
+    name: Initialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Initialize_Map_Rendering_MapTextureManager_Map_Rendering_Border_BorderRendererContext_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderRendererContext
+    name: BorderRendererContext
+    href: Map.Rendering.Border.BorderRendererContext.html
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  name: CalculateThreadGroups(int, int)
+  nameWithType: BorderRendererBase.CalculateThreadGroups(int, int)
+  fullName: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(int, int)
+  nameWithType.vb: BorderRendererBase.CalculateThreadGroups(Integer, Integer)
+  fullName.vb: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(Integer, Integer)
+  name.vb: CalculateThreadGroups(Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.CalculateThreadGroups(System.Int32,System.Int32)
+    name: CalculateThreadGroups
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_CalculateThreadGroups_System_Int32_System_Int32_
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  name: GetShaderModeValue(string)
+  nameWithType: BorderRendererBase.GetShaderModeValue(string)
+  fullName: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(string)
+  nameWithType.vb: BorderRendererBase.GetShaderModeValue(String)
+  fullName.vb: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(String)
+  name.vb: GetShaderModeValue(String)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+    name: GetShaderModeValue
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.GetShaderModeValue(System.String)
+    name: GetShaderModeValue
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GetShaderModeValue_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyCommonStyleParams(Material, BorderStyleParams)
+  nameWithType: BorderRendererBase.ApplyCommonStyleParams(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyCommonStyleParams(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyCommonStyleParams
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyCommonStyleParams_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderRendererBase.RendererId
+  commentId: P:Map.Rendering.Border.BorderRendererBase.RendererId
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_RendererId
+  name: RendererId
+  nameWithType: BorderRendererBase.RendererId
+  fullName: Map.Rendering.Border.BorderRendererBase.RendererId
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_RendererId
+  name: RendererId
+  nameWithType: MeshGeometryBorderRenderer.RendererId
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.RendererId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Border.BorderRendererBase.DisplayName
+  commentId: P:Map.Rendering.Border.BorderRendererBase.DisplayName
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_DisplayName
+  name: DisplayName
+  nameWithType: BorderRendererBase.DisplayName
+  fullName: Map.Rendering.Border.BorderRendererBase.DisplayName
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_DisplayName
+  name: DisplayName
+  nameWithType: MeshGeometryBorderRenderer.DisplayName
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.DisplayName
+- uid: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  commentId: P:Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: BorderRendererBase.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.BorderRendererBase.RequiresPerFrameUpdate
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.RequiresPerFrameUpdate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer__ctor_System_Single_
+  name: MeshGeometryBorderRenderer
+  nameWithType: MeshGeometryBorderRenderer.MeshGeometryBorderRenderer
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.MeshGeometryBorderRenderer
+  nameWithType.vb: MeshGeometryBorderRenderer.New
+  fullName.vb: Map.Rendering.Border.MeshGeometryBorderRenderer.New
+  name.vb: New
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+  commentId: M:Map.Rendering.Border.BorderRendererBase.OnInitialize
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  name: OnInitialize()
+  nameWithType: BorderRendererBase.OnInitialize()
+  fullName: Map.Rendering.Border.BorderRendererBase.OnInitialize()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnInitialize
+    name: OnInitialize
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnInitialize
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_OnInitialize
+  name: OnInitialize
+  nameWithType: MeshGeometryBorderRenderer.OnInitialize
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.OnInitialize
+- uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  name: GenerateBorders(BorderGenerationParams)
+  nameWithType: BorderRendererBase.GenerateBorders(BorderGenerationParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+    name: GenerateBorders
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  - name: (
+  - uid: Map.Rendering.Border.BorderGenerationParams
+    name: BorderGenerationParams
+    href: Map.Rendering.Border.BorderGenerationParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.GenerateBorders(Map.Rendering.Border.BorderGenerationParams)
+    name: GenerateBorders
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  - name: (
+  - uid: Map.Rendering.Border.BorderGenerationParams
+    name: BorderGenerationParams
+    href: Map.Rendering.Border.BorderGenerationParams.html
+  - name: )
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_GenerateBorders_Map_Rendering_Border_BorderGenerationParams_
+  name: GenerateBorders
+  nameWithType: MeshGeometryBorderRenderer.GenerateBorders
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.GenerateBorders
+- uid: Map.Rendering.Border.BorderGenerationParams
+  commentId: T:Map.Rendering.Border.BorderGenerationParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderGenerationParams.html
+  name: BorderGenerationParams
+  nameWithType: BorderGenerationParams
+  fullName: Map.Rendering.Border.BorderGenerationParams
+- uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  commentId: M:Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  name: OnRenderFrame()
+  nameWithType: BorderRendererBase.OnRenderFrame()
+  fullName: Map.Rendering.Border.BorderRendererBase.OnRenderFrame()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.OnRenderFrame
+    name: OnRenderFrame
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_OnRenderFrame
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_OnRenderFrame
+  name: OnRenderFrame
+  nameWithType: MeshGeometryBorderRenderer.OnRenderFrame
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.OnRenderFrame
+- uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  commentId: M:Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+  parent: Map.Rendering.Border.BorderRendererBase
+  isExternal: true
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyToMaterial(Material, BorderStyleParams)
+  nameWithType: BorderRendererBase.ApplyToMaterial(Material, BorderStyleParams)
+  fullName: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material, Map.Rendering.Border.BorderStyleParams)
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.ApplyToMaterial(UnityEngine.Material,Map.Rendering.Border.BorderStyleParams)
+    name: ApplyToMaterial
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Border.BorderStyleParams
+    name: BorderStyleParams
+    href: Map.Rendering.Border.BorderStyleParams.html
+  - name: )
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_ApplyToMaterial_UnityEngine_Material_Map_Rendering_Border_BorderStyleParams_
+  name: ApplyToMaterial
+  nameWithType: MeshGeometryBorderRenderer.ApplyToMaterial
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.ApplyToMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.Border.BorderStyleParams
+  commentId: T:Map.Rendering.Border.BorderStyleParams
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.BorderStyleParams.html
+  name: BorderStyleParams
+  nameWithType: BorderStyleParams
+  fullName: Map.Rendering.Border.BorderStyleParams
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_UpdateBorderStyles
+  name: UpdateBorderStyles
+  nameWithType: MeshGeometryBorderRenderer.UpdateBorderStyles
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.UpdateBorderStyles
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_SetBorderWidth_System_Single_
+  name: SetBorderWidth
+  nameWithType: MeshGeometryBorderRenderer.SetBorderWidth
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.SetBorderWidth
+- uid: Map.Rendering.Border.BorderRendererBase.Dispose
+  commentId: M:Map.Rendering.Border.BorderRendererBase.Dispose
+  parent: Map.Rendering.Border.BorderRendererBase
+  href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  name: Dispose()
+  nameWithType: BorderRendererBase.Dispose()
+  fullName: Map.Rendering.Border.BorderRendererBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.Border.BorderRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Border.BorderRendererBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Border.BorderRendererBase.html#Map_Rendering_Border_BorderRendererBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose*
+  commentId: Overload:Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose
+  href: Map.Rendering.Border.MeshGeometryBorderRenderer.html#Map_Rendering_Border_MeshGeometryBorderRenderer_Dispose
+  name: Dispose
+  nameWithType: MeshGeometryBorderRenderer.Dispose
+  fullName: Map.Rendering.Border.MeshGeometryBorderRenderer.Dispose

@@ -1,0 +1,1476 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.ProvinceSimulation
+  commentId: T:Core.Systems.ProvinceSimulation
+  id: ProvinceSimulation
+  parent: Core.Systems
+  children:
+  - Core.Systems.ProvinceSimulation.#ctor(System.Int32)
+  - Core.Systems.ProvinceSimulation.AddProvince(System.UInt16,Core.Data.TerrainType)
+  - Core.Systems.ProvinceSimulation.CalculateStateChecksum
+  - Core.Systems.ProvinceSimulation.ClearDirtyFlags
+  - Core.Systems.ProvinceSimulation.Dispose
+  - Core.Systems.ProvinceSimulation.GetAllProvinceIDs
+  - Core.Systems.ProvinceSimulation.GetAllProvinces
+  - Core.Systems.ProvinceSimulation.GetColdData(System.UInt16)
+  - Core.Systems.ProvinceSimulation.GetDirtyIndices
+  - Core.Systems.ProvinceSimulation.GetMemoryUsage
+  - Core.Systems.ProvinceSimulation.GetProvinceState(System.UInt16)
+  - Core.Systems.ProvinceSimulation.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Core.Systems.ProvinceSimulation.GetStateChecksum
+  - Core.Systems.ProvinceSimulation.HasProvince(System.UInt16)
+  - Core.Systems.ProvinceSimulation.IsDirty
+  - Core.Systems.ProvinceSimulation.IsInitialized
+  - Core.Systems.ProvinceSimulation.LogStatistics
+  - Core.Systems.ProvinceSimulation.ProvinceCount
+  - Core.Systems.ProvinceSimulation.SetColdData(System.UInt16,Core.Data.ProvinceColdData)
+  - Core.Systems.ProvinceSimulation.SetProvinceController(System.UInt16,System.UInt16)
+  - Core.Systems.ProvinceSimulation.SetProvinceOwner(System.UInt16,System.UInt16)
+  - Core.Systems.ProvinceSimulation.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  - Core.Systems.ProvinceSimulation.StateVersion
+  - Core.Systems.ProvinceSimulation.ValidateState(System.String@)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSimulation
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Core province simulation system using dual-layer architecture
+
+    Hot simulation data: exactly 80KB for 10,000 provinces
+
+    Cold presentation data: loaded on-demand
+  example: []
+  syntax:
+    content: public class ProvinceSimulation
+    content.vb: Public Class ProvinceSimulation
+  inheritance:
+  - System.Object
+- uid: Core.Systems.ProvinceSimulation.ProvinceCount
+  commentId: P:Core.Systems.ProvinceSimulation.ProvinceCount
+  id: ProvinceCount
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceSimulation.ProvinceCount
+  fullName: Core.Systems.ProvinceSimulation.ProvinceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int ProvinceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ProvinceCount As Integer
+  overload: Core.Systems.ProvinceSimulation.ProvinceCount*
+- uid: Core.Systems.ProvinceSimulation.StateVersion
+  commentId: P:Core.Systems.ProvinceSimulation.StateVersion
+  id: StateVersion
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: StateVersion
+  nameWithType: ProvinceSimulation.StateVersion
+  fullName: Core.Systems.ProvinceSimulation.StateVersion
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StateVersion
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public uint StateVersion { get; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Public ReadOnly Property StateVersion As UInteger
+  overload: Core.Systems.ProvinceSimulation.StateVersion*
+- uid: Core.Systems.ProvinceSimulation.IsDirty
+  commentId: P:Core.Systems.ProvinceSimulation.IsDirty
+  id: IsDirty
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: IsDirty
+  nameWithType: ProvinceSimulation.IsDirty
+  fullName: Core.Systems.ProvinceSimulation.IsDirty
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDirty
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsDirty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDirty As Boolean
+  overload: Core.Systems.ProvinceSimulation.IsDirty*
+- uid: Core.Systems.ProvinceSimulation.IsInitialized
+  commentId: P:Core.Systems.ProvinceSimulation.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: ProvinceSimulation.IsInitialized
+  fullName: Core.Systems.ProvinceSimulation.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Systems.ProvinceSimulation.IsInitialized*
+- uid: Core.Systems.ProvinceSimulation.#ctor(System.Int32)
+  commentId: M:Core.Systems.ProvinceSimulation.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSimulation(int)
+  nameWithType: ProvinceSimulation.ProvinceSimulation(int)
+  fullName: Core.Systems.ProvinceSimulation.ProvinceSimulation(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Initialize the simulation system
+  example: []
+  syntax:
+    content: public ProvinceSimulation(int capacity = 10000)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer = 10000)
+  overload: Core.Systems.ProvinceSimulation.#ctor*
+  nameWithType.vb: ProvinceSimulation.New(Integer)
+  fullName.vb: Core.Systems.ProvinceSimulation.New(Integer)
+  name.vb: New(Integer)
+- uid: Core.Systems.ProvinceSimulation.AddProvince(System.UInt16,Core.Data.TerrainType)
+  commentId: M:Core.Systems.ProvinceSimulation.AddProvince(System.UInt16,Core.Data.TerrainType)
+  id: AddProvince(System.UInt16,Core.Data.TerrainType)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: AddProvince(ushort, TerrainType)
+  nameWithType: ProvinceSimulation.AddProvince(ushort, TerrainType)
+  fullName: Core.Systems.ProvinceSimulation.AddProvince(ushort, Core.Data.TerrainType)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvince
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Add a new province to the simulation
+  example: []
+  syntax:
+    content: public bool AddProvince(ushort provinceID, TerrainType terrain = TerrainType.Grassland)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: terrain
+      type: Core.Data.TerrainType
+    return:
+      type: System.Boolean
+    content.vb: Public Function AddProvince(provinceID As UShort, terrain As TerrainType = TerrainType.Grassland) As Boolean
+  overload: Core.Systems.ProvinceSimulation.AddProvince*
+  nameWithType.vb: ProvinceSimulation.AddProvince(UShort, TerrainType)
+  fullName.vb: Core.Systems.ProvinceSimulation.AddProvince(UShort, Core.Data.TerrainType)
+  name.vb: AddProvince(UShort, TerrainType)
+- uid: Core.Systems.ProvinceSimulation.HasProvince(System.UInt16)
+  commentId: M:Core.Systems.ProvinceSimulation.HasProvince(System.UInt16)
+  id: HasProvince(System.UInt16)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: HasProvince(ushort)
+  nameWithType: ProvinceSimulation.HasProvince(ushort)
+  fullName: Core.Systems.ProvinceSimulation.HasProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasProvince
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Check if a province exists in the simulation
+  example: []
+  syntax:
+    content: public bool HasProvince(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function HasProvince(provinceID As UShort) As Boolean
+  overload: Core.Systems.ProvinceSimulation.HasProvince*
+  nameWithType.vb: ProvinceSimulation.HasProvince(UShort)
+  fullName.vb: Core.Systems.ProvinceSimulation.HasProvince(UShort)
+  name.vb: HasProvince(UShort)
+- uid: Core.Systems.ProvinceSimulation.GetProvinceState(System.UInt16)
+  commentId: M:Core.Systems.ProvinceSimulation.GetProvinceState(System.UInt16)
+  id: GetProvinceState(System.UInt16)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceState(ushort)
+  nameWithType: ProvinceSimulation.GetProvinceState(ushort)
+  fullName: Core.Systems.ProvinceSimulation.GetProvinceState(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceState
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 120
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get province state by ID (fast O(1) lookup)
+  example: []
+  syntax:
+    content: public ProvinceState GetProvinceState(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Function GetProvinceState(provinceID As UShort) As ProvinceState
+  overload: Core.Systems.ProvinceSimulation.GetProvinceState*
+  nameWithType.vb: ProvinceSimulation.GetProvinceState(UShort)
+  fullName.vb: Core.Systems.ProvinceSimulation.GetProvinceState(UShort)
+  name.vb: GetProvinceState(UShort)
+- uid: Core.Systems.ProvinceSimulation.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  commentId: M:Core.Systems.ProvinceSimulation.SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  id: SetProvinceState(System.UInt16,Core.Data.ProvinceState)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceState(ushort, ProvinceState)
+  nameWithType: ProvinceSimulation.SetProvinceState(ushort, ProvinceState)
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceState(ushort, Core.Data.ProvinceState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceState
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 132
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set province state by ID
+  example: []
+  syntax:
+    content: public bool SetProvinceState(ushort provinceID, ProvinceState newState)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: newState
+      type: Core.Data.ProvinceState
+    return:
+      type: System.Boolean
+    content.vb: Public Function SetProvinceState(provinceID As UShort, newState As ProvinceState) As Boolean
+  overload: Core.Systems.ProvinceSimulation.SetProvinceState*
+  nameWithType.vb: ProvinceSimulation.SetProvinceState(UShort, ProvinceState)
+  fullName.vb: Core.Systems.ProvinceSimulation.SetProvinceState(UShort, Core.Data.ProvinceState)
+  name.vb: SetProvinceState(UShort, ProvinceState)
+- uid: Core.Systems.ProvinceSimulation.SetProvinceOwner(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.ProvinceSimulation.SetProvinceOwner(System.UInt16,System.UInt16)
+  id: SetProvinceOwner(System.UInt16,System.UInt16)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceOwner(ushort, ushort)
+  nameWithType: ProvinceSimulation.SetProvinceOwner(ushort, ushort)
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceOwner(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceOwner
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 146
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set province owner
+  example: []
+  syntax:
+    content: public bool SetProvinceOwner(ushort provinceID, ushort ownerID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: ownerID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function SetProvinceOwner(provinceID As UShort, ownerID As UShort) As Boolean
+  overload: Core.Systems.ProvinceSimulation.SetProvinceOwner*
+  nameWithType.vb: ProvinceSimulation.SetProvinceOwner(UShort, UShort)
+  fullName.vb: Core.Systems.ProvinceSimulation.SetProvinceOwner(UShort, UShort)
+  name.vb: SetProvinceOwner(UShort, UShort)
+- uid: Core.Systems.ProvinceSimulation.SetProvinceController(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.ProvinceSimulation.SetProvinceController(System.UInt16,System.UInt16)
+  id: SetProvinceController(System.UInt16,System.UInt16)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceController(ushort, ushort)
+  nameWithType: ProvinceSimulation.SetProvinceController(ushort, ushort)
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceController(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceController
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 163
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set province controller (for occupation scenarios)
+  example: []
+  syntax:
+    content: public bool SetProvinceController(ushort provinceID, ushort controllerID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: controllerID
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function SetProvinceController(provinceID As UShort, controllerID As UShort) As Boolean
+  overload: Core.Systems.ProvinceSimulation.SetProvinceController*
+  nameWithType.vb: ProvinceSimulation.SetProvinceController(UShort, UShort)
+  fullName.vb: Core.Systems.ProvinceSimulation.SetProvinceController(UShort, UShort)
+  name.vb: SetProvinceController(UShort, UShort)
+- uid: Core.Systems.ProvinceSimulation.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Core.Systems.ProvinceSimulation.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesByOwner(ushort, NativeList<ushort>)
+  nameWithType: ProvinceSimulation.GetProvincesByOwner(ushort, NativeList<ushort>)
+  fullName: Core.Systems.ProvinceSimulation.GetProvincesByOwner(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesByOwner
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get all provinces owned by a country
+  example: []
+  syntax:
+    content: public void GetProvincesByOwner(ushort ownerID, NativeList<ushort> result)
+    parameters:
+    - id: ownerID
+      type: System.UInt16
+    - id: result
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetProvincesByOwner(ownerID As UShort, result As NativeList(Of UShort))
+  overload: Core.Systems.ProvinceSimulation.GetProvincesByOwner*
+  nameWithType.vb: ProvinceSimulation.GetProvincesByOwner(UShort, NativeList(Of UShort))
+  fullName.vb: Core.Systems.ProvinceSimulation.GetProvincesByOwner(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetProvincesByOwner(UShort, NativeList(Of UShort))
+- uid: Core.Systems.ProvinceSimulation.GetAllProvinces
+  commentId: M:Core.Systems.ProvinceSimulation.GetAllProvinces
+  id: GetAllProvinces
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinces()
+  nameWithType: ProvinceSimulation.GetAllProvinces()
+  fullName: Core.Systems.ProvinceSimulation.GetAllProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinces
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 203
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get read-only access to all provinces (hot data only)
+  example: []
+  syntax:
+    content: public NativeArray<ProvinceState>.ReadOnly GetAllProvinces()
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceState}.ReadOnly
+    content.vb: Public Function GetAllProvinces() As NativeArray(Of ProvinceState).ReadOnly
+  overload: Core.Systems.ProvinceSimulation.GetAllProvinces*
+- uid: Core.Systems.ProvinceSimulation.GetAllProvinceIDs
+  commentId: M:Core.Systems.ProvinceSimulation.GetAllProvinceIDs
+  id: GetAllProvinceIDs
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinceIDs()
+  nameWithType: ProvinceSimulation.GetAllProvinceIDs()
+  fullName: Core.Systems.ProvinceSimulation.GetAllProvinceIDs()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinceIDs
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 211
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get all province IDs in the simulation
+  example: []
+  syntax:
+    content: public ushort[] GetAllProvinceIDs()
+    return:
+      type: System.UInt16[]
+    content.vb: Public Function GetAllProvinceIDs() As UShort()
+  overload: Core.Systems.ProvinceSimulation.GetAllProvinceIDs*
+- uid: Core.Systems.ProvinceSimulation.GetDirtyIndices
+  commentId: M:Core.Systems.ProvinceSimulation.GetDirtyIndices
+  id: GetDirtyIndices
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetDirtyIndices()
+  nameWithType: ProvinceSimulation.GetDirtyIndices()
+  fullName: Core.Systems.ProvinceSimulation.GetDirtyIndices()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDirtyIndices
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 230
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get provinces that have changed since last clear
+  example: []
+  syntax:
+    content: public IReadOnlyCollection<int> GetDirtyIndices()
+    return:
+      type: System.Collections.Generic.IReadOnlyCollection{System.Int32}
+    content.vb: Public Function GetDirtyIndices() As IReadOnlyCollection(Of Integer)
+  overload: Core.Systems.ProvinceSimulation.GetDirtyIndices*
+- uid: Core.Systems.ProvinceSimulation.ClearDirtyFlags
+  commentId: M:Core.Systems.ProvinceSimulation.ClearDirtyFlags
+  id: ClearDirtyFlags
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: ClearDirtyFlags()
+  nameWithType: ProvinceSimulation.ClearDirtyFlags()
+  fullName: Core.Systems.ProvinceSimulation.ClearDirtyFlags()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearDirtyFlags
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 238
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Clear dirty flags (call after updating GPU textures)
+  example: []
+  syntax:
+    content: public void ClearDirtyFlags()
+    content.vb: Public Sub ClearDirtyFlags()
+  overload: Core.Systems.ProvinceSimulation.ClearDirtyFlags*
+- uid: Core.Systems.ProvinceSimulation.GetColdData(System.UInt16)
+  commentId: M:Core.Systems.ProvinceSimulation.GetColdData(System.UInt16)
+  id: GetColdData(System.UInt16)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetColdData(ushort)
+  nameWithType: ProvinceSimulation.GetColdData(ushort)
+  fullName: Core.Systems.ProvinceSimulation.GetColdData(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetColdData
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 257
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get cold data for a province (loaded on-demand)
+  example: []
+  syntax:
+    content: public ProvinceColdData GetColdData(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceColdData
+    content.vb: Public Function GetColdData(provinceID As UShort) As ProvinceColdData
+  overload: Core.Systems.ProvinceSimulation.GetColdData*
+  nameWithType.vb: ProvinceSimulation.GetColdData(UShort)
+  fullName.vb: Core.Systems.ProvinceSimulation.GetColdData(UShort)
+  name.vb: GetColdData(UShort)
+- uid: Core.Systems.ProvinceSimulation.SetColdData(System.UInt16,Core.Data.ProvinceColdData)
+  commentId: M:Core.Systems.ProvinceSimulation.SetColdData(System.UInt16,Core.Data.ProvinceColdData)
+  id: SetColdData(System.UInt16,Core.Data.ProvinceColdData)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: SetColdData(ushort, ProvinceColdData)
+  nameWithType: ProvinceSimulation.SetColdData(ushort, ProvinceColdData)
+  fullName: Core.Systems.ProvinceSimulation.SetColdData(ushort, Core.Data.ProvinceColdData)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetColdData
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 271
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set cold data for a province
+  example: []
+  syntax:
+    content: public void SetColdData(ushort provinceID, ProvinceColdData data)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: data
+      type: Core.Data.ProvinceColdData
+    content.vb: Public Sub SetColdData(provinceID As UShort, data As ProvinceColdData)
+  overload: Core.Systems.ProvinceSimulation.SetColdData*
+  nameWithType.vb: ProvinceSimulation.SetColdData(UShort, ProvinceColdData)
+  fullName.vb: Core.Systems.ProvinceSimulation.SetColdData(UShort, Core.Data.ProvinceColdData)
+  name.vb: SetColdData(UShort, ProvinceColdData)
+- uid: Core.Systems.ProvinceSimulation.GetStateChecksum
+  commentId: M:Core.Systems.ProvinceSimulation.GetStateChecksum
+  id: GetStateChecksum
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetStateChecksum()
+  nameWithType: ProvinceSimulation.GetStateChecksum()
+  fullName: Core.Systems.ProvinceSimulation.GetStateChecksum()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStateChecksum
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 279
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get state checksum for command validation
+  example: []
+  syntax:
+    content: public uint GetStateChecksum()
+    return:
+      type: System.UInt32
+    content.vb: Public Function GetStateChecksum() As UInteger
+  overload: Core.Systems.ProvinceSimulation.GetStateChecksum*
+- uid: Core.Systems.ProvinceSimulation.CalculateStateChecksum
+  commentId: M:Core.Systems.ProvinceSimulation.CalculateStateChecksum
+  id: CalculateStateChecksum
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: CalculateStateChecksum()
+  nameWithType: ProvinceSimulation.CalculateStateChecksum()
+  fullName: Core.Systems.ProvinceSimulation.CalculateStateChecksum()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateStateChecksum
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 287
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Calculate checksum of entire simulation state for validation
+  example: []
+  syntax:
+    content: public uint CalculateStateChecksum()
+    return:
+      type: System.UInt32
+    content.vb: Public Function CalculateStateChecksum() As UInteger
+  overload: Core.Systems.ProvinceSimulation.CalculateStateChecksum*
+- uid: Core.Systems.ProvinceSimulation.GetMemoryUsage
+  commentId: M:Core.Systems.ProvinceSimulation.GetMemoryUsage
+  id: GetMemoryUsage
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: GetMemoryUsage()
+  nameWithType: ProvinceSimulation.GetMemoryUsage()
+  fullName: Core.Systems.ProvinceSimulation.GetMemoryUsage()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMemoryUsage
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 307
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get memory usage statistics
+  example: []
+  syntax:
+    content: public (int totalBytes, int hotBytes, int coldBytes) GetMemoryUsage()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+    content.vb: Public Function GetMemoryUsage() As (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  overload: Core.Systems.ProvinceSimulation.GetMemoryUsage*
+- uid: Core.Systems.ProvinceSimulation.ValidateState(System.String@)
+  commentId: M:Core.Systems.ProvinceSimulation.ValidateState(System.String@)
+  id: ValidateState(System.String@)
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: ValidateState(out string)
+  nameWithType: ProvinceSimulation.ValidateState(out string)
+  fullName: Core.Systems.ProvinceSimulation.ValidateState(out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidateState
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 319
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Validate simulation state integrity
+  example: []
+  syntax:
+    content: public bool ValidateState(out string errorMessage)
+    parameters:
+    - id: errorMessage
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function ValidateState(errorMessage As String) As Boolean
+  overload: Core.Systems.ProvinceSimulation.ValidateState*
+  nameWithType.vb: ProvinceSimulation.ValidateState(String)
+  fullName.vb: Core.Systems.ProvinceSimulation.ValidateState(String)
+  name.vb: ValidateState(String)
+- uid: Core.Systems.ProvinceSimulation.Dispose
+  commentId: M:Core.Systems.ProvinceSimulation.Dispose
+  id: Dispose
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceSimulation.Dispose()
+  fullName: Core.Systems.ProvinceSimulation.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 359
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Systems.ProvinceSimulation.Dispose*
+- uid: Core.Systems.ProvinceSimulation.LogStatistics
+  commentId: M:Core.Systems.ProvinceSimulation.LogStatistics
+  id: LogStatistics
+  parent: Core.Systems.ProvinceSimulation
+  langs:
+  - csharp
+  - vb
+  name: LogStatistics()
+  nameWithType: ProvinceSimulation.LogStatistics()
+  fullName: Core.Systems.ProvinceSimulation.LogStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSimulation.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogStatistics
+    path: Scripts/Core/Systems/ProvinceSimulation.cs
+    startLine: 371
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: >-
+      [ContextMenu("Log Simulation Statistics")]
+
+      public void LogStatistics()
+    content.vb: >-
+      <ContextMenu("Log Simulation Statistics")>
+
+      Public Sub LogStatistics()
+  overload: Core.Systems.ProvinceSimulation.LogStatistics*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Log Simulation Statistics
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.ProvinceSimulation.ProvinceCount*
+  commentId: Overload:Core.Systems.ProvinceSimulation.ProvinceCount
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_ProvinceCount
+  name: ProvinceCount
+  nameWithType: ProvinceSimulation.ProvinceCount
+  fullName: Core.Systems.ProvinceSimulation.ProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.ProvinceSimulation.StateVersion*
+  commentId: Overload:Core.Systems.ProvinceSimulation.StateVersion
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_StateVersion
+  name: StateVersion
+  nameWithType: ProvinceSimulation.StateVersion
+  fullName: Core.Systems.ProvinceSimulation.StateVersion
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Systems.ProvinceSimulation.IsDirty*
+  commentId: Overload:Core.Systems.ProvinceSimulation.IsDirty
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_IsDirty
+  name: IsDirty
+  nameWithType: ProvinceSimulation.IsDirty
+  fullName: Core.Systems.ProvinceSimulation.IsDirty
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.ProvinceSimulation.IsInitialized*
+  commentId: Overload:Core.Systems.ProvinceSimulation.IsInitialized
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_IsInitialized
+  name: IsInitialized
+  nameWithType: ProvinceSimulation.IsInitialized
+  fullName: Core.Systems.ProvinceSimulation.IsInitialized
+- uid: Core.Systems.ProvinceSimulation.#ctor*
+  commentId: Overload:Core.Systems.ProvinceSimulation.#ctor
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation__ctor_System_Int32_
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation.ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation.ProvinceSimulation
+  nameWithType.vb: ProvinceSimulation.New
+  fullName.vb: Core.Systems.ProvinceSimulation.New
+  name.vb: New
+- uid: Core.Systems.ProvinceSimulation.AddProvince*
+  commentId: Overload:Core.Systems.ProvinceSimulation.AddProvince
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_AddProvince_System_UInt16_Core_Data_TerrainType_
+  name: AddProvince
+  nameWithType: ProvinceSimulation.AddProvince
+  fullName: Core.Systems.ProvinceSimulation.AddProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.TerrainType
+  commentId: T:Core.Data.TerrainType
+  parent: Core.Data
+  href: Core.Data.TerrainType.html
+  name: TerrainType
+  nameWithType: TerrainType
+  fullName: Core.Data.TerrainType
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.ProvinceSimulation.HasProvince*
+  commentId: Overload:Core.Systems.ProvinceSimulation.HasProvince
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_HasProvince_System_UInt16_
+  name: HasProvince
+  nameWithType: ProvinceSimulation.HasProvince
+  fullName: Core.Systems.ProvinceSimulation.HasProvince
+- uid: Core.Systems.ProvinceSimulation.GetProvinceState*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetProvinceState
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetProvinceState_System_UInt16_
+  name: GetProvinceState
+  nameWithType: ProvinceSimulation.GetProvinceState
+  fullName: Core.Systems.ProvinceSimulation.GetProvinceState
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Systems.ProvinceSimulation.SetProvinceState*
+  commentId: Overload:Core.Systems.ProvinceSimulation.SetProvinceState
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_SetProvinceState_System_UInt16_Core_Data_ProvinceState_
+  name: SetProvinceState
+  nameWithType: ProvinceSimulation.SetProvinceState
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceState
+- uid: Core.Systems.ProvinceSimulation.SetProvinceOwner*
+  commentId: Overload:Core.Systems.ProvinceSimulation.SetProvinceOwner
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_SetProvinceOwner_System_UInt16_System_UInt16_
+  name: SetProvinceOwner
+  nameWithType: ProvinceSimulation.SetProvinceOwner
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceOwner
+- uid: Core.Systems.ProvinceSimulation.SetProvinceController*
+  commentId: Overload:Core.Systems.ProvinceSimulation.SetProvinceController
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_SetProvinceController_System_UInt16_System_UInt16_
+  name: SetProvinceController
+  nameWithType: ProvinceSimulation.SetProvinceController
+  fullName: Core.Systems.ProvinceSimulation.SetProvinceController
+- uid: Core.Systems.ProvinceSimulation.GetProvincesByOwner*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetProvincesByOwner
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetProvincesByOwner_System_UInt16_Unity_Collections_NativeList_System_UInt16__
+  name: GetProvincesByOwner
+  nameWithType: ProvinceSimulation.GetProvincesByOwner
+  fullName: Core.Systems.ProvinceSimulation.GetProvincesByOwner
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Systems.ProvinceSimulation.GetAllProvinces*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetAllProvinces
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetAllProvinces
+  name: GetAllProvinces
+  nameWithType: ProvinceSimulation.GetAllProvinces
+  fullName: Core.Systems.ProvinceSimulation.GetAllProvinces
+- uid: Unity.Collections.NativeArray{Core.Data.ProvinceState}.ReadOnly
+  commentId: T:Unity.Collections.NativeArray{Core.Data.ProvinceState}.ReadOnly
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1.ReadOnly
+  href: Core.Data.ProvinceState.html
+  name: NativeArray<ProvinceState>.ReadOnly
+  nameWithType: NativeArray<ProvinceState>.ReadOnly
+  fullName: Unity.Collections.NativeArray<Core.Data.ProvinceState>.ReadOnly
+  nameWithType.vb: NativeArray(Of ProvinceState).ReadOnly
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.ProvinceState).ReadOnly
+  name.vb: NativeArray(Of ProvinceState).ReadOnly
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.ProvinceState
+    name: ProvinceState
+    href: Core.Data.ProvinceState.html
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeArray{Core.Data.ProvinceState}.ReadOnly
+    name: ReadOnly
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.ProvinceState
+    name: ProvinceState
+    href: Core.Data.ProvinceState.html
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeArray{Core.Data.ProvinceState}.ReadOnly
+    name: ReadOnly
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1.ReadOnly
+  commentId: T:Unity.Collections.NativeArray`1.ReadOnly
+  isExternal: true
+  name: NativeArray<T>.ReadOnly
+  nameWithType: NativeArray<T>.ReadOnly
+  fullName: Unity.Collections.NativeArray<T>.ReadOnly
+  nameWithType.vb: NativeArray(Of T).ReadOnly
+  fullName.vb: Unity.Collections.NativeArray(Of T).ReadOnly
+  name.vb: NativeArray(Of T).ReadOnly
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeArray`1.ReadOnly
+    name: ReadOnly
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeArray`1.ReadOnly
+    name: ReadOnly
+    isExternal: true
+- uid: Core.Systems.ProvinceSimulation.GetAllProvinceIDs*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetAllProvinceIDs
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetAllProvinceIDs
+  name: GetAllProvinceIDs
+  nameWithType: ProvinceSimulation.GetAllProvinceIDs
+  fullName: Core.Systems.ProvinceSimulation.GetAllProvinceIDs
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Systems.ProvinceSimulation.GetDirtyIndices*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetDirtyIndices
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetDirtyIndices
+  name: GetDirtyIndices
+  nameWithType: ProvinceSimulation.GetDirtyIndices
+  fullName: Core.Systems.ProvinceSimulation.GetDirtyIndices
+- uid: System.Collections.Generic.IReadOnlyCollection{System.Int32}
+  commentId: T:System.Collections.Generic.IReadOnlyCollection{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyCollection`1
+  name: IReadOnlyCollection<int>
+  nameWithType: IReadOnlyCollection<int>
+  fullName: System.Collections.Generic.IReadOnlyCollection<int>
+  nameWithType.vb: IReadOnlyCollection(Of Integer)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of Integer)
+  name.vb: IReadOnlyCollection(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyCollection`1
+  commentId: T:System.Collections.Generic.IReadOnlyCollection`1
+  isExternal: true
+  name: IReadOnlyCollection<T>
+  nameWithType: IReadOnlyCollection<T>
+  fullName: System.Collections.Generic.IReadOnlyCollection<T>
+  nameWithType.vb: IReadOnlyCollection(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyCollection(Of T)
+  name.vb: IReadOnlyCollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyCollection`1
+    name: IReadOnlyCollection
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Systems.ProvinceSimulation.ClearDirtyFlags*
+  commentId: Overload:Core.Systems.ProvinceSimulation.ClearDirtyFlags
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_ClearDirtyFlags
+  name: ClearDirtyFlags
+  nameWithType: ProvinceSimulation.ClearDirtyFlags
+  fullName: Core.Systems.ProvinceSimulation.ClearDirtyFlags
+- uid: Core.Systems.ProvinceSimulation.GetColdData*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetColdData
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetColdData_System_UInt16_
+  name: GetColdData
+  nameWithType: ProvinceSimulation.GetColdData
+  fullName: Core.Systems.ProvinceSimulation.GetColdData
+- uid: Core.Data.ProvinceColdData
+  commentId: T:Core.Data.ProvinceColdData
+  parent: Core.Data
+  href: Core.Data.ProvinceColdData.html
+  name: ProvinceColdData
+  nameWithType: ProvinceColdData
+  fullName: Core.Data.ProvinceColdData
+- uid: Core.Systems.ProvinceSimulation.SetColdData*
+  commentId: Overload:Core.Systems.ProvinceSimulation.SetColdData
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_SetColdData_System_UInt16_Core_Data_ProvinceColdData_
+  name: SetColdData
+  nameWithType: ProvinceSimulation.SetColdData
+  fullName: Core.Systems.ProvinceSimulation.SetColdData
+- uid: Core.Systems.ProvinceSimulation.GetStateChecksum*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetStateChecksum
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetStateChecksum
+  name: GetStateChecksum
+  nameWithType: ProvinceSimulation.GetStateChecksum
+  fullName: Core.Systems.ProvinceSimulation.GetStateChecksum
+- uid: Core.Systems.ProvinceSimulation.CalculateStateChecksum*
+  commentId: Overload:Core.Systems.ProvinceSimulation.CalculateStateChecksum
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_CalculateStateChecksum
+  name: CalculateStateChecksum
+  nameWithType: ProvinceSimulation.CalculateStateChecksum
+  fullName: Core.Systems.ProvinceSimulation.CalculateStateChecksum
+- uid: Core.Systems.ProvinceSimulation.GetMemoryUsage*
+  commentId: Overload:Core.Systems.ProvinceSimulation.GetMemoryUsage
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_GetMemoryUsage
+  name: GetMemoryUsage
+  nameWithType: ProvinceSimulation.GetMemoryUsage
+  fullName: Core.Systems.ProvinceSimulation.GetMemoryUsage
+- uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32,System.Int32}
+  parent: System
+  definition: System.ValueTuple`3
+  name: (int totalBytes, int hotBytes, int coldBytes)
+  nameWithType: (int totalBytes, int hotBytes, int coldBytes)
+  fullName: (int totalBytes, int hotBytes, int coldBytes)
+  nameWithType.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  fullName.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  name.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
+    name: hotBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
+    name: coldBytes
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
+    name: hotBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
+    name: coldBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`3
+  commentId: T:System.ValueTuple`3
+  name: (T1, T2, T3)
+  nameWithType: (T1, T2, T3)
+  fullName: (T1, T2, T3)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+- uid: Core.Systems.ProvinceSimulation.ValidateState*
+  commentId: Overload:Core.Systems.ProvinceSimulation.ValidateState
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_ValidateState_System_String__
+  name: ValidateState
+  nameWithType: ProvinceSimulation.ValidateState
+  fullName: Core.Systems.ProvinceSimulation.ValidateState
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.ProvinceSimulation.Dispose*
+  commentId: Overload:Core.Systems.ProvinceSimulation.Dispose
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_Dispose
+  name: Dispose
+  nameWithType: ProvinceSimulation.Dispose
+  fullName: Core.Systems.ProvinceSimulation.Dispose
+- uid: Core.Systems.ProvinceSimulation.LogStatistics*
+  commentId: Overload:Core.Systems.ProvinceSimulation.LogStatistics
+  href: Core.Systems.ProvinceSimulation.html#Core_Systems_ProvinceSimulation_LogStatistics
+  name: LogStatistics
+  nameWithType: ProvinceSimulation.LogStatistics
+  fullName: Core.Systems.ProvinceSimulation.LogStatistics

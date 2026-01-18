@@ -1,0 +1,505 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.ProvinceHistoryData
+  commentId: T:StarterKit.ProvinceHistoryData
+  id: ProvinceHistoryData
+  parent: StarterKit
+  children:
+  - StarterKit.ProvinceHistoryData.#ctor(System.UInt16)
+  - StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory
+  - StarterKit.ProvinceHistoryData.GetHistory
+  - StarterKit.ProvinceHistoryData.GetOwnershipChangeCount
+  - StarterKit.ProvinceHistoryData.GetPreviousOwner
+  - StarterKit.ProvinceHistoryData.ProvinceId
+  - StarterKit.ProvinceHistoryData.RecordOwnershipChange(System.UInt16,System.Int32)
+  - StarterKit.ProvinceHistoryData.WasOwnedBy(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistoryData
+  nameWithType: ProvinceHistoryData
+  fullName: StarterKit.ProvinceHistoryData
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceHistoryData
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 34
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Cold data storage for a single province's history.
+
+    Uses CircularBuffer to prevent unbounded memory growth.
+
+
+    Access pattern: Loaded on-demand when player clicks province.
+
+    NOT accessed every frame - this is the key distinction from hot data.
+  example: []
+  syntax:
+    content: public class ProvinceHistoryData
+    content.vb: Public Class ProvinceHistoryData
+  inheritance:
+  - System.Object
+- uid: StarterKit.ProvinceHistoryData.ProvinceId
+  commentId: P:StarterKit.ProvinceHistoryData.ProvinceId
+  id: ProvinceId
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceId
+  nameWithType: ProvinceHistoryData.ProvinceId
+  fullName: StarterKit.ProvinceHistoryData.ProvinceId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceId
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 38
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ushort ProvinceId { get; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly Property ProvinceId As UShort
+  overload: StarterKit.ProvinceHistoryData.ProvinceId*
+- uid: StarterKit.ProvinceHistoryData.#ctor(System.UInt16)
+  commentId: M:StarterKit.ProvinceHistoryData.#ctor(System.UInt16)
+  id: '#ctor(System.UInt16)'
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHistoryData(ushort)
+  nameWithType: ProvinceHistoryData.ProvinceHistoryData(ushort)
+  fullName: StarterKit.ProvinceHistoryData.ProvinceHistoryData(ushort)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 41
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: public ProvinceHistoryData(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    content.vb: Public Sub New(provinceId As UShort)
+  overload: StarterKit.ProvinceHistoryData.#ctor*
+  nameWithType.vb: ProvinceHistoryData.New(UShort)
+  fullName.vb: StarterKit.ProvinceHistoryData.New(UShort)
+  name.vb: New(UShort)
+- uid: StarterKit.ProvinceHistoryData.RecordOwnershipChange(System.UInt16,System.Int32)
+  commentId: M:StarterKit.ProvinceHistoryData.RecordOwnershipChange(System.UInt16,System.Int32)
+  id: RecordOwnershipChange(System.UInt16,System.Int32)
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: RecordOwnershipChange(ushort, int)
+  nameWithType: ProvinceHistoryData.RecordOwnershipChange(ushort, int)
+  fullName: StarterKit.ProvinceHistoryData.RecordOwnershipChange(ushort, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RecordOwnershipChange
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 51
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Record a new owner for this province.
+
+    Called when ownership changes - closes previous record and opens new one.
+  example: []
+  syntax:
+    content: public void RecordOwnershipChange(ushort newOwnerId, int gameDay)
+    parameters:
+    - id: newOwnerId
+      type: System.UInt16
+    - id: gameDay
+      type: System.Int32
+    content.vb: Public Sub RecordOwnershipChange(newOwnerId As UShort, gameDay As Integer)
+  overload: StarterKit.ProvinceHistoryData.RecordOwnershipChange*
+  nameWithType.vb: ProvinceHistoryData.RecordOwnershipChange(UShort, Integer)
+  fullName.vb: StarterKit.ProvinceHistoryData.RecordOwnershipChange(UShort, Integer)
+  name.vb: RecordOwnershipChange(UShort, Integer)
+- uid: StarterKit.ProvinceHistoryData.GetHistory
+  commentId: M:StarterKit.ProvinceHistoryData.GetHistory
+  id: GetHistory
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: GetHistory()
+  nameWithType: ProvinceHistoryData.GetHistory()
+  fullName: StarterKit.ProvinceHistoryData.GetHistory()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHistory
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 85
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Get ownership history (most recent first).
+
+    Returns empty list if no history recorded.
+  example: []
+  syntax:
+    content: public IReadOnlyList<OwnershipRecord> GetHistory()
+    return:
+      type: System.Collections.Generic.IReadOnlyList{StarterKit.OwnershipRecord}
+    content.vb: Public Function GetHistory() As IReadOnlyList(Of OwnershipRecord)
+  overload: StarterKit.ProvinceHistoryData.GetHistory*
+- uid: StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory
+  commentId: M:StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory
+  id: GetCurrentOwnerFromHistory
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentOwnerFromHistory()
+  nameWithType: ProvinceHistoryData.GetCurrentOwnerFromHistory()
+  fullName: StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCurrentOwnerFromHistory
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 95
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Get the current owner from history (or 0 if no history).
+
+    Note: For current owner, use ProvinceState.ownerID (hot data) instead.
+
+    This is just for completeness of the history record.
+  example: []
+  syntax:
+    content: public ushort GetCurrentOwnerFromHistory()
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetCurrentOwnerFromHistory() As UShort
+  overload: StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory*
+- uid: StarterKit.ProvinceHistoryData.GetPreviousOwner
+  commentId: M:StarterKit.ProvinceHistoryData.GetPreviousOwner
+  id: GetPreviousOwner
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: GetPreviousOwner()
+  nameWithType: ProvinceHistoryData.GetPreviousOwner()
+  fullName: StarterKit.ProvinceHistoryData.GetPreviousOwner()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPreviousOwner
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 110
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Get previous owner (before current).
+
+    Useful for "reclaimed from X" messages.
+  example: []
+  syntax:
+    content: public ushort GetPreviousOwner()
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetPreviousOwner() As UShort
+  overload: StarterKit.ProvinceHistoryData.GetPreviousOwner*
+- uid: StarterKit.ProvinceHistoryData.WasOwnedBy(System.UInt16)
+  commentId: M:StarterKit.ProvinceHistoryData.WasOwnedBy(System.UInt16)
+  id: WasOwnedBy(System.UInt16)
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: WasOwnedBy(ushort)
+  nameWithType: ProvinceHistoryData.WasOwnedBy(ushort)
+  fullName: StarterKit.ProvinceHistoryData.WasOwnedBy(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WasOwnedBy
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 123
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if province was ever owned by a specific country.
+  example: []
+  syntax:
+    content: public bool WasOwnedBy(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function WasOwnedBy(countryId As UShort) As Boolean
+  overload: StarterKit.ProvinceHistoryData.WasOwnedBy*
+  nameWithType.vb: ProvinceHistoryData.WasOwnedBy(UShort)
+  fullName.vb: StarterKit.ProvinceHistoryData.WasOwnedBy(UShort)
+  name.vb: WasOwnedBy(UShort)
+- uid: StarterKit.ProvinceHistoryData.GetOwnershipChangeCount
+  commentId: M:StarterKit.ProvinceHistoryData.GetOwnershipChangeCount
+  id: GetOwnershipChangeCount
+  parent: StarterKit.ProvinceHistoryData
+  langs:
+  - csharp
+  - vb
+  name: GetOwnershipChangeCount()
+  nameWithType: ProvinceHistoryData.GetOwnershipChangeCount()
+  fullName: StarterKit.ProvinceHistoryData.GetOwnershipChangeCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Data/ProvinceHistory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOwnershipChangeCount
+    path: Scripts/StarterKit/Data/ProvinceHistory.cs
+    startLine: 136
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get number of times this province changed hands.
+  example: []
+  syntax:
+    content: public int GetOwnershipChangeCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetOwnershipChangeCount() As Integer
+  overload: StarterKit.ProvinceHistoryData.GetOwnershipChangeCount*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.ProvinceHistoryData.ProvinceId*
+  commentId: Overload:StarterKit.ProvinceHistoryData.ProvinceId
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_ProvinceId
+  name: ProvinceId
+  nameWithType: ProvinceHistoryData.ProvinceId
+  fullName: StarterKit.ProvinceHistoryData.ProvinceId
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.ProvinceHistoryData.#ctor*
+  commentId: Overload:StarterKit.ProvinceHistoryData.#ctor
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData__ctor_System_UInt16_
+  name: ProvinceHistoryData
+  nameWithType: ProvinceHistoryData.ProvinceHistoryData
+  fullName: StarterKit.ProvinceHistoryData.ProvinceHistoryData
+  nameWithType.vb: ProvinceHistoryData.New
+  fullName.vb: StarterKit.ProvinceHistoryData.New
+  name.vb: New
+- uid: StarterKit.ProvinceHistoryData.RecordOwnershipChange*
+  commentId: Overload:StarterKit.ProvinceHistoryData.RecordOwnershipChange
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_RecordOwnershipChange_System_UInt16_System_Int32_
+  name: RecordOwnershipChange
+  nameWithType: ProvinceHistoryData.RecordOwnershipChange
+  fullName: StarterKit.ProvinceHistoryData.RecordOwnershipChange
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.ProvinceHistoryData.GetHistory*
+  commentId: Overload:StarterKit.ProvinceHistoryData.GetHistory
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_GetHistory
+  name: GetHistory
+  nameWithType: ProvinceHistoryData.GetHistory
+  fullName: StarterKit.ProvinceHistoryData.GetHistory
+- uid: System.Collections.Generic.IReadOnlyList{StarterKit.OwnershipRecord}
+  commentId: T:System.Collections.Generic.IReadOnlyList{StarterKit.OwnershipRecord}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: StarterKit.OwnershipRecord.html
+  name: IReadOnlyList<OwnershipRecord>
+  nameWithType: IReadOnlyList<OwnershipRecord>
+  fullName: System.Collections.Generic.IReadOnlyList<StarterKit.OwnershipRecord>
+  nameWithType.vb: IReadOnlyList(Of OwnershipRecord)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of StarterKit.OwnershipRecord)
+  name.vb: IReadOnlyList(Of OwnershipRecord)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - uid: StarterKit.OwnershipRecord
+    name: OwnershipRecord
+    href: StarterKit.OwnershipRecord.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: StarterKit.OwnershipRecord
+    name: OwnershipRecord
+    href: StarterKit.OwnershipRecord.html
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory*
+  commentId: Overload:StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_GetCurrentOwnerFromHistory
+  name: GetCurrentOwnerFromHistory
+  nameWithType: ProvinceHistoryData.GetCurrentOwnerFromHistory
+  fullName: StarterKit.ProvinceHistoryData.GetCurrentOwnerFromHistory
+- uid: StarterKit.ProvinceHistoryData.GetPreviousOwner*
+  commentId: Overload:StarterKit.ProvinceHistoryData.GetPreviousOwner
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_GetPreviousOwner
+  name: GetPreviousOwner
+  nameWithType: ProvinceHistoryData.GetPreviousOwner
+  fullName: StarterKit.ProvinceHistoryData.GetPreviousOwner
+- uid: StarterKit.ProvinceHistoryData.WasOwnedBy*
+  commentId: Overload:StarterKit.ProvinceHistoryData.WasOwnedBy
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_WasOwnedBy_System_UInt16_
+  name: WasOwnedBy
+  nameWithType: ProvinceHistoryData.WasOwnedBy
+  fullName: StarterKit.ProvinceHistoryData.WasOwnedBy
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.ProvinceHistoryData.GetOwnershipChangeCount*
+  commentId: Overload:StarterKit.ProvinceHistoryData.GetOwnershipChangeCount
+  href: StarterKit.ProvinceHistoryData.html#StarterKit_ProvinceHistoryData_GetOwnershipChangeCount
+  name: GetOwnershipChangeCount
+  nameWithType: ProvinceHistoryData.GetOwnershipChangeCount
+  fullName: StarterKit.ProvinceHistoryData.GetOwnershipChangeCount

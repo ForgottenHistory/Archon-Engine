@@ -1,0 +1,195 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderMode
+  commentId: T:Map.Rendering.BorderMode
+  id: BorderMode
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderMode.Country
+  - Map.Rendering.BorderMode.Dual
+  - Map.Rendering.BorderMode.None
+  - Map.Rendering.BorderMode.Province
+  - Map.Rendering.BorderMode.Thick
+  langs:
+  - csharp
+  - vb
+  name: BorderMode
+  nameWithType: BorderMode
+  fullName: Map.Rendering.BorderMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderMode
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 5
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Border mode - what borders to show
+  example: []
+  syntax:
+    content: public enum BorderMode
+    content.vb: Public Enum BorderMode
+- uid: Map.Rendering.BorderMode.Province
+  commentId: F:Map.Rendering.BorderMode.Province
+  id: Province
+  parent: Map.Rendering.BorderMode
+  langs:
+  - csharp
+  - vb
+  name: Province
+  nameWithType: BorderMode.Province
+  fullName: Map.Rendering.BorderMode.Province
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Province
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 7
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Province = 0
+    return:
+      type: Map.Rendering.BorderMode
+- uid: Map.Rendering.BorderMode.Country
+  commentId: F:Map.Rendering.BorderMode.Country
+  id: Country
+  parent: Map.Rendering.BorderMode
+  langs:
+  - csharp
+  - vb
+  name: Country
+  nameWithType: BorderMode.Country
+  fullName: Map.Rendering.BorderMode.Country
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Country = 1
+    return:
+      type: Map.Rendering.BorderMode
+- uid: Map.Rendering.BorderMode.Thick
+  commentId: F:Map.Rendering.BorderMode.Thick
+  id: Thick
+  parent: Map.Rendering.BorderMode
+  langs:
+  - csharp
+  - vb
+  name: Thick
+  nameWithType: BorderMode.Thick
+  fullName: Map.Rendering.BorderMode.Thick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Thick
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Thick = 2
+    return:
+      type: Map.Rendering.BorderMode
+- uid: Map.Rendering.BorderMode.Dual
+  commentId: F:Map.Rendering.BorderMode.Dual
+  id: Dual
+  parent: Map.Rendering.BorderMode
+  langs:
+  - csharp
+  - vb
+  name: Dual
+  nameWithType: BorderMode.Dual
+  fullName: Map.Rendering.BorderMode.Dual
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dual
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: Dual = 3
+    return:
+      type: Map.Rendering.BorderMode
+- uid: Map.Rendering.BorderMode.None
+  commentId: F:Map.Rendering.BorderMode.None
+  id: None
+  parent: Map.Rendering.BorderMode
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: BorderMode.None
+  fullName: Map.Rendering.BorderMode.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderEnums.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Map/Rendering/Border/BorderEnums.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: None = 4
+    return:
+      type: Map.Rendering.BorderMode
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.BorderMode
+  commentId: T:Map.Rendering.BorderMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderMode.html
+  name: BorderMode
+  nameWithType: BorderMode
+  fullName: Map.Rendering.BorderMode

@@ -1,0 +1,656 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Validation.ValidationBuilder
+  commentId: T:Core.Validation.ValidationBuilder
+  id: ValidationBuilder
+  parent: Core.Validation
+  children:
+  - Core.Validation.ValidationBuilder.Check(System.Boolean,System.String)
+  - Core.Validation.ValidationBuilder.Country(System.UInt16)
+  - Core.Validation.ValidationBuilder.Fail(System.String)
+  - Core.Validation.ValidationBuilder.GameState
+  - Core.Validation.ValidationBuilder.NotSameCountry(System.UInt16,System.UInt16,System.String)
+  - Core.Validation.ValidationBuilder.NotSameProvince(System.UInt16,System.UInt16,System.String)
+  - Core.Validation.ValidationBuilder.Province(System.UInt16)
+  - Core.Validation.ValidationBuilder.ProvinceOwnedBy(System.UInt16,System.UInt16)
+  - Core.Validation.ValidationBuilder.ProvinceUnowned(System.UInt16)
+  - Core.Validation.ValidationBuilder.ProvincesAdjacent(System.UInt16,System.UInt16)
+  - Core.Validation.ValidationBuilder.Result
+  - Core.Validation.ValidationBuilder.Result(System.String@)
+  langs:
+  - csharp
+  - vb
+  name: ValidationBuilder
+  nameWithType: ValidationBuilder
+  fullName: Core.Validation.ValidationBuilder
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidationBuilder
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: >-
+    Fluent validation builder for command validation.
+
+    Chains validation checks and collects error reasons.
+
+
+    Usage:
+
+    public override bool Validate(GameState gs) =&gt;
+        Validate.For(gs)
+                .Country(countryId)
+                .Province(provinceId)
+                .ProvinceOwnedBy(provinceId, countryId)
+                .Result(out var reason);
+
+    Extensibility:
+
+    GAME layer can add custom validators via extension methods:
+
+    public static ValidationBuilder HasGold(this ValidationBuilder v, ...) { ... }
+  example: []
+  syntax:
+    content: public class ValidationBuilder
+    content.vb: Public Class ValidationBuilder
+  inheritance:
+  - System.Object
+- uid: Core.Validation.ValidationBuilder.GameState
+  commentId: P:Core.Validation.ValidationBuilder.GameState
+  id: GameState
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: GameState
+  nameWithType: ValidationBuilder.GameState
+  fullName: Core.Validation.ValidationBuilder.GameState
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameState
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Access to GameState for extension methods.
+  example: []
+  syntax:
+    content: public GameState GameState { get; }
+    parameters: []
+    return:
+      type: Core.GameState
+    content.vb: Public ReadOnly Property GameState As GameState
+  overload: Core.Validation.ValidationBuilder.GameState*
+- uid: Core.Validation.ValidationBuilder.Fail(System.String)
+  commentId: M:Core.Validation.ValidationBuilder.Fail(System.String)
+  id: Fail(System.String)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Fail(string)
+  nameWithType: ValidationBuilder.Fail(string)
+  fullName: Core.Validation.ValidationBuilder.Fail(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Fail
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: >-
+    Record a validation failure. Short-circuits further checks.
+
+    Used by extension methods to add custom validation logic.
+  example: []
+  syntax:
+    content: public ValidationBuilder Fail(string reason)
+    parameters:
+    - id: reason
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function Fail(reason As String) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.Fail*
+  nameWithType.vb: ValidationBuilder.Fail(String)
+  fullName.vb: Core.Validation.ValidationBuilder.Fail(String)
+  name.vb: Fail(String)
+- uid: Core.Validation.ValidationBuilder.Check(System.Boolean,System.String)
+  commentId: M:Core.Validation.ValidationBuilder.Check(System.Boolean,System.String)
+  id: Check(System.Boolean,System.String)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Check(bool, string)
+  nameWithType: ValidationBuilder.Check(bool, string)
+  fullName: Core.Validation.ValidationBuilder.Check(bool, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Check
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 55
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Add a custom validation check.
+  example: []
+  syntax:
+    content: public ValidationBuilder Check(bool condition, string failureReason)
+    parameters:
+    - id: condition
+      type: System.Boolean
+    - id: failureReason
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function Check(condition As Boolean, failureReason As String) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.Check*
+  nameWithType.vb: ValidationBuilder.Check(Boolean, String)
+  fullName.vb: Core.Validation.ValidationBuilder.Check(Boolean, String)
+  name.vb: Check(Boolean, String)
+- uid: Core.Validation.ValidationBuilder.Result(System.String@)
+  commentId: M:Core.Validation.ValidationBuilder.Result(System.String@)
+  id: Result(System.String@)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Result(out string)
+  nameWithType: ValidationBuilder.Result(out string)
+  fullName: Core.Validation.ValidationBuilder.Result(out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Result
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Get the validation result.
+  example: []
+  syntax:
+    content: public bool Result(out string reason)
+    parameters:
+    - id: reason
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function Result(reason As String) As Boolean
+  overload: Core.Validation.ValidationBuilder.Result*
+  nameWithType.vb: ValidationBuilder.Result(String)
+  fullName.vb: Core.Validation.ValidationBuilder.Result(String)
+  name.vb: Result(String)
+- uid: Core.Validation.ValidationBuilder.Result
+  commentId: M:Core.Validation.ValidationBuilder.Result
+  id: Result
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Result()
+  nameWithType: ValidationBuilder.Result()
+  fullName: Core.Validation.ValidationBuilder.Result()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Result
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Get the validation result (without reason).
+  example: []
+  syntax:
+    content: public bool Result()
+    return:
+      type: System.Boolean
+    content.vb: Public Function Result() As Boolean
+  overload: Core.Validation.ValidationBuilder.Result*
+- uid: Core.Validation.ValidationBuilder.Country(System.UInt16)
+  commentId: M:Core.Validation.ValidationBuilder.Country(System.UInt16)
+  id: Country(System.UInt16)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Country(ushort)
+  nameWithType: ValidationBuilder.Country(ushort)
+  fullName: Core.Validation.ValidationBuilder.Country(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that a country ID is valid and exists.
+  example: []
+  syntax:
+    content: public ValidationBuilder Country(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function Country(countryId As UShort) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.Country*
+  nameWithType.vb: ValidationBuilder.Country(UShort)
+  fullName.vb: Core.Validation.ValidationBuilder.Country(UShort)
+  name.vb: Country(UShort)
+- uid: Core.Validation.ValidationBuilder.Province(System.UInt16)
+  commentId: M:Core.Validation.ValidationBuilder.Province(System.UInt16)
+  id: Province(System.UInt16)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: Province(ushort)
+  nameWithType: ValidationBuilder.Province(ushort)
+  fullName: Core.Validation.ValidationBuilder.Province(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Province
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that a province ID is valid.
+  example: []
+  syntax:
+    content: public ValidationBuilder Province(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function Province(provinceId As UShort) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.Province*
+  nameWithType.vb: ValidationBuilder.Province(UShort)
+  fullName.vb: Core.Validation.ValidationBuilder.Province(UShort)
+  name.vb: Province(UShort)
+- uid: Core.Validation.ValidationBuilder.ProvinceOwnedBy(System.UInt16,System.UInt16)
+  commentId: M:Core.Validation.ValidationBuilder.ProvinceOwnedBy(System.UInt16,System.UInt16)
+  id: ProvinceOwnedBy(System.UInt16,System.UInt16)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnedBy(ushort, ushort)
+  nameWithType: ValidationBuilder.ProvinceOwnedBy(ushort, ushort)
+  fullName: Core.Validation.ValidationBuilder.ProvinceOwnedBy(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnedBy
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 139
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that a province is owned by a specific country.
+  example: []
+  syntax:
+    content: public ValidationBuilder ProvinceOwnedBy(ushort provinceId, ushort countryId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function ProvinceOwnedBy(provinceId As UShort, countryId As UShort) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.ProvinceOwnedBy*
+  nameWithType.vb: ValidationBuilder.ProvinceOwnedBy(UShort, UShort)
+  fullName.vb: Core.Validation.ValidationBuilder.ProvinceOwnedBy(UShort, UShort)
+  name.vb: ProvinceOwnedBy(UShort, UShort)
+- uid: Core.Validation.ValidationBuilder.ProvinceUnowned(System.UInt16)
+  commentId: M:Core.Validation.ValidationBuilder.ProvinceUnowned(System.UInt16)
+  id: ProvinceUnowned(System.UInt16)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: ProvinceUnowned(ushort)
+  nameWithType: ValidationBuilder.ProvinceUnowned(ushort)
+  fullName: Core.Validation.ValidationBuilder.ProvinceUnowned(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceUnowned
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 160
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that a province is unowned (owner == 0).
+  example: []
+  syntax:
+    content: public ValidationBuilder ProvinceUnowned(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function ProvinceUnowned(provinceId As UShort) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.ProvinceUnowned*
+  nameWithType.vb: ValidationBuilder.ProvinceUnowned(UShort)
+  fullName.vb: Core.Validation.ValidationBuilder.ProvinceUnowned(UShort)
+  name.vb: ProvinceUnowned(UShort)
+- uid: Core.Validation.ValidationBuilder.NotSameCountry(System.UInt16,System.UInt16,System.String)
+  commentId: M:Core.Validation.ValidationBuilder.NotSameCountry(System.UInt16,System.UInt16,System.String)
+  id: NotSameCountry(System.UInt16,System.UInt16,System.String)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: NotSameCountry(ushort, ushort, string)
+  nameWithType: ValidationBuilder.NotSameCountry(ushort, ushort, string)
+  fullName: Core.Validation.ValidationBuilder.NotSameCountry(ushort, ushort, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NotSameCountry
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 181
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that two countries are not the same.
+  example: []
+  syntax:
+    content: public ValidationBuilder NotSameCountry(ushort countryA, ushort countryB, string contextMessage = null)
+    parameters:
+    - id: countryA
+      type: System.UInt16
+    - id: countryB
+      type: System.UInt16
+    - id: contextMessage
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function NotSameCountry(countryA As UShort, countryB As UShort, contextMessage As String = Nothing) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.NotSameCountry*
+  nameWithType.vb: ValidationBuilder.NotSameCountry(UShort, UShort, String)
+  fullName.vb: Core.Validation.ValidationBuilder.NotSameCountry(UShort, UShort, String)
+  name.vb: NotSameCountry(UShort, UShort, String)
+- uid: Core.Validation.ValidationBuilder.NotSameProvince(System.UInt16,System.UInt16,System.String)
+  commentId: M:Core.Validation.ValidationBuilder.NotSameProvince(System.UInt16,System.UInt16,System.String)
+  id: NotSameProvince(System.UInt16,System.UInt16,System.String)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: NotSameProvince(ushort, ushort, string)
+  nameWithType: ValidationBuilder.NotSameProvince(ushort, ushort, string)
+  fullName: Core.Validation.ValidationBuilder.NotSameProvince(ushort, ushort, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NotSameProvince
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 197
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that two provinces are not the same.
+  example: []
+  syntax:
+    content: public ValidationBuilder NotSameProvince(ushort provinceA, ushort provinceB, string contextMessage = null)
+    parameters:
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    - id: contextMessage
+      type: System.String
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function NotSameProvince(provinceA As UShort, provinceB As UShort, contextMessage As String = Nothing) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.NotSameProvince*
+  nameWithType.vb: ValidationBuilder.NotSameProvince(UShort, UShort, String)
+  fullName.vb: Core.Validation.ValidationBuilder.NotSameProvince(UShort, UShort, String)
+  name.vb: NotSameProvince(UShort, UShort, String)
+- uid: Core.Validation.ValidationBuilder.ProvincesAdjacent(System.UInt16,System.UInt16)
+  commentId: M:Core.Validation.ValidationBuilder.ProvincesAdjacent(System.UInt16,System.UInt16)
+  id: ProvincesAdjacent(System.UInt16,System.UInt16)
+  parent: Core.Validation.ValidationBuilder
+  langs:
+  - csharp
+  - vb
+  name: ProvincesAdjacent(ushort, ushort)
+  nameWithType: ValidationBuilder.ProvincesAdjacent(ushort, ushort)
+  fullName: Core.Validation.ValidationBuilder.ProvincesAdjacent(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/ValidationBuilder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesAdjacent
+    path: Scripts/Core/Validation/ValidationBuilder.cs
+    startLine: 213
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Validate that two provinces are adjacent.
+  example: []
+  syntax:
+    content: public ValidationBuilder ProvincesAdjacent(ushort provinceA, ushort provinceB)
+    parameters:
+    - id: provinceA
+      type: System.UInt16
+    - id: provinceB
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Function ProvincesAdjacent(provinceA As UShort, provinceB As UShort) As ValidationBuilder
+  overload: Core.Validation.ValidationBuilder.ProvincesAdjacent*
+  nameWithType.vb: ValidationBuilder.ProvincesAdjacent(UShort, UShort)
+  fullName.vb: Core.Validation.ValidationBuilder.ProvincesAdjacent(UShort, UShort)
+  name.vb: ProvincesAdjacent(UShort, UShort)
+references:
+- uid: Core.Validation
+  commentId: N:Core.Validation
+  href: Core.html
+  name: Core.Validation
+  nameWithType: Core.Validation
+  fullName: Core.Validation
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Validation.ValidationBuilder.GameState*
+  commentId: Overload:Core.Validation.ValidationBuilder.GameState
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_GameState
+  name: GameState
+  nameWithType: ValidationBuilder.GameState
+  fullName: Core.Validation.ValidationBuilder.GameState
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Validation.ValidationBuilder.Fail*
+  commentId: Overload:Core.Validation.ValidationBuilder.Fail
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_Fail_System_String_
+  name: Fail
+  nameWithType: ValidationBuilder.Fail
+  fullName: Core.Validation.ValidationBuilder.Fail
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Validation.ValidationBuilder
+  commentId: T:Core.Validation.ValidationBuilder
+  parent: Core.Validation
+  href: Core.Validation.ValidationBuilder.html
+  name: ValidationBuilder
+  nameWithType: ValidationBuilder
+  fullName: Core.Validation.ValidationBuilder
+- uid: Core.Validation.ValidationBuilder.Check*
+  commentId: Overload:Core.Validation.ValidationBuilder.Check
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_Check_System_Boolean_System_String_
+  name: Check
+  nameWithType: ValidationBuilder.Check
+  fullName: Core.Validation.ValidationBuilder.Check
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Validation.ValidationBuilder.Result*
+  commentId: Overload:Core.Validation.ValidationBuilder.Result
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_Result_System_String__
+  name: Result
+  nameWithType: ValidationBuilder.Result
+  fullName: Core.Validation.ValidationBuilder.Result
+- uid: Core.Validation.ValidationBuilder.Country*
+  commentId: Overload:Core.Validation.ValidationBuilder.Country
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_Country_System_UInt16_
+  name: Country
+  nameWithType: ValidationBuilder.Country
+  fullName: Core.Validation.ValidationBuilder.Country
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Validation.ValidationBuilder.Province*
+  commentId: Overload:Core.Validation.ValidationBuilder.Province
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_Province_System_UInt16_
+  name: Province
+  nameWithType: ValidationBuilder.Province
+  fullName: Core.Validation.ValidationBuilder.Province
+- uid: Core.Validation.ValidationBuilder.ProvinceOwnedBy*
+  commentId: Overload:Core.Validation.ValidationBuilder.ProvinceOwnedBy
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_ProvinceOwnedBy_System_UInt16_System_UInt16_
+  name: ProvinceOwnedBy
+  nameWithType: ValidationBuilder.ProvinceOwnedBy
+  fullName: Core.Validation.ValidationBuilder.ProvinceOwnedBy
+- uid: Core.Validation.ValidationBuilder.ProvinceUnowned*
+  commentId: Overload:Core.Validation.ValidationBuilder.ProvinceUnowned
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_ProvinceUnowned_System_UInt16_
+  name: ProvinceUnowned
+  nameWithType: ValidationBuilder.ProvinceUnowned
+  fullName: Core.Validation.ValidationBuilder.ProvinceUnowned
+- uid: Core.Validation.ValidationBuilder.NotSameCountry*
+  commentId: Overload:Core.Validation.ValidationBuilder.NotSameCountry
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_NotSameCountry_System_UInt16_System_UInt16_System_String_
+  name: NotSameCountry
+  nameWithType: ValidationBuilder.NotSameCountry
+  fullName: Core.Validation.ValidationBuilder.NotSameCountry
+- uid: Core.Validation.ValidationBuilder.NotSameProvince*
+  commentId: Overload:Core.Validation.ValidationBuilder.NotSameProvince
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_NotSameProvince_System_UInt16_System_UInt16_System_String_
+  name: NotSameProvince
+  nameWithType: ValidationBuilder.NotSameProvince
+  fullName: Core.Validation.ValidationBuilder.NotSameProvince
+- uid: Core.Validation.ValidationBuilder.ProvincesAdjacent*
+  commentId: Overload:Core.Validation.ValidationBuilder.ProvincesAdjacent
+  href: Core.Validation.ValidationBuilder.html#Core_Validation_ValidationBuilder_ProvincesAdjacent_System_UInt16_System_UInt16_
+  name: ProvincesAdjacent
+  nameWithType: ValidationBuilder.ProvincesAdjacent
+  fullName: Core.Validation.ValidationBuilder.ProvincesAdjacent

@@ -1,0 +1,616 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.IProvinceCommand
+  commentId: T:Core.Commands.IProvinceCommand
+  id: IProvinceCommand
+  parent: Core.Commands
+  children:
+  - Core.Commands.IProvinceCommand.CommandType
+  - Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.IProvinceCommand.ExecutionTick
+  - Core.Commands.IProvinceCommand.GetChecksum
+  - Core.Commands.IProvinceCommand.GetSerializedSize
+  - Core.Commands.IProvinceCommand.PlayerID
+  - Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  langs:
+  - csharp
+  - vb
+  name: IProvinceCommand
+  nameWithType: IProvinceCommand
+  fullName: Core.Commands.IProvinceCommand
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IProvinceCommand
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Interface for all province state change commands in the deterministic simulation.
+
+    Commands are the ONLY way to modify province state in multiplayer games.
+
+    All commands must be deterministic and serializable for network synchronization.
+  example: []
+  syntax:
+    content: public interface IProvinceCommand
+    content.vb: Public Interface IProvinceCommand
+- uid: Core.Commands.IProvinceCommand.CommandType
+  commentId: P:Core.Commands.IProvinceCommand.CommandType
+  id: CommandType
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: CommandType
+  nameWithType: IProvinceCommand.CommandType
+  fullName: Core.Commands.IProvinceCommand.CommandType
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandType
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Unique command type identifier for serialization
+
+    Must be consistent across all clients and versions
+  example: []
+  syntax:
+    content: byte CommandType { get; }
+    parameters: []
+    return:
+      type: System.Byte
+    content.vb: ReadOnly Property CommandType As Byte
+  overload: Core.Commands.IProvinceCommand.CommandType*
+- uid: Core.Commands.IProvinceCommand.ExecutionTick
+  commentId: P:Core.Commands.IProvinceCommand.ExecutionTick
+  id: ExecutionTick
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: ExecutionTick
+  nameWithType: IProvinceCommand.ExecutionTick
+  fullName: Core.Commands.IProvinceCommand.ExecutionTick
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExecutionTick
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 23
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Game tick when this command should be executed
+
+    Used for command scheduling and rollback
+  example: []
+  syntax:
+    content: uint ExecutionTick { get; set; }
+    parameters: []
+    return:
+      type: System.UInt32
+    content.vb: Property ExecutionTick As UInteger
+  overload: Core.Commands.IProvinceCommand.ExecutionTick*
+- uid: Core.Commands.IProvinceCommand.PlayerID
+  commentId: P:Core.Commands.IProvinceCommand.PlayerID
+  id: PlayerID
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: PlayerID
+  nameWithType: IProvinceCommand.PlayerID
+  fullName: Core.Commands.IProvinceCommand.PlayerID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerID
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Player who issued this command (for validation)
+  example: []
+  syntax:
+    content: ushort PlayerID { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Property PlayerID As UShort
+  overload: Core.Commands.IProvinceCommand.PlayerID*
+- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  id: Validate(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: Validate(ProvinceSimulation)
+  nameWithType: IProvinceCommand.Validate(ProvinceSimulation)
+  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Validate if this command can be executed in the current game state
+
+    Must be deterministic - same result across all clients
+  example: []
+  syntax:
+    content: CommandValidationResult Validate(ProvinceSimulation simulation)
+    parameters:
+    - id: simulation
+      type: Core.Systems.ProvinceSimulation
+      description: Current simulation state
+    return:
+      type: Core.Commands.CommandValidationResult
+      description: True if command can be executed
+    content.vb: Function Validate(simulation As ProvinceSimulation) As CommandValidationResult
+  overload: Core.Commands.IProvinceCommand.Validate*
+- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  id: Execute(Core.Systems.ProvinceSimulation)
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute(ProvinceSimulation)
+  nameWithType: IProvinceCommand.Execute(ProvinceSimulation)
+  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Execute this command, modifying the simulation state
+
+    Must be deterministic - same result across all clients
+  example: []
+  syntax:
+    content: CommandExecutionResult Execute(ProvinceSimulation simulation)
+    parameters:
+    - id: simulation
+      type: Core.Systems.ProvinceSimulation
+      description: Simulation to modify
+    return:
+      type: Core.Commands.CommandExecutionResult
+      description: Execution result with affected provinces
+    content.vb: Function Execute(simulation As ProvinceSimulation) As CommandExecutionResult
+  overload: Core.Commands.IProvinceCommand.Execute*
+- uid: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: Serialize(NativeArray<byte>, int)
+  nameWithType: IProvinceCommand.Serialize(NativeArray<byte>, int)
+  fullName: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Serialize command to binary format for network transmission
+
+    Must be deterministic and compact (target: 8-16 bytes)
+  example: []
+  syntax:
+    content: int Serialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+      description: Buffer to write to
+    - id: offset
+      type: System.Int32
+      description: Starting offset in buffer
+    return:
+      type: System.Int32
+      description: Number of bytes written
+    content.vb: Function Serialize(buffer As NativeArray(Of Byte), offset As Integer) As Integer
+  overload: Core.Commands.IProvinceCommand.Serialize*
+  nameWithType.vb: IProvinceCommand.Serialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Serialize(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(NativeArray<byte>, int)
+  nameWithType: IProvinceCommand.Deserialize(NativeArray<byte>, int)
+  fullName: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Deserialize command from binary format
+
+    Must exactly reverse the Serialize operation
+  example: []
+  syntax:
+    content: int Deserialize(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+      description: Buffer to read from
+    - id: offset
+      type: System.Int32
+      description: Starting offset in buffer
+    return:
+      type: System.Int32
+      description: Number of bytes read
+    content.vb: Function Deserialize(buffer As NativeArray(Of Byte), offset As Integer) As Integer
+  overload: Core.Commands.IProvinceCommand.Deserialize*
+  nameWithType.vb: IProvinceCommand.Deserialize(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: Deserialize(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.IProvinceCommand.GetSerializedSize
+  commentId: M:Core.Commands.IProvinceCommand.GetSerializedSize
+  id: GetSerializedSize
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: GetSerializedSize()
+  nameWithType: IProvinceCommand.GetSerializedSize()
+  fullName: Core.Commands.IProvinceCommand.GetSerializedSize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSerializedSize
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Get the serialized size of this command in bytes
+
+    Used for buffer allocation and validation
+  example: []
+  syntax:
+    content: int GetSerializedSize()
+    return:
+      type: System.Int32
+    content.vb: Function GetSerializedSize() As Integer
+  overload: Core.Commands.IProvinceCommand.GetSerializedSize*
+- uid: Core.Commands.IProvinceCommand.GetChecksum
+  commentId: M:Core.Commands.IProvinceCommand.GetChecksum
+  id: GetChecksum
+  parent: Core.Commands.IProvinceCommand
+  langs:
+  - csharp
+  - vb
+  name: GetChecksum()
+  nameWithType: IProvinceCommand.GetChecksum()
+  fullName: Core.Commands.IProvinceCommand.GetChecksum()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetChecksum
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Calculate checksum of command data for validation
+
+    Used to detect network corruption and ensure determinism
+  example: []
+  syntax:
+    content: uint GetChecksum()
+    return:
+      type: System.UInt32
+    content.vb: Function GetChecksum() As UInteger
+  overload: Core.Commands.IProvinceCommand.GetChecksum*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Commands.IProvinceCommand.CommandType*
+  commentId: Overload:Core.Commands.IProvinceCommand.CommandType
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_CommandType
+  name: CommandType
+  nameWithType: IProvinceCommand.CommandType
+  fullName: Core.Commands.IProvinceCommand.CommandType
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.IProvinceCommand.ExecutionTick*
+  commentId: Overload:Core.Commands.IProvinceCommand.ExecutionTick
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_ExecutionTick
+  name: ExecutionTick
+  nameWithType: IProvinceCommand.ExecutionTick
+  fullName: Core.Commands.IProvinceCommand.ExecutionTick
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Commands.IProvinceCommand.PlayerID*
+  commentId: Overload:Core.Commands.IProvinceCommand.PlayerID
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_PlayerID
+  name: PlayerID
+  nameWithType: IProvinceCommand.PlayerID
+  fullName: Core.Commands.IProvinceCommand.PlayerID
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Commands.IProvinceCommand.Validate*
+  commentId: Overload:Core.Commands.IProvinceCommand.Validate
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+  name: Validate
+  nameWithType: IProvinceCommand.Validate
+  fullName: Core.Commands.IProvinceCommand.Validate
+- uid: Core.Systems.ProvinceSimulation
+  commentId: T:Core.Systems.ProvinceSimulation
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSimulation.html
+  name: ProvinceSimulation
+  nameWithType: ProvinceSimulation
+  fullName: Core.Systems.ProvinceSimulation
+- uid: Core.Commands.CommandValidationResult
+  commentId: T:Core.Commands.CommandValidationResult
+  parent: Core.Commands
+  href: Core.Commands.CommandValidationResult.html
+  name: CommandValidationResult
+  nameWithType: CommandValidationResult
+  fullName: Core.Commands.CommandValidationResult
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Commands.IProvinceCommand.Execute*
+  commentId: Overload:Core.Commands.IProvinceCommand.Execute
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+  name: Execute
+  nameWithType: IProvinceCommand.Execute
+  fullName: Core.Commands.IProvinceCommand.Execute
+- uid: Core.Commands.CommandExecutionResult
+  commentId: T:Core.Commands.CommandExecutionResult
+  parent: Core.Commands
+  href: Core.Commands.CommandExecutionResult.html
+  name: CommandExecutionResult
+  nameWithType: CommandExecutionResult
+  fullName: Core.Commands.CommandExecutionResult
+- uid: Core.Commands.IProvinceCommand.Serialize*
+  commentId: Overload:Core.Commands.IProvinceCommand.Serialize
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Serialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Serialize
+  nameWithType: IProvinceCommand.Serialize
+  fullName: Core.Commands.IProvinceCommand.Serialize
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Commands.IProvinceCommand.Deserialize*
+  commentId: Overload:Core.Commands.IProvinceCommand.Deserialize
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Deserialize_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: Deserialize
+  nameWithType: IProvinceCommand.Deserialize
+  fullName: Core.Commands.IProvinceCommand.Deserialize
+- uid: Core.Commands.IProvinceCommand.GetSerializedSize*
+  commentId: Overload:Core.Commands.IProvinceCommand.GetSerializedSize
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetSerializedSize
+  name: GetSerializedSize
+  nameWithType: IProvinceCommand.GetSerializedSize
+  fullName: Core.Commands.IProvinceCommand.GetSerializedSize
+- uid: Core.Commands.IProvinceCommand.GetChecksum*
+  commentId: Overload:Core.Commands.IProvinceCommand.GetChecksum
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_GetChecksum
+  name: GetChecksum
+  nameWithType: IProvinceCommand.GetChecksum
+  fullName: Core.Commands.IProvinceCommand.GetChecksum

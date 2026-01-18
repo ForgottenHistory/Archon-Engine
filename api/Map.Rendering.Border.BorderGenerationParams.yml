@@ -1,0 +1,225 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderGenerationParams
+  commentId: T:Map.Rendering.Border.BorderGenerationParams
+  id: BorderGenerationParams
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderGenerationParams.ForceRegenerate
+  - Map.Rendering.Border.BorderGenerationParams.Mode
+  - Map.Rendering.Border.BorderGenerationParams.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: BorderGenerationParams
+  nameWithType: BorderGenerationParams
+  fullName: Map.Rendering.Border.BorderGenerationParams
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderGenerationParams
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 75
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Parameters for border generation.
+  example: []
+  syntax:
+    content: public struct BorderGenerationParams
+    content.vb: Public Structure BorderGenerationParams
+- uid: Map.Rendering.Border.BorderGenerationParams.Mode
+  commentId: F:Map.Rendering.Border.BorderGenerationParams.Mode
+  id: Mode
+  parent: Map.Rendering.Border.BorderGenerationParams
+  langs:
+  - csharp
+  - vb
+  name: Mode
+  nameWithType: BorderGenerationParams.Mode
+  fullName: Map.Rendering.Border.BorderGenerationParams.Mode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mode
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Which borders to show (Province, Country, Dual, None)
+  example: []
+  syntax:
+    content: public BorderMode Mode
+    return:
+      type: Map.Rendering.BorderMode
+    content.vb: Public Mode As BorderMode
+- uid: Map.Rendering.Border.BorderGenerationParams.ForceRegenerate
+  commentId: F:Map.Rendering.Border.BorderGenerationParams.ForceRegenerate
+  id: ForceRegenerate
+  parent: Map.Rendering.Border.BorderGenerationParams
+  langs:
+  - csharp
+  - vb
+  name: ForceRegenerate
+  nameWithType: BorderGenerationParams.ForceRegenerate
+  fullName: Map.Rendering.Border.BorderGenerationParams.ForceRegenerate
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ForceRegenerate
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Force full regeneration vs incremental update
+  example: []
+  syntax:
+    content: public bool ForceRegenerate
+    return:
+      type: System.Boolean
+    content.vb: Public ForceRegenerate As Boolean
+- uid: Map.Rendering.Border.BorderGenerationParams.ProvinceQueries
+  commentId: F:Map.Rendering.Border.BorderGenerationParams.ProvinceQueries
+  id: ProvinceQueries
+  parent: Map.Rendering.Border.BorderGenerationParams
+  langs:
+  - csharp
+  - vb
+  name: ProvinceQueries
+  nameWithType: BorderGenerationParams.ProvinceQueries
+  fullName: Map.Rendering.Border.BorderGenerationParams.ProvinceQueries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceQueries
+    path: Scripts/Map/Rendering/Border/IBorderRenderer.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Province queries for owner data (needed for country vs province border detection)
+  example: []
+  syntax:
+    content: public ProvinceQueries ProvinceQueries
+    return:
+      type: Core.Queries.ProvinceQueries
+    content.vb: Public ProvinceQueries As ProvinceQueries
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: Map.Rendering.BorderMode
+  commentId: T:Map.Rendering.BorderMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderMode.html
+  name: BorderMode
+  nameWithType: BorderMode
+  fullName: Map.Rendering.BorderMode
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html

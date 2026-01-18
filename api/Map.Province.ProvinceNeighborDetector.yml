@@ -1,0 +1,561 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceNeighborDetector
+  commentId: T:Map.Province.ProvinceNeighborDetector
+  id: ProvinceNeighborDetector
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceNeighborDetector.AreNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,System.UInt16)
+  - Map.Province.ProvinceNeighborDetector.DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult,System.Boolean)
+  - Map.Province.ProvinceNeighborDetector.GetNeighborCount(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16)
+  - Map.Province.ProvinceNeighborDetector.GetNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,Unity.Collections.Allocator)
+  - Map.Province.ProvinceNeighborDetector.LogNeighborStatistics(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceNeighborDetector
+  nameWithType: ProvinceNeighborDetector
+  fullName: Map.Province.ProvinceNeighborDetector
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceNeighborDetector
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    High-performance province neighbor detection using scanline algorithm
+
+    Optimized for 10,000+ provinces with Burst compilation
+  example: []
+  syntax:
+    content: public static class ProvinceNeighborDetector
+    content.vb: Public Module ProvinceNeighborDetector
+  inheritance:
+  - System.Object
+- uid: Map.Province.ProvinceNeighborDetector.DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult,System.Boolean)
+  commentId: M:Map.Province.ProvinceNeighborDetector.DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult,System.Boolean)
+  id: DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult,System.Boolean)
+  parent: Map.Province.ProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: DetectNeighbors(LoadResult, bool)
+  nameWithType: ProvinceNeighborDetector.DetectNeighbors(ProvinceMapLoader.LoadResult, bool)
+  fullName: Map.Province.ProvinceNeighborDetector.DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectNeighbors
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Detect all province neighbors using optimized scanline algorithm
+  example: []
+  syntax:
+    content: public static ProvinceNeighborDetector.NeighborResult DetectNeighbors(ProvinceMapLoader.LoadResult loadResult, bool includeOceanNeighbors = true)
+    parameters:
+    - id: loadResult
+      type: Map.Loading.ProvinceMapLoader.LoadResult
+      description: Province map load result
+    - id: includeOceanNeighbors
+      type: System.Boolean
+      description: Include ocean (ID 0) as neighbor
+    return:
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+      description: Neighbor detection result
+    content.vb: Public Shared Function DetectNeighbors(loadResult As ProvinceMapLoader.LoadResult, includeOceanNeighbors As Boolean = True) As ProvinceNeighborDetector.NeighborResult
+  overload: Map.Province.ProvinceNeighborDetector.DetectNeighbors*
+  nameWithType.vb: ProvinceNeighborDetector.DetectNeighbors(ProvinceMapLoader.LoadResult, Boolean)
+  fullName.vb: Map.Province.ProvinceNeighborDetector.DetectNeighbors(Map.Loading.ProvinceMapLoader.LoadResult, Boolean)
+  name.vb: DetectNeighbors(LoadResult, Boolean)
+- uid: Map.Province.ProvinceNeighborDetector.GetNeighborCount(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16)
+  commentId: M:Map.Province.ProvinceNeighborDetector.GetNeighborCount(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16)
+  id: GetNeighborCount(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16)
+  parent: Map.Province.ProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborCount(NativeHashMap<ushort, ProvinceNeighborData>, ushort)
+  nameWithType: ProvinceNeighborDetector.GetNeighborCount(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData>, ushort)
+  fullName: Map.Province.ProvinceNeighborDetector.GetNeighborCount(Unity.Collections.NativeHashMap<ushort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData>, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborCount
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 470
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get neighbor count for a province
+  example: []
+  syntax:
+    content: public static int GetNeighborCount(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData> provinceNeighbors, ushort provinceID)
+    parameters:
+    - id: provinceNeighbors
+      type: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData}
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function GetNeighborCount(provinceNeighbors As NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), provinceID As UShort) As Integer
+  overload: Map.Province.ProvinceNeighborDetector.GetNeighborCount*
+  nameWithType.vb: ProvinceNeighborDetector.GetNeighborCount(NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), UShort)
+  fullName.vb: Map.Province.ProvinceNeighborDetector.GetNeighborCount(Unity.Collections.NativeHashMap(Of UShort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData), UShort)
+  name.vb: GetNeighborCount(NativeHashMap(Of UShort, ProvinceNeighborData), UShort)
+- uid: Map.Province.ProvinceNeighborDetector.AreNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,System.UInt16)
+  commentId: M:Map.Province.ProvinceNeighborDetector.AreNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,System.UInt16)
+  id: AreNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,System.UInt16)
+  parent: Map.Province.ProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: AreNeighbors(NativeHashMap<ushort, ProvinceNeighborData>, ushort, ushort)
+  nameWithType: ProvinceNeighborDetector.AreNeighbors(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData>, ushort, ushort)
+  fullName: Map.Province.ProvinceNeighborDetector.AreNeighbors(Unity.Collections.NativeHashMap<ushort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData>, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AreNeighbors
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 478
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Check if two provinces are neighbors
+  example: []
+  syntax:
+    content: public static bool AreNeighbors(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData> provinceNeighbors, ushort provinceID1, ushort provinceID2)
+    parameters:
+    - id: provinceNeighbors
+      type: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData}
+    - id: provinceID1
+      type: System.UInt16
+    - id: provinceID2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function AreNeighbors(provinceNeighbors As NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), provinceID1 As UShort, provinceID2 As UShort) As Boolean
+  overload: Map.Province.ProvinceNeighborDetector.AreNeighbors*
+  nameWithType.vb: ProvinceNeighborDetector.AreNeighbors(NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), UShort, UShort)
+  fullName.vb: Map.Province.ProvinceNeighborDetector.AreNeighbors(Unity.Collections.NativeHashMap(Of UShort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData), UShort, UShort)
+  name.vb: AreNeighbors(NativeHashMap(Of UShort, ProvinceNeighborData), UShort, UShort)
+- uid: Map.Province.ProvinceNeighborDetector.GetNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Map.Province.ProvinceNeighborDetector.GetNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,Unity.Collections.Allocator)
+  id: GetNeighbors(Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData},System.UInt16,Unity.Collections.Allocator)
+  parent: Map.Province.ProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: GetNeighbors(NativeHashMap<ushort, ProvinceNeighborData>, ushort, Allocator)
+  nameWithType: ProvinceNeighborDetector.GetNeighbors(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData>, ushort, Allocator)
+  fullName: Map.Province.ProvinceNeighborDetector.GetNeighbors(Unity.Collections.NativeHashMap<ushort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData>, ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighbors
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 495
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get all neighbors of a province
+  example: []
+  syntax:
+    content: public static NativeArray<ushort> GetNeighbors(NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData> provinceNeighbors, ushort provinceID, Allocator allocator)
+    parameters:
+    - id: provinceNeighbors
+      type: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData}
+    - id: provinceID
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Shared Function GetNeighbors(provinceNeighbors As NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), provinceID As UShort, allocator As Allocator) As NativeArray(Of UShort)
+  overload: Map.Province.ProvinceNeighborDetector.GetNeighbors*
+  nameWithType.vb: ProvinceNeighborDetector.GetNeighbors(NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData), UShort, Allocator)
+  fullName.vb: Map.Province.ProvinceNeighborDetector.GetNeighbors(Unity.Collections.NativeHashMap(Of UShort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData), UShort, Unity.Collections.Allocator)
+  name.vb: GetNeighbors(NativeHashMap(Of UShort, ProvinceNeighborData), UShort, Allocator)
+- uid: Map.Province.ProvinceNeighborDetector.LogNeighborStatistics(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  commentId: M:Map.Province.ProvinceNeighborDetector.LogNeighborStatistics(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  id: LogNeighborStatistics(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  parent: Map.Province.ProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: LogNeighborStatistics(NeighborResult)
+  nameWithType: ProvinceNeighborDetector.LogNeighborStatistics(ProvinceNeighborDetector.NeighborResult)
+  fullName: Map.Province.ProvinceNeighborDetector.LogNeighborStatistics(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogNeighborStatistics
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 509
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Log neighbor statistics for debugging
+  example: []
+  syntax:
+    content: public static void LogNeighborStatistics(ProvinceNeighborDetector.NeighborResult result)
+    parameters:
+    - id: result
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+    content.vb: Public Shared Sub LogNeighborStatistics(result As ProvinceNeighborDetector.NeighborResult)
+  overload: Map.Province.ProvinceNeighborDetector.LogNeighborStatistics*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceNeighborDetector.DetectNeighbors*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.DetectNeighbors
+  href: Map.Province.ProvinceNeighborDetector.html#Map_Province_ProvinceNeighborDetector_DetectNeighbors_Map_Loading_ProvinceMapLoader_LoadResult_System_Boolean_
+  name: DetectNeighbors
+  nameWithType: ProvinceNeighborDetector.DetectNeighbors
+  fullName: Map.Province.ProvinceNeighborDetector.DetectNeighbors
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborResult
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborResult
+  nameWithType: ProvinceNeighborDetector.NeighborResult
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Map.Province.ProvinceNeighborDetector.GetNeighborCount*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.GetNeighborCount
+  href: Map.Province.ProvinceNeighborDetector.html#Map_Province_ProvinceNeighborDetector_GetNeighborCount_Unity_Collections_NativeHashMap_System_UInt16_Map_Province_ProvinceNeighborDetector_ProvinceNeighborData__System_UInt16_
+  name: GetNeighborCount
+  nameWithType: ProvinceNeighborDetector.GetNeighborCount
+  fullName: Map.Province.ProvinceNeighborDetector.GetNeighborCount
+- uid: Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData}
+  commentId: T:Unity.Collections.NativeHashMap{System.UInt16,Map.Province.ProvinceNeighborDetector.ProvinceNeighborData}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashMap`2
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData>
+  nameWithType: NativeHashMap<ushort, ProvinceNeighborDetector.ProvinceNeighborData>
+  fullName: Unity.Collections.NativeHashMap<ushort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData>
+  nameWithType.vb: NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData)
+  fullName.vb: Unity.Collections.NativeHashMap(Of UShort, Map.Province.ProvinceNeighborDetector.ProvinceNeighborData)
+  name.vb: NativeHashMap(Of UShort, ProvinceNeighborDetector.ProvinceNeighborData)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+    name: ProvinceNeighborData
+    href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData
+    name: ProvinceNeighborData
+    href: Map.Province.ProvinceNeighborDetector.ProvinceNeighborData.html
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.NativeHashMap`2
+  commentId: T:Unity.Collections.NativeHashMap`2
+  isExternal: true
+  name: NativeHashMap<TKey, TValue>
+  nameWithType: NativeHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeHashMap<TKey, TValue>
+  nameWithType.vb: NativeHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeHashMap(Of TKey, TValue)
+  name.vb: NativeHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashMap`2
+    name: NativeHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Province.ProvinceNeighborDetector.AreNeighbors*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.AreNeighbors
+  href: Map.Province.ProvinceNeighborDetector.html#Map_Province_ProvinceNeighborDetector_AreNeighbors_Unity_Collections_NativeHashMap_System_UInt16_Map_Province_ProvinceNeighborDetector_ProvinceNeighborData__System_UInt16_System_UInt16_
+  name: AreNeighbors
+  nameWithType: ProvinceNeighborDetector.AreNeighbors
+  fullName: Map.Province.ProvinceNeighborDetector.AreNeighbors
+- uid: Map.Province.ProvinceNeighborDetector.GetNeighbors*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.GetNeighbors
+  href: Map.Province.ProvinceNeighborDetector.html#Map_Province_ProvinceNeighborDetector_GetNeighbors_Unity_Collections_NativeHashMap_System_UInt16_Map_Province_ProvinceNeighborDetector_ProvinceNeighborData__System_UInt16_Unity_Collections_Allocator_
+  name: GetNeighbors
+  nameWithType: ProvinceNeighborDetector.GetNeighbors
+  fullName: Map.Province.ProvinceNeighborDetector.GetNeighbors
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Province.ProvinceNeighborDetector.LogNeighborStatistics*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.LogNeighborStatistics
+  href: Map.Province.ProvinceNeighborDetector.html#Map_Province_ProvinceNeighborDetector_LogNeighborStatistics_Map_Province_ProvinceNeighborDetector_NeighborResult_
+  name: LogNeighborStatistics
+  nameWithType: ProvinceNeighborDetector.LogNeighborStatistics
+  fullName: Map.Province.ProvinceNeighborDetector.LogNeighborStatistics

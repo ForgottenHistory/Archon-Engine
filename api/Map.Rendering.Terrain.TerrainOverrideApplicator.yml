@@ -1,0 +1,246 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator
+  commentId: T:Map.Rendering.Terrain.TerrainOverrideApplicator
+  id: TerrainOverrideApplicator
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor(System.String,System.Boolean)
+  - Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides(System.UInt32[],System.UInt16[],Map.Rendering.Terrain.TerrainRGBLookup)
+  langs:
+  - csharp
+  - vb
+  name: TerrainOverrideApplicator
+  nameWithType: TerrainOverrideApplicator
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainOverrideApplicator
+    path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    ENGINE: Applies terrain overrides from terrain.json5
+
+    EU4 uses terrain_override arrays to force specific provinces to specific terrain types
+
+    regardless of what the terrain.bmp shows
+  example: []
+  syntax:
+    content: public class TerrainOverrideApplicator
+    content.vb: Public Class TerrainOverrideApplicator
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor(System.String,System.Boolean)
+  commentId: M:Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor(System.String,System.Boolean)
+  id: '#ctor(System.String,System.Boolean)'
+  parent: Map.Rendering.Terrain.TerrainOverrideApplicator
+  langs:
+  - csharp
+  - vb
+  name: TerrainOverrideApplicator(string, bool)
+  nameWithType: TerrainOverrideApplicator.TerrainOverrideApplicator(string, bool)
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator.TerrainOverrideApplicator(string, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  syntax:
+    content: public TerrainOverrideApplicator(string dataDirectory = null, bool logProgress = true)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub New(dataDirectory As String = Nothing, logProgress As Boolean = True)
+  overload: Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor*
+  nameWithType.vb: TerrainOverrideApplicator.New(String, Boolean)
+  fullName.vb: Map.Rendering.Terrain.TerrainOverrideApplicator.New(String, Boolean)
+  name.vb: New(String, Boolean)
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides(System.UInt32[],System.UInt16[],Map.Rendering.Terrain.TerrainRGBLookup)
+  commentId: M:Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides(System.UInt32[],System.UInt16[],Map.Rendering.Terrain.TerrainRGBLookup)
+  id: ApplyOverrides(System.UInt32[],System.UInt16[],Map.Rendering.Terrain.TerrainRGBLookup)
+  parent: Map.Rendering.Terrain.TerrainOverrideApplicator
+  langs:
+  - csharp
+  - vb
+  name: ApplyOverrides(uint[], ushort[], TerrainRGBLookup)
+  nameWithType: TerrainOverrideApplicator.ApplyOverrides(uint[], ushort[], TerrainRGBLookup)
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides(uint[], ushort[], Map.Rendering.Terrain.TerrainRGBLookup)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyOverrides
+    path: Scripts/Map/Rendering/Terrain/TerrainOverrideApplicator.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: >-
+    Apply terrain overrides from terrain.json5 to terrain assignments
+
+    Modifies terrainAssignments array in-place
+  example: []
+  syntax:
+    content: public void ApplyOverrides(uint[] terrainAssignments, ushort[] provinceIDs, TerrainRGBLookup rgbLookup)
+    parameters:
+    - id: terrainAssignments
+      type: System.UInt32[]
+      description: Array indexed by array position (0-provinceCount)
+    - id: provinceIDs
+      type: System.UInt16[]
+      description: Array of province IDs matching terrainAssignments indices
+    - id: rgbLookup
+      type: Map.Rendering.Terrain.TerrainRGBLookup
+      description: TerrainRGBLookup for category→index mapping
+    content.vb: Public Sub ApplyOverrides(terrainAssignments As UInteger(), provinceIDs As UShort(), rgbLookup As TerrainRGBLookup)
+  overload: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides*
+  nameWithType.vb: TerrainOverrideApplicator.ApplyOverrides(UInteger(), UShort(), TerrainRGBLookup)
+  fullName.vb: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides(UInteger(), UShort(), Map.Rendering.Terrain.TerrainRGBLookup)
+  name.vb: ApplyOverrides(UInteger(), UShort(), TerrainRGBLookup)
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor*
+  commentId: Overload:Map.Rendering.Terrain.TerrainOverrideApplicator.#ctor
+  href: Map.Rendering.Terrain.TerrainOverrideApplicator.html#Map_Rendering_Terrain_TerrainOverrideApplicator__ctor_System_String_System_Boolean_
+  name: TerrainOverrideApplicator
+  nameWithType: TerrainOverrideApplicator.TerrainOverrideApplicator
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator.TerrainOverrideApplicator
+  nameWithType.vb: TerrainOverrideApplicator.New
+  fullName.vb: Map.Rendering.Terrain.TerrainOverrideApplicator.New
+  name.vb: New
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides*
+  commentId: Overload:Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides
+  href: Map.Rendering.Terrain.TerrainOverrideApplicator.html#Map_Rendering_Terrain_TerrainOverrideApplicator_ApplyOverrides_System_UInt32___System_UInt16___Map_Rendering_Terrain_TerrainRGBLookup_
+  name: ApplyOverrides
+  nameWithType: TerrainOverrideApplicator.ApplyOverrides
+  fullName: Map.Rendering.Terrain.TerrainOverrideApplicator.ApplyOverrides
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.Terrain.TerrainRGBLookup
+  commentId: T:Map.Rendering.Terrain.TerrainRGBLookup
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html
+  name: TerrainRGBLookup
+  nameWithType: TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup

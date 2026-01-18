@@ -1,0 +1,1075 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.CameraControllers.OrthographicCameraController
+  commentId: T:Map.CameraControllers.OrthographicCameraController
+  id: OrthographicCameraController
+  parent: Map.CameraControllers
+  children:
+  - Map.CameraControllers.OrthographicCameraController.ApplyZoom(System.Single)
+  - Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition
+  - Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint
+  - Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight
+  - Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth
+  - Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  - Map.CameraControllers.OrthographicCameraController.GetZoomRatio(System.Single,System.Single)
+  - Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  - Map.CameraControllers.OrthographicCameraController.SetupCamera
+  langs:
+  - csharp
+  - vb
+  name: OrthographicCameraController
+  nameWithType: OrthographicCameraController
+  fullName: Map.CameraControllers.OrthographicCameraController
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OrthographicCameraController
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: >-
+    ENGINE LAYER: Orthographic (2D top-down) camera for classic grand strategy look
+
+    Extends BaseCameraController with orthographic-specific zoom and positioning
+  example: []
+  syntax:
+    content: 'public class OrthographicCameraController : BaseCameraController'
+    content.vb: Public Class OrthographicCameraController Inherits BaseCameraController
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+  - Map.CameraControllers.BaseCameraController
+  inheritedMembers:
+  - Map.CameraControllers.BaseCameraController.mapPlane
+  - Map.CameraControllers.BaseCameraController.mapWorldWidth
+  - Map.CameraControllers.BaseCameraController.mapWorldHeight
+  - Map.CameraControllers.BaseCameraController.mapCamera
+  - Map.CameraControllers.BaseCameraController.minZoom
+  - Map.CameraControllers.BaseCameraController.maxZoom
+  - Map.CameraControllers.BaseCameraController.zoomSpeed
+  - Map.CameraControllers.BaseCameraController.currentZoom
+  - Map.CameraControllers.BaseCameraController.dragSpeed
+  - Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  - Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  - Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  - Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  - Map.CameraControllers.BaseCameraController.enableDragScroll
+  - Map.CameraControllers.BaseCameraController.enableArrowKeys
+  - Map.CameraControllers.BaseCameraController.positionSmoothTime
+  - Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  - Map.CameraControllers.BaseCameraController.zoomToCursor
+  - Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  - Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  - Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  - Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  - Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  - Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  - Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  - Map.CameraControllers.BaseCameraController.mapMaterial
+  - Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  - Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  - Map.CameraControllers.BaseCameraController.actualMapWidth
+  - Map.CameraControllers.BaseCameraController.actualMapHeight
+  - Map.CameraControllers.BaseCameraController.isInitialized
+  - Map.CameraControllers.BaseCameraController.targetPosition
+  - Map.CameraControllers.BaseCameraController.positionVelocity
+  - Map.CameraControllers.BaseCameraController.targetZoom
+  - Map.CameraControllers.BaseCameraController.zoomVelocity
+  - Map.CameraControllers.BaseCameraController.Initialize
+  - Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  - Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  - Map.CameraControllers.BaseCameraController.GetCameraBounds
+- uid: Map.CameraControllers.OrthographicCameraController.SetupCamera
+  commentId: M:Map.CameraControllers.OrthographicCameraController.SetupCamera
+  id: SetupCamera
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: SetupCamera()
+  nameWithType: OrthographicCameraController.SetupCamera()
+  fullName: Map.CameraControllers.OrthographicCameraController.SetupCamera()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetupCamera
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Setup camera - derived classes override to set projection mode
+  example: []
+  syntax:
+    content: protected override void SetupCamera()
+    content.vb: Protected Overrides Sub SetupCamera()
+  overridden: Map.CameraControllers.BaseCameraController.SetupCamera
+  overload: Map.CameraControllers.OrthographicCameraController.SetupCamera*
+- uid: Map.CameraControllers.OrthographicCameraController.ApplyZoom(System.Single)
+  commentId: M:Map.CameraControllers.OrthographicCameraController.ApplyZoom(System.Single)
+  id: ApplyZoom(System.Single)
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: ApplyZoom(float)
+  nameWithType: OrthographicCameraController.ApplyZoom(float)
+  fullName: Map.CameraControllers.OrthographicCameraController.ApplyZoom(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyZoom
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Apply zoom value to camera (orthographic size vs perspective distance/angle)
+  example: []
+  syntax:
+    content: protected override void ApplyZoom(float zoom)
+    parameters:
+    - id: zoom
+      type: System.Single
+    content.vb: Protected Overrides Sub ApplyZoom(zoom As Single)
+  overridden: Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  overload: Map.CameraControllers.OrthographicCameraController.ApplyZoom*
+  nameWithType.vb: OrthographicCameraController.ApplyZoom(Single)
+  fullName.vb: Map.CameraControllers.OrthographicCameraController.ApplyZoom(Single)
+  name.vb: ApplyZoom(Single)
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight
+  commentId: M:Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight
+  id: GetCameraViewHeight
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraViewHeight()
+  nameWithType: OrthographicCameraController.GetCameraViewHeight()
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraViewHeight
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get camera view height in world units
+  example: []
+  syntax:
+    content: protected override float GetCameraViewHeight()
+    return:
+      type: System.Single
+    content.vb: Protected Overrides Function GetCameraViewHeight() As Single
+  overridden: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  overload: Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight*
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth
+  commentId: M:Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth
+  id: GetCameraViewWidth
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraViewWidth()
+  nameWithType: OrthographicCameraController.GetCameraViewWidth()
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraViewWidth
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get camera view width in world units
+  example: []
+  syntax:
+    content: protected override float GetCameraViewWidth()
+    return:
+      type: System.Single
+    content.vb: Protected Overrides Function GetCameraViewWidth() As Single
+  overridden: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  overload: Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth*
+- uid: Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  id: GetWorldPositionAtMouse(UnityEngine.Vector3)
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetWorldPositionAtMouse(Vector3)
+  nameWithType: OrthographicCameraController.GetWorldPositionAtMouse(Vector3)
+  fullName: Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetWorldPositionAtMouse
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get world position at mouse cursor
+  example: []
+  syntax:
+    content: protected override Vector3 GetWorldPositionAtMouse(Vector3 mouseScreenPos)
+    parameters:
+    - id: mouseScreenPos
+      type: UnityEngine.Vector3
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected Overrides Function GetWorldPositionAtMouse(mouseScreenPos As Vector3) As Vector3
+  overridden: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  overload: Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse*
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint
+  commentId: M:Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint
+  id: GetCameraFocusPoint
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetCameraFocusPoint()
+  nameWithType: OrthographicCameraController.GetCameraFocusPoint()
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCameraFocusPoint
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 44
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: 'Get camera focus point (orthographic: camera position, perspective: raycast to ground)'
+  example: []
+  syntax:
+    content: protected override Vector3 GetCameraFocusPoint()
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected Overrides Function GetCameraFocusPoint() As Vector3
+  overridden: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  overload: Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint*
+- uid: Map.CameraControllers.OrthographicCameraController.GetZoomRatio(System.Single,System.Single)
+  commentId: M:Map.CameraControllers.OrthographicCameraController.GetZoomRatio(System.Single,System.Single)
+  id: GetZoomRatio(System.Single,System.Single)
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: GetZoomRatio(float, float)
+  nameWithType: OrthographicCameraController.GetZoomRatio(float, float)
+  fullName: Map.CameraControllers.OrthographicCameraController.GetZoomRatio(float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetZoomRatio
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Get zoom ratio between two zoom levels (for zoom-to-cursor)
+  example: []
+  syntax:
+    content: protected override float GetZoomRatio(float newZoom, float oldZoom)
+    parameters:
+    - id: newZoom
+      type: System.Single
+    - id: oldZoom
+      type: System.Single
+    return:
+      type: System.Single
+    content.vb: Protected Overrides Function GetZoomRatio(newZoom As Single, oldZoom As Single) As Single
+  overridden: Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  overload: Map.CameraControllers.OrthographicCameraController.GetZoomRatio*
+  nameWithType.vb: OrthographicCameraController.GetZoomRatio(Single, Single)
+  fullName.vb: Map.CameraControllers.OrthographicCameraController.GetZoomRatio(Single, Single)
+  name.vb: GetZoomRatio(Single, Single)
+- uid: Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  id: ScreenToWorldDelta(UnityEngine.Vector3)
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: ScreenToWorldDelta(Vector3)
+  nameWithType: OrthographicCameraController.ScreenToWorldDelta(Vector3)
+  fullName: Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScreenToWorldDelta
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 54
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  summary: Convert screen space delta to world space delta (for dragging)
+  example: []
+  syntax:
+    content: protected override Vector3 ScreenToWorldDelta(Vector3 screenDelta)
+    parameters:
+    - id: screenDelta
+      type: UnityEngine.Vector3
+    return:
+      type: UnityEngine.Vector3
+    content.vb: Protected Overrides Function ScreenToWorldDelta(screenDelta As Vector3) As Vector3
+  overridden: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  overload: Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta*
+- uid: Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition
+  commentId: M:Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition
+  id: ClampVerticalPosition
+  parent: Map.CameraControllers.OrthographicCameraController
+  langs:
+  - csharp
+  - vb
+  name: ClampVerticalPosition()
+  nameWithType: OrthographicCameraController.ClampVerticalPosition()
+  fullName: Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Camera/OrthographicCameraController.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClampVerticalPosition
+    path: Scripts/Map/Camera/OrthographicCameraController.cs
+    startLine: 66
+  assemblies:
+  - MapAssembly
+  namespace: Map.CameraControllers
+  example: []
+  syntax:
+    content: protected override void ClampVerticalPosition()
+    content.vb: Protected Overrides Sub ClampVerticalPosition()
+  overridden: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  overload: Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition*
+references:
+- uid: Map.CameraControllers
+  commentId: N:Map.CameraControllers
+  href: Map.html
+  name: Map.CameraControllers
+  nameWithType: Map.CameraControllers
+  fullName: Map.CameraControllers
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.CameraControllers
+    name: CameraControllers
+    href: Map.CameraControllers.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: Map.CameraControllers.BaseCameraController
+  commentId: T:Map.CameraControllers.BaseCameraController
+  parent: Map.CameraControllers
+  href: Map.CameraControllers.BaseCameraController.html
+  name: BaseCameraController
+  nameWithType: BaseCameraController
+  fullName: Map.CameraControllers.BaseCameraController
+- uid: Map.CameraControllers.BaseCameraController.mapPlane
+  commentId: F:Map.CameraControllers.BaseCameraController.mapPlane
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_mapPlane
+  name: mapPlane
+  nameWithType: BaseCameraController.mapPlane
+  fullName: Map.CameraControllers.BaseCameraController.mapPlane
+- uid: Map.CameraControllers.BaseCameraController.mapWorldWidth
+  commentId: F:Map.CameraControllers.BaseCameraController.mapWorldWidth
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_mapWorldWidth
+  name: mapWorldWidth
+  nameWithType: BaseCameraController.mapWorldWidth
+  fullName: Map.CameraControllers.BaseCameraController.mapWorldWidth
+- uid: Map.CameraControllers.BaseCameraController.mapWorldHeight
+  commentId: F:Map.CameraControllers.BaseCameraController.mapWorldHeight
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_mapWorldHeight
+  name: mapWorldHeight
+  nameWithType: BaseCameraController.mapWorldHeight
+  fullName: Map.CameraControllers.BaseCameraController.mapWorldHeight
+- uid: Map.CameraControllers.BaseCameraController.mapCamera
+  commentId: F:Map.CameraControllers.BaseCameraController.mapCamera
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_mapCamera
+  name: mapCamera
+  nameWithType: BaseCameraController.mapCamera
+  fullName: Map.CameraControllers.BaseCameraController.mapCamera
+- uid: Map.CameraControllers.BaseCameraController.minZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.minZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_minZoom
+  name: minZoom
+  nameWithType: BaseCameraController.minZoom
+  fullName: Map.CameraControllers.BaseCameraController.minZoom
+- uid: Map.CameraControllers.BaseCameraController.maxZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.maxZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_maxZoom
+  name: maxZoom
+  nameWithType: BaseCameraController.maxZoom
+  fullName: Map.CameraControllers.BaseCameraController.maxZoom
+- uid: Map.CameraControllers.BaseCameraController.zoomSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_zoomSpeed
+  name: zoomSpeed
+  nameWithType: BaseCameraController.zoomSpeed
+  fullName: Map.CameraControllers.BaseCameraController.zoomSpeed
+- uid: Map.CameraControllers.BaseCameraController.currentZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.currentZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_currentZoom
+  name: currentZoom
+  nameWithType: BaseCameraController.currentZoom
+  fullName: Map.CameraControllers.BaseCameraController.currentZoom
+- uid: Map.CameraControllers.BaseCameraController.dragSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.dragSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_dragSpeed
+  name: dragSpeed
+  nameWithType: BaseCameraController.dragSpeed
+  fullName: Map.CameraControllers.BaseCameraController.dragSpeed
+- uid: Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_edgeScrollSpeed
+  name: edgeScrollSpeed
+  nameWithType: BaseCameraController.edgeScrollSpeed
+  fullName: Map.CameraControllers.BaseCameraController.edgeScrollSpeed
+- uid: Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  commentId: F:Map.CameraControllers.BaseCameraController.edgeScrollBorder
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_edgeScrollBorder
+  name: edgeScrollBorder
+  nameWithType: BaseCameraController.edgeScrollBorder
+  fullName: Map.CameraControllers.BaseCameraController.edgeScrollBorder
+- uid: Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  commentId: F:Map.CameraControllers.BaseCameraController.arrowKeySpeed
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_arrowKeySpeed
+  name: arrowKeySpeed
+  nameWithType: BaseCameraController.arrowKeySpeed
+  fullName: Map.CameraControllers.BaseCameraController.arrowKeySpeed
+- uid: Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  commentId: F:Map.CameraControllers.BaseCameraController.enableEdgeScroll
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_enableEdgeScroll
+  name: enableEdgeScroll
+  nameWithType: BaseCameraController.enableEdgeScroll
+  fullName: Map.CameraControllers.BaseCameraController.enableEdgeScroll
+- uid: Map.CameraControllers.BaseCameraController.enableDragScroll
+  commentId: F:Map.CameraControllers.BaseCameraController.enableDragScroll
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_enableDragScroll
+  name: enableDragScroll
+  nameWithType: BaseCameraController.enableDragScroll
+  fullName: Map.CameraControllers.BaseCameraController.enableDragScroll
+- uid: Map.CameraControllers.BaseCameraController.enableArrowKeys
+  commentId: F:Map.CameraControllers.BaseCameraController.enableArrowKeys
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_enableArrowKeys
+  name: enableArrowKeys
+  nameWithType: BaseCameraController.enableArrowKeys
+  fullName: Map.CameraControllers.BaseCameraController.enableArrowKeys
+- uid: Map.CameraControllers.BaseCameraController.positionSmoothTime
+  commentId: F:Map.CameraControllers.BaseCameraController.positionSmoothTime
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_positionSmoothTime
+  name: positionSmoothTime
+  nameWithType: BaseCameraController.positionSmoothTime
+  fullName: Map.CameraControllers.BaseCameraController.positionSmoothTime
+- uid: Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomSmoothTime
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_zoomSmoothTime
+  name: zoomSmoothTime
+  nameWithType: BaseCameraController.zoomSmoothTime
+  fullName: Map.CameraControllers.BaseCameraController.zoomSmoothTime
+- uid: Map.CameraControllers.BaseCameraController.zoomToCursor
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomToCursor
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_zoomToCursor
+  name: zoomToCursor
+  nameWithType: BaseCameraController.zoomToCursor
+  fullName: Map.CameraControllers.BaseCameraController.zoomToCursor
+- uid: Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_scaleSpeedWithZoom
+  name: scaleSpeedWithZoom
+  nameWithType: BaseCameraController.scaleSpeedWithZoom
+  fullName: Map.CameraControllers.BaseCameraController.scaleSpeedWithZoom
+- uid: Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  commentId: F:Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_enableHorizontalWrapping
+  name: enableHorizontalWrapping
+  nameWithType: BaseCameraController.enableHorizontalWrapping
+  fullName: Map.CameraControllers.BaseCameraController.enableHorizontalWrapping
+- uid: Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  commentId: F:Map.CameraControllers.BaseCameraController.clampVerticalMovement
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_clampVerticalMovement
+  name: clampVerticalMovement
+  nameWithType: BaseCameraController.clampVerticalMovement
+  fullName: Map.CameraControllers.BaseCameraController.clampVerticalMovement
+- uid: Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_hideUnitsAboveZoom
+  name: hideUnitsAboveZoom
+  nameWithType: BaseCameraController.hideUnitsAboveZoom
+  fullName: Map.CameraControllers.BaseCameraController.hideUnitsAboveZoom
+- uid: Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_disableFogOfWarAboveZoom
+  name: disableFogOfWarAboveZoom
+  nameWithType: BaseCameraController.disableFogOfWarAboveZoom
+  fullName: Map.CameraControllers.BaseCameraController.disableFogOfWarAboveZoom
+- uid: Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  commentId: F:Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_fogOfWarFadeTime
+  name: fogOfWarFadeTime
+  nameWithType: BaseCameraController.fogOfWarFadeTime
+  fullName: Map.CameraControllers.BaseCameraController.fogOfWarFadeTime
+- uid: Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  commentId: F:Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_labelSwitchZoomThreshold
+  name: labelSwitchZoomThreshold
+  nameWithType: BaseCameraController.labelSwitchZoomThreshold
+  fullName: Map.CameraControllers.BaseCameraController.labelSwitchZoomThreshold
+- uid: Map.CameraControllers.BaseCameraController.mapMaterial
+  commentId: F:Map.CameraControllers.BaseCameraController.mapMaterial
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_mapMaterial
+  name: mapMaterial
+  nameWithType: BaseCameraController.mapMaterial
+  fullName: Map.CameraControllers.BaseCameraController.mapMaterial
+- uid: Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  commentId: F:Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_currentFogOfWarDisable
+  name: currentFogOfWarDisable
+  nameWithType: BaseCameraController.currentFogOfWarDisable
+  fullName: Map.CameraControllers.BaseCameraController.currentFogOfWarDisable
+- uid: Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  commentId: F:Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_targetFogOfWarDisable
+  name: targetFogOfWarDisable
+  nameWithType: BaseCameraController.targetFogOfWarDisable
+  fullName: Map.CameraControllers.BaseCameraController.targetFogOfWarDisable
+- uid: Map.CameraControllers.BaseCameraController.actualMapWidth
+  commentId: F:Map.CameraControllers.BaseCameraController.actualMapWidth
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_actualMapWidth
+  name: actualMapWidth
+  nameWithType: BaseCameraController.actualMapWidth
+  fullName: Map.CameraControllers.BaseCameraController.actualMapWidth
+- uid: Map.CameraControllers.BaseCameraController.actualMapHeight
+  commentId: F:Map.CameraControllers.BaseCameraController.actualMapHeight
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_actualMapHeight
+  name: actualMapHeight
+  nameWithType: BaseCameraController.actualMapHeight
+  fullName: Map.CameraControllers.BaseCameraController.actualMapHeight
+- uid: Map.CameraControllers.BaseCameraController.isInitialized
+  commentId: F:Map.CameraControllers.BaseCameraController.isInitialized
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_isInitialized
+  name: isInitialized
+  nameWithType: BaseCameraController.isInitialized
+  fullName: Map.CameraControllers.BaseCameraController.isInitialized
+- uid: Map.CameraControllers.BaseCameraController.targetPosition
+  commentId: F:Map.CameraControllers.BaseCameraController.targetPosition
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_targetPosition
+  name: targetPosition
+  nameWithType: BaseCameraController.targetPosition
+  fullName: Map.CameraControllers.BaseCameraController.targetPosition
+- uid: Map.CameraControllers.BaseCameraController.positionVelocity
+  commentId: F:Map.CameraControllers.BaseCameraController.positionVelocity
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_positionVelocity
+  name: positionVelocity
+  nameWithType: BaseCameraController.positionVelocity
+  fullName: Map.CameraControllers.BaseCameraController.positionVelocity
+- uid: Map.CameraControllers.BaseCameraController.targetZoom
+  commentId: F:Map.CameraControllers.BaseCameraController.targetZoom
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_targetZoom
+  name: targetZoom
+  nameWithType: BaseCameraController.targetZoom
+  fullName: Map.CameraControllers.BaseCameraController.targetZoom
+- uid: Map.CameraControllers.BaseCameraController.zoomVelocity
+  commentId: F:Map.CameraControllers.BaseCameraController.zoomVelocity
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_zoomVelocity
+  name: zoomVelocity
+  nameWithType: BaseCameraController.zoomVelocity
+  fullName: Map.CameraControllers.BaseCameraController.zoomVelocity
+- uid: Map.CameraControllers.BaseCameraController.Initialize
+  commentId: M:Map.CameraControllers.BaseCameraController.Initialize
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_Initialize
+  name: Initialize()
+  nameWithType: BaseCameraController.Initialize()
+  fullName: Map.CameraControllers.BaseCameraController.Initialize()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.Initialize
+    name: Initialize
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_Initialize
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.Initialize
+    name: Initialize
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_Initialize
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  commentId: M:Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplySmoothMovement
+  name: ApplySmoothMovement()
+  nameWithType: BaseCameraController.ApplySmoothMovement()
+  fullName: Map.CameraControllers.BaseCameraController.ApplySmoothMovement()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+    name: ApplySmoothMovement
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplySmoothMovement
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.ApplySmoothMovement
+    name: ApplySmoothMovement
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplySmoothMovement
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  isExternal: true
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_CenterCameraOn_UnityEngine_Vector3_
+  name: CenterCameraOn(Vector3)
+  nameWithType: BaseCameraController.CenterCameraOn(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+    name: CenterCameraOn
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_CenterCameraOn_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.CenterCameraOn(UnityEngine.Vector3)
+    name: CenterCameraOn
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_CenterCameraOn_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+- uid: Map.CameraControllers.BaseCameraController.GetCameraBounds
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraBounds
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraBounds
+  name: GetCameraBounds()
+  nameWithType: BaseCameraController.GetCameraBounds()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraBounds()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraBounds
+    name: GetCameraBounds
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraBounds
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraBounds
+    name: GetCameraBounds
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraBounds
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.CameraControllers.BaseCameraController.SetupCamera
+  commentId: M:Map.CameraControllers.BaseCameraController.SetupCamera
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_SetupCamera
+  name: SetupCamera()
+  nameWithType: BaseCameraController.SetupCamera()
+  fullName: Map.CameraControllers.BaseCameraController.SetupCamera()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.SetupCamera
+    name: SetupCamera
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_SetupCamera
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.SetupCamera
+    name: SetupCamera
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_SetupCamera
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.SetupCamera*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.SetupCamera
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_SetupCamera
+  name: SetupCamera
+  nameWithType: OrthographicCameraController.SetupCamera
+  fullName: Map.CameraControllers.OrthographicCameraController.SetupCamera
+- uid: Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  commentId: M:Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+  parent: Map.CameraControllers.BaseCameraController
+  isExternal: true
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplyZoom_System_Single_
+  name: ApplyZoom(float)
+  nameWithType: BaseCameraController.ApplyZoom(float)
+  fullName: Map.CameraControllers.BaseCameraController.ApplyZoom(float)
+  nameWithType.vb: BaseCameraController.ApplyZoom(Single)
+  fullName.vb: Map.CameraControllers.BaseCameraController.ApplyZoom(Single)
+  name.vb: ApplyZoom(Single)
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+    name: ApplyZoom
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplyZoom_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.ApplyZoom(System.Single)
+    name: ApplyZoom
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ApplyZoom_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.ApplyZoom*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.ApplyZoom
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_ApplyZoom_System_Single_
+  name: ApplyZoom
+  nameWithType: OrthographicCameraController.ApplyZoom
+  fullName: Map.CameraControllers.OrthographicCameraController.ApplyZoom
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewHeight
+  name: GetCameraViewHeight()
+  nameWithType: BaseCameraController.GetCameraViewHeight()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewHeight()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+    name: GetCameraViewHeight
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewHeight
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraViewHeight
+    name: GetCameraViewHeight
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewHeight
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_GetCameraViewHeight
+  name: GetCameraViewHeight
+  nameWithType: OrthographicCameraController.GetCameraViewHeight
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraViewHeight
+- uid: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewWidth
+  name: GetCameraViewWidth()
+  nameWithType: BaseCameraController.GetCameraViewWidth()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraViewWidth()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+    name: GetCameraViewWidth
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewWidth
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraViewWidth
+    name: GetCameraViewWidth
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraViewWidth
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_GetCameraViewWidth
+  name: GetCameraViewWidth
+  nameWithType: OrthographicCameraController.GetCameraViewWidth
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraViewWidth
+- uid: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  isExternal: true
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetWorldPositionAtMouse_UnityEngine_Vector3_
+  name: GetWorldPositionAtMouse(Vector3)
+  nameWithType: BaseCameraController.GetWorldPositionAtMouse(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+    name: GetWorldPositionAtMouse
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetWorldPositionAtMouse_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetWorldPositionAtMouse(UnityEngine.Vector3)
+    name: GetWorldPositionAtMouse
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetWorldPositionAtMouse_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_GetWorldPositionAtMouse_UnityEngine_Vector3_
+  name: GetWorldPositionAtMouse
+  nameWithType: OrthographicCameraController.GetWorldPositionAtMouse
+  fullName: Map.CameraControllers.OrthographicCameraController.GetWorldPositionAtMouse
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  commentId: M:Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraFocusPoint
+  name: GetCameraFocusPoint()
+  nameWithType: BaseCameraController.GetCameraFocusPoint()
+  fullName: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+    name: GetCameraFocusPoint
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraFocusPoint
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetCameraFocusPoint
+    name: GetCameraFocusPoint
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetCameraFocusPoint
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_GetCameraFocusPoint
+  name: GetCameraFocusPoint
+  nameWithType: OrthographicCameraController.GetCameraFocusPoint
+  fullName: Map.CameraControllers.OrthographicCameraController.GetCameraFocusPoint
+- uid: Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  commentId: M:Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+  parent: Map.CameraControllers.BaseCameraController
+  isExternal: true
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetZoomRatio_System_Single_System_Single_
+  name: GetZoomRatio(float, float)
+  nameWithType: BaseCameraController.GetZoomRatio(float, float)
+  fullName: Map.CameraControllers.BaseCameraController.GetZoomRatio(float, float)
+  nameWithType.vb: BaseCameraController.GetZoomRatio(Single, Single)
+  fullName.vb: Map.CameraControllers.BaseCameraController.GetZoomRatio(Single, Single)
+  name.vb: GetZoomRatio(Single, Single)
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+    name: GetZoomRatio
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetZoomRatio_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.GetZoomRatio(System.Single,System.Single)
+    name: GetZoomRatio
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_GetZoomRatio_System_Single_System_Single_
+  - name: (
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.GetZoomRatio*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.GetZoomRatio
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_GetZoomRatio_System_Single_System_Single_
+  name: GetZoomRatio
+  nameWithType: OrthographicCameraController.GetZoomRatio
+  fullName: Map.CameraControllers.OrthographicCameraController.GetZoomRatio
+- uid: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  commentId: M:Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  parent: Map.CameraControllers.BaseCameraController
+  isExternal: true
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ScreenToWorldDelta_UnityEngine_Vector3_
+  name: ScreenToWorldDelta(Vector3)
+  nameWithType: BaseCameraController.ScreenToWorldDelta(Vector3)
+  fullName: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+    name: ScreenToWorldDelta
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ScreenToWorldDelta_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.ScreenToWorldDelta(UnityEngine.Vector3)
+    name: ScreenToWorldDelta
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ScreenToWorldDelta_UnityEngine_Vector3_
+  - name: (
+  - uid: UnityEngine.Vector3
+    name: Vector3
+    isExternal: true
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_ScreenToWorldDelta_UnityEngine_Vector3_
+  name: ScreenToWorldDelta
+  nameWithType: OrthographicCameraController.ScreenToWorldDelta
+  fullName: Map.CameraControllers.OrthographicCameraController.ScreenToWorldDelta
+- uid: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  commentId: M:Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+  parent: Map.CameraControllers.BaseCameraController
+  href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ClampVerticalPosition
+  name: ClampVerticalPosition()
+  nameWithType: BaseCameraController.ClampVerticalPosition()
+  fullName: Map.CameraControllers.BaseCameraController.ClampVerticalPosition()
+  spec.csharp:
+  - uid: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+    name: ClampVerticalPosition
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ClampVerticalPosition
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.CameraControllers.BaseCameraController.ClampVerticalPosition
+    name: ClampVerticalPosition
+    href: Map.CameraControllers.BaseCameraController.html#Map_CameraControllers_BaseCameraController_ClampVerticalPosition
+  - name: (
+  - name: )
+- uid: Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition*
+  commentId: Overload:Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition
+  href: Map.CameraControllers.OrthographicCameraController.html#Map_CameraControllers_OrthographicCameraController_ClampVerticalPosition
+  name: ClampVerticalPosition
+  nameWithType: OrthographicCameraController.ClampVerticalPosition
+  fullName: Map.CameraControllers.OrthographicCameraController.ClampVerticalPosition

@@ -1,0 +1,434 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.JunctionDetector
+  commentId: T:Map.Rendering.Border.JunctionDetector
+  id: JunctionDetector
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.JunctionDetector.#ctor(System.Int32,System.Int32,UnityEngine.Color32[])
+  - Map.Rendering.Border.JunctionDetector.DetectJunctionPixels
+  - Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  langs:
+  - csharp
+  - vb
+  name: JunctionDetector
+  nameWithType: JunctionDetector
+  fullName: Map.Rendering.Border.JunctionDetector
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: JunctionDetector
+    path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Detects junction pixels (where 3+ provinces meet) and snaps polyline endpoints to them
+
+    Extracted from BorderCurveExtractor for single responsibility
+
+
+    Contains logic for:
+
+    - Junction pixel detection (3+ provinces meeting at a point)
+
+    - Endpoint snapping with spatial grid optimization (O(n) performance)
+
+    - Degenerate loop prevention (same polyline endpoints)
+  example: []
+  syntax:
+    content: public class JunctionDetector
+    content.vb: Public Class JunctionDetector
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.JunctionDetector.#ctor(System.Int32,System.Int32,UnityEngine.Color32[])
+  commentId: M:Map.Rendering.Border.JunctionDetector.#ctor(System.Int32,System.Int32,UnityEngine.Color32[])
+  id: '#ctor(System.Int32,System.Int32,UnityEngine.Color32[])'
+  parent: Map.Rendering.Border.JunctionDetector
+  langs:
+  - csharp
+  - vb
+  name: JunctionDetector(int, int, Color32[])
+  nameWithType: JunctionDetector.JunctionDetector(int, int, Color32[])
+  fullName: Map.Rendering.Border.JunctionDetector.JunctionDetector(int, int, UnityEngine.Color32[])
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public JunctionDetector(int width, int height, Color32[] idPixels)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: idPixels
+      type: UnityEngine.Color32[]
+    content.vb: Public Sub New(width As Integer, height As Integer, idPixels As Color32())
+  overload: Map.Rendering.Border.JunctionDetector.#ctor*
+  nameWithType.vb: JunctionDetector.New(Integer, Integer, Color32())
+  fullName.vb: Map.Rendering.Border.JunctionDetector.New(Integer, Integer, UnityEngine.Color32())
+  name.vb: New(Integer, Integer, Color32())
+- uid: Map.Rendering.Border.JunctionDetector.DetectJunctionPixels
+  commentId: M:Map.Rendering.Border.JunctionDetector.DetectJunctionPixels
+  id: DetectJunctionPixels
+  parent: Map.Rendering.Border.JunctionDetector
+  langs:
+  - csharp
+  - vb
+  name: DetectJunctionPixels()
+  nameWithType: JunctionDetector.DetectJunctionPixels()
+  fullName: Map.Rendering.Border.JunctionDetector.DetectJunctionPixels()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectJunctionPixels
+    path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Detect junction pixels where 3+ provinces meet
+
+    These are critical connection points for border polylines
+  example: []
+  syntax:
+    content: public Dictionary<Vector2, HashSet<ushort>> DetectJunctionPixels()
+    return:
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+    content.vb: Public Function DetectJunctionPixels() As Dictionary(Of Vector2, HashSet(Of UShort))
+  overload: Map.Rendering.Border.JunctionDetector.DetectJunctionPixels*
+- uid: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  commentId: M:Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  id: SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  parent: Map.Rendering.Border.JunctionDetector
+  langs:
+  - csharp
+  - vb
+  name: SnapPolylineEndpointsAtJunctions(Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, HashSet<ushort>>)
+  nameWithType: JunctionDetector.SnapPolylineEndpointsAtJunctions(Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, HashSet<ushort>>)
+  fullName: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>, System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SnapPolylineEndpointsAtJunctions
+    path: Scripts/Map/Rendering/Border/JunctionDetector.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Snap polyline endpoints to nearby junctions using spatial grid optimization
+
+    Prevents small gaps where borders should meet at junction points
+  example: []
+  syntax:
+    content: public void SnapPolylineEndpointsAtJunctions(Dictionary<(ushort, ushort), List<Vector2>> allPolylines, Dictionary<Vector2, HashSet<ushort>> junctionPixels)
+    parameters:
+    - id: allPolylines
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+      description: All border polylines (will be modified in-place)
+    - id: junctionPixels
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+      description: Junction pixels from DetectJunctionPixels()
+    content.vb: Public Sub SnapPolylineEndpointsAtJunctions(allPolylines As Dictionary(Of (UShort, UShort), List(Of Vector2)), junctionPixels As Dictionary(Of Vector2, HashSet(Of UShort)))
+  overload: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions*
+  nameWithType.vb: JunctionDetector.SnapPolylineEndpointsAtJunctions(Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, HashSet(Of UShort)))
+  fullName.vb: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions(System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2)), System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort)))
+  name.vb: SnapPolylineEndpointsAtJunctions(Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, HashSet(Of UShort)))
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.JunctionDetector.#ctor*
+  commentId: Overload:Map.Rendering.Border.JunctionDetector.#ctor
+  href: Map.Rendering.Border.JunctionDetector.html#Map_Rendering_Border_JunctionDetector__ctor_System_Int32_System_Int32_UnityEngine_Color32___
+  name: JunctionDetector
+  nameWithType: JunctionDetector.JunctionDetector
+  fullName: Map.Rendering.Border.JunctionDetector.JunctionDetector
+  nameWithType.vb: JunctionDetector.New
+  fullName.vb: Map.Rendering.Border.JunctionDetector.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.JunctionDetector.DetectJunctionPixels*
+  commentId: Overload:Map.Rendering.Border.JunctionDetector.DetectJunctionPixels
+  href: Map.Rendering.Border.JunctionDetector.html#Map_Rendering_Border_JunctionDetector_DetectJunctionPixels
+  name: DetectJunctionPixels
+  nameWithType: JunctionDetector.DetectJunctionPixels
+  fullName: Map.Rendering.Border.JunctionDetector.DetectJunctionPixels
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Vector2, HashSet<ushort>>
+  nameWithType: Dictionary<Vector2, HashSet<ushort>>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>
+  nameWithType.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort))
+  name.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions*
+  commentId: Overload:Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions
+  href: Map.Rendering.Border.JunctionDetector.html#Map_Rendering_Border_JunctionDetector_SnapPolylineEndpointsAtJunctions_System_Collections_Generic_Dictionary_System_ValueTuple_System_UInt16_System_UInt16__System_Collections_Generic_List_UnityEngine_Vector2___System_Collections_Generic_Dictionary_UnityEngine_Vector2_System_Collections_Generic_HashSet_System_UInt16___
+  name: SnapPolylineEndpointsAtJunctions
+  nameWithType: JunctionDetector.SnapPolylineEndpointsAtJunctions
+  fullName: Map.Rendering.Border.JunctionDetector.SnapPolylineEndpointsAtJunctions
+- uid: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<(ushort, ushort), List<Vector2>>
+  nameWithType: Dictionary<(ushort, ushort), List<Vector2>>
+  fullName: System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>
+  nameWithType.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  fullName.vb: System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: )

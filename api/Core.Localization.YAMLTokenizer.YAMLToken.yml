@@ -1,0 +1,298 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Localization.YAMLTokenizer.YAMLToken
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLToken
+  id: YAMLTokenizer.YAMLToken
+  parent: Core.Localization
+  children:
+  - Core.Localization.YAMLTokenizer.YAMLToken.Column
+  - Core.Localization.YAMLTokenizer.YAMLToken.Length
+  - Core.Localization.YAMLTokenizer.YAMLToken.Line
+  - Core.Localization.YAMLTokenizer.YAMLToken.StartOffset
+  - Core.Localization.YAMLTokenizer.YAMLToken.StringHash
+  - Core.Localization.YAMLTokenizer.YAMLToken.Type
+  - Core.Localization.YAMLTokenizer.YAMLToken.VersionNumber
+  langs:
+  - csharp
+  - vb
+  name: YAMLTokenizer.YAMLToken
+  nameWithType: YAMLTokenizer.YAMLToken
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YAMLToken
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  summary: YAML token structure
+  example: []
+  syntax:
+    content: public struct YAMLTokenizer.YAMLToken
+    content.vb: Public Structure YAMLTokenizer.YAMLToken
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.Type
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.Type
+  id: Type
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: YAMLTokenizer.YAMLToken.Type
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.Type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Type
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public YAMLTokenizer.YAMLTokenType Type
+    return:
+      type: Core.Localization.YAMLTokenizer.YAMLTokenType
+    content.vb: Public Type As YAMLTokenizer.YAMLTokenType
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.StartOffset
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.StartOffset
+  id: StartOffset
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: StartOffset
+  nameWithType: YAMLTokenizer.YAMLToken.StartOffset
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.StartOffset
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartOffset
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int StartOffset
+    return:
+      type: System.Int32
+    content.vb: Public StartOffset As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.Length
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.Length
+  id: Length
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: Length
+  nameWithType: YAMLTokenizer.YAMLToken.Length
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.Length
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Length
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int Length
+    return:
+      type: System.Int32
+    content.vb: Public Length As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.Line
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.Line
+  id: Line
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: Line
+  nameWithType: YAMLTokenizer.YAMLToken.Line
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.Line
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Line
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 48
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int Line
+    return:
+      type: System.Int32
+    content.vb: Public Line As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.Column
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.Column
+  id: Column
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: Column
+  nameWithType: YAMLTokenizer.YAMLToken.Column
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.Column
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Column
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int Column
+    return:
+      type: System.Int32
+    content.vb: Public Column As Integer
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.StringHash
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.StringHash
+  id: StringHash
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: StringHash
+  nameWithType: YAMLTokenizer.YAMLToken.StringHash
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.StringHash
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StringHash
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public uint StringHash
+    return:
+      type: System.UInt32
+    content.vb: Public StringHash As UInteger
+- uid: Core.Localization.YAMLTokenizer.YAMLToken.VersionNumber
+  commentId: F:Core.Localization.YAMLTokenizer.YAMLToken.VersionNumber
+  id: VersionNumber
+  parent: Core.Localization.YAMLTokenizer.YAMLToken
+  langs:
+  - csharp
+  - vb
+  name: VersionNumber
+  nameWithType: YAMLTokenizer.YAMLToken.VersionNumber
+  fullName: Core.Localization.YAMLTokenizer.YAMLToken.VersionNumber
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Localization/YAMLTokenizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: VersionNumber
+    path: Scripts/Core/Localization/YAMLTokenizer.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Localization
+  syntax:
+    content: public int VersionNumber
+    return:
+      type: System.Int32
+    content.vb: Public VersionNumber As Integer
+references:
+- uid: Core.Localization
+  commentId: N:Core.Localization
+  href: Core.html
+  name: Core.Localization
+  nameWithType: Core.Localization
+  fullName: Core.Localization
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Localization
+    name: Localization
+    href: Core.Localization.html
+- uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+  commentId: T:Core.Localization.YAMLTokenizer.YAMLTokenType
+  parent: Core.Localization
+  href: Core.Localization.YAMLTokenizer.html
+  name: YAMLTokenizer.YAMLTokenType
+  nameWithType: YAMLTokenizer.YAMLTokenType
+  fullName: Core.Localization.YAMLTokenizer.YAMLTokenType
+  spec.csharp:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+    name: YAMLTokenType
+    href: Core.Localization.YAMLTokenizer.YAMLTokenType.html
+  spec.vb:
+  - uid: Core.Localization.YAMLTokenizer
+    name: YAMLTokenizer
+    href: Core.Localization.YAMLTokenizer.html
+  - name: .
+  - uid: Core.Localization.YAMLTokenizer.YAMLTokenType
+    name: YAMLTokenType
+    href: Core.Localization.YAMLTokenizer.YAMLTokenType.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger

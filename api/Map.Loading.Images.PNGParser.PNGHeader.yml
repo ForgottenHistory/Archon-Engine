@@ -1,0 +1,501 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.PNGParser.PNGHeader
+  commentId: T:Map.Loading.Images.PNGParser.PNGHeader
+  id: PNGParser.PNGHeader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.PNGParser.PNGHeader.BitDepth
+  - Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+  - Map.Loading.Images.PNGParser.PNGHeader.ColorType
+  - Map.Loading.Images.PNGParser.PNGHeader.CompressionMethod
+  - Map.Loading.Images.PNGParser.PNGHeader.FilterMethod
+  - Map.Loading.Images.PNGParser.PNGHeader.HasAlpha
+  - Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+  - Map.Loading.Images.PNGParser.PNGHeader.Height
+  - Map.Loading.Images.PNGParser.PNGHeader.InterlaceMethod
+  - Map.Loading.Images.PNGParser.PNGHeader.IsSuccess
+  - Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+  - Map.Loading.Images.PNGParser.PNGHeader.IsValid
+  - Map.Loading.Images.PNGParser.PNGHeader.Width
+  langs:
+  - csharp
+  - vb
+  name: PNGParser.PNGHeader
+  nameWithType: PNGParser.PNGHeader
+  fullName: Map.Loading.Images.PNGParser.PNGHeader
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PNGHeader
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: PNG header information
+  example: []
+  syntax:
+    content: public struct PNGParser.PNGHeader
+    content.vb: Public Structure PNGParser.PNGHeader
+- uid: Map.Loading.Images.PNGParser.PNGHeader.Width
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.Width
+  id: Width
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: PNGParser.PNGHeader.Width
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width
+    return:
+      type: System.Int32
+    content.vb: Public Width As Integer
+- uid: Map.Loading.Images.PNGParser.PNGHeader.Height
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.Height
+  id: Height
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: PNGParser.PNGHeader.Height
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 27
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height
+    return:
+      type: System.Int32
+    content.vb: Public Height As Integer
+- uid: Map.Loading.Images.PNGParser.PNGHeader.BitDepth
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.BitDepth
+  id: BitDepth
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: BitDepth
+  nameWithType: PNGParser.PNGHeader.BitDepth
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.BitDepth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BitDepth
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public byte BitDepth
+    return:
+      type: System.Byte
+    content.vb: Public BitDepth As Byte
+- uid: Map.Loading.Images.PNGParser.PNGHeader.ColorType
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.ColorType
+  id: ColorType
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: ColorType
+  nameWithType: PNGParser.PNGHeader.ColorType
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.ColorType
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorType
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public byte ColorType
+    return:
+      type: System.Byte
+    content.vb: Public ColorType As Byte
+- uid: Map.Loading.Images.PNGParser.PNGHeader.CompressionMethod
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.CompressionMethod
+  id: CompressionMethod
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: CompressionMethod
+  nameWithType: PNGParser.PNGHeader.CompressionMethod
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.CompressionMethod
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompressionMethod
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 30
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public byte CompressionMethod
+    return:
+      type: System.Byte
+    content.vb: Public CompressionMethod As Byte
+- uid: Map.Loading.Images.PNGParser.PNGHeader.FilterMethod
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.FilterMethod
+  id: FilterMethod
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: FilterMethod
+  nameWithType: PNGParser.PNGHeader.FilterMethod
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.FilterMethod
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FilterMethod
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public byte FilterMethod
+    return:
+      type: System.Byte
+    content.vb: Public FilterMethod As Byte
+- uid: Map.Loading.Images.PNGParser.PNGHeader.InterlaceMethod
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.InterlaceMethod
+  id: InterlaceMethod
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: InterlaceMethod
+  nameWithType: PNGParser.PNGHeader.InterlaceMethod
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.InterlaceMethod
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InterlaceMethod
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public byte InterlaceMethod
+    return:
+      type: System.Byte
+    content.vb: Public InterlaceMethod As Byte
+- uid: Map.Loading.Images.PNGParser.PNGHeader.IsSuccess
+  commentId: F:Map.Loading.Images.PNGParser.PNGHeader.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: PNGParser.PNGHeader.IsSuccess
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.PNGParser.PNGHeader.IsValid
+  commentId: P:Map.Loading.Images.PNGParser.PNGHeader.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: PNGParser.PNGHeader.IsValid
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Map.Loading.Images.PNGParser.PNGHeader.IsValid*
+- uid: Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+  commentId: P:Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+  id: IsSupported
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: IsSupported
+  nameWithType: PNGParser.PNGHeader.IsSupported
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSupported
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSupported { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsSupported As Boolean
+  overload: Map.Loading.Images.PNGParser.PNGHeader.IsSupported*
+- uid: Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+  commentId: P:Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+  id: BytesPerPixel
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: BytesPerPixel
+  nameWithType: PNGParser.PNGHeader.BytesPerPixel
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BytesPerPixel
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int BytesPerPixel { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property BytesPerPixel As Integer
+  overload: Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel*
+- uid: Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+  commentId: P:Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+  id: HasPalette
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: HasPalette
+  nameWithType: PNGParser.PNGHeader.HasPalette
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasPalette
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool HasPalette { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasPalette As Boolean
+  overload: Map.Loading.Images.PNGParser.PNGHeader.HasPalette*
+- uid: Map.Loading.Images.PNGParser.PNGHeader.HasAlpha
+  commentId: P:Map.Loading.Images.PNGParser.PNGHeader.HasAlpha
+  id: HasAlpha
+  parent: Map.Loading.Images.PNGParser.PNGHeader
+  langs:
+  - csharp
+  - vb
+  name: HasAlpha
+  nameWithType: PNGParser.PNGHeader.HasAlpha
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.HasAlpha
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/PNGParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasAlpha
+    path: Scripts/Map/Loading/Images/PNGParser.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool HasAlpha { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasAlpha As Boolean
+  overload: Map.Loading.Images.PNGParser.PNGHeader.HasAlpha*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.PNGParser.PNGHeader.IsValid*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGHeader.IsValid
+  href: Map.Loading.Images.PNGParser.PNGHeader.html#Map_Loading_Images_PNGParser_PNGHeader_IsValid
+  name: IsValid
+  nameWithType: PNGParser.PNGHeader.IsValid
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.IsValid
+- uid: Map.Loading.Images.PNGParser.PNGHeader.IsSupported*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+  href: Map.Loading.Images.PNGParser.PNGHeader.html#Map_Loading_Images_PNGParser_PNGHeader_IsSupported
+  name: IsSupported
+  nameWithType: PNGParser.PNGHeader.IsSupported
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.IsSupported
+- uid: Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+  href: Map.Loading.Images.PNGParser.PNGHeader.html#Map_Loading_Images_PNGParser_PNGHeader_BytesPerPixel
+  name: BytesPerPixel
+  nameWithType: PNGParser.PNGHeader.BytesPerPixel
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.BytesPerPixel
+- uid: Map.Loading.Images.PNGParser.PNGHeader.HasPalette*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+  href: Map.Loading.Images.PNGParser.PNGHeader.html#Map_Loading_Images_PNGParser_PNGHeader_HasPalette
+  name: HasPalette
+  nameWithType: PNGParser.PNGHeader.HasPalette
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.HasPalette
+- uid: Map.Loading.Images.PNGParser.PNGHeader.HasAlpha*
+  commentId: Overload:Map.Loading.Images.PNGParser.PNGHeader.HasAlpha
+  href: Map.Loading.Images.PNGParser.PNGHeader.html#Map_Loading_Images_PNGParser_PNGHeader_HasAlpha
+  name: HasAlpha
+  nameWithType: PNGParser.PNGHeader.HasAlpha
+  fullName: Map.Loading.Images.PNGParser.PNGHeader.HasAlpha

@@ -1,0 +1,599 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  id: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPColorCollectionJob
+  - Map.Loading.Images.BMPLoadResult
+  - Map.Loading.Images.BMPParser
+  - Map.Loading.Images.BMPParser.BMPFileHeader
+  - Map.Loading.Images.BMPParser.BMPHeader
+  - Map.Loading.Images.BMPParser.BMPInfoHeader
+  - Map.Loading.Images.BMPParser.BMPPixelData
+  - Map.Loading.Images.BMPPixelSearchJob
+  - Map.Loading.Images.BMPProvinceStatsData
+  - Map.Loading.Images.BMPProvinceStatsJob
+  - Map.Loading.Images.BitmapTextureLoader
+  - Map.Loading.Images.HeightmapBitmapLoader
+  - Map.Loading.Images.HeightmapImageLoader
+  - Map.Loading.Images.HeightmapParser
+  - Map.Loading.Images.HeightmapParser.HeightmapResult
+  - Map.Loading.Images.HeightmapParser.HeightmapStats
+  - Map.Loading.Images.HeightmapParser.TerrainType
+  - Map.Loading.Images.ImageParser
+  - Map.Loading.Images.ImageParser.ImageFormat
+  - Map.Loading.Images.ImageParser.ImageHeader
+  - Map.Loading.Images.ImageParser.ImagePixelData
+  - Map.Loading.Images.JobifiedBMPLoader
+  - Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  - Map.Loading.Images.NormalMapBitmapLoader
+  - Map.Loading.Images.NormalMapImageLoader
+  - Map.Loading.Images.PNGParser
+  - Map.Loading.Images.PNGParser.PNGHeader
+  - Map.Loading.Images.PNGParser.PNGPixelData
+  - Map.Loading.Images.PersistentBMPPixelData
+  - Map.Loading.Images.PixelCoord
+  - Map.Loading.Images.ProvinceBounds
+  - Map.Loading.Images.ProvinceMapParser
+  - Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+  - Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+  - Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  - Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  - Map.Loading.Images.TerrainImageLoader
+  langs:
+  - csharp
+  - vb
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Loading.Images.PNGParser
+  commentId: T:Map.Loading.Images.PNGParser
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser
+  nameWithType: PNGParser
+  fullName: Map.Loading.Images.PNGParser
+- uid: Map.Loading.Images.PNGParser.PNGHeader
+  commentId: T:Map.Loading.Images.PNGParser.PNGHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGHeader
+  nameWithType: PNGParser.PNGHeader
+  fullName: Map.Loading.Images.PNGParser.PNGHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGHeader
+    name: PNGHeader
+    href: Map.Loading.Images.PNGParser.PNGHeader.html
+- uid: Map.Loading.Images.PNGParser.PNGPixelData
+  commentId: T:Map.Loading.Images.PNGParser.PNGPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PNGParser.html
+  name: PNGParser.PNGPixelData
+  nameWithType: PNGParser.PNGPixelData
+  fullName: Map.Loading.Images.PNGParser.PNGPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGPixelData
+    name: PNGPixelData
+    href: Map.Loading.Images.PNGParser.PNGPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.PNGParser
+    name: PNGParser
+    href: Map.Loading.Images.PNGParser.html
+  - name: .
+  - uid: Map.Loading.Images.PNGParser.PNGPixelData
+    name: PNGPixelData
+    href: Map.Loading.Images.PNGParser.PNGPixelData.html
+- uid: Map.Loading.Images.ImageParser
+  commentId: T:Map.Loading.Images.ImageParser
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser
+  nameWithType: ImageParser
+  fullName: Map.Loading.Images.ImageParser
+- uid: Map.Loading.Images.ImageParser.ImageFormat
+  commentId: T:Map.Loading.Images.ImageParser.ImageFormat
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageFormat
+  nameWithType: ImageParser.ImageFormat
+  fullName: Map.Loading.Images.ImageParser.ImageFormat
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageFormat
+    name: ImageFormat
+    href: Map.Loading.Images.ImageParser.ImageFormat.html
+- uid: Map.Loading.Images.ImageParser.ImageHeader
+  commentId: T:Map.Loading.Images.ImageParser.ImageHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImageHeader
+  nameWithType: ImageParser.ImageHeader
+  fullName: Map.Loading.Images.ImageParser.ImageHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageHeader
+    name: ImageHeader
+    href: Map.Loading.Images.ImageParser.ImageHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImageHeader
+    name: ImageHeader
+    href: Map.Loading.Images.ImageParser.ImageHeader.html
+- uid: Map.Loading.Images.ImageParser.ImagePixelData
+  commentId: T:Map.Loading.Images.ImageParser.ImagePixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImagePixelData
+  nameWithType: ImageParser.ImagePixelData
+  fullName: Map.Loading.Images.ImageParser.ImagePixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+- uid: Map.Loading.Images.HeightmapImageLoader
+  commentId: T:Map.Loading.Images.HeightmapImageLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapImageLoader.html
+  name: HeightmapImageLoader
+  nameWithType: HeightmapImageLoader
+  fullName: Map.Loading.Images.HeightmapImageLoader
+- uid: Map.Loading.Images.HeightmapBitmapLoader
+  commentId: T:Map.Loading.Images.HeightmapBitmapLoader
+  href: Map.Loading.Images.HeightmapBitmapLoader.html
+  name: HeightmapBitmapLoader
+  nameWithType: HeightmapBitmapLoader
+  fullName: Map.Loading.Images.HeightmapBitmapLoader
+- uid: Map.Loading.Images.JobifiedBMPLoader
+  commentId: T:Map.Loading.Images.JobifiedBMPLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.JobifiedBMPLoader.html
+  name: JobifiedBMPLoader
+  nameWithType: JobifiedBMPLoader
+  fullName: Map.Loading.Images.JobifiedBMPLoader
+- uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  commentId: T:Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  href: Map.Loading.Images.JobifiedBMPLoader.html
+  name: JobifiedBMPLoader.LoadingProgress
+  nameWithType: JobifiedBMPLoader.LoadingProgress
+  fullName: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+  spec.csharp:
+  - uid: Map.Loading.Images.JobifiedBMPLoader
+    name: JobifiedBMPLoader
+    href: Map.Loading.Images.JobifiedBMPLoader.html
+  - name: .
+  - uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+    name: LoadingProgress
+    href: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.html
+  spec.vb:
+  - uid: Map.Loading.Images.JobifiedBMPLoader
+    name: JobifiedBMPLoader
+    href: Map.Loading.Images.JobifiedBMPLoader.html
+  - name: .
+  - uid: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress
+    name: LoadingProgress
+    href: Map.Loading.Images.JobifiedBMPLoader.LoadingProgress.html
+- uid: Map.Loading.Images.BMPLoadResult
+  commentId: T:Map.Loading.Images.BMPLoadResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPLoadResult.html
+  name: BMPLoadResult
+  nameWithType: BMPLoadResult
+  fullName: Map.Loading.Images.BMPLoadResult
+- uid: Map.Loading.Images.PersistentBMPPixelData
+  commentId: T:Map.Loading.Images.PersistentBMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PersistentBMPPixelData.html
+  name: PersistentBMPPixelData
+  nameWithType: PersistentBMPPixelData
+  fullName: Map.Loading.Images.PersistentBMPPixelData
+- uid: Map.Loading.Images.ProvinceMapParser
+  commentId: T:Map.Loading.Images.ProvinceMapParser
+  href: Map.Loading.Images.ProvinceMapParser.html
+  name: ProvinceMapParser
+  nameWithType: ProvinceMapParser
+  fullName: Map.Loading.Images.ProvinceMapParser
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+  commentId: T:Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ProvinceMapParser.html
+  name: ProvinceMapParser.ProvinceMapResult
+  nameWithType: ProvinceMapParser.ProvinceMapResult
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+  spec.csharp:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult.html
+  spec.vb:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult
+    name: ProvinceMapResult
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceMapResult.html
+- uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  commentId: T:Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ProvinceMapParser.html
+  name: ProvinceMapParser.UnifiedProvinceMapResult
+  nameWithType: ProvinceMapParser.UnifiedProvinceMapResult
+  fullName: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+  spec.csharp:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+    name: UnifiedProvinceMapResult
+    href: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.html
+  spec.vb:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+    name: UnifiedProvinceMapResult
+    href: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult.html
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  commentId: T:Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ProvinceMapParser.html
+  name: ProvinceMapParser.ProvinceStats
+  nameWithType: ProvinceMapParser.ProvinceStats
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+  spec.csharp:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+    name: ProvinceStats
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceStats.html
+  spec.vb:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceStats
+    name: ProvinceStats
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceStats.html
+- uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+  commentId: T:Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ProvinceMapParser.html
+  name: ProvinceMapParser.ProvinceMapValidationResult
+  nameWithType: ProvinceMapParser.ProvinceMapValidationResult
+  fullName: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+  spec.csharp:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+    name: ProvinceMapValidationResult
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult.html
+  spec.vb:
+  - uid: Map.Loading.Images.ProvinceMapParser
+    name: ProvinceMapParser
+    href: Map.Loading.Images.ProvinceMapParser.html
+  - name: .
+  - uid: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult
+    name: ProvinceMapValidationResult
+    href: Map.Loading.Images.ProvinceMapParser.ProvinceMapValidationResult.html
+- uid: Map.Loading.Images.TerrainImageLoader
+  commentId: T:Map.Loading.Images.TerrainImageLoader
+  href: Map.Loading.Images.TerrainImageLoader.html
+  name: TerrainImageLoader
+  nameWithType: TerrainImageLoader
+  fullName: Map.Loading.Images.TerrainImageLoader
+- uid: Map.Loading.Images.BMPColorCollectionJob
+  commentId: T:Map.Loading.Images.BMPColorCollectionJob
+  href: Map.Loading.Images.BMPColorCollectionJob.html
+  name: BMPColorCollectionJob
+  nameWithType: BMPColorCollectionJob
+  fullName: Map.Loading.Images.BMPColorCollectionJob
+- uid: Map.Loading.Images.BMPPixelSearchJob
+  commentId: T:Map.Loading.Images.BMPPixelSearchJob
+  href: Map.Loading.Images.BMPPixelSearchJob.html
+  name: BMPPixelSearchJob
+  nameWithType: BMPPixelSearchJob
+  fullName: Map.Loading.Images.BMPPixelSearchJob
+- uid: Map.Loading.Images.BMPProvinceStatsJob
+  commentId: T:Map.Loading.Images.BMPProvinceStatsJob
+  href: Map.Loading.Images.BMPProvinceStatsJob.html
+  name: BMPProvinceStatsJob
+  nameWithType: BMPProvinceStatsJob
+  fullName: Map.Loading.Images.BMPProvinceStatsJob
+- uid: Map.Loading.Images.BMPProvinceStatsData
+  commentId: T:Map.Loading.Images.BMPProvinceStatsData
+  href: Map.Loading.Images.BMPProvinceStatsData.html
+  name: BMPProvinceStatsData
+  nameWithType: BMPProvinceStatsData
+  fullName: Map.Loading.Images.BMPProvinceStatsData
+- uid: Map.Loading.Images.ProvinceBounds
+  commentId: T:Map.Loading.Images.ProvinceBounds
+  href: Map.Loading.Images.ProvinceBounds.html
+  name: ProvinceBounds
+  nameWithType: ProvinceBounds
+  fullName: Map.Loading.Images.ProvinceBounds
+- uid: Map.Loading.Images.BMPParser
+  commentId: T:Map.Loading.Images.BMPParser
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser
+  nameWithType: BMPParser
+  fullName: Map.Loading.Images.BMPParser
+- uid: Map.Loading.Images.BMPParser.BMPFileHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPFileHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPFileHeader
+  nameWithType: BMPParser.BMPFileHeader
+  fullName: Map.Loading.Images.BMPParser.BMPFileHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPFileHeader
+    name: BMPFileHeader
+    href: Map.Loading.Images.BMPParser.BMPFileHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPFileHeader
+    name: BMPFileHeader
+    href: Map.Loading.Images.BMPParser.BMPFileHeader.html
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPInfoHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPInfoHeader
+  nameWithType: BMPParser.BMPInfoHeader
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPInfoHeader
+    name: BMPInfoHeader
+    href: Map.Loading.Images.BMPParser.BMPInfoHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPInfoHeader
+    name: BMPInfoHeader
+    href: Map.Loading.Images.BMPParser.BMPInfoHeader.html
+- uid: Map.Loading.Images.BMPParser.BMPHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPHeader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPHeader
+  nameWithType: BMPParser.BMPHeader
+  fullName: Map.Loading.Images.BMPParser.BMPHeader
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPHeader
+    name: BMPHeader
+    href: Map.Loading.Images.BMPParser.BMPHeader.html
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: Map.Loading.Images.PixelCoord
+  commentId: T:Map.Loading.Images.PixelCoord
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PixelCoord.html
+  name: PixelCoord
+  nameWithType: PixelCoord
+  fullName: Map.Loading.Images.PixelCoord
+- uid: Map.Loading.Images.BitmapTextureLoader
+  commentId: T:Map.Loading.Images.BitmapTextureLoader
+  href: Map.Loading.Images.BitmapTextureLoader.html
+  name: BitmapTextureLoader
+  nameWithType: BitmapTextureLoader
+  fullName: Map.Loading.Images.BitmapTextureLoader
+- uid: Map.Loading.Images.NormalMapImageLoader
+  commentId: T:Map.Loading.Images.NormalMapImageLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.NormalMapImageLoader.html
+  name: NormalMapImageLoader
+  nameWithType: NormalMapImageLoader
+  fullName: Map.Loading.Images.NormalMapImageLoader
+- uid: Map.Loading.Images.NormalMapBitmapLoader
+  commentId: T:Map.Loading.Images.NormalMapBitmapLoader
+  href: Map.Loading.Images.NormalMapBitmapLoader.html
+  name: NormalMapBitmapLoader
+  nameWithType: NormalMapBitmapLoader
+  fullName: Map.Loading.Images.NormalMapBitmapLoader
+- uid: Map.Loading.Images.HeightmapParser
+  commentId: T:Map.Loading.Images.HeightmapParser
+  href: Map.Loading.Images.HeightmapParser.html
+  name: HeightmapParser
+  nameWithType: HeightmapParser
+  fullName: Map.Loading.Images.HeightmapParser
+- uid: Map.Loading.Images.HeightmapParser.HeightmapResult
+  commentId: T:Map.Loading.Images.HeightmapParser.HeightmapResult
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapParser.html
+  name: HeightmapParser.HeightmapResult
+  nameWithType: HeightmapParser.HeightmapResult
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapResult
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapResult
+    name: HeightmapResult
+    href: Map.Loading.Images.HeightmapParser.HeightmapResult.html
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapResult
+    name: HeightmapResult
+    href: Map.Loading.Images.HeightmapParser.HeightmapResult.html
+- uid: Map.Loading.Images.HeightmapParser.TerrainType
+  commentId: T:Map.Loading.Images.HeightmapParser.TerrainType
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapParser.html
+  name: HeightmapParser.TerrainType
+  nameWithType: HeightmapParser.TerrainType
+  fullName: Map.Loading.Images.HeightmapParser.TerrainType
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.TerrainType
+    name: TerrainType
+    href: Map.Loading.Images.HeightmapParser.TerrainType.html
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.TerrainType
+    name: TerrainType
+    href: Map.Loading.Images.HeightmapParser.TerrainType.html
+- uid: Map.Loading.Images.HeightmapParser.HeightmapStats
+  commentId: T:Map.Loading.Images.HeightmapParser.HeightmapStats
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapParser.html
+  name: HeightmapParser.HeightmapStats
+  nameWithType: HeightmapParser.HeightmapStats
+  fullName: Map.Loading.Images.HeightmapParser.HeightmapStats
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapStats
+    name: HeightmapStats
+    href: Map.Loading.Images.HeightmapParser.HeightmapStats.html
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapParser
+    name: HeightmapParser
+    href: Map.Loading.Images.HeightmapParser.html
+  - name: .
+  - uid: Map.Loading.Images.HeightmapParser.HeightmapStats
+    name: HeightmapStats
+    href: Map.Loading.Images.HeightmapParser.HeightmapStats.html
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html

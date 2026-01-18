@@ -1,0 +1,401 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.TreeInstanceGenerator
+  commentId: T:Map.Rendering.TreeInstanceGenerator
+  id: TreeInstanceGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.TreeInstanceGenerator.#ctor(UnityEngine.ComputeShader,System.Int32,System.Int32,System.Int32,System.Boolean)
+  - Map.Rendering.TreeInstanceGenerator.GenerateTrees(UnityEngine.Texture2D,UnityEngine.Texture2D,System.UInt32[],System.Single,System.Single,System.Single,System.Single,System.Single)
+  - Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer
+  - Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer
+  - Map.Rendering.TreeInstanceGenerator.Release
+  langs:
+  - csharp
+  - vb
+  name: TreeInstanceGenerator
+  nameWithType: TreeInstanceGenerator
+  fullName: Map.Rendering.TreeInstanceGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TreeInstanceGenerator
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    GPU-driven tree instance generation using compute shaders.
+
+
+    Architecture:
+
+    - Reads terrain type texture to determine tree placement
+
+    - Generates tree positions/rotations/scales procedurally on GPU
+
+    - Outputs StructuredBuffer for DrawMeshInstancedIndirect
+
+    - Deterministic (same terrain = same trees)
+
+
+    Performance:
+
+    - Runs once at map load (or when terrain changes)
+
+    - GPU parallel processing (8x8 thread groups)
+
+    - Zero CPU overhead after generation
+
+
+    Usage:
+
+    - Call GenerateTrees() to populate buffers
+
+    - Use GetTreeMatrixBuffer() for indirect rendering
+  example: []
+  syntax:
+    content: public class TreeInstanceGenerator
+    content.vb: Public Class TreeInstanceGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.TreeInstanceGenerator.#ctor(UnityEngine.ComputeShader,System.Int32,System.Int32,System.Int32,System.Boolean)
+  commentId: M:Map.Rendering.TreeInstanceGenerator.#ctor(UnityEngine.ComputeShader,System.Int32,System.Int32,System.Int32,System.Boolean)
+  id: '#ctor(UnityEngine.ComputeShader,System.Int32,System.Int32,System.Int32,System.Boolean)'
+  parent: Map.Rendering.TreeInstanceGenerator
+  langs:
+  - csharp
+  - vb
+  name: TreeInstanceGenerator(ComputeShader, int, int, int, bool)
+  nameWithType: TreeInstanceGenerator.TreeInstanceGenerator(ComputeShader, int, int, int, bool)
+  fullName: Map.Rendering.TreeInstanceGenerator.TreeInstanceGenerator(UnityEngine.ComputeShader, int, int, int, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 55
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public TreeInstanceGenerator(ComputeShader shader, int mapWidth, int mapHeight, int maxTrees = 100000, bool logProgress = true)
+    parameters:
+    - id: shader
+      type: UnityEngine.ComputeShader
+    - id: mapWidth
+      type: System.Int32
+    - id: mapHeight
+      type: System.Int32
+    - id: maxTrees
+      type: System.Int32
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub New(shader As ComputeShader, mapWidth As Integer, mapHeight As Integer, maxTrees As Integer = 100000, logProgress As Boolean = True)
+  overload: Map.Rendering.TreeInstanceGenerator.#ctor*
+  nameWithType.vb: TreeInstanceGenerator.New(ComputeShader, Integer, Integer, Integer, Boolean)
+  fullName.vb: Map.Rendering.TreeInstanceGenerator.New(UnityEngine.ComputeShader, Integer, Integer, Integer, Boolean)
+  name.vb: New(ComputeShader, Integer, Integer, Integer, Boolean)
+- uid: Map.Rendering.TreeInstanceGenerator.GenerateTrees(UnityEngine.Texture2D,UnityEngine.Texture2D,System.UInt32[],System.Single,System.Single,System.Single,System.Single,System.Single)
+  commentId: M:Map.Rendering.TreeInstanceGenerator.GenerateTrees(UnityEngine.Texture2D,UnityEngine.Texture2D,System.UInt32[],System.Single,System.Single,System.Single,System.Single,System.Single)
+  id: GenerateTrees(UnityEngine.Texture2D,UnityEngine.Texture2D,System.UInt32[],System.Single,System.Single,System.Single,System.Single,System.Single)
+  parent: Map.Rendering.TreeInstanceGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateTrees(Texture2D, Texture2D, uint[], float, float, float, float, float)
+  nameWithType: TreeInstanceGenerator.GenerateTrees(Texture2D, Texture2D, uint[], float, float, float, float, float)
+  fullName: Map.Rendering.TreeInstanceGenerator.GenerateTrees(UnityEngine.Texture2D, UnityEngine.Texture2D, uint[], float, float, float, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateTrees
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 105
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generate tree instances based on terrain types.
+
+    Runs compute shader to populate tree matrix buffer.
+  example: []
+  syntax:
+    content: public void GenerateTrees(Texture2D terrainTypeTexture, Texture2D heightmapTexture, uint[] treeTerrainTypes, float treeDensity = 10, float treeScale = 1, float treeScaleVariation = 0.3, float mapWorldWidth = 0, float mapWorldHeight = 0)
+    parameters:
+    - id: terrainTypeTexture
+      type: UnityEngine.Texture2D
+      description: R8 texture with terrain type indices
+    - id: heightmapTexture
+      type: UnityEngine.Texture2D
+      description: R8 texture with heightmap data
+    - id: treeTerrainTypes
+      type: System.UInt32[]
+      description: Which terrain types spawn trees (GAME layer policy)
+    - id: treeDensity
+      type: System.Single
+      description: Trees per 100 world units squared
+    - id: treeScale
+      type: System.Single
+      description: Base tree scale
+    - id: treeScaleVariation
+      type: System.Single
+      description: Random scale variation (0-1)
+    - id: mapWorldWidth
+      type: System.Single
+      description: Map width in world space units
+    - id: mapWorldHeight
+      type: System.Single
+      description: Map height in world space units
+    content.vb: Public Sub GenerateTrees(terrainTypeTexture As Texture2D, heightmapTexture As Texture2D, treeTerrainTypes As UInteger(), treeDensity As Single = 10, treeScale As Single = 1, treeScaleVariation As Single = 0.3, mapWorldWidth As Single = 0, mapWorldHeight As Single = 0)
+  overload: Map.Rendering.TreeInstanceGenerator.GenerateTrees*
+  nameWithType.vb: TreeInstanceGenerator.GenerateTrees(Texture2D, Texture2D, UInteger(), Single, Single, Single, Single, Single)
+  fullName.vb: Map.Rendering.TreeInstanceGenerator.GenerateTrees(UnityEngine.Texture2D, UnityEngine.Texture2D, UInteger(), Single, Single, Single, Single, Single)
+  name.vb: GenerateTrees(Texture2D, Texture2D, UInteger(), Single, Single, Single, Single, Single)
+- uid: Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer
+  commentId: M:Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer
+  id: GetTreeMatrixBuffer
+  parent: Map.Rendering.TreeInstanceGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetTreeMatrixBuffer()
+  nameWithType: TreeInstanceGenerator.GetTreeMatrixBuffer()
+  fullName: Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTreeMatrixBuffer
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 195
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the tree matrix buffer for rendering (DrawMeshInstancedIndirect)
+  example: []
+  syntax:
+    content: public ComputeBuffer GetTreeMatrixBuffer()
+    return:
+      type: UnityEngine.ComputeBuffer
+    content.vb: Public Function GetTreeMatrixBuffer() As ComputeBuffer
+  overload: Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer*
+- uid: Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer
+  commentId: M:Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer
+  id: GetTreeCountBuffer
+  parent: Map.Rendering.TreeInstanceGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetTreeCountBuffer()
+  nameWithType: TreeInstanceGenerator.GetTreeCountBuffer()
+  fullName: Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTreeCountBuffer
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 200
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the tree count buffer for indirect args
+  example: []
+  syntax:
+    content: public ComputeBuffer GetTreeCountBuffer()
+    return:
+      type: UnityEngine.ComputeBuffer
+    content.vb: Public Function GetTreeCountBuffer() As ComputeBuffer
+  overload: Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer*
+- uid: Map.Rendering.TreeInstanceGenerator.Release
+  commentId: M:Map.Rendering.TreeInstanceGenerator.Release
+  id: Release
+  parent: Map.Rendering.TreeInstanceGenerator
+  langs:
+  - csharp
+  - vb
+  name: Release()
+  nameWithType: TreeInstanceGenerator.Release()
+  fullName: Map.Rendering.TreeInstanceGenerator.Release()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Release
+    path: Scripts/Map/Rendering/TreeInstanceGenerator.cs
+    startLine: 205
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Release GPU buffers
+  example: []
+  syntax:
+    content: public void Release()
+    content.vb: Public Sub Release()
+  overload: Map.Rendering.TreeInstanceGenerator.Release*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.TreeInstanceGenerator.#ctor*
+  commentId: Overload:Map.Rendering.TreeInstanceGenerator.#ctor
+  href: Map.Rendering.TreeInstanceGenerator.html#Map_Rendering_TreeInstanceGenerator__ctor_UnityEngine_ComputeShader_System_Int32_System_Int32_System_Int32_System_Boolean_
+  name: TreeInstanceGenerator
+  nameWithType: TreeInstanceGenerator.TreeInstanceGenerator
+  fullName: Map.Rendering.TreeInstanceGenerator.TreeInstanceGenerator
+  nameWithType.vb: TreeInstanceGenerator.New
+  fullName.vb: Map.Rendering.TreeInstanceGenerator.New
+  name.vb: New
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.TreeInstanceGenerator.GenerateTrees*
+  commentId: Overload:Map.Rendering.TreeInstanceGenerator.GenerateTrees
+  href: Map.Rendering.TreeInstanceGenerator.html#Map_Rendering_TreeInstanceGenerator_GenerateTrees_UnityEngine_Texture2D_UnityEngine_Texture2D_System_UInt32___System_Single_System_Single_System_Single_System_Single_System_Single_
+  name: GenerateTrees
+  nameWithType: TreeInstanceGenerator.GenerateTrees
+  fullName: Map.Rendering.TreeInstanceGenerator.GenerateTrees
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer*
+  commentId: Overload:Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer
+  href: Map.Rendering.TreeInstanceGenerator.html#Map_Rendering_TreeInstanceGenerator_GetTreeMatrixBuffer
+  name: GetTreeMatrixBuffer
+  nameWithType: TreeInstanceGenerator.GetTreeMatrixBuffer
+  fullName: Map.Rendering.TreeInstanceGenerator.GetTreeMatrixBuffer
+- uid: UnityEngine.ComputeBuffer
+  commentId: T:UnityEngine.ComputeBuffer
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeBuffer
+  nameWithType: ComputeBuffer
+  fullName: UnityEngine.ComputeBuffer
+- uid: Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer*
+  commentId: Overload:Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer
+  href: Map.Rendering.TreeInstanceGenerator.html#Map_Rendering_TreeInstanceGenerator_GetTreeCountBuffer
+  name: GetTreeCountBuffer
+  nameWithType: TreeInstanceGenerator.GetTreeCountBuffer
+  fullName: Map.Rendering.TreeInstanceGenerator.GetTreeCountBuffer
+- uid: Map.Rendering.TreeInstanceGenerator.Release*
+  commentId: Overload:Map.Rendering.TreeInstanceGenerator.Release
+  href: Map.Rendering.TreeInstanceGenerator.html#Map_Rendering_TreeInstanceGenerator_Release
+  name: Release
+  nameWithType: TreeInstanceGenerator.Release
+  fullName: Map.Rendering.TreeInstanceGenerator.Release

@@ -1,0 +1,346 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+  commentId: T:Map.Province.ProvinceMetadataGenerator.TerrainType
+  id: ProvinceMetadataGenerator.TerrainType
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Coastal
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Desert
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Forest
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Hills
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Impassable
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Island
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Lake
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Mountains
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Plains
+  - Map.Province.ProvinceMetadataGenerator.TerrainType.Swamp
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataGenerator.TerrainType
+  nameWithType: ProvinceMetadataGenerator.TerrainType
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainType
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 54
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Terrain classification for provinces
+  example: []
+  syntax:
+    content: 'public enum ProvinceMetadataGenerator.TerrainType : byte'
+    content.vb: Public Enum ProvinceMetadataGenerator.TerrainType As Byte
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Plains
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Plains
+  id: Plains
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Plains
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Plains
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Plains
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Plains
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 56
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Plains = 0
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Hills
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Hills
+  id: Hills
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Hills
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Hills
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Hills
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hills
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Hills = 1
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Mountains
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Mountains
+  id: Mountains
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Mountains
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Mountains
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Mountains
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mountains
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 58
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Mountains = 2
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Forest
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Forest
+  id: Forest
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Forest
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Forest
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Forest
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Forest
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Forest = 3
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Desert
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Desert
+  id: Desert
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Desert
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Desert
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Desert
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Desert
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 60
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Desert = 4
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Swamp
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Swamp
+  id: Swamp
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Swamp
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Swamp
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Swamp
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Swamp
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Swamp = 5
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Lake
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Lake
+  id: Lake
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Lake
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Lake
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Lake
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Lake
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 62
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Lake = 6
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Coastal
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Coastal
+  id: Coastal
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Coastal
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Coastal
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Coastal
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Coastal
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 63
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Coastal = 7
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Island
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Island
+  id: Island
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Island
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Island
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Island
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Island
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 64
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Island = 8
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType.Impassable
+  commentId: F:Map.Province.ProvinceMetadataGenerator.TerrainType.Impassable
+  id: Impassable
+  parent: Map.Province.ProvinceMetadataGenerator.TerrainType
+  langs:
+  - csharp
+  - vb
+  name: Impassable
+  nameWithType: ProvinceMetadataGenerator.TerrainType.Impassable
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType.Impassable
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Impassable
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 65
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: Impassable = 255
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+  commentId: T:Map.Province.ProvinceMetadataGenerator.TerrainType
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.TerrainType
+  nameWithType: ProvinceMetadataGenerator.TerrainType
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html

@@ -1,0 +1,331 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.BorderStyle
+  commentId: T:Map.Rendering.BorderStyle
+  id: BorderStyle
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.BorderStyle.CountryBorder(UnityEngine.Color)
+  - Map.Rendering.BorderStyle.Hidden
+  - Map.Rendering.BorderStyle.ProvinceBorder
+  - Map.Rendering.BorderStyle.color
+  - Map.Rendering.BorderStyle.thickness
+  - Map.Rendering.BorderStyle.type
+  - Map.Rendering.BorderStyle.visible
+  langs:
+  - csharp
+  - vb
+  name: BorderStyle
+  nameWithType: BorderStyle
+  fullName: Map.Rendering.BorderStyle
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderStyle
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 9
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Style information for rendering a border segment
+
+    Static geometry (curves), dynamic appearance (colors, thickness)
+  example: []
+  syntax:
+    content: public struct BorderStyle
+    content.vb: Public Structure BorderStyle
+- uid: Map.Rendering.BorderStyle.type
+  commentId: F:Map.Rendering.BorderStyle.type
+  id: type
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: type
+  nameWithType: BorderStyle.type
+  fullName: Map.Rendering.BorderStyle.type
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: type
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 11
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public BorderType type
+    return:
+      type: Map.Rendering.BorderType
+    content.vb: Public type As BorderType
+- uid: Map.Rendering.BorderStyle.color
+  commentId: F:Map.Rendering.BorderStyle.color
+  id: color
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: color
+  nameWithType: BorderStyle.color
+  fullName: Map.Rendering.BorderStyle.color
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: color
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public Color color
+    return:
+      type: UnityEngine.Color
+    content.vb: Public color As Color
+- uid: Map.Rendering.BorderStyle.thickness
+  commentId: F:Map.Rendering.BorderStyle.thickness
+  id: thickness
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: thickness
+  nameWithType: BorderStyle.thickness
+  fullName: Map.Rendering.BorderStyle.thickness
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: thickness
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public float thickness
+    return:
+      type: System.Single
+    content.vb: Public thickness As Single
+- uid: Map.Rendering.BorderStyle.visible
+  commentId: F:Map.Rendering.BorderStyle.visible
+  id: visible
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: visible
+  nameWithType: BorderStyle.visible
+  fullName: Map.Rendering.BorderStyle.visible
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: visible
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public bool visible
+    return:
+      type: System.Boolean
+    content.vb: Public visible As Boolean
+- uid: Map.Rendering.BorderStyle.ProvinceBorder
+  commentId: P:Map.Rendering.BorderStyle.ProvinceBorder
+  id: ProvinceBorder
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: ProvinceBorder
+  nameWithType: BorderStyle.ProvinceBorder
+  fullName: Map.Rendering.BorderStyle.ProvinceBorder
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceBorder
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static BorderStyle ProvinceBorder { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.BorderStyle
+    content.vb: Public Shared ReadOnly Property ProvinceBorder As BorderStyle
+  overload: Map.Rendering.BorderStyle.ProvinceBorder*
+- uid: Map.Rendering.BorderStyle.CountryBorder(UnityEngine.Color)
+  commentId: M:Map.Rendering.BorderStyle.CountryBorder(UnityEngine.Color)
+  id: CountryBorder(UnityEngine.Color)
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: CountryBorder(Color)
+  nameWithType: BorderStyle.CountryBorder(Color)
+  fullName: Map.Rendering.BorderStyle.CountryBorder(UnityEngine.Color)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryBorder
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static BorderStyle CountryBorder(Color countryColor)
+    parameters:
+    - id: countryColor
+      type: UnityEngine.Color
+    return:
+      type: Map.Rendering.BorderStyle
+    content.vb: Public Shared Function CountryBorder(countryColor As Color) As BorderStyle
+  overload: Map.Rendering.BorderStyle.CountryBorder*
+- uid: Map.Rendering.BorderStyle.Hidden
+  commentId: P:Map.Rendering.BorderStyle.Hidden
+  id: Hidden
+  parent: Map.Rendering.BorderStyle
+  langs:
+  - csharp
+  - vb
+  name: Hidden
+  nameWithType: BorderStyle.Hidden
+  fullName: Map.Rendering.BorderStyle.Hidden
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hidden
+    path: Scripts/Map/Rendering/Border/BorderCurveCache.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public static BorderStyle Hidden { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.BorderStyle
+    content.vb: Public Shared ReadOnly Property Hidden As BorderStyle
+  overload: Map.Rendering.BorderStyle.Hidden*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.BorderType
+  commentId: T:Map.Rendering.BorderType
+  parent: Map.Rendering
+  href: Map.Rendering.BorderType.html
+  name: BorderType
+  nameWithType: BorderType
+  fullName: Map.Rendering.BorderType
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.BorderStyle.ProvinceBorder*
+  commentId: Overload:Map.Rendering.BorderStyle.ProvinceBorder
+  href: Map.Rendering.BorderStyle.html#Map_Rendering_BorderStyle_ProvinceBorder
+  name: ProvinceBorder
+  nameWithType: BorderStyle.ProvinceBorder
+  fullName: Map.Rendering.BorderStyle.ProvinceBorder
+- uid: Map.Rendering.BorderStyle
+  commentId: T:Map.Rendering.BorderStyle
+  parent: Map.Rendering
+  href: Map.Rendering.BorderStyle.html
+  name: BorderStyle
+  nameWithType: BorderStyle
+  fullName: Map.Rendering.BorderStyle
+- uid: Map.Rendering.BorderStyle.CountryBorder*
+  commentId: Overload:Map.Rendering.BorderStyle.CountryBorder
+  href: Map.Rendering.BorderStyle.html#Map_Rendering_BorderStyle_CountryBorder_UnityEngine_Color_
+  name: CountryBorder
+  nameWithType: BorderStyle.CountryBorder
+  fullName: Map.Rendering.BorderStyle.CountryBorder
+- uid: Map.Rendering.BorderStyle.Hidden*
+  commentId: Overload:Map.Rendering.BorderStyle.Hidden
+  href: Map.Rendering.BorderStyle.html#Map_Rendering_BorderStyle_Hidden
+  name: Hidden
+  nameWithType: BorderStyle.Hidden
+  fullName: Map.Rendering.BorderStyle.Hidden

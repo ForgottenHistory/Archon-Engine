@@ -1,0 +1,373 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceMetadataGenerator
+  commentId: T:Map.Province.ProvinceMetadataGenerator
+  id: ProvinceMetadataGenerator
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceMetadataGenerator.GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceNeighborDetector.NeighborResult,System.Boolean)
+  - Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  - Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata,System.Single)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataGenerator
+  nameWithType: ProvinceMetadataGenerator
+  fullName: Map.Province.ProvinceMetadataGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMetadataGenerator
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Advanced province metadata generation system
+
+    Calculates size, center of mass, connectivity, convex hulls, and terrain classification
+  example: []
+  syntax:
+    content: public static class ProvinceMetadataGenerator
+    content.vb: Public Module ProvinceMetadataGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Province.ProvinceMetadataGenerator.GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceNeighborDetector.NeighborResult,System.Boolean)
+  commentId: M:Map.Province.ProvinceMetadataGenerator.GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceNeighborDetector.NeighborResult,System.Boolean)
+  id: GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceNeighborDetector.NeighborResult,System.Boolean)
+  parent: Map.Province.ProvinceMetadataGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateMetadata(LoadResult, NeighborResult, bool)
+  nameWithType: ProvinceMetadataGenerator.GenerateMetadata(ProvinceMapLoader.LoadResult, ProvinceNeighborDetector.NeighborResult, bool)
+  fullName: Map.Province.ProvinceMetadataGenerator.GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult, Map.Province.ProvinceNeighborDetector.NeighborResult, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateMetadata
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Generate comprehensive metadata for all provinces
+  example: []
+  syntax:
+    content: public static ProvinceMetadataGenerator.MetadataResult GenerateMetadata(ProvinceMapLoader.LoadResult loadResult, ProvinceNeighborDetector.NeighborResult neighborResult, bool generateConvexHulls = true)
+    parameters:
+    - id: loadResult
+      type: Map.Loading.ProvinceMapLoader.LoadResult
+      description: Province map load result
+    - id: neighborResult
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+      description: Neighbor detection result
+    - id: generateConvexHulls
+      type: System.Boolean
+      description: Generate convex hulls for label placement
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.MetadataResult
+      description: Complete metadata result
+    content.vb: Public Shared Function GenerateMetadata(loadResult As ProvinceMapLoader.LoadResult, neighborResult As ProvinceNeighborDetector.NeighborResult, generateConvexHulls As Boolean = True) As ProvinceMetadataGenerator.MetadataResult
+  overload: Map.Province.ProvinceMetadataGenerator.GenerateMetadata*
+  nameWithType.vb: ProvinceMetadataGenerator.GenerateMetadata(ProvinceMapLoader.LoadResult, ProvinceNeighborDetector.NeighborResult, Boolean)
+  fullName.vb: Map.Province.ProvinceMetadataGenerator.GenerateMetadata(Map.Loading.ProvinceMapLoader.LoadResult, Map.Province.ProvinceNeighborDetector.NeighborResult, Boolean)
+  name.vb: GenerateMetadata(LoadResult, NeighborResult, Boolean)
+- uid: Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  commentId: M:Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  id: GetOptimalLabelPosition(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  parent: Map.Province.ProvinceMetadataGenerator
+  langs:
+  - csharp
+  - vb
+  name: GetOptimalLabelPosition(ProvinceMetadata)
+  nameWithType: ProvinceMetadataGenerator.GetOptimalLabelPosition(ProvinceMetadataGenerator.ProvinceMetadata)
+  fullName: Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOptimalLabelPosition
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 578
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get optimal label position for province
+  example: []
+  syntax:
+    content: public static float2 GetOptimalLabelPosition(ProvinceMetadataGenerator.ProvinceMetadata metadata)
+    parameters:
+    - id: metadata
+      type: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    return:
+      type: Unity.Mathematics.float2
+    content.vb: Public Shared Function GetOptimalLabelPosition(metadata As ProvinceMetadataGenerator.ProvinceMetadata) As float2
+  overload: Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition*
+- uid: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata,System.Single)
+  commentId: M:Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata,System.Single)
+  id: IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata,System.Single)
+  parent: Map.Province.ProvinceMetadataGenerator
+  langs:
+  - csharp
+  - vb
+  name: IsSuitableForLargeLabel(ProvinceMetadata, float)
+  nameWithType: ProvinceMetadataGenerator.IsSuitableForLargeLabel(ProvinceMetadataGenerator.ProvinceMetadata, float)
+  fullName: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuitableForLargeLabel
+    path: Scripts/Map/Province/ProvinceMetadataGenerator.cs
+    startLine: 598
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Check if province is suitable for placing large labels
+  example: []
+  syntax:
+    content: public static bool IsSuitableForLargeLabel(ProvinceMetadataGenerator.ProvinceMetadata metadata, float minSize = 500)
+    parameters:
+    - id: metadata
+      type: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    - id: minSize
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsSuitableForLargeLabel(metadata As ProvinceMetadataGenerator.ProvinceMetadata, minSize As Single = 500) As Boolean
+  overload: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel*
+  nameWithType.vb: ProvinceMetadataGenerator.IsSuitableForLargeLabel(ProvinceMetadataGenerator.ProvinceMetadata, Single)
+  fullName.vb: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel(Map.Province.ProvinceMetadataGenerator.ProvinceMetadata, Single)
+  name.vb: IsSuitableForLargeLabel(ProvinceMetadata, Single)
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceMetadataGenerator.GenerateMetadata*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.GenerateMetadata
+  href: Map.Province.ProvinceMetadataGenerator.html#Map_Province_ProvinceMetadataGenerator_GenerateMetadata_Map_Loading_ProvinceMapLoader_LoadResult_Map_Province_ProvinceNeighborDetector_NeighborResult_System_Boolean_
+  name: GenerateMetadata
+  nameWithType: ProvinceMetadataGenerator.GenerateMetadata
+  fullName: Map.Province.ProvinceMetadataGenerator.GenerateMetadata
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborResult
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborResult
+  nameWithType: ProvinceNeighborDetector.NeighborResult
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  commentId: T:Map.Province.ProvinceMetadataGenerator.MetadataResult
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.MetadataResult
+  nameWithType: ProvinceMetadataGenerator.MetadataResult
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition
+  href: Map.Province.ProvinceMetadataGenerator.html#Map_Province_ProvinceMetadataGenerator_GetOptimalLabelPosition_Map_Province_ProvinceMetadataGenerator_ProvinceMetadata_
+  name: GetOptimalLabelPosition
+  nameWithType: ProvinceMetadataGenerator.GetOptimalLabelPosition
+  fullName: Map.Province.ProvinceMetadataGenerator.GetOptimalLabelPosition
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  commentId: T:Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.ProvinceMetadata
+  nameWithType: ProvinceMetadataGenerator.ProvinceMetadata
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+- uid: Unity.Mathematics.float2
+  commentId: T:Unity.Mathematics.float2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: float2
+  nameWithType: float2
+  fullName: Unity.Mathematics.float2
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel*
+  commentId: Overload:Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel
+  href: Map.Province.ProvinceMetadataGenerator.html#Map_Province_ProvinceMetadataGenerator_IsSuitableForLargeLabel_Map_Province_ProvinceMetadataGenerator_ProvinceMetadata_System_Single_
+  name: IsSuitableForLargeLabel
+  nameWithType: ProvinceMetadataGenerator.IsSuitableForLargeLabel
+  fullName: Map.Province.ProvinceMetadataGenerator.IsSuitableForLargeLabel
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

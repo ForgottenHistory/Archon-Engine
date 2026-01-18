@@ -1,0 +1,297 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.DeserializationResult
+  commentId: T:Core.Commands.DeserializationResult
+  id: DeserializationResult
+  parent: Core.Commands
+  children:
+  - Core.Commands.DeserializationResult.BytesRead
+  - Core.Commands.DeserializationResult.Command
+  - Core.Commands.DeserializationResult.ErrorMessage
+  - Core.Commands.DeserializationResult.Failure(System.String)
+  - Core.Commands.DeserializationResult.IsSuccess
+  - Core.Commands.DeserializationResult.Success(Core.Commands.IProvinceCommand,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: DeserializationResult
+  nameWithType: DeserializationResult
+  fullName: Core.Commands.DeserializationResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeserializationResult
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 316
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public struct DeserializationResult
+    content.vb: Public Structure DeserializationResult
+- uid: Core.Commands.DeserializationResult.IsSuccess
+  commentId: F:Core.Commands.DeserializationResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: DeserializationResult.IsSuccess
+  fullName: Core.Commands.DeserializationResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 318
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Commands.DeserializationResult.ErrorMessage
+  commentId: F:Core.Commands.DeserializationResult.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: DeserializationResult.ErrorMessage
+  fullName: Core.Commands.DeserializationResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 319
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Core.Commands.DeserializationResult.Command
+  commentId: F:Core.Commands.DeserializationResult.Command
+  id: Command
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: Command
+  nameWithType: DeserializationResult.Command
+  fullName: Core.Commands.DeserializationResult.Command
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Command
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 320
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public IProvinceCommand Command
+    return:
+      type: Core.Commands.IProvinceCommand
+    content.vb: Public Command As IProvinceCommand
+- uid: Core.Commands.DeserializationResult.BytesRead
+  commentId: F:Core.Commands.DeserializationResult.BytesRead
+  id: BytesRead
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: BytesRead
+  nameWithType: DeserializationResult.BytesRead
+  fullName: Core.Commands.DeserializationResult.BytesRead
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BytesRead
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public int BytesRead
+    return:
+      type: System.Int32
+    content.vb: Public BytesRead As Integer
+- uid: Core.Commands.DeserializationResult.Success(Core.Commands.IProvinceCommand,System.Int32)
+  commentId: M:Core.Commands.DeserializationResult.Success(Core.Commands.IProvinceCommand,System.Int32)
+  id: Success(Core.Commands.IProvinceCommand,System.Int32)
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: Success(IProvinceCommand, int)
+  nameWithType: DeserializationResult.Success(IProvinceCommand, int)
+  fullName: Core.Commands.DeserializationResult.Success(Core.Commands.IProvinceCommand, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 323
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static DeserializationResult Success(IProvinceCommand command, int bytes)
+    parameters:
+    - id: command
+      type: Core.Commands.IProvinceCommand
+    - id: bytes
+      type: System.Int32
+    return:
+      type: Core.Commands.DeserializationResult
+    content.vb: Public Shared Function Success(command As IProvinceCommand, bytes As Integer) As DeserializationResult
+  overload: Core.Commands.DeserializationResult.Success*
+  nameWithType.vb: DeserializationResult.Success(IProvinceCommand, Integer)
+  fullName.vb: Core.Commands.DeserializationResult.Success(Core.Commands.IProvinceCommand, Integer)
+  name.vb: Success(IProvinceCommand, Integer)
+- uid: Core.Commands.DeserializationResult.Failure(System.String)
+  commentId: M:Core.Commands.DeserializationResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Commands.DeserializationResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: DeserializationResult.Failure(string)
+  fullName: Core.Commands.DeserializationResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 325
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public static DeserializationResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Commands.DeserializationResult
+    content.vb: Public Shared Function Failure([error] As String) As DeserializationResult
+  overload: Core.Commands.DeserializationResult.Failure*
+  nameWithType.vb: DeserializationResult.Failure(String)
+  fullName.vb: Core.Commands.DeserializationResult.Failure(String)
+  name.vb: Failure(String)
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Commands.IProvinceCommand
+  commentId: T:Core.Commands.IProvinceCommand
+  parent: Core.Commands
+  href: Core.Commands.IProvinceCommand.html
+  name: IProvinceCommand
+  nameWithType: IProvinceCommand
+  fullName: Core.Commands.IProvinceCommand
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.DeserializationResult.Success*
+  commentId: Overload:Core.Commands.DeserializationResult.Success
+  href: Core.Commands.DeserializationResult.html#Core_Commands_DeserializationResult_Success_Core_Commands_IProvinceCommand_System_Int32_
+  name: Success
+  nameWithType: DeserializationResult.Success
+  fullName: Core.Commands.DeserializationResult.Success
+- uid: Core.Commands.DeserializationResult
+  commentId: T:Core.Commands.DeserializationResult
+  parent: Core.Commands
+  href: Core.Commands.DeserializationResult.html
+  name: DeserializationResult
+  nameWithType: DeserializationResult
+  fullName: Core.Commands.DeserializationResult
+- uid: Core.Commands.DeserializationResult.Failure*
+  commentId: Overload:Core.Commands.DeserializationResult.Failure
+  href: Core.Commands.DeserializationResult.html#Core_Commands_DeserializationResult_Failure_System_String_
+  name: Failure
+  nameWithType: DeserializationResult.Failure
+  fullName: Core.Commands.DeserializationResult.Failure

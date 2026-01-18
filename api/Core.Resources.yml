@@ -1,0 +1,112 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  id: Core.Resources
+  children:
+  - Core.Resources.IResourceProvider
+  - Core.Resources.ResourceBatchCompletedEvent
+  - Core.Resources.ResourceChangedEvent
+  - Core.Resources.ResourceCost
+  - Core.Resources.ResourceCostExtensions
+  - Core.Resources.ResourceDefinition
+  - Core.Resources.ResourceRegisteredEvent
+  - Core.Resources.ResourceSystem
+  - Core.Resources.ResourceSystemInitializedEvent
+  - Core.Resources.ResourceTransferredEvent
+  langs:
+  - csharp
+  - vb
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Resources.ResourceChangedEvent
+  commentId: T:Core.Resources.ResourceChangedEvent
+  href: Core.Resources.ResourceChangedEvent.html
+  name: ResourceChangedEvent
+  nameWithType: ResourceChangedEvent
+  fullName: Core.Resources.ResourceChangedEvent
+- uid: Core.Resources.ResourceTransferredEvent
+  commentId: T:Core.Resources.ResourceTransferredEvent
+  href: Core.Resources.ResourceTransferredEvent.html
+  name: ResourceTransferredEvent
+  nameWithType: ResourceTransferredEvent
+  fullName: Core.Resources.ResourceTransferredEvent
+- uid: Core.Resources.ResourceBatchCompletedEvent
+  commentId: T:Core.Resources.ResourceBatchCompletedEvent
+  href: Core.Resources.ResourceBatchCompletedEvent.html
+  name: ResourceBatchCompletedEvent
+  nameWithType: ResourceBatchCompletedEvent
+  fullName: Core.Resources.ResourceBatchCompletedEvent
+- uid: Core.Resources.ResourceSystemInitializedEvent
+  commentId: T:Core.Resources.ResourceSystemInitializedEvent
+  href: Core.Resources.ResourceSystemInitializedEvent.html
+  name: ResourceSystemInitializedEvent
+  nameWithType: ResourceSystemInitializedEvent
+  fullName: Core.Resources.ResourceSystemInitializedEvent
+- uid: Core.Resources.ResourceRegisteredEvent
+  commentId: T:Core.Resources.ResourceRegisteredEvent
+  href: Core.Resources.ResourceRegisteredEvent.html
+  name: ResourceRegisteredEvent
+  nameWithType: ResourceRegisteredEvent
+  fullName: Core.Resources.ResourceRegisteredEvent
+- uid: Core.Resources.ResourceSystem
+  commentId: T:Core.Resources.ResourceSystem
+  parent: Core.Resources
+  href: Core.Resources.ResourceSystem.html
+  name: ResourceSystem
+  nameWithType: ResourceSystem
+  fullName: Core.Resources.ResourceSystem
+- uid: Core.Resources.ResourceCost
+  commentId: T:Core.Resources.ResourceCost
+  parent: Core.Resources
+  href: Core.Resources.ResourceCost.html
+  name: ResourceCost
+  nameWithType: ResourceCost
+  fullName: Core.Resources.ResourceCost
+- uid: Core.Resources.ResourceCostExtensions
+  commentId: T:Core.Resources.ResourceCostExtensions
+  href: Core.Resources.ResourceCostExtensions.html
+  name: ResourceCostExtensions
+  nameWithType: ResourceCostExtensions
+  fullName: Core.Resources.ResourceCostExtensions
+- uid: Core.Resources.ResourceDefinition
+  commentId: T:Core.Resources.ResourceDefinition
+  parent: Core.Resources
+  href: Core.Resources.ResourceDefinition.html
+  name: ResourceDefinition
+  nameWithType: ResourceDefinition
+  fullName: Core.Resources.ResourceDefinition
+- uid: Core.Resources.IResourceProvider
+  commentId: T:Core.Resources.IResourceProvider
+  parent: Core.Resources
+  href: Core.Resources.IResourceProvider.html
+  name: IResourceProvider
+  nameWithType: IResourceProvider
+  fullName: Core.Resources.IResourceProvider
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html

@@ -1,0 +1,102 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.ILoaderFactory
+  commentId: T:Core.Loaders.ILoaderFactory
+  id: ILoaderFactory
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  langs:
+  - csharp
+  - vb
+  name: ILoaderFactory
+  nameWithType: ILoaderFactory
+  fullName: Core.Loaders.ILoaderFactory
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ILoaderFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ILoaderFactory
+    path: Scripts/Core/Loaders/ILoaderFactory.cs
+    startLine: 6
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Interface for data loader factories.
+
+    Implement this and add [LoaderMetadata] for auto-discovery.
+  example: []
+  syntax:
+    content: public interface ILoaderFactory
+    content.vb: Public Interface ILoaderFactory
+- uid: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  commentId: M:Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  id: Load(Core.Loaders.LoaderContext)
+  parent: Core.Loaders.ILoaderFactory
+  langs:
+  - csharp
+  - vb
+  name: Load(LoaderContext)
+  nameWithType: ILoaderFactory.Load(LoaderContext)
+  fullName: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/ILoaderFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Load
+    path: Scripts/Core/Loaders/ILoaderFactory.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load data into registries from the specified data path.
+  example: []
+  syntax:
+    content: void Load(LoaderContext context)
+    parameters:
+    - id: context
+      type: Core.Loaders.LoaderContext
+      description: Loading context with registries and settings
+    content.vb: Sub Load(context As LoaderContext)
+  overload: Core.Loaders.ILoaderFactory.Load*
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: Core.Loaders.ILoaderFactory.Load*
+  commentId: Overload:Core.Loaders.ILoaderFactory.Load
+  href: Core.Loaders.ILoaderFactory.html#Core_Loaders_ILoaderFactory_Load_Core_Loaders_LoaderContext_
+  name: Load
+  nameWithType: ILoaderFactory.Load
+  fullName: Core.Loaders.ILoaderFactory.Load
+- uid: Core.Loaders.LoaderContext
+  commentId: T:Core.Loaders.LoaderContext
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderContext.html
+  name: LoaderContext
+  nameWithType: LoaderContext
+  fullName: Core.Loaders.LoaderContext

@@ -1,0 +1,883 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.FormAllianceCommand
+  commentId: T:Core.Diplomacy.FormAllianceCommand
+  id: FormAllianceCommand
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.FormAllianceCommand.Country1
+  - Core.Diplomacy.FormAllianceCommand.Country2
+  - Core.Diplomacy.FormAllianceCommand.Deserialize(System.IO.BinaryReader)
+  - Core.Diplomacy.FormAllianceCommand.Execute(Core.GameState)
+  - Core.Diplomacy.FormAllianceCommand.GetSuccessMessage(Core.GameState)
+  - Core.Diplomacy.FormAllianceCommand.GetValidationError(Core.GameState)
+  - Core.Diplomacy.FormAllianceCommand.Priority
+  - Core.Diplomacy.FormAllianceCommand.Serialize(System.IO.BinaryWriter)
+  - Core.Diplomacy.FormAllianceCommand.Undo(Core.GameState)
+  - Core.Diplomacy.FormAllianceCommand.Validate(Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: FormAllianceCommand
+  nameWithType: FormAllianceCommand
+  fullName: Core.Diplomacy.FormAllianceCommand
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormAllianceCommand
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Command to form alliance between two countries
+
+
+    Validation:
+
+    - Both countries exist
+
+    - Not already allied
+
+    - Not at war
+
+
+    Execution:
+
+    - Set Alliance bit in DiplomacySystem
+
+    - Emit AllianceFormedEvent
+  example: []
+  syntax:
+    content: 'public class FormAllianceCommand : BaseCommand, ICommand'
+    content.vb: Public Class FormAllianceCommand Inherits BaseCommand Implements ICommand
+  inheritance:
+  - System.Object
+  - Core.Commands.BaseCommand
+  implements:
+  - Core.Commands.ICommand
+  inheritedMembers:
+  - Core.Commands.BaseCommand.CommandId
+  - Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  - Core.Commands.BaseCommand.LogExecution(System.String)
+- uid: Core.Diplomacy.FormAllianceCommand.Country1
+  commentId: P:Core.Diplomacy.FormAllianceCommand.Country1
+  id: Country1
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Country1
+  nameWithType: FormAllianceCommand.Country1
+  fullName: Core.Diplomacy.FormAllianceCommand.Country1
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country1
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public ushort Country1 { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property Country1 As UShort
+  overload: Core.Diplomacy.FormAllianceCommand.Country1*
+- uid: Core.Diplomacy.FormAllianceCommand.Country2
+  commentId: P:Core.Diplomacy.FormAllianceCommand.Country2
+  id: Country2
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Country2
+  nameWithType: FormAllianceCommand.Country2
+  fullName: Core.Diplomacy.FormAllianceCommand.Country2
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Country2
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public ushort Country2 { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public Property Country2 As UShort
+  overload: Core.Diplomacy.FormAllianceCommand.Country2*
+- uid: Core.Diplomacy.FormAllianceCommand.Priority
+  commentId: P:Core.Diplomacy.FormAllianceCommand.Priority
+  id: Priority
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Priority
+  nameWithType: FormAllianceCommand.Priority
+  fullName: Core.Diplomacy.FormAllianceCommand.Priority
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Priority
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Get command priority for execution ordering
+
+    Higher priority commands execute first
+  example: []
+  syntax:
+    content: public override int Priority { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Overrides ReadOnly Property Priority As Integer
+  overridden: Core.Commands.BaseCommand.Priority
+  overload: Core.Diplomacy.FormAllianceCommand.Priority*
+- uid: Core.Diplomacy.FormAllianceCommand.Validate(Core.GameState)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.Validate(Core.GameState)
+  id: Validate(Core.GameState)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Validate(GameState)
+  nameWithType: FormAllianceCommand.Validate(GameState)
+  fullName: Core.Diplomacy.FormAllianceCommand.Validate(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Validate that this command can be executed in the current game state.
+
+    Should be fast and have no side effects.
+  example: []
+  syntax:
+    content: public override bool Validate(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Current game state for validation
+    return:
+      type: System.Boolean
+      description: True if command can be executed
+    content.vb: Public Overrides Function Validate(gameState As GameState) As Boolean
+  overridden: Core.Commands.BaseCommand.Validate(Core.GameState)
+  overload: Core.Diplomacy.FormAllianceCommand.Validate*
+- uid: Core.Diplomacy.FormAllianceCommand.GetValidationError(Core.GameState)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.GetValidationError(Core.GameState)
+  id: GetValidationError(Core.GameState)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: GetValidationError(GameState)
+  nameWithType: FormAllianceCommand.GetValidationError(GameState)
+  fullName: Core.Diplomacy.FormAllianceCommand.GetValidationError(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValidationError
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public string GetValidationError(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Public Function GetValidationError(gameState As GameState) As String
+  overload: Core.Diplomacy.FormAllianceCommand.GetValidationError*
+- uid: Core.Diplomacy.FormAllianceCommand.GetSuccessMessage(Core.GameState)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.GetSuccessMessage(Core.GameState)
+  id: GetSuccessMessage(Core.GameState)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: GetSuccessMessage(GameState)
+  nameWithType: FormAllianceCommand.GetSuccessMessage(GameState)
+  fullName: Core.Diplomacy.FormAllianceCommand.GetSuccessMessage(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSuccessMessage
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public string GetSuccessMessage(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Public Function GetSuccessMessage(gameState As GameState) As String
+  overload: Core.Diplomacy.FormAllianceCommand.GetSuccessMessage*
+- uid: Core.Diplomacy.FormAllianceCommand.Execute(Core.GameState)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.Execute(Core.GameState)
+  id: Execute(Core.GameState)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Execute(GameState)
+  nameWithType: FormAllianceCommand.Execute(GameState)
+  fullName: Core.Diplomacy.FormAllianceCommand.Execute(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 84
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Execute the command and modify game state
+
+    Should emit appropriate events for other systems to react
+
+    Must be deterministic for multiplayer compatibility
+  example: []
+  syntax:
+    content: public override void Execute(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Game state to modify
+    content.vb: Public Overrides Sub Execute(gameState As GameState)
+  overridden: Core.Commands.BaseCommand.Execute(Core.GameState)
+  overload: Core.Diplomacy.FormAllianceCommand.Execute*
+- uid: Core.Diplomacy.FormAllianceCommand.Undo(Core.GameState)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.Undo(Core.GameState)
+  id: Undo(Core.GameState)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Undo(GameState)
+  nameWithType: FormAllianceCommand.Undo(GameState)
+  fullName: Core.Diplomacy.FormAllianceCommand.Undo(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Undo
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Undo the command - restore previous state
+
+    Required for replay systems and error recovery
+  example: []
+  syntax:
+    content: public override void Undo(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+      description: Game state to restore
+    content.vb: Public Overrides Sub Undo(gameState As GameState)
+  overridden: Core.Commands.BaseCommand.Undo(Core.GameState)
+  overload: Core.Diplomacy.FormAllianceCommand.Undo*
+- uid: Core.Diplomacy.FormAllianceCommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.Serialize(System.IO.BinaryWriter)
+  id: Serialize(System.IO.BinaryWriter)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Serialize(BinaryWriter)
+  nameWithType: FormAllianceCommand.Serialize(BinaryWriter)
+  fullName: Core.Diplomacy.FormAllianceCommand.Serialize(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Serialize command data to binary writer
+
+    Used for save/load and command logging
+
+    Must be deterministic - same command = same bytes
+  example: []
+  syntax:
+    content: public override void Serialize(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+      description: Binary writer to serialize to
+    content.vb: Public Overrides Sub Serialize(writer As BinaryWriter)
+  overridden: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  overload: Core.Diplomacy.FormAllianceCommand.Serialize*
+- uid: Core.Diplomacy.FormAllianceCommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Diplomacy.FormAllianceCommand.Deserialize(System.IO.BinaryReader)
+  id: Deserialize(System.IO.BinaryReader)
+  parent: Core.Diplomacy.FormAllianceCommand
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(BinaryReader)
+  nameWithType: FormAllianceCommand.Deserialize(BinaryReader)
+  fullName: Core.Diplomacy.FormAllianceCommand.Deserialize(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/TreatyCommands.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Diplomacy/TreatyCommands.cs
+    startLine: 106
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Deserialize command data from binary reader
+
+    Used for save/load and command replay
+
+    Must reconstruct identical command state
+  example: []
+  syntax:
+    content: public override void Deserialize(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+      description: Binary reader to deserialize from
+    content.vb: Public Overrides Sub Deserialize(reader As BinaryReader)
+  overridden: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  overload: Core.Diplomacy.FormAllianceCommand.Deserialize*
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Commands.BaseCommand
+  commentId: T:Core.Commands.BaseCommand
+  parent: Core.Commands
+  href: Core.Commands.BaseCommand.html
+  name: BaseCommand
+  nameWithType: BaseCommand
+  fullName: Core.Commands.BaseCommand
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: Core.Commands.BaseCommand.CommandId
+  commentId: P:Core.Commands.BaseCommand.CommandId
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_CommandId
+  name: CommandId
+  nameWithType: BaseCommand.CommandId
+  fullName: Core.Commands.BaseCommand.CommandId
+- uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  name: ValidateProvinceId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateProvinceId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateProvinceId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState, UShort)
+  name.vb: ValidateProvinceId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateProvinceId(Core.GameState,System.UInt16)
+    name: ValidateProvinceId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateProvinceId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  commentId: M:Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  name: ValidateCountryId(GameState, ushort)
+  nameWithType: BaseCommand.ValidateCountryId(GameState, ushort)
+  fullName: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, ushort)
+  nameWithType.vb: BaseCommand.ValidateCountryId(GameState, UShort)
+  fullName.vb: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState, UShort)
+  name.vb: ValidateCountryId(GameState, UShort)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.ValidateCountryId(Core.GameState,System.UInt16)
+    name: ValidateCountryId
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_ValidateCountryId_Core_GameState_System_UInt16_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Core.Commands.BaseCommand.LogExecution(System.String)
+  commentId: M:Core.Commands.BaseCommand.LogExecution(System.String)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  name: LogExecution(string)
+  nameWithType: BaseCommand.LogExecution(string)
+  fullName: Core.Commands.BaseCommand.LogExecution(string)
+  nameWithType.vb: BaseCommand.LogExecution(String)
+  fullName.vb: Core.Commands.BaseCommand.LogExecution(String)
+  name.vb: LogExecution(String)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.LogExecution(System.String)
+    name: LogExecution
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_LogExecution_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Diplomacy.FormAllianceCommand.Country1*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Country1
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Country1
+  name: Country1
+  nameWithType: FormAllianceCommand.Country1
+  fullName: Core.Diplomacy.FormAllianceCommand.Country1
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Diplomacy.FormAllianceCommand.Country2*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Country2
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Country2
+  name: Country2
+  nameWithType: FormAllianceCommand.Country2
+  fullName: Core.Diplomacy.FormAllianceCommand.Country2
+- uid: Core.Commands.BaseCommand.Priority
+  commentId: P:Core.Commands.BaseCommand.Priority
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Priority
+  name: Priority
+  nameWithType: BaseCommand.Priority
+  fullName: Core.Commands.BaseCommand.Priority
+- uid: Core.Diplomacy.FormAllianceCommand.Priority*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Priority
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Priority
+  name: Priority
+  nameWithType: FormAllianceCommand.Priority
+  fullName: Core.Diplomacy.FormAllianceCommand.Priority
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Validate(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  name: Validate(GameState)
+  nameWithType: BaseCommand.Validate(GameState)
+  fullName: Core.Commands.BaseCommand.Validate(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.FormAllianceCommand.Validate*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Validate
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Validate_Core_GameState_
+  name: Validate
+  nameWithType: FormAllianceCommand.Validate
+  fullName: Core.Diplomacy.FormAllianceCommand.Validate
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Diplomacy.FormAllianceCommand.GetValidationError*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.GetValidationError
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_GetValidationError_Core_GameState_
+  name: GetValidationError
+  nameWithType: FormAllianceCommand.GetValidationError
+  fullName: Core.Diplomacy.FormAllianceCommand.GetValidationError
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Diplomacy.FormAllianceCommand.GetSuccessMessage*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.GetSuccessMessage
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_GetSuccessMessage_Core_GameState_
+  name: GetSuccessMessage
+  nameWithType: FormAllianceCommand.GetSuccessMessage
+  fullName: Core.Diplomacy.FormAllianceCommand.GetSuccessMessage
+- uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Execute(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  name: Execute(GameState)
+  nameWithType: BaseCommand.Execute(GameState)
+  fullName: Core.Commands.BaseCommand.Execute(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.FormAllianceCommand.Execute*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Execute
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Execute_Core_GameState_
+  name: Execute
+  nameWithType: FormAllianceCommand.Execute
+  fullName: Core.Diplomacy.FormAllianceCommand.Execute
+- uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+  commentId: M:Core.Commands.BaseCommand.Undo(Core.GameState)
+  parent: Core.Commands.BaseCommand
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  name: Undo(GameState)
+  nameWithType: BaseCommand.Undo(GameState)
+  fullName: Core.Commands.BaseCommand.Undo(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Diplomacy.FormAllianceCommand.Undo*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Undo
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Undo_Core_GameState_
+  name: Undo
+  nameWithType: FormAllianceCommand.Undo
+  fullName: Core.Diplomacy.FormAllianceCommand.Undo
+- uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  name: Serialize(BinaryWriter)
+  nameWithType: BaseCommand.Serialize(BinaryWriter)
+  fullName: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+- uid: Core.Diplomacy.FormAllianceCommand.Serialize*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Serialize
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Serialize_System_IO_BinaryWriter_
+  name: Serialize
+  nameWithType: FormAllianceCommand.Serialize
+  fullName: Core.Diplomacy.FormAllianceCommand.Serialize
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  parent: Core.Commands.BaseCommand
+  isExternal: true
+  href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  name: Deserialize(BinaryReader)
+  nameWithType: BaseCommand.Deserialize(BinaryReader)
+  fullName: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+  spec.csharp:
+  - uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.BaseCommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.BaseCommand.html#Core_Commands_BaseCommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+- uid: Core.Diplomacy.FormAllianceCommand.Deserialize*
+  commentId: Overload:Core.Diplomacy.FormAllianceCommand.Deserialize
+  href: Core.Diplomacy.FormAllianceCommand.html#Core_Diplomacy_FormAllianceCommand_Deserialize_System_IO_BinaryReader_
+  name: Deserialize
+  nameWithType: FormAllianceCommand.Deserialize
+  fullName: Core.Diplomacy.FormAllianceCommand.Deserialize
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader

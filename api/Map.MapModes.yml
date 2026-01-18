@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  id: Map.MapModes
+  children:
+  - Map.MapModes.BaseMapModeHandler
+  - Map.MapModes.ColorGradient
+  - Map.MapModes.DebugMapModeHandler
+  - Map.MapModes.EnginePoliticalMapMode
+  - Map.MapModes.GradientComputeDispatcher
+  - Map.MapModes.GradientMapMode
+  - Map.MapModes.GradientMapMode.ValueStats
+  - Map.MapModes.IMapModeHandler
+  - Map.MapModes.MapMode
+  - Map.MapModes.MapModeDataTextures
+  - Map.MapModes.MapModeManager
+  - Map.MapModes.TextureUpdateScheduler
+  - Map.MapModes.UpdateFrequency
+  langs:
+  - csharp
+  - vb
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  parent: Map.MapModes
+  href: Map.MapModes.ColorGradient.html
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+- uid: Map.MapModes.MapModeDataTextures
+  commentId: T:Map.MapModes.MapModeDataTextures
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeDataTextures.html
+  name: MapModeDataTextures
+  nameWithType: MapModeDataTextures
+  fullName: Map.MapModes.MapModeDataTextures
+- uid: Map.MapModes.DebugMapModeHandler
+  commentId: T:Map.MapModes.DebugMapModeHandler
+  href: Map.MapModes.DebugMapModeHandler.html
+  name: DebugMapModeHandler
+  nameWithType: DebugMapModeHandler
+  fullName: Map.MapModes.DebugMapModeHandler
+- uid: Map.MapModes.EnginePoliticalMapMode
+  commentId: T:Map.MapModes.EnginePoliticalMapMode
+  href: Map.MapModes.EnginePoliticalMapMode.html
+  name: EnginePoliticalMapMode
+  nameWithType: EnginePoliticalMapMode
+  fullName: Map.MapModes.EnginePoliticalMapMode
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeManager.html
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+- uid: Map.MapModes.GradientMapMode
+  commentId: T:Map.MapModes.GradientMapMode
+  parent: Map.MapModes
+  href: Map.MapModes.GradientMapMode.html
+  name: GradientMapMode
+  nameWithType: GradientMapMode
+  fullName: Map.MapModes.GradientMapMode
+- uid: Map.MapModes.GradientMapMode.ValueStats
+  commentId: T:Map.MapModes.GradientMapMode.ValueStats
+  href: Map.MapModes.GradientMapMode.html
+  name: GradientMapMode.ValueStats
+  nameWithType: GradientMapMode.ValueStats
+  fullName: Map.MapModes.GradientMapMode.ValueStats
+  spec.csharp:
+  - uid: Map.MapModes.GradientMapMode
+    name: GradientMapMode
+    href: Map.MapModes.GradientMapMode.html
+  - name: .
+  - uid: Map.MapModes.GradientMapMode.ValueStats
+    name: ValueStats
+    href: Map.MapModes.GradientMapMode.ValueStats.html
+  spec.vb:
+  - uid: Map.MapModes.GradientMapMode
+    name: GradientMapMode
+    href: Map.MapModes.GradientMapMode.html
+  - name: .
+  - uid: Map.MapModes.GradientMapMode.ValueStats
+    name: ValueStats
+    href: Map.MapModes.GradientMapMode.ValueStats.html
+- uid: Map.MapModes.GradientComputeDispatcher
+  commentId: T:Map.MapModes.GradientComputeDispatcher
+  href: Map.MapModes.GradientComputeDispatcher.html
+  name: GradientComputeDispatcher
+  nameWithType: GradientComputeDispatcher
+  fullName: Map.MapModes.GradientComputeDispatcher
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.BaseMapModeHandler
+  commentId: T:Map.MapModes.BaseMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.BaseMapModeHandler.html
+  name: BaseMapModeHandler
+  nameWithType: BaseMapModeHandler
+  fullName: Map.MapModes.BaseMapModeHandler
+- uid: Map.MapModes.TextureUpdateScheduler
+  commentId: T:Map.MapModes.TextureUpdateScheduler
+  href: Map.MapModes.TextureUpdateScheduler.html
+  name: TextureUpdateScheduler
+  nameWithType: TextureUpdateScheduler
+  fullName: Map.MapModes.TextureUpdateScheduler
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html

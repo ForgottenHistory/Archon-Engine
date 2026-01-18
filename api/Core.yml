@@ -1,0 +1,154 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core
+  commentId: N:Core
+  id: Core
+  children:
+  - Core.CommandExecutedEvent
+  - Core.EngineInitializer
+  - Core.EngineInitializer.LoadingPhase
+  - Core.EventBus
+  - Core.GameSettings
+  - Core.GameSettings.ValidationResult
+  - Core.GameState
+  - Core.GameStateInitializedEvent
+  - Core.GameStateSnapshot
+  - Core.IGameEvent
+  - Core.ReadOnlyAttribute
+  - Core.ReadOnlyDrawer
+  - Core.SimulationDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: Core
+  nameWithType: Core
+  fullName: Core
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.GameStateSnapshot
+  commentId: T:Core.GameStateSnapshot
+  parent: Core
+  href: Core.GameStateSnapshot.html
+  name: GameStateSnapshot
+  nameWithType: GameStateSnapshot
+  fullName: Core.GameStateSnapshot
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.GameStateInitializedEvent
+  commentId: T:Core.GameStateInitializedEvent
+  href: Core.GameStateInitializedEvent.html
+  name: GameStateInitializedEvent
+  nameWithType: GameStateInitializedEvent
+  fullName: Core.GameStateInitializedEvent
+- uid: Core.CommandExecutedEvent
+  commentId: T:Core.CommandExecutedEvent
+  href: Core.CommandExecutedEvent.html
+  name: CommandExecutedEvent
+  nameWithType: CommandExecutedEvent
+  fullName: Core.CommandExecutedEvent
+- uid: Core.ReadOnlyAttribute
+  commentId: T:Core.ReadOnlyAttribute
+  parent: Core
+  href: Core.ReadOnlyAttribute.html
+  name: ReadOnlyAttribute
+  nameWithType: ReadOnlyAttribute
+  fullName: Core.ReadOnlyAttribute
+- uid: Core.ReadOnlyDrawer
+  commentId: T:Core.ReadOnlyDrawer
+  href: Core.ReadOnlyDrawer.html
+  name: ReadOnlyDrawer
+  nameWithType: ReadOnlyDrawer
+  fullName: Core.ReadOnlyDrawer
+- uid: Core.GameSettings
+  commentId: T:Core.GameSettings
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings
+  nameWithType: GameSettings
+  fullName: Core.GameSettings
+- uid: Core.GameSettings.ValidationResult
+  commentId: T:Core.GameSettings.ValidationResult
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings.ValidationResult
+  nameWithType: GameSettings.ValidationResult
+  fullName: Core.GameSettings.ValidationResult
+  spec.csharp:
+  - uid: Core.GameSettings
+    name: GameSettings
+    href: Core.GameSettings.html
+  - name: .
+  - uid: Core.GameSettings.ValidationResult
+    name: ValidationResult
+    href: Core.GameSettings.ValidationResult.html
+  spec.vb:
+  - uid: Core.GameSettings
+    name: GameSettings
+    href: Core.GameSettings.html
+  - name: .
+  - uid: Core.GameSettings.ValidationResult
+    name: ValidationResult
+    href: Core.GameSettings.ValidationResult.html
+- uid: Core.EngineInitializer
+  commentId: T:Core.EngineInitializer
+  href: Core.EngineInitializer.html
+  name: EngineInitializer
+  nameWithType: EngineInitializer
+  fullName: Core.EngineInitializer
+- uid: Core.EngineInitializer.LoadingPhase
+  commentId: T:Core.EngineInitializer.LoadingPhase
+  parent: Core
+  href: Core.EngineInitializer.html
+  name: EngineInitializer.LoadingPhase
+  nameWithType: EngineInitializer.LoadingPhase
+  fullName: Core.EngineInitializer.LoadingPhase
+  spec.csharp:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+  spec.vb:
+  - uid: Core.EngineInitializer
+    name: EngineInitializer
+    href: Core.EngineInitializer.html
+  - name: .
+  - uid: Core.EngineInitializer.LoadingPhase
+    name: LoadingPhase
+    href: Core.EngineInitializer.LoadingPhase.html
+- uid: Core.SimulationDataReadyEvent
+  commentId: T:Core.SimulationDataReadyEvent
+  parent: Core
+  href: Core.SimulationDataReadyEvent.html
+  name: SimulationDataReadyEvent
+  nameWithType: SimulationDataReadyEvent
+  fullName: Core.SimulationDataReadyEvent
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core

@@ -1,0 +1,343 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.DetailTextureArrayLoader
+  commentId: T:Map.Loading.DetailTextureArrayLoader
+  id: DetailTextureArrayLoader
+  parent: Map.Loading
+  children:
+  - Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes
+  - Map.Loading.DetailTextureArrayLoader.HasDetailTexture(System.Int32)
+  - Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray(System.Int32,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: DetailTextureArrayLoader
+  nameWithType: DetailTextureArrayLoader
+  fullName: Map.Loading.DetailTextureArrayLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetailTextureArrayLoader
+    path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Loads terrain detail textures into Texture2DArray for GPU splatting
+
+    Scans Assets/Data/textures/terrain_detail/ for {index}_{name}.png files
+
+
+    Architecture:
+
+    - File naming: {index}_{name}.png (e.g., "0_grasslands.png", "3_desert.png")
+
+    - Index range: 0-255 (matches TerrainColorMapper terrain type indices)
+
+    - Format: RGBA32 sRGB with mipmaps for performance
+
+    - Missing indices: Filled with neutral gray (128,128,128,255) for multiply blend
+
+
+    Moddability:
+
+    - Drop PNG files in folder to add/replace detail textures
+
+    - File names must match terrain type indices from TerrainColorMapper
+
+    - Supports hot-reload (rebuild array when files change)
+  example: []
+  syntax:
+    content: public static class DetailTextureArrayLoader
+    content.vb: Public Module DetailTextureArrayLoader
+  inheritance:
+  - System.Object
+- uid: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray(System.Int32,System.Boolean)
+  commentId: M:Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray(System.Int32,System.Boolean)
+  id: LoadDetailTextureArray(System.Int32,System.Boolean)
+  parent: Map.Loading.DetailTextureArrayLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadDetailTextureArray(int, bool)
+  nameWithType: DetailTextureArrayLoader.LoadDetailTextureArray(int, bool)
+  fullName: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray(int, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadDetailTextureArray
+    path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Load all detail textures into Texture2DArray
+  example: []
+  syntax:
+    content: public static Texture2DArray LoadDetailTextureArray(int textureSize = 512, bool logProgress = true)
+    parameters:
+    - id: textureSize
+      type: System.Int32
+      description: Resolution per texture (default 512x512)
+    - id: logProgress
+      type: System.Boolean
+      description: Enable progress logging
+    return:
+      type: UnityEngine.Texture2DArray
+      description: Texture2DArray with terrain detail textures
+    content.vb: Public Shared Function LoadDetailTextureArray(textureSize As Integer = 512, logProgress As Boolean = True) As Texture2DArray
+  overload: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray*
+  nameWithType.vb: DetailTextureArrayLoader.LoadDetailTextureArray(Integer, Boolean)
+  fullName.vb: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray(Integer, Boolean)
+  name.vb: LoadDetailTextureArray(Integer, Boolean)
+- uid: Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes
+  commentId: M:Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes
+  id: GetLoadedTerrainTypes
+  parent: Map.Loading.DetailTextureArrayLoader
+  langs:
+  - csharp
+  - vb
+  name: GetLoadedTerrainTypes()
+  nameWithType: DetailTextureArrayLoader.GetLoadedTerrainTypes()
+  fullName: Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLoadedTerrainTypes
+    path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+    startLine: 266
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: >-
+    Get list of loaded terrain type indices
+
+    Useful for debugging and validation
+  example: []
+  syntax:
+    content: public static List<int> GetLoadedTerrainTypes()
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Shared Function GetLoadedTerrainTypes() As List(Of Integer)
+  overload: Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes*
+- uid: Map.Loading.DetailTextureArrayLoader.HasDetailTexture(System.Int32)
+  commentId: M:Map.Loading.DetailTextureArrayLoader.HasDetailTexture(System.Int32)
+  id: HasDetailTexture(System.Int32)
+  parent: Map.Loading.DetailTextureArrayLoader
+  langs:
+  - csharp
+  - vb
+  name: HasDetailTexture(int)
+  nameWithType: DetailTextureArrayLoader.HasDetailTexture(int)
+  fullName: Map.Loading.DetailTextureArrayLoader.HasDetailTexture(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasDetailTexture
+    path: Scripts/Map/Loading/DetailTextureArrayLoader.cs
+    startLine: 275
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Check if terrain type has detail texture available
+  example: []
+  syntax:
+    content: public static bool HasDetailTexture(int terrainTypeIndex)
+    parameters:
+    - id: terrainTypeIndex
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasDetailTexture(terrainTypeIndex As Integer) As Boolean
+  overload: Map.Loading.DetailTextureArrayLoader.HasDetailTexture*
+  nameWithType.vb: DetailTextureArrayLoader.HasDetailTexture(Integer)
+  fullName.vb: Map.Loading.DetailTextureArrayLoader.HasDetailTexture(Integer)
+  name.vb: HasDetailTexture(Integer)
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray*
+  commentId: Overload:Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray
+  href: Map.Loading.DetailTextureArrayLoader.html#Map_Loading_DetailTextureArrayLoader_LoadDetailTextureArray_System_Int32_System_Boolean_
+  name: LoadDetailTextureArray
+  nameWithType: DetailTextureArrayLoader.LoadDetailTextureArray
+  fullName: Map.Loading.DetailTextureArrayLoader.LoadDetailTextureArray
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine.Texture2DArray
+  commentId: T:UnityEngine.Texture2DArray
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2DArray
+  nameWithType: Texture2DArray
+  fullName: UnityEngine.Texture2DArray
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes*
+  commentId: Overload:Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes
+  href: Map.Loading.DetailTextureArrayLoader.html#Map_Loading_DetailTextureArrayLoader_GetLoadedTerrainTypes
+  name: GetLoadedTerrainTypes
+  nameWithType: DetailTextureArrayLoader.GetLoadedTerrainTypes
+  fullName: Map.Loading.DetailTextureArrayLoader.GetLoadedTerrainTypes
+- uid: System.Collections.Generic.List{System.Int32}
+  commentId: T:System.Collections.Generic.List{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<int>
+  nameWithType: List<int>
+  fullName: System.Collections.Generic.List<int>
+  nameWithType.vb: List(Of Integer)
+  fullName.vb: System.Collections.Generic.List(Of Integer)
+  name.vb: List(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Loading.DetailTextureArrayLoader.HasDetailTexture*
+  commentId: Overload:Map.Loading.DetailTextureArrayLoader.HasDetailTexture
+  href: Map.Loading.DetailTextureArrayLoader.html#Map_Loading_DetailTextureArrayLoader_HasDetailTexture_System_Int32_
+  name: HasDetailTexture
+  nameWithType: DetailTextureArrayLoader.HasDetailTexture
+  fullName: Map.Loading.DetailTextureArrayLoader.HasDetailTexture

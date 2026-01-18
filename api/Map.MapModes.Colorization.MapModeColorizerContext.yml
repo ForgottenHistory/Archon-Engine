@@ -1,0 +1,227 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.Colorization.MapModeColorizerContext
+  commentId: T:Map.MapModes.Colorization.MapModeColorizerContext
+  id: MapModeColorizerContext
+  parent: Map.MapModes.Colorization
+  children:
+  - Map.MapModes.Colorization.MapModeColorizerContext.MapHeight
+  - Map.MapModes.Colorization.MapModeColorizerContext.MapWidth
+  - Map.MapModes.Colorization.MapModeColorizerContext.MaxProvinces
+  - Map.MapModes.Colorization.MapModeColorizerContext.TextureManager
+  langs:
+  - csharp
+  - vb
+  name: MapModeColorizerContext
+  nameWithType: MapModeColorizerContext
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapModeColorizerContext
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Context provided during colorizer initialization.
+
+    Contains shared resources needed by colorizers.
+  example: []
+  syntax:
+    content: public struct MapModeColorizerContext
+    content.vb: Public Structure MapModeColorizerContext
+- uid: Map.MapModes.Colorization.MapModeColorizerContext.TextureManager
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerContext.TextureManager
+  id: TextureManager
+  parent: Map.MapModes.Colorization.MapModeColorizerContext
+  langs:
+  - csharp
+  - vb
+  name: TextureManager
+  nameWithType: MapModeColorizerContext.TextureManager
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext.TextureManager
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextureManager
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 74
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Reference to texture manager for accessing map textures
+  example: []
+  syntax:
+    content: public MapTextureManager TextureManager
+    return:
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public TextureManager As MapTextureManager
+- uid: Map.MapModes.Colorization.MapModeColorizerContext.MapWidth
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerContext.MapWidth
+  id: MapWidth
+  parent: Map.MapModes.Colorization.MapModeColorizerContext
+  langs:
+  - csharp
+  - vb
+  name: MapWidth
+  nameWithType: MapModeColorizerContext.MapWidth
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext.MapWidth
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapWidth
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 79
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Map dimensions
+  example: []
+  syntax:
+    content: public int MapWidth
+    return:
+      type: System.Int32
+    content.vb: Public MapWidth As Integer
+- uid: Map.MapModes.Colorization.MapModeColorizerContext.MapHeight
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerContext.MapHeight
+  id: MapHeight
+  parent: Map.MapModes.Colorization.MapModeColorizerContext
+  langs:
+  - csharp
+  - vb
+  name: MapHeight
+  nameWithType: MapModeColorizerContext.MapHeight
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext.MapHeight
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapHeight
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 80
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  syntax:
+    content: public int MapHeight
+    return:
+      type: System.Int32
+    content.vb: Public MapHeight As Integer
+- uid: Map.MapModes.Colorization.MapModeColorizerContext.MaxProvinces
+  commentId: F:Map.MapModes.Colorization.MapModeColorizerContext.MaxProvinces
+  id: MaxProvinces
+  parent: Map.MapModes.Colorization.MapModeColorizerContext
+  langs:
+  - csharp
+  - vb
+  name: MaxProvinces
+  nameWithType: MapModeColorizerContext.MaxProvinces
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext.MaxProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxProvinces
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 85
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Maximum province count for buffer sizing
+  example: []
+  syntax:
+    content: public int MaxProvinces
+    return:
+      type: System.Int32
+    content.vb: Public MaxProvinces As Integer
+references:
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  href: Map.html
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

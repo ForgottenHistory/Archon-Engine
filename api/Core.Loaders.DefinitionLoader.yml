@@ -1,0 +1,299 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.DefinitionLoader
+  commentId: T:Core.Loaders.DefinitionLoader
+  id: DefinitionLoader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.DefinitionLoader.LoadDefinitions(System.String)
+  - Core.Loaders.DefinitionLoader.RegisterDefinitions(System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry},Core.Registries.ProvinceRegistry)
+  langs:
+  - csharp
+  - vb
+  name: DefinitionLoader
+  nameWithType: DefinitionLoader
+  fullName: Core.Loaders.DefinitionLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/DefinitionLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DefinitionLoader
+    path: Scripts/Core/Loaders/DefinitionLoader.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Loads province definitions from definition.csv
+
+    This ensures ALL provinces (including uncolonized ones without JSON5 files) are registered
+  example: []
+  syntax:
+    content: public static class DefinitionLoader
+    content.vb: Public Module DefinitionLoader
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.DefinitionLoader.LoadDefinitions(System.String)
+  commentId: M:Core.Loaders.DefinitionLoader.LoadDefinitions(System.String)
+  id: LoadDefinitions(System.String)
+  parent: Core.Loaders.DefinitionLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadDefinitions(string)
+  nameWithType: DefinitionLoader.LoadDefinitions(string)
+  fullName: Core.Loaders.DefinitionLoader.LoadDefinitions(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/DefinitionLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadDefinitions
+    path: Scripts/Core/Loaders/DefinitionLoader.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Load all province definitions from definition.csv
+
+    Returns list of all provinces that should exist in the game
+  example: []
+  syntax:
+    content: public static List<DefinitionLoader.DefinitionEntry> LoadDefinitions(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    return:
+      type: System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+    content.vb: Public Shared Function LoadDefinitions(dataDirectory As String) As List(Of DefinitionLoader.DefinitionEntry)
+  overload: Core.Loaders.DefinitionLoader.LoadDefinitions*
+  nameWithType.vb: DefinitionLoader.LoadDefinitions(String)
+  fullName.vb: Core.Loaders.DefinitionLoader.LoadDefinitions(String)
+  name.vb: LoadDefinitions(String)
+- uid: Core.Loaders.DefinitionLoader.RegisterDefinitions(System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry},Core.Registries.ProvinceRegistry)
+  commentId: M:Core.Loaders.DefinitionLoader.RegisterDefinitions(System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry},Core.Registries.ProvinceRegistry)
+  id: RegisterDefinitions(System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry},Core.Registries.ProvinceRegistry)
+  parent: Core.Loaders.DefinitionLoader
+  langs:
+  - csharp
+  - vb
+  name: RegisterDefinitions(List<DefinitionEntry>, ProvinceRegistry)
+  nameWithType: DefinitionLoader.RegisterDefinitions(List<DefinitionLoader.DefinitionEntry>, ProvinceRegistry)
+  fullName: Core.Loaders.DefinitionLoader.RegisterDefinitions(System.Collections.Generic.List<Core.Loaders.DefinitionLoader.DefinitionEntry>, Core.Registries.ProvinceRegistry)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/DefinitionLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterDefinitions
+    path: Scripts/Core/Loaders/DefinitionLoader.cs
+    startLine: 142
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Register all provinces from definitions into ProvinceRegistry
+
+    Creates default ProvinceData for provinces without JSON5 files
+  example: []
+  syntax:
+    content: public static void RegisterDefinitions(List<DefinitionLoader.DefinitionEntry> definitions, ProvinceRegistry registry)
+    parameters:
+    - id: definitions
+      type: System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+    - id: registry
+      type: Core.Registries.ProvinceRegistry
+    content.vb: Public Shared Sub RegisterDefinitions(definitions As List(Of DefinitionLoader.DefinitionEntry), registry As ProvinceRegistry)
+  overload: Core.Loaders.DefinitionLoader.RegisterDefinitions*
+  nameWithType.vb: DefinitionLoader.RegisterDefinitions(List(Of DefinitionLoader.DefinitionEntry), ProvinceRegistry)
+  fullName.vb: Core.Loaders.DefinitionLoader.RegisterDefinitions(System.Collections.Generic.List(Of Core.Loaders.DefinitionLoader.DefinitionEntry), Core.Registries.ProvinceRegistry)
+  name.vb: RegisterDefinitions(List(Of DefinitionEntry), ProvinceRegistry)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.DefinitionLoader.LoadDefinitions*
+  commentId: Overload:Core.Loaders.DefinitionLoader.LoadDefinitions
+  href: Core.Loaders.DefinitionLoader.html#Core_Loaders_DefinitionLoader_LoadDefinitions_System_String_
+  name: LoadDefinitions
+  nameWithType: DefinitionLoader.LoadDefinitions
+  fullName: Core.Loaders.DefinitionLoader.LoadDefinitions
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+  commentId: T:System.Collections.Generic.List{Core.Loaders.DefinitionLoader.DefinitionEntry}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: Core.Loaders.DefinitionLoader.html
+  name: List<DefinitionLoader.DefinitionEntry>
+  nameWithType: List<DefinitionLoader.DefinitionEntry>
+  fullName: System.Collections.Generic.List<Core.Loaders.DefinitionLoader.DefinitionEntry>
+  nameWithType.vb: List(Of DefinitionLoader.DefinitionEntry)
+  fullName.vb: System.Collections.Generic.List(Of Core.Loaders.DefinitionLoader.DefinitionEntry)
+  name.vb: List(Of DefinitionLoader.DefinitionEntry)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Loaders.DefinitionLoader
+    name: DefinitionLoader
+    href: Core.Loaders.DefinitionLoader.html
+  - name: .
+  - uid: Core.Loaders.DefinitionLoader.DefinitionEntry
+    name: DefinitionEntry
+    href: Core.Loaders.DefinitionLoader.DefinitionEntry.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Loaders.DefinitionLoader.RegisterDefinitions*
+  commentId: Overload:Core.Loaders.DefinitionLoader.RegisterDefinitions
+  href: Core.Loaders.DefinitionLoader.html#Core_Loaders_DefinitionLoader_RegisterDefinitions_System_Collections_Generic_List_Core_Loaders_DefinitionLoader_DefinitionEntry__Core_Registries_ProvinceRegistry_
+  name: RegisterDefinitions
+  nameWithType: DefinitionLoader.RegisterDefinitions
+  fullName: Core.Loaders.DefinitionLoader.RegisterDefinitions
+- uid: Core.Registries.ProvinceRegistry
+  commentId: T:Core.Registries.ProvinceRegistry
+  parent: Core.Registries
+  href: Core.Registries.ProvinceRegistry.html
+  name: ProvinceRegistry
+  nameWithType: ProvinceRegistry
+  fullName: Core.Registries.ProvinceRegistry
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html

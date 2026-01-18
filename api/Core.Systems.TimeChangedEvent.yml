@@ -1,0 +1,164 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.TimeChangedEvent
+  commentId: T:Core.Systems.TimeChangedEvent
+  id: TimeChangedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.TimeChangedEvent.GameTime
+  - Core.Systems.TimeChangedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: TimeChangedEvent
+  nameWithType: TimeChangedEvent
+  fullName: Core.Systems.TimeChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeChangedEvent
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: 'public struct TimeChangedEvent : IGameEvent'
+    content.vb: Public Structure TimeChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.TimeChangedEvent.GameTime
+  commentId: F:Core.Systems.TimeChangedEvent.GameTime
+  id: GameTime
+  parent: Core.Systems.TimeChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: GameTime
+  nameWithType: TimeChangedEvent.GameTime
+  fullName: Core.Systems.TimeChangedEvent.GameTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameTime
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public GameTime GameTime
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public GameTime As GameTime
+- uid: Core.Systems.TimeChangedEvent.TimeStamp
+  commentId: P:Core.Systems.TimeChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.TimeChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: TimeChangedEvent.TimeStamp
+  fullName: Core.Systems.TimeChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Events/TimeEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Events/TimeEvents.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.TimeChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  parent: Core.Systems
+  href: Core.Systems.GameTime.html
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+- uid: Core.Systems.TimeChangedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.TimeChangedEvent.TimeStamp
+  href: Core.Systems.TimeChangedEvent.html#Core_Systems_TimeChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: TimeChangedEvent.TimeStamp
+  fullName: Core.Systems.TimeChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

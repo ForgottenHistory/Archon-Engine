@@ -1,0 +1,599 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Interaction.ProvinceSelector
+  commentId: T:Map.Interaction.ProvinceSelector
+  id: ProvinceSelector
+  parent: Map.Interaction
+  children:
+  - Map.Interaction.ProvinceSelector.GetHoveredProvince
+  - Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition(UnityEngine.Camera)
+  - Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition(UnityEngine.Vector2,UnityEngine.Camera)
+  - Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  - Map.Interaction.ProvinceSelector.GetSelectedProvince
+  - Map.Interaction.ProvinceSelector.Initialize(Map.Rendering.MapTextureManager,UnityEngine.Transform)
+  - Map.Interaction.ProvinceSelector.OnProvinceClicked
+  - Map.Interaction.ProvinceSelector.OnProvinceHovered
+  - Map.Interaction.ProvinceSelector.OnProvinceRightClicked
+  - Map.Interaction.ProvinceSelector.OnSelectionCleared
+  langs:
+  - csharp
+  - vb
+  name: ProvinceSelector
+  nameWithType: ProvinceSelector
+  fullName: Map.Interaction.ProvinceSelector
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceSelector
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: >-
+    Handles province selection and world position to province ID conversion
+
+    Extracted from MapGenerator to follow single responsibility principle
+
+    Provides fast mouse-to-province lookup for interaction systems
+  example: []
+  syntax:
+    content: 'public class ProvinceSelector : MonoBehaviour'
+    content.vb: Public Class ProvinceSelector Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Interaction.ProvinceSelector.OnProvinceClicked
+  commentId: E:Map.Interaction.ProvinceSelector.OnProvinceClicked
+  id: OnProvinceClicked
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: OnProvinceClicked
+  nameWithType: ProvinceSelector.OnProvinceClicked
+  fullName: Map.Interaction.ProvinceSelector.OnProvinceClicked
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProvinceClicked
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public event Action<ushort> OnProvinceClicked
+    return:
+      type: System.Action{System.UInt16}
+    content.vb: Public Event OnProvinceClicked As Action(Of UShort)
+- uid: Map.Interaction.ProvinceSelector.OnProvinceRightClicked
+  commentId: E:Map.Interaction.ProvinceSelector.OnProvinceRightClicked
+  id: OnProvinceRightClicked
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: OnProvinceRightClicked
+  nameWithType: ProvinceSelector.OnProvinceRightClicked
+  fullName: Map.Interaction.ProvinceSelector.OnProvinceRightClicked
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProvinceRightClicked
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public event Action<ushort> OnProvinceRightClicked
+    return:
+      type: System.Action{System.UInt16}
+    content.vb: Public Event OnProvinceRightClicked As Action(Of UShort)
+- uid: Map.Interaction.ProvinceSelector.OnProvinceHovered
+  commentId: E:Map.Interaction.ProvinceSelector.OnProvinceHovered
+  id: OnProvinceHovered
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: OnProvinceHovered
+  nameWithType: ProvinceSelector.OnProvinceHovered
+  fullName: Map.Interaction.ProvinceSelector.OnProvinceHovered
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProvinceHovered
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public event Action<ushort> OnProvinceHovered
+    return:
+      type: System.Action{System.UInt16}
+    content.vb: Public Event OnProvinceHovered As Action(Of UShort)
+- uid: Map.Interaction.ProvinceSelector.OnSelectionCleared
+  commentId: E:Map.Interaction.ProvinceSelector.OnSelectionCleared
+  id: OnSelectionCleared
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: OnSelectionCleared
+  nameWithType: ProvinceSelector.OnSelectionCleared
+  fullName: Map.Interaction.ProvinceSelector.OnSelectionCleared
+  type: Event
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSelectionCleared
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 23
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public event Action OnSelectionCleared
+    return:
+      type: System.Action
+    content.vb: Public Event OnSelectionCleared As Action
+- uid: Map.Interaction.ProvinceSelector.Initialize(Map.Rendering.MapTextureManager,UnityEngine.Transform)
+  commentId: M:Map.Interaction.ProvinceSelector.Initialize(Map.Rendering.MapTextureManager,UnityEngine.Transform)
+  id: Initialize(Map.Rendering.MapTextureManager,UnityEngine.Transform)
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapTextureManager, Transform)
+  nameWithType: ProvinceSelector.Initialize(MapTextureManager, Transform)
+  fullName: Map.Interaction.ProvinceSelector.Initialize(Map.Rendering.MapTextureManager, UnityEngine.Transform)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public void Initialize(MapTextureManager textures, Transform quadTransform)
+    parameters:
+    - id: textures
+      type: Map.Rendering.MapTextureManager
+    - id: quadTransform
+      type: UnityEngine.Transform
+    content.vb: Public Sub Initialize(textures As MapTextureManager, quadTransform As Transform)
+  overload: Map.Interaction.ProvinceSelector.Initialize*
+- uid: Map.Interaction.ProvinceSelector.GetSelectedProvince
+  commentId: M:Map.Interaction.ProvinceSelector.GetSelectedProvince
+  id: GetSelectedProvince
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: GetSelectedProvince()
+  nameWithType: ProvinceSelector.GetSelectedProvince()
+  fullName: Map.Interaction.ProvinceSelector.GetSelectedProvince()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSelectedProvince
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 142
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get the currently selected province ID
+  example: []
+  syntax:
+    content: public ushort GetSelectedProvince()
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetSelectedProvince() As UShort
+  overload: Map.Interaction.ProvinceSelector.GetSelectedProvince*
+- uid: Map.Interaction.ProvinceSelector.GetHoveredProvince
+  commentId: M:Map.Interaction.ProvinceSelector.GetHoveredProvince
+  id: GetHoveredProvince
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: GetHoveredProvince()
+  nameWithType: ProvinceSelector.GetHoveredProvince()
+  fullName: Map.Interaction.ProvinceSelector.GetHoveredProvince()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHoveredProvince
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 147
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get the currently hovered province ID
+  example: []
+  syntax:
+    content: public ushort GetHoveredProvince()
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetHoveredProvince() As UShort
+  overload: Map.Interaction.ProvinceSelector.GetHoveredProvince*
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  commentId: M:Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  id: GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceAtWorldPosition(Vector3)
+  nameWithType: ProvinceSelector.GetProvinceAtWorldPosition(Vector3)
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceAtWorldPosition
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 155
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: >-
+    Get province ID at world position using raycast + texture lookup
+
+    Uses texture-based lookup for optimal performance (&lt;1ms)
+  example: []
+  syntax:
+    content: public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
+    parameters:
+    - id: worldPosition
+      type: UnityEngine.Vector3
+      description: World position to query
+    return:
+      type: System.UInt16
+      description: Province ID at position, or 0 if invalid
+    content.vb: Public Function GetProvinceAtWorldPosition(worldPosition As Vector3) As UShort
+  overload: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition*
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition(UnityEngine.Vector2,UnityEngine.Camera)
+  commentId: M:Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition(UnityEngine.Vector2,UnityEngine.Camera)
+  id: GetProvinceAtScreenPosition(UnityEngine.Vector2,UnityEngine.Camera)
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceAtScreenPosition(Vector2, Camera)
+  nameWithType: ProvinceSelector.GetProvinceAtScreenPosition(Vector2, Camera)
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition(UnityEngine.Vector2, UnityEngine.Camera)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceAtScreenPosition
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 203
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get province ID at screen position (converts screen to world first)
+  example: []
+  syntax:
+    content: public ushort GetProvinceAtScreenPosition(Vector2 screenPosition, Camera camera)
+    parameters:
+    - id: screenPosition
+      type: UnityEngine.Vector2
+      description: Screen position (e.g., mouse position)
+    - id: camera
+      type: UnityEngine.Camera
+      description: Camera to use for conversion
+    return:
+      type: System.UInt16
+      description: Province ID at position, or 0 if invalid
+    content.vb: Public Function GetProvinceAtScreenPosition(screenPosition As Vector2, camera As Camera) As UShort
+  overload: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition*
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition(UnityEngine.Camera)
+  commentId: M:Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition(UnityEngine.Camera)
+  id: GetProvinceAtMousePosition(UnityEngine.Camera)
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceAtMousePosition(Camera)
+  nameWithType: ProvinceSelector.GetProvinceAtMousePosition(Camera)
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition(UnityEngine.Camera)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceAtMousePosition
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 225
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Get province ID at mouse position (convenience method)
+  example: []
+  syntax:
+    content: public ushort GetProvinceAtMousePosition(Camera camera)
+    parameters:
+    - id: camera
+      type: UnityEngine.Camera
+      description: Camera to use for conversion
+    return:
+      type: System.UInt16
+      description: Province ID at mouse position, or 0 if invalid
+    content.vb: Public Function GetProvinceAtMousePosition(camera As Camera) As UShort
+  overload: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition*
+references:
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  href: Map.html
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Action{System.UInt16}
+  commentId: T:System.Action{System.UInt16}
+  parent: System
+  definition: System.Action`1
+  name: Action<ushort>
+  nameWithType: Action<ushort>
+  fullName: System.Action<ushort>
+  nameWithType.vb: Action(Of UShort)
+  fullName.vb: System.Action(Of UShort)
+  name.vb: Action(Of UShort)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: Map.Interaction.ProvinceSelector.Initialize*
+  commentId: Overload:Map.Interaction.ProvinceSelector.Initialize
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_Initialize_Map_Rendering_MapTextureManager_UnityEngine_Transform_
+  name: Initialize
+  nameWithType: ProvinceSelector.Initialize
+  fullName: Map.Interaction.ProvinceSelector.Initialize
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Interaction.ProvinceSelector.GetSelectedProvince*
+  commentId: Overload:Map.Interaction.ProvinceSelector.GetSelectedProvince
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_GetSelectedProvince
+  name: GetSelectedProvince
+  nameWithType: ProvinceSelector.GetSelectedProvince
+  fullName: Map.Interaction.ProvinceSelector.GetSelectedProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Interaction.ProvinceSelector.GetHoveredProvince*
+  commentId: Overload:Map.Interaction.ProvinceSelector.GetHoveredProvince
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_GetHoveredProvince
+  name: GetHoveredProvince
+  nameWithType: ProvinceSelector.GetHoveredProvince
+  fullName: Map.Interaction.ProvinceSelector.GetHoveredProvince
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition*
+  commentId: Overload:Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_GetProvinceAtWorldPosition_UnityEngine_Vector3_
+  name: GetProvinceAtWorldPosition
+  nameWithType: ProvinceSelector.GetProvinceAtWorldPosition
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition*
+  commentId: Overload:Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_GetProvinceAtScreenPosition_UnityEngine_Vector2_UnityEngine_Camera_
+  name: GetProvinceAtScreenPosition
+  nameWithType: ProvinceSelector.GetProvinceAtScreenPosition
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: UnityEngine.Camera
+  commentId: T:UnityEngine.Camera
+  parent: UnityEngine
+  isExternal: true
+  name: Camera
+  nameWithType: Camera
+  fullName: UnityEngine.Camera
+- uid: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition*
+  commentId: Overload:Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_GetProvinceAtMousePosition_UnityEngine_Camera_
+  name: GetProvinceAtMousePosition
+  nameWithType: ProvinceSelector.GetProvinceAtMousePosition
+  fullName: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition

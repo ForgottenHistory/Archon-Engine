@@ -1,0 +1,535 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderGeometryUtils
+  commentId: T:Map.Rendering.Border.BorderGeometryUtils
+  id: BorderGeometryUtils
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderGeometryUtils.CalculateAngle(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  - Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull(System.Collections.Generic.List{UnityEngine.Vector2})
+  - Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  - Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter(System.Collections.Generic.List{UnityEngine.Vector2})
+  - Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline(UnityEngine.Vector2,System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  - Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  - Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects(System.Collections.Generic.List{UnityEngine.Vector2})
+  langs:
+  - csharp
+  - vb
+  name: BorderGeometryUtils
+  nameWithType: BorderGeometryUtils
+  fullName: Map.Rendering.Border.BorderGeometryUtils
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderGeometryUtils
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Geometric utility functions for border processing
+
+    Extracted from BorderCurveExtractor for reusability
+
+
+    Contains:
+
+    - Line segment intersection detection
+
+    - Path self-intersection checking
+
+    - Convex hull computation (Graham scan)
+
+    - Distance calculations
+
+    - Angle calculations
+  example: []
+  syntax:
+    content: public static class BorderGeometryUtils
+    content.vb: Public Module BorderGeometryUtils
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  id: LineSegmentsIntersect(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: LineSegmentsIntersect(Vector2, Vector2, Vector2, Vector2)
+  nameWithType: BorderGeometryUtils.LineSegmentsIntersect(Vector2, Vector2, Vector2, Vector2)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect(UnityEngine.Vector2, UnityEngine.Vector2, UnityEngine.Vector2, UnityEngine.Vector2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LineSegmentsIntersect
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Check if two line segments intersect (not just touch at endpoints)
+
+    Uses cross product method for robust intersection detection
+  example: []
+  syntax:
+    content: public static bool LineSegmentsIntersect(Vector2 p1, Vector2 p2, Vector2 p3, Vector2 p4)
+    parameters:
+    - id: p1
+      type: UnityEngine.Vector2
+    - id: p2
+      type: UnityEngine.Vector2
+    - id: p3
+      type: UnityEngine.Vector2
+    - id: p4
+      type: UnityEngine.Vector2
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function LineSegmentsIntersect(p1 As Vector2, p2 As Vector2, p3 As Vector2, p4 As Vector2) As Boolean
+  overload: Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect*
+- uid: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects(System.Collections.Generic.List{UnityEngine.Vector2})
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects(System.Collections.Generic.List{UnityEngine.Vector2})
+  id: PathSelfIntersects(System.Collections.Generic.List{UnityEngine.Vector2})
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: PathSelfIntersects(List<Vector2>)
+  nameWithType: BorderGeometryUtils.PathSelfIntersects(List<Vector2>)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects(System.Collections.Generic.List<UnityEngine.Vector2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathSelfIntersects
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Check if path self-intersects (detects U-turns)
+  example: []
+  syntax:
+    content: public static bool PathSelfIntersects(List<Vector2> path)
+    parameters:
+    - id: path
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function PathSelfIntersects(path As List(Of Vector2)) As Boolean
+  overload: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects*
+  nameWithType.vb: BorderGeometryUtils.PathSelfIntersects(List(Of Vector2))
+  fullName.vb: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects(System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: PathSelfIntersects(List(Of Vector2))
+- uid: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull(System.Collections.Generic.List{UnityEngine.Vector2})
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull(System.Collections.Generic.List{UnityEngine.Vector2})
+  id: ComputeConvexHull(System.Collections.Generic.List{UnityEngine.Vector2})
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: ComputeConvexHull(List<Vector2>)
+  nameWithType: BorderGeometryUtils.ComputeConvexHull(List<Vector2>)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull(System.Collections.Generic.List<UnityEngine.Vector2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ComputeConvexHull
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 81
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Compute convex hull of points using Graham scan algorithm
+
+    Returns hull vertices in counter-clockwise order
+  example: []
+  syntax:
+    content: public static List<Vector2> ComputeConvexHull(List<Vector2> points)
+    parameters:
+    - id: points
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    content.vb: Public Shared Function ComputeConvexHull(points As List(Of Vector2)) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull*
+  nameWithType.vb: BorderGeometryUtils.ComputeConvexHull(List(Of Vector2))
+  fullName.vb: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull(System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: ComputeConvexHull(List(Of Vector2))
+- uid: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter(System.Collections.Generic.List{UnityEngine.Vector2})
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter(System.Collections.Generic.List{UnityEngine.Vector2})
+  id: FilterToConvexHullPerimeter(System.Collections.Generic.List{UnityEngine.Vector2})
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: FilterToConvexHullPerimeter(List<Vector2>)
+  nameWithType: BorderGeometryUtils.FilterToConvexHullPerimeter(List<Vector2>)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter(System.Collections.Generic.List<UnityEngine.Vector2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FilterToConvexHullPerimeter
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 134
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Filter border pixels to convex hull perimeter, removing interior pixels
+
+    This prevents U-turns caused by peninsula indents creating interior loops
+  example: []
+  syntax:
+    content: public static List<Vector2> FilterToConvexHullPerimeter(List<Vector2> pixels)
+    parameters:
+    - id: pixels
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    return:
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    content.vb: Public Shared Function FilterToConvexHullPerimeter(pixels As List(Of Vector2)) As List(Of Vector2)
+  overload: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter*
+  nameWithType.vb: BorderGeometryUtils.FilterToConvexHullPerimeter(List(Of Vector2))
+  fullName.vb: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter(System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: FilterToConvexHullPerimeter(List(Of Vector2))
+- uid: Map.Rendering.Border.BorderGeometryUtils.CalculateAngle(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.CalculateAngle(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  id: CalculateAngle(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: CalculateAngle(Vector2, Vector2, Vector2)
+  nameWithType: BorderGeometryUtils.CalculateAngle(Vector2, Vector2, Vector2)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.CalculateAngle(UnityEngine.Vector2, UnityEngine.Vector2, UnityEngine.Vector2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateAngle
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 161
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Calculate angle in degrees at point B formed by line A-B-C
+
+    Returns 0° for straight line, 180° for complete reversal
+  example: []
+  syntax:
+    content: public static float CalculateAngle(Vector2 pointA, Vector2 pointB, Vector2 pointC)
+    parameters:
+    - id: pointA
+      type: UnityEngine.Vector2
+    - id: pointB
+      type: UnityEngine.Vector2
+    - id: pointC
+      type: UnityEngine.Vector2
+    return:
+      type: System.Single
+    content.vb: Public Shared Function CalculateAngle(pointA As Vector2, pointB As Vector2, pointC As Vector2) As Single
+  overload: Map.Rendering.Border.BorderGeometryUtils.CalculateAngle*
+- uid: Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  id: DistancePointToSegment(UnityEngine.Vector2,UnityEngine.Vector2,UnityEngine.Vector2)
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: DistancePointToSegment(Vector2, Vector2, Vector2)
+  nameWithType: BorderGeometryUtils.DistancePointToSegment(Vector2, Vector2, Vector2)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment(UnityEngine.Vector2, UnityEngine.Vector2, UnityEngine.Vector2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DistancePointToSegment
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 176
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Compute distance from point to line segment
+  example: []
+  syntax:
+    content: public static float DistancePointToSegment(Vector2 point, Vector2 segStart, Vector2 segEnd)
+    parameters:
+    - id: point
+      type: UnityEngine.Vector2
+    - id: segStart
+      type: UnityEngine.Vector2
+    - id: segEnd
+      type: UnityEngine.Vector2
+    return:
+      type: System.Single
+    content.vb: Public Shared Function DistancePointToSegment(point As Vector2, segStart As Vector2, segEnd As Vector2) As Single
+  overload: Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment*
+- uid: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline(UnityEngine.Vector2,System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  commentId: M:Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline(UnityEngine.Vector2,System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  id: IsPointOnOrNearPolyline(UnityEngine.Vector2,System.Collections.Generic.List{UnityEngine.Vector2},System.Single)
+  parent: Map.Rendering.Border.BorderGeometryUtils
+  langs:
+  - csharp
+  - vb
+  name: IsPointOnOrNearPolyline(Vector2, List<Vector2>, float)
+  nameWithType: BorderGeometryUtils.IsPointOnOrNearPolyline(Vector2, List<Vector2>, float)
+  fullName: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline(UnityEngine.Vector2, System.Collections.Generic.List<UnityEngine.Vector2>, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsPointOnOrNearPolyline
+    path: Scripts/Map/Rendering/Border/BorderGeometryUtils.cs
+    startLine: 195
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Check if point is on or near a polyline (within tolerance distance)
+  example: []
+  syntax:
+    content: public static bool IsPointOnOrNearPolyline(Vector2 point, List<Vector2> polyline, float tolerance)
+    parameters:
+    - id: point
+      type: UnityEngine.Vector2
+    - id: polyline
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    - id: tolerance
+      type: System.Single
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function IsPointOnOrNearPolyline(point As Vector2, polyline As List(Of Vector2), tolerance As Single) As Boolean
+  overload: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline*
+  nameWithType.vb: BorderGeometryUtils.IsPointOnOrNearPolyline(Vector2, List(Of Vector2), Single)
+  fullName.vb: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline(UnityEngine.Vector2, System.Collections.Generic.List(Of UnityEngine.Vector2), Single)
+  name.vb: IsPointOnOrNearPolyline(Vector2, List(Of Vector2), Single)
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_LineSegmentsIntersect_UnityEngine_Vector2_UnityEngine_Vector2_UnityEngine_Vector2_UnityEngine_Vector2_
+  name: LineSegmentsIntersect
+  nameWithType: BorderGeometryUtils.LineSegmentsIntersect
+  fullName: Map.Rendering.Border.BorderGeometryUtils.LineSegmentsIntersect
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_PathSelfIntersects_System_Collections_Generic_List_UnityEngine_Vector2__
+  name: PathSelfIntersects
+  nameWithType: BorderGeometryUtils.PathSelfIntersects
+  fullName: Map.Rendering.Border.BorderGeometryUtils.PathSelfIntersects
+- uid: System.Collections.Generic.List{UnityEngine.Vector2}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2>
+  nameWithType: List<Vector2>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2>
+  nameWithType.vb: List(Of Vector2)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2)
+  name.vb: List(Of Vector2)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_ComputeConvexHull_System_Collections_Generic_List_UnityEngine_Vector2__
+  name: ComputeConvexHull
+  nameWithType: BorderGeometryUtils.ComputeConvexHull
+  fullName: Map.Rendering.Border.BorderGeometryUtils.ComputeConvexHull
+- uid: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_FilterToConvexHullPerimeter_System_Collections_Generic_List_UnityEngine_Vector2__
+  name: FilterToConvexHullPerimeter
+  nameWithType: BorderGeometryUtils.FilterToConvexHullPerimeter
+  fullName: Map.Rendering.Border.BorderGeometryUtils.FilterToConvexHullPerimeter
+- uid: Map.Rendering.Border.BorderGeometryUtils.CalculateAngle*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.CalculateAngle
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_CalculateAngle_UnityEngine_Vector2_UnityEngine_Vector2_UnityEngine_Vector2_
+  name: CalculateAngle
+  nameWithType: BorderGeometryUtils.CalculateAngle
+  fullName: Map.Rendering.Border.BorderGeometryUtils.CalculateAngle
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_DistancePointToSegment_UnityEngine_Vector2_UnityEngine_Vector2_UnityEngine_Vector2_
+  name: DistancePointToSegment
+  nameWithType: BorderGeometryUtils.DistancePointToSegment
+  fullName: Map.Rendering.Border.BorderGeometryUtils.DistancePointToSegment
+- uid: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline*
+  commentId: Overload:Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline
+  href: Map.Rendering.Border.BorderGeometryUtils.html#Map_Rendering_Border_BorderGeometryUtils_IsPointOnOrNearPolyline_UnityEngine_Vector2_System_Collections_Generic_List_UnityEngine_Vector2__System_Single_
+  name: IsPointOnOrNearPolyline
+  nameWithType: BorderGeometryUtils.IsPointOnOrNearPolyline
+  fullName: Map.Rendering.Border.BorderGeometryUtils.IsPointOnOrNearPolyline

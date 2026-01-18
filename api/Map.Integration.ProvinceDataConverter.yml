@@ -1,0 +1,193 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Integration.ProvinceDataConverter
+  commentId: T:Map.Integration.ProvinceDataConverter
+  id: ProvinceDataConverter
+  parent: Map.Integration
+  children:
+  - Map.Integration.ProvinceDataConverter.ConvertLoadResult(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceDataManager)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDataConverter
+  nameWithType: ProvinceDataConverter
+  fullName: Map.Integration.ProvinceDataConverter
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceDataConverter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDataConverter
+    path: Scripts/Map/Integration/ProvinceDataConverter.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Converts province map load results to ProvinceDataManager format
+
+    Handles pixel grouping, province registration, and initial data setup
+
+    Extracted from MapDataIntegrator for single responsibility
+  example: []
+  syntax:
+    content: public class ProvinceDataConverter
+    content.vb: Public Class ProvinceDataConverter
+  inheritance:
+  - System.Object
+- uid: Map.Integration.ProvinceDataConverter.ConvertLoadResult(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceDataManager)
+  commentId: M:Map.Integration.ProvinceDataConverter.ConvertLoadResult(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceDataManager)
+  id: ConvertLoadResult(Map.Loading.ProvinceMapLoader.LoadResult,Map.Province.ProvinceDataManager)
+  parent: Map.Integration.ProvinceDataConverter
+  langs:
+  - csharp
+  - vb
+  name: ConvertLoadResult(LoadResult, ProvinceDataManager)
+  nameWithType: ProvinceDataConverter.ConvertLoadResult(ProvinceMapLoader.LoadResult, ProvinceDataManager)
+  fullName: Map.Integration.ProvinceDataConverter.ConvertLoadResult(Map.Loading.ProvinceMapLoader.LoadResult, Map.Province.ProvinceDataManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceDataConverter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConvertLoadResult
+    path: Scripts/Map/Integration/ProvinceDataConverter.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Convert ProvinceMapLoader.LoadResult to ProvinceDataManager format
+
+    Groups pixels by province ID and initializes province data entries
+  example: []
+  syntax:
+    content: public static void ConvertLoadResult(ProvinceMapLoader.LoadResult loadResult, ProvinceDataManager dataManager)
+    parameters:
+    - id: loadResult
+      type: Map.Loading.ProvinceMapLoader.LoadResult
+    - id: dataManager
+      type: Map.Province.ProvinceDataManager
+    content.vb: Public Shared Sub ConvertLoadResult(loadResult As ProvinceMapLoader.LoadResult, dataManager As ProvinceDataManager)
+  overload: Map.Integration.ProvinceDataConverter.ConvertLoadResult*
+references:
+- uid: Map.Integration
+  commentId: N:Map.Integration
+  href: Map.html
+  name: Map.Integration
+  nameWithType: Map.Integration
+  fullName: Map.Integration
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Integration.ProvinceDataConverter.ConvertLoadResult*
+  commentId: Overload:Map.Integration.ProvinceDataConverter.ConvertLoadResult
+  href: Map.Integration.ProvinceDataConverter.html#Map_Integration_ProvinceDataConverter_ConvertLoadResult_Map_Loading_ProvinceMapLoader_LoadResult_Map_Province_ProvinceDataManager_
+  name: ConvertLoadResult
+  nameWithType: ProvinceDataConverter.ConvertLoadResult
+  fullName: Map.Integration.ProvinceDataConverter.ConvertLoadResult
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: Map.Province.ProvinceDataManager
+  commentId: T:Map.Province.ProvinceDataManager
+  parent: Map.Province
+  href: Map.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html

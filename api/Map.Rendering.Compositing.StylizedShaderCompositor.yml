@@ -1,0 +1,824 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor
+  commentId: T:Map.Rendering.Compositing.StylizedShaderCompositor
+  id: StylizedShaderCompositor
+  parent: Map.Rendering.Compositing
+  children:
+  - Map.Rendering.Compositing.StylizedShaderCompositor.#ctor
+  - Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+  - Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+  - Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig
+  langs:
+  - csharp
+  - vb
+  name: StylizedShaderCompositor
+  nameWithType: StylizedShaderCompositor
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StylizedShaderCompositor
+    path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+    startLine: 96
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: >-
+    Stylized compositor - uses multiply blending for borders for EU4-like look.
+
+    Borders darken the base color instead of overlaying.
+  example: []
+  syntax:
+    content: 'public class StylizedShaderCompositor : ShaderCompositorBase, IShaderCompositor'
+    content.vb: Public Class StylizedShaderCompositor Inherits ShaderCompositorBase Implements IShaderCompositor
+  inheritance:
+  - System.Object
+  - Map.Rendering.Compositing.ShaderCompositorBase
+  implements:
+  - Map.Rendering.Compositing.IShaderCompositor
+  inheritedMembers:
+  - Map.Rendering.Compositing.ShaderCompositorBase.context
+  - Map.Rendering.Compositing.ShaderCompositorBase.isInitialized
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableBaseColorId
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableLightingId
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableBordersId
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableHighlightsId
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableFogOfWarId
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableOverlayId
+  - Map.Rendering.Compositing.ShaderCompositorBase.BorderBlendModeId
+  - Map.Rendering.Compositing.ShaderCompositorBase.HighlightBlendModeId
+  - Map.Rendering.Compositing.ShaderCompositorBase.FogBlendModeId
+  - Map.Rendering.Compositing.ShaderCompositorBase.OverlayBlendModeId
+  - Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+  - Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor
+  - Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+  - Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material,Map.Rendering.Compositing.CompositorConfig)
+  - Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender
+  - Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader
+  - Map.Rendering.Compositing.ShaderCompositorBase.Dispose
+  - Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor
+  - Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material,System.Int32,System.Single)
+  - Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material,System.Int32,System.Int32)
+  - Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material,System.Int32,UnityEngine.Color)
+  - Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material,System.String)
+  - Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material,System.String)
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+  commentId: P:Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+  id: CompositorId
+  parent: Map.Rendering.Compositing.StylizedShaderCompositor
+  langs:
+  - csharp
+  - vb
+  name: CompositorId
+  nameWithType: StylizedShaderCompositor.CompositorId
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompositorId
+    path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+    startLine: 98
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Unique identifier for this compositor (e.g., "Default", "Stylized", "Minimal")
+  example: []
+  syntax:
+    content: public override string CompositorId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property CompositorId As String
+  overridden: Map.Rendering.Compositing.ShaderCompositorBase.CompositorId
+  overload: Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId*
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+  commentId: P:Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+  id: DisplayName
+  parent: Map.Rendering.Compositing.StylizedShaderCompositor
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: StylizedShaderCompositor.DisplayName
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+    startLine: 99
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: Human-readable name for UI/debugging
+  example: []
+  syntax:
+    content: public override string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Overrides ReadOnly Property DisplayName As String
+  overridden: Map.Rendering.Compositing.ShaderCompositorBase.DisplayName
+  overload: Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName*
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.#ctor
+  commentId: M:Map.Rendering.Compositing.StylizedShaderCompositor.#ctor
+  id: '#ctor'
+  parent: Map.Rendering.Compositing.StylizedShaderCompositor
+  langs:
+  - csharp
+  - vb
+  name: StylizedShaderCompositor()
+  nameWithType: StylizedShaderCompositor.StylizedShaderCompositor()
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.StylizedShaderCompositor()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+    startLine: 103
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  syntax:
+    content: public StylizedShaderCompositor()
+    content.vb: Public Sub New()
+  overload: Map.Rendering.Compositing.StylizedShaderCompositor.#ctor*
+  nameWithType.vb: StylizedShaderCompositor.New()
+  fullName.vb: Map.Rendering.Compositing.StylizedShaderCompositor.New()
+  name.vb: New()
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig
+  commentId: M:Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig
+  id: GetConfig
+  parent: Map.Rendering.Compositing.StylizedShaderCompositor
+  langs:
+  - csharp
+  - vb
+  name: GetConfig()
+  nameWithType: StylizedShaderCompositor.GetConfig()
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConfig
+    path: Scripts/Map/Rendering/Compositing/Implementations/DefaultShaderCompositor.cs
+    startLine: 122
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Compositing
+  summary: >-
+    Get the compositing configuration for this compositor.
+
+    Used by shader to determine layer order and blend modes.
+  example: []
+  syntax:
+    content: public override CompositorConfig GetConfig()
+    return:
+      type: Map.Rendering.Compositing.CompositorConfig
+    content.vb: Public Overrides Function GetConfig() As CompositorConfig
+  overridden: Map.Rendering.Compositing.ShaderCompositorBase.GetConfig
+  overload: Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig*
+references:
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Rendering.Compositing.ShaderCompositorBase
+  commentId: T:Map.Rendering.Compositing.ShaderCompositorBase
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html
+  name: ShaderCompositorBase
+  nameWithType: ShaderCompositorBase
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase
+- uid: Map.Rendering.Compositing.IShaderCompositor
+  commentId: T:Map.Rendering.Compositing.IShaderCompositor
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.IShaderCompositor.html
+  name: IShaderCompositor
+  nameWithType: IShaderCompositor
+  fullName: Map.Rendering.Compositing.IShaderCompositor
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.context
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.context
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_context
+  name: context
+  nameWithType: ShaderCompositorBase.context
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.context
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.isInitialized
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.isInitialized
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_isInitialized
+  name: isInitialized
+  nameWithType: ShaderCompositorBase.isInitialized
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.isInitialized
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableBaseColorId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableBaseColorId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableBaseColorId
+  name: EnableBaseColorId
+  nameWithType: ShaderCompositorBase.EnableBaseColorId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableBaseColorId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableLightingId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableLightingId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableLightingId
+  name: EnableLightingId
+  nameWithType: ShaderCompositorBase.EnableLightingId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableLightingId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableBordersId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableBordersId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableBordersId
+  name: EnableBordersId
+  nameWithType: ShaderCompositorBase.EnableBordersId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableBordersId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableHighlightsId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableHighlightsId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableHighlightsId
+  name: EnableHighlightsId
+  nameWithType: ShaderCompositorBase.EnableHighlightsId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableHighlightsId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableFogOfWarId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableFogOfWarId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableFogOfWarId
+  name: EnableFogOfWarId
+  nameWithType: ShaderCompositorBase.EnableFogOfWarId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableFogOfWarId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableOverlayId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.EnableOverlayId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableOverlayId
+  name: EnableOverlayId
+  nameWithType: ShaderCompositorBase.EnableOverlayId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableOverlayId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.BorderBlendModeId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.BorderBlendModeId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_BorderBlendModeId
+  name: BorderBlendModeId
+  nameWithType: ShaderCompositorBase.BorderBlendModeId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.BorderBlendModeId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.HighlightBlendModeId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.HighlightBlendModeId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_HighlightBlendModeId
+  name: HighlightBlendModeId
+  nameWithType: ShaderCompositorBase.HighlightBlendModeId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.HighlightBlendModeId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.FogBlendModeId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.FogBlendModeId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_FogBlendModeId
+  name: FogBlendModeId
+  nameWithType: ShaderCompositorBase.FogBlendModeId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.FogBlendModeId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.OverlayBlendModeId
+  commentId: F:Map.Rendering.Compositing.ShaderCompositorBase.OverlayBlendModeId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_OverlayBlendModeId
+  name: OverlayBlendModeId
+  nameWithType: ShaderCompositorBase.OverlayBlendModeId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.OverlayBlendModeId
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Initialize_Map_Rendering_Compositing_CompositorContext_
+  name: Initialize(CompositorContext)
+  nameWithType: ShaderCompositorBase.Initialize(CompositorContext)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+    name: Initialize
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Initialize_Map_Rendering_Compositing_CompositorContext_
+  - name: (
+  - uid: Map.Rendering.Compositing.CompositorContext
+    name: CompositorContext
+    href: Map.Rendering.Compositing.CompositorContext.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.Initialize(Map.Rendering.Compositing.CompositorContext)
+    name: Initialize
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Initialize_Map_Rendering_Compositing_CompositorContext_
+  - name: (
+  - uid: Map.Rendering.Compositing.CompositorContext
+    name: CompositorContext
+    href: Map.Rendering.Compositing.CompositorContext.html
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_InitializeCompositor
+  name: InitializeCompositor()
+  nameWithType: ShaderCompositorBase.InitializeCompositor()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor
+    name: InitializeCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_InitializeCompositor
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.InitializeCompositor
+    name: InitializeCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_InitializeCompositor
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureMaterial_UnityEngine_Material_
+  name: ConfigureMaterial(Material)
+  nameWithType: ShaderCompositorBase.ConfigureMaterial(Material)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+    name: ConfigureMaterial
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureMaterial_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureMaterial(UnityEngine.Material)
+    name: ConfigureMaterial
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureMaterial_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material,Map.Rendering.Compositing.CompositorConfig)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material,Map.Rendering.Compositing.CompositorConfig)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureCompositor_UnityEngine_Material_Map_Rendering_Compositing_CompositorConfig_
+  name: ConfigureCompositor(Material, CompositorConfig)
+  nameWithType: ShaderCompositorBase.ConfigureCompositor(Material, CompositorConfig)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material, Map.Rendering.Compositing.CompositorConfig)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material,Map.Rendering.Compositing.CompositorConfig)
+    name: ConfigureCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureCompositor_UnityEngine_Material_Map_Rendering_Compositing_CompositorConfig_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Compositing.CompositorConfig
+    name: CompositorConfig
+    href: Map.Rendering.Compositing.CompositorConfig.html
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.ConfigureCompositor(UnityEngine.Material,Map.Rendering.Compositing.CompositorConfig)
+    name: ConfigureCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_ConfigureCompositor_UnityEngine_Material_Map_Rendering_Compositing_CompositorConfig_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.Compositing.CompositorConfig
+    name: CompositorConfig
+    href: Map.Rendering.Compositing.CompositorConfig.html
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_OnPreRender
+  name: OnPreRender()
+  nameWithType: ShaderCompositorBase.OnPreRender()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender
+    name: OnPreRender
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_OnPreRender
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.OnPreRender
+    name: OnPreRender
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_OnPreRender
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetCustomShader
+  name: GetCustomShader()
+  nameWithType: ShaderCompositorBase.GetCustomShader()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader
+    name: GetCustomShader
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetCustomShader
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.GetCustomShader
+    name: GetCustomShader
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetCustomShader
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.Dispose
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.Dispose
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Dispose
+  name: Dispose()
+  nameWithType: ShaderCompositorBase.Dispose()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.Dispose()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.Dispose
+    name: Dispose
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_Dispose
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisposeCompositor
+  name: DisposeCompositor()
+  nameWithType: ShaderCompositorBase.DisposeCompositor()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor
+    name: DisposeCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisposeCompositor
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.DisposeCompositor
+    name: DisposeCompositor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisposeCompositor
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material,System.Int32,System.Single)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material,System.Int32,System.Single)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialFloat_UnityEngine_Material_System_Int32_System_Single_
+  name: SetMaterialFloat(Material, int, float)
+  nameWithType: ShaderCompositorBase.SetMaterialFloat(Material, int, float)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material, int, float)
+  nameWithType.vb: ShaderCompositorBase.SetMaterialFloat(Material, Integer, Single)
+  fullName.vb: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material, Integer, Single)
+  name.vb: SetMaterialFloat(Material, Integer, Single)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material,System.Int32,System.Single)
+    name: SetMaterialFloat
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialFloat_UnityEngine_Material_System_Int32_System_Single_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialFloat(UnityEngine.Material,System.Int32,System.Single)
+    name: SetMaterialFloat
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialFloat_UnityEngine_Material_System_Int32_System_Single_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material,System.Int32,System.Int32)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material,System.Int32,System.Int32)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialInt_UnityEngine_Material_System_Int32_System_Int32_
+  name: SetMaterialInt(Material, int, int)
+  nameWithType: ShaderCompositorBase.SetMaterialInt(Material, int, int)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material, int, int)
+  nameWithType.vb: ShaderCompositorBase.SetMaterialInt(Material, Integer, Integer)
+  fullName.vb: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material, Integer, Integer)
+  name.vb: SetMaterialInt(Material, Integer, Integer)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material,System.Int32,System.Int32)
+    name: SetMaterialInt
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialInt_UnityEngine_Material_System_Int32_System_Int32_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialInt(UnityEngine.Material,System.Int32,System.Int32)
+    name: SetMaterialInt
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialInt_UnityEngine_Material_System_Int32_System_Int32_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material,System.Int32,UnityEngine.Color)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material,System.Int32,UnityEngine.Color)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialColor_UnityEngine_Material_System_Int32_UnityEngine_Color_
+  name: SetMaterialColor(Material, int, Color)
+  nameWithType: ShaderCompositorBase.SetMaterialColor(Material, int, Color)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material, int, UnityEngine.Color)
+  nameWithType.vb: ShaderCompositorBase.SetMaterialColor(Material, Integer, Color)
+  fullName.vb: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material, Integer, UnityEngine.Color)
+  name.vb: SetMaterialColor(Material, Integer, Color)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material,System.Int32,UnityEngine.Color)
+    name: SetMaterialColor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialColor_UnityEngine_Material_System_Int32_UnityEngine_Color_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.SetMaterialColor(UnityEngine.Material,System.Int32,UnityEngine.Color)
+    name: SetMaterialColor
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_SetMaterialColor_UnityEngine_Material_System_Int32_UnityEngine_Color_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color
+    name: Color
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material,System.String)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material,System.String)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableKeyword_UnityEngine_Material_System_String_
+  name: EnableKeyword(Material, string)
+  nameWithType: ShaderCompositorBase.EnableKeyword(Material, string)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material, string)
+  nameWithType.vb: ShaderCompositorBase.EnableKeyword(Material, String)
+  fullName.vb: Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material, String)
+  name.vb: EnableKeyword(Material, String)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material,System.String)
+    name: EnableKeyword
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableKeyword_UnityEngine_Material_System_String_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.EnableKeyword(UnityEngine.Material,System.String)
+    name: EnableKeyword
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_EnableKeyword_UnityEngine_Material_System_String_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material,System.String)
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material,System.String)
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  isExternal: true
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisableKeyword_UnityEngine_Material_System_String_
+  name: DisableKeyword(Material, string)
+  nameWithType: ShaderCompositorBase.DisableKeyword(Material, string)
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material, string)
+  nameWithType.vb: ShaderCompositorBase.DisableKeyword(Material, String)
+  fullName.vb: Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material, String)
+  name.vb: DisableKeyword(Material, String)
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material,System.String)
+    name: DisableKeyword
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisableKeyword_UnityEngine_Material_System_String_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.DisableKeyword(UnityEngine.Material,System.String)
+    name: DisableKeyword
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisableKeyword_UnityEngine_Material_System_String_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.CompositorId
+  commentId: P:Map.Rendering.Compositing.ShaderCompositorBase.CompositorId
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_CompositorId
+  name: CompositorId
+  nameWithType: ShaderCompositorBase.CompositorId
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.CompositorId
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId*
+  commentId: Overload:Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+  href: Map.Rendering.Compositing.StylizedShaderCompositor.html#Map_Rendering_Compositing_StylizedShaderCompositor_CompositorId
+  name: CompositorId
+  nameWithType: StylizedShaderCompositor.CompositorId
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.CompositorId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.DisplayName
+  commentId: P:Map.Rendering.Compositing.ShaderCompositorBase.DisplayName
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_DisplayName
+  name: DisplayName
+  nameWithType: ShaderCompositorBase.DisplayName
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.DisplayName
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName*
+  commentId: Overload:Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+  href: Map.Rendering.Compositing.StylizedShaderCompositor.html#Map_Rendering_Compositing_StylizedShaderCompositor_DisplayName
+  name: DisplayName
+  nameWithType: StylizedShaderCompositor.DisplayName
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.DisplayName
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.#ctor*
+  commentId: Overload:Map.Rendering.Compositing.StylizedShaderCompositor.#ctor
+  href: Map.Rendering.Compositing.StylizedShaderCompositor.html#Map_Rendering_Compositing_StylizedShaderCompositor__ctor
+  name: StylizedShaderCompositor
+  nameWithType: StylizedShaderCompositor.StylizedShaderCompositor
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.StylizedShaderCompositor
+  nameWithType.vb: StylizedShaderCompositor.New
+  fullName.vb: Map.Rendering.Compositing.StylizedShaderCompositor.New
+  name.vb: New
+- uid: Map.Rendering.Compositing.ShaderCompositorBase.GetConfig
+  commentId: M:Map.Rendering.Compositing.ShaderCompositorBase.GetConfig
+  parent: Map.Rendering.Compositing.ShaderCompositorBase
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetConfig
+  name: GetConfig()
+  nameWithType: ShaderCompositorBase.GetConfig()
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase.GetConfig()
+  spec.csharp:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.GetConfig
+    name: GetConfig
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetConfig
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.Rendering.Compositing.ShaderCompositorBase.GetConfig
+    name: GetConfig
+    href: Map.Rendering.Compositing.ShaderCompositorBase.html#Map_Rendering_Compositing_ShaderCompositorBase_GetConfig
+  - name: (
+  - name: )
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig*
+  commentId: Overload:Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig
+  href: Map.Rendering.Compositing.StylizedShaderCompositor.html#Map_Rendering_Compositing_StylizedShaderCompositor_GetConfig
+  name: GetConfig
+  nameWithType: StylizedShaderCompositor.GetConfig
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor.GetConfig
+- uid: Map.Rendering.Compositing.CompositorConfig
+  commentId: T:Map.Rendering.Compositing.CompositorConfig
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.CompositorConfig.html
+  name: CompositorConfig
+  nameWithType: CompositorConfig
+  fullName: Map.Rendering.Compositing.CompositorConfig

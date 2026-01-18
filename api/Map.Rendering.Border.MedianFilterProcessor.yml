@@ -1,0 +1,515 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.MedianFilterProcessor
+  commentId: T:Map.Rendering.Border.MedianFilterProcessor
+  id: MedianFilterProcessor
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.MedianFilterProcessor.#ctor(System.Int32,System.Int32,System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  - Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter(UnityEngine.Color32[])
+  - Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst(UnityEngine.Color32[])
+  - Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple(System.Collections.Generic.List{UnityEngine.Vector2})
+  langs:
+  - csharp
+  - vb
+  name: MedianFilterProcessor
+  nameWithType: MedianFilterProcessor
+  fullName: Map.Rendering.Border.MedianFilterProcessor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MedianFilterProcessor
+    path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Processes border pixels using median filtering and pixel chaining
+
+    Extracted from BorderCurveExtractor for single responsibility
+
+
+    Contains logic for:
+
+    - Median filtering (removes single-pixel noise from province ID texture)
+
+    - Pixel chaining (converts scattered border pixels into ordered polylines)
+
+    - Junction-aware chaining (starts/ends chains at junction points)
+  example: []
+  syntax:
+    content: public class MedianFilterProcessor
+    content.vb: Public Class MedianFilterProcessor
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.MedianFilterProcessor.#ctor(System.Int32,System.Int32,System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  commentId: M:Map.Rendering.Border.MedianFilterProcessor.#ctor(System.Int32,System.Int32,System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})
+  id: '#ctor(System.Int32,System.Int32,System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}})'
+  parent: Map.Rendering.Border.MedianFilterProcessor
+  langs:
+  - csharp
+  - vb
+  name: MedianFilterProcessor(int, int, Dictionary<Vector2, HashSet<ushort>>)
+  nameWithType: MedianFilterProcessor.MedianFilterProcessor(int, int, Dictionary<Vector2, HashSet<ushort>>)
+  fullName: Map.Rendering.Border.MedianFilterProcessor.MedianFilterProcessor(int, int, System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+    startLine: 24
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public MedianFilterProcessor(int width, int height, Dictionary<Vector2, HashSet<ushort>> junctions)
+    parameters:
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: junctions
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+    content.vb: Public Sub New(width As Integer, height As Integer, junctions As Dictionary(Of Vector2, HashSet(Of UShort)))
+  overload: Map.Rendering.Border.MedianFilterProcessor.#ctor*
+  nameWithType.vb: MedianFilterProcessor.New(Integer, Integer, Dictionary(Of Vector2, HashSet(Of UShort)))
+  fullName.vb: Map.Rendering.Border.MedianFilterProcessor.New(Integer, Integer, System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort)))
+  name.vb: New(Integer, Integer, Dictionary(Of Vector2, HashSet(Of UShort)))
+- uid: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter(UnityEngine.Color32[])
+  commentId: M:Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter(UnityEngine.Color32[])
+  id: ApplyMedianFilter(UnityEngine.Color32[])
+  parent: Map.Rendering.Border.MedianFilterProcessor
+  langs:
+  - csharp
+  - vb
+  name: ApplyMedianFilter(Color32[])
+  nameWithType: MedianFilterProcessor.ApplyMedianFilter(Color32[])
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter(UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyMedianFilter
+    path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Apply 3x3 median filter to province ID texture
+
+    Removes single-pixel noise by replacing each pixel with most common ID in neighborhood
+  example: []
+  syntax:
+    content: public Color32[] ApplyMedianFilter(Color32[] pixels)
+    parameters:
+    - id: pixels
+      type: UnityEngine.Color32[]
+    return:
+      type: UnityEngine.Color32[]
+    content.vb: Public Function ApplyMedianFilter(pixels As Color32()) As Color32()
+  overload: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter*
+  nameWithType.vb: MedianFilterProcessor.ApplyMedianFilter(Color32())
+  fullName.vb: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter(UnityEngine.Color32())
+  name.vb: ApplyMedianFilter(Color32())
+- uid: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple(System.Collections.Generic.List{UnityEngine.Vector2})
+  commentId: M:Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple(System.Collections.Generic.List{UnityEngine.Vector2})
+  id: ChainBorderPixelsMultiple(System.Collections.Generic.List{UnityEngine.Vector2})
+  parent: Map.Rendering.Border.MedianFilterProcessor
+  langs:
+  - csharp
+  - vb
+  name: ChainBorderPixelsMultiple(List<Vector2>)
+  nameWithType: MedianFilterProcessor.ChainBorderPixelsMultiple(List<Vector2>)
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple(System.Collections.Generic.List<UnityEngine.Vector2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChainBorderPixelsMultiple
+    path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+    startLine: 98
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Chain scattered border pixels into multiple ordered polylines
+
+    Repeatedly calls ChainBorderPixelsSingle until all pixels are consumed
+  example: []
+  syntax:
+    content: public List<List<Vector2>> ChainBorderPixelsMultiple(List<Vector2> scatteredPixels)
+    parameters:
+    - id: scatteredPixels
+      type: System.Collections.Generic.List{UnityEngine.Vector2}
+    return:
+      type: System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+    content.vb: Public Function ChainBorderPixelsMultiple(scatteredPixels As List(Of Vector2)) As List(Of List(Of Vector2))
+  overload: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple*
+  nameWithType.vb: MedianFilterProcessor.ChainBorderPixelsMultiple(List(Of Vector2))
+  fullName.vb: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple(System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: ChainBorderPixelsMultiple(List(Of Vector2))
+- uid: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst(UnityEngine.Color32[])
+  commentId: M:Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst(UnityEngine.Color32[])
+  id: ApplyMedianFilterBurst(UnityEngine.Color32[])
+  parent: Map.Rendering.Border.MedianFilterProcessor
+  langs:
+  - csharp
+  - vb
+  name: ApplyMedianFilterBurst(Color32[])
+  nameWithType: MedianFilterProcessor.ApplyMedianFilterBurst(Color32[])
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst(UnityEngine.Color32[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyMedianFilterBurst
+    path: Scripts/Map/Rendering/Border/MedianFilterProcessor.cs
+    startLine: 296
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Apply median filter using Burst-compiled parallel job
+
+    ~10-20x faster than the original single-threaded version
+  example: []
+  syntax:
+    content: public Color32[] ApplyMedianFilterBurst(Color32[] pixels)
+    parameters:
+    - id: pixels
+      type: UnityEngine.Color32[]
+    return:
+      type: UnityEngine.Color32[]
+    content.vb: Public Function ApplyMedianFilterBurst(pixels As Color32()) As Color32()
+  overload: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst*
+  nameWithType.vb: MedianFilterProcessor.ApplyMedianFilterBurst(Color32())
+  fullName.vb: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst(UnityEngine.Color32())
+  name.vb: ApplyMedianFilterBurst(Color32())
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.MedianFilterProcessor.#ctor*
+  commentId: Overload:Map.Rendering.Border.MedianFilterProcessor.#ctor
+  href: Map.Rendering.Border.MedianFilterProcessor.html#Map_Rendering_Border_MedianFilterProcessor__ctor_System_Int32_System_Int32_System_Collections_Generic_Dictionary_UnityEngine_Vector2_System_Collections_Generic_HashSet_System_UInt16___
+  name: MedianFilterProcessor
+  nameWithType: MedianFilterProcessor.MedianFilterProcessor
+  fullName: Map.Rendering.Border.MedianFilterProcessor.MedianFilterProcessor
+  nameWithType.vb: MedianFilterProcessor.New
+  fullName.vb: Map.Rendering.Border.MedianFilterProcessor.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Collections.Generic.HashSet{System.UInt16}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Vector2, HashSet<ushort>>
+  nameWithType: Dictionary<Vector2, HashSet<ushort>>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Vector2, System.Collections.Generic.HashSet<ushort>>
+  nameWithType.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, System.Collections.Generic.HashSet(Of UShort))
+  name.vb: Dictionary(Of Vector2, HashSet(Of UShort))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter*
+  commentId: Overload:Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter
+  href: Map.Rendering.Border.MedianFilterProcessor.html#Map_Rendering_Border_MedianFilterProcessor_ApplyMedianFilter_UnityEngine_Color32___
+  name: ApplyMedianFilter
+  nameWithType: MedianFilterProcessor.ApplyMedianFilter
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilter
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple*
+  commentId: Overload:Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple
+  href: Map.Rendering.Border.MedianFilterProcessor.html#Map_Rendering_Border_MedianFilterProcessor_ChainBorderPixelsMultiple_System_Collections_Generic_List_UnityEngine_Vector2__
+  name: ChainBorderPixelsMultiple
+  nameWithType: MedianFilterProcessor.ChainBorderPixelsMultiple
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ChainBorderPixelsMultiple
+- uid: System.Collections.Generic.List{UnityEngine.Vector2}
+  commentId: T:System.Collections.Generic.List{UnityEngine.Vector2}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<Vector2>
+  nameWithType: List<Vector2>
+  fullName: System.Collections.Generic.List<UnityEngine.Vector2>
+  nameWithType.vb: List(Of Vector2)
+  fullName.vb: System.Collections.Generic.List(Of UnityEngine.Vector2)
+  name.vb: List(Of Vector2)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+  commentId: T:System.Collections.Generic.List{System.Collections.Generic.List{UnityEngine.Vector2}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<List<Vector2>>
+  nameWithType: List<List<Vector2>>
+  fullName: System.Collections.Generic.List<System.Collections.Generic.List<UnityEngine.Vector2>>
+  nameWithType.vb: List(Of List(Of Vector2))
+  fullName.vb: System.Collections.Generic.List(Of System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: List(Of List(Of Vector2))
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst*
+  commentId: Overload:Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst
+  href: Map.Rendering.Border.MedianFilterProcessor.html#Map_Rendering_Border_MedianFilterProcessor_ApplyMedianFilterBurst_UnityEngine_Color32___
+  name: ApplyMedianFilterBurst
+  nameWithType: MedianFilterProcessor.ApplyMedianFilterBurst
+  fullName: Map.Rendering.Border.MedianFilterProcessor.ApplyMedianFilterBurst

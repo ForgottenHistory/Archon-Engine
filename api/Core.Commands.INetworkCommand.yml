@@ -1,0 +1,373 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.INetworkCommand
+  commentId: T:Core.Commands.INetworkCommand
+  id: INetworkCommand
+  parent: Core.Commands
+  children:
+  - Core.Commands.INetworkCommand.Deserialize(System.Byte[])
+  - Core.Commands.INetworkCommand.EstimatedNetworkSize
+  - Core.Commands.INetworkCommand.Serialize
+  langs:
+  - csharp
+  - vb
+  name: INetworkCommand
+  nameWithType: INetworkCommand
+  fullName: Core.Commands.INetworkCommand
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: INetworkCommand
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Interface for commands that can be networked
+
+    Provides serialization support for multiplayer
+  example: []
+  syntax:
+    content: 'public interface INetworkCommand : ICommand'
+    content.vb: Public Interface INetworkCommand Inherits ICommand
+  inheritedMembers:
+  - Core.Commands.ICommand.Validate(Core.GameState)
+  - Core.Commands.ICommand.Execute(Core.GameState)
+  - Core.Commands.ICommand.Undo(Core.GameState)
+  - Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+  - Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+  - Core.Commands.ICommand.Priority
+  - Core.Commands.ICommand.CommandId
+- uid: Core.Commands.INetworkCommand.Serialize
+  commentId: M:Core.Commands.INetworkCommand.Serialize
+  id: Serialize
+  parent: Core.Commands.INetworkCommand
+  langs:
+  - csharp
+  - vb
+  name: Serialize()
+  nameWithType: INetworkCommand.Serialize()
+  fullName: Core.Commands.INetworkCommand.Serialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 116
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Serialize command data for network transmission
+
+    Must be deterministic and compact
+  example: []
+  syntax:
+    content: byte[] Serialize()
+    return:
+      type: System.Byte[]
+    content.vb: Function Serialize() As Byte()
+  overload: Core.Commands.INetworkCommand.Serialize*
+- uid: Core.Commands.INetworkCommand.Deserialize(System.Byte[])
+  commentId: M:Core.Commands.INetworkCommand.Deserialize(System.Byte[])
+  id: Deserialize(System.Byte[])
+  parent: Core.Commands.INetworkCommand
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(byte[])
+  nameWithType: INetworkCommand.Deserialize(byte[])
+  fullName: Core.Commands.INetworkCommand.Deserialize(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 122
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Deserialize command data from network
+
+    Must reconstruct identical command state
+  example: []
+  syntax:
+    content: void Deserialize(byte[] data)
+    parameters:
+    - id: data
+      type: System.Byte[]
+    content.vb: Sub Deserialize(data As Byte())
+  overload: Core.Commands.INetworkCommand.Deserialize*
+  nameWithType.vb: INetworkCommand.Deserialize(Byte())
+  fullName.vb: Core.Commands.INetworkCommand.Deserialize(Byte())
+  name.vb: Deserialize(Byte())
+- uid: Core.Commands.INetworkCommand.EstimatedNetworkSize
+  commentId: P:Core.Commands.INetworkCommand.EstimatedNetworkSize
+  id: EstimatedNetworkSize
+  parent: Core.Commands.INetworkCommand
+  langs:
+  - csharp
+  - vb
+  name: EstimatedNetworkSize
+  nameWithType: INetworkCommand.EstimatedNetworkSize
+  fullName: Core.Commands.INetworkCommand.EstimatedNetworkSize
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EstimatedNetworkSize
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Get estimated network size in bytes
+
+    Used for bandwidth management
+  example: []
+  syntax:
+    content: int EstimatedNetworkSize { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property EstimatedNetworkSize As Integer
+  overload: Core.Commands.INetworkCommand.EstimatedNetworkSize*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Commands.ICommand.Validate(Core.GameState)
+  commentId: M:Core.Commands.ICommand.Validate(Core.GameState)
+  parent: Core.Commands.ICommand
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Validate_Core_GameState_
+  name: Validate(GameState)
+  nameWithType: ICommand.Validate(GameState)
+  fullName: Core.Commands.ICommand.Validate(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.ICommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommand.Validate(Core.GameState)
+    name: Validate
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Validate_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Commands.ICommand.Execute(Core.GameState)
+  commentId: M:Core.Commands.ICommand.Execute(Core.GameState)
+  parent: Core.Commands.ICommand
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Execute_Core_GameState_
+  name: Execute(GameState)
+  nameWithType: ICommand.Execute(GameState)
+  fullName: Core.Commands.ICommand.Execute(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.ICommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommand.Execute(Core.GameState)
+    name: Execute
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Execute_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Commands.ICommand.Undo(Core.GameState)
+  commentId: M:Core.Commands.ICommand.Undo(Core.GameState)
+  parent: Core.Commands.ICommand
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Undo_Core_GameState_
+  name: Undo(GameState)
+  nameWithType: ICommand.Undo(GameState)
+  fullName: Core.Commands.ICommand.Undo(Core.GameState)
+  spec.csharp:
+  - uid: Core.Commands.ICommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommand.Undo(Core.GameState)
+    name: Undo
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Undo_Core_GameState_
+  - name: (
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: )
+- uid: Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+  commentId: M:Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+  parent: Core.Commands.ICommand
+  isExternal: true
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Serialize_System_IO_BinaryWriter_
+  name: Serialize(BinaryWriter)
+  nameWithType: ICommand.Serialize(BinaryWriter)
+  fullName: Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+  spec.csharp:
+  - uid: Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommand.Serialize(System.IO.BinaryWriter)
+    name: Serialize
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Serialize_System_IO_BinaryWriter_
+  - name: (
+  - uid: System.IO.BinaryWriter
+    name: BinaryWriter
+    isExternal: true
+  - name: )
+- uid: Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+  commentId: M:Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+  parent: Core.Commands.ICommand
+  isExternal: true
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Deserialize_System_IO_BinaryReader_
+  name: Deserialize(BinaryReader)
+  nameWithType: ICommand.Deserialize(BinaryReader)
+  fullName: Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+  spec.csharp:
+  - uid: Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommand.Deserialize(System.IO.BinaryReader)
+    name: Deserialize
+    href: Core.Commands.ICommand.html#Core_Commands_ICommand_Deserialize_System_IO_BinaryReader_
+  - name: (
+  - uid: System.IO.BinaryReader
+    name: BinaryReader
+    isExternal: true
+  - name: )
+- uid: Core.Commands.ICommand.Priority
+  commentId: P:Core.Commands.ICommand.Priority
+  parent: Core.Commands.ICommand
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_Priority
+  name: Priority
+  nameWithType: ICommand.Priority
+  fullName: Core.Commands.ICommand.Priority
+- uid: Core.Commands.ICommand.CommandId
+  commentId: P:Core.Commands.ICommand.CommandId
+  parent: Core.Commands.ICommand
+  href: Core.Commands.ICommand.html#Core_Commands_ICommand_CommandId
+  name: CommandId
+  nameWithType: ICommand.CommandId
+  fullName: Core.Commands.ICommand.CommandId
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: Core.Commands.INetworkCommand.Serialize*
+  commentId: Overload:Core.Commands.INetworkCommand.Serialize
+  href: Core.Commands.INetworkCommand.html#Core_Commands_INetworkCommand_Serialize
+  name: Serialize
+  nameWithType: INetworkCommand.Serialize
+  fullName: Core.Commands.INetworkCommand.Serialize
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Commands.INetworkCommand.Deserialize*
+  commentId: Overload:Core.Commands.INetworkCommand.Deserialize
+  href: Core.Commands.INetworkCommand.html#Core_Commands_INetworkCommand_Deserialize_System_Byte___
+  name: Deserialize
+  nameWithType: INetworkCommand.Deserialize
+  fullName: Core.Commands.INetworkCommand.Deserialize
+- uid: Core.Commands.INetworkCommand.EstimatedNetworkSize*
+  commentId: Overload:Core.Commands.INetworkCommand.EstimatedNetworkSize
+  href: Core.Commands.INetworkCommand.html#Core_Commands_INetworkCommand_EstimatedNetworkSize
+  name: EstimatedNetworkSize
+  nameWithType: INetworkCommand.EstimatedNetworkSize
+  fullName: Core.Commands.INetworkCommand.EstimatedNetworkSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

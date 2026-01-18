@@ -1,0 +1,976 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Integration.ProvinceMetadataManager
+  commentId: T:Map.Integration.ProvinceMetadataManager
+  id: ProvinceMetadataManager
+  parent: Map.Integration
+  children:
+  - Map.Integration.ProvinceMetadataManager.#ctor(Map.Province.ProvinceDataManager)
+  - Map.Integration.ProvinceMetadataManager.AreNeighbors(System.UInt16,System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetCoastalProvinces
+  - Map.Integration.ProvinceMetadataManager.GetMetadata(System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetNeighbors(System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetProvinceBounds(System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetProvinceCenter(System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetProvinceDistance(System.UInt16,System.UInt16)
+  - Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain(Map.Province.ProvinceMetadataGenerator.TerrainType)
+  - Map.Integration.ProvinceMetadataManager.MetadataResult
+  - Map.Integration.ProvinceMetadataManager.NeighborResult
+  - Map.Integration.ProvinceMetadataManager.SetMetadataResult(Map.Province.ProvinceMetadataGenerator.MetadataResult)
+  - Map.Integration.ProvinceMetadataManager.SetNeighborResult(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataManager
+  nameWithType: ProvinceMetadataManager
+  fullName: Map.Integration.ProvinceMetadataManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceMetadataManager
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: >-
+    Manages province metadata including neighbors, terrain flags, and coastal status
+
+    Provides query methods for province spatial relationships and properties
+
+    Extracted from MapDataIntegrator for single responsibility
+  example: []
+  syntax:
+    content: public class ProvinceMetadataManager
+    content.vb: Public Class ProvinceMetadataManager
+  inheritance:
+  - System.Object
+- uid: Map.Integration.ProvinceMetadataManager.NeighborResult
+  commentId: P:Map.Integration.ProvinceMetadataManager.NeighborResult
+  id: NeighborResult
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: NeighborResult
+  nameWithType: ProvinceMetadataManager.NeighborResult
+  fullName: Map.Integration.ProvinceMetadataManager.NeighborResult
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NeighborResult
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  syntax:
+    content: public ProvinceNeighborDetector.NeighborResult NeighborResult { get; }
+    parameters: []
+    return:
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+    content.vb: Public ReadOnly Property NeighborResult As ProvinceNeighborDetector.NeighborResult
+  overload: Map.Integration.ProvinceMetadataManager.NeighborResult*
+- uid: Map.Integration.ProvinceMetadataManager.MetadataResult
+  commentId: P:Map.Integration.ProvinceMetadataManager.MetadataResult
+  id: MetadataResult
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: MetadataResult
+  nameWithType: ProvinceMetadataManager.MetadataResult
+  fullName: Map.Integration.ProvinceMetadataManager.MetadataResult
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MetadataResult
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  syntax:
+    content: public ProvinceMetadataGenerator.MetadataResult MetadataResult { get; }
+    parameters: []
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    content.vb: Public ReadOnly Property MetadataResult As ProvinceMetadataGenerator.MetadataResult
+  overload: Map.Integration.ProvinceMetadataManager.MetadataResult*
+- uid: Map.Integration.ProvinceMetadataManager.#ctor(Map.Province.ProvinceDataManager)
+  commentId: M:Map.Integration.ProvinceMetadataManager.#ctor(Map.Province.ProvinceDataManager)
+  id: '#ctor(Map.Province.ProvinceDataManager)'
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMetadataManager(ProvinceDataManager)
+  nameWithType: ProvinceMetadataManager.ProvinceMetadataManager(ProvinceDataManager)
+  fullName: Map.Integration.ProvinceMetadataManager.ProvinceMetadataManager(Map.Province.ProvinceDataManager)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  syntax:
+    content: public ProvinceMetadataManager(ProvinceDataManager dataManager)
+    parameters:
+    - id: dataManager
+      type: Map.Province.ProvinceDataManager
+    content.vb: Public Sub New(dataManager As ProvinceDataManager)
+  overload: Map.Integration.ProvinceMetadataManager.#ctor*
+  nameWithType.vb: ProvinceMetadataManager.New(ProvinceDataManager)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.New(Map.Province.ProvinceDataManager)
+  name.vb: New(ProvinceDataManager)
+- uid: Map.Integration.ProvinceMetadataManager.SetNeighborResult(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  commentId: M:Map.Integration.ProvinceMetadataManager.SetNeighborResult(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  id: SetNeighborResult(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: SetNeighborResult(NeighborResult)
+  nameWithType: ProvinceMetadataManager.SetNeighborResult(ProvinceNeighborDetector.NeighborResult)
+  fullName: Map.Integration.ProvinceMetadataManager.SetNeighborResult(Map.Province.ProvinceNeighborDetector.NeighborResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetNeighborResult
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 29
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Store neighbor detection results
+  example: []
+  syntax:
+    content: public void SetNeighborResult(ProvinceNeighborDetector.NeighborResult result)
+    parameters:
+    - id: result
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+    content.vb: Public Sub SetNeighborResult(result As ProvinceNeighborDetector.NeighborResult)
+  overload: Map.Integration.ProvinceMetadataManager.SetNeighborResult*
+- uid: Map.Integration.ProvinceMetadataManager.SetMetadataResult(Map.Province.ProvinceMetadataGenerator.MetadataResult)
+  commentId: M:Map.Integration.ProvinceMetadataManager.SetMetadataResult(Map.Province.ProvinceMetadataGenerator.MetadataResult)
+  id: SetMetadataResult(Map.Province.ProvinceMetadataGenerator.MetadataResult)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: SetMetadataResult(MetadataResult)
+  nameWithType: ProvinceMetadataManager.SetMetadataResult(ProvinceMetadataGenerator.MetadataResult)
+  fullName: Map.Integration.ProvinceMetadataManager.SetMetadataResult(Map.Province.ProvinceMetadataGenerator.MetadataResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMetadataResult
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Store metadata generation results
+  example: []
+  syntax:
+    content: public void SetMetadataResult(ProvinceMetadataGenerator.MetadataResult result)
+    parameters:
+    - id: result
+      type: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    content.vb: Public Sub SetMetadataResult(result As ProvinceMetadataGenerator.MetadataResult)
+  overload: Map.Integration.ProvinceMetadataManager.SetMetadataResult*
+- uid: Map.Integration.ProvinceMetadataManager.GetNeighbors(System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetNeighbors(System.UInt16)
+  id: GetNeighbors(System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetNeighbors(ushort)
+  nameWithType: ProvinceMetadataManager.GetNeighbors(ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.GetNeighbors(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighbors
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 118
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get neighbors for a specific province
+  example: []
+  syntax:
+    content: public HashSet<ushort> GetNeighbors(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    content.vb: Public Function GetNeighbors(provinceID As UShort) As HashSet(Of UShort)
+  overload: Map.Integration.ProvinceMetadataManager.GetNeighbors*
+  nameWithType.vb: ProvinceMetadataManager.GetNeighbors(UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.GetNeighbors(UShort)
+  name.vb: GetNeighbors(UShort)
+- uid: Map.Integration.ProvinceMetadataManager.AreNeighbors(System.UInt16,System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.AreNeighbors(System.UInt16,System.UInt16)
+  id: AreNeighbors(System.UInt16,System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: AreNeighbors(ushort, ushort)
+  nameWithType: ProvinceMetadataManager.AreNeighbors(ushort, ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.AreNeighbors(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AreNeighbors
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 145
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Check if two provinces are neighbors
+  example: []
+  syntax:
+    content: public bool AreNeighbors(ushort provinceID1, ushort provinceID2)
+    parameters:
+    - id: provinceID1
+      type: System.UInt16
+    - id: provinceID2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function AreNeighbors(provinceID1 As UShort, provinceID2 As UShort) As Boolean
+  overload: Map.Integration.ProvinceMetadataManager.AreNeighbors*
+  nameWithType.vb: ProvinceMetadataManager.AreNeighbors(UShort, UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.AreNeighbors(UShort, UShort)
+  name.vb: AreNeighbors(UShort, UShort)
+- uid: Map.Integration.ProvinceMetadataManager.GetMetadata(System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetMetadata(System.UInt16)
+  id: GetMetadata(System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetMetadata(ushort)
+  nameWithType: ProvinceMetadataManager.GetMetadata(ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.GetMetadata(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMetadata
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 154
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get metadata for a specific province
+  example: []
+  syntax:
+    content: public ProvinceMetadataGenerator.ProvinceMetadata GetMetadata(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    content.vb: Public Function GetMetadata(provinceID As UShort) As ProvinceMetadataGenerator.ProvinceMetadata
+  overload: Map.Integration.ProvinceMetadataManager.GetMetadata*
+  nameWithType.vb: ProvinceMetadataManager.GetMetadata(UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.GetMetadata(UShort)
+  name.vb: GetMetadata(UShort)
+- uid: Map.Integration.ProvinceMetadataManager.GetCoastalProvinces
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetCoastalProvinces
+  id: GetCoastalProvinces
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetCoastalProvinces()
+  nameWithType: ProvinceMetadataManager.GetCoastalProvinces()
+  fullName: Map.Integration.ProvinceMetadataManager.GetCoastalProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCoastalProvinces
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 173
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get all coastal provinces
+  example: []
+  syntax:
+    content: public List<ushort> GetCoastalProvinces()
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetCoastalProvinces() As List(Of UShort)
+  overload: Map.Integration.ProvinceMetadataManager.GetCoastalProvinces*
+- uid: Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain(Map.Province.ProvinceMetadataGenerator.TerrainType)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain(Map.Province.ProvinceMetadataGenerator.TerrainType)
+  id: GetProvincesByTerrain(Map.Province.ProvinceMetadataGenerator.TerrainType)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesByTerrain(TerrainType)
+  nameWithType: ProvinceMetadataManager.GetProvincesByTerrain(ProvinceMetadataGenerator.TerrainType)
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain(Map.Province.ProvinceMetadataGenerator.TerrainType)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesByTerrain
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 192
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get all provinces of a specific terrain type
+  example: []
+  syntax:
+    content: public List<ushort> GetProvincesByTerrain(ProvinceMetadataGenerator.TerrainType terrainType)
+    parameters:
+    - id: terrainType
+      type: Map.Province.ProvinceMetadataGenerator.TerrainType
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function GetProvincesByTerrain(terrainType As ProvinceMetadataGenerator.TerrainType) As List(Of UShort)
+  overload: Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain*
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceCenter(System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetProvinceCenter(System.UInt16)
+  id: GetProvinceCenter(System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceCenter(ushort)
+  nameWithType: ProvinceMetadataManager.GetProvinceCenter(ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceCenter(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceCenter
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 217
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get province center point
+  example: []
+  syntax:
+    content: public Vector2 GetProvinceCenter(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: UnityEngine.Vector2
+    content.vb: Public Function GetProvinceCenter(provinceID As UShort) As Vector2
+  overload: Map.Integration.ProvinceMetadataManager.GetProvinceCenter*
+  nameWithType.vb: ProvinceMetadataManager.GetProvinceCenter(UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.GetProvinceCenter(UShort)
+  name.vb: GetProvinceCenter(UShort)
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceBounds(System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetProvinceBounds(System.UInt16)
+  id: GetProvinceBounds(System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceBounds(ushort)
+  nameWithType: ProvinceMetadataManager.GetProvinceBounds(ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceBounds(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceBounds
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 231
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Get province bounds
+  example: []
+  syntax:
+    content: public (Vector2 min, Vector2 max) GetProvinceBounds(ushort provinceID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    return:
+      type: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}
+    content.vb: Public Function GetProvinceBounds(provinceID As UShort) As (min As Vector2, max As Vector2)
+  overload: Map.Integration.ProvinceMetadataManager.GetProvinceBounds*
+  nameWithType.vb: ProvinceMetadataManager.GetProvinceBounds(UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.GetProvinceBounds(UShort)
+  name.vb: GetProvinceBounds(UShort)
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceDistance(System.UInt16,System.UInt16)
+  commentId: M:Map.Integration.ProvinceMetadataManager.GetProvinceDistance(System.UInt16,System.UInt16)
+  id: GetProvinceDistance(System.UInt16,System.UInt16)
+  parent: Map.Integration.ProvinceMetadataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceDistance(ushort, ushort)
+  nameWithType: ProvinceMetadataManager.GetProvinceDistance(ushort, ushort)
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceDistance(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceDistance
+    path: Scripts/Map/Integration/ProvinceMetadataManager.cs
+    startLine: 245
+  assemblies:
+  - MapAssembly
+  namespace: Map.Integration
+  summary: Calculate distance between two provinces (center to center)
+  example: []
+  syntax:
+    content: public float GetProvinceDistance(ushort provinceID1, ushort provinceID2)
+    parameters:
+    - id: provinceID1
+      type: System.UInt16
+    - id: provinceID2
+      type: System.UInt16
+    return:
+      type: System.Single
+    content.vb: Public Function GetProvinceDistance(provinceID1 As UShort, provinceID2 As UShort) As Single
+  overload: Map.Integration.ProvinceMetadataManager.GetProvinceDistance*
+  nameWithType.vb: ProvinceMetadataManager.GetProvinceDistance(UShort, UShort)
+  fullName.vb: Map.Integration.ProvinceMetadataManager.GetProvinceDistance(UShort, UShort)
+  name.vb: GetProvinceDistance(UShort, UShort)
+references:
+- uid: Map.Integration
+  commentId: N:Map.Integration
+  href: Map.html
+  name: Map.Integration
+  nameWithType: Map.Integration
+  fullName: Map.Integration
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Integration
+    name: Integration
+    href: Map.Integration.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Integration.ProvinceMetadataManager.NeighborResult*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.NeighborResult
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_NeighborResult
+  name: NeighborResult
+  nameWithType: ProvinceMetadataManager.NeighborResult
+  fullName: Map.Integration.ProvinceMetadataManager.NeighborResult
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborResult
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborResult
+  nameWithType: ProvinceNeighborDetector.NeighborResult
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Map.Integration.ProvinceMetadataManager.MetadataResult*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.MetadataResult
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_MetadataResult
+  name: MetadataResult
+  nameWithType: ProvinceMetadataManager.MetadataResult
+  fullName: Map.Integration.ProvinceMetadataManager.MetadataResult
+- uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  commentId: T:Map.Province.ProvinceMetadataGenerator.MetadataResult
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.MetadataResult
+  nameWithType: ProvinceMetadataGenerator.MetadataResult
+  fullName: Map.Province.ProvinceMetadataGenerator.MetadataResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
+    name: MetadataResult
+    href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+- uid: Map.Integration.ProvinceMetadataManager.#ctor*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.#ctor
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager__ctor_Map_Province_ProvinceDataManager_
+  name: ProvinceMetadataManager
+  nameWithType: ProvinceMetadataManager.ProvinceMetadataManager
+  fullName: Map.Integration.ProvinceMetadataManager.ProvinceMetadataManager
+  nameWithType.vb: ProvinceMetadataManager.New
+  fullName.vb: Map.Integration.ProvinceMetadataManager.New
+  name.vb: New
+- uid: Map.Province.ProvinceDataManager
+  commentId: T:Map.Province.ProvinceDataManager
+  parent: Map.Province
+  href: Map.Province.ProvinceDataManager.html
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager
+- uid: Map.Integration.ProvinceMetadataManager.SetNeighborResult*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.SetNeighborResult
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_SetNeighborResult_Map_Province_ProvinceNeighborDetector_NeighborResult_
+  name: SetNeighborResult
+  nameWithType: ProvinceMetadataManager.SetNeighborResult
+  fullName: Map.Integration.ProvinceMetadataManager.SetNeighborResult
+- uid: Map.Integration.ProvinceMetadataManager.SetMetadataResult*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.SetMetadataResult
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_SetMetadataResult_Map_Province_ProvinceMetadataGenerator_MetadataResult_
+  name: SetMetadataResult
+  nameWithType: ProvinceMetadataManager.SetMetadataResult
+  fullName: Map.Integration.ProvinceMetadataManager.SetMetadataResult
+- uid: Map.Integration.ProvinceMetadataManager.GetNeighbors*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetNeighbors
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetNeighbors_System_UInt16_
+  name: GetNeighbors
+  nameWithType: ProvinceMetadataManager.GetNeighbors
+  fullName: Map.Integration.ProvinceMetadataManager.GetNeighbors
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Collections.Generic.HashSet{System.UInt16}
+  commentId: T:System.Collections.Generic.HashSet{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<ushort>
+  nameWithType: HashSet<ushort>
+  fullName: System.Collections.Generic.HashSet<ushort>
+  nameWithType.vb: HashSet(Of UShort)
+  fullName.vb: System.Collections.Generic.HashSet(Of UShort)
+  name.vb: HashSet(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Integration.ProvinceMetadataManager.AreNeighbors*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.AreNeighbors
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_AreNeighbors_System_UInt16_System_UInt16_
+  name: AreNeighbors
+  nameWithType: ProvinceMetadataManager.AreNeighbors
+  fullName: Map.Integration.ProvinceMetadataManager.AreNeighbors
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Integration.ProvinceMetadataManager.GetMetadata*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetMetadata
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetMetadata_System_UInt16_
+  name: GetMetadata
+  nameWithType: ProvinceMetadataManager.GetMetadata
+  fullName: Map.Integration.ProvinceMetadataManager.GetMetadata
+- uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  commentId: T:Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.ProvinceMetadata
+  nameWithType: ProvinceMetadataGenerator.ProvinceMetadata
+  fullName: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata
+    name: ProvinceMetadata
+    href: Map.Province.ProvinceMetadataGenerator.ProvinceMetadata.html
+- uid: Map.Integration.ProvinceMetadataManager.GetCoastalProvinces*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetCoastalProvinces
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetCoastalProvinces
+  name: GetCoastalProvinces
+  nameWithType: ProvinceMetadataManager.GetCoastalProvinces
+  fullName: Map.Integration.ProvinceMetadataManager.GetCoastalProvinces
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetProvincesByTerrain_Map_Province_ProvinceMetadataGenerator_TerrainType_
+  name: GetProvincesByTerrain
+  nameWithType: ProvinceMetadataManager.GetProvincesByTerrain
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvincesByTerrain
+- uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+  commentId: T:Map.Province.ProvinceMetadataGenerator.TerrainType
+  parent: Map.Province
+  href: Map.Province.ProvinceMetadataGenerator.html
+  name: ProvinceMetadataGenerator.TerrainType
+  nameWithType: ProvinceMetadataGenerator.TerrainType
+  fullName: Map.Province.ProvinceMetadataGenerator.TerrainType
+  spec.csharp:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html
+  spec.vb:
+  - uid: Map.Province.ProvinceMetadataGenerator
+    name: ProvinceMetadataGenerator
+    href: Map.Province.ProvinceMetadataGenerator.html
+  - name: .
+  - uid: Map.Province.ProvinceMetadataGenerator.TerrainType
+    name: TerrainType
+    href: Map.Province.ProvinceMetadataGenerator.TerrainType.html
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceCenter*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetProvinceCenter
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetProvinceCenter_System_UInt16_
+  name: GetProvinceCenter
+  nameWithType: ProvinceMetadataManager.GetProvinceCenter
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceCenter
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceBounds*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetProvinceBounds
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetProvinceBounds_System_UInt16_
+  name: GetProvinceBounds
+  nameWithType: ProvinceMetadataManager.GetProvinceBounds
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceBounds
+- uid: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}
+  commentId: T:System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (Vector2 min, Vector2 max)
+  nameWithType: (Vector2 min, Vector2 max)
+  fullName: (UnityEngine.Vector2 min, UnityEngine.Vector2 max)
+  nameWithType.vb: (min As Vector2, max As Vector2)
+  fullName.vb: (min As UnityEngine.Vector2, max As UnityEngine.Vector2)
+  name.vb: (min As Vector2, max As Vector2)
+  spec.csharp:
+  - name: (
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}.min
+    name: min
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}.max
+    name: max
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}.min
+    name: min
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{UnityEngine.Vector2,UnityEngine.Vector2}.max
+    name: max
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Map.Integration.ProvinceMetadataManager.GetProvinceDistance*
+  commentId: Overload:Map.Integration.ProvinceMetadataManager.GetProvinceDistance
+  href: Map.Integration.ProvinceMetadataManager.html#Map_Integration_ProvinceMetadataManager_GetProvinceDistance_System_UInt16_System_UInt16_
+  name: GetProvinceDistance
+  nameWithType: ProvinceMetadataManager.GetProvinceDistance
+  fullName: Map.Integration.ProvinceMetadataManager.GetProvinceDistance
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

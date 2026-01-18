@@ -1,0 +1,1116 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceDataManager
+  commentId: T:Map.Province.ProvinceDataManager
+  id: ProvinceDataManager
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceDataManager.#ctor(System.Int32)
+  - Map.Province.ProvinceDataManager.AddProvince(System.UInt16,UnityEngine.Color32,Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  - Map.Province.ProvinceDataManager.AddProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  - Map.Province.ProvinceDataManager.Clear
+  - Map.Province.ProvinceDataManager.Dispose
+  - Map.Province.ProvinceDataManager.GetAllProvinces
+  - Map.Province.ProvinceDataManager.GetMemoryUsage
+  - Map.Province.ProvinceDataManager.GetProvinceByID(System.UInt16)
+  - Map.Province.ProvinceDataManager.GetProvinceIDByColor(UnityEngine.Color32)
+  - Map.Province.ProvinceDataManager.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Map.Province.ProvinceDataManager.IsValid
+  - Map.Province.ProvinceDataManager.LogStatistics
+  - Map.Province.ProvinceDataManager.ProvinceCount
+  - Map.Province.ProvinceDataManager.RemoveProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  - Map.Province.ProvinceDataManager.SetProvinceDisplayColor(System.UInt16,UnityEngine.Color32)
+  - Map.Province.ProvinceDataManager.SetProvinceFlags(System.UInt16,Map.Province.ProvinceFlags)
+  - Map.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDataManager
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 138
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    High-performance province data manager optimized for 10,000+ provinces
+
+    Uses native arrays and efficient lookup structures
+  example: []
+  syntax:
+    content: public class ProvinceDataManager
+    content.vb: Public Class ProvinceDataManager
+  inheritance:
+  - System.Object
+- uid: Map.Province.ProvinceDataManager.ProvinceCount
+  commentId: P:Map.Province.ProvinceDataManager.ProvinceCount
+  id: ProvinceCount
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceCount
+  nameWithType: ProvinceDataManager.ProvinceCount
+  fullName: Map.Province.ProvinceDataManager.ProvinceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceCount
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 149
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int ProvinceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property ProvinceCount As Integer
+  overload: Map.Province.ProvinceDataManager.ProvinceCount*
+- uid: Map.Province.ProvinceDataManager.IsValid
+  commentId: P:Map.Province.ProvinceDataManager.IsValid
+  id: IsValid
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: ProvinceDataManager.IsValid
+  fullName: Map.Province.ProvinceDataManager.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 150
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Map.Province.ProvinceDataManager.IsValid*
+- uid: Map.Province.ProvinceDataManager.#ctor(System.Int32)
+  commentId: M:Map.Province.ProvinceDataManager.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDataManager(int)
+  nameWithType: ProvinceDataManager.ProvinceDataManager(int)
+  fullName: Map.Province.ProvinceDataManager.ProvinceDataManager(int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 152
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ProvinceDataManager(int capacity = 10000)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer = 10000)
+  overload: Map.Province.ProvinceDataManager.#ctor*
+  nameWithType.vb: ProvinceDataManager.New(Integer)
+  fullName.vb: Map.Province.ProvinceDataManager.New(Integer)
+  name.vb: New(Integer)
+- uid: Map.Province.ProvinceDataManager.AddProvince(System.UInt16,UnityEngine.Color32,Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  commentId: M:Map.Province.ProvinceDataManager.AddProvince(System.UInt16,UnityEngine.Color32,Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  id: AddProvince(System.UInt16,UnityEngine.Color32,Unity.Collections.NativeArray{Unity.Mathematics.int2})
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: AddProvince(ushort, Color32, NativeArray<int2>)
+  nameWithType: ProvinceDataManager.AddProvince(ushort, Color32, NativeArray<int2>)
+  fullName: Map.Province.ProvinceDataManager.AddProvince(ushort, UnityEngine.Color32, Unity.Collections.NativeArray<Unity.Mathematics.int2>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvince
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 165
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Add a new province to the data structure
+  example: []
+  syntax:
+    content: public bool AddProvince(ushort id, Color32 identifierColor, NativeArray<int2> pixels)
+    parameters:
+    - id: id
+      type: System.UInt16
+    - id: identifierColor
+      type: UnityEngine.Color32
+    - id: pixels
+      type: Unity.Collections.NativeArray{Unity.Mathematics.int2}
+    return:
+      type: System.Boolean
+    content.vb: Public Function AddProvince(id As UShort, identifierColor As Color32, pixels As NativeArray(Of int2)) As Boolean
+  overload: Map.Province.ProvinceDataManager.AddProvince*
+  nameWithType.vb: ProvinceDataManager.AddProvince(UShort, Color32, NativeArray(Of int2))
+  fullName.vb: Map.Province.ProvinceDataManager.AddProvince(UShort, UnityEngine.Color32, Unity.Collections.NativeArray(Of Unity.Mathematics.int2))
+  name.vb: AddProvince(UShort, Color32, NativeArray(Of int2))
+- uid: Map.Province.ProvinceDataManager.GetProvinceByID(System.UInt16)
+  commentId: M:Map.Province.ProvinceDataManager.GetProvinceByID(System.UInt16)
+  id: GetProvinceByID(System.UInt16)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceByID(ushort)
+  nameWithType: ProvinceDataManager.GetProvinceByID(ushort)
+  fullName: Map.Province.ProvinceDataManager.GetProvinceByID(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceByID
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 212
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get province by ID
+  example: []
+  syntax:
+    content: public ProvinceData GetProvinceByID(ushort id)
+    parameters:
+    - id: id
+      type: System.UInt16
+    return:
+      type: Map.Province.ProvinceData
+    content.vb: Public Function GetProvinceByID(id As UShort) As ProvinceData
+  overload: Map.Province.ProvinceDataManager.GetProvinceByID*
+  nameWithType.vb: ProvinceDataManager.GetProvinceByID(UShort)
+  fullName.vb: Map.Province.ProvinceDataManager.GetProvinceByID(UShort)
+  name.vb: GetProvinceByID(UShort)
+- uid: Map.Province.ProvinceDataManager.GetProvinceIDByColor(UnityEngine.Color32)
+  commentId: M:Map.Province.ProvinceDataManager.GetProvinceIDByColor(UnityEngine.Color32)
+  id: GetProvinceIDByColor(UnityEngine.Color32)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceIDByColor(Color32)
+  nameWithType: ProvinceDataManager.GetProvinceIDByColor(Color32)
+  fullName: Map.Province.ProvinceDataManager.GetProvinceIDByColor(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceIDByColor
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 225
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get province ID by color (fast lookup)
+  example: []
+  syntax:
+    content: public ushort GetProvinceIDByColor(Color32 color)
+    parameters:
+    - id: color
+      type: UnityEngine.Color32
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceIDByColor(color As Color32) As UShort
+  overload: Map.Province.ProvinceDataManager.GetProvinceIDByColor*
+- uid: Map.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  commentId: M:Map.Province.ProvinceDataManager.SetProvinceOwner(System.UInt16,System.UInt16)
+  id: SetProvinceOwner(System.UInt16,System.UInt16)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceOwner(ushort, ushort)
+  nameWithType: ProvinceDataManager.SetProvinceOwner(ushort, ushort)
+  fullName: Map.Province.ProvinceDataManager.SetProvinceOwner(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceOwner
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 235
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Update province owner
+  example: []
+  syntax:
+    content: public void SetProvinceOwner(ushort provinceID, ushort ownerCountryID)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: ownerCountryID
+      type: System.UInt16
+    content.vb: Public Sub SetProvinceOwner(provinceID As UShort, ownerCountryID As UShort)
+  overload: Map.Province.ProvinceDataManager.SetProvinceOwner*
+  nameWithType.vb: ProvinceDataManager.SetProvinceOwner(UShort, UShort)
+  fullName.vb: Map.Province.ProvinceDataManager.SetProvinceOwner(UShort, UShort)
+  name.vb: SetProvinceOwner(UShort, UShort)
+- uid: Map.Province.ProvinceDataManager.SetProvinceDisplayColor(System.UInt16,UnityEngine.Color32)
+  commentId: M:Map.Province.ProvinceDataManager.SetProvinceDisplayColor(System.UInt16,UnityEngine.Color32)
+  id: SetProvinceDisplayColor(System.UInt16,UnityEngine.Color32)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceDisplayColor(ushort, Color32)
+  nameWithType: ProvinceDataManager.SetProvinceDisplayColor(ushort, Color32)
+  fullName: Map.Province.ProvinceDataManager.SetProvinceDisplayColor(ushort, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceDisplayColor
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 248
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Update province display color
+  example: []
+  syntax:
+    content: public void SetProvinceDisplayColor(ushort provinceID, Color32 newColor)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: newColor
+      type: UnityEngine.Color32
+    content.vb: Public Sub SetProvinceDisplayColor(provinceID As UShort, newColor As Color32)
+  overload: Map.Province.ProvinceDataManager.SetProvinceDisplayColor*
+  nameWithType.vb: ProvinceDataManager.SetProvinceDisplayColor(UShort, Color32)
+  fullName.vb: Map.Province.ProvinceDataManager.SetProvinceDisplayColor(UShort, UnityEngine.Color32)
+  name.vb: SetProvinceDisplayColor(UShort, Color32)
+- uid: Map.Province.ProvinceDataManager.SetProvinceFlags(System.UInt16,Map.Province.ProvinceFlags)
+  commentId: M:Map.Province.ProvinceDataManager.SetProvinceFlags(System.UInt16,Map.Province.ProvinceFlags)
+  id: SetProvinceFlags(System.UInt16,Map.Province.ProvinceFlags)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceFlags(ushort, ProvinceFlags)
+  nameWithType: ProvinceDataManager.SetProvinceFlags(ushort, ProvinceFlags)
+  fullName: Map.Province.ProvinceDataManager.SetProvinceFlags(ushort, Map.Province.ProvinceFlags)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceFlags
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 261
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Set province flags
+  example: []
+  syntax:
+    content: public void SetProvinceFlags(ushort provinceID, ProvinceFlags flags)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: flags
+      type: Map.Province.ProvinceFlags
+    content.vb: Public Sub SetProvinceFlags(provinceID As UShort, flags As ProvinceFlags)
+  overload: Map.Province.ProvinceDataManager.SetProvinceFlags*
+  nameWithType.vb: ProvinceDataManager.SetProvinceFlags(UShort, ProvinceFlags)
+  fullName.vb: Map.Province.ProvinceDataManager.SetProvinceFlags(UShort, Map.Province.ProvinceFlags)
+  name.vb: SetProvinceFlags(UShort, ProvinceFlags)
+- uid: Map.Province.ProvinceDataManager.AddProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  commentId: M:Map.Province.ProvinceDataManager.AddProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  id: AddProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: AddProvinceFlag(ushort, ProvinceFlags)
+  nameWithType: ProvinceDataManager.AddProvinceFlag(ushort, ProvinceFlags)
+  fullName: Map.Province.ProvinceDataManager.AddProvinceFlag(ushort, Map.Province.ProvinceFlags)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddProvinceFlag
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 274
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Add flag to province
+  example: []
+  syntax:
+    content: public void AddProvinceFlag(ushort provinceID, ProvinceFlags flag)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: flag
+      type: Map.Province.ProvinceFlags
+    content.vb: Public Sub AddProvinceFlag(provinceID As UShort, flag As ProvinceFlags)
+  overload: Map.Province.ProvinceDataManager.AddProvinceFlag*
+  nameWithType.vb: ProvinceDataManager.AddProvinceFlag(UShort, ProvinceFlags)
+  fullName.vb: Map.Province.ProvinceDataManager.AddProvinceFlag(UShort, Map.Province.ProvinceFlags)
+  name.vb: AddProvinceFlag(UShort, ProvinceFlags)
+- uid: Map.Province.ProvinceDataManager.RemoveProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  commentId: M:Map.Province.ProvinceDataManager.RemoveProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  id: RemoveProvinceFlag(System.UInt16,Map.Province.ProvinceFlags)
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: RemoveProvinceFlag(ushort, ProvinceFlags)
+  nameWithType: ProvinceDataManager.RemoveProvinceFlag(ushort, ProvinceFlags)
+  fullName: Map.Province.ProvinceDataManager.RemoveProvinceFlag(ushort, Map.Province.ProvinceFlags)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveProvinceFlag
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 287
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Remove flag from province
+  example: []
+  syntax:
+    content: public void RemoveProvinceFlag(ushort provinceID, ProvinceFlags flag)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: flag
+      type: Map.Province.ProvinceFlags
+    content.vb: Public Sub RemoveProvinceFlag(provinceID As UShort, flag As ProvinceFlags)
+  overload: Map.Province.ProvinceDataManager.RemoveProvinceFlag*
+  nameWithType.vb: ProvinceDataManager.RemoveProvinceFlag(UShort, ProvinceFlags)
+  fullName.vb: Map.Province.ProvinceDataManager.RemoveProvinceFlag(UShort, Map.Province.ProvinceFlags)
+  name.vb: RemoveProvinceFlag(UShort, ProvinceFlags)
+- uid: Map.Province.ProvinceDataManager.GetAllProvinces
+  commentId: M:Map.Province.ProvinceDataManager.GetAllProvinces
+  id: GetAllProvinces
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinces()
+  nameWithType: ProvinceDataManager.GetAllProvinces()
+  fullName: Map.Province.ProvinceDataManager.GetAllProvinces()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinces
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 300
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get all provinces as read-only array slice
+  example: []
+  syntax:
+    content: public NativeArray<ProvinceData>.ReadOnly GetAllProvinces()
+    return:
+      type: Unity.Collections.NativeArray{Map.Province.ProvinceData}.ReadOnly
+    content.vb: Public Function GetAllProvinces() As NativeArray(Of ProvinceData).ReadOnly
+  overload: Map.Province.ProvinceDataManager.GetAllProvinces*
+- uid: Map.Province.ProvinceDataManager.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Map.Province.ProvinceDataManager.GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetProvincesByOwner(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesByOwner(ushort, NativeList<ushort>)
+  nameWithType: ProvinceDataManager.GetProvincesByOwner(ushort, NativeList<ushort>)
+  fullName: Map.Province.ProvinceDataManager.GetProvincesByOwner(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesByOwner
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 308
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get provinces owned by specific country
+  example: []
+  syntax:
+    content: public void GetProvincesByOwner(ushort ownerCountryID, NativeList<ushort> result)
+    parameters:
+    - id: ownerCountryID
+      type: System.UInt16
+    - id: result
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetProvincesByOwner(ownerCountryID As UShort, result As NativeList(Of UShort))
+  overload: Map.Province.ProvinceDataManager.GetProvincesByOwner*
+  nameWithType.vb: ProvinceDataManager.GetProvincesByOwner(UShort, NativeList(Of UShort))
+  fullName.vb: Map.Province.ProvinceDataManager.GetProvincesByOwner(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetProvincesByOwner(UShort, NativeList(Of UShort))
+- uid: Map.Province.ProvinceDataManager.Clear
+  commentId: M:Map.Province.ProvinceDataManager.Clear
+  id: Clear
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: Clear()
+  nameWithType: ProvinceDataManager.Clear()
+  fullName: Map.Province.ProvinceDataManager.Clear()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Clear
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 324
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Clear all province data
+  example: []
+  syntax:
+    content: public void Clear()
+    content.vb: Public Sub Clear()
+  overload: Map.Province.ProvinceDataManager.Clear*
+- uid: Map.Province.ProvinceDataManager.GetMemoryUsage
+  commentId: M:Map.Province.ProvinceDataManager.GetMemoryUsage
+  id: GetMemoryUsage
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: GetMemoryUsage()
+  nameWithType: ProvinceDataManager.GetMemoryUsage()
+  fullName: Map.Province.ProvinceDataManager.GetMemoryUsage()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMemoryUsage
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 334
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get memory usage statistics
+  example: []
+  syntax:
+    content: public (int totalBytes, int provinceBytes, int lookupBytes) GetMemoryUsage()
+    return:
+      type: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+    content.vb: Public Function GetMemoryUsage() As (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
+  overload: Map.Province.ProvinceDataManager.GetMemoryUsage*
+- uid: Map.Province.ProvinceDataManager.Dispose
+  commentId: M:Map.Province.ProvinceDataManager.Dispose
+  id: Dispose
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceDataManager.Dispose()
+  fullName: Map.Province.ProvinceDataManager.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 344
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Province.ProvinceDataManager.Dispose*
+- uid: Map.Province.ProvinceDataManager.LogStatistics
+  commentId: M:Map.Province.ProvinceDataManager.LogStatistics
+  id: LogStatistics
+  parent: Map.Province.ProvinceDataManager
+  langs:
+  - csharp
+  - vb
+  name: LogStatistics()
+  nameWithType: ProvinceDataManager.LogStatistics()
+  fullName: Map.Province.ProvinceDataManager.LogStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceDataStructure.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogStatistics
+    path: Scripts/Map/Province/ProvinceDataStructure.cs
+    startLine: 352
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ContextMenu("Log Province Statistics")]
+
+      public void LogStatistics()
+    content.vb: >-
+      <ContextMenu("Log Province Statistics")>
+
+      Public Sub LogStatistics()
+  overload: Map.Province.ProvinceDataManager.LogStatistics*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Log Province Statistics
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceDataManager.ProvinceCount*
+  commentId: Overload:Map.Province.ProvinceDataManager.ProvinceCount
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_ProvinceCount
+  name: ProvinceCount
+  nameWithType: ProvinceDataManager.ProvinceCount
+  fullName: Map.Province.ProvinceDataManager.ProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceDataManager.IsValid*
+  commentId: Overload:Map.Province.ProvinceDataManager.IsValid
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_IsValid
+  name: IsValid
+  nameWithType: ProvinceDataManager.IsValid
+  fullName: Map.Province.ProvinceDataManager.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Province.ProvinceDataManager.#ctor*
+  commentId: Overload:Map.Province.ProvinceDataManager.#ctor
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager__ctor_System_Int32_
+  name: ProvinceDataManager
+  nameWithType: ProvinceDataManager.ProvinceDataManager
+  fullName: Map.Province.ProvinceDataManager.ProvinceDataManager
+  nameWithType.vb: ProvinceDataManager.New
+  fullName.vb: Map.Province.ProvinceDataManager.New
+  name.vb: New
+- uid: Map.Province.ProvinceDataManager.AddProvince*
+  commentId: Overload:Map.Province.ProvinceDataManager.AddProvince
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_AddProvince_System_UInt16_UnityEngine_Color32_Unity_Collections_NativeArray_Unity_Mathematics_int2__
+  name: AddProvince
+  nameWithType: ProvinceDataManager.AddProvince
+  fullName: Map.Province.ProvinceDataManager.AddProvince
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Unity.Collections.NativeArray{Unity.Mathematics.int2}
+  commentId: T:Unity.Collections.NativeArray{Unity.Mathematics.int2}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<int2>
+  nameWithType: NativeArray<int2>
+  fullName: Unity.Collections.NativeArray<Unity.Mathematics.int2>
+  nameWithType.vb: NativeArray(Of int2)
+  fullName.vb: Unity.Collections.NativeArray(Of Unity.Mathematics.int2)
+  name.vb: NativeArray(Of int2)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Unity.Mathematics.int2
+    name: int2
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Mathematics.int2
+    name: int2
+    isExternal: true
+  - name: )
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Map.Province.ProvinceDataManager.GetProvinceByID*
+  commentId: Overload:Map.Province.ProvinceDataManager.GetProvinceByID
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_GetProvinceByID_System_UInt16_
+  name: GetProvinceByID
+  nameWithType: ProvinceDataManager.GetProvinceByID
+  fullName: Map.Province.ProvinceDataManager.GetProvinceByID
+- uid: Map.Province.ProvinceData
+  commentId: T:Map.Province.ProvinceData
+  parent: Map.Province
+  href: Map.Province.ProvinceData.html
+  name: ProvinceData
+  nameWithType: ProvinceData
+  fullName: Map.Province.ProvinceData
+- uid: Map.Province.ProvinceDataManager.GetProvinceIDByColor*
+  commentId: Overload:Map.Province.ProvinceDataManager.GetProvinceIDByColor
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_GetProvinceIDByColor_UnityEngine_Color32_
+  name: GetProvinceIDByColor
+  nameWithType: ProvinceDataManager.GetProvinceIDByColor
+  fullName: Map.Province.ProvinceDataManager.GetProvinceIDByColor
+- uid: Map.Province.ProvinceDataManager.SetProvinceOwner*
+  commentId: Overload:Map.Province.ProvinceDataManager.SetProvinceOwner
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_SetProvinceOwner_System_UInt16_System_UInt16_
+  name: SetProvinceOwner
+  nameWithType: ProvinceDataManager.SetProvinceOwner
+  fullName: Map.Province.ProvinceDataManager.SetProvinceOwner
+- uid: Map.Province.ProvinceDataManager.SetProvinceDisplayColor*
+  commentId: Overload:Map.Province.ProvinceDataManager.SetProvinceDisplayColor
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_SetProvinceDisplayColor_System_UInt16_UnityEngine_Color32_
+  name: SetProvinceDisplayColor
+  nameWithType: ProvinceDataManager.SetProvinceDisplayColor
+  fullName: Map.Province.ProvinceDataManager.SetProvinceDisplayColor
+- uid: Map.Province.ProvinceDataManager.SetProvinceFlags*
+  commentId: Overload:Map.Province.ProvinceDataManager.SetProvinceFlags
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_SetProvinceFlags_System_UInt16_Map_Province_ProvinceFlags_
+  name: SetProvinceFlags
+  nameWithType: ProvinceDataManager.SetProvinceFlags
+  fullName: Map.Province.ProvinceDataManager.SetProvinceFlags
+- uid: Map.Province.ProvinceFlags
+  commentId: T:Map.Province.ProvinceFlags
+  parent: Map.Province
+  href: Map.Province.ProvinceFlags.html
+  name: ProvinceFlags
+  nameWithType: ProvinceFlags
+  fullName: Map.Province.ProvinceFlags
+- uid: Map.Province.ProvinceDataManager.AddProvinceFlag*
+  commentId: Overload:Map.Province.ProvinceDataManager.AddProvinceFlag
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_AddProvinceFlag_System_UInt16_Map_Province_ProvinceFlags_
+  name: AddProvinceFlag
+  nameWithType: ProvinceDataManager.AddProvinceFlag
+  fullName: Map.Province.ProvinceDataManager.AddProvinceFlag
+- uid: Map.Province.ProvinceDataManager.RemoveProvinceFlag*
+  commentId: Overload:Map.Province.ProvinceDataManager.RemoveProvinceFlag
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_RemoveProvinceFlag_System_UInt16_Map_Province_ProvinceFlags_
+  name: RemoveProvinceFlag
+  nameWithType: ProvinceDataManager.RemoveProvinceFlag
+  fullName: Map.Province.ProvinceDataManager.RemoveProvinceFlag
+- uid: Map.Province.ProvinceDataManager.GetAllProvinces*
+  commentId: Overload:Map.Province.ProvinceDataManager.GetAllProvinces
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_GetAllProvinces
+  name: GetAllProvinces
+  nameWithType: ProvinceDataManager.GetAllProvinces
+  fullName: Map.Province.ProvinceDataManager.GetAllProvinces
+- uid: Unity.Collections.NativeArray{Map.Province.ProvinceData}.ReadOnly
+  commentId: T:Unity.Collections.NativeArray{Map.Province.ProvinceData}.ReadOnly
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1.ReadOnly
+  href: Map.Province.ProvinceData.html
+  name: NativeArray<ProvinceData>.ReadOnly
+  nameWithType: NativeArray<ProvinceData>.ReadOnly
+  fullName: Unity.Collections.NativeArray<Map.Province.ProvinceData>.ReadOnly
+  nameWithType.vb: NativeArray(Of ProvinceData).ReadOnly
+  fullName.vb: Unity.Collections.NativeArray(Of Map.Province.ProvinceData).ReadOnly
+  name.vb: NativeArray(Of ProvinceData).ReadOnly
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Map.Province.ProvinceData
+    name: ProvinceData
+    href: Map.Province.ProvinceData.html
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeArray{Map.Province.ProvinceData}.ReadOnly
+    name: ReadOnly
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Map.Province.ProvinceData
+    name: ProvinceData
+    href: Map.Province.ProvinceData.html
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeArray{Map.Province.ProvinceData}.ReadOnly
+    name: ReadOnly
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1.ReadOnly
+  commentId: T:Unity.Collections.NativeArray`1.ReadOnly
+  isExternal: true
+  name: NativeArray<T>.ReadOnly
+  nameWithType: NativeArray<T>.ReadOnly
+  fullName: Unity.Collections.NativeArray<T>.ReadOnly
+  nameWithType.vb: NativeArray(Of T).ReadOnly
+  fullName.vb: Unity.Collections.NativeArray(Of T).ReadOnly
+  name.vb: NativeArray(Of T).ReadOnly
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeArray`1.ReadOnly
+    name: ReadOnly
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeArray`1.ReadOnly
+    name: ReadOnly
+    isExternal: true
+- uid: Map.Province.ProvinceDataManager.GetProvincesByOwner*
+  commentId: Overload:Map.Province.ProvinceDataManager.GetProvincesByOwner
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_GetProvincesByOwner_System_UInt16_Unity_Collections_NativeList_System_UInt16__
+  name: GetProvincesByOwner
+  nameWithType: ProvinceDataManager.GetProvincesByOwner
+  fullName: Map.Province.ProvinceDataManager.GetProvincesByOwner
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Province.ProvinceDataManager.Clear*
+  commentId: Overload:Map.Province.ProvinceDataManager.Clear
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_Clear
+  name: Clear
+  nameWithType: ProvinceDataManager.Clear
+  fullName: Map.Province.ProvinceDataManager.Clear
+- uid: Map.Province.ProvinceDataManager.GetMemoryUsage*
+  commentId: Overload:Map.Province.ProvinceDataManager.GetMemoryUsage
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_GetMemoryUsage
+  name: GetMemoryUsage
+  nameWithType: ProvinceDataManager.GetMemoryUsage
+  fullName: Map.Province.ProvinceDataManager.GetMemoryUsage
+- uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32,System.Int32}
+  parent: System
+  definition: System.ValueTuple`3
+  name: (int totalBytes, int hotBytes, int coldBytes)
+  nameWithType: (int totalBytes, int hotBytes, int coldBytes)
+  fullName: (int totalBytes, int hotBytes, int coldBytes)
+  nameWithType.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  fullName.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  name.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  spec.csharp:
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
+    name: hotBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
+    name: coldBytes
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
+    name: hotBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
+    name: coldBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.ValueTuple`3
+  commentId: T:System.ValueTuple`3
+  name: (T1, T2, T3)
+  nameWithType: (T1, T2, T3)
+  fullName: (T1, T2, T3)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+- uid: Map.Province.ProvinceDataManager.Dispose*
+  commentId: Overload:Map.Province.ProvinceDataManager.Dispose
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_Dispose
+  name: Dispose
+  nameWithType: ProvinceDataManager.Dispose
+  fullName: Map.Province.ProvinceDataManager.Dispose
+- uid: Map.Province.ProvinceDataManager.LogStatistics*
+  commentId: Overload:Map.Province.ProvinceDataManager.LogStatistics
+  href: Map.Province.ProvinceDataManager.html#Map_Province_ProvinceDataManager_LogStatistics
+  name: LogStatistics
+  nameWithType: ProvinceDataManager.LogStatistics
+  fullName: Map.Province.ProvinceDataManager.LogStatistics

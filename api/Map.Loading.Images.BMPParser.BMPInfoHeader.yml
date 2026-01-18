@@ -1,0 +1,559 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader
+  commentId: T:Map.Loading.Images.BMPParser.BMPInfoHeader
+  id: BMPParser.BMPInfoHeader
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.BitsPerPixel
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsImportant
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsUsed
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.Compression
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.HeaderSize
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.Height
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.ImageSize
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.Planes
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.Width
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.XPixelsPerMeter
+  - Map.Loading.Images.BMPParser.BMPInfoHeader.YPixelsPerMeter
+  langs:
+  - csharp
+  - vb
+  name: BMPParser.BMPInfoHeader
+  nameWithType: BMPParser.BMPInfoHeader
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPInfoHeader
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: BMP info header structure (40 bytes for BITMAPINFOHEADER)
+  example: []
+  syntax:
+    content: public struct BMPParser.BMPInfoHeader
+    content.vb: Public Structure BMPParser.BMPInfoHeader
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.HeaderSize
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.HeaderSize
+  id: HeaderSize
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: HeaderSize
+  nameWithType: BMPParser.BMPInfoHeader.HeaderSize
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.HeaderSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeaderSize
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint HeaderSize
+    return:
+      type: System.UInt32
+    content.vb: Public HeaderSize As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.Width
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.Width
+  id: Width
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: BMPParser.BMPInfoHeader.Width
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width
+    return:
+      type: System.Int32
+    content.vb: Public Width As Integer
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.Height
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.Height
+  id: Height
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: BMPParser.BMPInfoHeader.Height
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height
+    return:
+      type: System.Int32
+    content.vb: Public Height As Integer
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.Planes
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.Planes
+  id: Planes
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: Planes
+  nameWithType: BMPParser.BMPInfoHeader.Planes
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.Planes
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Planes
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ushort Planes
+    return:
+      type: System.UInt16
+    content.vb: Public Planes As UShort
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.BitsPerPixel
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.BitsPerPixel
+  id: BitsPerPixel
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: BitsPerPixel
+  nameWithType: BMPParser.BMPInfoHeader.BitsPerPixel
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.BitsPerPixel
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BitsPerPixel
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public ushort BitsPerPixel
+    return:
+      type: System.UInt16
+    content.vb: Public BitsPerPixel As UShort
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.Compression
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.Compression
+  id: Compression
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: Compression
+  nameWithType: BMPParser.BMPInfoHeader.Compression
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.Compression
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Compression
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint Compression
+    return:
+      type: System.UInt32
+    content.vb: Public Compression As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.ImageSize
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.ImageSize
+  id: ImageSize
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: ImageSize
+  nameWithType: BMPParser.BMPInfoHeader.ImageSize
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.ImageSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ImageSize
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 39
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint ImageSize
+    return:
+      type: System.UInt32
+    content.vb: Public ImageSize As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.XPixelsPerMeter
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.XPixelsPerMeter
+  id: XPixelsPerMeter
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: XPixelsPerMeter
+  nameWithType: BMPParser.BMPInfoHeader.XPixelsPerMeter
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.XPixelsPerMeter
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: XPixelsPerMeter
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int XPixelsPerMeter
+    return:
+      type: System.Int32
+    content.vb: Public XPixelsPerMeter As Integer
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.YPixelsPerMeter
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.YPixelsPerMeter
+  id: YPixelsPerMeter
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: YPixelsPerMeter
+  nameWithType: BMPParser.BMPInfoHeader.YPixelsPerMeter
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.YPixelsPerMeter
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: YPixelsPerMeter
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int YPixelsPerMeter
+    return:
+      type: System.Int32
+    content.vb: Public YPixelsPerMeter As Integer
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsUsed
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsUsed
+  id: ColorsUsed
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: ColorsUsed
+  nameWithType: BMPParser.BMPInfoHeader.ColorsUsed
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsUsed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorsUsed
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint ColorsUsed
+    return:
+      type: System.UInt32
+    content.vb: Public ColorsUsed As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsImportant
+  commentId: F:Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsImportant
+  id: ColorsImportant
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: ColorsImportant
+  nameWithType: BMPParser.BMPInfoHeader.ColorsImportant
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.ColorsImportant
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorsImportant
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public uint ColorsImportant
+    return:
+      type: System.UInt32
+    content.vb: Public ColorsImportant As UInteger
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+  commentId: P:Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+  id: IsValid
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: IsValid
+  nameWithType: BMPParser.BMPInfoHeader.IsValid
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsValid
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsValid { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsValid As Boolean
+  overload: Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid*
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+  commentId: P:Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+  id: IsSupported
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: IsSupported
+  nameWithType: BMPParser.BMPInfoHeader.IsSupported
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSupported
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSupported { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsSupported As Boolean
+  overload: Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported*
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+  commentId: P:Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+  id: AbsoluteHeight
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: AbsoluteHeight
+  nameWithType: BMPParser.BMPInfoHeader.AbsoluteHeight
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AbsoluteHeight
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int AbsoluteHeight { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property AbsoluteHeight As Integer
+  overload: Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight*
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp
+  commentId: P:Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp
+  id: IsBottomUp
+  parent: Map.Loading.Images.BMPParser.BMPInfoHeader
+  langs:
+  - csharp
+  - vb
+  name: IsBottomUp
+  nameWithType: BMPParser.BMPInfoHeader.IsBottomUp
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/BMPParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsBottomUp
+    path: Scripts/Map/Loading/Images/BMPParser.cs
+    startLine: 48
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsBottomUp { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsBottomUp As Boolean
+  overload: Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid*
+  commentId: Overload:Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+  href: Map.Loading.Images.BMPParser.BMPInfoHeader.html#Map_Loading_Images_BMPParser_BMPInfoHeader_IsValid
+  name: IsValid
+  nameWithType: BMPParser.BMPInfoHeader.IsValid
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsValid
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported*
+  commentId: Overload:Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+  href: Map.Loading.Images.BMPParser.BMPInfoHeader.html#Map_Loading_Images_BMPParser_BMPInfoHeader_IsSupported
+  name: IsSupported
+  nameWithType: BMPParser.BMPInfoHeader.IsSupported
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsSupported
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight*
+  commentId: Overload:Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+  href: Map.Loading.Images.BMPParser.BMPInfoHeader.html#Map_Loading_Images_BMPParser_BMPInfoHeader_AbsoluteHeight
+  name: AbsoluteHeight
+  nameWithType: BMPParser.BMPInfoHeader.AbsoluteHeight
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.AbsoluteHeight
+- uid: Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp*
+  commentId: Overload:Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp
+  href: Map.Loading.Images.BMPParser.BMPInfoHeader.html#Map_Loading_Images_BMPParser_BMPInfoHeader_IsBottomUp
+  name: IsBottomUp
+  nameWithType: BMPParser.BMPInfoHeader.IsBottomUp
+  fullName: Map.Loading.Images.BMPParser.BMPInfoHeader.IsBottomUp

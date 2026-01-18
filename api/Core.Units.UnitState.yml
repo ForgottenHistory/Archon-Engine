@@ -1,0 +1,858 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitState
+  commentId: T:Core.Units.UnitState
+  id: UnitState
+  parent: Core.Units
+  children:
+  - Core.Units.UnitState.Create(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Units.UnitState.CreateWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Units.UnitState.Equals(Core.Units.UnitState)
+  - Core.Units.UnitState.Equals(System.Object)
+  - Core.Units.UnitState.FromBytes(System.Byte[])
+  - Core.Units.UnitState.GetHashCode
+  - Core.Units.UnitState.HasTroops
+  - Core.Units.UnitState.IsDestroyed
+  - Core.Units.UnitState.ToBytes
+  - Core.Units.UnitState.ToString
+  - Core.Units.UnitState.countryID
+  - Core.Units.UnitState.op_Equality(Core.Units.UnitState,Core.Units.UnitState)
+  - Core.Units.UnitState.op_Inequality(Core.Units.UnitState,Core.Units.UnitState)
+  - Core.Units.UnitState.provinceID
+  - Core.Units.UnitState.unitCount
+  - Core.Units.UnitState.unitTypeID
+  langs:
+  - csharp
+  - vb
+  name: UnitState
+  nameWithType: UnitState
+  fullName: Core.Units.UnitState
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitState
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    8-byte hot data for a single military unit.
+
+
+    DESIGN:
+
+    - Fixed size (8 bytes) for cache efficiency and network transmission
+
+    - No visual data (positions, sprites) - presentation layer responsibility
+
+    - provinceID instead of coordinates - simulation layer doesn't know positions
+
+    - RISK-style: Simple unit count instead of percentage-based strength/morale
+
+
+    MULTIPLAYER:
+
+    - Deterministic layout (explicit struct layout)
+
+    - No managed references (NativeArray compatible)
+
+    - Serializable for network sync
+  example: []
+  syntax:
+    content: public struct UnitState
+    content.vb: Public Structure UnitState
+- uid: Core.Units.UnitState.provinceID
+  commentId: F:Core.Units.UnitState.provinceID
+  id: provinceID
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: provinceID
+  nameWithType: UnitState.provinceID
+  fullName: Core.Units.UnitState.provinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceID
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Current province location (0-65535 provinces)
+  example: []
+  syntax:
+    content: public ushort provinceID
+    return:
+      type: System.UInt16
+    content.vb: Public provinceID As UShort
+- uid: Core.Units.UnitState.countryID
+  commentId: F:Core.Units.UnitState.countryID
+  id: countryID
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: countryID
+  nameWithType: UnitState.countryID
+  fullName: Core.Units.UnitState.countryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: countryID
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Owning country (0-65535 countries)
+  example: []
+  syntax:
+    content: public ushort countryID
+    return:
+      type: System.UInt16
+    content.vb: Public countryID As UShort
+- uid: Core.Units.UnitState.unitTypeID
+  commentId: F:Core.Units.UnitState.unitTypeID
+  id: unitTypeID
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: unitTypeID
+  nameWithType: UnitState.unitTypeID
+  fullName: Core.Units.UnitState.unitTypeID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: unitTypeID
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Unit type ID (infantry, cavalry, artillery, etc.)
+  example: []
+  syntax:
+    content: public ushort unitTypeID
+    return:
+      type: System.UInt16
+    content.vb: Public unitTypeID As UShort
+- uid: Core.Units.UnitState.unitCount
+  commentId: F:Core.Units.UnitState.unitCount
+  id: unitCount
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: unitCount
+  nameWithType: UnitState.unitCount
+  fullName: Core.Units.UnitState.unitCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: unitCount
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Number of troops in this unit
+  example: []
+  syntax:
+    content: public ushort unitCount
+    return:
+      type: System.UInt16
+    content.vb: Public unitCount As UShort
+- uid: Core.Units.UnitState.Create(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitState.Create(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: Create(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: Create(ushort, ushort, ushort, ushort)
+  nameWithType: UnitState.Create(ushort, ushort, ushort, ushort)
+  fullName: Core.Units.UnitState.Create(ushort, ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Create a new unit with specified troop count
+  example: []
+  syntax:
+    content: public static UnitState Create(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount = 1)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: countryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    - id: unitCount
+      type: System.UInt16
+    return:
+      type: Core.Units.UnitState
+    content.vb: Public Shared Function Create(provinceID As UShort, countryID As UShort, unitTypeID As UShort, unitCount As UShort = 1) As UnitState
+  overload: Core.Units.UnitState.Create*
+  nameWithType.vb: UnitState.Create(UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Units.UnitState.Create(UShort, UShort, UShort, UShort)
+  name.vb: Create(UShort, UShort, UShort, UShort)
+- uid: Core.Units.UnitState.CreateWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Units.UnitState.CreateWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: CreateWithStats(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: CreateWithStats(ushort, ushort, ushort, ushort)
+  nameWithType: UnitState.CreateWithStats(ushort, ushort, ushort, ushort)
+  fullName: Core.Units.UnitState.CreateWithStats(ushort, ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateWithStats
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Create a unit with custom stats (for loading saves, reinforcements, etc.)
+  example: []
+  syntax:
+    content: public static UnitState CreateWithStats(ushort provinceID, ushort countryID, ushort unitTypeID, ushort unitCount)
+    parameters:
+    - id: provinceID
+      type: System.UInt16
+    - id: countryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    - id: unitCount
+      type: System.UInt16
+    return:
+      type: Core.Units.UnitState
+    content.vb: Public Shared Function CreateWithStats(provinceID As UShort, countryID As UShort, unitTypeID As UShort, unitCount As UShort) As UnitState
+  overload: Core.Units.UnitState.CreateWithStats*
+  nameWithType.vb: UnitState.CreateWithStats(UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Units.UnitState.CreateWithStats(UShort, UShort, UShort, UShort)
+  name.vb: CreateWithStats(UShort, UShort, UShort, UShort)
+- uid: Core.Units.UnitState.IsDestroyed
+  commentId: P:Core.Units.UnitState.IsDestroyed
+  id: IsDestroyed
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: IsDestroyed
+  nameWithType: UnitState.IsDestroyed
+  fullName: Core.Units.UnitState.IsDestroyed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDestroyed
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Is this unit destroyed (unitCount = 0)?
+  example: []
+  syntax:
+    content: public bool IsDestroyed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDestroyed As Boolean
+  overload: Core.Units.UnitState.IsDestroyed*
+- uid: Core.Units.UnitState.HasTroops
+  commentId: P:Core.Units.UnitState.HasTroops
+  id: HasTroops
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: HasTroops
+  nameWithType: UnitState.HasTroops
+  fullName: Core.Units.UnitState.HasTroops
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasTroops
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Does this unit have troops?
+  example: []
+  syntax:
+    content: public bool HasTroops { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasTroops As Boolean
+  overload: Core.Units.UnitState.HasTroops*
+- uid: Core.Units.UnitState.ToBytes
+  commentId: M:Core.Units.UnitState.ToBytes
+  id: ToBytes
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: ToBytes()
+  nameWithType: UnitState.ToBytes()
+  fullName: Core.Units.UnitState.ToBytes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToBytes
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Serialize to 8 bytes for network transmission or save files
+  example: []
+  syntax:
+    content: public byte[] ToBytes()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function ToBytes() As Byte()
+  overload: Core.Units.UnitState.ToBytes*
+- uid: Core.Units.UnitState.FromBytes(System.Byte[])
+  commentId: M:Core.Units.UnitState.FromBytes(System.Byte[])
+  id: FromBytes(System.Byte[])
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: FromBytes(byte[])
+  nameWithType: UnitState.FromBytes(byte[])
+  fullName: Core.Units.UnitState.FromBytes(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromBytes
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Deserialize from 8 bytes
+  example: []
+  syntax:
+    content: public static UnitState FromBytes(byte[] bytes)
+    parameters:
+    - id: bytes
+      type: System.Byte[]
+    return:
+      type: Core.Units.UnitState
+    content.vb: Public Shared Function FromBytes(bytes As Byte()) As UnitState
+  overload: Core.Units.UnitState.FromBytes*
+  nameWithType.vb: UnitState.FromBytes(Byte())
+  fullName.vb: Core.Units.UnitState.FromBytes(Byte())
+  name.vb: FromBytes(Byte())
+- uid: Core.Units.UnitState.Equals(Core.Units.UnitState)
+  commentId: M:Core.Units.UnitState.Equals(Core.Units.UnitState)
+  id: Equals(Core.Units.UnitState)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: Equals(UnitState)
+  nameWithType: UnitState.Equals(UnitState)
+  fullName: Core.Units.UnitState.Equals(Core.Units.UnitState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Units
+  example: []
+  syntax:
+    content: public bool Equals(UnitState other)
+    parameters:
+    - id: other
+      type: Core.Units.UnitState
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As UnitState) As Boolean
+  overload: Core.Units.UnitState.Equals*
+- uid: Core.Units.UnitState.Equals(System.Object)
+  commentId: M:Core.Units.UnitState.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: UnitState.Equals(object)
+  fullName: Core.Units.UnitState.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Units
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Units.UnitState.Equals*
+  nameWithType.vb: UnitState.Equals(Object)
+  fullName.vb: Core.Units.UnitState.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Units.UnitState.GetHashCode
+  commentId: M:Core.Units.UnitState.GetHashCode
+  id: GetHashCode
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: UnitState.GetHashCode()
+  fullName: Core.Units.UnitState.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.Units
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Units.UnitState.GetHashCode*
+- uid: Core.Units.UnitState.op_Equality(Core.Units.UnitState,Core.Units.UnitState)
+  commentId: M:Core.Units.UnitState.op_Equality(Core.Units.UnitState,Core.Units.UnitState)
+  id: op_Equality(Core.Units.UnitState,Core.Units.UnitState)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: operator ==(UnitState, UnitState)
+  nameWithType: UnitState.operator ==(UnitState, UnitState)
+  fullName: Core.Units.UnitState.operator ==(Core.Units.UnitState, Core.Units.UnitState)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public static bool operator ==(UnitState left, UnitState right)
+    parameters:
+    - id: left
+      type: Core.Units.UnitState
+    - id: right
+      type: Core.Units.UnitState
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As UnitState, right As UnitState) As Boolean
+  overload: Core.Units.UnitState.op_Equality*
+  nameWithType.vb: UnitState.=(UnitState, UnitState)
+  fullName.vb: Core.Units.UnitState.=(Core.Units.UnitState, Core.Units.UnitState)
+  name.vb: =(UnitState, UnitState)
+- uid: Core.Units.UnitState.op_Inequality(Core.Units.UnitState,Core.Units.UnitState)
+  commentId: M:Core.Units.UnitState.op_Inequality(Core.Units.UnitState,Core.Units.UnitState)
+  id: op_Inequality(Core.Units.UnitState,Core.Units.UnitState)
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: operator !=(UnitState, UnitState)
+  nameWithType: UnitState.operator !=(UnitState, UnitState)
+  fullName: Core.Units.UnitState.operator !=(Core.Units.UnitState, Core.Units.UnitState)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 125
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public static bool operator !=(UnitState left, UnitState right)
+    parameters:
+    - id: left
+      type: Core.Units.UnitState
+    - id: right
+      type: Core.Units.UnitState
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As UnitState, right As UnitState) As Boolean
+  overload: Core.Units.UnitState.op_Inequality*
+  nameWithType.vb: UnitState.<>(UnitState, UnitState)
+  fullName.vb: Core.Units.UnitState.<>(Core.Units.UnitState, Core.Units.UnitState)
+  name.vb: <>(UnitState, UnitState)
+- uid: Core.Units.UnitState.ToString
+  commentId: M:Core.Units.UnitState.ToString
+  id: ToString
+  parent: Core.Units.UnitState
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: UnitState.ToString()
+  fullName: Core.Units.UnitState.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Units/UnitState.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Units
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Units.UnitState.ToString*
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitState.Create*
+  commentId: Overload:Core.Units.UnitState.Create
+  href: Core.Units.UnitState.html#Core_Units_UnitState_Create_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: Create
+  nameWithType: UnitState.Create
+  fullName: Core.Units.UnitState.Create
+- uid: Core.Units.UnitState
+  commentId: T:Core.Units.UnitState
+  parent: Core.Units
+  href: Core.Units.UnitState.html
+  name: UnitState
+  nameWithType: UnitState
+  fullName: Core.Units.UnitState
+- uid: Core.Units.UnitState.CreateWithStats*
+  commentId: Overload:Core.Units.UnitState.CreateWithStats
+  href: Core.Units.UnitState.html#Core_Units_UnitState_CreateWithStats_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: CreateWithStats
+  nameWithType: UnitState.CreateWithStats
+  fullName: Core.Units.UnitState.CreateWithStats
+- uid: Core.Units.UnitState.IsDestroyed*
+  commentId: Overload:Core.Units.UnitState.IsDestroyed
+  href: Core.Units.UnitState.html#Core_Units_UnitState_IsDestroyed
+  name: IsDestroyed
+  nameWithType: UnitState.IsDestroyed
+  fullName: Core.Units.UnitState.IsDestroyed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Units.UnitState.HasTroops*
+  commentId: Overload:Core.Units.UnitState.HasTroops
+  href: Core.Units.UnitState.html#Core_Units_UnitState_HasTroops
+  name: HasTroops
+  nameWithType: UnitState.HasTroops
+  fullName: Core.Units.UnitState.HasTroops
+- uid: Core.Units.UnitState.ToBytes*
+  commentId: Overload:Core.Units.UnitState.ToBytes
+  href: Core.Units.UnitState.html#Core_Units_UnitState_ToBytes
+  name: ToBytes
+  nameWithType: UnitState.ToBytes
+  fullName: Core.Units.UnitState.ToBytes
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Units.UnitState.FromBytes*
+  commentId: Overload:Core.Units.UnitState.FromBytes
+  href: Core.Units.UnitState.html#Core_Units_UnitState_FromBytes_System_Byte___
+  name: FromBytes
+  nameWithType: UnitState.FromBytes
+  fullName: Core.Units.UnitState.FromBytes
+- uid: Core.Units.UnitState.Equals*
+  commentId: Overload:Core.Units.UnitState.Equals
+  href: Core.Units.UnitState.html#Core_Units_UnitState_Equals_Core_Units_UnitState_
+  name: Equals
+  nameWithType: UnitState.Equals
+  fullName: Core.Units.UnitState.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Units.UnitState.GetHashCode*
+  commentId: Overload:Core.Units.UnitState.GetHashCode
+  href: Core.Units.UnitState.html#Core_Units_UnitState_GetHashCode
+  name: GetHashCode
+  nameWithType: UnitState.GetHashCode
+  fullName: Core.Units.UnitState.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Units.UnitState.op_Equality*
+  commentId: Overload:Core.Units.UnitState.op_Equality
+  href: Core.Units.UnitState.html#Core_Units_UnitState_op_Equality_Core_Units_UnitState_Core_Units_UnitState_
+  name: operator ==
+  nameWithType: UnitState.operator ==
+  fullName: Core.Units.UnitState.operator ==
+  nameWithType.vb: UnitState.=
+  fullName.vb: Core.Units.UnitState.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Units.UnitState.op_Equality*
+    name: ==
+    href: Core.Units.UnitState.html#Core_Units_UnitState_op_Equality_Core_Units_UnitState_Core_Units_UnitState_
+- uid: Core.Units.UnitState.op_Inequality*
+  commentId: Overload:Core.Units.UnitState.op_Inequality
+  href: Core.Units.UnitState.html#Core_Units_UnitState_op_Inequality_Core_Units_UnitState_Core_Units_UnitState_
+  name: operator !=
+  nameWithType: UnitState.operator !=
+  fullName: Core.Units.UnitState.operator !=
+  nameWithType.vb: UnitState.<>
+  fullName.vb: Core.Units.UnitState.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Units.UnitState.op_Inequality*
+    name: '!='
+    href: Core.Units.UnitState.html#Core_Units_UnitState_op_Inequality_Core_Units_UnitState_Core_Units_UnitState_
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Units.UnitState.ToString*
+  commentId: Overload:Core.Units.UnitState.ToString
+  href: Core.Units.UnitState.html#Core_Units_UnitState_ToString
+  name: ToString
+  nameWithType: UnitState.ToString
+  fullName: Core.Units.UnitState.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

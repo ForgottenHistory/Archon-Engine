@@ -1,0 +1,158 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.HeightmapBitmapLoader
+  commentId: T:Map.Loading.Images.HeightmapBitmapLoader
+  id: HeightmapBitmapLoader
+  parent: Map.Loading.Images
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: HeightmapBitmapLoader
+  nameWithType: HeightmapBitmapLoader
+  fullName: Map.Loading.Images.HeightmapBitmapLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightmapBitmapLoader
+    path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
+    startLine: 176
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Legacy alias for HeightmapImageLoader for backward compatibility.
+  example: []
+  syntax:
+    content: 'public class HeightmapBitmapLoader : HeightmapImageLoader'
+    content.vb: Public Class HeightmapBitmapLoader Inherits HeightmapImageLoader
+  inheritance:
+  - System.Object
+  - Map.Loading.Images.HeightmapImageLoader
+  inheritedMembers:
+  - Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  - Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(System.String)
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.Loading.Images.HeightmapImageLoader
+  commentId: T:Map.Loading.Images.HeightmapImageLoader
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.HeightmapImageLoader.html
+  name: HeightmapImageLoader
+  nameWithType: HeightmapImageLoader
+  fullName: Map.Loading.Images.HeightmapImageLoader
+- uid: Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  commentId: M:Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+  parent: Map.Loading.Images.HeightmapImageLoader
+  isExternal: true
+  href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  name: Initialize(MapTextureManager, bool)
+  nameWithType: HeightmapImageLoader.Initialize(MapTextureManager, bool)
+  fullName: Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager, bool)
+  nameWithType.vb: HeightmapImageLoader.Initialize(MapTextureManager, Boolean)
+  fullName.vb: Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager, Boolean)
+  name.vb: Initialize(MapTextureManager, Boolean)
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+    name: Initialize
+    href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapImageLoader.Initialize(Map.Rendering.MapTextureManager,System.Boolean)
+    name: Initialize
+    href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_Initialize_Map_Rendering_MapTextureManager_System_Boolean_
+  - name: (
+  - uid: Map.Rendering.MapTextureManager
+    name: MapTextureManager
+    href: Map.Rendering.MapTextureManager.html
+  - name: ','
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(System.String)
+  commentId: M:Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(System.String)
+  parent: Map.Loading.Images.HeightmapImageLoader
+  isExternal: true
+  href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_LoadAndPopulate_System_String_
+  name: LoadAndPopulate(string)
+  nameWithType: HeightmapImageLoader.LoadAndPopulate(string)
+  fullName: Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(string)
+  nameWithType.vb: HeightmapImageLoader.LoadAndPopulate(String)
+  fullName.vb: Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(String)
+  name.vb: LoadAndPopulate(String)
+  spec.csharp:
+  - uid: Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(System.String)
+    name: LoadAndPopulate
+    href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_LoadAndPopulate_System_String_
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.Loading.Images.HeightmapImageLoader.LoadAndPopulate(System.String)
+    name: LoadAndPopulate
+    href: Map.Loading.Images.HeightmapImageLoader.html#Map_Loading_Images_HeightmapImageLoader_LoadAndPopulate_System_String_
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

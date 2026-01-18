@@ -1,0 +1,320 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.CompressedHistory
+  commentId: T:Core.Data.CompressedHistory
+  id: CompressedHistory
+  parent: Core.Data
+  children:
+  - Core.Data.CompressedHistory.#ctor
+  - Core.Data.CompressedHistory.AddEvent(Core.Data.HistoricalEvent)
+  - Core.Data.CompressedHistory.AverageDevelopment
+  - Core.Data.CompressedHistory.ClearOldest(System.Int32)
+  - Core.Data.CompressedHistory.EventCount
+  - Core.Data.CompressedHistory.OwnershipChanges
+  langs:
+  - csharp
+  - vb
+  name: CompressedHistory
+  nameWithType: CompressedHistory
+  fullName: Core.Data.CompressedHistory
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CompressedHistory
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 218
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Compressed history for medium-term storage
+  example: []
+  syntax:
+    content: public class CompressedHistory
+    content.vb: Public Class CompressedHistory
+  inheritance:
+  - System.Object
+- uid: Core.Data.CompressedHistory.EventCount
+  commentId: P:Core.Data.CompressedHistory.EventCount
+  id: EventCount
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: EventCount
+  nameWithType: CompressedHistory.EventCount
+  fullName: Core.Data.CompressedHistory.EventCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EventCount
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 220
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int EventCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property EventCount As Integer
+  overload: Core.Data.CompressedHistory.EventCount*
+- uid: Core.Data.CompressedHistory.OwnershipChanges
+  commentId: P:Core.Data.CompressedHistory.OwnershipChanges
+  id: OwnershipChanges
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: OwnershipChanges
+  nameWithType: CompressedHistory.OwnershipChanges
+  fullName: Core.Data.CompressedHistory.OwnershipChanges
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnershipChanges
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 221
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int OwnershipChanges { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property OwnershipChanges As Integer
+  overload: Core.Data.CompressedHistory.OwnershipChanges*
+- uid: Core.Data.CompressedHistory.AverageDevelopment
+  commentId: P:Core.Data.CompressedHistory.AverageDevelopment
+  id: AverageDevelopment
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: AverageDevelopment
+  nameWithType: CompressedHistory.AverageDevelopment
+  fullName: Core.Data.CompressedHistory.AverageDevelopment
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AverageDevelopment
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 222
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public float AverageDevelopment { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property AverageDevelopment As Single
+  overload: Core.Data.CompressedHistory.AverageDevelopment*
+- uid: Core.Data.CompressedHistory.#ctor
+  commentId: M:Core.Data.CompressedHistory.#ctor
+  id: '#ctor'
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: CompressedHistory()
+  nameWithType: CompressedHistory.CompressedHistory()
+  fullName: Core.Data.CompressedHistory.CompressedHistory()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 225
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public CompressedHistory()
+    content.vb: Public Sub New()
+  overload: Core.Data.CompressedHistory.#ctor*
+  nameWithType.vb: CompressedHistory.New()
+  fullName.vb: Core.Data.CompressedHistory.New()
+  name.vb: New()
+- uid: Core.Data.CompressedHistory.AddEvent(Core.Data.HistoricalEvent)
+  commentId: M:Core.Data.CompressedHistory.AddEvent(Core.Data.HistoricalEvent)
+  id: AddEvent(Core.Data.HistoricalEvent)
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: AddEvent(HistoricalEvent)
+  nameWithType: CompressedHistory.AddEvent(HistoricalEvent)
+  fullName: Core.Data.CompressedHistory.AddEvent(Core.Data.HistoricalEvent)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddEvent
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 230
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void AddEvent(HistoricalEvent evt)
+    parameters:
+    - id: evt
+      type: Core.Data.HistoricalEvent
+    content.vb: Public Sub AddEvent(evt As HistoricalEvent)
+  overload: Core.Data.CompressedHistory.AddEvent*
+- uid: Core.Data.CompressedHistory.ClearOldest(System.Int32)
+  commentId: M:Core.Data.CompressedHistory.ClearOldest(System.Int32)
+  id: ClearOldest(System.Int32)
+  parent: Core.Data.CompressedHistory
+  langs:
+  - csharp
+  - vb
+  name: ClearOldest(int)
+  nameWithType: CompressedHistory.ClearOldest(int)
+  fullName: Core.Data.CompressedHistory.ClearOldest(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearOldest
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 249
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public void ClearOldest(int count)
+    parameters:
+    - id: count
+      type: System.Int32
+    content.vb: Public Sub ClearOldest(count As Integer)
+  overload: Core.Data.CompressedHistory.ClearOldest*
+  nameWithType.vb: CompressedHistory.ClearOldest(Integer)
+  fullName.vb: Core.Data.CompressedHistory.ClearOldest(Integer)
+  name.vb: ClearOldest(Integer)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.CompressedHistory.EventCount*
+  commentId: Overload:Core.Data.CompressedHistory.EventCount
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory_EventCount
+  name: EventCount
+  nameWithType: CompressedHistory.EventCount
+  fullName: Core.Data.CompressedHistory.EventCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.CompressedHistory.OwnershipChanges*
+  commentId: Overload:Core.Data.CompressedHistory.OwnershipChanges
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory_OwnershipChanges
+  name: OwnershipChanges
+  nameWithType: CompressedHistory.OwnershipChanges
+  fullName: Core.Data.CompressedHistory.OwnershipChanges
+- uid: Core.Data.CompressedHistory.AverageDevelopment*
+  commentId: Overload:Core.Data.CompressedHistory.AverageDevelopment
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory_AverageDevelopment
+  name: AverageDevelopment
+  nameWithType: CompressedHistory.AverageDevelopment
+  fullName: Core.Data.CompressedHistory.AverageDevelopment
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Data.CompressedHistory.#ctor*
+  commentId: Overload:Core.Data.CompressedHistory.#ctor
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory__ctor
+  name: CompressedHistory
+  nameWithType: CompressedHistory.CompressedHistory
+  fullName: Core.Data.CompressedHistory.CompressedHistory
+  nameWithType.vb: CompressedHistory.New
+  fullName.vb: Core.Data.CompressedHistory.New
+  name.vb: New
+- uid: Core.Data.CompressedHistory.AddEvent*
+  commentId: Overload:Core.Data.CompressedHistory.AddEvent
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory_AddEvent_Core_Data_HistoricalEvent_
+  name: AddEvent
+  nameWithType: CompressedHistory.AddEvent
+  fullName: Core.Data.CompressedHistory.AddEvent
+- uid: Core.Data.HistoricalEvent
+  commentId: T:Core.Data.HistoricalEvent
+  parent: Core.Data
+  href: Core.Data.HistoricalEvent.html
+  name: HistoricalEvent
+  nameWithType: HistoricalEvent
+  fullName: Core.Data.HistoricalEvent
+- uid: Core.Data.CompressedHistory.ClearOldest*
+  commentId: Overload:Core.Data.CompressedHistory.ClearOldest
+  href: Core.Data.CompressedHistory.html#Core_Data_CompressedHistory_ClearOldest_System_Int32_
+  name: ClearOldest
+  nameWithType: CompressedHistory.ClearOldest
+  fullName: Core.Data.CompressedHistory.ClearOldest

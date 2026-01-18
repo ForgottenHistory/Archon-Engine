@@ -1,0 +1,861 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SaveGameData
+  commentId: T:Core.SaveLoad.SaveGameData
+  id: SaveGameData
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SaveGameData.GetSaveDate
+  - Core.SaveLoad.SaveGameData.GetSystemData``1(System.String)
+  - Core.SaveLoad.SaveGameData.IsCompatibleVersion(System.String)
+  - Core.SaveLoad.SaveGameData.SetSaveDate(System.DateTime)
+  - Core.SaveLoad.SaveGameData.SetSystemData(System.String,System.Object)
+  - Core.SaveLoad.SaveGameData.commandLog
+  - Core.SaveLoad.SaveGameData.currentTick
+  - Core.SaveLoad.SaveGameData.expectedChecksum
+  - Core.SaveLoad.SaveGameData.gameSpeed
+  - Core.SaveLoad.SaveGameData.gameVersion
+  - Core.SaveLoad.SaveGameData.saveDateTicks
+  - Core.SaveLoad.SaveGameData.saveFormatVersion
+  - Core.SaveLoad.SaveGameData.saveName
+  - Core.SaveLoad.SaveGameData.scenarioName
+  - Core.SaveLoad.SaveGameData.systemData
+  langs:
+  - csharp
+  - vb
+  name: SaveGameData
+  nameWithType: SaveGameData
+  fullName: Core.SaveLoad.SaveGameData
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveGameData
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    ENGINE LAYER - Container for all save game data
+
+
+    Architecture:
+
+    - Generic container, systems populate their own sections
+
+    - Metadata for version compatibility and UI display
+
+    - State snapshot for fast loading
+
+    - Command log for determinism verification
+
+
+    Usage:
+
+    SaveManager creates this, passes to systems via OnSave()
+
+    Systems populate their data sections
+
+    SaveManager serializes to disk
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public class SaveGameData
+    content.vb: >-
+      <Serializable>
+
+      Public Class SaveGameData
+  inheritance:
+  - System.Object
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.SaveLoad.SaveGameData.gameVersion
+  commentId: F:Core.SaveLoad.SaveGameData.gameVersion
+  id: gameVersion
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: gameVersion
+  nameWithType: SaveGameData.gameVersion
+  fullName: Core.SaveLoad.SaveGameData.gameVersion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameVersion
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Game version that created this save (for compatibility checks)
+
+    Format: "1.0.0"
+  example: []
+  syntax:
+    content: public string gameVersion
+    return:
+      type: System.String
+    content.vb: Public gameVersion As String
+- uid: Core.SaveLoad.SaveGameData.saveFormatVersion
+  commentId: F:Core.SaveLoad.SaveGameData.saveFormatVersion
+  id: saveFormatVersion
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: saveFormatVersion
+  nameWithType: SaveGameData.saveFormatVersion
+  fullName: Core.SaveLoad.SaveGameData.saveFormatVersion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveFormatVersion
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Save file format version (incremented when format changes)
+
+    Allows migration of old saves to new format
+  example: []
+  syntax:
+    content: public int saveFormatVersion
+    return:
+      type: System.Int32
+    content.vb: Public saveFormatVersion As Integer
+- uid: Core.SaveLoad.SaveGameData.saveName
+  commentId: F:Core.SaveLoad.SaveGameData.saveName
+  id: saveName
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: saveName
+  nameWithType: SaveGameData.saveName
+  fullName: Core.SaveLoad.SaveGameData.saveName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveName
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 41
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: User-facing save name (displayed in UI)
+  example: []
+  syntax:
+    content: public string saveName
+    return:
+      type: System.String
+    content.vb: Public saveName As String
+- uid: Core.SaveLoad.SaveGameData.saveDateTicks
+  commentId: F:Core.SaveLoad.SaveGameData.saveDateTicks
+  id: saveDateTicks
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: saveDateTicks
+  nameWithType: SaveGameData.saveDateTicks
+  fullName: Core.SaveLoad.SaveGameData.saveDateTicks
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveDateTicks
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 47
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Date/time when save was created (for sorting/display)
+
+    Stored as ticks for serialization
+  example: []
+  syntax:
+    content: public long saveDateTicks
+    return:
+      type: System.Int64
+    content.vb: Public saveDateTicks As Long
+- uid: Core.SaveLoad.SaveGameData.currentTick
+  commentId: F:Core.SaveLoad.SaveGameData.currentTick
+  id: currentTick
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: currentTick
+  nameWithType: SaveGameData.currentTick
+  fullName: Core.SaveLoad.SaveGameData.currentTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: currentTick
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Current game tick when saved
+  example: []
+  syntax:
+    content: public int currentTick
+    return:
+      type: System.Int32
+    content.vb: Public currentTick As Integer
+- uid: Core.SaveLoad.SaveGameData.gameSpeed
+  commentId: F:Core.SaveLoad.SaveGameData.gameSpeed
+  id: gameSpeed
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: gameSpeed
+  nameWithType: SaveGameData.gameSpeed
+  fullName: Core.SaveLoad.SaveGameData.gameSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameSpeed
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Current game speed when saved
+  example: []
+  syntax:
+    content: public int gameSpeed
+    return:
+      type: System.Int32
+    content.vb: Public gameSpeed As Integer
+- uid: Core.SaveLoad.SaveGameData.scenarioName
+  commentId: F:Core.SaveLoad.SaveGameData.scenarioName
+  id: scenarioName
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: scenarioName
+  nameWithType: SaveGameData.scenarioName
+  fullName: Core.SaveLoad.SaveGameData.scenarioName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: scenarioName
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Scenario name (e.g., "1444 Start")
+  example: []
+  syntax:
+    content: public string scenarioName
+    return:
+      type: System.String
+    content.vb: Public scenarioName As String
+- uid: Core.SaveLoad.SaveGameData.systemData
+  commentId: F:Core.SaveLoad.SaveGameData.systemData
+  id: systemData
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: systemData
+  nameWithType: SaveGameData.systemData
+  fullName: Core.SaveLoad.SaveGameData.systemData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: systemData
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Generic storage for system-specific data
+
+    Key: System name, Value: Serialized system data
+
+    Systems can store byte[] or custom serializable objects
+  example: []
+  syntax:
+    content: public Dictionary<string, object> systemData
+    return:
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    content.vb: Public systemData As Dictionary(Of String, Object)
+- uid: Core.SaveLoad.SaveGameData.commandLog
+  commentId: F:Core.SaveLoad.SaveGameData.commandLog
+  id: commandLog
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: commandLog
+  nameWithType: SaveGameData.commandLog
+  fullName: Core.SaveLoad.SaveGameData.commandLog
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: commandLog
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 83
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Command history (last N commands for verification)
+
+    Serialized command bytes
+  example: []
+  syntax:
+    content: public List<byte[]> commandLog
+    return:
+      type: System.Collections.Generic.List{System.Byte[]}
+    content.vb: Public commandLog As List(Of Byte())
+- uid: Core.SaveLoad.SaveGameData.expectedChecksum
+  commentId: F:Core.SaveLoad.SaveGameData.expectedChecksum
+  id: expectedChecksum
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: expectedChecksum
+  nameWithType: SaveGameData.expectedChecksum
+  fullName: Core.SaveLoad.SaveGameData.expectedChecksum
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: expectedChecksum
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Expected checksum after replaying command log
+
+    Used to verify determinism
+  example: []
+  syntax:
+    content: public uint expectedChecksum
+    return:
+      type: System.UInt32
+    content.vb: Public expectedChecksum As UInteger
+- uid: Core.SaveLoad.SaveGameData.GetSaveDate
+  commentId: M:Core.SaveLoad.SaveGameData.GetSaveDate
+  id: GetSaveDate
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: GetSaveDate()
+  nameWithType: SaveGameData.GetSaveDate()
+  fullName: Core.SaveLoad.SaveGameData.GetSaveDate()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSaveDate
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Get save date as DateTime
+  example: []
+  syntax:
+    content: public DateTime GetSaveDate()
+    return:
+      type: System.DateTime
+    content.vb: Public Function GetSaveDate() As Date
+  overload: Core.SaveLoad.SaveGameData.GetSaveDate*
+- uid: Core.SaveLoad.SaveGameData.SetSaveDate(System.DateTime)
+  commentId: M:Core.SaveLoad.SaveGameData.SetSaveDate(System.DateTime)
+  id: SetSaveDate(System.DateTime)
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: SetSaveDate(DateTime)
+  nameWithType: SaveGameData.SetSaveDate(DateTime)
+  fullName: Core.SaveLoad.SaveGameData.SetSaveDate(System.DateTime)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetSaveDate
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 106
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Set save date from DateTime
+  example: []
+  syntax:
+    content: public void SetSaveDate(DateTime date)
+    parameters:
+    - id: date
+      type: System.DateTime
+    content.vb: Public Sub SetSaveDate([date] As Date)
+  overload: Core.SaveLoad.SaveGameData.SetSaveDate*
+  nameWithType.vb: SaveGameData.SetSaveDate(Date)
+  fullName.vb: Core.SaveLoad.SaveGameData.SetSaveDate(Date)
+  name.vb: SetSaveDate(Date)
+- uid: Core.SaveLoad.SaveGameData.IsCompatibleVersion(System.String)
+  commentId: M:Core.SaveLoad.SaveGameData.IsCompatibleVersion(System.String)
+  id: IsCompatibleVersion(System.String)
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: IsCompatibleVersion(string)
+  nameWithType: SaveGameData.IsCompatibleVersion(string)
+  fullName: Core.SaveLoad.SaveGameData.IsCompatibleVersion(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCompatibleVersion
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 114
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Check if this save is compatible with current game version
+  example: []
+  syntax:
+    content: public bool IsCompatibleVersion(string currentVersion)
+    parameters:
+    - id: currentVersion
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsCompatibleVersion(currentVersion As String) As Boolean
+  overload: Core.SaveLoad.SaveGameData.IsCompatibleVersion*
+  nameWithType.vb: SaveGameData.IsCompatibleVersion(String)
+  fullName.vb: Core.SaveLoad.SaveGameData.IsCompatibleVersion(String)
+  name.vb: IsCompatibleVersion(String)
+- uid: Core.SaveLoad.SaveGameData.GetSystemData``1(System.String)
+  commentId: M:Core.SaveLoad.SaveGameData.GetSystemData``1(System.String)
+  id: GetSystemData``1(System.String)
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: GetSystemData<T>(string)
+  nameWithType: SaveGameData.GetSystemData<T>(string)
+  fullName: Core.SaveLoad.SaveGameData.GetSystemData<T>(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSystemData
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Get system data for a specific system
+  example: []
+  syntax:
+    content: 'public T GetSystemData<T>(string systemName) where T : class'
+    parameters:
+    - id: systemName
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Function GetSystemData(Of T As Class)(systemName As String) As T
+  overload: Core.SaveLoad.SaveGameData.GetSystemData*
+  nameWithType.vb: SaveGameData.GetSystemData(Of T)(String)
+  fullName.vb: Core.SaveLoad.SaveGameData.GetSystemData(Of T)(String)
+  name.vb: GetSystemData(Of T)(String)
+- uid: Core.SaveLoad.SaveGameData.SetSystemData(System.String,System.Object)
+  commentId: M:Core.SaveLoad.SaveGameData.SetSystemData(System.String,System.Object)
+  id: SetSystemData(System.String,System.Object)
+  parent: Core.SaveLoad.SaveGameData
+  langs:
+  - csharp
+  - vb
+  name: SetSystemData(string, object)
+  nameWithType: SaveGameData.SetSystemData(string, object)
+  fullName: Core.SaveLoad.SaveGameData.SetSystemData(string, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetSystemData
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 136
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Set system data for a specific system
+  example: []
+  syntax:
+    content: public void SetSystemData(string systemName, object data)
+    parameters:
+    - id: systemName
+      type: System.String
+    - id: data
+      type: System.Object
+    content.vb: Public Sub SetSystemData(systemName As String, data As Object)
+  overload: Core.SaveLoad.SaveGameData.SetSystemData*
+  nameWithType.vb: SaveGameData.SetSystemData(String, Object)
+  fullName.vb: Core.SaveLoad.SaveGameData.SetSystemData(String, Object)
+  name.vb: SetSystemData(String, Object)
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<string, object>
+  nameWithType: Dictionary<string, object>
+  fullName: System.Collections.Generic.Dictionary<string, object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.Collections.Generic.List{System.Byte[]}
+  commentId: T:System.Collections.Generic.List{System.Byte[]}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<byte[]>
+  nameWithType: List<byte[]>
+  fullName: System.Collections.Generic.List<byte[]>
+  nameWithType.vb: List(Of Byte())
+  fullName.vb: System.Collections.Generic.List(Of Byte())
+  name.vb: List(Of Byte())
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.SaveLoad.SaveGameData.GetSaveDate*
+  commentId: Overload:Core.SaveLoad.SaveGameData.GetSaveDate
+  href: Core.SaveLoad.SaveGameData.html#Core_SaveLoad_SaveGameData_GetSaveDate
+  name: GetSaveDate
+  nameWithType: SaveGameData.GetSaveDate
+  fullName: Core.SaveLoad.SaveGameData.GetSaveDate
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: Core.SaveLoad.SaveGameData.SetSaveDate*
+  commentId: Overload:Core.SaveLoad.SaveGameData.SetSaveDate
+  href: Core.SaveLoad.SaveGameData.html#Core_SaveLoad_SaveGameData_SetSaveDate_System_DateTime_
+  name: SetSaveDate
+  nameWithType: SaveGameData.SetSaveDate
+  fullName: Core.SaveLoad.SaveGameData.SetSaveDate
+- uid: Core.SaveLoad.SaveGameData.IsCompatibleVersion*
+  commentId: Overload:Core.SaveLoad.SaveGameData.IsCompatibleVersion
+  href: Core.SaveLoad.SaveGameData.html#Core_SaveLoad_SaveGameData_IsCompatibleVersion_System_String_
+  name: IsCompatibleVersion
+  nameWithType: SaveGameData.IsCompatibleVersion
+  fullName: Core.SaveLoad.SaveGameData.IsCompatibleVersion
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.SaveLoad.SaveGameData.GetSystemData*
+  commentId: Overload:Core.SaveLoad.SaveGameData.GetSystemData
+  href: Core.SaveLoad.SaveGameData.html#Core_SaveLoad_SaveGameData_GetSystemData__1_System_String_
+  name: GetSystemData
+  nameWithType: SaveGameData.GetSystemData
+  fullName: Core.SaveLoad.SaveGameData.GetSystemData
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.SaveLoad.SaveGameData.SetSystemData*
+  commentId: Overload:Core.SaveLoad.SaveGameData.SetSystemData
+  href: Core.SaveLoad.SaveGameData.html#Core_SaveLoad_SaveGameData_SetSystemData_System_String_System_Object_
+  name: SetSystemData
+  nameWithType: SaveGameData.SetSystemData
+  fullName: Core.SaveLoad.SaveGameData.SetSystemData

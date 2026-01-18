@@ -1,0 +1,220 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.ProvinceTerrainAnalyzer
+  commentId: T:Map.Rendering.ProvinceTerrainAnalyzer
+  id: ProvinceTerrainAnalyzer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
+  langs:
+  - csharp
+  - vb
+  name: ProvinceTerrainAnalyzer
+  nameWithType: ProvinceTerrainAnalyzer
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceTerrainAnalyzer
+    path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    ENGINE: Analyzes terrain.bmp to determine dominant terrain type per province
+
+    Uses GPU compute shader for efficient majority voting across all pixels
+
+    Refactored to use specialized components for RGB lookup, BMP reading, and overrides
+  example: []
+  syntax:
+    content: 'public class ProvinceTerrainAnalyzer : MonoBehaviour'
+    content.vb: Public Class ProvinceTerrainAnalyzer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
+  commentId: M:Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
+  id: AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
+  parent: Map.Rendering.ProvinceTerrainAnalyzer
+  langs:
+  - csharp
+  - vb
+  name: AnalyzeAndGetTerrainTypes(RenderTexture, Texture2D, ushort[])
+  nameWithType: ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(RenderTexture, Texture2D, ushort[])
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture, UnityEngine.Texture2D, ushort[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AnalyzeAndGetTerrainTypes
+    path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+    startLine: 70
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Analyze terrain and return results as array
+
+    Returns uint[] where [arrayIndex] = terrainTypeIndex (0-255)
+
+    Main entry point used by MapDataLoader
+  example: []
+  syntax:
+    content: public uint[] AnalyzeAndGetTerrainTypes(RenderTexture provinceIDTexture, Texture2D terrainTexture, ushort[] provinceIDs)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+    - id: terrainTexture
+      type: UnityEngine.Texture2D
+    - id: provinceIDs
+      type: System.UInt16[]
+    return:
+      type: System.UInt32[]
+    content.vb: Public Function AnalyzeAndGetTerrainTypes(provinceIDTexture As RenderTexture, terrainTexture As Texture2D, provinceIDs As UShort()) As UInteger()
+  overload: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes*
+  nameWithType.vb: ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(RenderTexture, Texture2D, UShort())
+  fullName.vb: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture, UnityEngine.Texture2D, UShort())
+  name.vb: AnalyzeAndGetTerrainTypes(RenderTexture, Texture2D, UShort())
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes*
+  commentId: Overload:Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes
+  href: Map.Rendering.ProvinceTerrainAnalyzer.html#Map_Rendering_ProvinceTerrainAnalyzer_AnalyzeAndGetTerrainTypes_UnityEngine_RenderTexture_UnityEngine_Texture2D_System_UInt16___
+  name: AnalyzeAndGetTerrainTypes
+  nameWithType: ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )

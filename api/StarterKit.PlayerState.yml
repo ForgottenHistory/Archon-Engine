@@ -1,0 +1,534 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  id: PlayerState
+  parent: StarterKit
+  children:
+  - StarterKit.PlayerState.#ctor(Core.GameState,System.Boolean)
+  - StarterKit.PlayerState.ClearPlayerCountry
+  - StarterKit.PlayerState.Deserialize(System.Byte[])
+  - StarterKit.PlayerState.GetPlayerCountryColor
+  - StarterKit.PlayerState.GetPlayerCountryTag
+  - StarterKit.PlayerState.HasPlayerCountry
+  - StarterKit.PlayerState.IsPlayerCountry(System.UInt16)
+  - StarterKit.PlayerState.PlayerCountryId
+  - StarterKit.PlayerState.Serialize
+  - StarterKit.PlayerState.SetPlayerCountry(System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerState
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 10
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Simple player state storage for StarterKit.
+
+    Tracks which country the player controls.
+  example: []
+  syntax:
+    content: public class PlayerState
+    content.vb: Public Class PlayerState
+  inheritance:
+  - System.Object
+- uid: StarterKit.PlayerState.PlayerCountryId
+  commentId: P:StarterKit.PlayerState.PlayerCountryId
+  id: PlayerCountryId
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: PlayerCountryId
+  nameWithType: PlayerState.PlayerCountryId
+  fullName: StarterKit.PlayerState.PlayerCountryId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerCountryId
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 17
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The country ID the player is currently controlling (0 if none selected).
+  example: []
+  syntax:
+    content: public ushort PlayerCountryId { get; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly Property PlayerCountryId As UShort
+  overload: StarterKit.PlayerState.PlayerCountryId*
+- uid: StarterKit.PlayerState.HasPlayerCountry
+  commentId: P:StarterKit.PlayerState.HasPlayerCountry
+  id: HasPlayerCountry
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: HasPlayerCountry
+  nameWithType: PlayerState.HasPlayerCountry
+  fullName: StarterKit.PlayerState.HasPlayerCountry
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasPlayerCountry
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 20
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: True if the player has selected a country to control.
+  example: []
+  syntax:
+    content: public bool HasPlayerCountry { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasPlayerCountry As Boolean
+  overload: StarterKit.PlayerState.HasPlayerCountry*
+- uid: StarterKit.PlayerState.#ctor(Core.GameState,System.Boolean)
+  commentId: M:StarterKit.PlayerState.#ctor(Core.GameState,System.Boolean)
+  id: '#ctor(Core.GameState,System.Boolean)'
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: PlayerState(GameState, bool)
+  nameWithType: PlayerState.PlayerState(GameState, bool)
+  fullName: StarterKit.PlayerState.PlayerState(Core.GameState, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 27
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a new PlayerState instance.
+  example: []
+  syntax:
+    content: public PlayerState(GameState gameStateRef, bool log = true)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+      description: Reference to the game state.
+    - id: log
+      type: System.Boolean
+      description: Whether to log state changes.
+    content.vb: Public Sub New(gameStateRef As GameState, log As Boolean = True)
+  overload: StarterKit.PlayerState.#ctor*
+  nameWithType.vb: PlayerState.New(GameState, Boolean)
+  fullName.vb: StarterKit.PlayerState.New(Core.GameState, Boolean)
+  name.vb: New(GameState, Boolean)
+- uid: StarterKit.PlayerState.SetPlayerCountry(System.UInt16)
+  commentId: M:StarterKit.PlayerState.SetPlayerCountry(System.UInt16)
+  id: SetPlayerCountry(System.UInt16)
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: SetPlayerCountry(ushort)
+  nameWithType: PlayerState.SetPlayerCountry(ushort)
+  fullName: StarterKit.PlayerState.SetPlayerCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPlayerCountry
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 42
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Set the player's controlled country.
+  example: []
+  syntax:
+    content: public void SetPlayerCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+      description: The country ID to control (must be non-zero).
+    content.vb: Public Sub SetPlayerCountry(countryId As UShort)
+  overload: StarterKit.PlayerState.SetPlayerCountry*
+  nameWithType.vb: PlayerState.SetPlayerCountry(UShort)
+  fullName.vb: StarterKit.PlayerState.SetPlayerCountry(UShort)
+  name.vb: SetPlayerCountry(UShort)
+- uid: StarterKit.PlayerState.ClearPlayerCountry
+  commentId: M:StarterKit.PlayerState.ClearPlayerCountry
+  id: ClearPlayerCountry
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: ClearPlayerCountry()
+  nameWithType: PlayerState.ClearPlayerCountry()
+  fullName: StarterKit.PlayerState.ClearPlayerCountry()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearPlayerCountry
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 62
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Clear the player's country selection (sets to 0/none).
+  example: []
+  syntax:
+    content: public void ClearPlayerCountry()
+    content.vb: Public Sub ClearPlayerCountry()
+  overload: StarterKit.PlayerState.ClearPlayerCountry*
+- uid: StarterKit.PlayerState.GetPlayerCountryTag
+  commentId: M:StarterKit.PlayerState.GetPlayerCountryTag
+  id: GetPlayerCountryTag
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: GetPlayerCountryTag()
+  nameWithType: PlayerState.GetPlayerCountryTag()
+  fullName: StarterKit.PlayerState.GetPlayerCountryTag()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPlayerCountryTag
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 75
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get the 3-letter tag for the player's country.
+  example: []
+  syntax:
+    content: public string GetPlayerCountryTag()
+    return:
+      type: System.String
+      description: Country tag (e.g., "ROM") or "NONE" if no country selected.
+    content.vb: Public Function GetPlayerCountryTag() As String
+  overload: StarterKit.PlayerState.GetPlayerCountryTag*
+- uid: StarterKit.PlayerState.GetPlayerCountryColor
+  commentId: M:StarterKit.PlayerState.GetPlayerCountryColor
+  id: GetPlayerCountryColor
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: GetPlayerCountryColor()
+  nameWithType: PlayerState.GetPlayerCountryColor()
+  fullName: StarterKit.PlayerState.GetPlayerCountryColor()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPlayerCountryColor
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 85
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get the map color for the player's country.
+  example: []
+  syntax:
+    content: public Color32 GetPlayerCountryColor()
+    return:
+      type: UnityEngine.Color32
+      description: Country color, or gray if no country selected.
+    content.vb: Public Function GetPlayerCountryColor() As Color32
+  overload: StarterKit.PlayerState.GetPlayerCountryColor*
+- uid: StarterKit.PlayerState.IsPlayerCountry(System.UInt16)
+  commentId: M:StarterKit.PlayerState.IsPlayerCountry(System.UInt16)
+  id: IsPlayerCountry(System.UInt16)
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: IsPlayerCountry(ushort)
+  nameWithType: PlayerState.IsPlayerCountry(ushort)
+  fullName: StarterKit.PlayerState.IsPlayerCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsPlayerCountry
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 99
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a given country is the player's country.
+  example: []
+  syntax:
+    content: public bool IsPlayerCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+      description: The country ID to check.
+    return:
+      type: System.Boolean
+      description: True if the player controls this country.
+    content.vb: Public Function IsPlayerCountry(countryId As UShort) As Boolean
+  overload: StarterKit.PlayerState.IsPlayerCountry*
+  nameWithType.vb: PlayerState.IsPlayerCountry(UShort)
+  fullName.vb: StarterKit.PlayerState.IsPlayerCountry(UShort)
+  name.vb: IsPlayerCountry(UShort)
+- uid: StarterKit.PlayerState.Serialize
+  commentId: M:StarterKit.PlayerState.Serialize
+  id: Serialize
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: Serialize()
+  nameWithType: PlayerState.Serialize()
+  fullName: StarterKit.PlayerState.Serialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 111
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Serialize player state to byte array
+  example: []
+  syntax:
+    content: public byte[] Serialize()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function Serialize() As Byte()
+  overload: StarterKit.PlayerState.Serialize*
+- uid: StarterKit.PlayerState.Deserialize(System.Byte[])
+  commentId: M:StarterKit.PlayerState.Deserialize(System.Byte[])
+  id: Deserialize(System.Byte[])
+  parent: StarterKit.PlayerState
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(byte[])
+  nameWithType: PlayerState.Deserialize(byte[])
+  fullName: StarterKit.PlayerState.Deserialize(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/State/PlayerState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/StarterKit/State/PlayerState.cs
+    startLine: 124
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Deserialize player state from byte array
+  example: []
+  syntax:
+    content: public void Deserialize(byte[] data)
+    parameters:
+    - id: data
+      type: System.Byte[]
+    content.vb: Public Sub Deserialize(data As Byte())
+  overload: StarterKit.PlayerState.Deserialize*
+  nameWithType.vb: PlayerState.Deserialize(Byte())
+  fullName.vb: StarterKit.PlayerState.Deserialize(Byte())
+  name.vb: Deserialize(Byte())
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.PlayerState.PlayerCountryId*
+  commentId: Overload:StarterKit.PlayerState.PlayerCountryId
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_PlayerCountryId
+  name: PlayerCountryId
+  nameWithType: PlayerState.PlayerCountryId
+  fullName: StarterKit.PlayerState.PlayerCountryId
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.PlayerState.HasPlayerCountry*
+  commentId: Overload:StarterKit.PlayerState.HasPlayerCountry
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_HasPlayerCountry
+  name: HasPlayerCountry
+  nameWithType: PlayerState.HasPlayerCountry
+  fullName: StarterKit.PlayerState.HasPlayerCountry
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.PlayerState.#ctor*
+  commentId: Overload:StarterKit.PlayerState.#ctor
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState__ctor_Core_GameState_System_Boolean_
+  name: PlayerState
+  nameWithType: PlayerState.PlayerState
+  fullName: StarterKit.PlayerState.PlayerState
+  nameWithType.vb: PlayerState.New
+  fullName.vb: StarterKit.PlayerState.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: StarterKit.PlayerState.SetPlayerCountry*
+  commentId: Overload:StarterKit.PlayerState.SetPlayerCountry
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_SetPlayerCountry_System_UInt16_
+  name: SetPlayerCountry
+  nameWithType: PlayerState.SetPlayerCountry
+  fullName: StarterKit.PlayerState.SetPlayerCountry
+- uid: StarterKit.PlayerState.ClearPlayerCountry*
+  commentId: Overload:StarterKit.PlayerState.ClearPlayerCountry
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_ClearPlayerCountry
+  name: ClearPlayerCountry
+  nameWithType: PlayerState.ClearPlayerCountry
+  fullName: StarterKit.PlayerState.ClearPlayerCountry
+- uid: StarterKit.PlayerState.GetPlayerCountryTag*
+  commentId: Overload:StarterKit.PlayerState.GetPlayerCountryTag
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_GetPlayerCountryTag
+  name: GetPlayerCountryTag
+  nameWithType: PlayerState.GetPlayerCountryTag
+  fullName: StarterKit.PlayerState.GetPlayerCountryTag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: StarterKit.PlayerState.GetPlayerCountryColor*
+  commentId: Overload:StarterKit.PlayerState.GetPlayerCountryColor
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_GetPlayerCountryColor
+  name: GetPlayerCountryColor
+  nameWithType: PlayerState.GetPlayerCountryColor
+  fullName: StarterKit.PlayerState.GetPlayerCountryColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: StarterKit.PlayerState.IsPlayerCountry*
+  commentId: Overload:StarterKit.PlayerState.IsPlayerCountry
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_IsPlayerCountry_System_UInt16_
+  name: IsPlayerCountry
+  nameWithType: PlayerState.IsPlayerCountry
+  fullName: StarterKit.PlayerState.IsPlayerCountry
+- uid: StarterKit.PlayerState.Serialize*
+  commentId: Overload:StarterKit.PlayerState.Serialize
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_Serialize
+  name: Serialize
+  nameWithType: PlayerState.Serialize
+  fullName: StarterKit.PlayerState.Serialize
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: StarterKit.PlayerState.Deserialize*
+  commentId: Overload:StarterKit.PlayerState.Deserialize
+  href: StarterKit.PlayerState.html#StarterKit_PlayerState_Deserialize_System_Byte___
+  name: Deserialize
+  nameWithType: PlayerState.Deserialize
+  fullName: StarterKit.PlayerState.Deserialize

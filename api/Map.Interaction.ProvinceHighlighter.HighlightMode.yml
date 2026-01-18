@@ -1,0 +1,128 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+  commentId: T:Map.Interaction.ProvinceHighlighter.HighlightMode
+  id: ProvinceHighlighter.HighlightMode
+  parent: Map.Interaction
+  children:
+  - Map.Interaction.ProvinceHighlighter.HighlightMode.BorderOnly
+  - Map.Interaction.ProvinceHighlighter.HighlightMode.Fill
+  langs:
+  - csharp
+  - vb
+  name: ProvinceHighlighter.HighlightMode
+  nameWithType: ProvinceHighlighter.HighlightMode
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HighlightMode
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: public enum ProvinceHighlighter.HighlightMode
+    content.vb: Public Enum ProvinceHighlighter.HighlightMode
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode.Fill
+  commentId: F:Map.Interaction.ProvinceHighlighter.HighlightMode.Fill
+  id: Fill
+  parent: Map.Interaction.ProvinceHighlighter.HighlightMode
+  langs:
+  - csharp
+  - vb
+  name: Fill
+  nameWithType: ProvinceHighlighter.HighlightMode.Fill
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode.Fill
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Fill
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 45
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: Fill = 0
+    return:
+      type: Map.Interaction.ProvinceHighlighter.HighlightMode
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode.BorderOnly
+  commentId: F:Map.Interaction.ProvinceHighlighter.HighlightMode.BorderOnly
+  id: BorderOnly
+  parent: Map.Interaction.ProvinceHighlighter.HighlightMode
+  langs:
+  - csharp
+  - vb
+  name: BorderOnly
+  nameWithType: ProvinceHighlighter.HighlightMode.BorderOnly
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode.BorderOnly
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderOnly
+    path: Scripts/Map/Interaction/ProvinceHighlighter.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  syntax:
+    content: BorderOnly = 1
+    return:
+      type: Map.Interaction.ProvinceHighlighter.HighlightMode
+references:
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  href: Map.html
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+- uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+  commentId: T:Map.Interaction.ProvinceHighlighter.HighlightMode
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceHighlighter.html
+  name: ProvinceHighlighter.HighlightMode
+  nameWithType: ProvinceHighlighter.HighlightMode
+  fullName: Map.Interaction.ProvinceHighlighter.HighlightMode
+  spec.csharp:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html
+  spec.vb:
+  - uid: Map.Interaction.ProvinceHighlighter
+    name: ProvinceHighlighter
+    href: Map.Interaction.ProvinceHighlighter.html
+  - name: .
+  - uid: Map.Interaction.ProvinceHighlighter.HighlightMode
+    name: HighlightMode
+    href: Map.Interaction.ProvinceHighlighter.HighlightMode.html

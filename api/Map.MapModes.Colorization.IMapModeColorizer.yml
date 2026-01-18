@@ -1,0 +1,431 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.Colorization.IMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.IMapModeColorizer
+  id: IMapModeColorizer
+  parent: Map.MapModes.Colorization
+  children:
+  - Map.MapModes.Colorization.IMapModeColorizer.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  - Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+  - Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+  - Map.MapModes.Colorization.IMapModeColorizer.Dispose
+  - Map.MapModes.Colorization.IMapModeColorizer.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  - Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame
+  - Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+  langs:
+  - csharp
+  - vb
+  name: IMapModeColorizer
+  nameWithType: IMapModeColorizer
+  fullName: Map.MapModes.Colorization.IMapModeColorizer
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IMapModeColorizer
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    ENGINE: Interface for pluggable map mode colorization strategies.
+
+
+    Pattern 20: Pluggable Implementation Pattern
+
+    - ENGINE provides interface + default implementation (gradient-based)
+
+    - GAME registers custom implementations via MapRendererRegistry
+
+    - VisualStyleConfiguration references by string ID
+
+
+    Default: GradientMapModeColorizer (3-color linear interpolation)
+
+    Custom examples: DiscreteColorBands, MultiGradient, PatternOverlay, AnimatedEffects
+  example: []
+  syntax:
+    content: public interface IMapModeColorizer
+    content.vb: Public Interface IMapModeColorizer
+- uid: Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+  commentId: P:Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+  id: ColorizerId
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: ColorizerId
+  nameWithType: IMapModeColorizer.ColorizerId
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorizerId
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Unique identifier for this colorizer (e.g., "Gradient", "DiscreteBands", "MultiColor")
+  example: []
+  syntax:
+    content: string ColorizerId { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property ColorizerId As String
+  overload: Map.MapModes.Colorization.IMapModeColorizer.ColorizerId*
+- uid: Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+  commentId: P:Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+  id: DisplayName
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: DisplayName
+  nameWithType: IMapModeColorizer.DisplayName
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisplayName
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Human-readable name for UI/debugging
+  example: []
+  syntax:
+    content: string DisplayName { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: ReadOnly Property DisplayName As String
+  overload: Map.MapModes.Colorization.IMapModeColorizer.DisplayName*
+- uid: Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+  commentId: P:Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+  id: RequiresPerFrameUpdate
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: RequiresPerFrameUpdate
+  nameWithType: IMapModeColorizer.RequiresPerFrameUpdate
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresPerFrameUpdate
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Whether this colorizer needs per-frame updates (e.g., animated effects)
+  example: []
+  syntax:
+    content: bool RequiresPerFrameUpdate { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property RequiresPerFrameUpdate As Boolean
+  overload: Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate*
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  commentId: M:Map.MapModes.Colorization.IMapModeColorizer.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  id: Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(MapModeColorizerContext)
+  nameWithType: IMapModeColorizer.Initialize(MapModeColorizerContext)
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Initialize(Map.MapModes.Colorization.MapModeColorizerContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Initialize the colorizer with required resources.
+
+    Called once when colorizer is first activated.
+  example: []
+  syntax:
+    content: void Initialize(MapModeColorizerContext context)
+    parameters:
+    - id: context
+      type: Map.MapModes.Colorization.MapModeColorizerContext
+    content.vb: Sub Initialize(context As MapModeColorizerContext)
+  overload: Map.MapModes.Colorization.IMapModeColorizer.Initialize*
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  commentId: M:Map.MapModes.Colorization.IMapModeColorizer.Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  id: Colorize(UnityEngine.RenderTexture,UnityEngine.RenderTexture,System.Single[],Map.MapModes.Colorization.ColorizationStyleParams)
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: Colorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  nameWithType: IMapModeColorizer.Colorize(RenderTexture, RenderTexture, float[], ColorizationStyleParams)
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Colorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, float[], Map.MapModes.Colorization.ColorizationStyleParams)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Colorize
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 47
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Apply colorization to generate output texture.
+
+    Core operation: province values + style params → colored texture
+  example: []
+  syntax:
+    content: void Colorize(RenderTexture provinceIDTexture, RenderTexture outputTexture, float[] provinceValues, ColorizationStyleParams styleParams)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.RenderTexture
+      description: 'Input: Province ID texture (RG16 encoded)'
+    - id: outputTexture
+      type: UnityEngine.RenderTexture
+      description: 'Output: Colorized RGBA texture'
+    - id: provinceValues
+      type: System.Single[]
+      description: Per-province normalized values (0-1), negative = skip
+    - id: styleParams
+      type: Map.MapModes.Colorization.ColorizationStyleParams
+      description: Colorization style parameters
+    content.vb: Sub Colorize(provinceIDTexture As RenderTexture, outputTexture As RenderTexture, provinceValues As Single(), styleParams As ColorizationStyleParams)
+  overload: Map.MapModes.Colorization.IMapModeColorizer.Colorize*
+  nameWithType.vb: IMapModeColorizer.Colorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+  fullName.vb: Map.MapModes.Colorization.IMapModeColorizer.Colorize(UnityEngine.RenderTexture, UnityEngine.RenderTexture, Single(), Map.MapModes.Colorization.ColorizationStyleParams)
+  name.vb: Colorize(RenderTexture, RenderTexture, Single(), ColorizationStyleParams)
+- uid: Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame
+  commentId: M:Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame
+  id: OnRenderFrame
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: OnRenderFrame()
+  nameWithType: IMapModeColorizer.OnRenderFrame()
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnRenderFrame
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 57
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: >-
+    Called each frame if RequiresPerFrameUpdate is true.
+
+    Use for animated effects, pulsing, etc.
+  example: []
+  syntax:
+    content: void OnRenderFrame()
+    content.vb: Sub OnRenderFrame()
+  overload: Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame*
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Dispose
+  commentId: M:Map.MapModes.Colorization.IMapModeColorizer.Dispose
+  id: Dispose
+  parent: Map.MapModes.Colorization.IMapModeColorizer
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: IMapModeColorizer.Dispose()
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/MapModes/Colorization/IMapModeColorizer.cs
+    startLine: 62
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes.Colorization
+  summary: Release GPU resources.
+  example: []
+  syntax:
+    content: void Dispose()
+    content.vb: Sub Dispose()
+  overload: Map.MapModes.Colorization.IMapModeColorizer.Dispose*
+references:
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  href: Map.html
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+- uid: Map.MapModes.Colorization.IMapModeColorizer.ColorizerId*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_ColorizerId
+  name: ColorizerId
+  nameWithType: IMapModeColorizer.ColorizerId
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.ColorizerId
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.Colorization.IMapModeColorizer.DisplayName*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_DisplayName
+  name: DisplayName
+  nameWithType: IMapModeColorizer.DisplayName
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.DisplayName
+- uid: Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_RequiresPerFrameUpdate
+  name: RequiresPerFrameUpdate
+  nameWithType: IMapModeColorizer.RequiresPerFrameUpdate
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.RequiresPerFrameUpdate
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Initialize*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.Initialize
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_Initialize_Map_MapModes_Colorization_MapModeColorizerContext_
+  name: Initialize
+  nameWithType: IMapModeColorizer.Initialize
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Initialize
+- uid: Map.MapModes.Colorization.MapModeColorizerContext
+  commentId: T:Map.MapModes.Colorization.MapModeColorizerContext
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.MapModeColorizerContext.html
+  name: MapModeColorizerContext
+  nameWithType: MapModeColorizerContext
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Colorize*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.Colorize
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_Colorize_UnityEngine_RenderTexture_UnityEngine_RenderTexture_System_Single___Map_MapModes_Colorization_ColorizationStyleParams_
+  name: Colorize
+  nameWithType: IMapModeColorizer.Colorize
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Colorize
+- uid: UnityEngine.RenderTexture
+  commentId: T:UnityEngine.RenderTexture
+  parent: UnityEngine
+  isExternal: true
+  name: RenderTexture
+  nameWithType: RenderTexture
+  fullName: UnityEngine.RenderTexture
+- uid: System.Single[]
+  isExternal: true
+  name: float[]
+  nameWithType: float[]
+  fullName: float[]
+  nameWithType.vb: Single()
+  fullName.vb: Single()
+  name.vb: Single()
+  spec.csharp:
+  - uid: System.Single
+    name: float
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Single
+    name: Single
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.MapModes.Colorization.ColorizationStyleParams
+  commentId: T:Map.MapModes.Colorization.ColorizationStyleParams
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  name: ColorizationStyleParams
+  nameWithType: ColorizationStyleParams
+  fullName: Map.MapModes.Colorization.ColorizationStyleParams
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_OnRenderFrame
+  name: OnRenderFrame
+  nameWithType: IMapModeColorizer.OnRenderFrame
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.OnRenderFrame
+- uid: Map.MapModes.Colorization.IMapModeColorizer.Dispose*
+  commentId: Overload:Map.MapModes.Colorization.IMapModeColorizer.Dispose
+  href: Map.MapModes.Colorization.IMapModeColorizer.html#Map_MapModes_Colorization_IMapModeColorizer_Dispose
+  name: Dispose
+  nameWithType: IMapModeColorizer.Dispose
+  fullName: Map.MapModes.Colorization.IMapModeColorizer.Dispose

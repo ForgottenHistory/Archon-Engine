@@ -1,0 +1,98 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  id: Core.Jobs
+  children:
+  - Core.Jobs.CountryProcessingJob
+  - Core.Jobs.CountryProcessingResult
+  - Core.Jobs.LoadBalancedScheduler
+  - Core.Jobs.LoadBalancedScheduler.WorkItem
+  - Core.Jobs.ProvinceProcessingJob
+  - Core.Jobs.ProvinceProcessingResult
+  langs:
+  - csharp
+  - vb
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Jobs.CountryProcessingJob
+  commentId: T:Core.Jobs.CountryProcessingJob
+  href: Core.Jobs.CountryProcessingJob.html
+  name: CountryProcessingJob
+  nameWithType: CountryProcessingJob
+  fullName: Core.Jobs.CountryProcessingJob
+- uid: Core.Jobs.CountryProcessingResult
+  commentId: T:Core.Jobs.CountryProcessingResult
+  parent: Core.Jobs
+  href: Core.Jobs.CountryProcessingResult.html
+  name: CountryProcessingResult
+  nameWithType: CountryProcessingResult
+  fullName: Core.Jobs.CountryProcessingResult
+- uid: Core.Jobs.ProvinceProcessingJob
+  commentId: T:Core.Jobs.ProvinceProcessingJob
+  href: Core.Jobs.ProvinceProcessingJob.html
+  name: ProvinceProcessingJob
+  nameWithType: ProvinceProcessingJob
+  fullName: Core.Jobs.ProvinceProcessingJob
+- uid: Core.Jobs.ProvinceProcessingResult
+  commentId: T:Core.Jobs.ProvinceProcessingResult
+  parent: Core.Jobs
+  href: Core.Jobs.ProvinceProcessingResult.html
+  name: ProvinceProcessingResult
+  nameWithType: ProvinceProcessingResult
+  fullName: Core.Jobs.ProvinceProcessingResult
+- uid: Core.Jobs.LoadBalancedScheduler
+  commentId: T:Core.Jobs.LoadBalancedScheduler
+  href: Core.Jobs.LoadBalancedScheduler.html
+  name: LoadBalancedScheduler
+  nameWithType: LoadBalancedScheduler
+  fullName: Core.Jobs.LoadBalancedScheduler
+- uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+  commentId: T:Core.Jobs.LoadBalancedScheduler.WorkItem
+  href: Core.Jobs.LoadBalancedScheduler.html
+  name: LoadBalancedScheduler.WorkItem
+  nameWithType: LoadBalancedScheduler.WorkItem
+  fullName: Core.Jobs.LoadBalancedScheduler.WorkItem
+  spec.csharp:
+  - uid: Core.Jobs.LoadBalancedScheduler
+    name: LoadBalancedScheduler
+    href: Core.Jobs.LoadBalancedScheduler.html
+  - name: .
+  - uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+    name: WorkItem
+    href: Core.Jobs.LoadBalancedScheduler.WorkItem.html
+  spec.vb:
+  - uid: Core.Jobs.LoadBalancedScheduler
+    name: LoadBalancedScheduler
+    href: Core.Jobs.LoadBalancedScheduler.html
+  - name: .
+  - uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+    name: WorkItem
+    href: Core.Jobs.LoadBalancedScheduler.WorkItem.html
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  href: Core.html
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html

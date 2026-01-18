@@ -1,0 +1,1194 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Resources.IResourceProvider
+  commentId: T:Core.Resources.IResourceProvider
+  id: IResourceProvider
+  parent: Core.Resources
+  children:
+  - Core.Resources.IResourceProvider.AddResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.AddResourceToAll(System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.BeginBatch
+  - Core.Resources.IResourceProvider.CanAfford(System.UInt16,Core.Resources.ResourceCost[])
+  - Core.Resources.IResourceProvider.CanAfford(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.EndBatch
+  - Core.Resources.IResourceProvider.GetAllResourceIds
+  - Core.Resources.IResourceProvider.GetAllResourcesForCountry(System.UInt16)
+  - Core.Resources.IResourceProvider.GetResource(System.UInt16,System.UInt16)
+  - Core.Resources.IResourceProvider.GetResourceDefinition(System.UInt16)
+  - Core.Resources.IResourceProvider.GetTotalResourceInWorld(System.UInt16)
+  - Core.Resources.IResourceProvider.IsBatchMode
+  - Core.Resources.IResourceProvider.IsInitialized
+  - Core.Resources.IResourceProvider.IsResourceRegistered(System.UInt16)
+  - Core.Resources.IResourceProvider.MaxCountries
+  - Core.Resources.IResourceProvider.RemoveResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.ResourceCount
+  - Core.Resources.IResourceProvider.SetResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.SetResourceForAll(System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.TransferResource(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  - Core.Resources.IResourceProvider.TrySpend(System.UInt16,Core.Resources.ResourceCost[])
+  langs:
+  - csharp
+  - vb
+  name: IResourceProvider
+  nameWithType: IResourceProvider
+  fullName: Core.Resources.IResourceProvider
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IResourceProvider
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    ENGINE: Interface for resource management systems.
+
+
+    Allows GAME layer to provide custom implementations (e.g., modded resources,
+
+    different storage strategies, or resource calculation overrides).
+
+
+    Default implementation: ResourceSystem
+  example: []
+  syntax:
+    content: public interface IResourceProvider
+    content.vb: Public Interface IResourceProvider
+- uid: Core.Resources.IResourceProvider.IsInitialized
+  commentId: P:Core.Resources.IResourceProvider.IsInitialized
+  id: IsInitialized
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: IResourceProvider.IsInitialized
+  fullName: Core.Resources.IResourceProvider.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Whether the provider is initialized and ready for operations
+  example: []
+  syntax:
+    content: bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsInitialized As Boolean
+  overload: Core.Resources.IResourceProvider.IsInitialized*
+- uid: Core.Resources.IResourceProvider.MaxCountries
+  commentId: P:Core.Resources.IResourceProvider.MaxCountries
+  id: MaxCountries
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: MaxCountries
+  nameWithType: IResourceProvider.MaxCountries
+  fullName: Core.Resources.IResourceProvider.MaxCountries
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxCountries
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Maximum number of countries supported
+  example: []
+  syntax:
+    content: int MaxCountries { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property MaxCountries As Integer
+  overload: Core.Resources.IResourceProvider.MaxCountries*
+- uid: Core.Resources.IResourceProvider.ResourceCount
+  commentId: P:Core.Resources.IResourceProvider.ResourceCount
+  id: ResourceCount
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: ResourceCount
+  nameWithType: IResourceProvider.ResourceCount
+  fullName: Core.Resources.IResourceProvider.ResourceCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceCount
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Number of registered resource types
+  example: []
+  syntax:
+    content: int ResourceCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: ReadOnly Property ResourceCount As Integer
+  overload: Core.Resources.IResourceProvider.ResourceCount*
+- uid: Core.Resources.IResourceProvider.GetResource(System.UInt16,System.UInt16)
+  commentId: M:Core.Resources.IResourceProvider.GetResource(System.UInt16,System.UInt16)
+  id: GetResource(System.UInt16,System.UInt16)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: GetResource(ushort, ushort)
+  nameWithType: IResourceProvider.GetResource(ushort, ushort)
+  fullName: Core.Resources.IResourceProvider.GetResource(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetResource
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get current resource amount for a country
+  example: []
+  syntax:
+    content: FixedPoint64 GetResource(ushort countryId, ushort resourceId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Function GetResource(countryId As UShort, resourceId As UShort) As FixedPoint64
+  overload: Core.Resources.IResourceProvider.GetResource*
+  nameWithType.vb: IResourceProvider.GetResource(UShort, UShort)
+  fullName.vb: Core.Resources.IResourceProvider.GetResource(UShort, UShort)
+  name.vb: GetResource(UShort, UShort)
+- uid: Core.Resources.IResourceProvider.AddResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.AddResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: AddResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: AddResource(ushort, ushort, FixedPoint64)
+  nameWithType: IResourceProvider.AddResource(ushort, ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.AddResource(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddResource
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Add resource to a country (clamped to max)
+  example: []
+  syntax:
+    content: void AddResource(ushort countryId, ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    content.vb: Sub AddResource(countryId As UShort, resourceId As UShort, amount As FixedPoint64)
+  overload: Core.Resources.IResourceProvider.AddResource*
+  nameWithType.vb: IResourceProvider.AddResource(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.AddResource(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: AddResource(UShort, UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.RemoveResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.RemoveResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: RemoveResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: RemoveResource(ushort, ushort, FixedPoint64)
+  nameWithType: IResourceProvider.RemoveResource(ushort, ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.RemoveResource(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveResource
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Remove resource from a country (returns false if insufficient)
+  example: []
+  syntax:
+    content: bool RemoveResource(ushort countryId, ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Function RemoveResource(countryId As UShort, resourceId As UShort, amount As FixedPoint64) As Boolean
+  overload: Core.Resources.IResourceProvider.RemoveResource*
+  nameWithType.vb: IResourceProvider.RemoveResource(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.RemoveResource(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: RemoveResource(UShort, UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.SetResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.SetResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: SetResource(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: SetResource(ushort, ushort, FixedPoint64)
+  nameWithType: IResourceProvider.SetResource(ushort, ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.SetResource(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetResource
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Set resource to exact amount (clamped to valid range)
+  example: []
+  syntax:
+    content: void SetResource(ushort countryId, ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    content.vb: Sub SetResource(countryId As UShort, resourceId As UShort, amount As FixedPoint64)
+  overload: Core.Resources.IResourceProvider.SetResource*
+  nameWithType.vb: IResourceProvider.SetResource(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.SetResource(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: SetResource(UShort, UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.CanAfford(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.CanAfford(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: CanAfford(System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: CanAfford(ushort, ushort, FixedPoint64)
+  nameWithType: IResourceProvider.CanAfford(ushort, ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.CanAfford(ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanAfford
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Check if country can afford a single cost
+  example: []
+  syntax:
+    content: bool CanAfford(ushort countryId, ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Function CanAfford(countryId As UShort, resourceId As UShort, amount As FixedPoint64) As Boolean
+  overload: Core.Resources.IResourceProvider.CanAfford*
+  nameWithType.vb: IResourceProvider.CanAfford(UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.CanAfford(UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: CanAfford(UShort, UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.CanAfford(System.UInt16,Core.Resources.ResourceCost[])
+  commentId: M:Core.Resources.IResourceProvider.CanAfford(System.UInt16,Core.Resources.ResourceCost[])
+  id: CanAfford(System.UInt16,Core.Resources.ResourceCost[])
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: CanAfford(ushort, ResourceCost[])
+  nameWithType: IResourceProvider.CanAfford(ushort, ResourceCost[])
+  fullName: Core.Resources.IResourceProvider.CanAfford(ushort, Core.Resources.ResourceCost[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanAfford
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Check if country can afford multiple costs
+  example: []
+  syntax:
+    content: bool CanAfford(ushort countryId, ResourceCost[] costs)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: costs
+      type: Core.Resources.ResourceCost[]
+    return:
+      type: System.Boolean
+    content.vb: Function CanAfford(countryId As UShort, costs As ResourceCost()) As Boolean
+  overload: Core.Resources.IResourceProvider.CanAfford*
+  nameWithType.vb: IResourceProvider.CanAfford(UShort, ResourceCost())
+  fullName.vb: Core.Resources.IResourceProvider.CanAfford(UShort, Core.Resources.ResourceCost())
+  name.vb: CanAfford(UShort, ResourceCost())
+- uid: Core.Resources.IResourceProvider.TrySpend(System.UInt16,Core.Resources.ResourceCost[])
+  commentId: M:Core.Resources.IResourceProvider.TrySpend(System.UInt16,Core.Resources.ResourceCost[])
+  id: TrySpend(System.UInt16,Core.Resources.ResourceCost[])
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: TrySpend(ushort, ResourceCost[])
+  nameWithType: IResourceProvider.TrySpend(ushort, ResourceCost[])
+  fullName: Core.Resources.IResourceProvider.TrySpend(ushort, Core.Resources.ResourceCost[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TrySpend
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Try to spend multiple costs atomically (all or nothing)
+  example: []
+  syntax:
+    content: bool TrySpend(ushort countryId, ResourceCost[] costs)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: costs
+      type: Core.Resources.ResourceCost[]
+    return:
+      type: System.Boolean
+    content.vb: Function TrySpend(countryId As UShort, costs As ResourceCost()) As Boolean
+  overload: Core.Resources.IResourceProvider.TrySpend*
+  nameWithType.vb: IResourceProvider.TrySpend(UShort, ResourceCost())
+  fullName.vb: Core.Resources.IResourceProvider.TrySpend(UShort, Core.Resources.ResourceCost())
+  name.vb: TrySpend(UShort, ResourceCost())
+- uid: Core.Resources.IResourceProvider.AddResourceToAll(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.AddResourceToAll(System.UInt16,Core.Data.FixedPoint64)
+  id: AddResourceToAll(System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: AddResourceToAll(ushort, FixedPoint64)
+  nameWithType: IResourceProvider.AddResourceToAll(ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.AddResourceToAll(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddResourceToAll
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 54
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Add resource to all countries
+  example: []
+  syntax:
+    content: void AddResourceToAll(ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    content.vb: Sub AddResourceToAll(resourceId As UShort, amount As FixedPoint64)
+  overload: Core.Resources.IResourceProvider.AddResourceToAll*
+  nameWithType.vb: IResourceProvider.AddResourceToAll(UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.AddResourceToAll(UShort, Core.Data.FixedPoint64)
+  name.vb: AddResourceToAll(UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.SetResourceForAll(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.SetResourceForAll(System.UInt16,Core.Data.FixedPoint64)
+  id: SetResourceForAll(System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: SetResourceForAll(ushort, FixedPoint64)
+  nameWithType: IResourceProvider.SetResourceForAll(ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.SetResourceForAll(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetResourceForAll
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 57
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Set resource for all countries
+  example: []
+  syntax:
+    content: void SetResourceForAll(ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    content.vb: Sub SetResourceForAll(resourceId As UShort, amount As FixedPoint64)
+  overload: Core.Resources.IResourceProvider.SetResourceForAll*
+  nameWithType.vb: IResourceProvider.SetResourceForAll(UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.SetResourceForAll(UShort, Core.Data.FixedPoint64)
+  name.vb: SetResourceForAll(UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.TransferResource(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Resources.IResourceProvider.TransferResource(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  id: TransferResource(System.UInt16,System.UInt16,System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: TransferResource(ushort, ushort, ushort, FixedPoint64)
+  nameWithType: IResourceProvider.TransferResource(ushort, ushort, ushort, FixedPoint64)
+  fullName: Core.Resources.IResourceProvider.TransferResource(ushort, ushort, ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TransferResource
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 60
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Transfer resource between countries (returns false if insufficient)
+  example: []
+  syntax:
+    content: bool TransferResource(ushort fromCountryId, ushort toCountryId, ushort resourceId, FixedPoint64 amount)
+    parameters:
+    - id: fromCountryId
+      type: System.UInt16
+    - id: toCountryId
+      type: System.UInt16
+    - id: resourceId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Function TransferResource(fromCountryId As UShort, toCountryId As UShort, resourceId As UShort, amount As FixedPoint64) As Boolean
+  overload: Core.Resources.IResourceProvider.TransferResource*
+  nameWithType.vb: IResourceProvider.TransferResource(UShort, UShort, UShort, FixedPoint64)
+  fullName.vb: Core.Resources.IResourceProvider.TransferResource(UShort, UShort, UShort, Core.Data.FixedPoint64)
+  name.vb: TransferResource(UShort, UShort, UShort, FixedPoint64)
+- uid: Core.Resources.IResourceProvider.IsResourceRegistered(System.UInt16)
+  commentId: M:Core.Resources.IResourceProvider.IsResourceRegistered(System.UInt16)
+  id: IsResourceRegistered(System.UInt16)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: IsResourceRegistered(ushort)
+  nameWithType: IResourceProvider.IsResourceRegistered(ushort)
+  fullName: Core.Resources.IResourceProvider.IsResourceRegistered(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsResourceRegistered
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Check if a resource type is registered
+  example: []
+  syntax:
+    content: bool IsResourceRegistered(ushort resourceId)
+    parameters:
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Function IsResourceRegistered(resourceId As UShort) As Boolean
+  overload: Core.Resources.IResourceProvider.IsResourceRegistered*
+  nameWithType.vb: IResourceProvider.IsResourceRegistered(UShort)
+  fullName.vb: Core.Resources.IResourceProvider.IsResourceRegistered(UShort)
+  name.vb: IsResourceRegistered(UShort)
+- uid: Core.Resources.IResourceProvider.GetResourceDefinition(System.UInt16)
+  commentId: M:Core.Resources.IResourceProvider.GetResourceDefinition(System.UInt16)
+  id: GetResourceDefinition(System.UInt16)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: GetResourceDefinition(ushort)
+  nameWithType: IResourceProvider.GetResourceDefinition(ushort)
+  fullName: Core.Resources.IResourceProvider.GetResourceDefinition(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetResourceDefinition
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get resource definition by ID
+  example: []
+  syntax:
+    content: ResourceDefinition GetResourceDefinition(ushort resourceId)
+    parameters:
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: Core.Resources.ResourceDefinition
+    content.vb: Function GetResourceDefinition(resourceId As UShort) As ResourceDefinition
+  overload: Core.Resources.IResourceProvider.GetResourceDefinition*
+  nameWithType.vb: IResourceProvider.GetResourceDefinition(UShort)
+  fullName.vb: Core.Resources.IResourceProvider.GetResourceDefinition(UShort)
+  name.vb: GetResourceDefinition(UShort)
+- uid: Core.Resources.IResourceProvider.GetAllResourceIds
+  commentId: M:Core.Resources.IResourceProvider.GetAllResourceIds
+  id: GetAllResourceIds
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: GetAllResourceIds()
+  nameWithType: IResourceProvider.GetAllResourceIds()
+  fullName: Core.Resources.IResourceProvider.GetAllResourceIds()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllResourceIds
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get all registered resource IDs
+  example: []
+  syntax:
+    content: IEnumerable<ushort> GetAllResourceIds()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    content.vb: Function GetAllResourceIds() As IEnumerable(Of UShort)
+  overload: Core.Resources.IResourceProvider.GetAllResourceIds*
+- uid: Core.Resources.IResourceProvider.GetTotalResourceInWorld(System.UInt16)
+  commentId: M:Core.Resources.IResourceProvider.GetTotalResourceInWorld(System.UInt16)
+  id: GetTotalResourceInWorld(System.UInt16)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: GetTotalResourceInWorld(ushort)
+  nameWithType: IResourceProvider.GetTotalResourceInWorld(ushort)
+  fullName: Core.Resources.IResourceProvider.GetTotalResourceInWorld(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTotalResourceInWorld
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get total amount of a resource across all countries
+  example: []
+  syntax:
+    content: FixedPoint64 GetTotalResourceInWorld(ushort resourceId)
+    parameters:
+    - id: resourceId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Function GetTotalResourceInWorld(resourceId As UShort) As FixedPoint64
+  overload: Core.Resources.IResourceProvider.GetTotalResourceInWorld*
+  nameWithType.vb: IResourceProvider.GetTotalResourceInWorld(UShort)
+  fullName.vb: Core.Resources.IResourceProvider.GetTotalResourceInWorld(UShort)
+  name.vb: GetTotalResourceInWorld(UShort)
+- uid: Core.Resources.IResourceProvider.GetAllResourcesForCountry(System.UInt16)
+  commentId: M:Core.Resources.IResourceProvider.GetAllResourcesForCountry(System.UInt16)
+  id: GetAllResourcesForCountry(System.UInt16)
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: GetAllResourcesForCountry(ushort)
+  nameWithType: IResourceProvider.GetAllResourcesForCountry(ushort)
+  fullName: Core.Resources.IResourceProvider.GetAllResourcesForCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllResourcesForCountry
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Get all resources for a country as dictionary (for UI/debugging)
+  example: []
+  syntax:
+    content: Dictionary<ushort, FixedPoint64> GetAllResourcesForCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.Dictionary{System.UInt16,Core.Data.FixedPoint64}
+    content.vb: Function GetAllResourcesForCountry(countryId As UShort) As Dictionary(Of UShort, FixedPoint64)
+  overload: Core.Resources.IResourceProvider.GetAllResourcesForCountry*
+  nameWithType.vb: IResourceProvider.GetAllResourcesForCountry(UShort)
+  fullName.vb: Core.Resources.IResourceProvider.GetAllResourcesForCountry(UShort)
+  name.vb: GetAllResourcesForCountry(UShort)
+- uid: Core.Resources.IResourceProvider.BeginBatch
+  commentId: M:Core.Resources.IResourceProvider.BeginBatch
+  id: BeginBatch
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: BeginBatch()
+  nameWithType: IResourceProvider.BeginBatch()
+  fullName: Core.Resources.IResourceProvider.BeginBatch()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BeginBatch
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: >-
+    Begin batch mode - suppresses events until EndBatch is called.
+
+    Use during loading/setup to avoid thousands of individual events.
+  example: []
+  syntax:
+    content: void BeginBatch()
+    content.vb: Sub BeginBatch()
+  overload: Core.Resources.IResourceProvider.BeginBatch*
+- uid: Core.Resources.IResourceProvider.EndBatch
+  commentId: M:Core.Resources.IResourceProvider.EndBatch
+  id: EndBatch
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: EndBatch()
+  nameWithType: IResourceProvider.EndBatch()
+  fullName: Core.Resources.IResourceProvider.EndBatch()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EndBatch
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 90
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: End batch mode - optionally emits a single batch event.
+  example: []
+  syntax:
+    content: void EndBatch()
+    content.vb: Sub EndBatch()
+  overload: Core.Resources.IResourceProvider.EndBatch*
+- uid: Core.Resources.IResourceProvider.IsBatchMode
+  commentId: P:Core.Resources.IResourceProvider.IsBatchMode
+  id: IsBatchMode
+  parent: Core.Resources.IResourceProvider
+  langs:
+  - csharp
+  - vb
+  name: IsBatchMode
+  nameWithType: IResourceProvider.IsBatchMode
+  fullName: Core.Resources.IResourceProvider.IsBatchMode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Resources/IResourceProvider.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsBatchMode
+    path: Scripts/Core/Resources/IResourceProvider.cs
+    startLine: 93
+  assemblies:
+  - Core
+  namespace: Core.Resources
+  summary: Whether currently in batch mode
+  example: []
+  syntax:
+    content: bool IsBatchMode { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsBatchMode As Boolean
+  overload: Core.Resources.IResourceProvider.IsBatchMode*
+references:
+- uid: Core.Resources
+  commentId: N:Core.Resources
+  href: Core.html
+  name: Core.Resources
+  nameWithType: Core.Resources
+  fullName: Core.Resources
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Resources
+    name: Resources
+    href: Core.Resources.html
+- uid: Core.Resources.IResourceProvider.IsInitialized*
+  commentId: Overload:Core.Resources.IResourceProvider.IsInitialized
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_IsInitialized
+  name: IsInitialized
+  nameWithType: IResourceProvider.IsInitialized
+  fullName: Core.Resources.IResourceProvider.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Resources.IResourceProvider.MaxCountries*
+  commentId: Overload:Core.Resources.IResourceProvider.MaxCountries
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_MaxCountries
+  name: MaxCountries
+  nameWithType: IResourceProvider.MaxCountries
+  fullName: Core.Resources.IResourceProvider.MaxCountries
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Resources.IResourceProvider.ResourceCount*
+  commentId: Overload:Core.Resources.IResourceProvider.ResourceCount
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_ResourceCount
+  name: ResourceCount
+  nameWithType: IResourceProvider.ResourceCount
+  fullName: Core.Resources.IResourceProvider.ResourceCount
+- uid: Core.Resources.IResourceProvider.GetResource*
+  commentId: Overload:Core.Resources.IResourceProvider.GetResource
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_GetResource_System_UInt16_System_UInt16_
+  name: GetResource
+  nameWithType: IResourceProvider.GetResource
+  fullName: Core.Resources.IResourceProvider.GetResource
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Resources.IResourceProvider.AddResource*
+  commentId: Overload:Core.Resources.IResourceProvider.AddResource
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_AddResource_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: AddResource
+  nameWithType: IResourceProvider.AddResource
+  fullName: Core.Resources.IResourceProvider.AddResource
+- uid: Core.Resources.IResourceProvider.RemoveResource*
+  commentId: Overload:Core.Resources.IResourceProvider.RemoveResource
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_RemoveResource_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: RemoveResource
+  nameWithType: IResourceProvider.RemoveResource
+  fullName: Core.Resources.IResourceProvider.RemoveResource
+- uid: Core.Resources.IResourceProvider.SetResource*
+  commentId: Overload:Core.Resources.IResourceProvider.SetResource
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_SetResource_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: SetResource
+  nameWithType: IResourceProvider.SetResource
+  fullName: Core.Resources.IResourceProvider.SetResource
+- uid: Core.Resources.IResourceProvider.CanAfford*
+  commentId: Overload:Core.Resources.IResourceProvider.CanAfford
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_CanAfford_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: CanAfford
+  nameWithType: IResourceProvider.CanAfford
+  fullName: Core.Resources.IResourceProvider.CanAfford
+- uid: Core.Resources.ResourceCost[]
+  isExternal: true
+  href: Core.Resources.ResourceCost.html
+  name: ResourceCost[]
+  nameWithType: ResourceCost[]
+  fullName: Core.Resources.ResourceCost[]
+  nameWithType.vb: ResourceCost()
+  fullName.vb: Core.Resources.ResourceCost()
+  name.vb: ResourceCost()
+  spec.csharp:
+  - uid: Core.Resources.ResourceCost
+    name: ResourceCost
+    href: Core.Resources.ResourceCost.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.Resources.ResourceCost
+    name: ResourceCost
+    href: Core.Resources.ResourceCost.html
+  - name: (
+  - name: )
+- uid: Core.Resources.IResourceProvider.TrySpend*
+  commentId: Overload:Core.Resources.IResourceProvider.TrySpend
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_TrySpend_System_UInt16_Core_Resources_ResourceCost___
+  name: TrySpend
+  nameWithType: IResourceProvider.TrySpend
+  fullName: Core.Resources.IResourceProvider.TrySpend
+- uid: Core.Resources.IResourceProvider.AddResourceToAll*
+  commentId: Overload:Core.Resources.IResourceProvider.AddResourceToAll
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_AddResourceToAll_System_UInt16_Core_Data_FixedPoint64_
+  name: AddResourceToAll
+  nameWithType: IResourceProvider.AddResourceToAll
+  fullName: Core.Resources.IResourceProvider.AddResourceToAll
+- uid: Core.Resources.IResourceProvider.SetResourceForAll*
+  commentId: Overload:Core.Resources.IResourceProvider.SetResourceForAll
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_SetResourceForAll_System_UInt16_Core_Data_FixedPoint64_
+  name: SetResourceForAll
+  nameWithType: IResourceProvider.SetResourceForAll
+  fullName: Core.Resources.IResourceProvider.SetResourceForAll
+- uid: Core.Resources.IResourceProvider.TransferResource*
+  commentId: Overload:Core.Resources.IResourceProvider.TransferResource
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_TransferResource_System_UInt16_System_UInt16_System_UInt16_Core_Data_FixedPoint64_
+  name: TransferResource
+  nameWithType: IResourceProvider.TransferResource
+  fullName: Core.Resources.IResourceProvider.TransferResource
+- uid: Core.Resources.IResourceProvider.IsResourceRegistered*
+  commentId: Overload:Core.Resources.IResourceProvider.IsResourceRegistered
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_IsResourceRegistered_System_UInt16_
+  name: IsResourceRegistered
+  nameWithType: IResourceProvider.IsResourceRegistered
+  fullName: Core.Resources.IResourceProvider.IsResourceRegistered
+- uid: Core.Resources.IResourceProvider.GetResourceDefinition*
+  commentId: Overload:Core.Resources.IResourceProvider.GetResourceDefinition
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_GetResourceDefinition_System_UInt16_
+  name: GetResourceDefinition
+  nameWithType: IResourceProvider.GetResourceDefinition
+  fullName: Core.Resources.IResourceProvider.GetResourceDefinition
+- uid: Core.Resources.ResourceDefinition
+  commentId: T:Core.Resources.ResourceDefinition
+  parent: Core.Resources
+  href: Core.Resources.ResourceDefinition.html
+  name: ResourceDefinition
+  nameWithType: ResourceDefinition
+  fullName: Core.Resources.ResourceDefinition
+- uid: Core.Resources.IResourceProvider.GetAllResourceIds*
+  commentId: Overload:Core.Resources.IResourceProvider.GetAllResourceIds
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_GetAllResourceIds
+  name: GetAllResourceIds
+  nameWithType: IResourceProvider.GetAllResourceIds
+  fullName: Core.Resources.IResourceProvider.GetAllResourceIds
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Resources.IResourceProvider.GetTotalResourceInWorld*
+  commentId: Overload:Core.Resources.IResourceProvider.GetTotalResourceInWorld
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_GetTotalResourceInWorld_System_UInt16_
+  name: GetTotalResourceInWorld
+  nameWithType: IResourceProvider.GetTotalResourceInWorld
+  fullName: Core.Resources.IResourceProvider.GetTotalResourceInWorld
+- uid: Core.Resources.IResourceProvider.GetAllResourcesForCountry*
+  commentId: Overload:Core.Resources.IResourceProvider.GetAllResourcesForCountry
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_GetAllResourcesForCountry_System_UInt16_
+  name: GetAllResourcesForCountry
+  nameWithType: IResourceProvider.GetAllResourcesForCountry
+  fullName: Core.Resources.IResourceProvider.GetAllResourcesForCountry
+- uid: System.Collections.Generic.Dictionary{System.UInt16,Core.Data.FixedPoint64}
+  commentId: T:System.Collections.Generic.Dictionary{System.UInt16,Core.Data.FixedPoint64}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: Core.Data.FixedPoint64.html
+  name: Dictionary<ushort, FixedPoint64>
+  nameWithType: Dictionary<ushort, FixedPoint64>
+  fullName: System.Collections.Generic.Dictionary<ushort, Core.Data.FixedPoint64>
+  nameWithType.vb: Dictionary(Of UShort, FixedPoint64)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UShort, Core.Data.FixedPoint64)
+  name.vb: Dictionary(Of UShort, FixedPoint64)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Data.FixedPoint64
+    name: FixedPoint64
+    href: Core.Data.FixedPoint64.html
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Core.Resources.IResourceProvider.BeginBatch*
+  commentId: Overload:Core.Resources.IResourceProvider.BeginBatch
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_BeginBatch
+  name: BeginBatch
+  nameWithType: IResourceProvider.BeginBatch
+  fullName: Core.Resources.IResourceProvider.BeginBatch
+- uid: Core.Resources.IResourceProvider.EndBatch*
+  commentId: Overload:Core.Resources.IResourceProvider.EndBatch
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_EndBatch
+  name: EndBatch
+  nameWithType: IResourceProvider.EndBatch
+  fullName: Core.Resources.IResourceProvider.EndBatch
+- uid: Core.Resources.IResourceProvider.IsBatchMode*
+  commentId: Overload:Core.Resources.IResourceProvider.IsBatchMode
+  href: Core.Resources.IResourceProvider.html#Core_Resources_IResourceProvider_IsBatchMode
+  name: IsBatchMode
+  nameWithType: IResourceProvider.IsBatchMode
+  fullName: Core.Resources.IResourceProvider.IsBatchMode

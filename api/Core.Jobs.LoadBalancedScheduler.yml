@@ -1,0 +1,484 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Jobs.LoadBalancedScheduler
+  commentId: T:Core.Jobs.LoadBalancedScheduler
+  id: LoadBalancedScheduler
+  parent: Core.Jobs
+  children:
+  - Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem})
+  - Core.Jobs.LoadBalancedScheduler.SplitByPercentile(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Single,Unity.Collections.Allocator)
+  - Core.Jobs.LoadBalancedScheduler.SplitByThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Int32,Unity.Collections.Allocator)
+  langs:
+  - csharp
+  - vb
+  name: LoadBalancedScheduler
+  nameWithType: LoadBalancedScheduler
+  fullName: Core.Jobs.LoadBalancedScheduler
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadBalancedScheduler
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    ENGINE - Generic load balancing for heterogeneous workloads
+
+
+    Problem: Unity's IJobParallelFor assumes uniform cost per item.
+
+    Reality: Some provinces take 10ms, others take 0.1ms (100x difference).
+
+    Result: Thread imbalance (thread 0 works, threads 1-7 idle).
+
+
+    Solution (Victoria 3 pattern): Split into "expensive" and "affordable" batches
+
+    - Expensive items: Spread across threads (balanced naturally)
+
+    - Affordable items: Separate job (also balanced)
+
+
+    Usage:
+
+    1. GAME estimates cost per item (building count, pop count, etc.)
+
+    2. Create WorkItem array with indices and costs
+
+    3. Call SplitByThreshold() or ScheduleBalanced()
+
+    4. ENGINE handles thread distribution
+
+
+    Architecture: MECHANISM (engine) vs POLICY (game)
+
+    - Engine: Provides splitting/scheduling infrastructure
+
+    - Game: Defines what makes an item "expensive"
+  example: []
+  syntax:
+    content: public static class LoadBalancedScheduler
+    content.vb: Public Module LoadBalancedScheduler
+  inheritance:
+  - System.Object
+- uid: Core.Jobs.LoadBalancedScheduler.SplitByThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Int32,Unity.Collections.Allocator)
+  commentId: M:Core.Jobs.LoadBalancedScheduler.SplitByThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Int32,Unity.Collections.Allocator)
+  id: SplitByThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Int32,Unity.Collections.Allocator)
+  parent: Core.Jobs.LoadBalancedScheduler
+  langs:
+  - csharp
+  - vb
+  name: SplitByThreshold(NativeArray<WorkItem>, int, Allocator)
+  nameWithType: LoadBalancedScheduler.SplitByThreshold(NativeArray<LoadBalancedScheduler.WorkItem>, int, Allocator)
+  fullName: Core.Jobs.LoadBalancedScheduler.SplitByThreshold(Unity.Collections.NativeArray<Core.Jobs.LoadBalancedScheduler.WorkItem>, int, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SplitByThreshold
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    Split work items into expensive and affordable batches by threshold
+
+
+    Pattern: Items above threshold go to "expensive" batch, others to "affordable"
+
+    Result: Two balanced batches that can be scheduled separately
+
+
+    Performance: O(n) split, no sorting (assumes caller pre-sorts if needed)
+
+    Memory: Allocates two NativeArrays (caller must dispose)
+  example: []
+  syntax:
+    content: public static (NativeArray<int> expensive, NativeArray<int> affordable) SplitByThreshold(NativeArray<LoadBalancedScheduler.WorkItem> items, int costThreshold, Allocator allocator)
+    parameters:
+    - id: items
+      type: Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem}
+      description: All work items with costs
+    - id: costThreshold
+      type: System.Int32
+      description: Items &gt;= threshold are "expensive"
+    - id: allocator
+      type: Unity.Collections.Allocator
+      description: Memory allocator (TempJob, Persistent, etc.)
+    return:
+      type: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}
+      description: Tuple of (expensive indices, affordable indices)
+    content.vb: Public Shared Function SplitByThreshold(items As NativeArray(Of LoadBalancedScheduler.WorkItem), costThreshold As Integer, allocator As Allocator) As (expensive As NativeArray(Of Integer), affordable As NativeArray(Of Integer))
+  overload: Core.Jobs.LoadBalancedScheduler.SplitByThreshold*
+  nameWithType.vb: LoadBalancedScheduler.SplitByThreshold(NativeArray(Of LoadBalancedScheduler.WorkItem), Integer, Allocator)
+  fullName.vb: Core.Jobs.LoadBalancedScheduler.SplitByThreshold(Unity.Collections.NativeArray(Of Core.Jobs.LoadBalancedScheduler.WorkItem), Integer, Unity.Collections.Allocator)
+  name.vb: SplitByThreshold(NativeArray(Of WorkItem), Integer, Allocator)
+- uid: Core.Jobs.LoadBalancedScheduler.SplitByPercentile(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Single,Unity.Collections.Allocator)
+  commentId: M:Core.Jobs.LoadBalancedScheduler.SplitByPercentile(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Single,Unity.Collections.Allocator)
+  id: SplitByPercentile(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem},System.Single,Unity.Collections.Allocator)
+  parent: Core.Jobs.LoadBalancedScheduler
+  langs:
+  - csharp
+  - vb
+  name: SplitByPercentile(NativeArray<WorkItem>, float, Allocator)
+  nameWithType: LoadBalancedScheduler.SplitByPercentile(NativeArray<LoadBalancedScheduler.WorkItem>, float, Allocator)
+  fullName: Core.Jobs.LoadBalancedScheduler.SplitByPercentile(Unity.Collections.NativeArray<Core.Jobs.LoadBalancedScheduler.WorkItem>, float, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SplitByPercentile
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    Split work items using percentile-based threshold (adaptive)
+
+
+    Instead of fixed threshold, use Nth percentile as split point
+
+    Example: percentile=0.9 → top 10% are "expensive"
+
+
+    Benefit: Automatically adapts to data distribution
+
+    Cost: Requires sorting (O(n log n))
+  example: []
+  syntax:
+    content: public static (NativeArray<int> expensive, NativeArray<int> affordable) SplitByPercentile(NativeArray<LoadBalancedScheduler.WorkItem> items, float percentile, Allocator allocator)
+    parameters:
+    - id: items
+      type: Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem}
+      description: All work items with costs
+    - id: percentile
+      type: System.Single
+      description: Percentile threshold (0.0-1.0, e.g., 0.9 = top 10%)
+    - id: allocator
+      type: Unity.Collections.Allocator
+      description: Memory allocator
+    return:
+      type: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}
+      description: Tuple of (expensive indices, affordable indices)
+    content.vb: Public Shared Function SplitByPercentile(items As NativeArray(Of LoadBalancedScheduler.WorkItem), percentile As Single, allocator As Allocator) As (expensive As NativeArray(Of Integer), affordable As NativeArray(Of Integer))
+  overload: Core.Jobs.LoadBalancedScheduler.SplitByPercentile*
+  nameWithType.vb: LoadBalancedScheduler.SplitByPercentile(NativeArray(Of LoadBalancedScheduler.WorkItem), Single, Allocator)
+  fullName.vb: Core.Jobs.LoadBalancedScheduler.SplitByPercentile(Unity.Collections.NativeArray(Of Core.Jobs.LoadBalancedScheduler.WorkItem), Single, Unity.Collections.Allocator)
+  name.vb: SplitByPercentile(NativeArray(Of WorkItem), Single, Allocator)
+- uid: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem})
+  commentId: M:Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem})
+  id: CalculateMedianThreshold(Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem})
+  parent: Core.Jobs.LoadBalancedScheduler
+  langs:
+  - csharp
+  - vb
+  name: CalculateMedianThreshold(NativeArray<WorkItem>)
+  nameWithType: LoadBalancedScheduler.CalculateMedianThreshold(NativeArray<LoadBalancedScheduler.WorkItem>)
+  fullName: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold(Unity.Collections.NativeArray<Core.Jobs.LoadBalancedScheduler.WorkItem>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateMedianThreshold
+    path: Scripts/Core/Jobs/LoadBalancedScheduler.cs
+    startLine: 148
+  assemblies:
+  - Core
+  namespace: Core.Jobs
+  summary: >-
+    Calculate recommended threshold from work items (helper)
+
+
+    Heuristic: Use median cost as threshold
+
+    Reasoning: Splits work roughly 50/50, natural balance point
+
+
+    Alternative: Use mean + 1 std dev for "outlier detection"
+  example: []
+  syntax:
+    content: public static int CalculateMedianThreshold(NativeArray<LoadBalancedScheduler.WorkItem> items)
+    parameters:
+    - id: items
+      type: Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem}
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function CalculateMedianThreshold(items As NativeArray(Of LoadBalancedScheduler.WorkItem)) As Integer
+  overload: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold*
+  nameWithType.vb: LoadBalancedScheduler.CalculateMedianThreshold(NativeArray(Of LoadBalancedScheduler.WorkItem))
+  fullName.vb: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold(Unity.Collections.NativeArray(Of Core.Jobs.LoadBalancedScheduler.WorkItem))
+  name.vb: CalculateMedianThreshold(NativeArray(Of WorkItem))
+references:
+- uid: Core.Jobs
+  commentId: N:Core.Jobs
+  href: Core.html
+  name: Core.Jobs
+  nameWithType: Core.Jobs
+  fullName: Core.Jobs
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Jobs
+    name: Jobs
+    href: Core.Jobs.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Jobs.LoadBalancedScheduler.SplitByThreshold*
+  commentId: Overload:Core.Jobs.LoadBalancedScheduler.SplitByThreshold
+  href: Core.Jobs.LoadBalancedScheduler.html#Core_Jobs_LoadBalancedScheduler_SplitByThreshold_Unity_Collections_NativeArray_Core_Jobs_LoadBalancedScheduler_WorkItem__System_Int32_Unity_Collections_Allocator_
+  name: SplitByThreshold
+  nameWithType: LoadBalancedScheduler.SplitByThreshold
+  fullName: Core.Jobs.LoadBalancedScheduler.SplitByThreshold
+- uid: Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem}
+  commentId: T:Unity.Collections.NativeArray{Core.Jobs.LoadBalancedScheduler.WorkItem}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Jobs.LoadBalancedScheduler.html
+  name: NativeArray<LoadBalancedScheduler.WorkItem>
+  nameWithType: NativeArray<LoadBalancedScheduler.WorkItem>
+  fullName: Unity.Collections.NativeArray<Core.Jobs.LoadBalancedScheduler.WorkItem>
+  nameWithType.vb: NativeArray(Of LoadBalancedScheduler.WorkItem)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Jobs.LoadBalancedScheduler.WorkItem)
+  name.vb: NativeArray(Of LoadBalancedScheduler.WorkItem)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Jobs.LoadBalancedScheduler
+    name: LoadBalancedScheduler
+    href: Core.Jobs.LoadBalancedScheduler.html
+  - name: .
+  - uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+    name: WorkItem
+    href: Core.Jobs.LoadBalancedScheduler.WorkItem.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Jobs.LoadBalancedScheduler
+    name: LoadBalancedScheduler
+    href: Core.Jobs.LoadBalancedScheduler.html
+  - name: .
+  - uid: Core.Jobs.LoadBalancedScheduler.WorkItem
+    name: WorkItem
+    href: Core.Jobs.LoadBalancedScheduler.WorkItem.html
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}
+  commentId: T:System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}
+  parent: System
+  definition: System.ValueTuple`2
+  name: (NativeArray<int> expensive, NativeArray<int> affordable)
+  nameWithType: (NativeArray<int> expensive, NativeArray<int> affordable)
+  fullName: (Unity.Collections.NativeArray<int> expensive, Unity.Collections.NativeArray<int> affordable)
+  nameWithType.vb: (expensive As NativeArray(Of Integer), affordable As NativeArray(Of Integer))
+  fullName.vb: (expensive As Unity.Collections.NativeArray(Of Integer), affordable As Unity.Collections.NativeArray(Of Integer))
+  name.vb: (expensive As NativeArray(Of Integer), affordable As NativeArray(Of Integer))
+  spec.csharp:
+  - name: (
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  - name: " "
+  - uid: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}.expensive
+    name: expensive
+  - name: ','
+  - name: " "
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  - name: " "
+  - uid: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}.affordable
+    name: affordable
+  - name: )
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}.expensive
+    name: expensive
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{Unity.Collections.NativeArray{System.Int32},Unity.Collections.NativeArray{System.Int32}}.affordable
+    name: affordable
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.ValueTuple`2
+  commentId: T:System.ValueTuple`2
+  name: (T1, T2)
+  nameWithType: (T1, T2)
+  fullName: (T1, T2)
+  spec.csharp:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+  spec.vb:
+  - name: (
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: Core.Jobs.LoadBalancedScheduler.SplitByPercentile*
+  commentId: Overload:Core.Jobs.LoadBalancedScheduler.SplitByPercentile
+  href: Core.Jobs.LoadBalancedScheduler.html#Core_Jobs_LoadBalancedScheduler_SplitByPercentile_Unity_Collections_NativeArray_Core_Jobs_LoadBalancedScheduler_WorkItem__System_Single_Unity_Collections_Allocator_
+  name: SplitByPercentile
+  nameWithType: LoadBalancedScheduler.SplitByPercentile
+  fullName: Core.Jobs.LoadBalancedScheduler.SplitByPercentile
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold*
+  commentId: Overload:Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold
+  href: Core.Jobs.LoadBalancedScheduler.html#Core_Jobs_LoadBalancedScheduler_CalculateMedianThreshold_Unity_Collections_NativeArray_Core_Jobs_LoadBalancedScheduler_WorkItem__
+  name: CalculateMedianThreshold
+  nameWithType: LoadBalancedScheduler.CalculateMedianThreshold
+  fullName: Core.Jobs.LoadBalancedScheduler.CalculateMedianThreshold

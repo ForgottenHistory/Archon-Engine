@@ -1,0 +1,648 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandSerializer
+  commentId: T:Core.Commands.CommandSerializer
+  id: CommandSerializer
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandSerializer.CalculateBatchSize(System.Collections.Generic.IList{Core.Commands.IProvinceCommand})
+  - Core.Commands.CommandSerializer.DeserializeCommand(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.CommandSerializer.DeserializeCommandBatch(Unity.Collections.NativeArray{System.Byte})
+  - Core.Commands.CommandSerializer.RegisterCommandType(System.Byte,System.Func{Core.Commands.IProvinceCommand})
+  - Core.Commands.CommandSerializer.SerializeCommand(Core.Commands.IProvinceCommand,Unity.Collections.NativeArray{System.Byte},System.Int32)
+  - Core.Commands.CommandSerializer.SerializeCommandBatch(System.Collections.Generic.IList{Core.Commands.IProvinceCommand},System.UInt32,System.UInt16,Unity.Collections.Allocator)
+  langs:
+  - csharp
+  - vb
+  name: CommandSerializer
+  nameWithType: CommandSerializer
+  fullName: Core.Commands.CommandSerializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandSerializer
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Handles serialization and deserialization of commands for network transmission
+
+    Supports command batching and compression for network efficiency
+  example: []
+  syntax:
+    content: public static class CommandSerializer
+    content.vb: Public Module CommandSerializer
+  inheritance:
+  - System.Object
+- uid: Core.Commands.CommandSerializer.SerializeCommand(Core.Commands.IProvinceCommand,Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.CommandSerializer.SerializeCommand(Core.Commands.IProvinceCommand,Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: SerializeCommand(Core.Commands.IProvinceCommand,Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: SerializeCommand(IProvinceCommand, NativeArray<byte>, int)
+  nameWithType: CommandSerializer.SerializeCommand(IProvinceCommand, NativeArray<byte>, int)
+  fullName: Core.Commands.CommandSerializer.SerializeCommand(Core.Commands.IProvinceCommand, Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SerializeCommand
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Serialize a single command to binary format
+  example: []
+  syntax:
+    content: public static SerializationResult SerializeCommand(IProvinceCommand command, NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: command
+      type: Core.Commands.IProvinceCommand
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: offset
+      type: System.Int32
+    return:
+      type: Core.Commands.SerializationResult
+    content.vb: Public Shared Function SerializeCommand(command As IProvinceCommand, buffer As NativeArray(Of Byte), offset As Integer) As SerializationResult
+  overload: Core.Commands.CommandSerializer.SerializeCommand*
+  nameWithType.vb: CommandSerializer.SerializeCommand(IProvinceCommand, NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.CommandSerializer.SerializeCommand(Core.Commands.IProvinceCommand, Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: SerializeCommand(IProvinceCommand, NativeArray(Of Byte), Integer)
+- uid: Core.Commands.CommandSerializer.DeserializeCommand(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  commentId: M:Core.Commands.CommandSerializer.DeserializeCommand(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  id: DeserializeCommand(Unity.Collections.NativeArray{System.Byte},System.Int32)
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: DeserializeCommand(NativeArray<byte>, int)
+  nameWithType: CommandSerializer.DeserializeCommand(NativeArray<byte>, int)
+  fullName: Core.Commands.CommandSerializer.DeserializeCommand(Unity.Collections.NativeArray<byte>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeserializeCommand
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 49
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Deserialize a single command from binary format
+  example: []
+  syntax:
+    content: public static DeserializationResult DeserializeCommand(NativeArray<byte> buffer, int offset)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: offset
+      type: System.Int32
+    return:
+      type: Core.Commands.DeserializationResult
+    content.vb: Public Shared Function DeserializeCommand(buffer As NativeArray(Of Byte), offset As Integer) As DeserializationResult
+  overload: Core.Commands.CommandSerializer.DeserializeCommand*
+  nameWithType.vb: CommandSerializer.DeserializeCommand(NativeArray(Of Byte), Integer)
+  fullName.vb: Core.Commands.CommandSerializer.DeserializeCommand(Unity.Collections.NativeArray(Of Byte), Integer)
+  name.vb: DeserializeCommand(NativeArray(Of Byte), Integer)
+- uid: Core.Commands.CommandSerializer.SerializeCommandBatch(System.Collections.Generic.IList{Core.Commands.IProvinceCommand},System.UInt32,System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Commands.CommandSerializer.SerializeCommandBatch(System.Collections.Generic.IList{Core.Commands.IProvinceCommand},System.UInt32,System.UInt16,Unity.Collections.Allocator)
+  id: SerializeCommandBatch(System.Collections.Generic.IList{Core.Commands.IProvinceCommand},System.UInt32,System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: SerializeCommandBatch(IList<IProvinceCommand>, uint, ushort, Allocator)
+  nameWithType: CommandSerializer.SerializeCommandBatch(IList<IProvinceCommand>, uint, ushort, Allocator)
+  fullName: Core.Commands.CommandSerializer.SerializeCommandBatch(System.Collections.Generic.IList<Core.Commands.IProvinceCommand>, uint, ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SerializeCommandBatch
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 85
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Serialize multiple commands into a batch with header
+
+    Format: [BatchHeader] [Command1] [Command2] ... [CommandN]
+  example: []
+  syntax:
+    content: public static BatchSerializationResult SerializeCommandBatch(IList<IProvinceCommand> commands, uint tick, ushort playerID, Allocator allocator = Allocator.Temp)
+    parameters:
+    - id: commands
+      type: System.Collections.Generic.IList{Core.Commands.IProvinceCommand}
+    - id: tick
+      type: System.UInt32
+    - id: playerID
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Core.Commands.BatchSerializationResult
+    content.vb: Public Shared Function SerializeCommandBatch(commands As IList(Of IProvinceCommand), tick As UInteger, playerID As UShort, allocator As Allocator = Allocator.Temp) As BatchSerializationResult
+  overload: Core.Commands.CommandSerializer.SerializeCommandBatch*
+  nameWithType.vb: CommandSerializer.SerializeCommandBatch(IList(Of IProvinceCommand), UInteger, UShort, Allocator)
+  fullName.vb: Core.Commands.CommandSerializer.SerializeCommandBatch(System.Collections.Generic.IList(Of Core.Commands.IProvinceCommand), UInteger, UShort, Unity.Collections.Allocator)
+  name.vb: SerializeCommandBatch(IList(Of IProvinceCommand), UInteger, UShort, Allocator)
+- uid: Core.Commands.CommandSerializer.DeserializeCommandBatch(Unity.Collections.NativeArray{System.Byte})
+  commentId: M:Core.Commands.CommandSerializer.DeserializeCommandBatch(Unity.Collections.NativeArray{System.Byte})
+  id: DeserializeCommandBatch(Unity.Collections.NativeArray{System.Byte})
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: DeserializeCommandBatch(NativeArray<byte>)
+  nameWithType: CommandSerializer.DeserializeCommandBatch(NativeArray<byte>)
+  fullName: Core.Commands.CommandSerializer.DeserializeCommandBatch(Unity.Collections.NativeArray<byte>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DeserializeCommandBatch
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 147
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Deserialize a command batch
+  example: []
+  syntax:
+    content: public static BatchDeserializationResult DeserializeCommandBatch(NativeArray<byte> buffer)
+    parameters:
+    - id: buffer
+      type: Unity.Collections.NativeArray{System.Byte}
+    return:
+      type: Core.Commands.BatchDeserializationResult
+    content.vb: Public Shared Function DeserializeCommandBatch(buffer As NativeArray(Of Byte)) As BatchDeserializationResult
+  overload: Core.Commands.CommandSerializer.DeserializeCommandBatch*
+  nameWithType.vb: CommandSerializer.DeserializeCommandBatch(NativeArray(Of Byte))
+  fullName.vb: Core.Commands.CommandSerializer.DeserializeCommandBatch(Unity.Collections.NativeArray(Of Byte))
+  name.vb: DeserializeCommandBatch(NativeArray(Of Byte))
+- uid: Core.Commands.CommandSerializer.CalculateBatchSize(System.Collections.Generic.IList{Core.Commands.IProvinceCommand})
+  commentId: M:Core.Commands.CommandSerializer.CalculateBatchSize(System.Collections.Generic.IList{Core.Commands.IProvinceCommand})
+  id: CalculateBatchSize(System.Collections.Generic.IList{Core.Commands.IProvinceCommand})
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: CalculateBatchSize(IList<IProvinceCommand>)
+  nameWithType: CommandSerializer.CalculateBatchSize(IList<IProvinceCommand>)
+  fullName: Core.Commands.CommandSerializer.CalculateBatchSize(System.Collections.Generic.IList<Core.Commands.IProvinceCommand>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateBatchSize
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 204
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Calculate the size needed to serialize a batch of commands
+  example: []
+  syntax:
+    content: public static int CalculateBatchSize(IList<IProvinceCommand> commands)
+    parameters:
+    - id: commands
+      type: System.Collections.Generic.IList{Core.Commands.IProvinceCommand}
+    return:
+      type: System.Int32
+    content.vb: Public Shared Function CalculateBatchSize(commands As IList(Of IProvinceCommand)) As Integer
+  overload: Core.Commands.CommandSerializer.CalculateBatchSize*
+  nameWithType.vb: CommandSerializer.CalculateBatchSize(IList(Of IProvinceCommand))
+  fullName.vb: Core.Commands.CommandSerializer.CalculateBatchSize(System.Collections.Generic.IList(Of Core.Commands.IProvinceCommand))
+  name.vb: CalculateBatchSize(IList(Of IProvinceCommand))
+- uid: Core.Commands.CommandSerializer.RegisterCommandType(System.Byte,System.Func{Core.Commands.IProvinceCommand})
+  commentId: M:Core.Commands.CommandSerializer.RegisterCommandType(System.Byte,System.Func{Core.Commands.IProvinceCommand})
+  id: RegisterCommandType(System.Byte,System.Func{Core.Commands.IProvinceCommand})
+  parent: Core.Commands.CommandSerializer
+  langs:
+  - csharp
+  - vb
+  name: RegisterCommandType(byte, Func<IProvinceCommand>)
+  nameWithType: CommandSerializer.RegisterCommandType(byte, Func<IProvinceCommand>)
+  fullName: Core.Commands.CommandSerializer.RegisterCommandType(byte, System.Func<Core.Commands.IProvinceCommand>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterCommandType
+    path: Scripts/Core/Commands/CommandSerializer.cs
+    startLine: 217
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Register a new command type factory
+  example: []
+  syntax:
+    content: public static void RegisterCommandType(byte commandType, Func<IProvinceCommand> factory)
+    parameters:
+    - id: commandType
+      type: System.Byte
+    - id: factory
+      type: System.Func{Core.Commands.IProvinceCommand}
+    content.vb: Public Shared Sub RegisterCommandType(commandType As Byte, factory As Func(Of IProvinceCommand))
+  overload: Core.Commands.CommandSerializer.RegisterCommandType*
+  nameWithType.vb: CommandSerializer.RegisterCommandType(Byte, Func(Of IProvinceCommand))
+  fullName.vb: Core.Commands.CommandSerializer.RegisterCommandType(Byte, System.Func(Of Core.Commands.IProvinceCommand))
+  name.vb: RegisterCommandType(Byte, Func(Of IProvinceCommand))
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.CommandSerializer.SerializeCommand*
+  commentId: Overload:Core.Commands.CommandSerializer.SerializeCommand
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_SerializeCommand_Core_Commands_IProvinceCommand_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: SerializeCommand
+  nameWithType: CommandSerializer.SerializeCommand
+  fullName: Core.Commands.CommandSerializer.SerializeCommand
+- uid: Core.Commands.IProvinceCommand
+  commentId: T:Core.Commands.IProvinceCommand
+  parent: Core.Commands
+  href: Core.Commands.IProvinceCommand.html
+  name: IProvinceCommand
+  nameWithType: IProvinceCommand
+  fullName: Core.Commands.IProvinceCommand
+- uid: Unity.Collections.NativeArray{System.Byte}
+  commentId: T:Unity.Collections.NativeArray{System.Byte}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<byte>
+  nameWithType: NativeArray<byte>
+  fullName: Unity.Collections.NativeArray<byte>
+  nameWithType.vb: NativeArray(Of Byte)
+  fullName.vb: Unity.Collections.NativeArray(Of Byte)
+  name.vb: NativeArray(Of Byte)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Commands.SerializationResult
+  commentId: T:Core.Commands.SerializationResult
+  parent: Core.Commands
+  href: Core.Commands.SerializationResult.html
+  name: SerializationResult
+  nameWithType: SerializationResult
+  fullName: Core.Commands.SerializationResult
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Commands.CommandSerializer.DeserializeCommand*
+  commentId: Overload:Core.Commands.CommandSerializer.DeserializeCommand
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_DeserializeCommand_Unity_Collections_NativeArray_System_Byte__System_Int32_
+  name: DeserializeCommand
+  nameWithType: CommandSerializer.DeserializeCommand
+  fullName: Core.Commands.CommandSerializer.DeserializeCommand
+- uid: Core.Commands.DeserializationResult
+  commentId: T:Core.Commands.DeserializationResult
+  parent: Core.Commands
+  href: Core.Commands.DeserializationResult.html
+  name: DeserializationResult
+  nameWithType: DeserializationResult
+  fullName: Core.Commands.DeserializationResult
+- uid: Core.Commands.CommandSerializer.SerializeCommandBatch*
+  commentId: Overload:Core.Commands.CommandSerializer.SerializeCommandBatch
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_SerializeCommandBatch_System_Collections_Generic_IList_Core_Commands_IProvinceCommand__System_UInt32_System_UInt16_Unity_Collections_Allocator_
+  name: SerializeCommandBatch
+  nameWithType: CommandSerializer.SerializeCommandBatch
+  fullName: Core.Commands.CommandSerializer.SerializeCommandBatch
+- uid: System.Collections.Generic.IList{Core.Commands.IProvinceCommand}
+  commentId: T:System.Collections.Generic.IList{Core.Commands.IProvinceCommand}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IList`1
+  href: Core.Commands.IProvinceCommand.html
+  name: IList<IProvinceCommand>
+  nameWithType: IList<IProvinceCommand>
+  fullName: System.Collections.Generic.IList<Core.Commands.IProvinceCommand>
+  nameWithType.vb: IList(Of IProvinceCommand)
+  fullName.vb: System.Collections.Generic.IList(Of Core.Commands.IProvinceCommand)
+  name.vb: IList(Of IProvinceCommand)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+  - name: <
+  - uid: Core.Commands.IProvinceCommand
+    name: IProvinceCommand
+    href: Core.Commands.IProvinceCommand.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Commands.IProvinceCommand
+    name: IProvinceCommand
+    href: Core.Commands.IProvinceCommand.html
+  - name: )
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Core.Commands.BatchSerializationResult
+  commentId: T:Core.Commands.BatchSerializationResult
+  parent: Core.Commands
+  href: Core.Commands.BatchSerializationResult.html
+  name: BatchSerializationResult
+  nameWithType: BatchSerializationResult
+  fullName: Core.Commands.BatchSerializationResult
+- uid: System.Collections.Generic.IList`1
+  commentId: T:System.Collections.Generic.IList`1
+  isExternal: true
+  name: IList<T>
+  nameWithType: IList<T>
+  fullName: System.Collections.Generic.IList<T>
+  nameWithType.vb: IList(Of T)
+  fullName.vb: System.Collections.Generic.IList(Of T)
+  name.vb: IList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IList`1
+    name: IList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Commands.CommandSerializer.DeserializeCommandBatch*
+  commentId: Overload:Core.Commands.CommandSerializer.DeserializeCommandBatch
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_DeserializeCommandBatch_Unity_Collections_NativeArray_System_Byte__
+  name: DeserializeCommandBatch
+  nameWithType: CommandSerializer.DeserializeCommandBatch
+  fullName: Core.Commands.CommandSerializer.DeserializeCommandBatch
+- uid: Core.Commands.BatchDeserializationResult
+  commentId: T:Core.Commands.BatchDeserializationResult
+  parent: Core.Commands
+  href: Core.Commands.BatchDeserializationResult.html
+  name: BatchDeserializationResult
+  nameWithType: BatchDeserializationResult
+  fullName: Core.Commands.BatchDeserializationResult
+- uid: Core.Commands.CommandSerializer.CalculateBatchSize*
+  commentId: Overload:Core.Commands.CommandSerializer.CalculateBatchSize
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_CalculateBatchSize_System_Collections_Generic_IList_Core_Commands_IProvinceCommand__
+  name: CalculateBatchSize
+  nameWithType: CommandSerializer.CalculateBatchSize
+  fullName: Core.Commands.CommandSerializer.CalculateBatchSize
+- uid: Core.Commands.CommandSerializer.RegisterCommandType*
+  commentId: Overload:Core.Commands.CommandSerializer.RegisterCommandType
+  href: Core.Commands.CommandSerializer.html#Core_Commands_CommandSerializer_RegisterCommandType_System_Byte_System_Func_Core_Commands_IProvinceCommand__
+  name: RegisterCommandType
+  nameWithType: CommandSerializer.RegisterCommandType
+  fullName: Core.Commands.CommandSerializer.RegisterCommandType
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System.Func{Core.Commands.IProvinceCommand}
+  commentId: T:System.Func{Core.Commands.IProvinceCommand}
+  parent: System
+  definition: System.Func`1
+  href: Core.Commands.IProvinceCommand.html
+  name: Func<IProvinceCommand>
+  nameWithType: Func<IProvinceCommand>
+  fullName: System.Func<Core.Commands.IProvinceCommand>
+  nameWithType.vb: Func(Of IProvinceCommand)
+  fullName.vb: System.Func(Of Core.Commands.IProvinceCommand)
+  name.vb: Func(Of IProvinceCommand)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - uid: Core.Commands.IProvinceCommand
+    name: IProvinceCommand
+    href: Core.Commands.IProvinceCommand.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Commands.IProvinceCommand
+    name: IProvinceCommand
+    href: Core.Commands.IProvinceCommand.html
+  - name: )
+- uid: System.Func`1
+  commentId: T:System.Func`1
+  isExternal: true
+  name: Func<TResult>
+  nameWithType: Func<TResult>
+  fullName: System.Func<TResult>
+  nameWithType.vb: Func(Of TResult)
+  fullName.vb: System.Func(Of TResult)
+  name.vb: Func(Of TResult)
+  spec.csharp:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: <
+  - name: TResult
+  - name: '>'
+  spec.vb:
+  - uid: System.Func`1
+    name: Func
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TResult
+  - name: )

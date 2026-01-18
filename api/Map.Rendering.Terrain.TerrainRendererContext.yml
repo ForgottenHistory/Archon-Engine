@@ -1,0 +1,187 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Terrain.TerrainRendererContext
+  commentId: T:Map.Rendering.Terrain.TerrainRendererContext
+  id: TerrainRendererContext
+  parent: Map.Rendering.Terrain
+  children:
+  - Map.Rendering.Terrain.TerrainRendererContext.MaxTerrainTypes
+  - Map.Rendering.Terrain.TerrainRendererContext.TerrainBlendMapCompute
+  - Map.Rendering.Terrain.TerrainRendererContext.TerrainRGBLookup
+  langs:
+  - csharp
+  - vb
+  name: TerrainRendererContext
+  nameWithType: TerrainRendererContext
+  fullName: Map.Rendering.Terrain.TerrainRendererContext
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainRendererContext
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Context provided during terrain renderer initialization
+  example: []
+  syntax:
+    content: public struct TerrainRendererContext
+    content.vb: Public Structure TerrainRendererContext
+- uid: Map.Rendering.Terrain.TerrainRendererContext.TerrainBlendMapCompute
+  commentId: F:Map.Rendering.Terrain.TerrainRendererContext.TerrainBlendMapCompute
+  id: TerrainBlendMapCompute
+  parent: Map.Rendering.Terrain.TerrainRendererContext
+  langs:
+  - csharp
+  - vb
+  name: TerrainBlendMapCompute
+  nameWithType: TerrainRendererContext.TerrainBlendMapCompute
+  fullName: Map.Rendering.Terrain.TerrainRendererContext.TerrainBlendMapCompute
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainBlendMapCompute
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 94
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Compute shader for blend map generation
+  example: []
+  syntax:
+    content: public ComputeShader TerrainBlendMapCompute
+    return:
+      type: UnityEngine.ComputeShader
+    content.vb: Public TerrainBlendMapCompute As ComputeShader
+- uid: Map.Rendering.Terrain.TerrainRendererContext.TerrainRGBLookup
+  commentId: F:Map.Rendering.Terrain.TerrainRendererContext.TerrainRGBLookup
+  id: TerrainRGBLookup
+  parent: Map.Rendering.Terrain.TerrainRendererContext
+  langs:
+  - csharp
+  - vb
+  name: TerrainRGBLookup
+  nameWithType: TerrainRendererContext.TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRendererContext.TerrainRGBLookup
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainRGBLookup
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 97
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Terrain RGB lookup for type mappings
+  example: []
+  syntax:
+    content: public TerrainRGBLookup TerrainRGBLookup
+    return:
+      type: Map.Rendering.Terrain.TerrainRGBLookup
+    content.vb: Public TerrainRGBLookup As TerrainRGBLookup
+- uid: Map.Rendering.Terrain.TerrainRendererContext.MaxTerrainTypes
+  commentId: F:Map.Rendering.Terrain.TerrainRendererContext.MaxTerrainTypes
+  id: MaxTerrainTypes
+  parent: Map.Rendering.Terrain.TerrainRendererContext
+  langs:
+  - csharp
+  - vb
+  name: MaxTerrainTypes
+  nameWithType: TerrainRendererContext.MaxTerrainTypes
+  fullName: Map.Rendering.Terrain.TerrainRendererContext.MaxTerrainTypes
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxTerrainTypes
+    path: Scripts/Map/Rendering/Terrain/ITerrainRenderer.cs
+    startLine: 100
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Maximum number of terrain types
+  example: []
+  syntax:
+    content: public int MaxTerrainTypes
+    return:
+      type: System.Int32
+    content.vb: Public MaxTerrainTypes As Integer
+references:
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: UnityEngine.ComputeShader
+  commentId: T:UnityEngine.ComputeShader
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeShader
+  nameWithType: ComputeShader
+  fullName: UnityEngine.ComputeShader
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Terrain.TerrainRGBLookup
+  commentId: T:Map.Rendering.Terrain.TerrainRGBLookup
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainRGBLookup.html
+  name: TerrainRGBLookup
+  nameWithType: TerrainRGBLookup
+  fullName: Map.Rendering.Terrain.TerrainRGBLookup
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

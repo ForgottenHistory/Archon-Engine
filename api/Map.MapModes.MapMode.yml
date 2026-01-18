@@ -1,0 +1,519 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  id: MapMode
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.MapMode.BorderDebug
+  - Map.MapModes.MapMode.Culture
+  - Map.MapModes.MapMode.Development
+  - Map.MapModes.MapMode.Diplomatic
+  - Map.MapModes.MapMode.Economic
+  - Map.MapModes.MapMode.HeightmapDebug
+  - Map.MapModes.MapMode.Military
+  - Map.MapModes.MapMode.NormalMapDebug
+  - Map.MapModes.MapMode.PlayerMapMode
+  - Map.MapModes.MapMode.Political
+  - Map.MapModes.MapMode.ProvinceColors
+  - Map.MapModes.MapMode.ProvinceIDDebug
+  - Map.MapModes.MapMode.Religion
+  - Map.MapModes.MapMode.Selected
+  - Map.MapModes.MapMode.StrategicView
+  - Map.MapModes.MapMode.Terrain
+  - Map.MapModes.MapMode.Trade
+  langs:
+  - csharp
+  - vb
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapMode
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 66
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Map mode types supported by the system
+  example: []
+  syntax:
+    content: public enum MapMode
+    content.vb: Public Enum MapMode
+- uid: Map.MapModes.MapMode.Political
+  commentId: F:Map.MapModes.MapMode.Political
+  id: Political
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Political
+  nameWithType: MapMode.Political
+  fullName: Map.MapModes.MapMode.Political
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Political
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 69
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Political = 0
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Terrain
+  commentId: F:Map.MapModes.MapMode.Terrain
+  id: Terrain
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Terrain
+  nameWithType: MapMode.Terrain
+  fullName: Map.MapModes.MapMode.Terrain
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Terrain
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 70
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Terrain = 1
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Development
+  commentId: F:Map.MapModes.MapMode.Development
+  id: Development
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Development
+  nameWithType: MapMode.Development
+  fullName: Map.MapModes.MapMode.Development
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Development
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Development = 2
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Culture
+  commentId: F:Map.MapModes.MapMode.Culture
+  id: Culture
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Culture
+  nameWithType: MapMode.Culture
+  fullName: Map.MapModes.MapMode.Culture
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Culture
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 72
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Culture = 3
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Religion
+  commentId: F:Map.MapModes.MapMode.Religion
+  id: Religion
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Religion
+  nameWithType: MapMode.Religion
+  fullName: Map.MapModes.MapMode.Religion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Religion
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 73
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Religion = 4
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Diplomatic
+  commentId: F:Map.MapModes.MapMode.Diplomatic
+  id: Diplomatic
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Diplomatic
+  nameWithType: MapMode.Diplomatic
+  fullName: Map.MapModes.MapMode.Diplomatic
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Diplomatic
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 76
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Diplomatic = 5
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Trade
+  commentId: F:Map.MapModes.MapMode.Trade
+  id: Trade
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Trade
+  nameWithType: MapMode.Trade
+  fullName: Map.MapModes.MapMode.Trade
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Trade
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 77
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Trade = 6
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Military
+  commentId: F:Map.MapModes.MapMode.Military
+  id: Military
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Military
+  nameWithType: MapMode.Military
+  fullName: Map.MapModes.MapMode.Military
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Military
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 78
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Military = 7
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Economic
+  commentId: F:Map.MapModes.MapMode.Economic
+  id: Economic
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Economic
+  nameWithType: MapMode.Economic
+  fullName: Map.MapModes.MapMode.Economic
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Economic
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 79
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Economic = 8
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.Selected
+  commentId: F:Map.MapModes.MapMode.Selected
+  id: Selected
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: Selected
+  nameWithType: MapMode.Selected
+  fullName: Map.MapModes.MapMode.Selected
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Selected
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 82
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: Selected = 9
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.StrategicView
+  commentId: F:Map.MapModes.MapMode.StrategicView
+  id: StrategicView
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: StrategicView
+  nameWithType: MapMode.StrategicView
+  fullName: Map.MapModes.MapMode.StrategicView
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StrategicView
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 83
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: StrategicView = 10
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.PlayerMapMode
+  commentId: F:Map.MapModes.MapMode.PlayerMapMode
+  id: PlayerMapMode
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: PlayerMapMode
+  nameWithType: MapMode.PlayerMapMode
+  fullName: Map.MapModes.MapMode.PlayerMapMode
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PlayerMapMode
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 84
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: PlayerMapMode = 11
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.ProvinceColors
+  commentId: F:Map.MapModes.MapMode.ProvinceColors
+  id: ProvinceColors
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: ProvinceColors
+  nameWithType: MapMode.ProvinceColors
+  fullName: Map.MapModes.MapMode.ProvinceColors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceColors
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 85
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: ProvinceColors = 12
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.BorderDebug
+  commentId: F:Map.MapModes.MapMode.BorderDebug
+  id: BorderDebug
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: BorderDebug
+  nameWithType: MapMode.BorderDebug
+  fullName: Map.MapModes.MapMode.BorderDebug
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDebug
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 88
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: BorderDebug = 100
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.ProvinceIDDebug
+  commentId: F:Map.MapModes.MapMode.ProvinceIDDebug
+  id: ProvinceIDDebug
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: ProvinceIDDebug
+  nameWithType: MapMode.ProvinceIDDebug
+  fullName: Map.MapModes.MapMode.ProvinceIDDebug
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceIDDebug
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 89
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: ProvinceIDDebug = 101
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.HeightmapDebug
+  commentId: F:Map.MapModes.MapMode.HeightmapDebug
+  id: HeightmapDebug
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: HeightmapDebug
+  nameWithType: MapMode.HeightmapDebug
+  fullName: Map.MapModes.MapMode.HeightmapDebug
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HeightmapDebug
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 90
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: HeightmapDebug = 102
+    return:
+      type: Map.MapModes.MapMode
+- uid: Map.MapModes.MapMode.NormalMapDebug
+  commentId: F:Map.MapModes.MapMode.NormalMapDebug
+  id: NormalMapDebug
+  parent: Map.MapModes.MapMode
+  langs:
+  - csharp
+  - vb
+  name: NormalMapDebug
+  nameWithType: MapMode.NormalMapDebug
+  fullName: Map.MapModes.MapMode.NormalMapDebug
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/IMapModeHandler.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapDebug
+    path: Scripts/Map/MapModes/IMapModeHandler.cs
+    startLine: 91
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: NormalMapDebug = 103
+    return:
+      type: Map.MapModes.MapMode
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode

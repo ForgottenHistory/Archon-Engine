@@ -1,0 +1,233 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent
+  commentId: T:Core.Systems.ProvinceDevelopmentChangedEvent
+  id: ProvinceDevelopmentChangedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.ProvinceDevelopmentChangedEvent.NewDevelopment
+  - Core.Systems.ProvinceDevelopmentChangedEvent.OldDevelopment
+  - Core.Systems.ProvinceDevelopmentChangedEvent.ProvinceId
+  - Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: ProvinceDevelopmentChangedEvent
+  nameWithType: ProvinceDevelopmentChangedEvent
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceDevelopmentChangedEvent
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 22
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: 'public struct ProvinceDevelopmentChangedEvent : IGameEvent'
+    content.vb: Public Structure ProvinceDevelopmentChangedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent.ProvinceId
+  commentId: F:Core.Systems.ProvinceDevelopmentChangedEvent.ProvinceId
+  id: ProvinceId
+  parent: Core.Systems.ProvinceDevelopmentChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: ProvinceId
+  nameWithType: ProvinceDevelopmentChangedEvent.ProvinceId
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent.ProvinceId
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceId
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ushort ProvinceId
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceId As UShort
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent.OldDevelopment
+  commentId: F:Core.Systems.ProvinceDevelopmentChangedEvent.OldDevelopment
+  id: OldDevelopment
+  parent: Core.Systems.ProvinceDevelopmentChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldDevelopment
+  nameWithType: ProvinceDevelopmentChangedEvent.OldDevelopment
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent.OldDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldDevelopment
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public byte OldDevelopment
+    return:
+      type: System.Byte
+    content.vb: Public OldDevelopment As Byte
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent.NewDevelopment
+  commentId: F:Core.Systems.ProvinceDevelopmentChangedEvent.NewDevelopment
+  id: NewDevelopment
+  parent: Core.Systems.ProvinceDevelopmentChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewDevelopment
+  nameWithType: ProvinceDevelopmentChangedEvent.NewDevelopment
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent.NewDevelopment
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewDevelopment
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public byte NewDevelopment
+    return:
+      type: System.Byte
+    content.vb: Public NewDevelopment As Byte
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+  commentId: P:Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.ProvinceDevelopmentChangedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: ProvinceDevelopmentChangedEvent.TimeStamp
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Systems/Province/ProvinceEvents.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+  href: Core.Systems.ProvinceDevelopmentChangedEvent.html#Core_Systems_ProvinceDevelopmentChangedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: ProvinceDevelopmentChangedEvent.TimeStamp
+  fullName: Core.Systems.ProvinceDevelopmentChangedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

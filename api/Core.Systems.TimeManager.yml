@@ -1,0 +1,1477 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.TimeManager
+  commentId: T:Core.Systems.TimeManager
+  id: TimeManager
+  parent: Core.Systems
+  children:
+  - Core.Systems.TimeManager.CalculateTotalTicks(System.Int32,System.Int32,System.Int32)
+  - Core.Systems.TimeManager.Calendar
+  - Core.Systems.TimeManager.CurrentDay
+  - Core.Systems.TimeManager.CurrentHour
+  - Core.Systems.TimeManager.CurrentMonth
+  - Core.Systems.TimeManager.CurrentTick
+  - Core.Systems.TimeManager.CurrentYear
+  - Core.Systems.TimeManager.GameSpeed
+  - Core.Systems.TimeManager.GetAccumulator
+  - Core.Systems.TimeManager.GetCurrentGameTime
+  - Core.Systems.TimeManager.GetCurrentMonthName
+  - Core.Systems.TimeManager.GetFormattedDate
+  - Core.Systems.TimeManager.GetFormattedDateCompact
+  - Core.Systems.TimeManager.Initialize(Core.EventBus,Core.Systems.ProvinceSystem,Core.Systems.ICalendar)
+  - Core.Systems.TimeManager.IsInitialized
+  - Core.Systems.TimeManager.IsPaused
+  - Core.Systems.TimeManager.LoadState(System.UInt64,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,Core.Data.FixedPoint64)
+  - Core.Systems.TimeManager.OnDailyTick
+  - Core.Systems.TimeManager.OnHourlyTick
+  - Core.Systems.TimeManager.OnMonthlyTick
+  - Core.Systems.TimeManager.OnPauseStateChanged
+  - Core.Systems.TimeManager.OnSpeedChanged
+  - Core.Systems.TimeManager.OnWeeklyTick
+  - Core.Systems.TimeManager.OnYearlyTick
+  - Core.Systems.TimeManager.PauseTime
+  - Core.Systems.TimeManager.SetCurrentTick(System.UInt64)
+  - Core.Systems.TimeManager.SetGameTime(System.Int32,System.Int32,System.Int32,System.Int32)
+  - Core.Systems.TimeManager.SetSpeed(System.Int32)
+  - Core.Systems.TimeManager.StartTime
+  - Core.Systems.TimeManager.SynchronizeToTick(System.UInt64)
+  - Core.Systems.TimeManager.TogglePause
+  langs:
+  - csharp
+  - vb
+  name: TimeManager
+  nameWithType: TimeManager
+  fullName: Core.Systems.TimeManager
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeManager
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Deterministic time manager for multiplayer-ready simulation
+
+    Uses fixed-point math and tick-based progression to ensure identical behavior across all clients
+
+
+    CRITICAL ARCHITECTURE REQUIREMENTS:
+
+    - Fixed-point accumulator (NO float drift)
+
+    - Real Earth calendar (365 days, no leap years for determinism)
+
+    - Tick counter for command synchronization
+
+    - Exact fraction speed multipliers
+
+    - NO Time.time dependencies (non-deterministic)
+
+    - ICalendar abstraction for custom calendars
+
+
+    See: Assets/Docs/Engine/time-system-architecture.md
+  example: []
+  syntax:
+    content: 'public class TimeManager : MonoBehaviour'
+    content.vb: Public Class TimeManager Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Core.Systems.TimeManager.OnHourlyTick
+  commentId: E:Core.Systems.TimeManager.OnHourlyTick
+  id: OnHourlyTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnHourlyTick
+  nameWithType: TimeManager.OnHourlyTick
+  fullName: Core.Systems.TimeManager.OnHourlyTick
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnHourlyTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnHourlyTick
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnHourlyTick As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnDailyTick
+  commentId: E:Core.Systems.TimeManager.OnDailyTick
+  id: OnDailyTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnDailyTick
+  nameWithType: TimeManager.OnDailyTick
+  fullName: Core.Systems.TimeManager.OnDailyTick
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDailyTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 65
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnDailyTick
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnDailyTick As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnWeeklyTick
+  commentId: E:Core.Systems.TimeManager.OnWeeklyTick
+  id: OnWeeklyTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnWeeklyTick
+  nameWithType: TimeManager.OnWeeklyTick
+  fullName: Core.Systems.TimeManager.OnWeeklyTick
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnWeeklyTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnWeeklyTick
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnWeeklyTick As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnMonthlyTick
+  commentId: E:Core.Systems.TimeManager.OnMonthlyTick
+  id: OnMonthlyTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnMonthlyTick
+  nameWithType: TimeManager.OnMonthlyTick
+  fullName: Core.Systems.TimeManager.OnMonthlyTick
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnMonthlyTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 67
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnMonthlyTick
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnMonthlyTick As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnYearlyTick
+  commentId: E:Core.Systems.TimeManager.OnYearlyTick
+  id: OnYearlyTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnYearlyTick
+  nameWithType: TimeManager.OnYearlyTick
+  fullName: Core.Systems.TimeManager.OnYearlyTick
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnYearlyTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 68
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnYearlyTick
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnYearlyTick As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnSpeedChanged
+  commentId: E:Core.Systems.TimeManager.OnSpeedChanged
+  id: OnSpeedChanged
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnSpeedChanged
+  nameWithType: TimeManager.OnSpeedChanged
+  fullName: Core.Systems.TimeManager.OnSpeedChanged
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnSpeedChanged
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 69
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<int> OnSpeedChanged
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Public Event OnSpeedChanged As Action(Of Integer)
+- uid: Core.Systems.TimeManager.OnPauseStateChanged
+  commentId: E:Core.Systems.TimeManager.OnPauseStateChanged
+  id: OnPauseStateChanged
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: OnPauseStateChanged
+  nameWithType: TimeManager.OnPauseStateChanged
+  fullName: Core.Systems.TimeManager.OnPauseStateChanged
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnPauseStateChanged
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public event Action<bool> OnPauseStateChanged
+    return:
+      type: System.Action{System.Boolean}
+    content.vb: Public Event OnPauseStateChanged As Action(Of Boolean)
+- uid: Core.Systems.TimeManager.CurrentYear
+  commentId: P:Core.Systems.TimeManager.CurrentYear
+  id: CurrentYear
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentYear
+  nameWithType: TimeManager.CurrentYear
+  fullName: Core.Systems.TimeManager.CurrentYear
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentYear
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 73
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CurrentYear { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CurrentYear As Integer
+  overload: Core.Systems.TimeManager.CurrentYear*
+- uid: Core.Systems.TimeManager.CurrentMonth
+  commentId: P:Core.Systems.TimeManager.CurrentMonth
+  id: CurrentMonth
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentMonth
+  nameWithType: TimeManager.CurrentMonth
+  fullName: Core.Systems.TimeManager.CurrentMonth
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentMonth
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CurrentMonth { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CurrentMonth As Integer
+  overload: Core.Systems.TimeManager.CurrentMonth*
+- uid: Core.Systems.TimeManager.CurrentDay
+  commentId: P:Core.Systems.TimeManager.CurrentDay
+  id: CurrentDay
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentDay
+  nameWithType: TimeManager.CurrentDay
+  fullName: Core.Systems.TimeManager.CurrentDay
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentDay
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 75
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CurrentDay { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CurrentDay As Integer
+  overload: Core.Systems.TimeManager.CurrentDay*
+- uid: Core.Systems.TimeManager.CurrentHour
+  commentId: P:Core.Systems.TimeManager.CurrentHour
+  id: CurrentHour
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentHour
+  nameWithType: TimeManager.CurrentHour
+  fullName: Core.Systems.TimeManager.CurrentHour
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentHour
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int CurrentHour { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CurrentHour As Integer
+  overload: Core.Systems.TimeManager.CurrentHour*
+- uid: Core.Systems.TimeManager.CurrentTick
+  commentId: P:Core.Systems.TimeManager.CurrentTick
+  id: CurrentTick
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CurrentTick
+  nameWithType: TimeManager.CurrentTick
+  fullName: Core.Systems.TimeManager.CurrentTick
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ulong CurrentTick { get; }
+    parameters: []
+    return:
+      type: System.UInt64
+    content.vb: Public ReadOnly Property CurrentTick As ULong
+  overload: Core.Systems.TimeManager.CurrentTick*
+- uid: Core.Systems.TimeManager.GameSpeed
+  commentId: P:Core.Systems.TimeManager.GameSpeed
+  id: GameSpeed
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GameSpeed
+  nameWithType: TimeManager.GameSpeed
+  fullName: Core.Systems.TimeManager.GameSpeed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameSpeed
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 78
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public int GameSpeed { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property GameSpeed As Integer
+  overload: Core.Systems.TimeManager.GameSpeed*
+- uid: Core.Systems.TimeManager.IsPaused
+  commentId: P:Core.Systems.TimeManager.IsPaused
+  id: IsPaused
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: IsPaused
+  nameWithType: TimeManager.IsPaused
+  fullName: Core.Systems.TimeManager.IsPaused
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsPaused
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsPaused { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsPaused As Boolean
+  overload: Core.Systems.TimeManager.IsPaused*
+- uid: Core.Systems.TimeManager.IsInitialized
+  commentId: P:Core.Systems.TimeManager.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: TimeManager.IsInitialized
+  fullName: Core.Systems.TimeManager.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Systems.TimeManager.IsInitialized*
+- uid: Core.Systems.TimeManager.Calendar
+  commentId: P:Core.Systems.TimeManager.Calendar
+  id: Calendar
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: Calendar
+  nameWithType: TimeManager.Calendar
+  fullName: Core.Systems.TimeManager.Calendar
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Calendar
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 87
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Active calendar for date formatting and validation.
+
+    Default is StandardCalendar (real Earth calendar, 365 days).
+
+    GAME layer can provide custom calendars via Initialize().
+  example: []
+  syntax:
+    content: public ICalendar Calendar { get; }
+    parameters: []
+    return:
+      type: Core.Systems.ICalendar
+    content.vb: Public ReadOnly Property Calendar As ICalendar
+  overload: Core.Systems.TimeManager.Calendar*
+- uid: Core.Systems.TimeManager.Initialize(Core.EventBus,Core.Systems.ProvinceSystem,Core.Systems.ICalendar)
+  commentId: M:Core.Systems.TimeManager.Initialize(Core.EventBus,Core.Systems.ProvinceSystem,Core.Systems.ICalendar)
+  id: Initialize(Core.EventBus,Core.Systems.ProvinceSystem,Core.Systems.ICalendar)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: Initialize(EventBus, ProvinceSystem, ICalendar)
+  nameWithType: TimeManager.Initialize(EventBus, ProvinceSystem, ICalendar)
+  fullName: Core.Systems.TimeManager.Initialize(Core.EventBus, Core.Systems.ProvinceSystem, Core.Systems.ICalendar)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Initialize the time manager with event bus and optional calendar.
+  example: []
+  syntax:
+    content: public void Initialize(EventBus eventBus, ProvinceSystem provinceSystem = null, ICalendar customCalendar = null)
+    parameters:
+    - id: eventBus
+      type: Core.EventBus
+      description: Event bus for time events
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+      description: Optional province system for buffer swapping
+    - id: customCalendar
+      type: Core.Systems.ICalendar
+      description: 'Optional custom calendar (default: StandardCalendar)'
+    content.vb: Public Sub Initialize(eventBus As EventBus, provinceSystem As ProvinceSystem = Nothing, customCalendar As ICalendar = Nothing)
+  overload: Core.Systems.TimeManager.Initialize*
+- uid: Core.Systems.TimeManager.StartTime
+  commentId: M:Core.Systems.TimeManager.StartTime
+  id: StartTime
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: StartTime()
+  nameWithType: TimeManager.StartTime()
+  fullName: Core.Systems.TimeManager.StartTime()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StartTime
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 241
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Start time progression
+  example: []
+  syntax:
+    content: public void StartTime()
+    content.vb: Public Sub StartTime()
+  overload: Core.Systems.TimeManager.StartTime*
+- uid: Core.Systems.TimeManager.PauseTime
+  commentId: M:Core.Systems.TimeManager.PauseTime
+  id: PauseTime
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: PauseTime()
+  nameWithType: TimeManager.PauseTime()
+  fullName: Core.Systems.TimeManager.PauseTime()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PauseTime
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 255
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Pause time progression
+  example: []
+  syntax:
+    content: public void PauseTime()
+    content.vb: Public Sub PauseTime()
+  overload: Core.Systems.TimeManager.PauseTime*
+- uid: Core.Systems.TimeManager.TogglePause
+  commentId: M:Core.Systems.TimeManager.TogglePause
+  id: TogglePause
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: TogglePause()
+  nameWithType: TimeManager.TogglePause()
+  fullName: Core.Systems.TimeManager.TogglePause()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TogglePause
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 269
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Toggle pause state
+  example: []
+  syntax:
+    content: public void TogglePause()
+    content.vb: Public Sub TogglePause()
+  overload: Core.Systems.TimeManager.TogglePause*
+- uid: Core.Systems.TimeManager.SetSpeed(System.Int32)
+  commentId: M:Core.Systems.TimeManager.SetSpeed(System.Int32)
+  id: SetSpeed(System.Int32)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: SetSpeed(int)
+  nameWithType: TimeManager.SetSpeed(int)
+  fullName: Core.Systems.TimeManager.SetSpeed(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetSpeed
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 280
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set game speed (0=paused, 1+=speed multiplier)
+  example: []
+  syntax:
+    content: public void SetSpeed(int multiplier)
+    parameters:
+    - id: multiplier
+      type: System.Int32
+    content.vb: Public Sub SetSpeed(multiplier As Integer)
+  overload: Core.Systems.TimeManager.SetSpeed*
+  nameWithType.vb: TimeManager.SetSpeed(Integer)
+  fullName.vb: Core.Systems.TimeManager.SetSpeed(Integer)
+  name.vb: SetSpeed(Integer)
+- uid: Core.Systems.TimeManager.SetGameTime(System.Int32,System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.TimeManager.SetGameTime(System.Int32,System.Int32,System.Int32,System.Int32)
+  id: SetGameTime(System.Int32,System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: SetGameTime(int, int, int, int)
+  nameWithType: TimeManager.SetGameTime(int, int, int, int)
+  fullName: Core.Systems.TimeManager.SetGameTime(int, int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetGameTime
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 322
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set specific game date (for loading saves, scenarios)
+  example: []
+  syntax:
+    content: public void SetGameTime(int newYear, int newMonth, int newDay, int newHour = 0)
+    parameters:
+    - id: newYear
+      type: System.Int32
+    - id: newMonth
+      type: System.Int32
+    - id: newDay
+      type: System.Int32
+    - id: newHour
+      type: System.Int32
+    content.vb: Public Sub SetGameTime(newYear As Integer, newMonth As Integer, newDay As Integer, newHour As Integer = 0)
+  overload: Core.Systems.TimeManager.SetGameTime*
+  nameWithType.vb: TimeManager.SetGameTime(Integer, Integer, Integer, Integer)
+  fullName.vb: Core.Systems.TimeManager.SetGameTime(Integer, Integer, Integer, Integer)
+  name.vb: SetGameTime(Integer, Integer, Integer, Integer)
+- uid: Core.Systems.TimeManager.SetCurrentTick(System.UInt64)
+  commentId: M:Core.Systems.TimeManager.SetCurrentTick(System.UInt64)
+  id: SetCurrentTick(System.UInt64)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: SetCurrentTick(ulong)
+  nameWithType: TimeManager.SetCurrentTick(ulong)
+  fullName: Core.Systems.TimeManager.SetCurrentTick(ulong)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetCurrentTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 340
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set specific tick (for multiplayer synchronization)
+  example: []
+  syntax:
+    content: public void SetCurrentTick(ulong newTick)
+    parameters:
+    - id: newTick
+      type: System.UInt64
+    content.vb: Public Sub SetCurrentTick(newTick As ULong)
+  overload: Core.Systems.TimeManager.SetCurrentTick*
+  nameWithType.vb: TimeManager.SetCurrentTick(ULong)
+  fullName.vb: Core.Systems.TimeManager.SetCurrentTick(ULong)
+  name.vb: SetCurrentTick(ULong)
+- uid: Core.Systems.TimeManager.SynchronizeToTick(System.UInt64)
+  commentId: M:Core.Systems.TimeManager.SynchronizeToTick(System.UInt64)
+  id: SynchronizeToTick(System.UInt64)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: SynchronizeToTick(ulong)
+  nameWithType: TimeManager.SynchronizeToTick(ulong)
+  fullName: Core.Systems.TimeManager.SynchronizeToTick(ulong)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SynchronizeToTick
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 349
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Synchronize to specific tick (for multiplayer)
+
+    Advances time until we reach the target tick
+  example: []
+  syntax:
+    content: public void SynchronizeToTick(ulong targetTick)
+    parameters:
+    - id: targetTick
+      type: System.UInt64
+    content.vb: Public Sub SynchronizeToTick(targetTick As ULong)
+  overload: Core.Systems.TimeManager.SynchronizeToTick*
+  nameWithType.vb: TimeManager.SynchronizeToTick(ULong)
+  fullName.vb: Core.Systems.TimeManager.SynchronizeToTick(ULong)
+  name.vb: SynchronizeToTick(ULong)
+- uid: Core.Systems.TimeManager.GetCurrentGameTime
+  commentId: M:Core.Systems.TimeManager.GetCurrentGameTime
+  id: GetCurrentGameTime
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentGameTime()
+  nameWithType: TimeManager.GetCurrentGameTime()
+  fullName: Core.Systems.TimeManager.GetCurrentGameTime()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCurrentGameTime
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 368
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get current game time as struct
+  example: []
+  syntax:
+    content: public GameTime GetCurrentGameTime()
+    return:
+      type: Core.Systems.GameTime
+    content.vb: Public Function GetCurrentGameTime() As GameTime
+  overload: Core.Systems.TimeManager.GetCurrentGameTime*
+- uid: Core.Systems.TimeManager.GetFormattedDate
+  commentId: M:Core.Systems.TimeManager.GetFormattedDate
+  id: GetFormattedDate
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GetFormattedDate()
+  nameWithType: TimeManager.GetFormattedDate()
+  fullName: Core.Systems.TimeManager.GetFormattedDate()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFormattedDate
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 383
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get formatted date string using active calendar.
+
+    Example: "11 November 1444 AD"
+  example: []
+  syntax:
+    content: public string GetFormattedDate()
+    return:
+      type: System.String
+    content.vb: Public Function GetFormattedDate() As String
+  overload: Core.Systems.TimeManager.GetFormattedDate*
+- uid: Core.Systems.TimeManager.GetFormattedDateCompact
+  commentId: M:Core.Systems.TimeManager.GetFormattedDateCompact
+  id: GetFormattedDateCompact
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GetFormattedDateCompact()
+  nameWithType: TimeManager.GetFormattedDateCompact()
+  fullName: Core.Systems.TimeManager.GetFormattedDateCompact()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetFormattedDateCompact
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 392
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get compact formatted date string using active calendar.
+
+    Example: "11 Nov 1444"
+  example: []
+  syntax:
+    content: public string GetFormattedDateCompact()
+    return:
+      type: System.String
+    content.vb: Public Function GetFormattedDateCompact() As String
+  overload: Core.Systems.TimeManager.GetFormattedDateCompact*
+- uid: Core.Systems.TimeManager.GetCurrentMonthName
+  commentId: M:Core.Systems.TimeManager.GetCurrentMonthName
+  id: GetCurrentMonthName
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GetCurrentMonthName()
+  nameWithType: TimeManager.GetCurrentMonthName()
+  fullName: Core.Systems.TimeManager.GetCurrentMonthName()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCurrentMonthName
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 400
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get the name of the current month from the calendar.
+  example: []
+  syntax:
+    content: public string GetCurrentMonthName()
+    return:
+      type: System.String
+    content.vb: Public Function GetCurrentMonthName() As String
+  overload: Core.Systems.TimeManager.GetCurrentMonthName*
+- uid: Core.Systems.TimeManager.CalculateTotalTicks(System.Int32,System.Int32,System.Int32)
+  commentId: M:Core.Systems.TimeManager.CalculateTotalTicks(System.Int32,System.Int32,System.Int32)
+  id: CalculateTotalTicks(System.Int32,System.Int32,System.Int32)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: CalculateTotalTicks(int, int, int)
+  nameWithType: TimeManager.CalculateTotalTicks(int, int, int)
+  fullName: Core.Systems.TimeManager.CalculateTotalTicks(int, int, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateTotalTicks
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 409
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Calculate total hours between start date and current game time.
+
+    Uses proper month lengths via GameTime.ToTotalHours().
+  example: []
+  syntax:
+    content: public long CalculateTotalTicks(int fromYear, int fromMonth, int fromDay)
+    parameters:
+    - id: fromYear
+      type: System.Int32
+    - id: fromMonth
+      type: System.Int32
+    - id: fromDay
+      type: System.Int32
+    return:
+      type: System.Int64
+    content.vb: Public Function CalculateTotalTicks(fromYear As Integer, fromMonth As Integer, fromDay As Integer) As Long
+  overload: Core.Systems.TimeManager.CalculateTotalTicks*
+  nameWithType.vb: TimeManager.CalculateTotalTicks(Integer, Integer, Integer)
+  fullName.vb: Core.Systems.TimeManager.CalculateTotalTicks(Integer, Integer, Integer)
+  name.vb: CalculateTotalTicks(Integer, Integer, Integer)
+- uid: Core.Systems.TimeManager.GetAccumulator
+  commentId: M:Core.Systems.TimeManager.GetAccumulator
+  id: GetAccumulator
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: GetAccumulator()
+  nameWithType: TimeManager.GetAccumulator()
+  fullName: Core.Systems.TimeManager.GetAccumulator()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAccumulator
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 423
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get current accumulator value for save/load
+  example: []
+  syntax:
+    content: public FixedPoint64 GetAccumulator()
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetAccumulator() As FixedPoint64
+  overload: Core.Systems.TimeManager.GetAccumulator*
+- uid: Core.Systems.TimeManager.LoadState(System.UInt64,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,Core.Data.FixedPoint64)
+  commentId: M:Core.Systems.TimeManager.LoadState(System.UInt64,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,Core.Data.FixedPoint64)
+  id: LoadState(System.UInt64,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,Core.Data.FixedPoint64)
+  parent: Core.Systems.TimeManager
+  langs:
+  - csharp
+  - vb
+  name: LoadState(ulong, int, int, int, int, int, bool, FixedPoint64)
+  nameWithType: TimeManager.LoadState(ulong, int, int, int, int, int, bool, FixedPoint64)
+  fullName: Core.Systems.TimeManager.LoadState(ulong, int, int, int, int, int, bool, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/TimeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadState
+    path: Scripts/Core/Systems/TimeManager.cs
+    startLine: 432
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Load complete TimeManager state from save file
+
+    Restores all internal state without triggering events
+  example: []
+  syntax:
+    content: public void LoadState(ulong tick, int newYear, int newMonth, int newDay, int newHour, int speedLevel, bool paused, FixedPoint64 newAccumulator)
+    parameters:
+    - id: tick
+      type: System.UInt64
+    - id: newYear
+      type: System.Int32
+    - id: newMonth
+      type: System.Int32
+    - id: newDay
+      type: System.Int32
+    - id: newHour
+      type: System.Int32
+    - id: speedLevel
+      type: System.Int32
+    - id: paused
+      type: System.Boolean
+    - id: newAccumulator
+      type: Core.Data.FixedPoint64
+    content.vb: Public Sub LoadState(tick As ULong, newYear As Integer, newMonth As Integer, newDay As Integer, newHour As Integer, speedLevel As Integer, paused As Boolean, newAccumulator As FixedPoint64)
+  overload: Core.Systems.TimeManager.LoadState*
+  nameWithType.vb: TimeManager.LoadState(ULong, Integer, Integer, Integer, Integer, Integer, Boolean, FixedPoint64)
+  fullName.vb: Core.Systems.TimeManager.LoadState(ULong, Integer, Integer, Integer, Integer, Integer, Boolean, Core.Data.FixedPoint64)
+  name.vb: LoadState(ULong, Integer, Integer, Integer, Integer, Integer, Boolean, FixedPoint64)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Action{System.Int32}
+  commentId: T:System.Action{System.Int32}
+  parent: System
+  definition: System.Action`1
+  name: Action<int>
+  nameWithType: Action<int>
+  fullName: System.Action<int>
+  nameWithType.vb: Action(Of Integer)
+  fullName.vb: System.Action(Of Integer)
+  name.vb: Action(Of Integer)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Action{System.Boolean}
+  commentId: T:System.Action{System.Boolean}
+  parent: System
+  definition: System.Action`1
+  name: Action<bool>
+  nameWithType: Action<bool>
+  fullName: System.Action<bool>
+  nameWithType.vb: Action(Of Boolean)
+  fullName.vb: System.Action(Of Boolean)
+  name.vb: Action(Of Boolean)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+  - name: )
+- uid: Core.Systems.TimeManager.CurrentYear*
+  commentId: Overload:Core.Systems.TimeManager.CurrentYear
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CurrentYear
+  name: CurrentYear
+  nameWithType: TimeManager.CurrentYear
+  fullName: Core.Systems.TimeManager.CurrentYear
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.TimeManager.CurrentMonth*
+  commentId: Overload:Core.Systems.TimeManager.CurrentMonth
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CurrentMonth
+  name: CurrentMonth
+  nameWithType: TimeManager.CurrentMonth
+  fullName: Core.Systems.TimeManager.CurrentMonth
+- uid: Core.Systems.TimeManager.CurrentDay*
+  commentId: Overload:Core.Systems.TimeManager.CurrentDay
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CurrentDay
+  name: CurrentDay
+  nameWithType: TimeManager.CurrentDay
+  fullName: Core.Systems.TimeManager.CurrentDay
+- uid: Core.Systems.TimeManager.CurrentHour*
+  commentId: Overload:Core.Systems.TimeManager.CurrentHour
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CurrentHour
+  name: CurrentHour
+  nameWithType: TimeManager.CurrentHour
+  fullName: Core.Systems.TimeManager.CurrentHour
+- uid: Core.Systems.TimeManager.CurrentTick*
+  commentId: Overload:Core.Systems.TimeManager.CurrentTick
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CurrentTick
+  name: CurrentTick
+  nameWithType: TimeManager.CurrentTick
+  fullName: Core.Systems.TimeManager.CurrentTick
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Core.Systems.TimeManager.GameSpeed*
+  commentId: Overload:Core.Systems.TimeManager.GameSpeed
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GameSpeed
+  name: GameSpeed
+  nameWithType: TimeManager.GameSpeed
+  fullName: Core.Systems.TimeManager.GameSpeed
+- uid: Core.Systems.TimeManager.IsPaused*
+  commentId: Overload:Core.Systems.TimeManager.IsPaused
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_IsPaused
+  name: IsPaused
+  nameWithType: TimeManager.IsPaused
+  fullName: Core.Systems.TimeManager.IsPaused
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.TimeManager.IsInitialized*
+  commentId: Overload:Core.Systems.TimeManager.IsInitialized
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_IsInitialized
+  name: IsInitialized
+  nameWithType: TimeManager.IsInitialized
+  fullName: Core.Systems.TimeManager.IsInitialized
+- uid: Core.Systems.TimeManager.Calendar*
+  commentId: Overload:Core.Systems.TimeManager.Calendar
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_Calendar
+  name: Calendar
+  nameWithType: TimeManager.Calendar
+  fullName: Core.Systems.TimeManager.Calendar
+- uid: Core.Systems.ICalendar
+  commentId: T:Core.Systems.ICalendar
+  parent: Core.Systems
+  href: Core.Systems.ICalendar.html
+  name: ICalendar
+  nameWithType: ICalendar
+  fullName: Core.Systems.ICalendar
+- uid: Core.Systems.TimeManager.Initialize*
+  commentId: Overload:Core.Systems.TimeManager.Initialize
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_Initialize_Core_EventBus_Core_Systems_ProvinceSystem_Core_Systems_ICalendar_
+  name: Initialize
+  nameWithType: TimeManager.Initialize
+  fullName: Core.Systems.TimeManager.Initialize
+- uid: Core.EventBus
+  commentId: T:Core.EventBus
+  parent: Core
+  href: Core.EventBus.html
+  name: EventBus
+  nameWithType: EventBus
+  fullName: Core.EventBus
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Systems.TimeManager.StartTime*
+  commentId: Overload:Core.Systems.TimeManager.StartTime
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_StartTime
+  name: StartTime
+  nameWithType: TimeManager.StartTime
+  fullName: Core.Systems.TimeManager.StartTime
+- uid: Core.Systems.TimeManager.PauseTime*
+  commentId: Overload:Core.Systems.TimeManager.PauseTime
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_PauseTime
+  name: PauseTime
+  nameWithType: TimeManager.PauseTime
+  fullName: Core.Systems.TimeManager.PauseTime
+- uid: Core.Systems.TimeManager.TogglePause*
+  commentId: Overload:Core.Systems.TimeManager.TogglePause
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_TogglePause
+  name: TogglePause
+  nameWithType: TimeManager.TogglePause
+  fullName: Core.Systems.TimeManager.TogglePause
+- uid: Core.Systems.TimeManager.SetSpeed*
+  commentId: Overload:Core.Systems.TimeManager.SetSpeed
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_SetSpeed_System_Int32_
+  name: SetSpeed
+  nameWithType: TimeManager.SetSpeed
+  fullName: Core.Systems.TimeManager.SetSpeed
+- uid: Core.Systems.TimeManager.SetGameTime*
+  commentId: Overload:Core.Systems.TimeManager.SetGameTime
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_SetGameTime_System_Int32_System_Int32_System_Int32_System_Int32_
+  name: SetGameTime
+  nameWithType: TimeManager.SetGameTime
+  fullName: Core.Systems.TimeManager.SetGameTime
+- uid: Core.Systems.TimeManager.SetCurrentTick*
+  commentId: Overload:Core.Systems.TimeManager.SetCurrentTick
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_SetCurrentTick_System_UInt64_
+  name: SetCurrentTick
+  nameWithType: TimeManager.SetCurrentTick
+  fullName: Core.Systems.TimeManager.SetCurrentTick
+- uid: Core.Systems.TimeManager.SynchronizeToTick*
+  commentId: Overload:Core.Systems.TimeManager.SynchronizeToTick
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_SynchronizeToTick_System_UInt64_
+  name: SynchronizeToTick
+  nameWithType: TimeManager.SynchronizeToTick
+  fullName: Core.Systems.TimeManager.SynchronizeToTick
+- uid: Core.Systems.TimeManager.GetCurrentGameTime*
+  commentId: Overload:Core.Systems.TimeManager.GetCurrentGameTime
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GetCurrentGameTime
+  name: GetCurrentGameTime
+  nameWithType: TimeManager.GetCurrentGameTime
+  fullName: Core.Systems.TimeManager.GetCurrentGameTime
+- uid: Core.Systems.GameTime
+  commentId: T:Core.Systems.GameTime
+  parent: Core.Systems
+  href: Core.Systems.GameTime.html
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Core.Systems.GameTime
+- uid: Core.Systems.TimeManager.GetFormattedDate*
+  commentId: Overload:Core.Systems.TimeManager.GetFormattedDate
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GetFormattedDate
+  name: GetFormattedDate
+  nameWithType: TimeManager.GetFormattedDate
+  fullName: Core.Systems.TimeManager.GetFormattedDate
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.TimeManager.GetFormattedDateCompact*
+  commentId: Overload:Core.Systems.TimeManager.GetFormattedDateCompact
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GetFormattedDateCompact
+  name: GetFormattedDateCompact
+  nameWithType: TimeManager.GetFormattedDateCompact
+  fullName: Core.Systems.TimeManager.GetFormattedDateCompact
+- uid: Core.Systems.TimeManager.GetCurrentMonthName*
+  commentId: Overload:Core.Systems.TimeManager.GetCurrentMonthName
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GetCurrentMonthName
+  name: GetCurrentMonthName
+  nameWithType: TimeManager.GetCurrentMonthName
+  fullName: Core.Systems.TimeManager.GetCurrentMonthName
+- uid: Core.Systems.TimeManager.CalculateTotalTicks*
+  commentId: Overload:Core.Systems.TimeManager.CalculateTotalTicks
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_CalculateTotalTicks_System_Int32_System_Int32_System_Int32_
+  name: CalculateTotalTicks
+  nameWithType: TimeManager.CalculateTotalTicks
+  fullName: Core.Systems.TimeManager.CalculateTotalTicks
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: Core.Systems.TimeManager.GetAccumulator*
+  commentId: Overload:Core.Systems.TimeManager.GetAccumulator
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_GetAccumulator
+  name: GetAccumulator
+  nameWithType: TimeManager.GetAccumulator
+  fullName: Core.Systems.TimeManager.GetAccumulator
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Systems.TimeManager.LoadState*
+  commentId: Overload:Core.Systems.TimeManager.LoadState
+  href: Core.Systems.TimeManager.html#Core_Systems_TimeManager_LoadState_System_UInt64_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Boolean_Core_Data_FixedPoint64_
+  name: LoadState
+  nameWithType: TimeManager.LoadState
+  fullName: Core.Systems.TimeManager.LoadState

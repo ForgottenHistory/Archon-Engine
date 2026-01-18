@@ -1,0 +1,281 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent
+  commentId: T:Core.Diplomacy.MilitaryAccessRevokedEvent
+  id: MilitaryAccessRevokedEvent
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  - Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+  - Core.Diplomacy.MilitaryAccessRevokedEvent.granterID
+  - Core.Diplomacy.MilitaryAccessRevokedEvent.recipientID
+  - Core.Diplomacy.MilitaryAccessRevokedEvent.tick
+  langs:
+  - csharp
+  - vb
+  name: MilitaryAccessRevokedEvent
+  nameWithType: MilitaryAccessRevokedEvent
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MilitaryAccessRevokedEvent
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 246
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Emitted when military access is revoked
+  example: []
+  syntax:
+    content: 'public struct MilitaryAccessRevokedEvent : IGameEvent'
+    content.vb: Public Structure MilitaryAccessRevokedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.granterID
+  commentId: F:Core.Diplomacy.MilitaryAccessRevokedEvent.granterID
+  id: granterID
+  parent: Core.Diplomacy.MilitaryAccessRevokedEvent
+  langs:
+  - csharp
+  - vb
+  name: granterID
+  nameWithType: MilitaryAccessRevokedEvent.granterID
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.granterID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: granterID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 248
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort granterID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly granterID As UShort
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.recipientID
+  commentId: F:Core.Diplomacy.MilitaryAccessRevokedEvent.recipientID
+  id: recipientID
+  parent: Core.Diplomacy.MilitaryAccessRevokedEvent
+  langs:
+  - csharp
+  - vb
+  name: recipientID
+  nameWithType: MilitaryAccessRevokedEvent.recipientID
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.recipientID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: recipientID
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 249
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly ushort recipientID
+    return:
+      type: System.UInt16
+    content.vb: Public ReadOnly recipientID As UShort
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.tick
+  commentId: F:Core.Diplomacy.MilitaryAccessRevokedEvent.tick
+  id: tick
+  parent: Core.Diplomacy.MilitaryAccessRevokedEvent
+  langs:
+  - csharp
+  - vb
+  name: tick
+  nameWithType: MilitaryAccessRevokedEvent.tick
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.tick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: tick
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 250
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public readonly int tick
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly tick As Integer
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+  commentId: P:Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Diplomacy.MilitaryAccessRevokedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: MilitaryAccessRevokedEvent.TimeStamp
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 251
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  commentId: M:Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor(System.UInt16,System.UInt16,System.Int32)
+  id: '#ctor(System.UInt16,System.UInt16,System.Int32)'
+  parent: Core.Diplomacy.MilitaryAccessRevokedEvent
+  langs:
+  - csharp
+  - vb
+  name: MilitaryAccessRevokedEvent(ushort, ushort, int)
+  nameWithType: MilitaryAccessRevokedEvent.MilitaryAccessRevokedEvent(ushort, ushort, int)
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.MilitaryAccessRevokedEvent(ushort, ushort, int)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Diplomacy/DiplomacyEvents.cs
+    startLine: 253
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  syntax:
+    content: public MilitaryAccessRevokedEvent(ushort granter, ushort recipient, int tick)
+    parameters:
+    - id: granter
+      type: System.UInt16
+    - id: recipient
+      type: System.UInt16
+    - id: tick
+      type: System.Int32
+    content.vb: Public Sub New(granter As UShort, recipient As UShort, tick As Integer)
+  overload: Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor*
+  nameWithType.vb: MilitaryAccessRevokedEvent.New(UShort, UShort, Integer)
+  fullName.vb: Core.Diplomacy.MilitaryAccessRevokedEvent.New(UShort, UShort, Integer)
+  name.vb: New(UShort, UShort, Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp*
+  commentId: Overload:Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+  href: Core.Diplomacy.MilitaryAccessRevokedEvent.html#Core_Diplomacy_MilitaryAccessRevokedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: MilitaryAccessRevokedEvent.TimeStamp
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor*
+  commentId: Overload:Core.Diplomacy.MilitaryAccessRevokedEvent.#ctor
+  href: Core.Diplomacy.MilitaryAccessRevokedEvent.html#Core_Diplomacy_MilitaryAccessRevokedEvent__ctor_System_UInt16_System_UInt16_System_Int32_
+  name: MilitaryAccessRevokedEvent
+  nameWithType: MilitaryAccessRevokedEvent.MilitaryAccessRevokedEvent
+  fullName: Core.Diplomacy.MilitaryAccessRevokedEvent.MilitaryAccessRevokedEvent
+  nameWithType.vb: MilitaryAccessRevokedEvent.New
+  fullName.vb: Core.Diplomacy.MilitaryAccessRevokedEvent.New
+  name.vb: New

@@ -1,0 +1,85 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  id: Map.MapModes.Colorization
+  children:
+  - Map.MapModes.Colorization.ColorizationStyleParams
+  - Map.MapModes.Colorization.GradientMapModeColorizer
+  - Map.MapModes.Colorization.IMapModeColorizer
+  - Map.MapModes.Colorization.MapModeColorizerBase
+  - Map.MapModes.Colorization.MapModeColorizerContext
+  langs:
+  - csharp
+  - vb
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.MapModes.Colorization.GradientMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.GradientMapModeColorizer
+  href: Map.MapModes.Colorization.GradientMapModeColorizer.html
+  name: GradientMapModeColorizer
+  nameWithType: GradientMapModeColorizer
+  fullName: Map.MapModes.Colorization.GradientMapModeColorizer
+- uid: Map.MapModes.Colorization.IMapModeColorizer
+  commentId: T:Map.MapModes.Colorization.IMapModeColorizer
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.IMapModeColorizer.html
+  name: IMapModeColorizer
+  nameWithType: IMapModeColorizer
+  fullName: Map.MapModes.Colorization.IMapModeColorizer
+- uid: Map.MapModes.Colorization.MapModeColorizerContext
+  commentId: T:Map.MapModes.Colorization.MapModeColorizerContext
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.MapModeColorizerContext.html
+  name: MapModeColorizerContext
+  nameWithType: MapModeColorizerContext
+  fullName: Map.MapModes.Colorization.MapModeColorizerContext
+- uid: Map.MapModes.Colorization.ColorizationStyleParams
+  commentId: T:Map.MapModes.Colorization.ColorizationStyleParams
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.ColorizationStyleParams.html
+  name: ColorizationStyleParams
+  nameWithType: ColorizationStyleParams
+  fullName: Map.MapModes.Colorization.ColorizationStyleParams
+- uid: Map.MapModes.Colorization.MapModeColorizerBase
+  commentId: T:Map.MapModes.Colorization.MapModeColorizerBase
+  parent: Map.MapModes.Colorization
+  href: Map.MapModes.Colorization.MapModeColorizerBase.html
+  name: MapModeColorizerBase
+  nameWithType: MapModeColorizerBase
+  fullName: Map.MapModes.Colorization.MapModeColorizerBase
+- uid: Map.MapModes.Colorization
+  commentId: N:Map.MapModes.Colorization
+  href: Map.html
+  name: Map.MapModes.Colorization
+  nameWithType: Map.MapModes.Colorization
+  fullName: Map.MapModes.Colorization
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  - name: .
+  - uid: Map.MapModes.Colorization
+    name: Colorization
+    href: Map.MapModes.Colorization.html

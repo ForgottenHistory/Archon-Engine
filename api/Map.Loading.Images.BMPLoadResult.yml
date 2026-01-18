@@ -1,0 +1,518 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.Images.BMPLoadResult
+  commentId: T:Map.Loading.Images.BMPLoadResult
+  id: BMPLoadResult
+  parent: Map.Loading.Images
+  children:
+  - Map.Loading.Images.BMPLoadResult.BitsPerPixel
+  - Map.Loading.Images.BMPLoadResult.Dispose
+  - Map.Loading.Images.BMPLoadResult.ErrorMessage
+  - Map.Loading.Images.BMPLoadResult.GetPixelData
+  - Map.Loading.Images.BMPLoadResult.Height
+  - Map.Loading.Images.BMPLoadResult.IsSuccess
+  - Map.Loading.Images.BMPLoadResult.Palette
+  - Map.Loading.Images.BMPLoadResult.PixelData
+  - Map.Loading.Images.BMPLoadResult.UniqueColors
+  - Map.Loading.Images.BMPLoadResult.Width
+  langs:
+  - csharp
+  - vb
+  name: BMPLoadResult
+  nameWithType: BMPLoadResult
+  fullName: Map.Loading.Images.BMPLoadResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BMPLoadResult
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 164
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Generic result of BMP file loading (works for any BMP type)
+  example: []
+  syntax:
+    content: public struct BMPLoadResult
+    content.vb: Public Structure BMPLoadResult
+- uid: Map.Loading.Images.BMPLoadResult.IsSuccess
+  commentId: F:Map.Loading.Images.BMPLoadResult.IsSuccess
+  id: IsSuccess
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: BMPLoadResult.IsSuccess
+  fullName: Map.Loading.Images.BMPLoadResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Map.Loading.Images.BMPLoadResult.ErrorMessage
+  commentId: F:Map.Loading.Images.BMPLoadResult.ErrorMessage
+  id: ErrorMessage
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: BMPLoadResult.ErrorMessage
+  fullName: Map.Loading.Images.BMPLoadResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 167
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public string ErrorMessage
+    return:
+      type: System.String
+    content.vb: Public ErrorMessage As String
+- uid: Map.Loading.Images.BMPLoadResult.PixelData
+  commentId: F:Map.Loading.Images.BMPLoadResult.PixelData
+  id: PixelData
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: PixelData
+  nameWithType: BMPLoadResult.PixelData
+  fullName: Map.Loading.Images.BMPLoadResult.PixelData
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PixelData
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 168
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public PersistentBMPPixelData PixelData
+    return:
+      type: Map.Loading.Images.PersistentBMPPixelData
+    content.vb: Public PixelData As PersistentBMPPixelData
+- uid: Map.Loading.Images.BMPLoadResult.UniqueColors
+  commentId: F:Map.Loading.Images.BMPLoadResult.UniqueColors
+  id: UniqueColors
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: UniqueColors
+  nameWithType: BMPLoadResult.UniqueColors
+  fullName: Map.Loading.Images.BMPLoadResult.UniqueColors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UniqueColors
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 169
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public NativeHashSet<int> UniqueColors
+    return:
+      type: Unity.Collections.NativeHashSet{System.Int32}
+    content.vb: Public UniqueColors As NativeHashSet(Of Integer)
+- uid: Map.Loading.Images.BMPLoadResult.Width
+  commentId: F:Map.Loading.Images.BMPLoadResult.Width
+  id: Width
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Width
+  nameWithType: BMPLoadResult.Width
+  fullName: Map.Loading.Images.BMPLoadResult.Width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Width
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 170
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Width
+    return:
+      type: System.Int32
+    content.vb: Public Width As Integer
+- uid: Map.Loading.Images.BMPLoadResult.Height
+  commentId: F:Map.Loading.Images.BMPLoadResult.Height
+  id: Height
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Height
+  nameWithType: BMPLoadResult.Height
+  fullName: Map.Loading.Images.BMPLoadResult.Height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Height
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 171
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int Height
+    return:
+      type: System.Int32
+    content.vb: Public Height As Integer
+- uid: Map.Loading.Images.BMPLoadResult.BitsPerPixel
+  commentId: F:Map.Loading.Images.BMPLoadResult.BitsPerPixel
+  id: BitsPerPixel
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: BitsPerPixel
+  nameWithType: BMPLoadResult.BitsPerPixel
+  fullName: Map.Loading.Images.BMPLoadResult.BitsPerPixel
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BitsPerPixel
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 172
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public int BitsPerPixel
+    return:
+      type: System.Int32
+    content.vb: Public BitsPerPixel As Integer
+- uid: Map.Loading.Images.BMPLoadResult.Palette
+  commentId: F:Map.Loading.Images.BMPLoadResult.Palette
+  id: Palette
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Palette
+  nameWithType: BMPLoadResult.Palette
+  fullName: Map.Loading.Images.BMPLoadResult.Palette
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Palette
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 173
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public Color32[] Palette
+    return:
+      type: UnityEngine.Color32[]
+    content.vb: Public Palette As Color32()
+- uid: Map.Loading.Images.BMPLoadResult.GetPixelData
+  commentId: M:Map.Loading.Images.BMPLoadResult.GetPixelData
+  id: GetPixelData
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: GetPixelData()
+  nameWithType: BMPLoadResult.GetPixelData()
+  fullName: Map.Loading.Images.BMPLoadResult.GetPixelData()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPixelData
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 178
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: Get pixel data as BMPPixelData for processing
+  example: []
+  syntax:
+    content: public BMPParser.BMPPixelData GetPixelData()
+    return:
+      type: Map.Loading.Images.BMPParser.BMPPixelData
+    content.vb: Public Function GetPixelData() As BMPParser.BMPPixelData
+  overload: Map.Loading.Images.BMPLoadResult.GetPixelData*
+- uid: Map.Loading.Images.BMPLoadResult.Dispose
+  commentId: M:Map.Loading.Images.BMPLoadResult.Dispose
+  id: Dispose
+  parent: Map.Loading.Images.BMPLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: BMPLoadResult.Dispose()
+  fullName: Map.Loading.Images.BMPLoadResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/Images/JobifiedBMPLoader.cs
+    startLine: 192
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.Images.BMPLoadResult.Dispose*
+references:
+- uid: Map.Loading.Images
+  commentId: N:Map.Loading.Images
+  href: Map.html
+  name: Map.Loading.Images
+  nameWithType: Map.Loading.Images
+  fullName: Map.Loading.Images
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  - name: .
+  - uid: Map.Loading.Images
+    name: Images
+    href: Map.Loading.Images.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Loading.Images.PersistentBMPPixelData
+  commentId: T:Map.Loading.Images.PersistentBMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.PersistentBMPPixelData.html
+  name: PersistentBMPPixelData
+  nameWithType: PersistentBMPPixelData
+  fullName: Map.Loading.Images.PersistentBMPPixelData
+- uid: Unity.Collections.NativeHashSet{System.Int32}
+  commentId: T:Unity.Collections.NativeHashSet{System.Int32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeHashSet`1
+  name: NativeHashSet<int>
+  nameWithType: NativeHashSet<int>
+  fullName: Unity.Collections.NativeHashSet<int>
+  nameWithType.vb: NativeHashSet(Of Integer)
+  fullName.vb: Unity.Collections.NativeHashSet(Of Integer)
+  name.vb: NativeHashSet(Of Integer)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeHashSet`1
+  commentId: T:Unity.Collections.NativeHashSet`1
+  isExternal: true
+  name: NativeHashSet<T>
+  nameWithType: NativeHashSet<T>
+  fullName: Unity.Collections.NativeHashSet<T>
+  nameWithType.vb: NativeHashSet(Of T)
+  fullName.vb: Unity.Collections.NativeHashSet(Of T)
+  name.vb: NativeHashSet(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeHashSet`1
+    name: NativeHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: UnityEngine.Color32[]
+  isExternal: true
+  name: Color32[]
+  nameWithType: Color32[]
+  fullName: UnityEngine.Color32[]
+  nameWithType.vb: Color32()
+  fullName.vb: UnityEngine.Color32()
+  name.vb: Color32()
+  spec.csharp:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Loading.Images.BMPLoadResult.GetPixelData*
+  commentId: Overload:Map.Loading.Images.BMPLoadResult.GetPixelData
+  href: Map.Loading.Images.BMPLoadResult.html#Map_Loading_Images_BMPLoadResult_GetPixelData
+  name: GetPixelData
+  nameWithType: BMPLoadResult.GetPixelData
+  fullName: Map.Loading.Images.BMPLoadResult.GetPixelData
+- uid: Map.Loading.Images.BMPParser.BMPPixelData
+  commentId: T:Map.Loading.Images.BMPParser.BMPPixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.BMPParser.html
+  name: BMPParser.BMPPixelData
+  nameWithType: BMPParser.BMPPixelData
+  fullName: Map.Loading.Images.BMPParser.BMPPixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.BMPParser
+    name: BMPParser
+    href: Map.Loading.Images.BMPParser.html
+  - name: .
+  - uid: Map.Loading.Images.BMPParser.BMPPixelData
+    name: BMPPixelData
+    href: Map.Loading.Images.BMPParser.BMPPixelData.html
+- uid: Map.Loading.Images.BMPLoadResult.Dispose*
+  commentId: Overload:Map.Loading.Images.BMPLoadResult.Dispose
+  href: Map.Loading.Images.BMPLoadResult.html#Map_Loading_Images_BMPLoadResult_Dispose
+  name: Dispose
+  nameWithType: BMPLoadResult.Dispose
+  fullName: Map.Loading.Images.BMPLoadResult.Dispose

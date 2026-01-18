@@ -1,0 +1,439 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  id: ProvinceInitialStateLoadResult
+  parent: Core.Data
+  children:
+  - Core.Data.ProvinceInitialStateLoadResult.Dispose
+  - Core.Data.ProvinceInitialStateLoadResult.ErrorMessage
+  - Core.Data.ProvinceInitialStateLoadResult.FailedCount
+  - Core.Data.ProvinceInitialStateLoadResult.Failure(System.String)
+  - Core.Data.ProvinceInitialStateLoadResult.InitialStates
+  - Core.Data.ProvinceInitialStateLoadResult.IsSuccess
+  - Core.Data.ProvinceInitialStateLoadResult.LoadedCount
+  - Core.Data.ProvinceInitialStateLoadResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceInitialStateLoadResult
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Result container for Burst-compatible province history loading
+  example: []
+  syntax:
+    content: public struct ProvinceInitialStateLoadResult
+    content.vb: Public Structure ProvinceInitialStateLoadResult
+- uid: Core.Data.ProvinceInitialStateLoadResult.IsSuccess
+  commentId: F:Core.Data.ProvinceInitialStateLoadResult.IsSuccess
+  id: IsSuccess
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: IsSuccess
+  nameWithType: ProvinceInitialStateLoadResult.IsSuccess
+  fullName: Core.Data.ProvinceInitialStateLoadResult.IsSuccess
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsSuccess
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public bool IsSuccess
+    return:
+      type: System.Boolean
+    content.vb: Public IsSuccess As Boolean
+- uid: Core.Data.ProvinceInitialStateLoadResult.ErrorMessage
+  commentId: F:Core.Data.ProvinceInitialStateLoadResult.ErrorMessage
+  id: ErrorMessage
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: ErrorMessage
+  nameWithType: ProvinceInitialStateLoadResult.ErrorMessage
+  fullName: Core.Data.ProvinceInitialStateLoadResult.ErrorMessage
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ErrorMessage
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 92
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public FixedString512Bytes ErrorMessage
+    return:
+      type: Unity.Collections.FixedString512Bytes
+    content.vb: Public ErrorMessage As FixedString512Bytes
+- uid: Core.Data.ProvinceInitialStateLoadResult.InitialStates
+  commentId: F:Core.Data.ProvinceInitialStateLoadResult.InitialStates
+  id: InitialStates
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: InitialStates
+  nameWithType: ProvinceInitialStateLoadResult.InitialStates
+  fullName: Core.Data.ProvinceInitialStateLoadResult.InitialStates
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitialStates
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 93
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public NativeArray<ProvinceInitialState> InitialStates
+    return:
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+    content.vb: Public InitialStates As NativeArray(Of ProvinceInitialState)
+- uid: Core.Data.ProvinceInitialStateLoadResult.LoadedCount
+  commentId: F:Core.Data.ProvinceInitialStateLoadResult.LoadedCount
+  id: LoadedCount
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: LoadedCount
+  nameWithType: ProvinceInitialStateLoadResult.LoadedCount
+  fullName: Core.Data.ProvinceInitialStateLoadResult.LoadedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadedCount
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 94
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int LoadedCount
+    return:
+      type: System.Int32
+    content.vb: Public LoadedCount As Integer
+- uid: Core.Data.ProvinceInitialStateLoadResult.FailedCount
+  commentId: F:Core.Data.ProvinceInitialStateLoadResult.FailedCount
+  id: FailedCount
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: FailedCount
+  nameWithType: ProvinceInitialStateLoadResult.FailedCount
+  fullName: Core.Data.ProvinceInitialStateLoadResult.FailedCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FailedCount
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int FailedCount
+    return:
+      type: System.Int32
+    content.vb: Public FailedCount As Integer
+- uid: Core.Data.ProvinceInitialStateLoadResult.Dispose
+  commentId: M:Core.Data.ProvinceInitialStateLoadResult.Dispose
+  id: Dispose
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceInitialStateLoadResult.Dispose()
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 97
+  assemblies:
+  - Core
+  namespace: Core.Data
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Data.ProvinceInitialStateLoadResult.Dispose*
+- uid: Core.Data.ProvinceInitialStateLoadResult.Failure(System.String)
+  commentId: M:Core.Data.ProvinceInitialStateLoadResult.Failure(System.String)
+  id: Failure(System.String)
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Failure(string)
+  nameWithType: ProvinceInitialStateLoadResult.Failure(string)
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Failure(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Failure
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static ProvinceInitialStateLoadResult Failure(string error)
+    parameters:
+    - id: error
+      type: System.String
+    return:
+      type: Core.Data.ProvinceInitialStateLoadResult
+    content.vb: Public Shared Function Failure([error] As String) As ProvinceInitialStateLoadResult
+  overload: Core.Data.ProvinceInitialStateLoadResult.Failure*
+  nameWithType.vb: ProvinceInitialStateLoadResult.Failure(String)
+  fullName.vb: Core.Data.ProvinceInitialStateLoadResult.Failure(String)
+  name.vb: Failure(String)
+- uid: Core.Data.ProvinceInitialStateLoadResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  commentId: M:Core.Data.ProvinceInitialStateLoadResult.Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  id: Success(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState},System.Int32)
+  parent: Core.Data.ProvinceInitialStateLoadResult
+  langs:
+  - csharp
+  - vb
+  name: Success(NativeArray<ProvinceInitialState>, int)
+  nameWithType: ProvinceInitialStateLoadResult.Success(NativeArray<ProvinceInitialState>, int)
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Success(Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceInitialState.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Success
+    path: Scripts/Core/Data/ProvinceInitialState.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public static ProvinceInitialStateLoadResult Success(NativeArray<ProvinceInitialState> states, int failed)
+    parameters:
+    - id: states
+      type: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+    - id: failed
+      type: System.Int32
+    return:
+      type: Core.Data.ProvinceInitialStateLoadResult
+    content.vb: Public Shared Function Success(states As NativeArray(Of ProvinceInitialState), failed As Integer) As ProvinceInitialStateLoadResult
+  overload: Core.Data.ProvinceInitialStateLoadResult.Success*
+  nameWithType.vb: ProvinceInitialStateLoadResult.Success(NativeArray(Of ProvinceInitialState), Integer)
+  fullName.vb: Core.Data.ProvinceInitialStateLoadResult.Success(Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState), Integer)
+  name.vb: Success(NativeArray(Of ProvinceInitialState), Integer)
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Unity.Collections.FixedString512Bytes
+  commentId: T:Unity.Collections.FixedString512Bytes
+  parent: Unity.Collections
+  isExternal: true
+  name: FixedString512Bytes
+  nameWithType: FixedString512Bytes
+  fullName: Unity.Collections.FixedString512Bytes
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  commentId: T:Unity.Collections.NativeArray{Core.Data.ProvinceInitialState}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  href: Core.Data.ProvinceInitialState.html
+  name: NativeArray<ProvinceInitialState>
+  nameWithType: NativeArray<ProvinceInitialState>
+  fullName: Unity.Collections.NativeArray<Core.Data.ProvinceInitialState>
+  nameWithType.vb: NativeArray(Of ProvinceInitialState)
+  fullName.vb: Unity.Collections.NativeArray(Of Core.Data.ProvinceInitialState)
+  name.vb: NativeArray(Of ProvinceInitialState)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Data.ProvinceInitialState
+    name: ProvinceInitialState
+    href: Core.Data.ProvinceInitialState.html
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.ProvinceInitialStateLoadResult.Dispose*
+  commentId: Overload:Core.Data.ProvinceInitialStateLoadResult.Dispose
+  href: Core.Data.ProvinceInitialStateLoadResult.html#Core_Data_ProvinceInitialStateLoadResult_Dispose
+  name: Dispose
+  nameWithType: ProvinceInitialStateLoadResult.Dispose
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Dispose
+- uid: Core.Data.ProvinceInitialStateLoadResult.Failure*
+  commentId: Overload:Core.Data.ProvinceInitialStateLoadResult.Failure
+  href: Core.Data.ProvinceInitialStateLoadResult.html#Core_Data_ProvinceInitialStateLoadResult_Failure_System_String_
+  name: Failure
+  nameWithType: ProvinceInitialStateLoadResult.Failure
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Failure
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialStateLoadResult.html
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+- uid: Core.Data.ProvinceInitialStateLoadResult.Success*
+  commentId: Overload:Core.Data.ProvinceInitialStateLoadResult.Success
+  href: Core.Data.ProvinceInitialStateLoadResult.html#Core_Data_ProvinceInitialStateLoadResult_Success_Unity_Collections_NativeArray_Core_Data_ProvinceInitialState__System_Int32_
+  name: Success
+  nameWithType: ProvinceInitialStateLoadResult.Success
+  fullName: Core.Data.ProvinceInitialStateLoadResult.Success

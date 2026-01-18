@@ -1,0 +1,195 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Loading.ProvinceMapLoader.ProvincePixel
+  commentId: T:Map.Loading.ProvinceMapLoader.ProvincePixel
+  id: ProvinceMapLoader.ProvincePixel
+  parent: Map.Loading
+  children:
+  - Map.Loading.ProvinceMapLoader.ProvincePixel.Color
+  - Map.Loading.ProvinceMapLoader.ProvincePixel.Position
+  - Map.Loading.ProvinceMapLoader.ProvincePixel.ProvinceID
+  langs:
+  - csharp
+  - vb
+  name: ProvinceMapLoader.ProvincePixel
+  nameWithType: ProvinceMapLoader.ProvincePixel
+  fullName: Map.Loading.ProvinceMapLoader.ProvincePixel
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincePixel
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Legacy ProvincePixel structure
+  example: []
+  syntax:
+    content: public struct ProvinceMapLoader.ProvincePixel
+    content.vb: Public Structure ProvinceMapLoader.ProvincePixel
+- uid: Map.Loading.ProvinceMapLoader.ProvincePixel.Position
+  commentId: F:Map.Loading.ProvinceMapLoader.ProvincePixel.Position
+  id: Position
+  parent: Map.Loading.ProvinceMapLoader.ProvincePixel
+  langs:
+  - csharp
+  - vb
+  name: Position
+  nameWithType: ProvinceMapLoader.ProvincePixel.Position
+  fullName: Map.Loading.ProvinceMapLoader.ProvincePixel.Position
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Position
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 40
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public int2 Position
+    return:
+      type: Unity.Mathematics.int2
+    content.vb: Public Position As int2
+- uid: Map.Loading.ProvinceMapLoader.ProvincePixel.ProvinceID
+  commentId: F:Map.Loading.ProvinceMapLoader.ProvincePixel.ProvinceID
+  id: ProvinceID
+  parent: Map.Loading.ProvinceMapLoader.ProvincePixel
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: ProvinceMapLoader.ProvincePixel.ProvinceID
+  fullName: Map.Loading.ProvinceMapLoader.ProvincePixel.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 41
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Map.Loading.ProvinceMapLoader.ProvincePixel.Color
+  commentId: F:Map.Loading.ProvinceMapLoader.ProvincePixel.Color
+  id: Color
+  parent: Map.Loading.ProvinceMapLoader.ProvincePixel
+  langs:
+  - csharp
+  - vb
+  name: Color
+  nameWithType: ProvinceMapLoader.ProvincePixel.Color
+  fullName: Map.Loading.ProvinceMapLoader.ProvincePixel.Color
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Compatibility/Map.Loading.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Color
+    path: Scripts/Map/Compatibility/Map.Loading.cs
+    startLine: 42
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public Color32 Color
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Color As Color32
+references:
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+- uid: Unity.Mathematics.int2
+  commentId: T:Unity.Mathematics.int2
+  parent: Unity.Mathematics
+  isExternal: true
+  name: int2
+  nameWithType: int2
+  fullName: Unity.Mathematics.int2
+- uid: Unity.Mathematics
+  commentId: N:Unity.Mathematics
+  isExternal: true
+  name: Unity.Mathematics
+  nameWithType: Unity.Mathematics
+  fullName: Unity.Mathematics
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Mathematics
+    name: Mathematics
+    isExternal: true
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

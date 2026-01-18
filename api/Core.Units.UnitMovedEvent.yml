@@ -1,0 +1,225 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitMovedEvent
+  commentId: T:Core.Units.UnitMovedEvent
+  id: UnitMovedEvent
+  parent: Core.Units
+  children:
+  - Core.Units.UnitMovedEvent.NewProvinceID
+  - Core.Units.UnitMovedEvent.OldProvinceID
+  - Core.Units.UnitMovedEvent.TimeStamp
+  - Core.Units.UnitMovedEvent.UnitID
+  langs:
+  - csharp
+  - vb
+  name: UnitMovedEvent
+  nameWithType: UnitMovedEvent
+  fullName: Core.Units.UnitMovedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitMovedEvent
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Emitted when a unit moves to a new province
+  example: []
+  syntax:
+    content: 'public struct UnitMovedEvent : IGameEvent'
+    content.vb: Public Structure UnitMovedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Units.UnitMovedEvent.UnitID
+  commentId: F:Core.Units.UnitMovedEvent.UnitID
+  id: UnitID
+  parent: Core.Units.UnitMovedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitID
+  nameWithType: UnitMovedEvent.UnitID
+  fullName: Core.Units.UnitMovedEvent.UnitID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitID As UShort
+- uid: Core.Units.UnitMovedEvent.OldProvinceID
+  commentId: F:Core.Units.UnitMovedEvent.OldProvinceID
+  id: OldProvinceID
+  parent: Core.Units.UnitMovedEvent
+  langs:
+  - csharp
+  - vb
+  name: OldProvinceID
+  nameWithType: UnitMovedEvent.OldProvinceID
+  fullName: Core.Units.UnitMovedEvent.OldProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OldProvinceID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort OldProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public OldProvinceID As UShort
+- uid: Core.Units.UnitMovedEvent.NewProvinceID
+  commentId: F:Core.Units.UnitMovedEvent.NewProvinceID
+  id: NewProvinceID
+  parent: Core.Units.UnitMovedEvent
+  langs:
+  - csharp
+  - vb
+  name: NewProvinceID
+  nameWithType: UnitMovedEvent.NewProvinceID
+  fullName: Core.Units.UnitMovedEvent.NewProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NewProvinceID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort NewProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public NewProvinceID As UShort
+- uid: Core.Units.UnitMovedEvent.TimeStamp
+  commentId: P:Core.Units.UnitMovedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Units.UnitMovedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: UnitMovedEvent.TimeStamp
+  fullName: Core.Units.UnitMovedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Units.UnitMovedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitMovedEvent.TimeStamp*
+  commentId: Overload:Core.Units.UnitMovedEvent.TimeStamp
+  href: Core.Units.UnitMovedEvent.html#Core_Units_UnitMovedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: UnitMovedEvent.TimeStamp
+  fullName: Core.Units.UnitMovedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

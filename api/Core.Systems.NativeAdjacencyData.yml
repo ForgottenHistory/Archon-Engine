@@ -1,0 +1,414 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.NativeAdjacencyData
+  commentId: T:Core.Systems.NativeAdjacencyData
+  id: NativeAdjacencyData
+  parent: Core.Systems
+  children:
+  - Core.Systems.NativeAdjacencyData.GetNeighbors(System.UInt16)
+  - Core.Systems.NativeAdjacencyData.IsAdjacent(System.UInt16,System.UInt16)
+  - Core.Systems.NativeAdjacencyData.IsCreated
+  - Core.Systems.NativeAdjacencyData.adjacencyMap
+  langs:
+  - csharp
+  - vb
+  name: NativeAdjacencyData
+  nameWithType: NativeAdjacencyData
+  fullName: Core.Systems.NativeAdjacencyData
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NativeAdjacencyData
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Read-only native adjacency data for Burst jobs.
+
+    Use this struct in IJob implementations for parallel graph algorithms.
+  example: []
+  syntax:
+    content: public struct NativeAdjacencyData
+    content.vb: Public Structure NativeAdjacencyData
+- uid: Core.Systems.NativeAdjacencyData.adjacencyMap
+  commentId: F:Core.Systems.NativeAdjacencyData.adjacencyMap
+  id: adjacencyMap
+  parent: Core.Systems.NativeAdjacencyData
+  langs:
+  - csharp
+  - vb
+  name: adjacencyMap
+  nameWithType: NativeAdjacencyData.adjacencyMap
+  fullName: Core.Systems.NativeAdjacencyData.adjacencyMap
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: adjacencyMap
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public NativeParallelMultiHashMap<ushort, ushort> adjacencyMap
+    return:
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+    content.vb: Public adjacencyMap As NativeParallelMultiHashMap(Of UShort, UShort)
+- uid: Core.Systems.NativeAdjacencyData.IsCreated
+  commentId: P:Core.Systems.NativeAdjacencyData.IsCreated
+  id: IsCreated
+  parent: Core.Systems.NativeAdjacencyData
+  langs:
+  - csharp
+  - vb
+  name: IsCreated
+  nameWithType: NativeAdjacencyData.IsCreated
+  fullName: Core.Systems.NativeAdjacencyData.IsCreated
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCreated
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsCreated { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsCreated As Boolean
+  overload: Core.Systems.NativeAdjacencyData.IsCreated*
+- uid: Core.Systems.NativeAdjacencyData.GetNeighbors(System.UInt16)
+  commentId: M:Core.Systems.NativeAdjacencyData.GetNeighbors(System.UInt16)
+  id: GetNeighbors(System.UInt16)
+  parent: Core.Systems.NativeAdjacencyData
+  langs:
+  - csharp
+  - vb
+  name: GetNeighbors(ushort)
+  nameWithType: NativeAdjacencyData.GetNeighbors(ushort)
+  fullName: Core.Systems.NativeAdjacencyData.GetNeighbors(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighbors
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get neighbors for a province. Use in Burst jobs.
+  example: []
+  syntax:
+    content: public NativeParallelMultiHashMap<ushort, ushort>.Enumerator GetNeighbors(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}.Enumerator
+    content.vb: Public Function GetNeighbors(provinceId As UShort) As NativeParallelMultiHashMap(Of UShort, UShort).Enumerator
+  overload: Core.Systems.NativeAdjacencyData.GetNeighbors*
+  nameWithType.vb: NativeAdjacencyData.GetNeighbors(UShort)
+  fullName.vb: Core.Systems.NativeAdjacencyData.GetNeighbors(UShort)
+  name.vb: GetNeighbors(UShort)
+- uid: Core.Systems.NativeAdjacencyData.IsAdjacent(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.NativeAdjacencyData.IsAdjacent(System.UInt16,System.UInt16)
+  id: IsAdjacent(System.UInt16,System.UInt16)
+  parent: Core.Systems.NativeAdjacencyData
+  langs:
+  - csharp
+  - vb
+  name: IsAdjacent(ushort, ushort)
+  nameWithType: NativeAdjacencyData.IsAdjacent(ushort, ushort)
+  fullName: Core.Systems.NativeAdjacencyData.IsAdjacent(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/AdjacencySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsAdjacent
+    path: Scripts/Core/Systems/AdjacencySystem.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Check if two provinces are adjacent. Use in Burst jobs.
+  example: []
+  syntax:
+    content: public bool IsAdjacent(ushort province1, ushort province2)
+    parameters:
+    - id: province1
+      type: System.UInt16
+    - id: province2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsAdjacent(province1 As UShort, province2 As UShort) As Boolean
+  overload: Core.Systems.NativeAdjacencyData.IsAdjacent*
+  nameWithType.vb: NativeAdjacencyData.IsAdjacent(UShort, UShort)
+  fullName.vb: Core.Systems.NativeAdjacencyData.IsAdjacent(UShort, UShort)
+  name.vb: IsAdjacent(UShort, UShort)
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelMultiHashMap`2
+  name: NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType: NativeParallelMultiHashMap<ushort, ushort>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>
+  nameWithType.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort)
+  name.vb: NativeParallelMultiHashMap(Of UShort, UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeParallelMultiHashMap`2
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap`2
+  isExternal: true
+  name: NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType: NativeParallelMultiHashMap<TKey, TValue>
+  fullName: Unity.Collections.NativeParallelMultiHashMap<TKey, TValue>
+  nameWithType.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of TKey, TValue)
+  name.vb: NativeParallelMultiHashMap(Of TKey, TValue)
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Core.Systems.NativeAdjacencyData.IsCreated*
+  commentId: Overload:Core.Systems.NativeAdjacencyData.IsCreated
+  href: Core.Systems.NativeAdjacencyData.html#Core_Systems_NativeAdjacencyData_IsCreated
+  name: IsCreated
+  nameWithType: NativeAdjacencyData.IsCreated
+  fullName: Core.Systems.NativeAdjacencyData.IsCreated
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.NativeAdjacencyData.GetNeighbors*
+  commentId: Overload:Core.Systems.NativeAdjacencyData.GetNeighbors
+  href: Core.Systems.NativeAdjacencyData.html#Core_Systems_NativeAdjacencyData_GetNeighbors_System_UInt16_
+  name: GetNeighbors
+  nameWithType: NativeAdjacencyData.GetNeighbors
+  fullName: Core.Systems.NativeAdjacencyData.GetNeighbors
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}.Enumerator
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}.Enumerator
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelMultiHashMap`2.Enumerator
+  name: NativeParallelMultiHashMap<ushort, ushort>.Enumerator
+  nameWithType: NativeParallelMultiHashMap<ushort, ushort>.Enumerator
+  fullName: Unity.Collections.NativeParallelMultiHashMap<ushort, ushort>.Enumerator
+  nameWithType.vb: NativeParallelMultiHashMap(Of UShort, UShort).Enumerator
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of UShort, UShort).Enumerator
+  name.vb: NativeParallelMultiHashMap(Of UShort, UShort).Enumerator
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}.Enumerator
+    name: Enumerator
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeParallelMultiHashMap{System.UInt16,System.UInt16}.Enumerator
+    name: Enumerator
+    isExternal: true
+- uid: Unity.Collections.NativeParallelMultiHashMap`2.Enumerator
+  commentId: T:Unity.Collections.NativeParallelMultiHashMap`2.Enumerator
+  isExternal: true
+  name: NativeParallelMultiHashMap<TKey, TValue>.Enumerator
+  nameWithType: NativeParallelMultiHashMap<TKey, TValue>.Enumerator
+  fullName: Unity.Collections.NativeParallelMultiHashMap<TKey, TValue>.Enumerator
+  nameWithType.vb: NativeParallelMultiHashMap(Of TKey, TValue).Enumerator
+  fullName.vb: Unity.Collections.NativeParallelMultiHashMap(Of TKey, TValue).Enumerator
+  name.vb: NativeParallelMultiHashMap(Of TKey, TValue).Enumerator
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2.Enumerator
+    name: Enumerator
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2
+    name: NativeParallelMultiHashMap
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeParallelMultiHashMap`2.Enumerator
+    name: Enumerator
+    isExternal: true
+- uid: Core.Systems.NativeAdjacencyData.IsAdjacent*
+  commentId: Overload:Core.Systems.NativeAdjacencyData.IsAdjacent
+  href: Core.Systems.NativeAdjacencyData.html#Core_Systems_NativeAdjacencyData_IsAdjacent_System_UInt16_System_UInt16_
+  name: IsAdjacent
+  nameWithType: NativeAdjacencyData.IsAdjacent
+  fullName: Core.Systems.NativeAdjacencyData.IsAdjacent

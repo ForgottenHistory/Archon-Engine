@@ -1,0 +1,243 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.BorderParameterBinder
+  commentId: T:Map.Rendering.Border.BorderParameterBinder
+  id: BorderParameterBinder
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+  - Map.Rendering.Border.BorderParameterBinder.BorderMode
+  - Map.Rendering.Border.BorderParameterBinder.RenderingMode
+  langs:
+  - csharp
+  - vb
+  name: BorderParameterBinder
+  nameWithType: BorderParameterBinder
+  fullName: Map.Rendering.Border.BorderParameterBinder
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderParameterBinder
+    path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Manages border rendering mode state
+
+    Extracted from BorderComputeDispatcher for single responsibility
+
+
+    NOTE: Visual parameters (colors, widths, distance field settings) are now
+
+    controlled via VisualStyleConfiguration - the single source of truth for visuals.
+
+    This class only tracks the rendering mode for compute shader orchestration.
+  example: []
+  syntax:
+    content: public class BorderParameterBinder
+    content.vb: Public Class BorderParameterBinder
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.BorderParameterBinder.BorderMode
+  commentId: P:Map.Rendering.Border.BorderParameterBinder.BorderMode
+  id: BorderMode
+  parent: Map.Rendering.Border.BorderParameterBinder
+  langs:
+  - csharp
+  - vb
+  name: BorderMode
+  nameWithType: BorderParameterBinder.BorderMode
+  fullName: Map.Rendering.Border.BorderParameterBinder.BorderMode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderMode
+    path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderMode BorderMode { get; set; }
+    parameters: []
+    return:
+      type: Map.Rendering.BorderMode
+    content.vb: Public Property BorderMode As BorderMode
+  overload: Map.Rendering.Border.BorderParameterBinder.BorderMode*
+- uid: Map.Rendering.Border.BorderParameterBinder.RenderingMode
+  commentId: P:Map.Rendering.Border.BorderParameterBinder.RenderingMode
+  id: RenderingMode
+  parent: Map.Rendering.Border.BorderParameterBinder
+  langs:
+  - csharp
+  - vb
+  name: RenderingMode
+  nameWithType: BorderParameterBinder.RenderingMode
+  fullName: Map.Rendering.Border.BorderParameterBinder.RenderingMode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RenderingMode
+    path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+    startLine: 16
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public BorderRenderingMode RenderingMode { get; set; }
+    parameters: []
+    return:
+      type: Map.Rendering.BorderRenderingMode
+    content.vb: Public Property RenderingMode As BorderRenderingMode
+  overload: Map.Rendering.Border.BorderParameterBinder.RenderingMode*
+- uid: Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+  commentId: P:Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+  id: AutoUpdateBorders
+  parent: Map.Rendering.Border.BorderParameterBinder
+  langs:
+  - csharp
+  - vb
+  name: AutoUpdateBorders
+  nameWithType: BorderParameterBinder.AutoUpdateBorders
+  fullName: Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AutoUpdateBorders
+    path: Scripts/Map/Rendering/Border/BorderParameterBinder.cs
+    startLine: 19
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public bool AutoUpdateBorders { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property AutoUpdateBorders As Boolean
+  overload: Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders*
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.BorderParameterBinder.BorderMode*
+  commentId: Overload:Map.Rendering.Border.BorderParameterBinder.BorderMode
+  href: Map.Rendering.Border.BorderParameterBinder.html#Map_Rendering_Border_BorderParameterBinder_BorderMode
+  name: BorderMode
+  nameWithType: BorderParameterBinder.BorderMode
+  fullName: Map.Rendering.Border.BorderParameterBinder.BorderMode
+- uid: Map.Rendering.BorderMode
+  commentId: T:Map.Rendering.BorderMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderMode.html
+  name: BorderMode
+  nameWithType: BorderMode
+  fullName: Map.Rendering.BorderMode
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Rendering.Border.BorderParameterBinder.RenderingMode*
+  commentId: Overload:Map.Rendering.Border.BorderParameterBinder.RenderingMode
+  href: Map.Rendering.Border.BorderParameterBinder.html#Map_Rendering_Border_BorderParameterBinder_RenderingMode
+  name: RenderingMode
+  nameWithType: BorderParameterBinder.RenderingMode
+  fullName: Map.Rendering.Border.BorderParameterBinder.RenderingMode
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderRenderingMode.html
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode
+- uid: Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders*
+  commentId: Overload:Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+  href: Map.Rendering.Border.BorderParameterBinder.html#Map_Rendering_Border_BorderParameterBinder_AutoUpdateBorders
+  name: AutoUpdateBorders
+  nameWithType: BorderParameterBinder.AutoUpdateBorders
+  fullName: Map.Rendering.Border.BorderParameterBinder.AutoUpdateBorders
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

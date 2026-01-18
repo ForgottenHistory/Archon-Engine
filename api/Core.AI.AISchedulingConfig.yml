@@ -1,0 +1,451 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.AI.AISchedulingConfig
+  commentId: T:Core.AI.AISchedulingConfig
+  id: AISchedulingConfig
+  parent: Core.AI
+  children:
+  - Core.AI.AISchedulingConfig.#ctor(Core.AI.AITierConfig[])
+  - Core.AI.AISchedulingConfig.CreateDefault
+  - Core.AI.AISchedulingConfig.GetIntervalForTier(System.Byte)
+  - Core.AI.AISchedulingConfig.GetTier(System.Int32)
+  - Core.AI.AISchedulingConfig.GetTierForDistance(System.Byte)
+  - Core.AI.AISchedulingConfig.MAX_DISTANCE
+  - Core.AI.AISchedulingConfig.MAX_TIERS
+  - Core.AI.AISchedulingConfig.TierCount
+  langs:
+  - csharp
+  - vb
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AISchedulingConfig
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    ENGINE LAYER - Configuration for AI scheduling system.
+
+    Provides mechanism for tier-based AI processing.
+
+    GAME layer provides policy (specific tier definitions).
+
+    Tiers ordered by distance (closest first), each with distance threshold and interval.
+
+    Countries assigned to first tier where distance is at or below maxDistance.
+  example: []
+  syntax:
+    content: public class AISchedulingConfig
+    content.vb: Public Class AISchedulingConfig
+  inheritance:
+  - System.Object
+- uid: Core.AI.AISchedulingConfig.MAX_TIERS
+  commentId: F:Core.AI.AISchedulingConfig.MAX_TIERS
+  id: MAX_TIERS
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: MAX_TIERS
+  nameWithType: AISchedulingConfig.MAX_TIERS
+  fullName: Core.AI.AISchedulingConfig.MAX_TIERS
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MAX_TIERS
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public const int MAX_TIERS = 8
+    return:
+      type: System.Int32
+    content.vb: Public Const MAX_TIERS As Integer = 8
+- uid: Core.AI.AISchedulingConfig.MAX_DISTANCE
+  commentId: F:Core.AI.AISchedulingConfig.MAX_DISTANCE
+  id: MAX_DISTANCE
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: MAX_DISTANCE
+  nameWithType: AISchedulingConfig.MAX_DISTANCE
+  fullName: Core.AI.AISchedulingConfig.MAX_DISTANCE
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MAX_DISTANCE
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public const byte MAX_DISTANCE = 255
+    return:
+      type: System.Byte
+    content.vb: Public Const MAX_DISTANCE As Byte = 255
+- uid: Core.AI.AISchedulingConfig.TierCount
+  commentId: P:Core.AI.AISchedulingConfig.TierCount
+  id: TierCount
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: TierCount
+  nameWithType: AISchedulingConfig.TierCount
+  fullName: Core.AI.AISchedulingConfig.TierCount
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TierCount
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public int TierCount { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TierCount As Integer
+  overload: Core.AI.AISchedulingConfig.TierCount*
+- uid: Core.AI.AISchedulingConfig.#ctor(Core.AI.AITierConfig[])
+  commentId: M:Core.AI.AISchedulingConfig.#ctor(Core.AI.AITierConfig[])
+  id: '#ctor(Core.AI.AITierConfig[])'
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: AISchedulingConfig(AITierConfig[])
+  nameWithType: AISchedulingConfig.AISchedulingConfig(AITierConfig[])
+  fullName: Core.AI.AISchedulingConfig.AISchedulingConfig(Core.AI.AITierConfig[])
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.AI
+  syntax:
+    content: public AISchedulingConfig(AITierConfig[] tiers)
+    parameters:
+    - id: tiers
+      type: Core.AI.AITierConfig[]
+    content.vb: Public Sub New(tiers As AITierConfig())
+  overload: Core.AI.AISchedulingConfig.#ctor*
+  nameWithType.vb: AISchedulingConfig.New(AITierConfig())
+  fullName.vb: Core.AI.AISchedulingConfig.New(Core.AI.AITierConfig())
+  name.vb: New(AITierConfig())
+- uid: Core.AI.AISchedulingConfig.GetTier(System.Int32)
+  commentId: M:Core.AI.AISchedulingConfig.GetTier(System.Int32)
+  id: GetTier(System.Int32)
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: GetTier(int)
+  nameWithType: AISchedulingConfig.GetTier(int)
+  fullName: Core.AI.AISchedulingConfig.GetTier(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTier
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get tier configuration by index.
+  example: []
+  syntax:
+    content: public AITierConfig GetTier(int tierIndex)
+    parameters:
+    - id: tierIndex
+      type: System.Int32
+    return:
+      type: Core.AI.AITierConfig
+    content.vb: Public Function GetTier(tierIndex As Integer) As AITierConfig
+  overload: Core.AI.AISchedulingConfig.GetTier*
+  nameWithType.vb: AISchedulingConfig.GetTier(Integer)
+  fullName.vb: Core.AI.AISchedulingConfig.GetTier(Integer)
+  name.vb: GetTier(Integer)
+- uid: Core.AI.AISchedulingConfig.GetTierForDistance(System.Byte)
+  commentId: M:Core.AI.AISchedulingConfig.GetTierForDistance(System.Byte)
+  id: GetTierForDistance(System.Byte)
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: GetTierForDistance(byte)
+  nameWithType: AISchedulingConfig.GetTierForDistance(byte)
+  fullName: Core.AI.AISchedulingConfig.GetTierForDistance(byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTierForDistance
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Get tier index for a given distance.
+
+    Returns first tier where distance is at or below maxDistance.
+  example: []
+  syntax:
+    content: public byte GetTierForDistance(byte distance)
+    parameters:
+    - id: distance
+      type: System.Byte
+    return:
+      type: System.Byte
+    content.vb: Public Function GetTierForDistance(distance As Byte) As Byte
+  overload: Core.AI.AISchedulingConfig.GetTierForDistance*
+  nameWithType.vb: AISchedulingConfig.GetTierForDistance(Byte)
+  fullName.vb: Core.AI.AISchedulingConfig.GetTierForDistance(Byte)
+  name.vb: GetTierForDistance(Byte)
+- uid: Core.AI.AISchedulingConfig.GetIntervalForTier(System.Byte)
+  commentId: M:Core.AI.AISchedulingConfig.GetIntervalForTier(System.Byte)
+  id: GetIntervalForTier(System.Byte)
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: GetIntervalForTier(byte)
+  nameWithType: AISchedulingConfig.GetIntervalForTier(byte)
+  fullName: Core.AI.AISchedulingConfig.GetIntervalForTier(byte)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetIntervalForTier
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 79
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: Get processing interval (hours) for a tier.
+  example: []
+  syntax:
+    content: public ushort GetIntervalForTier(byte tier)
+    parameters:
+    - id: tier
+      type: System.Byte
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetIntervalForTier(tier As Byte) As UShort
+  overload: Core.AI.AISchedulingConfig.GetIntervalForTier*
+  nameWithType.vb: AISchedulingConfig.GetIntervalForTier(Byte)
+  fullName.vb: Core.AI.AISchedulingConfig.GetIntervalForTier(Byte)
+  name.vb: GetIntervalForTier(Byte)
+- uid: Core.AI.AISchedulingConfig.CreateDefault
+  commentId: M:Core.AI.AISchedulingConfig.CreateDefault
+  id: CreateDefault
+  parent: Core.AI.AISchedulingConfig
+  langs:
+  - csharp
+  - vb
+  name: CreateDefault()
+  nameWithType: AISchedulingConfig.CreateDefault()
+  fullName: Core.AI.AISchedulingConfig.CreateDefault()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/AI/AISchedulingConfig.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateDefault
+    path: Scripts/Core/AI/AISchedulingConfig.cs
+    startLine: 91
+  assemblies:
+  - Core
+  namespace: Core.AI
+  summary: >-
+    Create default configuration.
+
+    GAME layer can override with custom config.
+  example: []
+  syntax:
+    content: public static AISchedulingConfig CreateDefault()
+    return:
+      type: Core.AI.AISchedulingConfig
+    content.vb: Public Shared Function CreateDefault() As AISchedulingConfig
+  overload: Core.AI.AISchedulingConfig.CreateDefault*
+references:
+- uid: Core.AI
+  commentId: N:Core.AI
+  href: Core.html
+  name: Core.AI
+  nameWithType: Core.AI
+  fullName: Core.AI
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.AI
+    name: AI
+    href: Core.AI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.AI.AISchedulingConfig.TierCount*
+  commentId: Overload:Core.AI.AISchedulingConfig.TierCount
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig_TierCount
+  name: TierCount
+  nameWithType: AISchedulingConfig.TierCount
+  fullName: Core.AI.AISchedulingConfig.TierCount
+- uid: Core.AI.AISchedulingConfig.#ctor*
+  commentId: Overload:Core.AI.AISchedulingConfig.#ctor
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig__ctor_Core_AI_AITierConfig___
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig.AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig.AISchedulingConfig
+  nameWithType.vb: AISchedulingConfig.New
+  fullName.vb: Core.AI.AISchedulingConfig.New
+  name.vb: New
+- uid: Core.AI.AITierConfig[]
+  isExternal: true
+  href: Core.AI.AITierConfig.html
+  name: AITierConfig[]
+  nameWithType: AITierConfig[]
+  fullName: Core.AI.AITierConfig[]
+  nameWithType.vb: AITierConfig()
+  fullName.vb: Core.AI.AITierConfig()
+  name.vb: AITierConfig()
+  spec.csharp:
+  - uid: Core.AI.AITierConfig
+    name: AITierConfig
+    href: Core.AI.AITierConfig.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Core.AI.AITierConfig
+    name: AITierConfig
+    href: Core.AI.AITierConfig.html
+  - name: (
+  - name: )
+- uid: Core.AI.AISchedulingConfig.GetTier*
+  commentId: Overload:Core.AI.AISchedulingConfig.GetTier
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig_GetTier_System_Int32_
+  name: GetTier
+  nameWithType: AISchedulingConfig.GetTier
+  fullName: Core.AI.AISchedulingConfig.GetTier
+- uid: Core.AI.AITierConfig
+  commentId: T:Core.AI.AITierConfig
+  parent: Core.AI
+  href: Core.AI.AITierConfig.html
+  name: AITierConfig
+  nameWithType: AITierConfig
+  fullName: Core.AI.AITierConfig
+- uid: Core.AI.AISchedulingConfig.GetTierForDistance*
+  commentId: Overload:Core.AI.AISchedulingConfig.GetTierForDistance
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig_GetTierForDistance_System_Byte_
+  name: GetTierForDistance
+  nameWithType: AISchedulingConfig.GetTierForDistance
+  fullName: Core.AI.AISchedulingConfig.GetTierForDistance
+- uid: Core.AI.AISchedulingConfig.GetIntervalForTier*
+  commentId: Overload:Core.AI.AISchedulingConfig.GetIntervalForTier
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig_GetIntervalForTier_System_Byte_
+  name: GetIntervalForTier
+  nameWithType: AISchedulingConfig.GetIntervalForTier
+  fullName: Core.AI.AISchedulingConfig.GetIntervalForTier
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.AI.AISchedulingConfig.CreateDefault*
+  commentId: Overload:Core.AI.AISchedulingConfig.CreateDefault
+  href: Core.AI.AISchedulingConfig.html#Core_AI_AISchedulingConfig_CreateDefault
+  name: CreateDefault
+  nameWithType: AISchedulingConfig.CreateDefault
+  fullName: Core.AI.AISchedulingConfig.CreateDefault
+- uid: Core.AI.AISchedulingConfig
+  commentId: T:Core.AI.AISchedulingConfig
+  parent: Core.AI
+  href: Core.AI.AISchedulingConfig.html
+  name: AISchedulingConfig
+  nameWithType: AISchedulingConfig
+  fullName: Core.AI.AISchedulingConfig

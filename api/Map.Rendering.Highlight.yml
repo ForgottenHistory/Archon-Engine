@@ -1,0 +1,93 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  id: Map.Rendering.Highlight
+  children:
+  - Map.Rendering.Highlight.DefaultHighlightRenderer
+  - Map.Rendering.Highlight.HighlightMode
+  - Map.Rendering.Highlight.HighlightRendererBase
+  - Map.Rendering.Highlight.HighlightRendererContext
+  - Map.Rendering.Highlight.HighlightStyleParams
+  - Map.Rendering.Highlight.IHighlightRenderer
+  langs:
+  - csharp
+  - vb
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Rendering.Highlight.IHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.IHighlightRenderer
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.IHighlightRenderer.html
+  name: IHighlightRenderer
+  nameWithType: IHighlightRenderer
+  fullName: Map.Rendering.Highlight.IHighlightRenderer
+- uid: Map.Rendering.Highlight.HighlightMode
+  commentId: T:Map.Rendering.Highlight.HighlightMode
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightMode.html
+  name: HighlightMode
+  nameWithType: HighlightMode
+  fullName: Map.Rendering.Highlight.HighlightMode
+- uid: Map.Rendering.Highlight.HighlightRendererContext
+  commentId: T:Map.Rendering.Highlight.HighlightRendererContext
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightRendererContext.html
+  name: HighlightRendererContext
+  nameWithType: HighlightRendererContext
+  fullName: Map.Rendering.Highlight.HighlightRendererContext
+- uid: Map.Rendering.Highlight.HighlightStyleParams
+  commentId: T:Map.Rendering.Highlight.HighlightStyleParams
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightStyleParams.html
+  name: HighlightStyleParams
+  nameWithType: HighlightStyleParams
+  fullName: Map.Rendering.Highlight.HighlightStyleParams
+- uid: Map.Rendering.Highlight.DefaultHighlightRenderer
+  commentId: T:Map.Rendering.Highlight.DefaultHighlightRenderer
+  href: Map.Rendering.Highlight.DefaultHighlightRenderer.html
+  name: DefaultHighlightRenderer
+  nameWithType: DefaultHighlightRenderer
+  fullName: Map.Rendering.Highlight.DefaultHighlightRenderer
+- uid: Map.Rendering.Highlight.HighlightRendererBase
+  commentId: T:Map.Rendering.Highlight.HighlightRendererBase
+  parent: Map.Rendering.Highlight
+  href: Map.Rendering.Highlight.HighlightRendererBase.html
+  name: HighlightRendererBase
+  nameWithType: HighlightRendererBase
+  fullName: Map.Rendering.Highlight.HighlightRendererBase
+- uid: Map.Rendering.Highlight
+  commentId: N:Map.Rendering.Highlight
+  href: Map.html
+  name: Map.Rendering.Highlight
+  nameWithType: Map.Rendering.Highlight
+  fullName: Map.Rendering.Highlight
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Highlight
+    name: Highlight
+    href: Map.Rendering.Highlight.html

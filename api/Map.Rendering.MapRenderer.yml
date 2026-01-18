@@ -1,0 +1,242 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.MapRenderer
+  commentId: T:Map.Rendering.MapRenderer
+  id: MapRenderer
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.MapRenderer.GetMaterial
+  - Map.Rendering.MapRenderer.SetMapSize(UnityEngine.Vector2)
+  - Map.Rendering.MapRenderer.SetMaterial(UnityEngine.Material)
+  langs:
+  - csharp
+  - vb
+  name: MapRenderer
+  nameWithType: MapRenderer
+  fullName: Map.Rendering.MapRenderer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapRenderer
+    path: Scripts/Map/MapRenderer.cs
+    startLine: 7
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Creates and manages the single quad mesh for texture-based map rendering
+  example: []
+  syntax:
+    content: >-
+      [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
+
+      public class MapRenderer : MonoBehaviour
+    content.vb: >-
+      <RequireComponent(GetType(MeshFilter), GetType(MeshRenderer))>
+
+      Public Class MapRenderer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.MapRenderer.SetMapSize(UnityEngine.Vector2)
+  commentId: M:Map.Rendering.MapRenderer.SetMapSize(UnityEngine.Vector2)
+  id: SetMapSize(UnityEngine.Vector2)
+  parent: Map.Rendering.MapRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetMapSize(Vector2)
+  nameWithType: MapRenderer.SetMapSize(Vector2)
+  fullName: Map.Rendering.MapRenderer.SetMapSize(UnityEngine.Vector2)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMapSize
+    path: Scripts/Map/MapRenderer.cs
+    startLine: 135
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Update map dimensions and regenerate quad
+  example: []
+  syntax:
+    content: public void SetMapSize(Vector2 newSize)
+    parameters:
+    - id: newSize
+      type: UnityEngine.Vector2
+    content.vb: Public Sub SetMapSize(newSize As Vector2)
+  overload: Map.Rendering.MapRenderer.SetMapSize*
+- uid: Map.Rendering.MapRenderer.SetMaterial(UnityEngine.Material)
+  commentId: M:Map.Rendering.MapRenderer.SetMaterial(UnityEngine.Material)
+  id: SetMaterial(UnityEngine.Material)
+  parent: Map.Rendering.MapRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetMaterial(Material)
+  nameWithType: MapRenderer.SetMaterial(Material)
+  fullName: Map.Rendering.MapRenderer.SetMaterial(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMaterial
+    path: Scripts/Map/MapRenderer.cs
+    startLine: 144
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set the material for map rendering
+  example: []
+  syntax:
+    content: public void SetMaterial(Material material)
+    parameters:
+    - id: material
+      type: UnityEngine.Material
+    content.vb: Public Sub SetMaterial(material As Material)
+  overload: Map.Rendering.MapRenderer.SetMaterial*
+- uid: Map.Rendering.MapRenderer.GetMaterial
+  commentId: M:Map.Rendering.MapRenderer.GetMaterial
+  id: GetMaterial
+  parent: Map.Rendering.MapRenderer
+  langs:
+  - csharp
+  - vb
+  name: GetMaterial()
+  nameWithType: MapRenderer.GetMaterial()
+  fullName: Map.Rendering.MapRenderer.GetMaterial()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMaterial
+    path: Scripts/Map/MapRenderer.cs
+    startLine: 153
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Get the current map material
+  example: []
+  syntax:
+    content: public Material GetMaterial()
+    return:
+      type: UnityEngine.Material
+    content.vb: Public Function GetMaterial() As Material
+  overload: Map.Rendering.MapRenderer.GetMaterial*
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.MapRenderer.SetMapSize*
+  commentId: Overload:Map.Rendering.MapRenderer.SetMapSize
+  href: Map.Rendering.MapRenderer.html#Map_Rendering_MapRenderer_SetMapSize_UnityEngine_Vector2_
+  name: SetMapSize
+  nameWithType: MapRenderer.SetMapSize
+  fullName: Map.Rendering.MapRenderer.SetMapSize
+- uid: UnityEngine.Vector2
+  commentId: T:UnityEngine.Vector2
+  parent: UnityEngine
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: UnityEngine.Vector2
+- uid: Map.Rendering.MapRenderer.SetMaterial*
+  commentId: Overload:Map.Rendering.MapRenderer.SetMaterial
+  href: Map.Rendering.MapRenderer.html#Map_Rendering_MapRenderer_SetMaterial_UnityEngine_Material_
+  name: SetMaterial
+  nameWithType: MapRenderer.SetMaterial
+  fullName: Map.Rendering.MapRenderer.SetMaterial
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.MapRenderer.GetMaterial*
+  commentId: Overload:Map.Rendering.MapRenderer.GetMaterial
+  href: Map.Rendering.MapRenderer.html#Map_Rendering_MapRenderer_GetMaterial
+  name: GetMaterial
+  nameWithType: MapRenderer.GetMaterial
+  fullName: Map.Rendering.MapRenderer.GetMaterial

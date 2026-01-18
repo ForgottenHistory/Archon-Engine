@@ -1,0 +1,316 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.TerrainLoader
+  commentId: T:Core.Loaders.TerrainLoader
+  id: TerrainLoader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.TerrainLoader.Load(Core.Loaders.LoaderContext)
+  - Core.Loaders.TerrainLoader.LoadTerrains(Core.Registries.Registry{Core.Registries.TerrainData},System.String)
+  langs:
+  - csharp
+  - vb
+  name: TerrainLoader
+  nameWithType: TerrainLoader
+  fullName: Core.Loaders.TerrainLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/TerrainLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainLoader
+    path: Scripts/Core/Loaders/TerrainLoader.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Loads terrain type definitions from terrain.json5.
+
+    This is the single source of truth for terrain definitions.
+
+    TerrainColorMapper (Map layer) should use the same file.
+
+
+    Terrain IDs are assigned sequentially based on order in the file,
+
+    ensuring consistency between Core and Map layers.
+  example: []
+  syntax:
+    content: >-
+      [LoaderMetadata("terrain", Description = "Load terrain type definitions", Priority = 10, Required = true)]
+
+      public class TerrainLoader : ILoaderFactory
+    content.vb: >-
+      <LoaderMetadata("terrain", Description:="Load terrain type definitions", Priority:=10, Required:=True)>
+
+      Public Class TerrainLoader Implements ILoaderFactory
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Loaders.ILoaderFactory
+  attributes:
+  - type: Core.Loaders.LoaderMetadataAttribute
+    ctor: Core.Loaders.LoaderMetadataAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: terrain
+    namedArguments:
+    - name: Description
+      type: System.String
+      value: Load terrain type definitions
+    - name: Priority
+      type: System.Int32
+      value: 10
+    - name: Required
+      type: System.Boolean
+      value: true
+- uid: Core.Loaders.TerrainLoader.Load(Core.Loaders.LoaderContext)
+  commentId: M:Core.Loaders.TerrainLoader.Load(Core.Loaders.LoaderContext)
+  id: Load(Core.Loaders.LoaderContext)
+  parent: Core.Loaders.TerrainLoader
+  langs:
+  - csharp
+  - vb
+  name: Load(LoaderContext)
+  nameWithType: TerrainLoader.Load(LoaderContext)
+  fullName: Core.Loaders.TerrainLoader.Load(Core.Loaders.LoaderContext)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/TerrainLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Load
+    path: Scripts/Core/Loaders/TerrainLoader.cs
+    startLine: 17
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load data into registries from the specified data path.
+  example: []
+  syntax:
+    content: public void Load(LoaderContext context)
+    parameters:
+    - id: context
+      type: Core.Loaders.LoaderContext
+      description: Loading context with registries and settings
+    content.vb: Public Sub Load(context As LoaderContext)
+  overload: Core.Loaders.TerrainLoader.Load*
+  implements:
+  - Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+- uid: Core.Loaders.TerrainLoader.LoadTerrains(Core.Registries.Registry{Core.Registries.TerrainData},System.String)
+  commentId: M:Core.Loaders.TerrainLoader.LoadTerrains(Core.Registries.Registry{Core.Registries.TerrainData},System.String)
+  id: LoadTerrains(Core.Registries.Registry{Core.Registries.TerrainData},System.String)
+  parent: Core.Loaders.TerrainLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadTerrains(Registry<TerrainData>, string)
+  nameWithType: TerrainLoader.LoadTerrains(Registry<TerrainData>, string)
+  fullName: Core.Loaders.TerrainLoader.LoadTerrains(Core.Registries.Registry<Core.Registries.TerrainData>, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/TerrainLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadTerrains
+    path: Scripts/Core/Loaders/TerrainLoader.cs
+    startLine: 25
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load all terrain types from map/terrain.json5 file.
+  example: []
+  syntax:
+    content: public static void LoadTerrains(Registry<TerrainData> terrainRegistry, string dataPath)
+    parameters:
+    - id: terrainRegistry
+      type: Core.Registries.Registry{Core.Registries.TerrainData}
+    - id: dataPath
+      type: System.String
+    content.vb: Public Shared Sub LoadTerrains(terrainRegistry As Registry(Of TerrainData), dataPath As String)
+  overload: Core.Loaders.TerrainLoader.LoadTerrains*
+  nameWithType.vb: TerrainLoader.LoadTerrains(Registry(Of TerrainData), String)
+  fullName.vb: Core.Loaders.TerrainLoader.LoadTerrains(Core.Registries.Registry(Of Core.Registries.TerrainData), String)
+  name.vb: LoadTerrains(Registry(Of TerrainData), String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Loaders.ILoaderFactory
+  commentId: T:Core.Loaders.ILoaderFactory
+  parent: Core.Loaders
+  href: Core.Loaders.ILoaderFactory.html
+  name: ILoaderFactory
+  nameWithType: ILoaderFactory
+  fullName: Core.Loaders.ILoaderFactory
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.TerrainLoader.Load*
+  commentId: Overload:Core.Loaders.TerrainLoader.Load
+  href: Core.Loaders.TerrainLoader.html#Core_Loaders_TerrainLoader_Load_Core_Loaders_LoaderContext_
+  name: Load
+  nameWithType: TerrainLoader.Load
+  fullName: Core.Loaders.TerrainLoader.Load
+- uid: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  commentId: M:Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  parent: Core.Loaders.ILoaderFactory
+  href: Core.Loaders.ILoaderFactory.html#Core_Loaders_ILoaderFactory_Load_Core_Loaders_LoaderContext_
+  name: Load(LoaderContext)
+  nameWithType: ILoaderFactory.Load(LoaderContext)
+  fullName: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+  spec.csharp:
+  - uid: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+    name: Load
+    href: Core.Loaders.ILoaderFactory.html#Core_Loaders_ILoaderFactory_Load_Core_Loaders_LoaderContext_
+  - name: (
+  - uid: Core.Loaders.LoaderContext
+    name: LoaderContext
+    href: Core.Loaders.LoaderContext.html
+  - name: )
+  spec.vb:
+  - uid: Core.Loaders.ILoaderFactory.Load(Core.Loaders.LoaderContext)
+    name: Load
+    href: Core.Loaders.ILoaderFactory.html#Core_Loaders_ILoaderFactory_Load_Core_Loaders_LoaderContext_
+  - name: (
+  - uid: Core.Loaders.LoaderContext
+    name: LoaderContext
+    href: Core.Loaders.LoaderContext.html
+  - name: )
+- uid: Core.Loaders.LoaderContext
+  commentId: T:Core.Loaders.LoaderContext
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderContext.html
+  name: LoaderContext
+  nameWithType: LoaderContext
+  fullName: Core.Loaders.LoaderContext
+- uid: Core.Loaders.TerrainLoader.LoadTerrains*
+  commentId: Overload:Core.Loaders.TerrainLoader.LoadTerrains
+  href: Core.Loaders.TerrainLoader.html#Core_Loaders_TerrainLoader_LoadTerrains_Core_Registries_Registry_Core_Registries_TerrainData__System_String_
+  name: LoadTerrains
+  nameWithType: TerrainLoader.LoadTerrains
+  fullName: Core.Loaders.TerrainLoader.LoadTerrains
+- uid: Core.Registries.Registry{Core.Registries.TerrainData}
+  commentId: T:Core.Registries.Registry{Core.Registries.TerrainData}
+  parent: Core.Registries
+  definition: Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<TerrainData>
+  nameWithType: Registry<TerrainData>
+  fullName: Core.Registries.Registry<Core.Registries.TerrainData>
+  nameWithType.vb: Registry(Of TerrainData)
+  fullName.vb: Core.Registries.Registry(Of Core.Registries.TerrainData)
+  name.vb: Registry(Of TerrainData)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Core.Registries.TerrainData
+    name: TerrainData
+    href: Core.Registries.TerrainData.html
+  - name: )
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Registries.Registry`1
+  commentId: T:Core.Registries.Registry`1
+  href: Core.Registries.Registry-1.html
+  name: Registry<T>
+  nameWithType: Registry<T>
+  fullName: Core.Registries.Registry<T>
+  nameWithType.vb: Registry(Of T)
+  fullName.vb: Core.Registries.Registry(Of T)
+  name.vb: Registry(Of T)
+  spec.csharp:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Core.Registries.Registry`1
+    name: Registry
+    href: Core.Registries.Registry-1.html
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Registries
+  commentId: N:Core.Registries
+  href: Core.html
+  name: Core.Registries
+  nameWithType: Core.Registries
+  fullName: Core.Registries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Registries
+    name: Registries
+    href: Core.Registries.html

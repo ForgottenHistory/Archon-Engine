@@ -1,0 +1,1104 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.EconomySystem
+  commentId: T:StarterKit.EconomySystem
+  id: EconomySystem
+  parent: StarterKit
+  children:
+  - StarterKit.EconomySystem.#ctor(Core.GameState,StarterKit.PlayerState,Core.Modifiers.ModifierSystem,System.Boolean)
+  - StarterKit.EconomySystem.AddGold(System.Int32)
+  - StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,Core.Data.FixedPoint64)
+  - StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,System.Int32)
+  - StarterKit.EconomySystem.Deserialize(System.Byte[])
+  - StarterKit.EconomySystem.Dispose
+  - StarterKit.EconomySystem.GetCountriesWithGold
+  - StarterKit.EconomySystem.GetCountryGold(System.UInt16)
+  - StarterKit.EconomySystem.GetCountryGoldInt(System.UInt16)
+  - StarterKit.EconomySystem.GetMonthlyIncome(System.UInt16)
+  - StarterKit.EconomySystem.GetMonthlyIncomeInt
+  - StarterKit.EconomySystem.GetMonthlyIncomeInt(System.UInt16)
+  - StarterKit.EconomySystem.Gold
+  - StarterKit.EconomySystem.GoldFixed
+  - StarterKit.EconomySystem.InvalidateAllIncome
+  - StarterKit.EconomySystem.InvalidateCountryIncome(System.UInt16)
+  - StarterKit.EconomySystem.RemoveGold(System.Int32)
+  - StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,Core.Data.FixedPoint64)
+  - StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,System.Int32)
+  - StarterKit.EconomySystem.Serialize
+  langs:
+  - csharp
+  - vb
+  name: EconomySystem
+  nameWithType: EconomySystem
+  fullName: StarterKit.EconomySystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EconomySystem
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 26
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Simple economy for StarterKit.
+
+    1 gold per province + modifier bonuses, collected monthly.
+
+    Tracks gold for ALL countries (for ledger display).
+
+
+    Uses FixedPoint64 for deterministic calculations across all platforms.
+
+    This ensures multiplayer sync - float operations produce different results
+
+    on different CPUs, but FixedPoint64 is identical everywhere.
+
+
+    Income Formula (per province):
+      baseIncome = 1 gold
+      localModified = baseIncome * (1 + LocalIncomeModifier)
+      finalIncome = localModified * (1 + CountryIncomeModifier)
+  example: []
+  syntax:
+    content: public class EconomySystem
+    content.vb: Public Class EconomySystem
+  inheritance:
+  - System.Object
+- uid: StarterKit.EconomySystem.Gold
+  commentId: P:StarterKit.EconomySystem.Gold
+  id: Gold
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: Gold
+  nameWithType: EconomySystem.Gold
+  fullName: StarterKit.EconomySystem.Gold
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Gold
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 46
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Player's gold (convenience property, returns int for simple display)
+  example: []
+  syntax:
+    content: public int Gold { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property Gold As Integer
+  overload: StarterKit.EconomySystem.Gold*
+- uid: StarterKit.EconomySystem.GoldFixed
+  commentId: P:StarterKit.EconomySystem.GoldFixed
+  id: GoldFixed
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GoldFixed
+  nameWithType: EconomySystem.GoldFixed
+  fullName: StarterKit.EconomySystem.GoldFixed
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GoldFixed
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 51
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Player's gold as FixedPoint64 (for precise calculations)
+  example: []
+  syntax:
+    content: public FixedPoint64 GoldFixed { get; }
+    parameters: []
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public ReadOnly Property GoldFixed As FixedPoint64
+  overload: StarterKit.EconomySystem.GoldFixed*
+- uid: StarterKit.EconomySystem.#ctor(Core.GameState,StarterKit.PlayerState,Core.Modifiers.ModifierSystem,System.Boolean)
+  commentId: M:StarterKit.EconomySystem.#ctor(Core.GameState,StarterKit.PlayerState,Core.Modifiers.ModifierSystem,System.Boolean)
+  id: '#ctor(Core.GameState,StarterKit.PlayerState,Core.Modifiers.ModifierSystem,System.Boolean)'
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: EconomySystem(GameState, PlayerState, ModifierSystem, bool)
+  nameWithType: EconomySystem.EconomySystem(GameState, PlayerState, ModifierSystem, bool)
+  fullName: StarterKit.EconomySystem.EconomySystem(Core.GameState, StarterKit.PlayerState, Core.Modifiers.ModifierSystem, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 60
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Create a new EconomySystem.
+  example: []
+  syntax:
+    content: public EconomySystem(GameState gameStateRef, PlayerState playerStateRef, ModifierSystem modifierSystemRef, bool log = true)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+      description: Reference to the game state.
+    - id: playerStateRef
+      type: StarterKit.PlayerState
+      description: Reference to player state for identifying player country.
+    - id: modifierSystemRef
+      type: Core.Modifiers.ModifierSystem
+      description: Modifier system for building bonuses.
+    - id: log
+      type: System.Boolean
+      description: Whether to log income collection.
+    content.vb: Public Sub New(gameStateRef As GameState, playerStateRef As PlayerState, modifierSystemRef As ModifierSystem, log As Boolean = True)
+  overload: StarterKit.EconomySystem.#ctor*
+  nameWithType.vb: EconomySystem.New(GameState, PlayerState, ModifierSystem, Boolean)
+  fullName.vb: StarterKit.EconomySystem.New(Core.GameState, StarterKit.PlayerState, Core.Modifiers.ModifierSystem, Boolean)
+  name.vb: New(GameState, PlayerState, ModifierSystem, Boolean)
+- uid: StarterKit.EconomySystem.InvalidateCountryIncome(System.UInt16)
+  commentId: M:StarterKit.EconomySystem.InvalidateCountryIncome(System.UInt16)
+  id: InvalidateCountryIncome(System.UInt16)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCountryIncome(ushort)
+  nameWithType: EconomySystem.InvalidateCountryIncome(ushort)
+  fullName: StarterKit.EconomySystem.InvalidateCountryIncome(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateCountryIncome
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 105
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Invalidate income cache for a specific country.
+
+    Call when buildings change or modifiers are added/removed.
+  example: []
+  syntax:
+    content: public void InvalidateCountryIncome(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    content.vb: Public Sub InvalidateCountryIncome(countryId As UShort)
+  overload: StarterKit.EconomySystem.InvalidateCountryIncome*
+  nameWithType.vb: EconomySystem.InvalidateCountryIncome(UShort)
+  fullName.vb: StarterKit.EconomySystem.InvalidateCountryIncome(UShort)
+  name.vb: InvalidateCountryIncome(UShort)
+- uid: StarterKit.EconomySystem.InvalidateAllIncome
+  commentId: M:StarterKit.EconomySystem.InvalidateAllIncome
+  id: InvalidateAllIncome
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: InvalidateAllIncome()
+  nameWithType: EconomySystem.InvalidateAllIncome()
+  fullName: StarterKit.EconomySystem.InvalidateAllIncome()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateAllIncome
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 115
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Invalidate all income caches.
+
+    Call after load or major changes.
+  example: []
+  syntax:
+    content: public void InvalidateAllIncome()
+    content.vb: Public Sub InvalidateAllIncome()
+  overload: StarterKit.EconomySystem.InvalidateAllIncome*
+- uid: StarterKit.EconomySystem.Dispose
+  commentId: M:StarterKit.EconomySystem.Dispose
+  id: Dispose
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: EconomySystem.Dispose()
+  fullName: StarterKit.EconomySystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 121
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: StarterKit.EconomySystem.Dispose*
+- uid: StarterKit.EconomySystem.GetCountryGold(System.UInt16)
+  commentId: M:StarterKit.EconomySystem.GetCountryGold(System.UInt16)
+  id: GetCountryGold(System.UInt16)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryGold(ushort)
+  nameWithType: EconomySystem.GetCountryGold(ushort)
+  fullName: StarterKit.EconomySystem.GetCountryGold(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryGold
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 277
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get gold for a specific country as FixedPoint64.
+  example: []
+  syntax:
+    content: public FixedPoint64 GetCountryGold(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetCountryGold(countryId As UShort) As FixedPoint64
+  overload: StarterKit.EconomySystem.GetCountryGold*
+  nameWithType.vb: EconomySystem.GetCountryGold(UShort)
+  fullName.vb: StarterKit.EconomySystem.GetCountryGold(UShort)
+  name.vb: GetCountryGold(UShort)
+- uid: StarterKit.EconomySystem.GetCountryGoldInt(System.UInt16)
+  commentId: M:StarterKit.EconomySystem.GetCountryGoldInt(System.UInt16)
+  id: GetCountryGoldInt(System.UInt16)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountryGoldInt(ushort)
+  nameWithType: EconomySystem.GetCountryGoldInt(ushort)
+  fullName: StarterKit.EconomySystem.GetCountryGoldInt(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryGoldInt
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 286
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get gold for a specific country as int (for simple display).
+  example: []
+  syntax:
+    content: public int GetCountryGoldInt(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCountryGoldInt(countryId As UShort) As Integer
+  overload: StarterKit.EconomySystem.GetCountryGoldInt*
+  nameWithType.vb: EconomySystem.GetCountryGoldInt(UShort)
+  fullName.vb: StarterKit.EconomySystem.GetCountryGoldInt(UShort)
+  name.vb: GetCountryGoldInt(UShort)
+- uid: StarterKit.EconomySystem.GetMonthlyIncome(System.UInt16)
+  commentId: M:StarterKit.EconomySystem.GetMonthlyIncome(System.UInt16)
+  id: GetMonthlyIncome(System.UInt16)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetMonthlyIncome(ushort)
+  nameWithType: EconomySystem.GetMonthlyIncome(ushort)
+  fullName: StarterKit.EconomySystem.GetMonthlyIncome(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMonthlyIncome
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 294
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get monthly income for a country (cached, using ModifierSystem)
+  example: []
+  syntax:
+    content: public FixedPoint64 GetMonthlyIncome(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function GetMonthlyIncome(countryId As UShort) As FixedPoint64
+  overload: StarterKit.EconomySystem.GetMonthlyIncome*
+  nameWithType.vb: EconomySystem.GetMonthlyIncome(UShort)
+  fullName.vb: StarterKit.EconomySystem.GetMonthlyIncome(UShort)
+  name.vb: GetMonthlyIncome(UShort)
+- uid: StarterKit.EconomySystem.GetMonthlyIncomeInt(System.UInt16)
+  commentId: M:StarterKit.EconomySystem.GetMonthlyIncomeInt(System.UInt16)
+  id: GetMonthlyIncomeInt(System.UInt16)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetMonthlyIncomeInt(ushort)
+  nameWithType: EconomySystem.GetMonthlyIncomeInt(ushort)
+  fullName: StarterKit.EconomySystem.GetMonthlyIncomeInt(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMonthlyIncomeInt
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 302
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get monthly income for a country as int (for simple display)
+  example: []
+  syntax:
+    content: public int GetMonthlyIncomeInt(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetMonthlyIncomeInt(countryId As UShort) As Integer
+  overload: StarterKit.EconomySystem.GetMonthlyIncomeInt*
+  nameWithType.vb: EconomySystem.GetMonthlyIncomeInt(UShort)
+  fullName.vb: StarterKit.EconomySystem.GetMonthlyIncomeInt(UShort)
+  name.vb: GetMonthlyIncomeInt(UShort)
+- uid: StarterKit.EconomySystem.GetMonthlyIncomeInt
+  commentId: M:StarterKit.EconomySystem.GetMonthlyIncomeInt
+  id: GetMonthlyIncomeInt
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetMonthlyIncomeInt()
+  nameWithType: EconomySystem.GetMonthlyIncomeInt()
+  fullName: StarterKit.EconomySystem.GetMonthlyIncomeInt()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMonthlyIncomeInt
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 310
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get monthly income for player (convenience)
+  example: []
+  syntax:
+    content: public int GetMonthlyIncomeInt()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetMonthlyIncomeInt() As Integer
+  overload: StarterKit.EconomySystem.GetMonthlyIncomeInt*
+- uid: StarterKit.EconomySystem.AddGold(System.Int32)
+  commentId: M:StarterKit.EconomySystem.AddGold(System.Int32)
+  id: AddGold(System.Int32)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: AddGold(int)
+  nameWithType: EconomySystem.AddGold(int)
+  fullName: StarterKit.EconomySystem.AddGold(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddGold
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 321
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Add gold to player (for commands/cheats)
+  example: []
+  syntax:
+    content: public void AddGold(int amount)
+    parameters:
+    - id: amount
+      type: System.Int32
+    content.vb: Public Sub AddGold(amount As Integer)
+  overload: StarterKit.EconomySystem.AddGold*
+  nameWithType.vb: EconomySystem.AddGold(Integer)
+  fullName.vb: StarterKit.EconomySystem.AddGold(Integer)
+  name.vb: AddGold(Integer)
+- uid: StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,Core.Data.FixedPoint64)
+  id: AddGoldToCountry(System.UInt16,Core.Data.FixedPoint64)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: AddGoldToCountry(ushort, FixedPoint64)
+  nameWithType: EconomySystem.AddGoldToCountry(ushort, FixedPoint64)
+  fullName: StarterKit.EconomySystem.AddGoldToCountry(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddGoldToCountry
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 332
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Add gold to a specific country (FixedPoint64 version for precise calculations)
+  example: []
+  syntax:
+    content: public void AddGoldToCountry(ushort countryId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    content.vb: Public Sub AddGoldToCountry(countryId As UShort, amount As FixedPoint64)
+  overload: StarterKit.EconomySystem.AddGoldToCountry*
+  nameWithType.vb: EconomySystem.AddGoldToCountry(UShort, FixedPoint64)
+  fullName.vb: StarterKit.EconomySystem.AddGoldToCountry(UShort, Core.Data.FixedPoint64)
+  name.vb: AddGoldToCountry(UShort, FixedPoint64)
+- uid: StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,System.Int32)
+  commentId: M:StarterKit.EconomySystem.AddGoldToCountry(System.UInt16,System.Int32)
+  id: AddGoldToCountry(System.UInt16,System.Int32)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: AddGoldToCountry(ushort, int)
+  nameWithType: EconomySystem.AddGoldToCountry(ushort, int)
+  fullName: StarterKit.EconomySystem.AddGoldToCountry(ushort, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AddGoldToCountry
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 344
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Add gold to a specific country (int version for simple cases)
+  example: []
+  syntax:
+    content: public void AddGoldToCountry(ushort countryId, int amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: amount
+      type: System.Int32
+    content.vb: Public Sub AddGoldToCountry(countryId As UShort, amount As Integer)
+  overload: StarterKit.EconomySystem.AddGoldToCountry*
+  nameWithType.vb: EconomySystem.AddGoldToCountry(UShort, Integer)
+  fullName.vb: StarterKit.EconomySystem.AddGoldToCountry(UShort, Integer)
+  name.vb: AddGoldToCountry(UShort, Integer)
+- uid: StarterKit.EconomySystem.RemoveGold(System.Int32)
+  commentId: M:StarterKit.EconomySystem.RemoveGold(System.Int32)
+  id: RemoveGold(System.Int32)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveGold(int)
+  nameWithType: EconomySystem.RemoveGold(int)
+  fullName: StarterKit.EconomySystem.RemoveGold(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveGold
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 352
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Remove gold from player (returns false if insufficient)
+  example: []
+  syntax:
+    content: public bool RemoveGold(int amount)
+    parameters:
+    - id: amount
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function RemoveGold(amount As Integer) As Boolean
+  overload: StarterKit.EconomySystem.RemoveGold*
+  nameWithType.vb: EconomySystem.RemoveGold(Integer)
+  fullName.vb: StarterKit.EconomySystem.RemoveGold(Integer)
+  name.vb: RemoveGold(Integer)
+- uid: StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,Core.Data.FixedPoint64)
+  id: RemoveGoldFromCountry(System.UInt16,Core.Data.FixedPoint64)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveGoldFromCountry(ushort, FixedPoint64)
+  nameWithType: EconomySystem.RemoveGoldFromCountry(ushort, FixedPoint64)
+  fullName: StarterKit.EconomySystem.RemoveGoldFromCountry(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveGoldFromCountry
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 363
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Remove gold from a specific country (returns false if insufficient)
+  example: []
+  syntax:
+    content: public bool RemoveGoldFromCountry(ushort countryId, FixedPoint64 amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: amount
+      type: Core.Data.FixedPoint64
+    return:
+      type: System.Boolean
+    content.vb: Public Function RemoveGoldFromCountry(countryId As UShort, amount As FixedPoint64) As Boolean
+  overload: StarterKit.EconomySystem.RemoveGoldFromCountry*
+  nameWithType.vb: EconomySystem.RemoveGoldFromCountry(UShort, FixedPoint64)
+  fullName.vb: StarterKit.EconomySystem.RemoveGoldFromCountry(UShort, Core.Data.FixedPoint64)
+  name.vb: RemoveGoldFromCountry(UShort, FixedPoint64)
+- uid: StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,System.Int32)
+  commentId: M:StarterKit.EconomySystem.RemoveGoldFromCountry(System.UInt16,System.Int32)
+  id: RemoveGoldFromCountry(System.UInt16,System.Int32)
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: RemoveGoldFromCountry(ushort, int)
+  nameWithType: EconomySystem.RemoveGoldFromCountry(ushort, int)
+  fullName: StarterKit.EconomySystem.RemoveGoldFromCountry(ushort, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RemoveGoldFromCountry
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 379
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Remove gold from a specific country (int version for simple cases)
+  example: []
+  syntax:
+    content: public bool RemoveGoldFromCountry(ushort countryId, int amount)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: amount
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function RemoveGoldFromCountry(countryId As UShort, amount As Integer) As Boolean
+  overload: StarterKit.EconomySystem.RemoveGoldFromCountry*
+  nameWithType.vb: EconomySystem.RemoveGoldFromCountry(UShort, Integer)
+  fullName.vb: StarterKit.EconomySystem.RemoveGoldFromCountry(UShort, Integer)
+  name.vb: RemoveGoldFromCountry(UShort, Integer)
+- uid: StarterKit.EconomySystem.GetCountriesWithGold
+  commentId: M:StarterKit.EconomySystem.GetCountriesWithGold
+  id: GetCountriesWithGold
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: GetCountriesWithGold()
+  nameWithType: EconomySystem.GetCountriesWithGold()
+  fullName: StarterKit.EconomySystem.GetCountriesWithGold()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountriesWithGold
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 400
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Get all countries with tracked gold (for ledger)
+  example: []
+  syntax:
+    content: public IEnumerable<ushort> GetCountriesWithGold()
+    return:
+      type: System.Collections.Generic.IEnumerable{System.UInt16}
+    content.vb: Public Function GetCountriesWithGold() As IEnumerable(Of UShort)
+  overload: StarterKit.EconomySystem.GetCountriesWithGold*
+- uid: StarterKit.EconomySystem.Serialize
+  commentId: M:StarterKit.EconomySystem.Serialize
+  id: Serialize
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: Serialize()
+  nameWithType: EconomySystem.Serialize()
+  fullName: StarterKit.EconomySystem.Serialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Serialize
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 413
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Serialize economy state to byte array.
+
+    FixedPoint64 uses its RawValue (long) for deterministic serialization.
+  example: []
+  syntax:
+    content: public byte[] Serialize()
+    return:
+      type: System.Byte[]
+    content.vb: Public Function Serialize() As Byte()
+  overload: StarterKit.EconomySystem.Serialize*
+- uid: StarterKit.EconomySystem.Deserialize(System.Byte[])
+  commentId: M:StarterKit.EconomySystem.Deserialize(System.Byte[])
+  id: Deserialize(System.Byte[])
+  parent: StarterKit.EconomySystem
+  langs:
+  - csharp
+  - vb
+  name: Deserialize(byte[])
+  nameWithType: EconomySystem.Deserialize(byte[])
+  fullName: StarterKit.EconomySystem.Deserialize(byte[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/EconomySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Deserialize
+    path: Scripts/StarterKit/Systems/EconomySystem.cs
+    startLine: 433
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Deserialize economy state from byte array.
+
+    Restores FixedPoint64 from raw long values.
+  example: []
+  syntax:
+    content: public void Deserialize(byte[] data)
+    parameters:
+    - id: data
+      type: System.Byte[]
+    content.vb: Public Sub Deserialize(data As Byte())
+  overload: StarterKit.EconomySystem.Deserialize*
+  nameWithType.vb: EconomySystem.Deserialize(Byte())
+  fullName.vb: StarterKit.EconomySystem.Deserialize(Byte())
+  name.vb: Deserialize(Byte())
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: StarterKit.EconomySystem.Gold*
+  commentId: Overload:StarterKit.EconomySystem.Gold
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_Gold
+  name: Gold
+  nameWithType: EconomySystem.Gold
+  fullName: StarterKit.EconomySystem.Gold
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: StarterKit.EconomySystem.GoldFixed*
+  commentId: Overload:StarterKit.EconomySystem.GoldFixed
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GoldFixed
+  name: GoldFixed
+  nameWithType: EconomySystem.GoldFixed
+  fullName: StarterKit.EconomySystem.GoldFixed
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: StarterKit.EconomySystem.#ctor*
+  commentId: Overload:StarterKit.EconomySystem.#ctor
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem__ctor_Core_GameState_StarterKit_PlayerState_Core_Modifiers_ModifierSystem_System_Boolean_
+  name: EconomySystem
+  nameWithType: EconomySystem.EconomySystem
+  fullName: StarterKit.EconomySystem.EconomySystem
+  nameWithType.vb: EconomySystem.New
+  fullName.vb: StarterKit.EconomySystem.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.PlayerState
+  commentId: T:StarterKit.PlayerState
+  parent: StarterKit
+  href: StarterKit.PlayerState.html
+  name: PlayerState
+  nameWithType: PlayerState
+  fullName: StarterKit.PlayerState
+- uid: Core.Modifiers.ModifierSystem
+  commentId: T:Core.Modifiers.ModifierSystem
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSystem.html
+  name: ModifierSystem
+  nameWithType: ModifierSystem
+  fullName: Core.Modifiers.ModifierSystem
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Modifiers
+  commentId: N:Core.Modifiers
+  href: Core.html
+  name: Core.Modifiers
+  nameWithType: Core.Modifiers
+  fullName: Core.Modifiers
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modifiers
+    name: Modifiers
+    href: Core.Modifiers.html
+- uid: StarterKit.EconomySystem.InvalidateCountryIncome*
+  commentId: Overload:StarterKit.EconomySystem.InvalidateCountryIncome
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_InvalidateCountryIncome_System_UInt16_
+  name: InvalidateCountryIncome
+  nameWithType: EconomySystem.InvalidateCountryIncome
+  fullName: StarterKit.EconomySystem.InvalidateCountryIncome
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.EconomySystem.InvalidateAllIncome*
+  commentId: Overload:StarterKit.EconomySystem.InvalidateAllIncome
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_InvalidateAllIncome
+  name: InvalidateAllIncome
+  nameWithType: EconomySystem.InvalidateAllIncome
+  fullName: StarterKit.EconomySystem.InvalidateAllIncome
+- uid: StarterKit.EconomySystem.Dispose*
+  commentId: Overload:StarterKit.EconomySystem.Dispose
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_Dispose
+  name: Dispose
+  nameWithType: EconomySystem.Dispose
+  fullName: StarterKit.EconomySystem.Dispose
+- uid: StarterKit.EconomySystem.GetCountryGold*
+  commentId: Overload:StarterKit.EconomySystem.GetCountryGold
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GetCountryGold_System_UInt16_
+  name: GetCountryGold
+  nameWithType: EconomySystem.GetCountryGold
+  fullName: StarterKit.EconomySystem.GetCountryGold
+- uid: StarterKit.EconomySystem.GetCountryGoldInt*
+  commentId: Overload:StarterKit.EconomySystem.GetCountryGoldInt
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GetCountryGoldInt_System_UInt16_
+  name: GetCountryGoldInt
+  nameWithType: EconomySystem.GetCountryGoldInt
+  fullName: StarterKit.EconomySystem.GetCountryGoldInt
+- uid: StarterKit.EconomySystem.GetMonthlyIncome*
+  commentId: Overload:StarterKit.EconomySystem.GetMonthlyIncome
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GetMonthlyIncome_System_UInt16_
+  name: GetMonthlyIncome
+  nameWithType: EconomySystem.GetMonthlyIncome
+  fullName: StarterKit.EconomySystem.GetMonthlyIncome
+- uid: StarterKit.EconomySystem.GetMonthlyIncomeInt*
+  commentId: Overload:StarterKit.EconomySystem.GetMonthlyIncomeInt
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GetMonthlyIncomeInt_System_UInt16_
+  name: GetMonthlyIncomeInt
+  nameWithType: EconomySystem.GetMonthlyIncomeInt
+  fullName: StarterKit.EconomySystem.GetMonthlyIncomeInt
+- uid: StarterKit.EconomySystem.AddGold*
+  commentId: Overload:StarterKit.EconomySystem.AddGold
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_AddGold_System_Int32_
+  name: AddGold
+  nameWithType: EconomySystem.AddGold
+  fullName: StarterKit.EconomySystem.AddGold
+- uid: StarterKit.EconomySystem.AddGoldToCountry*
+  commentId: Overload:StarterKit.EconomySystem.AddGoldToCountry
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_AddGoldToCountry_System_UInt16_Core_Data_FixedPoint64_
+  name: AddGoldToCountry
+  nameWithType: EconomySystem.AddGoldToCountry
+  fullName: StarterKit.EconomySystem.AddGoldToCountry
+- uid: StarterKit.EconomySystem.RemoveGold*
+  commentId: Overload:StarterKit.EconomySystem.RemoveGold
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_RemoveGold_System_Int32_
+  name: RemoveGold
+  nameWithType: EconomySystem.RemoveGold
+  fullName: StarterKit.EconomySystem.RemoveGold
+- uid: StarterKit.EconomySystem.RemoveGoldFromCountry*
+  commentId: Overload:StarterKit.EconomySystem.RemoveGoldFromCountry
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_RemoveGoldFromCountry_System_UInt16_Core_Data_FixedPoint64_
+  name: RemoveGoldFromCountry
+  nameWithType: EconomySystem.RemoveGoldFromCountry
+  fullName: StarterKit.EconomySystem.RemoveGoldFromCountry
+- uid: StarterKit.EconomySystem.GetCountriesWithGold*
+  commentId: Overload:StarterKit.EconomySystem.GetCountriesWithGold
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_GetCountriesWithGold
+  name: GetCountriesWithGold
+  nameWithType: EconomySystem.GetCountriesWithGold
+  fullName: StarterKit.EconomySystem.GetCountriesWithGold
+- uid: System.Collections.Generic.IEnumerable{System.UInt16}
+  commentId: T:System.Collections.Generic.IEnumerable{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  name: IEnumerable<ushort>
+  nameWithType: IEnumerable<ushort>
+  fullName: System.Collections.Generic.IEnumerable<ushort>
+  nameWithType.vb: IEnumerable(Of UShort)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of UShort)
+  name.vb: IEnumerable(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: StarterKit.EconomySystem.Serialize*
+  commentId: Overload:StarterKit.EconomySystem.Serialize
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_Serialize
+  name: Serialize
+  nameWithType: EconomySystem.Serialize
+  fullName: StarterKit.EconomySystem.Serialize
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: StarterKit.EconomySystem.Deserialize*
+  commentId: Overload:StarterKit.EconomySystem.Deserialize
+  href: StarterKit.EconomySystem.html#StarterKit_EconomySystem_Deserialize_System_Byte___
+  name: Deserialize
+  nameWithType: EconomySystem.Deserialize
+  fullName: StarterKit.EconomySystem.Deserialize

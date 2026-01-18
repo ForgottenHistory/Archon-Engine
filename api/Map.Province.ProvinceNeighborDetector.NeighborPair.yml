@@ -1,0 +1,270 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborPair
+  id: ProvinceNeighborDetector.NeighborPair
+  parent: Map.Province
+  children:
+  - Map.Province.ProvinceNeighborDetector.NeighborPair.Equals(Map.Province.ProvinceNeighborDetector.NeighborPair)
+  - Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode
+  - Map.Province.ProvinceNeighborDetector.NeighborPair.ID1
+  - Map.Province.ProvinceNeighborDetector.NeighborPair.ID2
+  langs:
+  - csharp
+  - vb
+  name: ProvinceNeighborDetector.NeighborPair
+  nameWithType: ProvinceNeighborDetector.NeighborPair
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NeighborPair
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 442
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Neighbor pair structure for deduplication
+  example: []
+  syntax:
+    content: public struct ProvinceNeighborDetector.NeighborPair
+    content.vb: Public Structure ProvinceNeighborDetector.NeighborPair
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.ID1
+  commentId: F:Map.Province.ProvinceNeighborDetector.NeighborPair.ID1
+  id: ID1
+  parent: Map.Province.ProvinceNeighborDetector.NeighborPair
+  langs:
+  - csharp
+  - vb
+  name: ID1
+  nameWithType: ProvinceNeighborDetector.NeighborPair.ID1
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.ID1
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ID1
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 444
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort ID1
+    return:
+      type: System.UInt16
+    content.vb: Public ID1 As UShort
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.ID2
+  commentId: F:Map.Province.ProvinceNeighborDetector.NeighborPair.ID2
+  id: ID2
+  parent: Map.Province.ProvinceNeighborDetector.NeighborPair
+  langs:
+  - csharp
+  - vb
+  name: ID2
+  nameWithType: ProvinceNeighborDetector.NeighborPair.ID2
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.ID2
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ID2
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 445
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public ushort ID2
+    return:
+      type: System.UInt16
+    content.vb: Public ID2 As UShort
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.Equals(Map.Province.ProvinceNeighborDetector.NeighborPair)
+  commentId: M:Map.Province.ProvinceNeighborDetector.NeighborPair.Equals(Map.Province.ProvinceNeighborDetector.NeighborPair)
+  id: Equals(Map.Province.ProvinceNeighborDetector.NeighborPair)
+  parent: Map.Province.ProvinceNeighborDetector.NeighborPair
+  langs:
+  - csharp
+  - vb
+  name: Equals(NeighborPair)
+  nameWithType: ProvinceNeighborDetector.NeighborPair.Equals(ProvinceNeighborDetector.NeighborPair)
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.Equals(Map.Province.ProvinceNeighborDetector.NeighborPair)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 447
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  example: []
+  syntax:
+    content: public bool Equals(ProvinceNeighborDetector.NeighborPair other)
+    parameters:
+    - id: other
+      type: Map.Province.ProvinceNeighborDetector.NeighborPair
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As ProvinceNeighborDetector.NeighborPair) As Boolean
+  overload: Map.Province.ProvinceNeighborDetector.NeighborPair.Equals*
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode
+  commentId: M:Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode
+  id: GetHashCode
+  parent: Map.Province.ProvinceNeighborDetector.NeighborPair
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: ProvinceNeighborDetector.NeighborPair.GetHashCode()
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 452
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.Equals*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.NeighborPair.Equals
+  href: Map.Province.ProvinceNeighborDetector.NeighborPair.html#Map_Province_ProvinceNeighborDetector_NeighborPair_Equals_Map_Province_ProvinceNeighborDetector_NeighborPair_
+  name: Equals
+  nameWithType: ProvinceNeighborDetector.NeighborPair.Equals
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.Equals
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborPair
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborPair
+  nameWithType: ProvinceNeighborDetector.NeighborPair
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+    name: NeighborPair
+    href: Map.Province.ProvinceNeighborDetector.NeighborPair.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborPair
+    name: NeighborPair
+    href: Map.Province.ProvinceNeighborDetector.NeighborPair.html
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode*
+  commentId: Overload:Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode
+  href: Map.Province.ProvinceNeighborDetector.NeighborPair.html#Map_Province_ProvinceNeighborDetector_NeighborPair_GetHashCode
+  name: GetHashCode
+  nameWithType: ProvinceNeighborDetector.NeighborPair.GetHashCode
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborPair.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType

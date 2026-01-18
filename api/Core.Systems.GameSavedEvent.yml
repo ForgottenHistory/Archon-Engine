@@ -1,0 +1,207 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.GameSavedEvent
+  commentId: T:Core.Systems.GameSavedEvent
+  id: GameSavedEvent
+  parent: Core.Systems
+  children:
+  - Core.Systems.GameSavedEvent.CurrentTick
+  - Core.Systems.GameSavedEvent.SaveName
+  - Core.Systems.GameSavedEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: GameSavedEvent
+  nameWithType: GameSavedEvent
+  fullName: Core.Systems.GameSavedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Events/SaveLoadEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameSavedEvent
+    path: Scripts/Core/Events/SaveLoadEvents.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Event emitted when a game is successfully saved to a file
+  example: []
+  syntax:
+    content: 'public struct GameSavedEvent : IGameEvent'
+    content.vb: Public Structure GameSavedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Systems.GameSavedEvent.SaveName
+  commentId: F:Core.Systems.GameSavedEvent.SaveName
+  id: SaveName
+  parent: Core.Systems.GameSavedEvent
+  langs:
+  - csharp
+  - vb
+  name: SaveName
+  nameWithType: GameSavedEvent.SaveName
+  fullName: Core.Systems.GameSavedEvent.SaveName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Events/SaveLoadEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveName
+    path: Scripts/Core/Events/SaveLoadEvents.cs
+    startLine: 18
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public string SaveName
+    return:
+      type: System.String
+    content.vb: Public SaveName As String
+- uid: Core.Systems.GameSavedEvent.CurrentTick
+  commentId: F:Core.Systems.GameSavedEvent.CurrentTick
+  id: CurrentTick
+  parent: Core.Systems.GameSavedEvent
+  langs:
+  - csharp
+  - vb
+  name: CurrentTick
+  nameWithType: GameSavedEvent.CurrentTick
+  fullName: Core.Systems.GameSavedEvent.CurrentTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Events/SaveLoadEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CurrentTick
+    path: Scripts/Core/Events/SaveLoadEvents.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public ulong CurrentTick
+    return:
+      type: System.UInt64
+    content.vb: Public CurrentTick As ULong
+- uid: Core.Systems.GameSavedEvent.TimeStamp
+  commentId: P:Core.Systems.GameSavedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Systems.GameSavedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: GameSavedEvent.TimeStamp
+  fullName: Core.Systems.GameSavedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Events/SaveLoadEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Events/SaveLoadEvents.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Systems.GameSavedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Core.Systems.GameSavedEvent.TimeStamp*
+  commentId: Overload:Core.Systems.GameSavedEvent.TimeStamp
+  href: Core.Systems.GameSavedEvent.html#Core_Systems_GameSavedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: GameSavedEvent.TimeStamp
+  fullName: Core.Systems.GameSavedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

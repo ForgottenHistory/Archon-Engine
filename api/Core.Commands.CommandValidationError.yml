@@ -1,0 +1,276 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.CommandValidationError
+  commentId: T:Core.Commands.CommandValidationError
+  id: CommandValidationError
+  parent: Core.Commands
+  children:
+  - Core.Commands.CommandValidationError.ChecksumMismatch
+  - Core.Commands.CommandValidationError.InsufficientPermissions
+  - Core.Commands.CommandValidationError.InvalidGameState
+  - Core.Commands.CommandValidationError.InvalidParameters
+  - Core.Commands.CommandValidationError.InvalidProvince
+  - Core.Commands.CommandValidationError.None
+  - Core.Commands.CommandValidationError.ResourceConstraints
+  - Core.Commands.CommandValidationError.TimingViolation
+  langs:
+  - csharp
+  - vb
+  name: CommandValidationError
+  nameWithType: CommandValidationError
+  fullName: Core.Commands.CommandValidationError
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CommandValidationError
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 96
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Types of validation errors
+  example: []
+  syntax:
+    content: 'public enum CommandValidationError : byte'
+    content.vb: Public Enum CommandValidationError As Byte
+- uid: Core.Commands.CommandValidationError.None
+  commentId: F:Core.Commands.CommandValidationError.None
+  id: None
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: CommandValidationError.None
+  fullName: Core.Commands.CommandValidationError.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 98
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: None = 0
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.InvalidProvince
+  commentId: F:Core.Commands.CommandValidationError.InvalidProvince
+  id: InvalidProvince
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: InvalidProvince
+  nameWithType: CommandValidationError.InvalidProvince
+  fullName: Core.Commands.CommandValidationError.InvalidProvince
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidProvince
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 99
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: InvalidProvince = 1
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.InsufficientPermissions
+  commentId: F:Core.Commands.CommandValidationError.InsufficientPermissions
+  id: InsufficientPermissions
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: InsufficientPermissions
+  nameWithType: CommandValidationError.InsufficientPermissions
+  fullName: Core.Commands.CommandValidationError.InsufficientPermissions
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InsufficientPermissions
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 100
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: InsufficientPermissions = 2
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.InvalidGameState
+  commentId: F:Core.Commands.CommandValidationError.InvalidGameState
+  id: InvalidGameState
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: InvalidGameState
+  nameWithType: CommandValidationError.InvalidGameState
+  fullName: Core.Commands.CommandValidationError.InvalidGameState
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidGameState
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 101
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: InvalidGameState = 3
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.InvalidParameters
+  commentId: F:Core.Commands.CommandValidationError.InvalidParameters
+  id: InvalidParameters
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: InvalidParameters
+  nameWithType: CommandValidationError.InvalidParameters
+  fullName: Core.Commands.CommandValidationError.InvalidParameters
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidParameters
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: InvalidParameters = 4
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.ResourceConstraints
+  commentId: F:Core.Commands.CommandValidationError.ResourceConstraints
+  id: ResourceConstraints
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: ResourceConstraints
+  nameWithType: CommandValidationError.ResourceConstraints
+  fullName: Core.Commands.CommandValidationError.ResourceConstraints
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResourceConstraints
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: ResourceConstraints = 5
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.TimingViolation
+  commentId: F:Core.Commands.CommandValidationError.TimingViolation
+  id: TimingViolation
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: TimingViolation
+  nameWithType: CommandValidationError.TimingViolation
+  fullName: Core.Commands.CommandValidationError.TimingViolation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimingViolation
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: TimingViolation = 6
+    return:
+      type: Core.Commands.CommandValidationError
+- uid: Core.Commands.CommandValidationError.ChecksumMismatch
+  commentId: F:Core.Commands.CommandValidationError.ChecksumMismatch
+  id: ChecksumMismatch
+  parent: Core.Commands.CommandValidationError
+  langs:
+  - csharp
+  - vb
+  name: ChecksumMismatch
+  nameWithType: CommandValidationError.ChecksumMismatch
+  fullName: Core.Commands.CommandValidationError.ChecksumMismatch
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Commands/IProvinceCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ChecksumMismatch
+    path: Scripts/Core/Commands/IProvinceCommand.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: ChecksumMismatch = 7
+    return:
+      type: Core.Commands.CommandValidationError
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Commands.CommandValidationError
+  commentId: T:Core.Commands.CommandValidationError
+  parent: Core.Commands
+  href: Core.Commands.CommandValidationError.html
+  name: CommandValidationError
+  nameWithType: CommandValidationError
+  fullName: Core.Commands.CommandValidationError

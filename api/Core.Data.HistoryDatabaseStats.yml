@@ -1,0 +1,207 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.HistoryDatabaseStats
+  commentId: T:Core.Data.HistoryDatabaseStats
+  id: HistoryDatabaseStats
+  parent: Core.Data
+  children:
+  - Core.Data.HistoryDatabaseStats.EstimatedMemoryUsageKB
+  - Core.Data.HistoryDatabaseStats.ProvincesWithCompressedHistory
+  - Core.Data.HistoryDatabaseStats.ProvincesWithLongTermHistory
+  - Core.Data.HistoryDatabaseStats.ProvincesWithRecentHistory
+  - Core.Data.HistoryDatabaseStats.TotalRecentEvents
+  langs:
+  - csharp
+  - vb
+  name: HistoryDatabaseStats
+  nameWithType: HistoryDatabaseStats
+  fullName: Core.Data.HistoryDatabaseStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HistoryDatabaseStats
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 315
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public struct HistoryDatabaseStats
+    content.vb: Public Structure HistoryDatabaseStats
+- uid: Core.Data.HistoryDatabaseStats.ProvincesWithRecentHistory
+  commentId: F:Core.Data.HistoryDatabaseStats.ProvincesWithRecentHistory
+  id: ProvincesWithRecentHistory
+  parent: Core.Data.HistoryDatabaseStats
+  langs:
+  - csharp
+  - vb
+  name: ProvincesWithRecentHistory
+  nameWithType: HistoryDatabaseStats.ProvincesWithRecentHistory
+  fullName: Core.Data.HistoryDatabaseStats.ProvincesWithRecentHistory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesWithRecentHistory
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 317
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ProvincesWithRecentHistory
+    return:
+      type: System.Int32
+    content.vb: Public ProvincesWithRecentHistory As Integer
+- uid: Core.Data.HistoryDatabaseStats.ProvincesWithCompressedHistory
+  commentId: F:Core.Data.HistoryDatabaseStats.ProvincesWithCompressedHistory
+  id: ProvincesWithCompressedHistory
+  parent: Core.Data.HistoryDatabaseStats
+  langs:
+  - csharp
+  - vb
+  name: ProvincesWithCompressedHistory
+  nameWithType: HistoryDatabaseStats.ProvincesWithCompressedHistory
+  fullName: Core.Data.HistoryDatabaseStats.ProvincesWithCompressedHistory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesWithCompressedHistory
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 318
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ProvincesWithCompressedHistory
+    return:
+      type: System.Int32
+    content.vb: Public ProvincesWithCompressedHistory As Integer
+- uid: Core.Data.HistoryDatabaseStats.ProvincesWithLongTermHistory
+  commentId: F:Core.Data.HistoryDatabaseStats.ProvincesWithLongTermHistory
+  id: ProvincesWithLongTermHistory
+  parent: Core.Data.HistoryDatabaseStats
+  langs:
+  - csharp
+  - vb
+  name: ProvincesWithLongTermHistory
+  nameWithType: HistoryDatabaseStats.ProvincesWithLongTermHistory
+  fullName: Core.Data.HistoryDatabaseStats.ProvincesWithLongTermHistory
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvincesWithLongTermHistory
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 319
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int ProvincesWithLongTermHistory
+    return:
+      type: System.Int32
+    content.vb: Public ProvincesWithLongTermHistory As Integer
+- uid: Core.Data.HistoryDatabaseStats.TotalRecentEvents
+  commentId: F:Core.Data.HistoryDatabaseStats.TotalRecentEvents
+  id: TotalRecentEvents
+  parent: Core.Data.HistoryDatabaseStats
+  langs:
+  - csharp
+  - vb
+  name: TotalRecentEvents
+  nameWithType: HistoryDatabaseStats.TotalRecentEvents
+  fullName: Core.Data.HistoryDatabaseStats.TotalRecentEvents
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalRecentEvents
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 320
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int TotalRecentEvents
+    return:
+      type: System.Int32
+    content.vb: Public TotalRecentEvents As Integer
+- uid: Core.Data.HistoryDatabaseStats.EstimatedMemoryUsageKB
+  commentId: F:Core.Data.HistoryDatabaseStats.EstimatedMemoryUsageKB
+  id: EstimatedMemoryUsageKB
+  parent: Core.Data.HistoryDatabaseStats
+  langs:
+  - csharp
+  - vb
+  name: EstimatedMemoryUsageKB
+  nameWithType: HistoryDatabaseStats.EstimatedMemoryUsageKB
+  fullName: Core.Data.HistoryDatabaseStats.EstimatedMemoryUsageKB
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EstimatedMemoryUsageKB
+    path: Scripts/Core/Data/ProvinceHistoryDatabase.cs
+    startLine: 321
+  assemblies:
+  - Core
+  namespace: Core.Data
+  syntax:
+    content: public int EstimatedMemoryUsageKB
+    return:
+      type: System.Int32
+    content.vb: Public EstimatedMemoryUsageKB As Integer
+references:
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System

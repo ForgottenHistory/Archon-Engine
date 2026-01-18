@@ -1,0 +1,250 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.GPUProvinceNeighborDetector
+  commentId: T:Map.Province.GPUProvinceNeighborDetector
+  id: GPUProvinceNeighborDetector
+  parent: Map.Province
+  children:
+  - Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture(Map.Loading.ProvinceMapLoader.LoadResult)
+  - Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU(UnityEngine.Texture2D,System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: GPUProvinceNeighborDetector
+  nameWithType: GPUProvinceNeighborDetector
+  fullName: Map.Province.GPUProvinceNeighborDetector
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GPUProvinceNeighborDetector
+    path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+    startLine: 13
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    GPU-accelerated province neighbor detection using compute shaders
+
+    Processes millions of pixels in parallel on the GPU instead of CPU
+  example: []
+  syntax:
+    content: public static class GPUProvinceNeighborDetector
+    content.vb: Public Module GPUProvinceNeighborDetector
+  inheritance:
+  - System.Object
+- uid: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU(UnityEngine.Texture2D,System.Int32)
+  commentId: M:Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU(UnityEngine.Texture2D,System.Int32)
+  id: DetectNeighborsGPU(UnityEngine.Texture2D,System.Int32)
+  parent: Map.Province.GPUProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: DetectNeighborsGPU(Texture2D, int)
+  nameWithType: GPUProvinceNeighborDetector.DetectNeighborsGPU(Texture2D, int)
+  fullName: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU(UnityEngine.Texture2D, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectNeighborsGPU
+    path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Detect neighbors using GPU compute shader - orders of magnitude faster than CPU
+  example: []
+  syntax:
+    content: public static ProvinceNeighborDetector.NeighborResult DetectNeighborsGPU(Texture2D provinceIDTexture, int provinceCount)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.Texture2D
+    - id: provinceCount
+      type: System.Int32
+    return:
+      type: Map.Province.ProvinceNeighborDetector.NeighborResult
+    content.vb: Public Shared Function DetectNeighborsGPU(provinceIDTexture As Texture2D, provinceCount As Integer) As ProvinceNeighborDetector.NeighborResult
+  overload: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU*
+  nameWithType.vb: GPUProvinceNeighborDetector.DetectNeighborsGPU(Texture2D, Integer)
+  fullName.vb: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU(UnityEngine.Texture2D, Integer)
+  name.vb: DetectNeighborsGPU(Texture2D, Integer)
+- uid: Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture(Map.Loading.ProvinceMapLoader.LoadResult)
+  commentId: M:Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture(Map.Loading.ProvinceMapLoader.LoadResult)
+  id: CreateProvinceIDTexture(Map.Loading.ProvinceMapLoader.LoadResult)
+  parent: Map.Province.GPUProvinceNeighborDetector
+  langs:
+  - csharp
+  - vb
+  name: CreateProvinceIDTexture(LoadResult)
+  nameWithType: GPUProvinceNeighborDetector.CreateProvinceIDTexture(ProvinceMapLoader.LoadResult)
+  fullName: Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture(Map.Loading.ProvinceMapLoader.LoadResult)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CreateProvinceIDTexture
+    path: Scripts/Map/Province/GPUProvinceNeighborDetector.cs
+    startLine: 239
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Create province ID texture from load result for GPU processing
+  example: []
+  syntax:
+    content: public static Texture2D CreateProvinceIDTexture(ProvinceMapLoader.LoadResult loadResult)
+    parameters:
+    - id: loadResult
+      type: Map.Loading.ProvinceMapLoader.LoadResult
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: Public Shared Function CreateProvinceIDTexture(loadResult As ProvinceMapLoader.LoadResult) As Texture2D
+  overload: Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU*
+  commentId: Overload:Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU
+  href: Map.Province.GPUProvinceNeighborDetector.html#Map_Province_GPUProvinceNeighborDetector_DetectNeighborsGPU_UnityEngine_Texture2D_System_Int32_
+  name: DetectNeighborsGPU
+  nameWithType: GPUProvinceNeighborDetector.DetectNeighborsGPU
+  fullName: Map.Province.GPUProvinceNeighborDetector.DetectNeighborsGPU
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+  commentId: T:Map.Province.ProvinceNeighborDetector.NeighborResult
+  parent: Map.Province
+  href: Map.Province.ProvinceNeighborDetector.html
+  name: ProvinceNeighborDetector.NeighborResult
+  nameWithType: ProvinceNeighborDetector.NeighborResult
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult
+  spec.csharp:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+  spec.vb:
+  - uid: Map.Province.ProvinceNeighborDetector
+    name: ProvinceNeighborDetector
+    href: Map.Province.ProvinceNeighborDetector.html
+  - name: .
+  - uid: Map.Province.ProvinceNeighborDetector.NeighborResult
+    name: NeighborResult
+    href: Map.Province.ProvinceNeighborDetector.NeighborResult.html
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture*
+  commentId: Overload:Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture
+  href: Map.Province.GPUProvinceNeighborDetector.html#Map_Province_GPUProvinceNeighborDetector_CreateProvinceIDTexture_Map_Loading_ProvinceMapLoader_LoadResult_
+  name: CreateProvinceIDTexture
+  nameWithType: GPUProvinceNeighborDetector.CreateProvinceIDTexture
+  fullName: Map.Province.GPUProvinceNeighborDetector.CreateProvinceIDTexture
+- uid: Map.Loading.ProvinceMapLoader.LoadResult
+  commentId: T:Map.Loading.ProvinceMapLoader.LoadResult
+  parent: Map.Loading
+  href: Map.Loading.ProvinceMapLoader.html
+  name: ProvinceMapLoader.LoadResult
+  nameWithType: ProvinceMapLoader.LoadResult
+  fullName: Map.Loading.ProvinceMapLoader.LoadResult
+  spec.csharp:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+  spec.vb:
+  - uid: Map.Loading.ProvinceMapLoader
+    name: ProvinceMapLoader
+    href: Map.Loading.ProvinceMapLoader.html
+  - name: .
+  - uid: Map.Loading.ProvinceMapLoader.LoadResult
+    name: LoadResult
+    href: Map.Loading.ProvinceMapLoader.LoadResult.html
+- uid: Map.Loading
+  commentId: N:Map.Loading
+  href: Map.html
+  name: Map.Loading
+  nameWithType: Map.Loading
+  fullName: Map.Loading
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Loading
+    name: Loading
+    href: Map.Loading.html

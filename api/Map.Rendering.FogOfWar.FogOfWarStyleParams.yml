@@ -1,0 +1,376 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarStyleParams
+  id: FogOfWarStyleParams
+  parent: Map.Rendering.FogOfWar
+  children:
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredDesaturation
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredTint
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseColor
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseScale
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseSpeed
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseStrength
+  - Map.Rendering.FogOfWar.FogOfWarStyleParams.UnexploredColor
+  langs:
+  - csharp
+  - vb
+  name: FogOfWarStyleParams
+  nameWithType: FogOfWarStyleParams
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FogOfWarStyleParams
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 120
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Style parameters for fog of war rendering (from VisualStyleConfiguration)
+  example: []
+  syntax:
+    content: public struct FogOfWarStyleParams
+    content.vb: Public Structure FogOfWarStyleParams
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.UnexploredColor
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.UnexploredColor
+  id: UnexploredColor
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: UnexploredColor
+  nameWithType: FogOfWarStyleParams.UnexploredColor
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.UnexploredColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnexploredColor
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 123
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Color for unexplored provinces
+  example: []
+  syntax:
+    content: public Color UnexploredColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public UnexploredColor As Color
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredTint
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredTint
+  id: ExploredTint
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: ExploredTint
+  nameWithType: FogOfWarStyleParams.ExploredTint
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredTint
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExploredTint
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 126
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Color tint for explored but not visible provinces
+  example: []
+  syntax:
+    content: public Color ExploredTint
+    return:
+      type: UnityEngine.Color
+    content.vb: Public ExploredTint As Color
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredDesaturation
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredDesaturation
+  id: ExploredDesaturation
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: ExploredDesaturation
+  nameWithType: FogOfWarStyleParams.ExploredDesaturation
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.ExploredDesaturation
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExploredDesaturation
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 129
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Desaturation amount for explored areas (0-1)
+  example: []
+  syntax:
+    content: public float ExploredDesaturation
+    return:
+      type: System.Single
+    content.vb: Public ExploredDesaturation As Single
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseColor
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseColor
+  id: NoiseColor
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NoiseColor
+  nameWithType: FogOfWarStyleParams.NoiseColor
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseColor
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoiseColor
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 132
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Color of animated fog noise
+  example: []
+  syntax:
+    content: public Color NoiseColor
+    return:
+      type: UnityEngine.Color
+    content.vb: Public NoiseColor As Color
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseScale
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseScale
+  id: NoiseScale
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NoiseScale
+  nameWithType: FogOfWarStyleParams.NoiseScale
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseScale
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoiseScale
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 135
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Scale of fog noise pattern
+  example: []
+  syntax:
+    content: public float NoiseScale
+    return:
+      type: System.Single
+    content.vb: Public NoiseScale As Single
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseStrength
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseStrength
+  id: NoiseStrength
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NoiseStrength
+  nameWithType: FogOfWarStyleParams.NoiseStrength
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseStrength
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoiseStrength
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 138
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Strength of noise effect (0-1)
+  example: []
+  syntax:
+    content: public float NoiseStrength
+    return:
+      type: System.Single
+    content.vb: Public NoiseStrength As Single
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseSpeed
+  commentId: F:Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseSpeed
+  id: NoiseSpeed
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: NoiseSpeed
+  nameWithType: FogOfWarStyleParams.NoiseSpeed
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.NoiseSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NoiseSpeed
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 141
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Animation speed of drifting fog
+  example: []
+  syntax:
+    content: public float NoiseSpeed
+    return:
+      type: System.Single
+    content.vb: Public NoiseSpeed As Single
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  commentId: M:Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  id: FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  parent: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  langs:
+  - csharp
+  - vb
+  name: FromConfig(VisualStyleConfiguration)
+  nameWithType: FogOfWarStyleParams.FromConfig(VisualStyleConfiguration)
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig(Archon.Engine.Map.VisualStyleConfiguration)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FromConfig
+    path: Scripts/Map/Rendering/FogOfWar/IFogOfWarRenderer.cs
+    startLine: 146
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.FogOfWar
+  summary: Create style params from VisualStyleConfiguration
+  example: []
+  syntax:
+    content: public static FogOfWarStyleParams FromConfig(VisualStyleConfiguration config)
+    parameters:
+    - id: config
+      type: Archon.Engine.Map.VisualStyleConfiguration
+    return:
+      type: Map.Rendering.FogOfWar.FogOfWarStyleParams
+    content.vb: Public Shared Function FromConfig(config As VisualStyleConfiguration) As FogOfWarStyleParams
+  overload: Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig*
+references:
+- uid: Map.Rendering.FogOfWar
+  commentId: N:Map.Rendering.FogOfWar
+  href: Map.html
+  name: Map.Rendering.FogOfWar
+  nameWithType: Map.Rendering.FogOfWar
+  fullName: Map.Rendering.FogOfWar
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.FogOfWar
+    name: FogOfWar
+    href: Map.Rendering.FogOfWar.html
+- uid: UnityEngine.Color
+  commentId: T:UnityEngine.Color
+  parent: UnityEngine
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: UnityEngine.Color
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig*
+  commentId: Overload:Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig
+  href: Map.Rendering.FogOfWar.FogOfWarStyleParams.html#Map_Rendering_FogOfWar_FogOfWarStyleParams_FromConfig_Archon_Engine_Map_VisualStyleConfiguration_
+  name: FromConfig
+  nameWithType: FogOfWarStyleParams.FromConfig
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams.FromConfig
+- uid: Archon.Engine.Map.VisualStyleConfiguration
+  commentId: T:Archon.Engine.Map.VisualStyleConfiguration
+  parent: Archon.Engine.Map
+  name: VisualStyleConfiguration
+  nameWithType: VisualStyleConfiguration
+  fullName: Archon.Engine.Map.VisualStyleConfiguration
+- uid: Map.Rendering.FogOfWar.FogOfWarStyleParams
+  commentId: T:Map.Rendering.FogOfWar.FogOfWarStyleParams
+  parent: Map.Rendering.FogOfWar
+  href: Map.Rendering.FogOfWar.FogOfWarStyleParams.html
+  name: FogOfWarStyleParams
+  nameWithType: FogOfWarStyleParams
+  fullName: Map.Rendering.FogOfWar.FogOfWarStyleParams
+- uid: Archon.Engine.Map
+  commentId: N:Archon.Engine.Map
+  name: Archon.Engine.Map
+  nameWithType: Archon.Engine.Map
+  fullName: Archon.Engine.Map
+  spec.csharp:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Engine
+    name: Engine
+  - name: .
+  - uid: Archon.Engine.Map
+    name: Map
+  spec.vb:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Engine
+    name: Engine
+  - name: .
+  - uid: Archon.Engine.Map
+    name: Map

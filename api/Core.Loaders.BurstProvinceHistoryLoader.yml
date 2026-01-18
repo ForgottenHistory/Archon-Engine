@@ -1,0 +1,158 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.BurstProvinceHistoryLoader
+  commentId: T:Core.Loaders.BurstProvinceHistoryLoader
+  id: BurstProvinceHistoryLoader
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates(System.String)
+  langs:
+  - csharp
+  - vb
+  name: BurstProvinceHistoryLoader
+  nameWithType: BurstProvinceHistoryLoader
+  fullName: Core.Loaders.BurstProvinceHistoryLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BurstProvinceHistoryLoader
+    path: Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: >-
+    Province history loader using hybrid JSON5 + Burst architecture
+
+    Phase 1: Load JSON5 files to structs (main thread)
+
+    Phase 2: Process structs with burst jobs (multi-threaded)
+  example: []
+  syntax:
+    content: public static class BurstProvinceHistoryLoader
+    content.vb: Public Module BurstProvinceHistoryLoader
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates(System.String)
+  commentId: M:Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates(System.String)
+  id: LoadProvinceInitialStates(System.String)
+  parent: Core.Loaders.BurstProvinceHistoryLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadProvinceInitialStates(string)
+  nameWithType: BurstProvinceHistoryLoader.LoadProvinceInitialStates(string)
+  fullName: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadProvinceInitialStates
+    path: Scripts/Core/Loaders/BurstProvinceHistoryLoader.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Load province initial states using hybrid JSON5 + Burst approach
+  example: []
+  syntax:
+    content: public static ProvinceInitialStateLoadResult LoadProvinceInitialStates(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    return:
+      type: Core.Data.ProvinceInitialStateLoadResult
+    content.vb: Public Shared Function LoadProvinceInitialStates(dataDirectory As String) As ProvinceInitialStateLoadResult
+  overload: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates*
+  nameWithType.vb: BurstProvinceHistoryLoader.LoadProvinceInitialStates(String)
+  fullName.vb: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates(String)
+  name.vb: LoadProvinceInitialStates(String)
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates*
+  commentId: Overload:Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates
+  href: Core.Loaders.BurstProvinceHistoryLoader.html#Core_Loaders_BurstProvinceHistoryLoader_LoadProvinceInitialStates_System_String_
+  name: LoadProvinceInitialStates
+  nameWithType: BurstProvinceHistoryLoader.LoadProvinceInitialStates
+  fullName: Core.Loaders.BurstProvinceHistoryLoader.LoadProvinceInitialStates
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Data.ProvinceInitialStateLoadResult
+  commentId: T:Core.Data.ProvinceInitialStateLoadResult
+  parent: Core.Data
+  href: Core.Data.ProvinceInitialStateLoadResult.html
+  name: ProvinceInitialStateLoadResult
+  nameWithType: ProvinceInitialStateLoadResult
+  fullName: Core.Data.ProvinceInitialStateLoadResult
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html

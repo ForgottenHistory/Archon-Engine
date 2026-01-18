@@ -1,0 +1,1591 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.GradientMapMode
+  commentId: T:Map.MapModes.GradientMapMode
+  id: GradientMapMode
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  - Map.MapModes.GradientMapMode.Dispose
+  - Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  - Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  - Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  - Map.MapModes.GradientMapMode.GetGradient
+  - Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  - Map.MapModes.GradientMapMode.GetUpdateFrequency
+  - Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  - Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  - Map.MapModes.GradientMapMode.IsActive
+  - Map.MapModes.GradientMapMode.LogActivation(System.String)
+  - Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  - Map.MapModes.GradientMapMode.MarkDirty
+  - Map.MapModes.GradientMapMode.Mode
+  - Map.MapModes.GradientMapMode.Name
+  - Map.MapModes.GradientMapMode.OceanColor
+  - Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  - Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  - Map.MapModes.GradientMapMode.OnMapModeActivated
+  - Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  - Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  - Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  - Map.MapModes.GradientMapMode.ShaderModeID
+  - Map.MapModes.GradientMapMode.UnownedColor
+  - Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  langs:
+  - csharp
+  - vb
+  name: GradientMapMode
+  nameWithType: GradientMapMode
+  fullName: Map.MapModes.GradientMapMode
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GradientMapMode
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    ENGINE LAYER - Generic gradient-based map mode handler
+
+
+    Architecture:
+
+    - Pure mechanism, no game-specific knowledge
+
+    - Concrete GAME modes override: GetGradient(), GetValueForProvince()
+
+    - Uses GPU compute shader for fast colorization (~1ms vs 125ms CPU)
+
+    - Uses MapModeManager's texture array for instant mode switching
+
+
+    Performance:
+
+    - GPU compute shader processes 11.5M pixels in ~1ms
+
+    - Texture updates only when dirty (data changed)
+
+    - Mode switching is instant (just changes shader int)
+
+
+    Usage (GAME Layer):
+
+    public class FarmDensityMapMode : GradientMapMode
+
+    {
+        protected override ColorGradient GetGradient() =&gt; new ColorGradient(...);
+        protected override float GetValueForProvince(ushort id) =&gt; buildingSystem.GetFarmCount(id);
+    }
+  example: []
+  syntax:
+    content: 'public abstract class GradientMapMode : IMapModeHandler'
+    content.vb: Public MustInherit Class GradientMapMode Implements IMapModeHandler
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - StarterKit.MapModes.FarmDensityMapMode
+  - StarterKit.MapModes.TerrainCostMapMode
+  implements:
+  - Map.MapModes.IMapModeHandler
+- uid: Map.MapModes.GradientMapMode.OceanColor
+  commentId: P:Map.MapModes.GradientMapMode.OceanColor
+  id: OceanColor
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: OceanColor
+  nameWithType: GradientMapMode.OceanColor
+  fullName: Map.MapModes.GradientMapMode.OceanColor
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OceanColor
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 31
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: protected virtual Color32 OceanColor { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Protected Overridable ReadOnly Property OceanColor As Color32
+  overload: Map.MapModes.GradientMapMode.OceanColor*
+- uid: Map.MapModes.GradientMapMode.UnownedColor
+  commentId: P:Map.MapModes.GradientMapMode.UnownedColor
+  id: UnownedColor
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: UnownedColor
+  nameWithType: GradientMapMode.UnownedColor
+  fullName: Map.MapModes.GradientMapMode.UnownedColor
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnownedColor
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 32
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: protected virtual Color32 UnownedColor { get; }
+    parameters: []
+    return:
+      type: UnityEngine.Color32
+    content.vb: Protected Overridable ReadOnly Property UnownedColor As Color32
+  overload: Map.MapModes.GradientMapMode.UnownedColor*
+- uid: Map.MapModes.GradientMapMode.MarkDirty
+  commentId: M:Map.MapModes.GradientMapMode.MarkDirty
+  id: MarkDirty
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: MarkDirty()
+  nameWithType: GradientMapMode.MarkDirty()
+  fullName: Map.MapModes.GradientMapMode.MarkDirty()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MarkDirty
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 61
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Mark this map mode as dirty (needs recalculation)
+
+    Call this when underlying data changes (province ownership, development, etc.)
+
+    The texture will be updated on the next frame via RequestDeferredUpdate(),
+
+    but ONLY if this map mode is currently active.
+  example: []
+  syntax:
+    content: public void MarkDirty()
+    content.vb: Public Sub MarkDirty()
+  overload: Map.MapModes.GradientMapMode.MarkDirty*
+- uid: Map.MapModes.GradientMapMode.IsActive
+  commentId: P:Map.MapModes.GradientMapMode.IsActive
+  id: IsActive
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: IsActive
+  nameWithType: GradientMapMode.IsActive
+  fullName: Map.MapModes.GradientMapMode.IsActive
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsActive
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 73
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Check if this map mode is currently the active one
+  example: []
+  syntax:
+    content: public bool IsActive { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsActive As Boolean
+  overload: Map.MapModes.GradientMapMode.IsActive*
+- uid: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  commentId: M:Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  id: RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: RegisterWithMapModeManager(MapModeManager)
+  nameWithType: GradientMapMode.RegisterWithMapModeManager(MapModeManager)
+  fullName: Map.MapModes.GradientMapMode.RegisterWithMapModeManager(Map.MapModes.MapModeManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterWithMapModeManager
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 79
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Register with MapModeManager to get a texture array slot.
+
+    Called during initialization.
+  example: []
+  syntax:
+    content: protected void RegisterWithMapModeManager(MapModeManager manager)
+    parameters:
+    - id: manager
+      type: Map.MapModes.MapModeManager
+    content.vb: Protected Sub RegisterWithMapModeManager(manager As MapModeManager)
+  overload: Map.MapModes.GradientMapMode.RegisterWithMapModeManager*
+- uid: Map.MapModes.GradientMapMode.OnMapModeActivated
+  commentId: M:Map.MapModes.GradientMapMode.OnMapModeActivated
+  id: OnMapModeActivated
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: OnMapModeActivated()
+  nameWithType: GradientMapMode.OnMapModeActivated()
+  fullName: Map.MapModes.GradientMapMode.OnMapModeActivated()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnMapModeActivated
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 168
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Called when map mode is activated.
+
+    Subclasses should call base.OnMapModeActivated() if they override OnActivate.
+  example: []
+  syntax:
+    content: protected void OnMapModeActivated()
+    content.vb: Protected Sub OnMapModeActivated()
+  overload: Map.MapModes.GradientMapMode.OnMapModeActivated*
+- uid: Map.MapModes.GradientMapMode.Mode
+  commentId: P:Map.MapModes.GradientMapMode.Mode
+  id: Mode
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: Mode
+  nameWithType: GradientMapMode.Mode
+  fullName: Map.MapModes.GradientMapMode.Mode
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Mode
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 177
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Map mode type this handler manages
+  example: []
+  syntax:
+    content: public abstract MapMode Mode { get; }
+    parameters: []
+    return:
+      type: Map.MapModes.MapMode
+    content.vb: Public MustOverride ReadOnly Property Mode As MapMode
+  overload: Map.MapModes.GradientMapMode.Mode*
+  implements:
+  - Map.MapModes.IMapModeHandler.Mode
+- uid: Map.MapModes.GradientMapMode.Name
+  commentId: P:Map.MapModes.GradientMapMode.Name
+  id: Name
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: GradientMapMode.Name
+  fullName: Map.MapModes.GradientMapMode.Name
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Name
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 178
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Display name for UI
+  example: []
+  syntax:
+    content: public abstract string Name { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public MustOverride ReadOnly Property Name As String
+  overload: Map.MapModes.GradientMapMode.Name*
+  implements:
+  - Map.MapModes.IMapModeHandler.Name
+- uid: Map.MapModes.GradientMapMode.ShaderModeID
+  commentId: P:Map.MapModes.GradientMapMode.ShaderModeID
+  id: ShaderModeID
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: ShaderModeID
+  nameWithType: GradientMapMode.ShaderModeID
+  fullName: Map.MapModes.GradientMapMode.ShaderModeID
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShaderModeID
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 179
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Shader mode ID for the GPU
+  example: []
+  syntax:
+    content: public abstract int ShaderModeID { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public MustOverride ReadOnly Property ShaderModeID As Integer
+  overload: Map.MapModes.GradientMapMode.ShaderModeID*
+  implements:
+  - Map.MapModes.IMapModeHandler.ShaderModeID
+- uid: Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  commentId: P:Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  id: RequiresFrequentUpdates
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: RequiresFrequentUpdates
+  nameWithType: GradientMapMode.RequiresFrequentUpdates
+  fullName: Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RequiresFrequentUpdates
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 180
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Whether this mode requires frequent texture updates
+  example: []
+  syntax:
+    content: public virtual bool RequiresFrequentUpdates { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Overridable ReadOnly Property RequiresFrequentUpdates As Boolean
+  overload: Map.MapModes.GradientMapMode.RequiresFrequentUpdates*
+  implements:
+  - Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+- uid: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  id: OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: GradientMapMode.OnActivate(Material, MapModeDataTextures)
+  fullName: Map.MapModes.GradientMapMode.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnActivate
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 181
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Called when this map mode becomes active
+
+    Set up shader properties, enable keywords, etc.
+  example: []
+  syntax:
+    content: public abstract void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    - id: dataTextures
+      type: Map.MapModes.MapModeDataTextures
+    content.vb: Public MustOverride Sub OnActivate(mapMaterial As Material, dataTextures As MapModeDataTextures)
+  overload: Map.MapModes.GradientMapMode.OnActivate*
+  implements:
+  - Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+- uid: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  commentId: M:Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  id: OnDeactivate(UnityEngine.Material)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: OnDeactivate(Material)
+  nameWithType: GradientMapMode.OnDeactivate(Material)
+  fullName: Map.MapModes.GradientMapMode.OnDeactivate(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnDeactivate
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 182
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Called when this map mode becomes inactive
+
+    Clean up, disable keywords, etc.
+  example: []
+  syntax:
+    content: public abstract void OnDeactivate(Material mapMaterial)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    content.vb: Public MustOverride Sub OnDeactivate(mapMaterial As Material)
+  overload: Map.MapModes.GradientMapMode.OnDeactivate*
+  implements:
+  - Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+- uid: Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:Map.MapModes.GradientMapMode.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  id: GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: GradientMapMode.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: Map.MapModes.GradientMapMode.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTooltip
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 183
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get tooltip text for a specific province in this map mode
+  example: []
+  syntax:
+    content: public abstract string GetProvinceTooltip(ushort provinceId, ProvinceQueries provinceQueries, CountryQueries countryQueries)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: countryQueries
+      type: Core.Queries.CountryQueries
+    return:
+      type: System.String
+    content.vb: Public MustOverride Function GetProvinceTooltip(provinceId As UShort, provinceQueries As ProvinceQueries, countryQueries As CountryQueries) As String
+  overload: Map.MapModes.GradientMapMode.GetProvinceTooltip*
+  implements:
+  - Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  nameWithType.vb: GradientMapMode.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: Map.MapModes.GradientMapMode.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+- uid: Map.MapModes.GradientMapMode.GetUpdateFrequency
+  commentId: M:Map.MapModes.GradientMapMode.GetUpdateFrequency
+  id: GetUpdateFrequency
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetUpdateFrequency()
+  nameWithType: GradientMapMode.GetUpdateFrequency()
+  fullName: Map.MapModes.GradientMapMode.GetUpdateFrequency()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUpdateFrequency
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 184
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get update frequency for this map mode's textures
+  example: []
+  syntax:
+    content: public abstract UpdateFrequency GetUpdateFrequency()
+    return:
+      type: Map.MapModes.UpdateFrequency
+    content.vb: Public MustOverride Function GetUpdateFrequency() As UpdateFrequency
+  overload: Map.MapModes.GradientMapMode.GetUpdateFrequency*
+  implements:
+  - Map.MapModes.IMapModeHandler.GetUpdateFrequency
+- uid: Map.MapModes.GradientMapMode.GetGradient
+  commentId: M:Map.MapModes.GradientMapMode.GetGradient
+  id: GetGradient
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetGradient()
+  nameWithType: GradientMapMode.GetGradient()
+  fullName: Map.MapModes.GradientMapMode.GetGradient()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetGradient
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 189
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Get the color gradient to use for this map mode
+  example: []
+  syntax:
+    content: protected abstract ColorGradient GetGradient()
+    return:
+      type: Map.MapModes.ColorGradient
+    content.vb: Protected MustOverride Function GetGradient() As ColorGradient
+  overload: Map.MapModes.GradientMapMode.GetGradient*
+- uid: Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  commentId: M:Map.MapModes.GradientMapMode.GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  id: GetValueForProvince(System.UInt16,Core.Queries.ProvinceQueries,System.Object)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetValueForProvince(ushort, ProvinceQueries, object)
+  nameWithType: GradientMapMode.GetValueForProvince(ushort, ProvinceQueries, object)
+  fullName: Map.MapModes.GradientMapMode.GetValueForProvince(ushort, Core.Queries.ProvinceQueries, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValueForProvince
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 195
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get the numeric value for a province (will be normalized and mapped to gradient)
+
+    Return 0 or negative to skip the province
+  example: []
+  syntax:
+    content: protected abstract float GetValueForProvince(ushort provinceId, ProvinceQueries provinceQueries, object gameProvinceSystem)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: gameProvinceSystem
+      type: System.Object
+    return:
+      type: System.Single
+    content.vb: Protected MustOverride Function GetValueForProvince(provinceId As UShort, provinceQueries As ProvinceQueries, gameProvinceSystem As Object) As Single
+  overload: Map.MapModes.GradientMapMode.GetValueForProvince*
+  nameWithType.vb: GradientMapMode.GetValueForProvince(UShort, ProvinceQueries, Object)
+  fullName.vb: Map.MapModes.GradientMapMode.GetValueForProvince(UShort, Core.Queries.ProvinceQueries, Object)
+  name.vb: GetValueForProvince(UShort, ProvinceQueries, Object)
+- uid: Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  commentId: M:Map.MapModes.GradientMapMode.GetValueCategory(System.Single)
+  id: GetValueCategory(System.Single)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetValueCategory(float)
+  nameWithType: GradientMapMode.GetValueCategory(float)
+  fullName: Map.MapModes.GradientMapMode.GetValueCategory(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValueCategory
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 201
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get human-readable category name for a value (used in tooltips)
+
+    Override for custom categorization
+  example: []
+  syntax:
+    content: protected virtual string GetValueCategory(float value)
+    parameters:
+    - id: value
+      type: System.Single
+    return:
+      type: System.String
+    content.vb: Protected Overridable Function GetValueCategory(value As Single) As String
+  overload: Map.MapModes.GradientMapMode.GetValueCategory*
+  nameWithType.vb: GradientMapMode.GetValueCategory(Single)
+  fullName.vb: Map.MapModes.GradientMapMode.GetValueCategory(Single)
+  name.vb: GetValueCategory(Single)
+- uid: Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  commentId: M:Map.MapModes.GradientMapMode.GetCategoryThreshold(System.Int32)
+  id: GetCategoryThreshold(System.Int32)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: GetCategoryThreshold(int)
+  nameWithType: GradientMapMode.GetCategoryThreshold(int)
+  fullName: Map.MapModes.GradientMapMode.GetCategoryThreshold(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCategoryThreshold
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 215
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Override to provide custom category thresholds
+
+    Default assumes 0-100 range
+  example: []
+  syntax:
+    content: protected virtual float GetCategoryThreshold(int tier)
+    parameters:
+    - id: tier
+      type: System.Int32
+    return:
+      type: System.Single
+    content.vb: Protected Overridable Function GetCategoryThreshold(tier As Integer) As Single
+  overload: Map.MapModes.GradientMapMode.GetCategoryThreshold*
+  nameWithType.vb: GradientMapMode.GetCategoryThreshold(Integer)
+  fullName.vb: Map.MapModes.GradientMapMode.GetCategoryThreshold(Integer)
+  name.vb: GetCategoryThreshold(Integer)
+- uid: Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  commentId: M:Map.MapModes.GradientMapMode.FormatValue(System.Single)
+  id: FormatValue(System.Single)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: FormatValue(float)
+  nameWithType: GradientMapMode.FormatValue(float)
+  fullName: Map.MapModes.GradientMapMode.FormatValue(float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FormatValue
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 231
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Format value for display in tooltip
+
+    Override for custom formatting (e.g., "10.5 gold", "1000 soldiers")
+  example: []
+  syntax:
+    content: protected virtual string FormatValue(float value)
+    parameters:
+    - id: value
+      type: System.Single
+    return:
+      type: System.String
+    content.vb: Protected Overridable Function FormatValue(value As Single) As String
+  overload: Map.MapModes.GradientMapMode.FormatValue*
+  nameWithType.vb: GradientMapMode.FormatValue(Single)
+  fullName.vb: Map.MapModes.GradientMapMode.FormatValue(Single)
+  name.vb: FormatValue(Single)
+- uid: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  id: UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  nameWithType: GradientMapMode.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  fullName: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateTextures
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 236
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Update the mode-specific data textures from Core simulation data
+
+    Only called when data has changed or mode requires frequent updates
+  example: []
+  syntax:
+    content: public virtual void UpdateTextures(MapModeDataTextures dataTextures, ProvinceQueries provinceQueries, CountryQueries countryQueries, ProvinceMapping provinceMapping, object gameProvinceSystem = null)
+    parameters:
+    - id: dataTextures
+      type: Map.MapModes.MapModeDataTextures
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: countryQueries
+      type: Core.Queries.CountryQueries
+    - id: provinceMapping
+      type: Map.Rendering.ProvinceMapping
+    - id: gameProvinceSystem
+      type: System.Object
+      description: Optional game-specific province system - engine passes through without knowing type
+    content.vb: Public Overridable Sub UpdateTextures(dataTextures As MapModeDataTextures, provinceQueries As ProvinceQueries, countryQueries As CountryQueries, provinceMapping As ProvinceMapping, gameProvinceSystem As Object = Nothing)
+  overload: Map.MapModes.GradientMapMode.UpdateTextures*
+  implements:
+  - Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  nameWithType.vb: GradientMapMode.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.GradientMapMode.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, Object)
+  name.vb: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+- uid: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  commentId: M:Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  id: DisableAllMapModeKeywords(UnityEngine.Material)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: DisableAllMapModeKeywords(Material)
+  nameWithType: GradientMapMode.DisableAllMapModeKeywords(Material)
+  fullName: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DisableAllMapModeKeywords
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 419
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Helper method for subclasses to disable all map mode keywords (legacy compatibility)
+  example: []
+  syntax:
+    content: protected void DisableAllMapModeKeywords(Material mapMaterial)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    content.vb: Protected Sub DisableAllMapModeKeywords(mapMaterial As Material)
+  overload: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords*
+- uid: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  commentId: M:Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material,System.String)
+  id: EnableMapModeKeyword(UnityEngine.Material,System.String)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: EnableMapModeKeyword(Material, string)
+  nameWithType: GradientMapMode.EnableMapModeKeyword(Material, string)
+  fullName: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnableMapModeKeyword
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 428
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Helper method for subclasses to enable a specific keyword (legacy compatibility)
+  example: []
+  syntax:
+    content: protected void EnableMapModeKeyword(Material mapMaterial, string keyword)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    - id: keyword
+      type: System.String
+    content.vb: Protected Sub EnableMapModeKeyword(mapMaterial As Material, keyword As String)
+  overload: Map.MapModes.GradientMapMode.EnableMapModeKeyword*
+  nameWithType.vb: GradientMapMode.EnableMapModeKeyword(Material, String)
+  fullName.vb: Map.MapModes.GradientMapMode.EnableMapModeKeyword(UnityEngine.Material, String)
+  name.vb: EnableMapModeKeyword(Material, String)
+- uid: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  commentId: M:Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material,System.Int32)
+  id: SetShaderMode(UnityEngine.Material,System.Int32)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: SetShaderMode(Material, int)
+  nameWithType: GradientMapMode.SetShaderMode(Material, int)
+  fullName: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetShaderMode
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 437
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Helper method for subclasses to set shader mode (legacy compatibility)
+  example: []
+  syntax:
+    content: protected void SetShaderMode(Material mapMaterial, int modeID)
+    parameters:
+    - id: mapMaterial
+      type: UnityEngine.Material
+    - id: modeID
+      type: System.Int32
+    content.vb: Protected Sub SetShaderMode(mapMaterial As Material, modeID As Integer)
+  overload: Map.MapModes.GradientMapMode.SetShaderMode*
+  nameWithType.vb: GradientMapMode.SetShaderMode(Material, Integer)
+  fullName.vb: Map.MapModes.GradientMapMode.SetShaderMode(UnityEngine.Material, Integer)
+  name.vb: SetShaderMode(Material, Integer)
+- uid: Map.MapModes.GradientMapMode.LogActivation(System.String)
+  commentId: M:Map.MapModes.GradientMapMode.LogActivation(System.String)
+  id: LogActivation(System.String)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: LogActivation(string)
+  nameWithType: GradientMapMode.LogActivation(string)
+  fullName: Map.MapModes.GradientMapMode.LogActivation(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogActivation
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 447
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Helper method for subclasses to log activation
+  example: []
+  syntax:
+    content: protected void LogActivation(string message)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogActivation(message As String)
+  overload: Map.MapModes.GradientMapMode.LogActivation*
+  nameWithType.vb: GradientMapMode.LogActivation(String)
+  fullName.vb: Map.MapModes.GradientMapMode.LogActivation(String)
+  name.vb: LogActivation(String)
+- uid: Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  commentId: M:Map.MapModes.GradientMapMode.LogDeactivation(System.String)
+  id: LogDeactivation(System.String)
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: LogDeactivation(string)
+  nameWithType: GradientMapMode.LogDeactivation(string)
+  fullName: Map.MapModes.GradientMapMode.LogDeactivation(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogDeactivation
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 455
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Helper method for subclasses to log deactivation
+  example: []
+  syntax:
+    content: protected void LogDeactivation(string message = null)
+    parameters:
+    - id: message
+      type: System.String
+    content.vb: Protected Sub LogDeactivation(message As String = Nothing)
+  overload: Map.MapModes.GradientMapMode.LogDeactivation*
+  nameWithType.vb: GradientMapMode.LogDeactivation(String)
+  fullName.vb: Map.MapModes.GradientMapMode.LogDeactivation(String)
+  name.vb: LogDeactivation(String)
+- uid: Map.MapModes.GradientMapMode.Dispose
+  commentId: M:Map.MapModes.GradientMapMode.Dispose
+  id: Dispose
+  parent: Map.MapModes.GradientMapMode
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: GradientMapMode.Dispose()
+  fullName: Map.MapModes.GradientMapMode.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 474
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Dispose resources
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.MapModes.GradientMapMode.Dispose*
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Map.MapModes.IMapModeHandler
+  commentId: T:Map.MapModes.IMapModeHandler
+  parent: Map.MapModes
+  href: Map.MapModes.IMapModeHandler.html
+  name: IMapModeHandler
+  nameWithType: IMapModeHandler
+  fullName: Map.MapModes.IMapModeHandler
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.MapModes.GradientMapMode.OceanColor*
+  commentId: Overload:Map.MapModes.GradientMapMode.OceanColor
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_OceanColor
+  name: OceanColor
+  nameWithType: GradientMapMode.OceanColor
+  fullName: Map.MapModes.GradientMapMode.OceanColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.MapModes.GradientMapMode.UnownedColor*
+  commentId: Overload:Map.MapModes.GradientMapMode.UnownedColor
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_UnownedColor
+  name: UnownedColor
+  nameWithType: GradientMapMode.UnownedColor
+  fullName: Map.MapModes.GradientMapMode.UnownedColor
+- uid: Map.MapModes.GradientMapMode.MarkDirty*
+  commentId: Overload:Map.MapModes.GradientMapMode.MarkDirty
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_MarkDirty
+  name: MarkDirty
+  nameWithType: GradientMapMode.MarkDirty
+  fullName: Map.MapModes.GradientMapMode.MarkDirty
+- uid: Map.MapModes.GradientMapMode.IsActive*
+  commentId: Overload:Map.MapModes.GradientMapMode.IsActive
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_IsActive
+  name: IsActive
+  nameWithType: GradientMapMode.IsActive
+  fullName: Map.MapModes.GradientMapMode.IsActive
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.MapModes.GradientMapMode.RegisterWithMapModeManager*
+  commentId: Overload:Map.MapModes.GradientMapMode.RegisterWithMapModeManager
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_RegisterWithMapModeManager_Map_MapModes_MapModeManager_
+  name: RegisterWithMapModeManager
+  nameWithType: GradientMapMode.RegisterWithMapModeManager
+  fullName: Map.MapModes.GradientMapMode.RegisterWithMapModeManager
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeManager.html
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+- uid: Map.MapModes.GradientMapMode.OnMapModeActivated*
+  commentId: Overload:Map.MapModes.GradientMapMode.OnMapModeActivated
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_OnMapModeActivated
+  name: OnMapModeActivated
+  nameWithType: GradientMapMode.OnMapModeActivated
+  fullName: Map.MapModes.GradientMapMode.OnMapModeActivated
+- uid: Map.MapModes.GradientMapMode.Mode*
+  commentId: Overload:Map.MapModes.GradientMapMode.Mode
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_Mode
+  name: Mode
+  nameWithType: GradientMapMode.Mode
+  fullName: Map.MapModes.GradientMapMode.Mode
+- uid: Map.MapModes.IMapModeHandler.Mode
+  commentId: P:Map.MapModes.IMapModeHandler.Mode
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_Mode
+  name: Mode
+  nameWithType: IMapModeHandler.Mode
+  fullName: Map.MapModes.IMapModeHandler.Mode
+- uid: Map.MapModes.MapMode
+  commentId: T:Map.MapModes.MapMode
+  parent: Map.MapModes
+  href: Map.MapModes.MapMode.html
+  name: MapMode
+  nameWithType: MapMode
+  fullName: Map.MapModes.MapMode
+- uid: Map.MapModes.GradientMapMode.Name*
+  commentId: Overload:Map.MapModes.GradientMapMode.Name
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_Name
+  name: Name
+  nameWithType: GradientMapMode.Name
+  fullName: Map.MapModes.GradientMapMode.Name
+- uid: Map.MapModes.IMapModeHandler.Name
+  commentId: P:Map.MapModes.IMapModeHandler.Name
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_Name
+  name: Name
+  nameWithType: IMapModeHandler.Name
+  fullName: Map.MapModes.IMapModeHandler.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.MapModes.GradientMapMode.ShaderModeID*
+  commentId: Overload:Map.MapModes.GradientMapMode.ShaderModeID
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_ShaderModeID
+  name: ShaderModeID
+  nameWithType: GradientMapMode.ShaderModeID
+  fullName: Map.MapModes.GradientMapMode.ShaderModeID
+- uid: Map.MapModes.IMapModeHandler.ShaderModeID
+  commentId: P:Map.MapModes.IMapModeHandler.ShaderModeID
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_ShaderModeID
+  name: ShaderModeID
+  nameWithType: IMapModeHandler.ShaderModeID
+  fullName: Map.MapModes.IMapModeHandler.ShaderModeID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Map.MapModes.GradientMapMode.RequiresFrequentUpdates*
+  commentId: Overload:Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_RequiresFrequentUpdates
+  name: RequiresFrequentUpdates
+  nameWithType: GradientMapMode.RequiresFrequentUpdates
+  fullName: Map.MapModes.GradientMapMode.RequiresFrequentUpdates
+- uid: Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+  commentId: P:Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_RequiresFrequentUpdates
+  name: RequiresFrequentUpdates
+  nameWithType: IMapModeHandler.RequiresFrequentUpdates
+  fullName: Map.MapModes.IMapModeHandler.RequiresFrequentUpdates
+- uid: Map.MapModes.GradientMapMode.OnActivate*
+  commentId: Overload:Map.MapModes.GradientMapMode.OnActivate
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  name: OnActivate
+  nameWithType: GradientMapMode.OnActivate
+  fullName: Map.MapModes.GradientMapMode.OnActivate
+- uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  commentId: M:Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  name: OnActivate(Material, MapModeDataTextures)
+  nameWithType: IMapModeHandler.OnActivate(Material, MapModeDataTextures)
+  fullName: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material, Map.MapModes.MapModeDataTextures)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.OnActivate(UnityEngine.Material,Map.MapModes.MapModeDataTextures)
+    name: OnActivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnActivate_UnityEngine_Material_Map_MapModes_MapModeDataTextures_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: )
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.MapModes.MapModeDataTextures
+  commentId: T:Map.MapModes.MapModeDataTextures
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeDataTextures.html
+  name: MapModeDataTextures
+  nameWithType: MapModeDataTextures
+  fullName: Map.MapModes.MapModeDataTextures
+- uid: Map.MapModes.GradientMapMode.OnDeactivate*
+  commentId: Overload:Map.MapModes.GradientMapMode.OnDeactivate
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_OnDeactivate_UnityEngine_Material_
+  name: OnDeactivate
+  nameWithType: GradientMapMode.OnDeactivate
+  fullName: Map.MapModes.GradientMapMode.OnDeactivate
+- uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  commentId: M:Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  name: OnDeactivate(Material)
+  nameWithType: IMapModeHandler.OnDeactivate(Material)
+  fullName: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.OnDeactivate(UnityEngine.Material)
+    name: OnDeactivate
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_OnDeactivate_UnityEngine_Material_
+  - name: (
+  - uid: UnityEngine.Material
+    name: Material
+    isExternal: true
+  - name: )
+- uid: Map.MapModes.GradientMapMode.GetProvinceTooltip*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetProvinceTooltip
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  name: GetProvinceTooltip
+  nameWithType: GradientMapMode.GetProvinceTooltip
+  fullName: Map.MapModes.GradientMapMode.GetProvinceTooltip
+- uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  commentId: M:Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  name: GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  nameWithType: IMapModeHandler.GetProvinceTooltip(ushort, ProvinceQueries, CountryQueries)
+  fullName: Map.MapModes.IMapModeHandler.GetProvinceTooltip(ushort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  nameWithType.vb: IMapModeHandler.GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  fullName.vb: Map.MapModes.IMapModeHandler.GetProvinceTooltip(UShort, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries)
+  name.vb: GetProvinceTooltip(UShort, ProvinceQueries, CountryQueries)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.GetProvinceTooltip(System.UInt16,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries)
+    name: GetProvinceTooltip
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetProvinceTooltip_System_UInt16_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: )
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries.CountryQueries
+  commentId: T:Core.Queries.CountryQueries
+  parent: Core.Queries
+  href: Core.Queries.CountryQueries.html
+  name: CountryQueries
+  nameWithType: CountryQueries
+  fullName: Core.Queries.CountryQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: Map.MapModes.GradientMapMode.GetUpdateFrequency*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetUpdateFrequency
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetUpdateFrequency
+  name: GetUpdateFrequency
+  nameWithType: GradientMapMode.GetUpdateFrequency
+  fullName: Map.MapModes.GradientMapMode.GetUpdateFrequency
+- uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+  commentId: M:Map.MapModes.IMapModeHandler.GetUpdateFrequency
+  parent: Map.MapModes.IMapModeHandler
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  name: GetUpdateFrequency()
+  nameWithType: IMapModeHandler.GetUpdateFrequency()
+  fullName: Map.MapModes.IMapModeHandler.GetUpdateFrequency()
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+    name: GetUpdateFrequency
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.GetUpdateFrequency
+    name: GetUpdateFrequency
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_GetUpdateFrequency
+  - name: (
+  - name: )
+- uid: Map.MapModes.UpdateFrequency
+  commentId: T:Map.MapModes.UpdateFrequency
+  parent: Map.MapModes
+  href: Map.MapModes.UpdateFrequency.html
+  name: UpdateFrequency
+  nameWithType: UpdateFrequency
+  fullName: Map.MapModes.UpdateFrequency
+- uid: Map.MapModes.GradientMapMode.GetGradient*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetGradient
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetGradient
+  name: GetGradient
+  nameWithType: GradientMapMode.GetGradient
+  fullName: Map.MapModes.GradientMapMode.GetGradient
+- uid: Map.MapModes.ColorGradient
+  commentId: T:Map.MapModes.ColorGradient
+  parent: Map.MapModes
+  href: Map.MapModes.ColorGradient.html
+  name: ColorGradient
+  nameWithType: ColorGradient
+  fullName: Map.MapModes.ColorGradient
+- uid: Map.MapModes.GradientMapMode.GetValueForProvince*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetValueForProvince
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetValueForProvince_System_UInt16_Core_Queries_ProvinceQueries_System_Object_
+  name: GetValueForProvince
+  nameWithType: GradientMapMode.GetValueForProvince
+  fullName: Map.MapModes.GradientMapMode.GetValueForProvince
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.MapModes.GradientMapMode.GetValueCategory*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetValueCategory
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetValueCategory_System_Single_
+  name: GetValueCategory
+  nameWithType: GradientMapMode.GetValueCategory
+  fullName: Map.MapModes.GradientMapMode.GetValueCategory
+- uid: Map.MapModes.GradientMapMode.GetCategoryThreshold*
+  commentId: Overload:Map.MapModes.GradientMapMode.GetCategoryThreshold
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_GetCategoryThreshold_System_Int32_
+  name: GetCategoryThreshold
+  nameWithType: GradientMapMode.GetCategoryThreshold
+  fullName: Map.MapModes.GradientMapMode.GetCategoryThreshold
+- uid: Map.MapModes.GradientMapMode.FormatValue*
+  commentId: Overload:Map.MapModes.GradientMapMode.FormatValue
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_FormatValue_System_Single_
+  name: FormatValue
+  nameWithType: GradientMapMode.FormatValue
+  fullName: Map.MapModes.GradientMapMode.FormatValue
+- uid: Map.MapModes.GradientMapMode.UpdateTextures*
+  commentId: Overload:Map.MapModes.GradientMapMode.UpdateTextures
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  name: UpdateTextures
+  nameWithType: GradientMapMode.UpdateTextures
+  fullName: Map.MapModes.GradientMapMode.UpdateTextures
+- uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  commentId: M:Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+  parent: Map.MapModes.IMapModeHandler
+  isExternal: true
+  href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  name: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  nameWithType: IMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, object)
+  fullName: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, object)
+  nameWithType.vb: IMapModeHandler.UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  fullName.vb: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures, Core.Queries.ProvinceQueries, Core.Queries.CountryQueries, Map.Rendering.ProvinceMapping, Object)
+  name.vb: UpdateTextures(MapModeDataTextures, ProvinceQueries, CountryQueries, ProvinceMapping, Object)
+  spec.csharp:
+  - uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Map.MapModes.IMapModeHandler.UpdateTextures(Map.MapModes.MapModeDataTextures,Core.Queries.ProvinceQueries,Core.Queries.CountryQueries,Map.Rendering.ProvinceMapping,System.Object)
+    name: UpdateTextures
+    href: Map.MapModes.IMapModeHandler.html#Map_MapModes_IMapModeHandler_UpdateTextures_Map_MapModes_MapModeDataTextures_Core_Queries_ProvinceQueries_Core_Queries_CountryQueries_Map_Rendering_ProvinceMapping_System_Object_
+  - name: (
+  - uid: Map.MapModes.MapModeDataTextures
+    name: MapModeDataTextures
+    href: Map.MapModes.MapModeDataTextures.html
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.ProvinceQueries
+    name: ProvinceQueries
+  - name: ','
+  - name: " "
+  - uid: Core.Queries.CountryQueries
+    name: CountryQueries
+  - name: ','
+  - name: " "
+  - uid: Map.Rendering.ProvinceMapping
+    name: ProvinceMapping
+    href: Map.Rendering.ProvinceMapping.html
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords*
+  commentId: Overload:Map.MapModes.GradientMapMode.DisableAllMapModeKeywords
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_DisableAllMapModeKeywords_UnityEngine_Material_
+  name: DisableAllMapModeKeywords
+  nameWithType: GradientMapMode.DisableAllMapModeKeywords
+  fullName: Map.MapModes.GradientMapMode.DisableAllMapModeKeywords
+- uid: Map.MapModes.GradientMapMode.EnableMapModeKeyword*
+  commentId: Overload:Map.MapModes.GradientMapMode.EnableMapModeKeyword
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_EnableMapModeKeyword_UnityEngine_Material_System_String_
+  name: EnableMapModeKeyword
+  nameWithType: GradientMapMode.EnableMapModeKeyword
+  fullName: Map.MapModes.GradientMapMode.EnableMapModeKeyword
+- uid: Map.MapModes.GradientMapMode.SetShaderMode*
+  commentId: Overload:Map.MapModes.GradientMapMode.SetShaderMode
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_SetShaderMode_UnityEngine_Material_System_Int32_
+  name: SetShaderMode
+  nameWithType: GradientMapMode.SetShaderMode
+  fullName: Map.MapModes.GradientMapMode.SetShaderMode
+- uid: Map.MapModes.GradientMapMode.LogActivation*
+  commentId: Overload:Map.MapModes.GradientMapMode.LogActivation
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_LogActivation_System_String_
+  name: LogActivation
+  nameWithType: GradientMapMode.LogActivation
+  fullName: Map.MapModes.GradientMapMode.LogActivation
+- uid: Map.MapModes.GradientMapMode.LogDeactivation*
+  commentId: Overload:Map.MapModes.GradientMapMode.LogDeactivation
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_LogDeactivation_System_String_
+  name: LogDeactivation
+  nameWithType: GradientMapMode.LogDeactivation
+  fullName: Map.MapModes.GradientMapMode.LogDeactivation
+- uid: Map.MapModes.GradientMapMode.Dispose*
+  commentId: Overload:Map.MapModes.GradientMapMode.Dispose
+  href: Map.MapModes.GradientMapMode.html#Map_MapModes_GradientMapMode_Dispose
+  name: Dispose
+  nameWithType: GradientMapMode.Dispose
+  fullName: Map.MapModes.GradientMapMode.Dispose

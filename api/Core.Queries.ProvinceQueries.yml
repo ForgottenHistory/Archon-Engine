@@ -1,0 +1,1980 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  id: ProvinceQueries
+  parent: Core.Queries
+  children:
+  - Core.Queries.ProvinceQueries.#ctor(Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Core.Systems.AdjacencySystem)
+  - Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(System.UInt16)
+  - Core.Queries.ProvinceQueries.Dispose
+  - Core.Queries.ProvinceQueries.Exists(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetAllProvinceIds(Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetCachedProvinceDistance(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetConnectedLandmasses(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetCountryProvinceCount(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  - Core.Queries.ProvinceQueries.GetDistanceBetween(System.UInt16,System.UInt16)
+  - Core.Queries.ProvinceQueries.GetLandProvinces(Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetLandmassCount(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetOceanProvinces(Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetOwner(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetPerformanceStats
+  - Core.Queries.ProvinceQueries.GetProvinceOwnerColor(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetProvinceOwnerTag(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetProvinceState(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetProvinceStatistics
+  - Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetProvincesByOwnerTag(System.String,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetProvincesByTerrain(System.UInt16,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetProvincesWithinDistance(System.UInt16,System.Byte,Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.GetTerrain(System.UInt16)
+  - Core.Queries.ProvinceQueries.GetTotalProvinceCount
+  - Core.Queries.ProvinceQueries.GetUnownedProvinces(Unity.Collections.Allocator)
+  - Core.Queries.ProvinceQueries.IsOcean(System.UInt16)
+  - Core.Queries.ProvinceQueries.IsOwned(System.UInt16)
+  - Core.Queries.ProvinceQueries.ResetPerformanceStats
+  - Core.Queries.ProvinceQueries.ShareSameOwner(System.UInt16,System.UInt16)
+  langs:
+  - csharp
+  - vb
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceQueries
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    High-performance province data access layer
+
+    Provides optimized queries for province information
+
+    Performance: All basic queries &lt;0.01ms, cached complex queries
+  example: []
+  syntax:
+    content: public class ProvinceQueries
+    content.vb: Public Class ProvinceQueries
+  inheritance:
+  - System.Object
+- uid: Core.Queries.ProvinceQueries.#ctor(Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Core.Systems.AdjacencySystem)
+  commentId: M:Core.Queries.ProvinceQueries.#ctor(Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Core.Systems.AdjacencySystem)
+  id: '#ctor(Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Core.Systems.AdjacencySystem)'
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: ProvinceQueries(ProvinceSystem, CountrySystem, AdjacencySystem)
+  nameWithType: ProvinceQueries.ProvinceQueries(ProvinceSystem, CountrySystem, AdjacencySystem)
+  fullName: Core.Queries.ProvinceQueries.ProvinceQueries(Core.Systems.ProvinceSystem, Core.Systems.CountrySystem, Core.Systems.AdjacencySystem)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  syntax:
+    content: public ProvinceQueries(ProvinceSystem provinceSystem, CountrySystem countrySystem, AdjacencySystem adjacencySystem = null)
+    parameters:
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
+    - id: countrySystem
+      type: Core.Systems.CountrySystem
+    - id: adjacencySystem
+      type: Core.Systems.AdjacencySystem
+    content.vb: Public Sub New(provinceSystem As ProvinceSystem, countrySystem As CountrySystem, adjacencySystem As AdjacencySystem = Nothing)
+  overload: Core.Queries.ProvinceQueries.#ctor*
+  nameWithType.vb: ProvinceQueries.New(ProvinceSystem, CountrySystem, AdjacencySystem)
+  fullName.vb: Core.Queries.ProvinceQueries.New(Core.Systems.ProvinceSystem, Core.Systems.CountrySystem, Core.Systems.AdjacencySystem)
+  name.vb: New(ProvinceSystem, CountrySystem, AdjacencySystem)
+- uid: Core.Queries.ProvinceQueries.GetOwner(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetOwner(System.UInt16)
+  id: GetOwner(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetOwner(ushort)
+  nameWithType: ProvinceQueries.GetOwner(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetOwner(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOwner
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get province owner - most common query (must be ultra-fast)
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public ushort GetOwner(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetOwner(provinceId As UShort) As UShort
+  overload: Core.Queries.ProvinceQueries.GetOwner*
+  nameWithType.vb: ProvinceQueries.GetOwner(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetOwner(UShort)
+  name.vb: GetOwner(UShort)
+- uid: Core.Queries.ProvinceQueries.GetTerrain(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetTerrain(System.UInt16)
+  id: GetTerrain(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetTerrain(ushort)
+  nameWithType: ProvinceQueries.GetTerrain(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetTerrain(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTerrain
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 53
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get province terrain type (now ushort)
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public ushort GetTerrain(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetTerrain(provinceId As UShort) As UShort
+  overload: Core.Queries.ProvinceQueries.GetTerrain*
+  nameWithType.vb: ProvinceQueries.GetTerrain(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetTerrain(UShort)
+  name.vb: GetTerrain(UShort)
+- uid: Core.Queries.ProvinceQueries.GetProvinceState(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvinceState(System.UInt16)
+  id: GetProvinceState(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceState(ushort)
+  nameWithType: ProvinceQueries.GetProvinceState(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetProvinceState(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceState
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 62
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get complete province state (8-byte struct)
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public ProvinceState GetProvinceState(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: Core.Data.ProvinceState
+    content.vb: Public Function GetProvinceState(provinceId As UShort) As ProvinceState
+  overload: Core.Queries.ProvinceQueries.GetProvinceState*
+  nameWithType.vb: ProvinceQueries.GetProvinceState(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvinceState(UShort)
+  name.vb: GetProvinceState(UShort)
+- uid: Core.Queries.ProvinceQueries.Exists(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.Exists(System.UInt16)
+  id: Exists(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: Exists(ushort)
+  nameWithType: ProvinceQueries.Exists(ushort)
+  fullName: Core.Queries.ProvinceQueries.Exists(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Exists
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if province exists
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public bool Exists(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function Exists(provinceId As UShort) As Boolean
+  overload: Core.Queries.ProvinceQueries.Exists*
+  nameWithType.vb: ProvinceQueries.Exists(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.Exists(UShort)
+  name.vb: Exists(UShort)
+- uid: Core.Queries.ProvinceQueries.IsOwned(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.IsOwned(System.UInt16)
+  id: IsOwned(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: IsOwned(ushort)
+  nameWithType: ProvinceQueries.IsOwned(ushort)
+  fullName: Core.Queries.ProvinceQueries.IsOwned(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOwned
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if province is owned by any country
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public bool IsOwned(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsOwned(provinceId As UShort) As Boolean
+  overload: Core.Queries.ProvinceQueries.IsOwned*
+  nameWithType.vb: ProvinceQueries.IsOwned(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.IsOwned(UShort)
+  name.vb: IsOwned(UShort)
+- uid: Core.Queries.ProvinceQueries.IsOcean(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.IsOcean(System.UInt16)
+  id: IsOcean(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: IsOcean(ushort)
+  nameWithType: ProvinceQueries.IsOcean(ushort)
+  fullName: Core.Queries.ProvinceQueries.IsOcean(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsOcean
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 89
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if province is ocean
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public bool IsOcean(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsOcean(provinceId As UShort) As Boolean
+  overload: Core.Queries.ProvinceQueries.IsOcean*
+  nameWithType.vb: ProvinceQueries.IsOcean(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.IsOcean(UShort)
+  name.vb: IsOcean(UShort)
+- uid: Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  id: GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinces(ushort, Allocator)
+  nameWithType: ProvinceQueries.GetCountryProvinces(ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetCountryProvinces(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 103
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all provinces owned by a specific country
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetCountryProvinces(countryId As UShort, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetCountryProvinces*
+  nameWithType.vb: ProvinceQueries.GetCountryProvinces(UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetCountryProvinces(UShort, Unity.Collections.Allocator)
+  name.vb: GetCountryProvinces(UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  commentId: M:Core.Queries.ProvinceQueries.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  id: GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinces(ushort, NativeList<ushort>)
+  nameWithType: ProvinceQueries.GetCountryProvinces(ushort, NativeList<ushort>)
+  fullName: Core.Queries.ProvinceQueries.GetCountryProvinces(ushort, Unity.Collections.NativeList<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all provinces owned by a specific country (fills existing NativeList)
+
+    Zero-allocation overload for hot paths (monthly tick, etc.)
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: resultBuffer
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Sub GetCountryProvinces(countryId As UShort, resultBuffer As NativeList(Of UShort))
+  overload: Core.Queries.ProvinceQueries.GetCountryProvinces*
+  nameWithType.vb: ProvinceQueries.GetCountryProvinces(UShort, NativeList(Of UShort))
+  fullName.vb: Core.Queries.ProvinceQueries.GetCountryProvinces(UShort, Unity.Collections.NativeList(Of UShort))
+  name.vb: GetCountryProvinces(UShort, NativeList(Of UShort))
+- uid: Core.Queries.ProvinceQueries.GetCountryProvinceCount(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetCountryProvinceCount(System.UInt16)
+  id: GetCountryProvinceCount(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetCountryProvinceCount(ushort)
+  nameWithType: ProvinceQueries.GetCountryProvinceCount(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetCountryProvinceCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCountryProvinceCount
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get number of provinces owned by a country
+
+    Performance target: &lt;2ms for 10k provinces
+  example: []
+  syntax:
+    content: public int GetCountryProvinceCount(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetCountryProvinceCount(countryId As UShort) As Integer
+  overload: Core.Queries.ProvinceQueries.GetCountryProvinceCount*
+  nameWithType.vb: ProvinceQueries.GetCountryProvinceCount(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetCountryProvinceCount(UShort)
+  name.vb: GetCountryProvinceCount(UShort)
+- uid: Core.Queries.ProvinceQueries.GetProvincesByTerrain(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvincesByTerrain(System.UInt16,Unity.Collections.Allocator)
+  id: GetProvincesByTerrain(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesByTerrain(ushort, Allocator)
+  nameWithType: ProvinceQueries.GetProvincesByTerrain(ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetProvincesByTerrain(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesByTerrain
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 137
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get provinces by terrain type
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetProvincesByTerrain(ushort terrainType, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: terrainType
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetProvincesByTerrain(terrainType As UShort, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetProvincesByTerrain*
+  nameWithType.vb: ProvinceQueries.GetProvincesByTerrain(UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvincesByTerrain(UShort, Unity.Collections.Allocator)
+  name.vb: GetProvincesByTerrain(UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetUnownedProvinces(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetUnownedProvinces(Unity.Collections.Allocator)
+  id: GetUnownedProvinces(Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetUnownedProvinces(Allocator)
+  nameWithType: ProvinceQueries.GetUnownedProvinces(Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetUnownedProvinces(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetUnownedProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 164
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get unowned provinces (available for colonization)
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetUnownedProvinces(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetUnownedProvinces(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetUnownedProvinces*
+- uid: Core.Queries.ProvinceQueries.GetOceanProvinces(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetOceanProvinces(Unity.Collections.Allocator)
+  id: GetOceanProvinces(Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetOceanProvinces(Allocator)
+  nameWithType: ProvinceQueries.GetOceanProvinces(Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetOceanProvinces(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetOceanProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 174
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get ocean provinces
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetOceanProvinces(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetOceanProvinces(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetOceanProvinces*
+- uid: Core.Queries.ProvinceQueries.GetLandProvinces(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetLandProvinces(Unity.Collections.Allocator)
+  id: GetLandProvinces(Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetLandProvinces(Allocator)
+  nameWithType: ProvinceQueries.GetLandProvinces(Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetLandProvinces(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLandProvinces
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 184
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get land provinces (non-ocean)
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;5ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetLandProvinces(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetLandProvinces(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetLandProvinces*
+- uid: Core.Queries.ProvinceQueries.GetProvinceOwnerColor(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvinceOwnerColor(System.UInt16)
+  id: GetProvinceOwnerColor(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceOwnerColor(ushort)
+  nameWithType: ProvinceQueries.GetProvinceOwnerColor(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetProvinceOwnerColor(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceOwnerColor
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 214
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get the color of the country that owns this province
+
+    Performance target: &lt;0.01ms
+  example: []
+  syntax:
+    content: public Color32 GetProvinceOwnerColor(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: UnityEngine.Color32
+    content.vb: Public Function GetProvinceOwnerColor(provinceId As UShort) As Color32
+  overload: Core.Queries.ProvinceQueries.GetProvinceOwnerColor*
+  nameWithType.vb: ProvinceQueries.GetProvinceOwnerColor(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvinceOwnerColor(UShort)
+  name.vb: GetProvinceOwnerColor(UShort)
+- uid: Core.Queries.ProvinceQueries.GetProvinceOwnerTag(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvinceOwnerTag(System.UInt16)
+  id: GetProvinceOwnerTag(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceOwnerTag(ushort)
+  nameWithType: ProvinceQueries.GetProvinceOwnerTag(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetProvinceOwnerTag(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceOwnerTag
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 224
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get the tag of the country that owns this province
+
+    Performance target: &lt;0.01ms
+  example: []
+  syntax:
+    content: public string GetProvinceOwnerTag(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.String
+    content.vb: Public Function GetProvinceOwnerTag(provinceId As UShort) As String
+  overload: Core.Queries.ProvinceQueries.GetProvinceOwnerTag*
+  nameWithType.vb: ProvinceQueries.GetProvinceOwnerTag(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvinceOwnerTag(UShort)
+  name.vb: GetProvinceOwnerTag(UShort)
+- uid: Core.Queries.ProvinceQueries.ShareSameOwner(System.UInt16,System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.ShareSameOwner(System.UInt16,System.UInt16)
+  id: ShareSameOwner(System.UInt16,System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: ShareSameOwner(ushort, ushort)
+  nameWithType: ProvinceQueries.ShareSameOwner(ushort, ushort)
+  fullName: Core.Queries.ProvinceQueries.ShareSameOwner(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShareSameOwner
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 234
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Check if two provinces are owned by the same country
+
+    Performance target: &lt;0.01ms
+  example: []
+  syntax:
+    content: public bool ShareSameOwner(ushort provinceId1, ushort provinceId2)
+    parameters:
+    - id: provinceId1
+      type: System.UInt16
+    - id: provinceId2
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function ShareSameOwner(provinceId1 As UShort, provinceId2 As UShort) As Boolean
+  overload: Core.Queries.ProvinceQueries.ShareSameOwner*
+  nameWithType.vb: ProvinceQueries.ShareSameOwner(UShort, UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.ShareSameOwner(UShort, UShort)
+  name.vb: ShareSameOwner(UShort, UShort)
+- uid: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,Unity.Collections.Allocator)
+  id: GetProvincesBorderingCountry(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesBorderingCountry(ushort, Allocator)
+  nameWithType: ProvinceQueries.GetProvincesBorderingCountry(ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesBorderingCountry
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 245
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all provinces that border a specific country (adjacent to but not owned by).
+
+    Useful for finding invasion targets, border fortification candidates, etc.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: less than 15ms
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetProvincesBorderingCountry(ushort countryId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetProvincesBorderingCountry(countryId As UShort, allocator As Allocator = Allocator.TempJob) As NativeList(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry*
+  nameWithType.vb: ProvinceQueries.GetProvincesBorderingCountry(UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(UShort, Unity.Collections.Allocator)
+  name.vb: GetProvincesBorderingCountry(UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  id: GetProvincesBorderingCountry(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesBorderingCountry(ushort, ushort, Allocator)
+  nameWithType: ProvinceQueries.GetProvincesBorderingCountry(ushort, ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(ushort, ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesBorderingCountry
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 295
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all provinces that border a specific country, filtered by owner.
+
+    Example: Get all YOUR provinces that border enemy country X.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: less than 15ms
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetProvincesBorderingCountry(ushort countryId, ushort filterOwnerId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: filterOwnerId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetProvincesBorderingCountry(countryId As UShort, filterOwnerId As UShort, allocator As Allocator = Allocator.TempJob) As NativeList(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry*
+  nameWithType.vb: ProvinceQueries.GetProvincesBorderingCountry(UShort, UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry(UShort, UShort, Unity.Collections.Allocator)
+  name.vb: GetProvincesBorderingCountry(UShort, UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag(System.String,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvincesByOwnerTag(System.String,Unity.Collections.Allocator)
+  id: GetProvincesByOwnerTag(System.String,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesByOwnerTag(string, Allocator)
+  nameWithType: ProvinceQueries.GetProvincesByOwnerTag(string, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag(string, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesByOwnerTag
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 342
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get provinces owned by countries with a specific tag pattern
+
+    Example: Get all provinces owned by countries with tags starting with "GER"
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;10ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetProvincesByOwnerTag(string tagPattern, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: tagPattern
+      type: System.String
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetProvincesByOwnerTag(tagPattern As String, allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag*
+  nameWithType.vb: ProvinceQueries.GetProvincesByOwnerTag(String, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag(String, Unity.Collections.Allocator)
+  name.vb: GetProvincesByOwnerTag(String, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetAllProvinceIds(Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetAllProvinceIds(Unity.Collections.Allocator)
+  id: GetAllProvinceIds(Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetAllProvinceIds(Allocator)
+  nameWithType: ProvinceQueries.GetAllProvinceIds(Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetAllProvinceIds(Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetAllProvinceIds
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 390
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all active province IDs
+
+    Returns native array that must be disposed by caller
+
+    Performance target: &lt;1ms for 10k provinces
+  example: []
+  syntax:
+    content: public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeArray{System.UInt16}
+    content.vb: Public Function GetAllProvinceIds(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetAllProvinceIds*
+- uid: Core.Queries.ProvinceQueries.GetTotalProvinceCount
+  commentId: M:Core.Queries.ProvinceQueries.GetTotalProvinceCount
+  id: GetTotalProvinceCount
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetTotalProvinceCount()
+  nameWithType: ProvinceQueries.GetTotalProvinceCount()
+  fullName: Core.Queries.ProvinceQueries.GetTotalProvinceCount()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetTotalProvinceCount
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 399
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get total number of provinces in the system
+
+    Performance target: &lt;0.001ms
+  example: []
+  syntax:
+    content: public int GetTotalProvinceCount()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetTotalProvinceCount() As Integer
+  overload: Core.Queries.ProvinceQueries.GetTotalProvinceCount*
+- uid: Core.Queries.ProvinceQueries.GetProvinceStatistics
+  commentId: M:Core.Queries.ProvinceQueries.GetProvinceStatistics
+  id: GetProvinceStatistics
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceStatistics()
+  nameWithType: ProvinceQueries.GetProvinceStatistics()
+  fullName: Core.Queries.ProvinceQueries.GetProvinceStatistics()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceStatistics
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 409
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get province statistics for debugging/UI (engine-only data)
+
+    Performance target: &lt;10ms for 10k provinces
+
+    Note: Development stats removed (game-specific)
+  example: []
+  syntax:
+    content: public ProvinceStatistics GetProvinceStatistics()
+    return:
+      type: Core.Queries.ProvinceStatistics
+    content.vb: Public Function GetProvinceStatistics() As ProvinceStatistics
+  overload: Core.Queries.ProvinceQueries.GetProvinceStatistics*
+- uid: Core.Queries.ProvinceQueries.GetPerformanceStats
+  commentId: M:Core.Queries.ProvinceQueries.GetPerformanceStats
+  id: GetPerformanceStats
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetPerformanceStats()
+  nameWithType: ProvinceQueries.GetPerformanceStats()
+  fullName: Core.Queries.ProvinceQueries.GetPerformanceStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPerformanceStats
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 442
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Get query performance statistics
+  example: []
+  syntax:
+    content: public static QueryPerformanceStats GetPerformanceStats()
+    return:
+      type: Core.Queries.QueryPerformanceStats
+    content.vb: Public Shared Function GetPerformanceStats() As QueryPerformanceStats
+  overload: Core.Queries.ProvinceQueries.GetPerformanceStats*
+- uid: Core.Queries.ProvinceQueries.ResetPerformanceStats
+  commentId: M:Core.Queries.ProvinceQueries.ResetPerformanceStats
+  id: ResetPerformanceStats
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: ResetPerformanceStats()
+  nameWithType: ProvinceQueries.ResetPerformanceStats()
+  fullName: Core.Queries.ProvinceQueries.ResetPerformanceStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResetPerformanceStats
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 455
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: Reset performance statistics
+  example: []
+  syntax:
+    content: public static void ResetPerformanceStats()
+    content.vb: Public Shared Sub ResetPerformanceStats()
+  overload: Core.Queries.ProvinceQueries.ResetPerformanceStats*
+- uid: Core.Queries.ProvinceQueries.GetProvincesWithinDistance(System.UInt16,System.Byte,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetProvincesWithinDistance(System.UInt16,System.Byte,Unity.Collections.Allocator)
+  id: GetProvincesWithinDistance(System.UInt16,System.Byte,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetProvincesWithinDistance(ushort, byte, Allocator)
+  nameWithType: ProvinceQueries.GetProvincesWithinDistance(ushort, byte, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetProvincesWithinDistance(ushort, byte, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvincesWithinDistance
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 471
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get all provinces within N hops of a source province.
+
+    Requires AdjacencySystem to be available.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: less than 20ms for distance=10
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetProvincesWithinDistance(ushort sourceProvinceId, byte maxDistance, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: sourceProvinceId
+      type: System.UInt16
+    - id: maxDistance
+      type: System.Byte
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetProvincesWithinDistance(sourceProvinceId As UShort, maxDistance As Byte, allocator As Allocator = Allocator.TempJob) As NativeList(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetProvincesWithinDistance*
+  nameWithType.vb: ProvinceQueries.GetProvincesWithinDistance(UShort, Byte, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetProvincesWithinDistance(UShort, Byte, Unity.Collections.Allocator)
+  name.vb: GetProvincesWithinDistance(UShort, Byte, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetDistanceBetween(System.UInt16,System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetDistanceBetween(System.UInt16,System.UInt16)
+  id: GetDistanceBetween(System.UInt16,System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetDistanceBetween(ushort, ushort)
+  nameWithType: ProvinceQueries.GetDistanceBetween(ushort, ushort)
+  fullName: Core.Queries.ProvinceQueries.GetDistanceBetween(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDistanceBetween
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 505
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get distance between two provinces (BFS hops).
+
+    Returns byte.MaxValue if unreachable or AdjacencySystem not available.
+
+    Performance target: less than 5ms
+  example: []
+  syntax:
+    content: public byte GetDistanceBetween(ushort province1, ushort province2)
+    parameters:
+    - id: province1
+      type: System.UInt16
+    - id: province2
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetDistanceBetween(province1 As UShort, province2 As UShort) As Byte
+  overload: Core.Queries.ProvinceQueries.GetDistanceBetween*
+  nameWithType.vb: ProvinceQueries.GetDistanceBetween(UShort, UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetDistanceBetween(UShort, UShort)
+  name.vb: GetDistanceBetween(UShort, UShort)
+- uid: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(System.UInt16)
+  id: CalculateDistancesFromCountry(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: CalculateDistancesFromCountry(ushort)
+  nameWithType: ProvinceQueries.CalculateDistancesFromCountry(ushort)
+  fullName: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateDistancesFromCountry
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 527
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get distances from all provinces of a country.
+
+    Useful for influence calculations.
+
+    Returns byte.MaxValue for provinces that are unreachable.
+
+    Performance target: less than 30ms
+  example: []
+  syntax:
+    content: public void CalculateDistancesFromCountry(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    content.vb: Public Sub CalculateDistancesFromCountry(countryId As UShort)
+  overload: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry*
+  nameWithType.vb: ProvinceQueries.CalculateDistancesFromCountry(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(UShort)
+  name.vb: CalculateDistancesFromCountry(UShort)
+- uid: Core.Queries.ProvinceQueries.GetCachedProvinceDistance(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetCachedProvinceDistance(System.UInt16)
+  id: GetCachedProvinceDistance(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetCachedProvinceDistance(ushort)
+  nameWithType: ProvinceQueries.GetCachedProvinceDistance(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetCachedProvinceDistance(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCachedProvinceDistance
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 544
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get province distance from the last CalculateDistancesFromCountry call.
+
+    Must call CalculateDistancesFromCountry first.
+  example: []
+  syntax:
+    content: public byte GetCachedProvinceDistance(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    return:
+      type: System.Byte
+    content.vb: Public Function GetCachedProvinceDistance(provinceId As UShort) As Byte
+  overload: Core.Queries.ProvinceQueries.GetCachedProvinceDistance*
+  nameWithType.vb: ProvinceQueries.GetCachedProvinceDistance(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetCachedProvinceDistance(UShort)
+  name.vb: GetCachedProvinceDistance(UShort)
+- uid: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner(System.UInt16,Unity.Collections.Allocator)
+  id: GetConnectedProvincesOfSameOwner(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetConnectedProvincesOfSameOwner(ushort, Allocator)
+  nameWithType: ProvinceQueries.GetConnectedProvincesOfSameOwner(ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConnectedProvincesOfSameOwner
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 578
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Find all provinces connected to source that belong to the same country.
+
+    Uses flood-fill through adjacency graph.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: less than 20ms
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetConnectedProvincesOfSameOwner(ushort sourceProvinceId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: sourceProvinceId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetConnectedProvincesOfSameOwner(sourceProvinceId As UShort, allocator As Allocator = Allocator.TempJob) As NativeList(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner*
+  nameWithType.vb: ProvinceQueries.GetConnectedProvincesOfSameOwner(UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner(UShort, Unity.Collections.Allocator)
+  name.vb: GetConnectedProvincesOfSameOwner(UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  id: GetConnectedProvincesWithOwner(System.UInt16,System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetConnectedProvincesWithOwner(ushort, ushort, Allocator)
+  nameWithType: ProvinceQueries.GetConnectedProvincesWithOwner(ushort, ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner(ushort, ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConnectedProvincesWithOwner
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 592
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Find all provinces connected to source that have a specific owner.
+
+    Uses flood-fill through adjacency graph.
+
+    Returns native list that must be disposed by caller.
+
+    Performance target: less than 20ms
+  example: []
+  syntax:
+    content: public NativeList<ushort> GetConnectedProvincesWithOwner(ushort sourceProvinceId, ushort targetOwnerId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: sourceProvinceId
+      type: System.UInt16
+    - id: targetOwnerId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{System.UInt16}
+    content.vb: Public Function GetConnectedProvincesWithOwner(sourceProvinceId As UShort, targetOwnerId As UShort, allocator As Allocator = Allocator.TempJob) As NativeList(Of UShort)
+  overload: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner*
+  nameWithType.vb: ProvinceQueries.GetConnectedProvincesWithOwner(UShort, UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner(UShort, UShort, Unity.Collections.Allocator)
+  name.vb: GetConnectedProvincesWithOwner(UShort, UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetConnectedLandmasses(System.UInt16,Unity.Collections.Allocator)
+  commentId: M:Core.Queries.ProvinceQueries.GetConnectedLandmasses(System.UInt16,Unity.Collections.Allocator)
+  id: GetConnectedLandmasses(System.UInt16,Unity.Collections.Allocator)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetConnectedLandmasses(ushort, Allocator)
+  nameWithType: ProvinceQueries.GetConnectedLandmasses(ushort, Allocator)
+  fullName: Core.Queries.ProvinceQueries.GetConnectedLandmasses(ushort, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetConnectedLandmasses
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 658
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Find all connected landmasses owned by a country.
+
+    Returns a list of province groups (each group is a connected landmass).
+
+    Each inner list must be disposed by caller.
+
+    Performance target: less than 30ms
+  example: []
+  syntax:
+    content: public NativeList<NativeList<ushort>> GetConnectedLandmasses(ushort countryId, Allocator allocator = Allocator.TempJob)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Unity.Collections.NativeList{Unity.Collections.NativeList{System.UInt16}}
+    content.vb: Public Function GetConnectedLandmasses(countryId As UShort, allocator As Allocator = Allocator.TempJob) As NativeList(Of NativeList(Of UShort))
+  overload: Core.Queries.ProvinceQueries.GetConnectedLandmasses*
+  nameWithType.vb: ProvinceQueries.GetConnectedLandmasses(UShort, Allocator)
+  fullName.vb: Core.Queries.ProvinceQueries.GetConnectedLandmasses(UShort, Unity.Collections.Allocator)
+  name.vb: GetConnectedLandmasses(UShort, Allocator)
+- uid: Core.Queries.ProvinceQueries.GetLandmassCount(System.UInt16)
+  commentId: M:Core.Queries.ProvinceQueries.GetLandmassCount(System.UInt16)
+  id: GetLandmassCount(System.UInt16)
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: GetLandmassCount(ushort)
+  nameWithType: ProvinceQueries.GetLandmassCount(ushort)
+  fullName: Core.Queries.ProvinceQueries.GetLandmassCount(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLandmassCount
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 714
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Get number of separate landmasses owned by a country.
+
+    Useful for detecting if a country has disconnected territories.
+
+    Performance target: less than 30ms
+  example: []
+  syntax:
+    content: public int GetLandmassCount(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetLandmassCount(countryId As UShort) As Integer
+  overload: Core.Queries.ProvinceQueries.GetLandmassCount*
+  nameWithType.vb: ProvinceQueries.GetLandmassCount(UShort)
+  fullName.vb: Core.Queries.ProvinceQueries.GetLandmassCount(UShort)
+  name.vb: GetLandmassCount(UShort)
+- uid: Core.Queries.ProvinceQueries.Dispose
+  commentId: M:Core.Queries.ProvinceQueries.Dispose
+  id: Dispose
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: ProvinceQueries.Dispose()
+  fullName: Core.Queries.ProvinceQueries.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 732
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Queries.ProvinceQueries.Dispose*
+references:
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Queries.ProvinceQueries.#ctor*
+  commentId: Overload:Core.Queries.ProvinceQueries.#ctor
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries__ctor_Core_Systems_ProvinceSystem_Core_Systems_CountrySystem_Core_Systems_AdjacencySystem_
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries.ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries.ProvinceQueries
+  nameWithType.vb: ProvinceQueries.New
+  fullName.vb: Core.Queries.ProvinceQueries.New
+  name.vb: New
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
+  parent: Core.Systems
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
+- uid: Core.Systems.CountrySystem
+  commentId: T:Core.Systems.CountrySystem
+  parent: Core.Systems
+  href: Core.Systems.CountrySystem.html
+  name: CountrySystem
+  nameWithType: CountrySystem
+  fullName: Core.Systems.CountrySystem
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: Core.Queries.ProvinceQueries.GetOwner*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetOwner
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetOwner_System_UInt16_
+  name: GetOwner
+  nameWithType: ProvinceQueries.GetOwner
+  fullName: Core.Queries.ProvinceQueries.GetOwner
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: Core.Queries.ProvinceQueries.GetTerrain*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetTerrain
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetTerrain_System_UInt16_
+  name: GetTerrain
+  nameWithType: ProvinceQueries.GetTerrain
+  fullName: Core.Queries.ProvinceQueries.GetTerrain
+- uid: Core.Queries.ProvinceQueries.GetProvinceState*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvinceState
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvinceState_System_UInt16_
+  name: GetProvinceState
+  nameWithType: ProvinceQueries.GetProvinceState
+  fullName: Core.Queries.ProvinceQueries.GetProvinceState
+- uid: Core.Data.ProvinceState
+  commentId: T:Core.Data.ProvinceState
+  parent: Core.Data
+  href: Core.Data.ProvinceState.html
+  name: ProvinceState
+  nameWithType: ProvinceState
+  fullName: Core.Data.ProvinceState
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: Core.Queries.ProvinceQueries.Exists*
+  commentId: Overload:Core.Queries.ProvinceQueries.Exists
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_Exists_System_UInt16_
+  name: Exists
+  nameWithType: ProvinceQueries.Exists
+  fullName: Core.Queries.ProvinceQueries.Exists
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Queries.ProvinceQueries.IsOwned*
+  commentId: Overload:Core.Queries.ProvinceQueries.IsOwned
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_IsOwned_System_UInt16_
+  name: IsOwned
+  nameWithType: ProvinceQueries.IsOwned
+  fullName: Core.Queries.ProvinceQueries.IsOwned
+- uid: Core.Queries.ProvinceQueries.IsOcean*
+  commentId: Overload:Core.Queries.ProvinceQueries.IsOcean
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_IsOcean_System_UInt16_
+  name: IsOcean
+  nameWithType: ProvinceQueries.IsOcean
+  fullName: Core.Queries.ProvinceQueries.IsOcean
+- uid: Core.Queries.ProvinceQueries.GetCountryProvinces*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetCountryProvinces
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetCountryProvinces_System_UInt16_Unity_Collections_Allocator_
+  name: GetCountryProvinces
+  nameWithType: ProvinceQueries.GetCountryProvinces
+  fullName: Core.Queries.ProvinceQueries.GetCountryProvinces
+- uid: Unity.Collections.Allocator
+  commentId: T:Unity.Collections.Allocator
+  parent: Unity.Collections
+  isExternal: true
+  name: Allocator
+  nameWithType: Allocator
+  fullName: Unity.Collections.Allocator
+- uid: Unity.Collections.NativeArray{System.UInt16}
+  commentId: T:Unity.Collections.NativeArray{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<ushort>
+  nameWithType: NativeArray<ushort>
+  fullName: Unity.Collections.NativeArray<ushort>
+  nameWithType.vb: NativeArray(Of UShort)
+  fullName.vb: Unity.Collections.NativeArray(Of UShort)
+  name.vb: NativeArray(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections.NativeList{System.UInt16}
+  commentId: T:Unity.Collections.NativeList{System.UInt16}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<ushort>
+  nameWithType: NativeList<ushort>
+  fullName: Unity.Collections.NativeList<ushort>
+  nameWithType.vb: NativeList(Of UShort)
+  fullName.vb: Unity.Collections.NativeList(Of UShort)
+  name.vb: NativeList(Of UShort)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeList`1
+  commentId: T:Unity.Collections.NativeList`1
+  isExternal: true
+  name: NativeList<T>
+  nameWithType: NativeList<T>
+  fullName: Unity.Collections.NativeList<T>
+  nameWithType.vb: NativeList(Of T)
+  fullName.vb: Unity.Collections.NativeList(Of T)
+  name.vb: NativeList(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Queries.ProvinceQueries.GetCountryProvinceCount*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetCountryProvinceCount
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetCountryProvinceCount_System_UInt16_
+  name: GetCountryProvinceCount
+  nameWithType: ProvinceQueries.GetCountryProvinceCount
+  fullName: Core.Queries.ProvinceQueries.GetCountryProvinceCount
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Queries.ProvinceQueries.GetProvincesByTerrain*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvincesByTerrain
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvincesByTerrain_System_UInt16_Unity_Collections_Allocator_
+  name: GetProvincesByTerrain
+  nameWithType: ProvinceQueries.GetProvincesByTerrain
+  fullName: Core.Queries.ProvinceQueries.GetProvincesByTerrain
+- uid: Core.Queries.ProvinceQueries.GetUnownedProvinces*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetUnownedProvinces
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetUnownedProvinces_Unity_Collections_Allocator_
+  name: GetUnownedProvinces
+  nameWithType: ProvinceQueries.GetUnownedProvinces
+  fullName: Core.Queries.ProvinceQueries.GetUnownedProvinces
+- uid: Core.Queries.ProvinceQueries.GetOceanProvinces*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetOceanProvinces
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetOceanProvinces_Unity_Collections_Allocator_
+  name: GetOceanProvinces
+  nameWithType: ProvinceQueries.GetOceanProvinces
+  fullName: Core.Queries.ProvinceQueries.GetOceanProvinces
+- uid: Core.Queries.ProvinceQueries.GetLandProvinces*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetLandProvinces
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetLandProvinces_Unity_Collections_Allocator_
+  name: GetLandProvinces
+  nameWithType: ProvinceQueries.GetLandProvinces
+  fullName: Core.Queries.ProvinceQueries.GetLandProvinces
+- uid: Core.Queries.ProvinceQueries.GetProvinceOwnerColor*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvinceOwnerColor
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvinceOwnerColor_System_UInt16_
+  name: GetProvinceOwnerColor
+  nameWithType: ProvinceQueries.GetProvinceOwnerColor
+  fullName: Core.Queries.ProvinceQueries.GetProvinceOwnerColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Core.Queries.ProvinceQueries.GetProvinceOwnerTag*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvinceOwnerTag
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvinceOwnerTag_System_UInt16_
+  name: GetProvinceOwnerTag
+  nameWithType: ProvinceQueries.GetProvinceOwnerTag
+  fullName: Core.Queries.ProvinceQueries.GetProvinceOwnerTag
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Queries.ProvinceQueries.ShareSameOwner*
+  commentId: Overload:Core.Queries.ProvinceQueries.ShareSameOwner
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_ShareSameOwner_System_UInt16_System_UInt16_
+  name: ShareSameOwner
+  nameWithType: ProvinceQueries.ShareSameOwner
+  fullName: Core.Queries.ProvinceQueries.ShareSameOwner
+- uid: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvincesBorderingCountry
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvincesBorderingCountry_System_UInt16_Unity_Collections_Allocator_
+  name: GetProvincesBorderingCountry
+  nameWithType: ProvinceQueries.GetProvincesBorderingCountry
+  fullName: Core.Queries.ProvinceQueries.GetProvincesBorderingCountry
+- uid: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvincesByOwnerTag
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvincesByOwnerTag_System_String_Unity_Collections_Allocator_
+  name: GetProvincesByOwnerTag
+  nameWithType: ProvinceQueries.GetProvincesByOwnerTag
+  fullName: Core.Queries.ProvinceQueries.GetProvincesByOwnerTag
+- uid: Core.Queries.ProvinceQueries.GetAllProvinceIds*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetAllProvinceIds
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetAllProvinceIds_Unity_Collections_Allocator_
+  name: GetAllProvinceIds
+  nameWithType: ProvinceQueries.GetAllProvinceIds
+  fullName: Core.Queries.ProvinceQueries.GetAllProvinceIds
+- uid: Core.Queries.ProvinceQueries.GetTotalProvinceCount*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetTotalProvinceCount
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetTotalProvinceCount
+  name: GetTotalProvinceCount
+  nameWithType: ProvinceQueries.GetTotalProvinceCount
+  fullName: Core.Queries.ProvinceQueries.GetTotalProvinceCount
+- uid: Core.Queries.ProvinceQueries.GetProvinceStatistics*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvinceStatistics
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvinceStatistics
+  name: GetProvinceStatistics
+  nameWithType: ProvinceQueries.GetProvinceStatistics
+  fullName: Core.Queries.ProvinceQueries.GetProvinceStatistics
+- uid: Core.Queries.ProvinceStatistics
+  commentId: T:Core.Queries.ProvinceStatistics
+  parent: Core.Queries
+  href: Core.Queries.ProvinceStatistics.html
+  name: ProvinceStatistics
+  nameWithType: ProvinceStatistics
+  fullName: Core.Queries.ProvinceStatistics
+- uid: Core.Queries.ProvinceQueries.GetPerformanceStats*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetPerformanceStats
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetPerformanceStats
+  name: GetPerformanceStats
+  nameWithType: ProvinceQueries.GetPerformanceStats
+  fullName: Core.Queries.ProvinceQueries.GetPerformanceStats
+- uid: Core.Queries.QueryPerformanceStats
+  commentId: T:Core.Queries.QueryPerformanceStats
+  parent: Core.Queries
+  href: Core.Queries.QueryPerformanceStats.html
+  name: QueryPerformanceStats
+  nameWithType: QueryPerformanceStats
+  fullName: Core.Queries.QueryPerformanceStats
+- uid: Core.Queries.ProvinceQueries.ResetPerformanceStats*
+  commentId: Overload:Core.Queries.ProvinceQueries.ResetPerformanceStats
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_ResetPerformanceStats
+  name: ResetPerformanceStats
+  nameWithType: ProvinceQueries.ResetPerformanceStats
+  fullName: Core.Queries.ProvinceQueries.ResetPerformanceStats
+- uid: Core.Queries.ProvinceQueries.GetProvincesWithinDistance*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetProvincesWithinDistance
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetProvincesWithinDistance_System_UInt16_System_Byte_Unity_Collections_Allocator_
+  name: GetProvincesWithinDistance
+  nameWithType: ProvinceQueries.GetProvincesWithinDistance
+  fullName: Core.Queries.ProvinceQueries.GetProvincesWithinDistance
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: Core.Queries.ProvinceQueries.GetDistanceBetween*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetDistanceBetween
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetDistanceBetween_System_UInt16_System_UInt16_
+  name: GetDistanceBetween
+  nameWithType: ProvinceQueries.GetDistanceBetween
+  fullName: Core.Queries.ProvinceQueries.GetDistanceBetween
+- uid: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry*
+  commentId: Overload:Core.Queries.ProvinceQueries.CalculateDistancesFromCountry
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_CalculateDistancesFromCountry_System_UInt16_
+  name: CalculateDistancesFromCountry
+  nameWithType: ProvinceQueries.CalculateDistancesFromCountry
+  fullName: Core.Queries.ProvinceQueries.CalculateDistancesFromCountry
+- uid: Core.Queries.ProvinceQueries.GetCachedProvinceDistance*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetCachedProvinceDistance
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetCachedProvinceDistance_System_UInt16_
+  name: GetCachedProvinceDistance
+  nameWithType: ProvinceQueries.GetCachedProvinceDistance
+  fullName: Core.Queries.ProvinceQueries.GetCachedProvinceDistance
+- uid: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetConnectedProvincesOfSameOwner_System_UInt16_Unity_Collections_Allocator_
+  name: GetConnectedProvincesOfSameOwner
+  nameWithType: ProvinceQueries.GetConnectedProvincesOfSameOwner
+  fullName: Core.Queries.ProvinceQueries.GetConnectedProvincesOfSameOwner
+- uid: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetConnectedProvincesWithOwner_System_UInt16_System_UInt16_Unity_Collections_Allocator_
+  name: GetConnectedProvincesWithOwner
+  nameWithType: ProvinceQueries.GetConnectedProvincesWithOwner
+  fullName: Core.Queries.ProvinceQueries.GetConnectedProvincesWithOwner
+- uid: Core.Queries.ProvinceQueries.GetConnectedLandmasses*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetConnectedLandmasses
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetConnectedLandmasses_System_UInt16_Unity_Collections_Allocator_
+  name: GetConnectedLandmasses
+  nameWithType: ProvinceQueries.GetConnectedLandmasses
+  fullName: Core.Queries.ProvinceQueries.GetConnectedLandmasses
+- uid: Unity.Collections.NativeList{Unity.Collections.NativeList{System.UInt16}}
+  commentId: T:Unity.Collections.NativeList{Unity.Collections.NativeList{System.UInt16}}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeList`1
+  name: NativeList<NativeList<ushort>>
+  nameWithType: NativeList<NativeList<ushort>>
+  fullName: Unity.Collections.NativeList<Unity.Collections.NativeList<ushort>>
+  nameWithType.vb: NativeList(Of NativeList(Of UShort))
+  fullName.vb: Unity.Collections.NativeList(Of Unity.Collections.NativeList(Of UShort))
+  name.vb: NativeList(Of NativeList(Of UShort))
+  spec.csharp:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Unity.Collections.NativeList`1
+    name: NativeList
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Core.Queries.ProvinceQueries.GetLandmassCount*
+  commentId: Overload:Core.Queries.ProvinceQueries.GetLandmassCount
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetLandmassCount_System_UInt16_
+  name: GetLandmassCount
+  nameWithType: ProvinceQueries.GetLandmassCount
+  fullName: Core.Queries.ProvinceQueries.GetLandmassCount
+- uid: Core.Queries.ProvinceQueries.Dispose*
+  commentId: Overload:Core.Queries.ProvinceQueries.Dispose
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_Dispose
+  name: Dispose
+  nameWithType: ProvinceQueries.Dispose
+  fullName: Core.Queries.ProvinceQueries.Dispose

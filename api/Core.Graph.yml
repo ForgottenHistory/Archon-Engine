@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Graph
+  commentId: N:Core.Graph
+  id: Core.Graph
+  children:
+  - Core.Graph.BFSDistanceJob
+  - Core.Graph.GraphDistanceCalculator
+  langs:
+  - csharp
+  - vb
+  name: Core.Graph
+  nameWithType: Core.Graph
+  fullName: Core.Graph
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Graph.GraphDistanceCalculator
+  commentId: T:Core.Graph.GraphDistanceCalculator
+  href: Core.Graph.GraphDistanceCalculator.html
+  name: GraphDistanceCalculator
+  nameWithType: GraphDistanceCalculator
+  fullName: Core.Graph.GraphDistanceCalculator
+- uid: Core.Graph.BFSDistanceJob
+  commentId: T:Core.Graph.BFSDistanceJob
+  href: Core.Graph.BFSDistanceJob.html
+  name: BFSDistanceJob
+  nameWithType: BFSDistanceJob
+  fullName: Core.Graph.BFSDistanceJob

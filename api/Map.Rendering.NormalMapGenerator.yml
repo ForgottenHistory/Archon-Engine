@@ -1,0 +1,214 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.NormalMapGenerator
+  commentId: T:Map.Rendering.NormalMapGenerator
+  id: NormalMapGenerator
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.NormalMapGenerator.#ctor
+  - Map.Rendering.NormalMapGenerator.GenerateNormalMap(UnityEngine.Texture2D,UnityEngine.Texture2D,System.Single,System.Boolean)
+  langs:
+  - csharp
+  - vb
+  name: NormalMapGenerator
+  nameWithType: NormalMapGenerator
+  fullName: Map.Rendering.NormalMapGenerator
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/NormalMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NormalMapGenerator
+    path: Scripts/Map/Rendering/NormalMapGenerator.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generates normal map from heightmap using GPU compute shader.
+
+    Based on EU5's approach - calculates gradients on GPU for maximum performance.
+
+
+    Algorithm:
+
+    1. Sample heightmap at each pixel and 4 neighbors (LRUD)
+
+    2. Calculate gradients using central difference
+
+    3. Construct normal vector from gradients
+
+    4. Pack normal into RG8 texture (XZ components, reconstruct Y in fragment shader)
+
+
+    Result: High-quality lighting with depth perception at any zoom level
+  example: []
+  syntax:
+    content: public class NormalMapGenerator
+    content.vb: Public Class NormalMapGenerator
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.NormalMapGenerator.#ctor
+  commentId: M:Map.Rendering.NormalMapGenerator.#ctor
+  id: '#ctor'
+  parent: Map.Rendering.NormalMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: NormalMapGenerator()
+  nameWithType: NormalMapGenerator.NormalMapGenerator()
+  fullName: Map.Rendering.NormalMapGenerator.NormalMapGenerator()
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/NormalMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/NormalMapGenerator.cs
+    startLine: 26
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public NormalMapGenerator()
+    content.vb: Public Sub New()
+  overload: Map.Rendering.NormalMapGenerator.#ctor*
+  nameWithType.vb: NormalMapGenerator.New()
+  fullName.vb: Map.Rendering.NormalMapGenerator.New()
+  name.vb: New()
+- uid: Map.Rendering.NormalMapGenerator.GenerateNormalMap(UnityEngine.Texture2D,UnityEngine.Texture2D,System.Single,System.Boolean)
+  commentId: M:Map.Rendering.NormalMapGenerator.GenerateNormalMap(UnityEngine.Texture2D,UnityEngine.Texture2D,System.Single,System.Boolean)
+  id: GenerateNormalMap(UnityEngine.Texture2D,UnityEngine.Texture2D,System.Single,System.Boolean)
+  parent: Map.Rendering.NormalMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: GenerateNormalMap(Texture2D, Texture2D, float, bool)
+  nameWithType: NormalMapGenerator.GenerateNormalMap(Texture2D, Texture2D, float, bool)
+  fullName: Map.Rendering.NormalMapGenerator.GenerateNormalMap(UnityEngine.Texture2D, UnityEngine.Texture2D, float, bool)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/NormalMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GenerateNormalMap
+    path: Scripts/Map/Rendering/NormalMapGenerator.cs
+    startLine: 63
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Generates normal map from heightmap texture using GPU compute shader.
+
+    CRITICAL: Follows GPU coordination patterns from unity-compute-shader-coordination.md
+  example: []
+  syntax:
+    content: public void GenerateNormalMap(Texture2D heightmapTexture, Texture2D normalMapTexture, float heightScale = 10, bool logProgress = false)
+    parameters:
+    - id: heightmapTexture
+      type: UnityEngine.Texture2D
+      description: Input heightmap (R8 or R16 format)
+    - id: normalMapTexture
+      type: UnityEngine.Texture2D
+      description: Output normal map (RG8 format)
+    - id: heightScale
+      type: System.Single
+      description: 'Height scale multiplier for normal calculation (default: 10.0)'
+    - id: logProgress
+      type: System.Boolean
+      description: Enable performance logging
+    content.vb: Public Sub GenerateNormalMap(heightmapTexture As Texture2D, normalMapTexture As Texture2D, heightScale As Single = 10, logProgress As Boolean = False)
+  overload: Map.Rendering.NormalMapGenerator.GenerateNormalMap*
+  nameWithType.vb: NormalMapGenerator.GenerateNormalMap(Texture2D, Texture2D, Single, Boolean)
+  fullName.vb: Map.Rendering.NormalMapGenerator.GenerateNormalMap(UnityEngine.Texture2D, UnityEngine.Texture2D, Single, Boolean)
+  name.vb: GenerateNormalMap(Texture2D, Texture2D, Single, Boolean)
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.NormalMapGenerator.#ctor*
+  commentId: Overload:Map.Rendering.NormalMapGenerator.#ctor
+  href: Map.Rendering.NormalMapGenerator.html#Map_Rendering_NormalMapGenerator__ctor
+  name: NormalMapGenerator
+  nameWithType: NormalMapGenerator.NormalMapGenerator
+  fullName: Map.Rendering.NormalMapGenerator.NormalMapGenerator
+  nameWithType.vb: NormalMapGenerator.New
+  fullName.vb: Map.Rendering.NormalMapGenerator.New
+  name.vb: New
+- uid: Map.Rendering.NormalMapGenerator.GenerateNormalMap*
+  commentId: Overload:Map.Rendering.NormalMapGenerator.GenerateNormalMap
+  href: Map.Rendering.NormalMapGenerator.html#Map_Rendering_NormalMapGenerator_GenerateNormalMap_UnityEngine_Texture2D_UnityEngine_Texture2D_System_Single_System_Boolean_
+  name: GenerateNormalMap
+  nameWithType: NormalMapGenerator.GenerateNormalMap
+  fullName: Map.Rendering.NormalMapGenerator.GenerateNormalMap
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

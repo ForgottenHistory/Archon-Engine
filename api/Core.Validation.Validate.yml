@@ -1,0 +1,140 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Validation.Validate
+  commentId: T:Core.Validation.Validate
+  id: Validate
+  parent: Core.Validation
+  children:
+  - Core.Validation.Validate.For(Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: Validate
+  nameWithType: Validate
+  fullName: Core.Validation.Validate
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Validation/Validate.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Validate
+    path: Scripts/Core/Validation/Validate.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: >-
+    Static entry point for fluent validation.
+
+
+    Usage:
+
+    Validate.For(gameState)
+            .Country(countryId)
+            .Province(provinceId)
+            .Result(out var reason);
+  example: []
+  syntax:
+    content: public static class Validate
+    content.vb: Public Module Validate
+  inheritance:
+  - System.Object
+- uid: Core.Validation.Validate.For(Core.GameState)
+  commentId: M:Core.Validation.Validate.For(Core.GameState)
+  id: For(Core.GameState)
+  parent: Core.Validation.Validate
+  langs:
+  - csharp
+  - vb
+  name: For(GameState)
+  nameWithType: Validate.For(GameState)
+  fullName: Core.Validation.Validate.For(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Validation/Validate.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: For
+    path: Scripts/Core/Validation/Validate.cs
+    startLine: 16
+  assemblies:
+  - Core
+  namespace: Core.Validation
+  summary: Start a validation chain for the given GameState.
+  example: []
+  syntax:
+    content: public static ValidationBuilder For(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function [For](gameState As GameState) As ValidationBuilder
+  overload: Core.Validation.Validate.For*
+references:
+- uid: Core.Validation
+  commentId: N:Core.Validation
+  href: Core.html
+  name: Core.Validation
+  nameWithType: Core.Validation
+  fullName: Core.Validation
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Validation
+    name: Validation
+    href: Core.Validation.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Validation.Validate.For*
+  commentId: Overload:Core.Validation.Validate.For
+  href: Core.Validation.Validate.html#Core_Validation_Validate_For_Core_GameState_
+  name: For
+  nameWithType: Validate.For
+  fullName: Core.Validation.Validate.For
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.Validation.ValidationBuilder
+  commentId: T:Core.Validation.ValidationBuilder
+  parent: Core.Validation
+  href: Core.Validation.ValidationBuilder.html
+  name: ValidationBuilder
+  nameWithType: ValidationBuilder
+  fullName: Core.Validation.ValidationBuilder
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core

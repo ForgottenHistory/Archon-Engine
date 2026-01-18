@@ -1,0 +1,379 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Diplomacy.OpinionModifier
+  commentId: T:Core.Diplomacy.OpinionModifier
+  id: OpinionModifier
+  parent: Core.Diplomacy
+  children:
+  - Core.Diplomacy.OpinionModifier.CalculateCurrentValue(System.Int32)
+  - Core.Diplomacy.OpinionModifier.IsFullyDecayed(System.Int32)
+  - Core.Diplomacy.OpinionModifier.appliedTick
+  - Core.Diplomacy.OpinionModifier.decayRate
+  - Core.Diplomacy.OpinionModifier.modifierTypeID
+  - Core.Diplomacy.OpinionModifier.value
+  langs:
+  - csharp
+  - vb
+  name: OpinionModifier
+  nameWithType: OpinionModifier
+  fullName: Core.Diplomacy.OpinionModifier
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OpinionModifier
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    ENGINE LAYER - Individual opinion modifier affecting relations between countries
+
+
+    Architecture:
+
+    - Fixed-size struct for deterministic serialization
+
+    - Decays linearly over time (value * (1 - elapsed/decayRate))
+
+    - Fully decayed modifiers removed automatically
+
+
+    Memory: ~20 bytes per modifier (aligned)
+
+
+    Example Usage:
+
+    var modifier = new OpinionModifier {
+        modifierTypeID = OpinionModifierTypes.DeclaredWar,
+        value = FixedPoint64.FromInt(-50),
+        appliedTick = currentTick,
+        decayRate = 3600  // 10 years (360 ticks/year)
+    };
+
+
+    // Calculate current value after 5 years:
+
+    FixedPoint64 current = modifier.CalculateCurrentValue(currentTick);
+
+    // Returns -25 (50% decay after half the decay period)
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public struct OpinionModifier
+    content.vb: >-
+      <Serializable>
+
+      Public Structure OpinionModifier
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Diplomacy.OpinionModifier.modifierTypeID
+  commentId: F:Core.Diplomacy.OpinionModifier.modifierTypeID
+  id: modifierTypeID
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: modifierTypeID
+  nameWithType: OpinionModifier.modifierTypeID
+  fullName: Core.Diplomacy.OpinionModifier.modifierTypeID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: modifierTypeID
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Type of modifier (game-specific, e.g., DeclaredWar, StoleProvince)
+
+    Maps to OpinionModifierTypes enum in GAME layer
+  example: []
+  syntax:
+    content: public ushort modifierTypeID
+    return:
+      type: System.UInt16
+    content.vb: Public modifierTypeID As UShort
+- uid: Core.Diplomacy.OpinionModifier.value
+  commentId: F:Core.Diplomacy.OpinionModifier.value
+  id: value
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: value
+  nameWithType: OpinionModifier.value
+  fullName: Core.Diplomacy.OpinionModifier.value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: value
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Base opinion value change (-200 to +200)
+
+    Negative = worsens opinion, Positive = improves opinion
+  example: []
+  syntax:
+    content: public FixedPoint64 value
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public value As FixedPoint64
+- uid: Core.Diplomacy.OpinionModifier.appliedTick
+  commentId: F:Core.Diplomacy.OpinionModifier.appliedTick
+  id: appliedTick
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: appliedTick
+  nameWithType: OpinionModifier.appliedTick
+  fullName: Core.Diplomacy.OpinionModifier.appliedTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: appliedTick
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 46
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Tick when this modifier was applied
+
+    Used to calculate decay over time
+  example: []
+  syntax:
+    content: public int appliedTick
+    return:
+      type: System.Int32
+    content.vb: Public appliedTick As Integer
+- uid: Core.Diplomacy.OpinionModifier.decayRate
+  commentId: F:Core.Diplomacy.OpinionModifier.decayRate
+  id: decayRate
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: decayRate
+  nameWithType: OpinionModifier.decayRate
+  fullName: Core.Diplomacy.OpinionModifier.decayRate
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: decayRate
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 52
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Ticks until full decay (0 = permanent modifier)
+
+    Example: 3600 ticks = 10 years (360 days/year)
+  example: []
+  syntax:
+    content: public int decayRate
+    return:
+      type: System.Int32
+    content.vb: Public decayRate As Integer
+- uid: Core.Diplomacy.OpinionModifier.CalculateCurrentValue(System.Int32)
+  commentId: M:Core.Diplomacy.OpinionModifier.CalculateCurrentValue(System.Int32)
+  id: CalculateCurrentValue(System.Int32)
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: CalculateCurrentValue(int)
+  nameWithType: OpinionModifier.CalculateCurrentValue(int)
+  fullName: Core.Diplomacy.OpinionModifier.CalculateCurrentValue(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CalculateCurrentValue
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 58
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: >-
+    Calculate current value with decay applied
+
+    Linear decay: value * (1 - timeElapsed / decayRate)
+  example: []
+  syntax:
+    content: public FixedPoint64 CalculateCurrentValue(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function CalculateCurrentValue(currentTick As Integer) As FixedPoint64
+  overload: Core.Diplomacy.OpinionModifier.CalculateCurrentValue*
+  nameWithType.vb: OpinionModifier.CalculateCurrentValue(Integer)
+  fullName.vb: Core.Diplomacy.OpinionModifier.CalculateCurrentValue(Integer)
+  name.vb: CalculateCurrentValue(Integer)
+- uid: Core.Diplomacy.OpinionModifier.IsFullyDecayed(System.Int32)
+  commentId: M:Core.Diplomacy.OpinionModifier.IsFullyDecayed(System.Int32)
+  id: IsFullyDecayed(System.Int32)
+  parent: Core.Diplomacy.OpinionModifier
+  langs:
+  - csharp
+  - vb
+  name: IsFullyDecayed(int)
+  nameWithType: OpinionModifier.IsFullyDecayed(int)
+  fullName: Core.Diplomacy.OpinionModifier.IsFullyDecayed(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Diplomacy/OpinionModifier.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsFullyDecayed
+    path: Scripts/Core/Diplomacy/OpinionModifier.cs
+    startLine: 80
+  assemblies:
+  - Core
+  namespace: Core.Diplomacy
+  summary: Check if this modifier is fully decayed
+  example: []
+  syntax:
+    content: public bool IsFullyDecayed(int currentTick)
+    parameters:
+    - id: currentTick
+      type: System.Int32
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsFullyDecayed(currentTick As Integer) As Boolean
+  overload: Core.Diplomacy.OpinionModifier.IsFullyDecayed*
+  nameWithType.vb: OpinionModifier.IsFullyDecayed(Integer)
+  fullName.vb: Core.Diplomacy.OpinionModifier.IsFullyDecayed(Integer)
+  name.vb: IsFullyDecayed(Integer)
+references:
+- uid: Core.Diplomacy
+  commentId: N:Core.Diplomacy
+  href: Core.html
+  name: Core.Diplomacy
+  nameWithType: Core.Diplomacy
+  fullName: Core.Diplomacy
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Diplomacy
+    name: Diplomacy
+    href: Core.Diplomacy.html
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.FixedPoint64
+  commentId: T:Core.Data.FixedPoint64
+  parent: Core.Data
+  href: Core.Data.FixedPoint64.html
+  name: FixedPoint64
+  nameWithType: FixedPoint64
+  fullName: Core.Data.FixedPoint64
+- uid: Core.Data
+  commentId: N:Core.Data
+  href: Core.html
+  name: Core.Data
+  nameWithType: Core.Data
+  fullName: Core.Data
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Diplomacy.OpinionModifier.CalculateCurrentValue*
+  commentId: Overload:Core.Diplomacy.OpinionModifier.CalculateCurrentValue
+  href: Core.Diplomacy.OpinionModifier.html#Core_Diplomacy_OpinionModifier_CalculateCurrentValue_System_Int32_
+  name: CalculateCurrentValue
+  nameWithType: OpinionModifier.CalculateCurrentValue
+  fullName: Core.Diplomacy.OpinionModifier.CalculateCurrentValue
+- uid: Core.Diplomacy.OpinionModifier.IsFullyDecayed*
+  commentId: Overload:Core.Diplomacy.OpinionModifier.IsFullyDecayed
+  href: Core.Diplomacy.OpinionModifier.html#Core_Diplomacy_OpinionModifier_IsFullyDecayed_System_Int32_
+  name: IsFullyDecayed
+  nameWithType: OpinionModifier.IsFullyDecayed
+  fullName: Core.Diplomacy.OpinionModifier.IsFullyDecayed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean

@@ -1,0 +1,1035 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Systems.PathfindingSystem
+  commentId: T:Core.Systems.PathfindingSystem
+  id: PathfindingSystem
+  parent: Core.Systems
+  children:
+  - Core.Systems.PathfindingSystem.CacheHitRate
+  - Core.Systems.PathfindingSystem.CacheHits
+  - Core.Systems.PathfindingSystem.ClearCache
+  - Core.Systems.PathfindingSystem.Dispose
+  - Core.Systems.PathfindingSystem.FindPath(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  - Core.Systems.PathfindingSystem.FindPathAvoiding(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  - Core.Systems.PathfindingSystem.FindPathWithForbidden(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  - Core.Systems.PathfindingSystem.FindPathWithOptions(System.UInt16,System.UInt16,Core.Systems.PathOptions)
+  - Core.Systems.PathfindingSystem.GetCacheStats
+  - Core.Systems.PathfindingSystem.GetDistance(System.UInt16,System.UInt16)
+  - Core.Systems.PathfindingSystem.GetStats
+  - Core.Systems.PathfindingSystem.Initialize(Core.Systems.AdjacencySystem,Core.Systems.MovementValidator,System.Int32)
+  - Core.Systems.PathfindingSystem.InvalidateCacheForProvince(System.UInt16)
+  - Core.Systems.PathfindingSystem.IsInitialized
+  - Core.Systems.PathfindingSystem.PathExists(System.UInt16,System.UInt16)
+  - Core.Systems.PathfindingSystem.ResetStats
+  - Core.Systems.PathfindingSystem.SetDefaultCostCalculator(Core.Systems.IMovementCostCalculator)
+  - Core.Systems.PathfindingSystem.TotalSearches
+  langs:
+  - csharp
+  - vb
+  name: PathfindingSystem
+  nameWithType: PathfindingSystem
+  fullName: Core.Systems.PathfindingSystem
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathfindingSystem
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public class PathfindingSystem
+    content.vb: Public Class PathfindingSystem
+  inheritance:
+  - System.Object
+- uid: Core.Systems.PathfindingSystem.Initialize(Core.Systems.AdjacencySystem,Core.Systems.MovementValidator,System.Int32)
+  commentId: M:Core.Systems.PathfindingSystem.Initialize(Core.Systems.AdjacencySystem,Core.Systems.MovementValidator,System.Int32)
+  id: Initialize(Core.Systems.AdjacencySystem,Core.Systems.MovementValidator,System.Int32)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: Initialize(AdjacencySystem, MovementValidator, int)
+  nameWithType: PathfindingSystem.Initialize(AdjacencySystem, MovementValidator, int)
+  fullName: Core.Systems.PathfindingSystem.Initialize(Core.Systems.AdjacencySystem, Core.Systems.MovementValidator, int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 64
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Initialize pathfinding system with adjacency data.
+  example: []
+  syntax:
+    content: public void Initialize(AdjacencySystem adjacencies, MovementValidator validator = null, int cacheSize = 256)
+    parameters:
+    - id: adjacencies
+      type: Core.Systems.AdjacencySystem
+      description: Adjacency system for neighbor lookups
+    - id: validator
+      type: Core.Systems.MovementValidator
+      description: Legacy validator (deprecated, use IMovementCostCalculator)
+    - id: cacheSize
+      type: System.Int32
+      description: Size of path cache (0 to disable)
+    content.vb: Public Sub Initialize(adjacencies As AdjacencySystem, validator As MovementValidator = Nothing, cacheSize As Integer = 256)
+  overload: Core.Systems.PathfindingSystem.Initialize*
+  nameWithType.vb: PathfindingSystem.Initialize(AdjacencySystem, MovementValidator, Integer)
+  fullName.vb: Core.Systems.PathfindingSystem.Initialize(Core.Systems.AdjacencySystem, Core.Systems.MovementValidator, Integer)
+  name.vb: Initialize(AdjacencySystem, MovementValidator, Integer)
+- uid: Core.Systems.PathfindingSystem.SetDefaultCostCalculator(Core.Systems.IMovementCostCalculator)
+  commentId: M:Core.Systems.PathfindingSystem.SetDefaultCostCalculator(Core.Systems.IMovementCostCalculator)
+  id: SetDefaultCostCalculator(Core.Systems.IMovementCostCalculator)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: SetDefaultCostCalculator(IMovementCostCalculator)
+  nameWithType: PathfindingSystem.SetDefaultCostCalculator(IMovementCostCalculator)
+  fullName: Core.Systems.PathfindingSystem.SetDefaultCostCalculator(Core.Systems.IMovementCostCalculator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetDefaultCostCalculator
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Set the default cost calculator for all pathfinding requests.
+  example: []
+  syntax:
+    content: public void SetDefaultCostCalculator(IMovementCostCalculator calculator)
+    parameters:
+    - id: calculator
+      type: Core.Systems.IMovementCostCalculator
+    content.vb: Public Sub SetDefaultCostCalculator(calculator As IMovementCostCalculator)
+  overload: Core.Systems.PathfindingSystem.SetDefaultCostCalculator*
+- uid: Core.Systems.PathfindingSystem.FindPath(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.PathfindingSystem.FindPath(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  id: FindPath(System.UInt16,System.UInt16,System.UInt16,System.UInt16)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: FindPath(ushort, ushort, ushort, ushort)
+  nameWithType: PathfindingSystem.FindPath(ushort, ushort, ushort, ushort)
+  fullName: Core.Systems.PathfindingSystem.FindPath(ushort, ushort, ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPath
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Find shortest path from start to goal using default options.
+  example: []
+  syntax:
+    content: public List<ushort> FindPath(ushort start, ushort goal, ushort unitOwnerCountryID = 0, ushort unitTypeID = 0)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    - id: unitOwnerCountryID
+      type: System.UInt16
+    - id: unitTypeID
+      type: System.UInt16
+    return:
+      type: System.Collections.Generic.List{System.UInt16}
+    content.vb: Public Function FindPath(start As UShort, goal As UShort, unitOwnerCountryID As UShort = 0, unitTypeID As UShort = 0) As List(Of UShort)
+  overload: Core.Systems.PathfindingSystem.FindPath*
+  nameWithType.vb: PathfindingSystem.FindPath(UShort, UShort, UShort, UShort)
+  fullName.vb: Core.Systems.PathfindingSystem.FindPath(UShort, UShort, UShort, UShort)
+  name.vb: FindPath(UShort, UShort, UShort, UShort)
+- uid: Core.Systems.PathfindingSystem.FindPathWithOptions(System.UInt16,System.UInt16,Core.Systems.PathOptions)
+  commentId: M:Core.Systems.PathfindingSystem.FindPathWithOptions(System.UInt16,System.UInt16,Core.Systems.PathOptions)
+  id: FindPathWithOptions(System.UInt16,System.UInt16,Core.Systems.PathOptions)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: FindPathWithOptions(ushort, ushort, PathOptions)
+  nameWithType: PathfindingSystem.FindPathWithOptions(ushort, ushort, PathOptions)
+  fullName: Core.Systems.PathfindingSystem.FindPathWithOptions(ushort, ushort, Core.Systems.PathOptions)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPathWithOptions
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 127
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Find shortest path with full options.
+  example: []
+  syntax:
+    content: public PathResult FindPathWithOptions(ushort start, ushort goal, PathOptions options)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    - id: options
+      type: Core.Systems.PathOptions
+    return:
+      type: Core.Systems.PathResult
+    content.vb: Public Function FindPathWithOptions(start As UShort, goal As UShort, options As PathOptions) As PathResult
+  overload: Core.Systems.PathfindingSystem.FindPathWithOptions*
+  nameWithType.vb: PathfindingSystem.FindPathWithOptions(UShort, UShort, PathOptions)
+  fullName.vb: Core.Systems.PathfindingSystem.FindPathWithOptions(UShort, UShort, Core.Systems.PathOptions)
+  name.vb: FindPathWithOptions(UShort, UShort, PathOptions)
+- uid: Core.Systems.PathfindingSystem.FindPathAvoiding(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  commentId: M:Core.Systems.PathfindingSystem.FindPathAvoiding(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  id: FindPathAvoiding(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: FindPathAvoiding(ushort, ushort, HashSet<ushort>)
+  nameWithType: PathfindingSystem.FindPathAvoiding(ushort, ushort, HashSet<ushort>)
+  fullName: Core.Systems.PathfindingSystem.FindPathAvoiding(ushort, ushort, System.Collections.Generic.HashSet<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPathAvoiding
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 189
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Find path avoiding specific provinces (convenience method).
+  example: []
+  syntax:
+    content: public PathResult FindPathAvoiding(ushort start, ushort goal, HashSet<ushort> avoidProvinces)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    - id: avoidProvinces
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    return:
+      type: Core.Systems.PathResult
+    content.vb: Public Function FindPathAvoiding(start As UShort, goal As UShort, avoidProvinces As HashSet(Of UShort)) As PathResult
+  overload: Core.Systems.PathfindingSystem.FindPathAvoiding*
+  nameWithType.vb: PathfindingSystem.FindPathAvoiding(UShort, UShort, HashSet(Of UShort))
+  fullName.vb: Core.Systems.PathfindingSystem.FindPathAvoiding(UShort, UShort, System.Collections.Generic.HashSet(Of UShort))
+  name.vb: FindPathAvoiding(UShort, UShort, HashSet(Of UShort))
+- uid: Core.Systems.PathfindingSystem.FindPathWithForbidden(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  commentId: M:Core.Systems.PathfindingSystem.FindPathWithForbidden(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  id: FindPathWithForbidden(System.UInt16,System.UInt16,System.Collections.Generic.HashSet{System.UInt16})
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: FindPathWithForbidden(ushort, ushort, HashSet<ushort>)
+  nameWithType: PathfindingSystem.FindPathWithForbidden(ushort, ushort, HashSet<ushort>)
+  fullName: Core.Systems.PathfindingSystem.FindPathWithForbidden(ushort, ushort, System.Collections.Generic.HashSet<ushort>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FindPathWithForbidden
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Find path with forbidden provinces (convenience method).
+  example: []
+  syntax:
+    content: public PathResult FindPathWithForbidden(ushort start, ushort goal, HashSet<ushort> forbiddenProvinces)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    - id: forbiddenProvinces
+      type: System.Collections.Generic.HashSet{System.UInt16}
+    return:
+      type: Core.Systems.PathResult
+    content.vb: Public Function FindPathWithForbidden(start As UShort, goal As UShort, forbiddenProvinces As HashSet(Of UShort)) As PathResult
+  overload: Core.Systems.PathfindingSystem.FindPathWithForbidden*
+  nameWithType.vb: PathfindingSystem.FindPathWithForbidden(UShort, UShort, HashSet(Of UShort))
+  fullName.vb: Core.Systems.PathfindingSystem.FindPathWithForbidden(UShort, UShort, System.Collections.Generic.HashSet(Of UShort))
+  name.vb: FindPathWithForbidden(UShort, UShort, HashSet(Of UShort))
+- uid: Core.Systems.PathfindingSystem.PathExists(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.PathfindingSystem.PathExists(System.UInt16,System.UInt16)
+  id: PathExists(System.UInt16,System.UInt16)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: PathExists(ushort, ushort)
+  nameWithType: PathfindingSystem.PathExists(ushort, ushort)
+  fullName: Core.Systems.PathfindingSystem.PathExists(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PathExists
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 211
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Check if a path exists between two provinces.
+  example: []
+  syntax:
+    content: public bool PathExists(ushort start, ushort goal)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function PathExists(start As UShort, goal As UShort) As Boolean
+  overload: Core.Systems.PathfindingSystem.PathExists*
+  nameWithType.vb: PathfindingSystem.PathExists(UShort, UShort)
+  fullName.vb: Core.Systems.PathfindingSystem.PathExists(UShort, UShort)
+  name.vb: PathExists(UShort, UShort)
+- uid: Core.Systems.PathfindingSystem.GetDistance(System.UInt16,System.UInt16)
+  commentId: M:Core.Systems.PathfindingSystem.GetDistance(System.UInt16,System.UInt16)
+  id: GetDistance(System.UInt16,System.UInt16)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetDistance(ushort, ushort)
+  nameWithType: PathfindingSystem.GetDistance(ushort, ushort)
+  fullName: Core.Systems.PathfindingSystem.GetDistance(ushort, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetDistance
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 220
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Get the distance (number of provinces) between two provinces.
+
+    Returns -1 if no path exists.
+  example: []
+  syntax:
+    content: public int GetDistance(ushort start, ushort goal)
+    parameters:
+    - id: start
+      type: System.UInt16
+    - id: goal
+      type: System.UInt16
+    return:
+      type: System.Int32
+    content.vb: Public Function GetDistance(start As UShort, goal As UShort) As Integer
+  overload: Core.Systems.PathfindingSystem.GetDistance*
+  nameWithType.vb: PathfindingSystem.GetDistance(UShort, UShort)
+  fullName.vb: Core.Systems.PathfindingSystem.GetDistance(UShort, UShort)
+  name.vb: GetDistance(UShort, UShort)
+- uid: Core.Systems.PathfindingSystem.ClearCache
+  commentId: M:Core.Systems.PathfindingSystem.ClearCache
+  id: ClearCache
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: ClearCache()
+  nameWithType: PathfindingSystem.ClearCache()
+  fullName: Core.Systems.PathfindingSystem.ClearCache()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearCache
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 233
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Clear the path cache.
+  example: []
+  syntax:
+    content: public void ClearCache()
+    content.vb: Public Sub ClearCache()
+  overload: Core.Systems.PathfindingSystem.ClearCache*
+- uid: Core.Systems.PathfindingSystem.InvalidateCacheForProvince(System.UInt16)
+  commentId: M:Core.Systems.PathfindingSystem.InvalidateCacheForProvince(System.UInt16)
+  id: InvalidateCacheForProvince(System.UInt16)
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: InvalidateCacheForProvince(ushort)
+  nameWithType: PathfindingSystem.InvalidateCacheForProvince(ushort)
+  fullName: Core.Systems.PathfindingSystem.InvalidateCacheForProvince(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateCacheForProvince
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 242
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: >-
+    Invalidate cached paths that pass through a province.
+
+    Call when a province becomes blocked/unblocked.
+  example: []
+  syntax:
+    content: public void InvalidateCacheForProvince(ushort provinceId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    content.vb: Public Sub InvalidateCacheForProvince(provinceId As UShort)
+  overload: Core.Systems.PathfindingSystem.InvalidateCacheForProvince*
+  nameWithType.vb: PathfindingSystem.InvalidateCacheForProvince(UShort)
+  fullName.vb: Core.Systems.PathfindingSystem.InvalidateCacheForProvince(UShort)
+  name.vb: InvalidateCacheForProvince(UShort)
+- uid: Core.Systems.PathfindingSystem.GetCacheStats
+  commentId: M:Core.Systems.PathfindingSystem.GetCacheStats
+  id: GetCacheStats
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetCacheStats()
+  nameWithType: PathfindingSystem.GetCacheStats()
+  fullName: Core.Systems.PathfindingSystem.GetCacheStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetCacheStats
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 250
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get cache statistics.
+  example: []
+  syntax:
+    content: public string GetCacheStats()
+    return:
+      type: System.String
+    content.vb: Public Function GetCacheStats() As String
+  overload: Core.Systems.PathfindingSystem.GetCacheStats*
+- uid: Core.Systems.PathfindingSystem.IsInitialized
+  commentId: P:Core.Systems.PathfindingSystem.IsInitialized
+  id: IsInitialized
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: PathfindingSystem.IsInitialized
+  fullName: Core.Systems.PathfindingSystem.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 433
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: Core.Systems.PathfindingSystem.IsInitialized*
+- uid: Core.Systems.PathfindingSystem.TotalSearches
+  commentId: P:Core.Systems.PathfindingSystem.TotalSearches
+  id: TotalSearches
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: TotalSearches
+  nameWithType: PathfindingSystem.TotalSearches
+  fullName: Core.Systems.PathfindingSystem.TotalSearches
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TotalSearches
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 436
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Total pathfinding searches performed
+  example: []
+  syntax:
+    content: public int TotalSearches { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property TotalSearches As Integer
+  overload: Core.Systems.PathfindingSystem.TotalSearches*
+- uid: Core.Systems.PathfindingSystem.CacheHits
+  commentId: P:Core.Systems.PathfindingSystem.CacheHits
+  id: CacheHits
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: CacheHits
+  nameWithType: PathfindingSystem.CacheHits
+  fullName: Core.Systems.PathfindingSystem.CacheHits
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CacheHits
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 439
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Number of cache hits
+  example: []
+  syntax:
+    content: public int CacheHits { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public ReadOnly Property CacheHits As Integer
+  overload: Core.Systems.PathfindingSystem.CacheHits*
+- uid: Core.Systems.PathfindingSystem.CacheHitRate
+  commentId: P:Core.Systems.PathfindingSystem.CacheHitRate
+  id: CacheHitRate
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: CacheHitRate
+  nameWithType: PathfindingSystem.CacheHitRate
+  fullName: Core.Systems.PathfindingSystem.CacheHitRate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CacheHitRate
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 442
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Cache hit rate (0-1)
+  example: []
+  syntax:
+    content: public float CacheHitRate { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property CacheHitRate As Single
+  overload: Core.Systems.PathfindingSystem.CacheHitRate*
+- uid: Core.Systems.PathfindingSystem.GetStats
+  commentId: M:Core.Systems.PathfindingSystem.GetStats
+  id: GetStats
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: GetStats()
+  nameWithType: PathfindingSystem.GetStats()
+  fullName: Core.Systems.PathfindingSystem.GetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetStats
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 447
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Get system statistics as string.
+  example: []
+  syntax:
+    content: public string GetStats()
+    return:
+      type: System.String
+    content.vb: Public Function GetStats() As String
+  overload: Core.Systems.PathfindingSystem.GetStats*
+- uid: Core.Systems.PathfindingSystem.ResetStats
+  commentId: M:Core.Systems.PathfindingSystem.ResetStats
+  id: ResetStats
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: ResetStats()
+  nameWithType: PathfindingSystem.ResetStats()
+  fullName: Core.Systems.PathfindingSystem.ResetStats()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ResetStats
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 455
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  summary: Reset statistics.
+  example: []
+  syntax:
+    content: public void ResetStats()
+    content.vb: Public Sub ResetStats()
+  overload: Core.Systems.PathfindingSystem.ResetStats*
+- uid: Core.Systems.PathfindingSystem.Dispose
+  commentId: M:Core.Systems.PathfindingSystem.Dispose
+  id: Dispose
+  parent: Core.Systems.PathfindingSystem
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: PathfindingSystem.Dispose()
+  fullName: Core.Systems.PathfindingSystem.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/PathfindingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Systems/PathfindingSystem.cs
+    startLine: 466
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Systems.PathfindingSystem.Dispose*
+references:
+- uid: Core.Systems
+  commentId: N:Core.Systems
+  href: Core.html
+  name: Core.Systems
+  nameWithType: Core.Systems
+  fullName: Core.Systems
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Systems
+    name: Systems
+    href: Core.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Systems.PathfindingSystem.Initialize*
+  commentId: Overload:Core.Systems.PathfindingSystem.Initialize
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_Initialize_Core_Systems_AdjacencySystem_Core_Systems_MovementValidator_System_Int32_
+  name: Initialize
+  nameWithType: PathfindingSystem.Initialize
+  fullName: Core.Systems.PathfindingSystem.Initialize
+- uid: Core.Systems.AdjacencySystem
+  commentId: T:Core.Systems.AdjacencySystem
+  parent: Core.Systems
+  href: Core.Systems.AdjacencySystem.html
+  name: AdjacencySystem
+  nameWithType: AdjacencySystem
+  fullName: Core.Systems.AdjacencySystem
+- uid: Core.Systems.MovementValidator
+  commentId: T:Core.Systems.MovementValidator
+  parent: Core.Systems
+  href: Core.Systems.MovementValidator.html
+  name: MovementValidator
+  nameWithType: MovementValidator
+  fullName: Core.Systems.MovementValidator
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Systems.PathfindingSystem.SetDefaultCostCalculator*
+  commentId: Overload:Core.Systems.PathfindingSystem.SetDefaultCostCalculator
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_SetDefaultCostCalculator_Core_Systems_IMovementCostCalculator_
+  name: SetDefaultCostCalculator
+  nameWithType: PathfindingSystem.SetDefaultCostCalculator
+  fullName: Core.Systems.PathfindingSystem.SetDefaultCostCalculator
+- uid: Core.Systems.IMovementCostCalculator
+  commentId: T:Core.Systems.IMovementCostCalculator
+  parent: Core.Systems
+  href: Core.Systems.IMovementCostCalculator.html
+  name: IMovementCostCalculator
+  nameWithType: IMovementCostCalculator
+  fullName: Core.Systems.IMovementCostCalculator
+- uid: Core.Systems.PathfindingSystem.FindPath*
+  commentId: Overload:Core.Systems.PathfindingSystem.FindPath
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_FindPath_System_UInt16_System_UInt16_System_UInt16_System_UInt16_
+  name: FindPath
+  nameWithType: PathfindingSystem.FindPath
+  fullName: Core.Systems.PathfindingSystem.FindPath
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System.Collections.Generic.List{System.UInt16}
+  commentId: T:System.Collections.Generic.List{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  name: List<ushort>
+  nameWithType: List<ushort>
+  fullName: System.Collections.Generic.List<ushort>
+  nameWithType.vb: List(Of UShort)
+  fullName.vb: System.Collections.Generic.List(Of UShort)
+  name.vb: List(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Core.Systems.PathfindingSystem.FindPathWithOptions*
+  commentId: Overload:Core.Systems.PathfindingSystem.FindPathWithOptions
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_FindPathWithOptions_System_UInt16_System_UInt16_Core_Systems_PathOptions_
+  name: FindPathWithOptions
+  nameWithType: PathfindingSystem.FindPathWithOptions
+  fullName: Core.Systems.PathfindingSystem.FindPathWithOptions
+- uid: Core.Systems.PathOptions
+  commentId: T:Core.Systems.PathOptions
+  parent: Core.Systems
+  href: Core.Systems.PathOptions.html
+  name: PathOptions
+  nameWithType: PathOptions
+  fullName: Core.Systems.PathOptions
+- uid: Core.Systems.PathResult
+  commentId: T:Core.Systems.PathResult
+  parent: Core.Systems
+  href: Core.Systems.PathResult.html
+  name: PathResult
+  nameWithType: PathResult
+  fullName: Core.Systems.PathResult
+- uid: Core.Systems.PathfindingSystem.FindPathAvoiding*
+  commentId: Overload:Core.Systems.PathfindingSystem.FindPathAvoiding
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_FindPathAvoiding_System_UInt16_System_UInt16_System_Collections_Generic_HashSet_System_UInt16__
+  name: FindPathAvoiding
+  nameWithType: PathfindingSystem.FindPathAvoiding
+  fullName: Core.Systems.PathfindingSystem.FindPathAvoiding
+- uid: System.Collections.Generic.HashSet{System.UInt16}
+  commentId: T:System.Collections.Generic.HashSet{System.UInt16}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<ushort>
+  nameWithType: HashSet<ushort>
+  fullName: System.Collections.Generic.HashSet<ushort>
+  nameWithType.vb: HashSet(Of UShort)
+  fullName.vb: System.Collections.Generic.HashSet(Of UShort)
+  name.vb: HashSet(Of UShort)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Core.Systems.PathfindingSystem.FindPathWithForbidden*
+  commentId: Overload:Core.Systems.PathfindingSystem.FindPathWithForbidden
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_FindPathWithForbidden_System_UInt16_System_UInt16_System_Collections_Generic_HashSet_System_UInt16__
+  name: FindPathWithForbidden
+  nameWithType: PathfindingSystem.FindPathWithForbidden
+  fullName: Core.Systems.PathfindingSystem.FindPathWithForbidden
+- uid: Core.Systems.PathfindingSystem.PathExists*
+  commentId: Overload:Core.Systems.PathfindingSystem.PathExists
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_PathExists_System_UInt16_System_UInt16_
+  name: PathExists
+  nameWithType: PathfindingSystem.PathExists
+  fullName: Core.Systems.PathfindingSystem.PathExists
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Systems.PathfindingSystem.GetDistance*
+  commentId: Overload:Core.Systems.PathfindingSystem.GetDistance
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_GetDistance_System_UInt16_System_UInt16_
+  name: GetDistance
+  nameWithType: PathfindingSystem.GetDistance
+  fullName: Core.Systems.PathfindingSystem.GetDistance
+- uid: Core.Systems.PathfindingSystem.ClearCache*
+  commentId: Overload:Core.Systems.PathfindingSystem.ClearCache
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_ClearCache
+  name: ClearCache
+  nameWithType: PathfindingSystem.ClearCache
+  fullName: Core.Systems.PathfindingSystem.ClearCache
+- uid: Core.Systems.PathfindingSystem.InvalidateCacheForProvince*
+  commentId: Overload:Core.Systems.PathfindingSystem.InvalidateCacheForProvince
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_InvalidateCacheForProvince_System_UInt16_
+  name: InvalidateCacheForProvince
+  nameWithType: PathfindingSystem.InvalidateCacheForProvince
+  fullName: Core.Systems.PathfindingSystem.InvalidateCacheForProvince
+- uid: Core.Systems.PathfindingSystem.GetCacheStats*
+  commentId: Overload:Core.Systems.PathfindingSystem.GetCacheStats
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_GetCacheStats
+  name: GetCacheStats
+  nameWithType: PathfindingSystem.GetCacheStats
+  fullName: Core.Systems.PathfindingSystem.GetCacheStats
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core.Systems.PathfindingSystem.IsInitialized*
+  commentId: Overload:Core.Systems.PathfindingSystem.IsInitialized
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_IsInitialized
+  name: IsInitialized
+  nameWithType: PathfindingSystem.IsInitialized
+  fullName: Core.Systems.PathfindingSystem.IsInitialized
+- uid: Core.Systems.PathfindingSystem.TotalSearches*
+  commentId: Overload:Core.Systems.PathfindingSystem.TotalSearches
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_TotalSearches
+  name: TotalSearches
+  nameWithType: PathfindingSystem.TotalSearches
+  fullName: Core.Systems.PathfindingSystem.TotalSearches
+- uid: Core.Systems.PathfindingSystem.CacheHits*
+  commentId: Overload:Core.Systems.PathfindingSystem.CacheHits
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_CacheHits
+  name: CacheHits
+  nameWithType: PathfindingSystem.CacheHits
+  fullName: Core.Systems.PathfindingSystem.CacheHits
+- uid: Core.Systems.PathfindingSystem.CacheHitRate*
+  commentId: Overload:Core.Systems.PathfindingSystem.CacheHitRate
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_CacheHitRate
+  name: CacheHitRate
+  nameWithType: PathfindingSystem.CacheHitRate
+  fullName: Core.Systems.PathfindingSystem.CacheHitRate
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.Systems.PathfindingSystem.GetStats*
+  commentId: Overload:Core.Systems.PathfindingSystem.GetStats
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_GetStats
+  name: GetStats
+  nameWithType: PathfindingSystem.GetStats
+  fullName: Core.Systems.PathfindingSystem.GetStats
+- uid: Core.Systems.PathfindingSystem.ResetStats*
+  commentId: Overload:Core.Systems.PathfindingSystem.ResetStats
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_ResetStats
+  name: ResetStats
+  nameWithType: PathfindingSystem.ResetStats
+  fullName: Core.Systems.PathfindingSystem.ResetStats
+- uid: Core.Systems.PathfindingSystem.Dispose*
+  commentId: Overload:Core.Systems.PathfindingSystem.Dispose
+  href: Core.Systems.PathfindingSystem.html#Core_Systems_PathfindingSystem_Dispose
+  name: Dispose
+  nameWithType: PathfindingSystem.Dispose
+  fullName: Core.Systems.PathfindingSystem.Dispose

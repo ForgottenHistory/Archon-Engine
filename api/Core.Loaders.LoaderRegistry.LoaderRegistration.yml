@@ -1,0 +1,249 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration
+  commentId: T:Core.Loaders.LoaderRegistry.LoaderRegistration
+  id: LoaderRegistry.LoaderRegistration
+  parent: Core.Loaders
+  children:
+  - Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+  - Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+  - Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+  - Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+  langs:
+  - csharp
+  - vb
+  name: LoaderRegistry.LoaderRegistration
+  nameWithType: LoaderRegistry.LoaderRegistration
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Loaders/LoaderRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoaderRegistration
+    path: Scripts/Core/Loaders/LoaderRegistry.cs
+    startLine: 223
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  summary: Registration entry for a loader.
+  example: []
+  syntax:
+    content: public class LoaderRegistry.LoaderRegistration
+    content.vb: Public Class LoaderRegistry.LoaderRegistration
+  inheritance:
+  - System.Object
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+  commentId: P:Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+  id: Metadata
+  parent: Core.Loaders.LoaderRegistry.LoaderRegistration
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: LoaderRegistry.LoaderRegistration.Metadata
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Loaders/LoaderRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Metadata
+    path: Scripts/Core/Loaders/LoaderRegistry.cs
+    startLine: 225
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public LoaderMetadataAttribute Metadata { get; set; }
+    parameters: []
+    return:
+      type: Core.Loaders.LoaderMetadataAttribute
+    content.vb: Public Property Metadata As LoaderMetadataAttribute
+  overload: Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata*
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+  commentId: P:Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+  id: Factory
+  parent: Core.Loaders.LoaderRegistry.LoaderRegistration
+  langs:
+  - csharp
+  - vb
+  name: Factory
+  nameWithType: LoaderRegistry.LoaderRegistration.Factory
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Loaders/LoaderRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Factory
+    path: Scripts/Core/Loaders/LoaderRegistry.cs
+    startLine: 226
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public ILoaderFactory Factory { get; set; }
+    parameters: []
+    return:
+      type: Core.Loaders.ILoaderFactory
+    content.vb: Public Property Factory As ILoaderFactory
+  overload: Core.Loaders.LoaderRegistry.LoaderRegistration.Factory*
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+  commentId: P:Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+  id: Executed
+  parent: Core.Loaders.LoaderRegistry.LoaderRegistration
+  langs:
+  - csharp
+  - vb
+  name: Executed
+  nameWithType: LoaderRegistry.LoaderRegistration.Executed
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Loaders/LoaderRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Executed
+    path: Scripts/Core/Loaders/LoaderRegistry.cs
+    startLine: 227
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public bool Executed { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property Executed As Boolean
+  overload: Core.Loaders.LoaderRegistry.LoaderRegistration.Executed*
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+  commentId: P:Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+  id: Error
+  parent: Core.Loaders.LoaderRegistry.LoaderRegistration
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: LoaderRegistry.LoaderRegistration.Error
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Loaders/LoaderRegistry.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Error
+    path: Scripts/Core/Loaders/LoaderRegistry.cs
+    startLine: 228
+  assemblies:
+  - Core
+  namespace: Core.Loaders
+  syntax:
+    content: public string Error { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property [Error] As String
+  overload: Core.Loaders.LoaderRegistry.LoaderRegistration.Error*
+references:
+- uid: Core.Loaders
+  commentId: N:Core.Loaders
+  href: Core.html
+  name: Core.Loaders
+  nameWithType: Core.Loaders
+  fullName: Core.Loaders
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Loaders
+    name: Loaders
+    href: Core.Loaders.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata*
+  commentId: Overload:Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+  href: Core.Loaders.LoaderRegistry.LoaderRegistration.html#Core_Loaders_LoaderRegistry_LoaderRegistration_Metadata
+  name: Metadata
+  nameWithType: LoaderRegistry.LoaderRegistration.Metadata
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Metadata
+- uid: Core.Loaders.LoaderMetadataAttribute
+  commentId: T:Core.Loaders.LoaderMetadataAttribute
+  parent: Core.Loaders
+  href: Core.Loaders.LoaderMetadataAttribute.html
+  name: LoaderMetadataAttribute
+  nameWithType: LoaderMetadataAttribute
+  fullName: Core.Loaders.LoaderMetadataAttribute
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Factory*
+  commentId: Overload:Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+  href: Core.Loaders.LoaderRegistry.LoaderRegistration.html#Core_Loaders_LoaderRegistry_LoaderRegistration_Factory
+  name: Factory
+  nameWithType: LoaderRegistry.LoaderRegistration.Factory
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Factory
+- uid: Core.Loaders.ILoaderFactory
+  commentId: T:Core.Loaders.ILoaderFactory
+  parent: Core.Loaders
+  href: Core.Loaders.ILoaderFactory.html
+  name: ILoaderFactory
+  nameWithType: ILoaderFactory
+  fullName: Core.Loaders.ILoaderFactory
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Executed*
+  commentId: Overload:Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+  href: Core.Loaders.LoaderRegistry.LoaderRegistration.html#Core_Loaders_LoaderRegistry_LoaderRegistration_Executed
+  name: Executed
+  nameWithType: LoaderRegistry.LoaderRegistration.Executed
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Executed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Loaders.LoaderRegistry.LoaderRegistration.Error*
+  commentId: Overload:Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+  href: Core.Loaders.LoaderRegistry.LoaderRegistration.html#Core_Loaders_LoaderRegistry_LoaderRegistration_Error
+  name: Error
+  nameWithType: LoaderRegistry.LoaderRegistration.Error
+  fullName: Core.Loaders.LoaderRegistry.LoaderRegistration.Error
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

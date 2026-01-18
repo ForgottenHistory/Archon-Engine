@@ -1,0 +1,432 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.SimpleCommandFactory
+  commentId: T:Core.Commands.SimpleCommandFactory
+  id: SimpleCommandFactory
+  parent: Core.Commands
+  children:
+  - Core.Commands.SimpleCommandFactory.Create(System.Type)
+  - Core.Commands.SimpleCommandFactory.DiscoverAndRegister(Core.Commands.CommandRegistry,System.Reflection.Assembly[])
+  - Core.Commands.SimpleCommandFactory.Metadata
+  - Core.Commands.SimpleCommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  langs:
+  - csharp
+  - vb
+  name: SimpleCommandFactory
+  nameWithType: SimpleCommandFactory
+  fullName: Core.Commands.SimpleCommandFactory
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/SimpleCommandFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SimpleCommandFactory
+    path: Scripts/Core/Commands/SimpleCommandFactory.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Auto-generates ICommandFactory wrappers for SimpleCommand classes.
+
+    Handles argument parsing based on [Arg] attributes.
+  example: []
+  syntax:
+    content: 'public class SimpleCommandFactory : ICommandFactory'
+    content.vb: Public Class SimpleCommandFactory Implements ICommandFactory
+  inheritance:
+  - System.Object
+  implements:
+  - Core.Commands.ICommandFactory
+- uid: Core.Commands.SimpleCommandFactory.Metadata
+  commentId: P:Core.Commands.SimpleCommandFactory.Metadata
+  id: Metadata
+  parent: Core.Commands.SimpleCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: Metadata
+  nameWithType: SimpleCommandFactory.Metadata
+  fullName: Core.Commands.SimpleCommandFactory.Metadata
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/SimpleCommandFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Metadata
+    path: Scripts/Core/Commands/SimpleCommandFactory.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandAttribute Metadata { get; }
+    parameters: []
+    return:
+      type: Core.Commands.CommandAttribute
+    content.vb: Public ReadOnly Property Metadata As CommandAttribute
+  overload: Core.Commands.SimpleCommandFactory.Metadata*
+- uid: Core.Commands.SimpleCommandFactory.Create(System.Type)
+  commentId: M:Core.Commands.SimpleCommandFactory.Create(System.Type)
+  id: Create(System.Type)
+  parent: Core.Commands.SimpleCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: Create(Type)
+  nameWithType: SimpleCommandFactory.Create(Type)
+  fullName: Core.Commands.SimpleCommandFactory.Create(System.Type)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/SimpleCommandFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Create
+    path: Scripts/Core/Commands/SimpleCommandFactory.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Create a factory for a SimpleCommand type.
+  example: []
+  syntax:
+    content: public static SimpleCommandFactory Create(Type commandType)
+    parameters:
+    - id: commandType
+      type: System.Type
+    return:
+      type: Core.Commands.SimpleCommandFactory
+    content.vb: Public Shared Function Create(commandType As Type) As SimpleCommandFactory
+  overload: Core.Commands.SimpleCommandFactory.Create*
+- uid: Core.Commands.SimpleCommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  commentId: M:Core.Commands.SimpleCommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  id: TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  parent: Core.Commands.SimpleCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: TryCreateCommand(string[], GameState, out ICommand, out string)
+  nameWithType: SimpleCommandFactory.TryCreateCommand(string[], GameState, out ICommand, out string)
+  fullName: Core.Commands.SimpleCommandFactory.TryCreateCommand(string[], Core.GameState, out Core.Commands.ICommand, out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/SimpleCommandFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryCreateCommand
+    path: Scripts/Core/Commands/SimpleCommandFactory.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Try to create a command from parsed arguments.
+  example: []
+  syntax:
+    content: public bool TryCreateCommand(string[] inputArgs, GameState gameState, out ICommand command, out string errorMessage)
+    parameters:
+    - id: inputArgs
+      type: System.String[]
+    - id: gameState
+      type: Core.GameState
+      description: GameState for validation/lookups
+    - id: command
+      type: Core.Commands.ICommand
+      description: Created command if successful
+    - id: errorMessage
+      type: System.String
+      description: Error message if failed
+    return:
+      type: System.Boolean
+      description: True if command created successfully
+    content.vb: Public Function TryCreateCommand(inputArgs As String(), gameState As GameState, command As ICommand, errorMessage As String) As Boolean
+  overload: Core.Commands.SimpleCommandFactory.TryCreateCommand*
+  implements:
+  - Core.Commands.ICommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  nameWithType.vb: SimpleCommandFactory.TryCreateCommand(String(), GameState, ICommand, String)
+  fullName.vb: Core.Commands.SimpleCommandFactory.TryCreateCommand(String(), Core.GameState, Core.Commands.ICommand, String)
+  name.vb: TryCreateCommand(String(), GameState, ICommand, String)
+- uid: Core.Commands.SimpleCommandFactory.DiscoverAndRegister(Core.Commands.CommandRegistry,System.Reflection.Assembly[])
+  commentId: M:Core.Commands.SimpleCommandFactory.DiscoverAndRegister(Core.Commands.CommandRegistry,System.Reflection.Assembly[])
+  id: DiscoverAndRegister(Core.Commands.CommandRegistry,System.Reflection.Assembly[])
+  parent: Core.Commands.SimpleCommandFactory
+  langs:
+  - csharp
+  - vb
+  name: DiscoverAndRegister(CommandRegistry, params Assembly[])
+  nameWithType: SimpleCommandFactory.DiscoverAndRegister(CommandRegistry, params Assembly[])
+  fullName: Core.Commands.SimpleCommandFactory.DiscoverAndRegister(Core.Commands.CommandRegistry, params System.Reflection.Assembly[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/SimpleCommandFactory.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DiscoverAndRegister
+    path: Scripts/Core/Commands/SimpleCommandFactory.cs
+    startLine: 124
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Discover all SimpleCommand types in assemblies and register with CommandRegistry.
+  example: []
+  syntax:
+    content: public static void DiscoverAndRegister(CommandRegistry registry, params Assembly[] assemblies)
+    parameters:
+    - id: registry
+      type: Core.Commands.CommandRegistry
+    - id: assemblies
+      type: System.Reflection.Assembly[]
+    content.vb: Public Shared Sub DiscoverAndRegister(registry As CommandRegistry, ParamArray assemblies As Assembly())
+  overload: Core.Commands.SimpleCommandFactory.DiscoverAndRegister*
+  nameWithType.vb: SimpleCommandFactory.DiscoverAndRegister(CommandRegistry, ParamArray Assembly())
+  fullName.vb: Core.Commands.SimpleCommandFactory.DiscoverAndRegister(Core.Commands.CommandRegistry, ParamArray System.Reflection.Assembly())
+  name.vb: DiscoverAndRegister(CommandRegistry, ParamArray Assembly())
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Core.Commands.ICommandFactory
+  commentId: T:Core.Commands.ICommandFactory
+  parent: Core.Commands
+  href: Core.Commands.ICommandFactory.html
+  name: ICommandFactory
+  nameWithType: ICommandFactory
+  fullName: Core.Commands.ICommandFactory
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.SimpleCommandFactory.Metadata*
+  commentId: Overload:Core.Commands.SimpleCommandFactory.Metadata
+  href: Core.Commands.SimpleCommandFactory.html#Core_Commands_SimpleCommandFactory_Metadata
+  name: Metadata
+  nameWithType: SimpleCommandFactory.Metadata
+  fullName: Core.Commands.SimpleCommandFactory.Metadata
+- uid: Core.Commands.CommandAttribute
+  commentId: T:Core.Commands.CommandAttribute
+  parent: Core.Commands
+  href: Core.Commands.CommandAttribute.html
+  name: CommandAttribute
+  nameWithType: CommandAttribute
+  fullName: Core.Commands.CommandAttribute
+- uid: Core.Commands.SimpleCommandFactory.Create*
+  commentId: Overload:Core.Commands.SimpleCommandFactory.Create
+  href: Core.Commands.SimpleCommandFactory.html#Core_Commands_SimpleCommandFactory_Create_System_Type_
+  name: Create
+  nameWithType: SimpleCommandFactory.Create
+  fullName: Core.Commands.SimpleCommandFactory.Create
+- uid: System.Type
+  commentId: T:System.Type
+  parent: System
+  isExternal: true
+  name: Type
+  nameWithType: Type
+  fullName: System.Type
+- uid: Core.Commands.SimpleCommandFactory
+  commentId: T:Core.Commands.SimpleCommandFactory
+  parent: Core.Commands
+  href: Core.Commands.SimpleCommandFactory.html
+  name: SimpleCommandFactory
+  nameWithType: SimpleCommandFactory
+  fullName: Core.Commands.SimpleCommandFactory
+- uid: Core.Commands.SimpleCommandFactory.TryCreateCommand*
+  commentId: Overload:Core.Commands.SimpleCommandFactory.TryCreateCommand
+  href: Core.Commands.SimpleCommandFactory.html#Core_Commands_SimpleCommandFactory_TryCreateCommand_System_String___Core_GameState_Core_Commands_ICommand__System_String__
+  name: TryCreateCommand
+  nameWithType: SimpleCommandFactory.TryCreateCommand
+  fullName: Core.Commands.SimpleCommandFactory.TryCreateCommand
+- uid: Core.Commands.ICommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  commentId: M:Core.Commands.ICommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+  parent: Core.Commands.ICommandFactory
+  isExternal: true
+  href: Core.Commands.ICommandFactory.html#Core_Commands_ICommandFactory_TryCreateCommand_System_String___Core_GameState_Core_Commands_ICommand__System_String__
+  name: TryCreateCommand(string[], GameState, out ICommand, out string)
+  nameWithType: ICommandFactory.TryCreateCommand(string[], GameState, out ICommand, out string)
+  fullName: Core.Commands.ICommandFactory.TryCreateCommand(string[], Core.GameState, out Core.Commands.ICommand, out string)
+  nameWithType.vb: ICommandFactory.TryCreateCommand(String(), GameState, ICommand, String)
+  fullName.vb: Core.Commands.ICommandFactory.TryCreateCommand(String(), Core.GameState, Core.Commands.ICommand, String)
+  name.vb: TryCreateCommand(String(), GameState, ICommand, String)
+  spec.csharp:
+  - uid: Core.Commands.ICommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+    name: TryCreateCommand
+    href: Core.Commands.ICommandFactory.html#Core_Commands_ICommandFactory_TryCreateCommand_System_String___Core_GameState_Core_Commands_ICommand__System_String__
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: Core.Commands.ICommand
+    name: ICommand
+    href: Core.Commands.ICommand.html
+  - name: ','
+  - name: " "
+  - name: out
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Core.Commands.ICommandFactory.TryCreateCommand(System.String[],Core.GameState,Core.Commands.ICommand@,System.String@)
+    name: TryCreateCommand
+    href: Core.Commands.ICommandFactory.html#Core_Commands_ICommandFactory_TryCreateCommand_System_String___Core_GameState_Core_Commands_ICommand__System_String__
+  - name: (
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: Core.GameState
+    name: GameState
+    href: Core.GameState.html
+  - name: ','
+  - name: " "
+  - uid: Core.Commands.ICommand
+    name: ICommand
+    href: Core.Commands.ICommand.html
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: )
+- uid: System.String[]
+  isExternal: true
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core.Commands.ICommand
+  commentId: T:Core.Commands.ICommand
+  parent: Core.Commands
+  href: Core.Commands.ICommand.html
+  name: ICommand
+  nameWithType: ICommand
+  fullName: Core.Commands.ICommand
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Commands.SimpleCommandFactory.DiscoverAndRegister*
+  commentId: Overload:Core.Commands.SimpleCommandFactory.DiscoverAndRegister
+  href: Core.Commands.SimpleCommandFactory.html#Core_Commands_SimpleCommandFactory_DiscoverAndRegister_Core_Commands_CommandRegistry_System_Reflection_Assembly___
+  name: DiscoverAndRegister
+  nameWithType: SimpleCommandFactory.DiscoverAndRegister
+  fullName: Core.Commands.SimpleCommandFactory.DiscoverAndRegister
+- uid: Core.Commands.CommandRegistry
+  commentId: T:Core.Commands.CommandRegistry
+  parent: Core.Commands
+  href: Core.Commands.CommandRegistry.html
+  name: CommandRegistry
+  nameWithType: CommandRegistry
+  fullName: Core.Commands.CommandRegistry
+- uid: System.Reflection.Assembly[]
+  isExternal: true
+  name: Assembly[]
+  nameWithType: Assembly[]
+  fullName: System.Reflection.Assembly[]
+  nameWithType.vb: Assembly()
+  fullName.vb: System.Reflection.Assembly()
+  name.vb: Assembly()
+  spec.csharp:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Reflection.Assembly
+    name: Assembly
+    isExternal: true
+  - name: (
+  - name: )

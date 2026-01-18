@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  id: Map.Rendering.Compositing
+  children:
+  - Map.Rendering.Compositing.BlendMode
+  - Map.Rendering.Compositing.CinematicShaderCompositor
+  - Map.Rendering.Compositing.CompositorConfig
+  - Map.Rendering.Compositing.CompositorContext
+  - Map.Rendering.Compositing.DefaultShaderCompositor
+  - Map.Rendering.Compositing.IShaderCompositor
+  - Map.Rendering.Compositing.MinimalShaderCompositor
+  - Map.Rendering.Compositing.ShaderCompositorBase
+  - Map.Rendering.Compositing.StylizedShaderCompositor
+  langs:
+  - csharp
+  - vb
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  type: Namespace
+  assemblies:
+  - MapAssembly
+references:
+- uid: Map.Rendering.Compositing.ShaderCompositorBase
+  commentId: T:Map.Rendering.Compositing.ShaderCompositorBase
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.ShaderCompositorBase.html
+  name: ShaderCompositorBase
+  nameWithType: ShaderCompositorBase
+  fullName: Map.Rendering.Compositing.ShaderCompositorBase
+- uid: Map.Rendering.Compositing.DefaultShaderCompositor
+  commentId: T:Map.Rendering.Compositing.DefaultShaderCompositor
+  href: Map.Rendering.Compositing.DefaultShaderCompositor.html
+  name: DefaultShaderCompositor
+  nameWithType: DefaultShaderCompositor
+  fullName: Map.Rendering.Compositing.DefaultShaderCompositor
+- uid: Map.Rendering.Compositing.MinimalShaderCompositor
+  commentId: T:Map.Rendering.Compositing.MinimalShaderCompositor
+  href: Map.Rendering.Compositing.MinimalShaderCompositor.html
+  name: MinimalShaderCompositor
+  nameWithType: MinimalShaderCompositor
+  fullName: Map.Rendering.Compositing.MinimalShaderCompositor
+- uid: Map.Rendering.Compositing.StylizedShaderCompositor
+  commentId: T:Map.Rendering.Compositing.StylizedShaderCompositor
+  href: Map.Rendering.Compositing.StylizedShaderCompositor.html
+  name: StylizedShaderCompositor
+  nameWithType: StylizedShaderCompositor
+  fullName: Map.Rendering.Compositing.StylizedShaderCompositor
+- uid: Map.Rendering.Compositing.CinematicShaderCompositor
+  commentId: T:Map.Rendering.Compositing.CinematicShaderCompositor
+  href: Map.Rendering.Compositing.CinematicShaderCompositor.html
+  name: CinematicShaderCompositor
+  nameWithType: CinematicShaderCompositor
+  fullName: Map.Rendering.Compositing.CinematicShaderCompositor
+- uid: Map.Rendering.Compositing.IShaderCompositor
+  commentId: T:Map.Rendering.Compositing.IShaderCompositor
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.IShaderCompositor.html
+  name: IShaderCompositor
+  nameWithType: IShaderCompositor
+  fullName: Map.Rendering.Compositing.IShaderCompositor
+- uid: Map.Rendering.Compositing.CompositorContext
+  commentId: T:Map.Rendering.Compositing.CompositorContext
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.CompositorContext.html
+  name: CompositorContext
+  nameWithType: CompositorContext
+  fullName: Map.Rendering.Compositing.CompositorContext
+- uid: Map.Rendering.Compositing.CompositorConfig
+  commentId: T:Map.Rendering.Compositing.CompositorConfig
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.CompositorConfig.html
+  name: CompositorConfig
+  nameWithType: CompositorConfig
+  fullName: Map.Rendering.Compositing.CompositorConfig
+- uid: Map.Rendering.Compositing.BlendMode
+  commentId: T:Map.Rendering.Compositing.BlendMode
+  parent: Map.Rendering.Compositing
+  href: Map.Rendering.Compositing.BlendMode.html
+  name: BlendMode
+  nameWithType: BlendMode
+  fullName: Map.Rendering.Compositing.BlendMode
+- uid: Map.Rendering.Compositing
+  commentId: N:Map.Rendering.Compositing
+  href: Map.html
+  name: Map.Rendering.Compositing
+  nameWithType: Map.Rendering.Compositing
+  fullName: Map.Rendering.Compositing
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Compositing
+    name: Compositing
+    href: Map.Rendering.Compositing.html

@@ -1,0 +1,284 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Units.UnitCreatedEvent
+  commentId: T:Core.Units.UnitCreatedEvent
+  id: UnitCreatedEvent
+  parent: Core.Units
+  children:
+  - Core.Units.UnitCreatedEvent.CountryID
+  - Core.Units.UnitCreatedEvent.ProvinceID
+  - Core.Units.UnitCreatedEvent.TimeStamp
+  - Core.Units.UnitCreatedEvent.UnitCount
+  - Core.Units.UnitCreatedEvent.UnitID
+  - Core.Units.UnitCreatedEvent.UnitTypeID
+  langs:
+  - csharp
+  - vb
+  name: UnitCreatedEvent
+  nameWithType: UnitCreatedEvent
+  fullName: Core.Units.UnitCreatedEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitCreatedEvent
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 6
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: >-
+    Emitted when a new unit is created.
+
+    UI can subscribe to show notifications, update displays, etc.
+  example: []
+  syntax:
+    content: 'public struct UnitCreatedEvent : IGameEvent'
+    content.vb: Public Structure UnitCreatedEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Units.UnitCreatedEvent.UnitID
+  commentId: F:Core.Units.UnitCreatedEvent.UnitID
+  id: UnitID
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitID
+  nameWithType: UnitCreatedEvent.UnitID
+  fullName: Core.Units.UnitCreatedEvent.UnitID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 8
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitID As UShort
+- uid: Core.Units.UnitCreatedEvent.ProvinceID
+  commentId: F:Core.Units.UnitCreatedEvent.ProvinceID
+  id: ProvinceID
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: ProvinceID
+  nameWithType: UnitCreatedEvent.ProvinceID
+  fullName: Core.Units.UnitCreatedEvent.ProvinceID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort ProvinceID
+    return:
+      type: System.UInt16
+    content.vb: Public ProvinceID As UShort
+- uid: Core.Units.UnitCreatedEvent.CountryID
+  commentId: F:Core.Units.UnitCreatedEvent.CountryID
+  id: CountryID
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: CountryID
+  nameWithType: UnitCreatedEvent.CountryID
+  fullName: Core.Units.UnitCreatedEvent.CountryID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort CountryID
+    return:
+      type: System.UInt16
+    content.vb: Public CountryID As UShort
+- uid: Core.Units.UnitCreatedEvent.UnitTypeID
+  commentId: F:Core.Units.UnitCreatedEvent.UnitTypeID
+  id: UnitTypeID
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitTypeID
+  nameWithType: UnitCreatedEvent.UnitTypeID
+  fullName: Core.Units.UnitCreatedEvent.UnitTypeID
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitTypeID
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitTypeID
+    return:
+      type: System.UInt16
+    content.vb: Public UnitTypeID As UShort
+- uid: Core.Units.UnitCreatedEvent.UnitCount
+  commentId: F:Core.Units.UnitCreatedEvent.UnitCount
+  id: UnitCount
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: UnitCount
+  nameWithType: UnitCreatedEvent.UnitCount
+  fullName: Core.Units.UnitCreatedEvent.UnitCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnitCount
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Units
+  syntax:
+    content: public ushort UnitCount
+    return:
+      type: System.UInt16
+    content.vb: Public UnitCount As UShort
+- uid: Core.Units.UnitCreatedEvent.TimeStamp
+  commentId: P:Core.Units.UnitCreatedEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Units.UnitCreatedEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: UnitCreatedEvent.TimeStamp
+  fullName: Core.Units.UnitCreatedEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Units/UnitEvents.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Units/UnitEvents.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core.Units
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Units.UnitCreatedEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Units
+  commentId: N:Core.Units
+  href: Core.html
+  name: Core.Units
+  nameWithType: Core.Units
+  fullName: Core.Units
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Units
+    name: Units
+    href: Core.Units.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Units.UnitCreatedEvent.TimeStamp*
+  commentId: Overload:Core.Units.UnitCreatedEvent.TimeStamp
+  href: Core.Units.UnitCreatedEvent.html#Core_Units_UnitCreatedEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: UnitCreatedEvent.TimeStamp
+  fullName: Core.Units.UnitCreatedEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

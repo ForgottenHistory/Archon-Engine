@@ -1,0 +1,686 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Data.Ids.TerrainId
+  commentId: T:Core.Data.Ids.TerrainId
+  id: TerrainId
+  parent: Core.Data.Ids
+  children:
+  - Core.Data.Ids.TerrainId.#ctor(System.Byte)
+  - Core.Data.Ids.TerrainId.Equals(Core.Data.Ids.TerrainId)
+  - Core.Data.Ids.TerrainId.Equals(System.Object)
+  - Core.Data.Ids.TerrainId.GetHashCode
+  - Core.Data.Ids.TerrainId.IsLand
+  - Core.Data.Ids.TerrainId.Ocean
+  - Core.Data.Ids.TerrainId.ToString
+  - Core.Data.Ids.TerrainId.Value
+  - Core.Data.Ids.TerrainId.op_Equality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  - Core.Data.Ids.TerrainId.op_Implicit(Core.Data.Ids.TerrainId)~System.Byte
+  - Core.Data.Ids.TerrainId.op_Implicit(System.Byte)~Core.Data.Ids.TerrainId
+  - Core.Data.Ids.TerrainId.op_Inequality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  langs:
+  - csharp
+  - vb
+  name: TerrainId
+  nameWithType: TerrainId
+  fullName: Core.Data.Ids.TerrainId
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainId
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: >-
+    Type-safe terrain identifier
+
+    Prevents mixing up terrain IDs with other entity IDs at compile time
+
+    Following data-linking-architecture.md specifications
+  example: []
+  syntax:
+    content: >-
+      [Serializable]
+
+      public readonly struct TerrainId
+    content.vb: >-
+      <Serializable>
+
+      Public Structure TerrainId
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: Core.Data.Ids.TerrainId.Value
+  commentId: F:Core.Data.Ids.TerrainId.Value
+  id: Value
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: TerrainId.Value
+  fullName: Core.Data.Ids.TerrainId.Value
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Value
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public readonly byte Value
+    return:
+      type: System.Byte
+    content.vb: Public ReadOnly Value As Byte
+- uid: Core.Data.Ids.TerrainId.#ctor(System.Byte)
+  commentId: M:Core.Data.Ids.TerrainId.#ctor(System.Byte)
+  id: '#ctor(System.Byte)'
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: TerrainId(byte)
+  nameWithType: TerrainId.TerrainId(byte)
+  fullName: Core.Data.Ids.TerrainId.TerrainId(byte)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public TerrainId(byte value)
+    parameters:
+    - id: value
+      type: System.Byte
+    content.vb: Public Sub New(value As Byte)
+  overload: Core.Data.Ids.TerrainId.#ctor*
+  nameWithType.vb: TerrainId.New(Byte)
+  fullName.vb: Core.Data.Ids.TerrainId.New(Byte)
+  name.vb: New(Byte)
+- uid: Core.Data.Ids.TerrainId.Ocean
+  commentId: F:Core.Data.Ids.TerrainId.Ocean
+  id: Ocean
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: Ocean
+  nameWithType: TerrainId.Ocean
+  fullName: Core.Data.Ids.TerrainId.Ocean
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Ocean
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 19
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Special constant for ocean terrain (always 0)
+  example: []
+  syntax:
+    content: public static readonly TerrainId Ocean
+    return:
+      type: Core.Data.Ids.TerrainId
+    content.vb: Public Shared ReadOnly Ocean As TerrainId
+- uid: Core.Data.Ids.TerrainId.IsLand
+  commentId: P:Core.Data.Ids.TerrainId.IsLand
+  id: IsLand
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: IsLand
+  nameWithType: TerrainId.IsLand
+  fullName: Core.Data.Ids.TerrainId.IsLand
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsLand
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 24
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  summary: Check if this is a valid land terrain (not ocean)
+  example: []
+  syntax:
+    content: public bool IsLand { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsLand As Boolean
+  overload: Core.Data.Ids.TerrainId.IsLand*
+- uid: Core.Data.Ids.TerrainId.Equals(Core.Data.Ids.TerrainId)
+  commentId: M:Core.Data.Ids.TerrainId.Equals(Core.Data.Ids.TerrainId)
+  id: Equals(Core.Data.Ids.TerrainId)
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: Equals(TerrainId)
+  nameWithType: TerrainId.Equals(TerrainId)
+  fullName: Core.Data.Ids.TerrainId.Equals(Core.Data.Ids.TerrainId)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public bool Equals(TerrainId other)
+    parameters:
+    - id: other
+      type: Core.Data.Ids.TerrainId
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(other As TerrainId) As Boolean
+  overload: Core.Data.Ids.TerrainId.Equals*
+- uid: Core.Data.Ids.TerrainId.Equals(System.Object)
+  commentId: M:Core.Data.Ids.TerrainId.Equals(System.Object)
+  id: Equals(System.Object)
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: Equals(object)
+  nameWithType: TerrainId.Equals(object)
+  fullName: Core.Data.Ids.TerrainId.Equals(object)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override bool Equals(object obj)
+    parameters:
+    - id: obj
+      type: System.Object
+    return:
+      type: System.Boolean
+    content.vb: Public Overrides Function Equals(obj As Object) As Boolean
+  overridden: System.ValueType.Equals(System.Object)
+  overload: Core.Data.Ids.TerrainId.Equals*
+  nameWithType.vb: TerrainId.Equals(Object)
+  fullName.vb: Core.Data.Ids.TerrainId.Equals(Object)
+  name.vb: Equals(Object)
+- uid: Core.Data.Ids.TerrainId.GetHashCode
+  commentId: M:Core.Data.Ids.TerrainId.GetHashCode
+  id: GetHashCode
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode()
+  nameWithType: TerrainId.GetHashCode()
+  fullName: Core.Data.Ids.TerrainId.GetHashCode()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override int GetHashCode()
+    return:
+      type: System.Int32
+    content.vb: Public Overrides Function GetHashCode() As Integer
+  overridden: System.ValueType.GetHashCode
+  overload: Core.Data.Ids.TerrainId.GetHashCode*
+- uid: Core.Data.Ids.TerrainId.op_Equality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  commentId: M:Core.Data.Ids.TerrainId.op_Equality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  id: op_Equality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: operator ==(TerrainId, TerrainId)
+  nameWithType: TerrainId.operator ==(TerrainId, TerrainId)
+  fullName: Core.Data.Ids.TerrainId.operator ==(Core.Data.Ids.TerrainId, Core.Data.Ids.TerrainId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Equality
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator ==(TerrainId left, TerrainId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.TerrainId
+    - id: right
+      type: Core.Data.Ids.TerrainId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator =(left As TerrainId, right As TerrainId) As Boolean
+  overload: Core.Data.Ids.TerrainId.op_Equality*
+  nameWithType.vb: TerrainId.=(TerrainId, TerrainId)
+  fullName.vb: Core.Data.Ids.TerrainId.=(Core.Data.Ids.TerrainId, Core.Data.Ids.TerrainId)
+  name.vb: =(TerrainId, TerrainId)
+- uid: Core.Data.Ids.TerrainId.op_Inequality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  commentId: M:Core.Data.Ids.TerrainId.op_Inequality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  id: op_Inequality(Core.Data.Ids.TerrainId,Core.Data.Ids.TerrainId)
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: operator !=(TerrainId, TerrainId)
+  nameWithType: TerrainId.operator !=(TerrainId, TerrainId)
+  fullName: Core.Data.Ids.TerrainId.operator !=(Core.Data.Ids.TerrainId, Core.Data.Ids.TerrainId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Inequality
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static bool operator !=(TerrainId left, TerrainId right)
+    parameters:
+    - id: left
+      type: Core.Data.Ids.TerrainId
+    - id: right
+      type: Core.Data.Ids.TerrainId
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Operator <>(left As TerrainId, right As TerrainId) As Boolean
+  overload: Core.Data.Ids.TerrainId.op_Inequality*
+  nameWithType.vb: TerrainId.<>(TerrainId, TerrainId)
+  fullName.vb: Core.Data.Ids.TerrainId.<>(Core.Data.Ids.TerrainId, Core.Data.Ids.TerrainId)
+  name.vb: <>(TerrainId, TerrainId)
+- uid: Core.Data.Ids.TerrainId.op_Implicit(Core.Data.Ids.TerrainId)~System.Byte
+  commentId: M:Core.Data.Ids.TerrainId.op_Implicit(Core.Data.Ids.TerrainId)~System.Byte
+  id: op_Implicit(Core.Data.Ids.TerrainId)~System.Byte
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator byte(TerrainId)
+  nameWithType: TerrainId.implicit operator byte(TerrainId)
+  fullName: Core.Data.Ids.TerrainId.implicit operator byte(Core.Data.Ids.TerrainId)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator byte(TerrainId id)
+    parameters:
+    - id: id
+      type: Core.Data.Ids.TerrainId
+    return:
+      type: System.Byte
+    content.vb: Public Shared Widening Operator CType(id As TerrainId) As Byte
+  overload: Core.Data.Ids.TerrainId.op_Implicit*
+  nameWithType.vb: TerrainId.CType(TerrainId)
+  fullName.vb: Core.Data.Ids.TerrainId.CType(Core.Data.Ids.TerrainId)
+  name.vb: CType(TerrainId)
+- uid: Core.Data.Ids.TerrainId.op_Implicit(System.Byte)~Core.Data.Ids.TerrainId
+  commentId: M:Core.Data.Ids.TerrainId.op_Implicit(System.Byte)~Core.Data.Ids.TerrainId
+  id: op_Implicit(System.Byte)~Core.Data.Ids.TerrainId
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: implicit operator TerrainId(byte)
+  nameWithType: TerrainId.implicit operator TerrainId(byte)
+  fullName: Core.Data.Ids.TerrainId.implicit operator Core.Data.Ids.TerrainId(byte)
+  type: Operator
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: op_Implicit
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  syntax:
+    content: public static implicit operator TerrainId(byte value)
+    parameters:
+    - id: value
+      type: System.Byte
+    return:
+      type: Core.Data.Ids.TerrainId
+    content.vb: Public Shared Widening Operator CType(value As Byte) As TerrainId
+  overload: Core.Data.Ids.TerrainId.op_Implicit*
+  nameWithType.vb: TerrainId.CType(Byte)
+  fullName.vb: Core.Data.Ids.TerrainId.CType(Byte)
+  name.vb: CType(Byte)
+- uid: Core.Data.Ids.TerrainId.ToString
+  commentId: M:Core.Data.Ids.TerrainId.ToString
+  id: ToString
+  parent: Core.Data.Ids.TerrainId
+  langs:
+  - csharp
+  - vb
+  name: ToString()
+  nameWithType: TerrainId.ToString()
+  fullName: Core.Data.Ids.TerrainId.ToString()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/Ids/TerrainId.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ToString
+    path: Scripts/Core/Data/Ids/TerrainId.cs
+    startLine: 40
+  assemblies:
+  - Core
+  namespace: Core.Data.Ids
+  example: []
+  syntax:
+    content: public override string ToString()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function ToString() As String
+  overridden: System.ValueType.ToString
+  overload: Core.Data.Ids.TerrainId.ToString*
+references:
+- uid: Core.Data.Ids
+  commentId: N:Core.Data.Ids
+  href: Core.html
+  name: Core.Data.Ids
+  nameWithType: Core.Data.Ids
+  fullName: Core.Data.Ids
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Data
+    name: Data
+    href: Core.Data.html
+  - name: .
+  - uid: Core.Data.Ids
+    name: Ids
+    href: Core.Data.Ids.html
+- uid: System.Byte
+  commentId: T:System.Byte
+  parent: System
+  isExternal: true
+  name: byte
+  nameWithType: byte
+  fullName: byte
+  nameWithType.vb: Byte
+  fullName.vb: Byte
+  name.vb: Byte
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Data.Ids.TerrainId.#ctor*
+  commentId: Overload:Core.Data.Ids.TerrainId.#ctor
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId__ctor_System_Byte_
+  name: TerrainId
+  nameWithType: TerrainId.TerrainId
+  fullName: Core.Data.Ids.TerrainId.TerrainId
+  nameWithType.vb: TerrainId.New
+  fullName.vb: Core.Data.Ids.TerrainId.New
+  name.vb: New
+- uid: Core.Data.Ids.TerrainId
+  commentId: T:Core.Data.Ids.TerrainId
+  parent: Core.Data.Ids
+  href: Core.Data.Ids.TerrainId.html
+  name: TerrainId
+  nameWithType: TerrainId
+  fullName: Core.Data.Ids.TerrainId
+- uid: Core.Data.Ids.TerrainId.IsLand*
+  commentId: Overload:Core.Data.Ids.TerrainId.IsLand
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_IsLand
+  name: IsLand
+  nameWithType: TerrainId.IsLand
+  fullName: Core.Data.Ids.TerrainId.IsLand
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Data.Ids.TerrainId.Equals*
+  commentId: Overload:Core.Data.Ids.TerrainId.Equals
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_Equals_Core_Data_Ids_TerrainId_
+  name: Equals
+  nameWithType: TerrainId.Equals
+  fullName: Core.Data.Ids.TerrainId.Equals
+- uid: System.ValueType.Equals(System.Object)
+  commentId: M:System.ValueType.Equals(System.Object)
+  parent: System.ValueType
+  isExternal: true
+  name: Equals(object)
+  nameWithType: ValueType.Equals(object)
+  fullName: System.ValueType.Equals(object)
+  nameWithType.vb: ValueType.Equals(Object)
+  fullName.vb: System.ValueType.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.Equals(System.Object)
+    name: Equals
+    isExternal: true
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+  - name: )
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.ValueType
+  commentId: T:System.ValueType
+  parent: System
+  isExternal: true
+  name: ValueType
+  nameWithType: ValueType
+  fullName: System.ValueType
+- uid: System.ValueType.GetHashCode
+  commentId: M:System.ValueType.GetHashCode
+  parent: System.ValueType
+  isExternal: true
+  name: GetHashCode()
+  nameWithType: ValueType.GetHashCode()
+  fullName: System.ValueType.GetHashCode()
+  spec.csharp:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.GetHashCode
+    name: GetHashCode
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.TerrainId.GetHashCode*
+  commentId: Overload:Core.Data.Ids.TerrainId.GetHashCode
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_GetHashCode
+  name: GetHashCode
+  nameWithType: TerrainId.GetHashCode
+  fullName: Core.Data.Ids.TerrainId.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Core.Data.Ids.TerrainId.op_Equality*
+  commentId: Overload:Core.Data.Ids.TerrainId.op_Equality
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_op_Equality_Core_Data_Ids_TerrainId_Core_Data_Ids_TerrainId_
+  name: operator ==
+  nameWithType: TerrainId.operator ==
+  fullName: Core.Data.Ids.TerrainId.operator ==
+  nameWithType.vb: TerrainId.=
+  fullName.vb: Core.Data.Ids.TerrainId.=
+  name.vb: =
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.TerrainId.op_Equality*
+    name: ==
+    href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_op_Equality_Core_Data_Ids_TerrainId_Core_Data_Ids_TerrainId_
+- uid: Core.Data.Ids.TerrainId.op_Inequality*
+  commentId: Overload:Core.Data.Ids.TerrainId.op_Inequality
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_op_Inequality_Core_Data_Ids_TerrainId_Core_Data_Ids_TerrainId_
+  name: operator !=
+  nameWithType: TerrainId.operator !=
+  fullName: Core.Data.Ids.TerrainId.operator !=
+  nameWithType.vb: TerrainId.<>
+  fullName.vb: Core.Data.Ids.TerrainId.<>
+  name.vb: <>
+  spec.csharp:
+  - name: operator
+  - name: " "
+  - uid: Core.Data.Ids.TerrainId.op_Inequality*
+    name: '!='
+    href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_op_Inequality_Core_Data_Ids_TerrainId_Core_Data_Ids_TerrainId_
+- uid: Core.Data.Ids.TerrainId.op_Implicit*
+  commentId: Overload:Core.Data.Ids.TerrainId.op_Implicit
+  name: implicit operator
+  nameWithType: TerrainId.implicit operator
+  fullName: Core.Data.Ids.TerrainId.implicit operator
+  nameWithType.vb: TerrainId.CType
+  fullName.vb: Core.Data.Ids.TerrainId.CType
+  name.vb: CType
+  spec.csharp:
+  - name: implicit
+  - name: " "
+  - name: operator
+- uid: System.ValueType.ToString
+  commentId: M:System.ValueType.ToString
+  parent: System.ValueType
+  isExternal: true
+  name: ToString()
+  nameWithType: ValueType.ToString()
+  fullName: System.ValueType.ToString()
+  spec.csharp:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.ValueType.ToString
+    name: ToString
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Data.Ids.TerrainId.ToString*
+  commentId: Overload:Core.Data.Ids.TerrainId.ToString
+  href: Core.Data.Ids.TerrainId.html#Core_Data_Ids_TerrainId_ToString
+  name: ToString
+  nameWithType: TerrainId.ToString
+  fullName: Core.Data.Ids.TerrainId.ToString
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

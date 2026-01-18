@@ -1,0 +1,261 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Initialization.Phases.StaticDataReadyEvent
+  commentId: T:Core.Initialization.Phases.StaticDataReadyEvent
+  id: StaticDataReadyEvent
+  parent: Core.Initialization.Phases
+  children:
+  - Core.Initialization.Phases.StaticDataReadyEvent.LoaderCount
+  - Core.Initialization.Phases.StaticDataReadyEvent.LocalizationEntries
+  - Core.Initialization.Phases.StaticDataReadyEvent.LocalizationLanguages
+  - Core.Initialization.Phases.StaticDataReadyEvent.TerrainCount
+  - Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+  langs:
+  - csharp
+  - vb
+  name: StaticDataReadyEvent
+  nameWithType: StaticDataReadyEvent
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: StaticDataReadyEvent
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Event emitted when static data loading completes.
+  example: []
+  syntax:
+    content: 'public struct StaticDataReadyEvent : IGameEvent'
+    content.vb: Public Structure StaticDataReadyEvent Implements IGameEvent
+  implements:
+  - Core.IGameEvent
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.TerrainCount
+  commentId: F:Core.Initialization.Phases.StaticDataReadyEvent.TerrainCount
+  id: TerrainCount
+  parent: Core.Initialization.Phases.StaticDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: TerrainCount
+  nameWithType: StaticDataReadyEvent.TerrainCount
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.TerrainCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TerrainCount
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 104
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int TerrainCount
+    return:
+      type: System.Int32
+    content.vb: Public TerrainCount As Integer
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.LoaderCount
+  commentId: F:Core.Initialization.Phases.StaticDataReadyEvent.LoaderCount
+  id: LoaderCount
+  parent: Core.Initialization.Phases.StaticDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: LoaderCount
+  nameWithType: StaticDataReadyEvent.LoaderCount
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.LoaderCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoaderCount
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 105
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int LoaderCount
+    return:
+      type: System.Int32
+    content.vb: Public LoaderCount As Integer
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.LocalizationLanguages
+  commentId: F:Core.Initialization.Phases.StaticDataReadyEvent.LocalizationLanguages
+  id: LocalizationLanguages
+  parent: Core.Initialization.Phases.StaticDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: LocalizationLanguages
+  nameWithType: StaticDataReadyEvent.LocalizationLanguages
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.LocalizationLanguages
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalizationLanguages
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 106
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int LocalizationLanguages
+    return:
+      type: System.Int32
+    content.vb: Public LocalizationLanguages As Integer
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.LocalizationEntries
+  commentId: F:Core.Initialization.Phases.StaticDataReadyEvent.LocalizationEntries
+  id: LocalizationEntries
+  parent: Core.Initialization.Phases.StaticDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: LocalizationEntries
+  nameWithType: StaticDataReadyEvent.LocalizationEntries
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.LocalizationEntries
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LocalizationEntries
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 107
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  syntax:
+    content: public int LocalizationEntries
+    return:
+      type: System.Int32
+    content.vb: Public LocalizationEntries As Integer
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+  commentId: P:Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+  id: TimeStamp
+  parent: Core.Initialization.Phases.StaticDataReadyEvent
+  langs:
+  - csharp
+  - vb
+  name: TimeStamp
+  nameWithType: StaticDataReadyEvent.TimeStamp
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeStamp
+    path: Scripts/Core/Initialization/Phases/StaticDataLoadingPhase.cs
+    startLine: 108
+  assemblies:
+  - Core
+  namespace: Core.Initialization.Phases
+  summary: Timestamp when the event was emitted (set automatically by EventBus).
+  example: []
+  syntax:
+    content: public float TimeStamp { readonly get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property TimeStamp As Single
+  overload: Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp*
+  implements:
+  - Core.IGameEvent.TimeStamp
+references:
+- uid: Core.Initialization.Phases
+  commentId: N:Core.Initialization.Phases
+  href: Core.html
+  name: Core.Initialization.Phases
+  nameWithType: Core.Initialization.Phases
+  fullName: Core.Initialization.Phases
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Initialization
+    name: Initialization
+    href: Core.Initialization.html
+  - name: .
+  - uid: Core.Initialization.Phases
+    name: Phases
+    href: Core.Initialization.Phases.html
+- uid: Core.IGameEvent
+  commentId: T:Core.IGameEvent
+  parent: Core
+  href: Core.IGameEvent.html
+  name: IGameEvent
+  nameWithType: IGameEvent
+  fullName: Core.IGameEvent
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp*
+  commentId: Overload:Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+  href: Core.Initialization.Phases.StaticDataReadyEvent.html#Core_Initialization_Phases_StaticDataReadyEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: StaticDataReadyEvent.TimeStamp
+  fullName: Core.Initialization.Phases.StaticDataReadyEvent.TimeStamp
+- uid: Core.IGameEvent.TimeStamp
+  commentId: P:Core.IGameEvent.TimeStamp
+  parent: Core.IGameEvent
+  href: Core.IGameEvent.html#Core_IGameEvent_TimeStamp
+  name: TimeStamp
+  nameWithType: IGameEvent.TimeStamp
+  fullName: Core.IGameEvent.TimeStamp
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

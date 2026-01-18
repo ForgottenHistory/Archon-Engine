@@ -1,0 +1,244 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.OwnerTextureDispatcher
+  commentId: T:Map.Rendering.OwnerTextureDispatcher
+  id: OwnerTextureDispatcher
+  parent: Map.Rendering
+  children:
+  - Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  - Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
+  langs:
+  - csharp
+  - vb
+  name: OwnerTextureDispatcher
+  nameWithType: OwnerTextureDispatcher
+  fullName: Map.Rendering.OwnerTextureDispatcher
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OwnerTextureDispatcher
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 12
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Manages GPU compute shader for high-performance owner texture population.
+
+    Processes entire map in parallel to populate province owner texture from simulation data.
+
+    Part of the texture-based map rendering system - dual-layer architecture compliance.
+
+    Performance: ~2ms for entire map vs 50+ seconds on CPU
+  example: []
+  syntax:
+    content: 'public class OwnerTextureDispatcher : MonoBehaviour'
+    content.vb: Public Class OwnerTextureDispatcher Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
+  commentId: M:Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
+  id: SetTextureManager(Map.Rendering.MapTextureManager)
+  parent: Map.Rendering.OwnerTextureDispatcher
+  langs:
+  - csharp
+  - vb
+  name: SetTextureManager(MapTextureManager)
+  nameWithType: OwnerTextureDispatcher.SetTextureManager(MapTextureManager)
+  fullName: Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTextureManager
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 76
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set the texture manager reference
+  example: []
+  syntax:
+    content: public void SetTextureManager(MapTextureManager manager)
+    parameters:
+    - id: manager
+      type: Map.Rendering.MapTextureManager
+    content.vb: Public Sub SetTextureManager(manager As MapTextureManager)
+  overload: Map.Rendering.OwnerTextureDispatcher.SetTextureManager*
+- uid: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  commentId: M:Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  id: PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  parent: Map.Rendering.OwnerTextureDispatcher
+  langs:
+  - csharp
+  - vb
+  name: PopulateOwnerTexture(ProvinceQueries)
+  nameWithType: OwnerTextureDispatcher.PopulateOwnerTexture(ProvinceQueries)
+  fullName: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: PopulateOwnerTexture
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Populate owner texture from Core simulation data using GPU compute shader
+
+    Architecture: Core ProvinceQueries → GPU buffer → GPU texture
+  example: []
+  syntax:
+    content: >-
+      [ContextMenu("Populate Owner Texture")]
+
+      public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
+    parameters:
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+      description: Read-only access to Core simulation data
+    content.vb: >-
+      <ContextMenu("Populate Owner Texture")>
+
+      Public Sub PopulateOwnerTexture(provinceQueries As ProvinceQueries)
+  overload: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Populate Owner Texture
+references:
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.OwnerTextureDispatcher.SetTextureManager*
+  commentId: Overload:Map.Rendering.OwnerTextureDispatcher.SetTextureManager
+  href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_SetTextureManager_Map_Rendering_MapTextureManager_
+  name: SetTextureManager
+  nameWithType: OwnerTextureDispatcher.SetTextureManager
+  fullName: Map.Rendering.OwnerTextureDispatcher.SetTextureManager
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture*
+  commentId: Overload:Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture
+  href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_PopulateOwnerTexture_Core_Queries_ProvinceQueries_
+  name: PopulateOwnerTexture
+  nameWithType: OwnerTextureDispatcher.PopulateOwnerTexture
+  fullName: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture
+- uid: Core.Queries.ProvinceQueries
+  commentId: T:Core.Queries.ProvinceQueries
+  parent: Core.Queries
+  href: Core.Queries.ProvinceQueries.html
+  name: ProvinceQueries
+  nameWithType: ProvinceQueries
+  fullName: Core.Queries.ProvinceQueries
+- uid: Core.Queries
+  commentId: N:Core.Queries
+  href: Core.html
+  name: Core.Queries
+  nameWithType: Core.Queries
+  fullName: Core.Queries
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Queries
+    name: Queries
+    href: Core.Queries.html

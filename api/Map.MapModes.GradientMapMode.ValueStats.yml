@@ -1,0 +1,191 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.MapModes.GradientMapMode.ValueStats
+  commentId: T:Map.MapModes.GradientMapMode.ValueStats
+  id: GradientMapMode.ValueStats
+  parent: Map.MapModes
+  children:
+  - Map.MapModes.GradientMapMode.ValueStats.AvgValue
+  - Map.MapModes.GradientMapMode.ValueStats.MaxValue
+  - Map.MapModes.GradientMapMode.ValueStats.MinValue
+  - Map.MapModes.GradientMapMode.ValueStats.ValidProvinces
+  langs:
+  - csharp
+  - vb
+  name: GradientMapMode.ValueStats
+  nameWithType: GradientMapMode.ValueStats
+  fullName: Map.MapModes.GradientMapMode.ValueStats
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValueStats
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 463
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: Statistics for value distribution analysis
+  example: []
+  syntax:
+    content: protected struct GradientMapMode.ValueStats
+    content.vb: Protected Structure GradientMapMode.ValueStats
+- uid: Map.MapModes.GradientMapMode.ValueStats.MinValue
+  commentId: F:Map.MapModes.GradientMapMode.ValueStats.MinValue
+  id: MinValue
+  parent: Map.MapModes.GradientMapMode.ValueStats
+  langs:
+  - csharp
+  - vb
+  name: MinValue
+  nameWithType: GradientMapMode.ValueStats.MinValue
+  fullName: Map.MapModes.GradientMapMode.ValueStats.MinValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MinValue
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 465
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public float MinValue
+    return:
+      type: System.Single
+    content.vb: Public MinValue As Single
+- uid: Map.MapModes.GradientMapMode.ValueStats.MaxValue
+  commentId: F:Map.MapModes.GradientMapMode.ValueStats.MaxValue
+  id: MaxValue
+  parent: Map.MapModes.GradientMapMode.ValueStats
+  langs:
+  - csharp
+  - vb
+  name: MaxValue
+  nameWithType: GradientMapMode.ValueStats.MaxValue
+  fullName: Map.MapModes.GradientMapMode.ValueStats.MaxValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MaxValue
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 466
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public float MaxValue
+    return:
+      type: System.Single
+    content.vb: Public MaxValue As Single
+- uid: Map.MapModes.GradientMapMode.ValueStats.AvgValue
+  commentId: F:Map.MapModes.GradientMapMode.ValueStats.AvgValue
+  id: AvgValue
+  parent: Map.MapModes.GradientMapMode.ValueStats
+  langs:
+  - csharp
+  - vb
+  name: AvgValue
+  nameWithType: GradientMapMode.ValueStats.AvgValue
+  fullName: Map.MapModes.GradientMapMode.ValueStats.AvgValue
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AvgValue
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 467
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public float AvgValue
+    return:
+      type: System.Single
+    content.vb: Public AvgValue As Single
+- uid: Map.MapModes.GradientMapMode.ValueStats.ValidProvinces
+  commentId: F:Map.MapModes.GradientMapMode.ValueStats.ValidProvinces
+  id: ValidProvinces
+  parent: Map.MapModes.GradientMapMode.ValueStats
+  langs:
+  - csharp
+  - vb
+  name: ValidProvinces
+  nameWithType: GradientMapMode.ValueStats.ValidProvinces
+  fullName: Map.MapModes.GradientMapMode.ValueStats.ValidProvinces
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/MapModes/GradientMapMode.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ValidProvinces
+    path: Scripts/Map/MapModes/GradientMapMode.cs
+    startLine: 468
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  syntax:
+    content: public int ValidProvinces
+    return:
+      type: System.Int32
+    content.vb: Public ValidProvinces As Integer
+references:
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
