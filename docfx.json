@@ -29,6 +29,18 @@
       {
         "files": ["Docs/Engine/*.md", "Docs/Engine/toc.yml"],
         "dest": "architecture"
+      },
+      {
+        "files": ["Scripts/Core/FILE_REGISTRY.md"],
+        "dest": "guides/core"
+      },
+      {
+        "files": ["Scripts/Map/FILE_REGISTRY.md"],
+        "dest": "guides/map"
+      },
+      {
+        "files": ["Scripts/Scripting/FILE_REGISTRY.md"],
+        "dest": "guides/scripting"
       }
     ],
     "resource": [

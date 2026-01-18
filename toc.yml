@@ -6,3 +6,11 @@
   href: api/
 - name: Architecture
   href: architecture/
+- name: File Registries
+  items:
+    - name: Core Layer
+      href: guides/core/FILE_REGISTRY.md
+    - name: Map Layer
+      href: guides/map/FILE_REGISTRY.md
+    - name: Scripting Layer
+      href: guides/scripting/FILE_REGISTRY.md
