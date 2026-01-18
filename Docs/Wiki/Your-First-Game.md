@@ -346,7 +346,7 @@ namespace MyGame.UI
                 return; // Already selected
 
             // Get the owner of the clicked province
-            var state = gameState.Provinces.GetState(provinceId);
+            var state = gameState.Provinces.GetProvinceState(provinceId);
             ushort countryId = state.ownerID;
 
             if (countryId == 0)
@@ -481,6 +481,7 @@ Create `Assets/Game/UI/ProvinceInfoUI.cs`:
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Localization;
 using Map.Interaction;
 
 namespace MyGame.UI
@@ -499,7 +500,7 @@ namespace MyGame.UI
         private VisualElement panel;
         private Label nameLabel;
         private Label ownerLabel;
-        private Label developmentLabel;
+        private Label terrainLabel;
 
         public void Initialize(GameState gameState, PlayerState playerState,
             ProvinceSelector provinceSelector)
@@ -541,12 +542,12 @@ namespace MyGame.UI
             ownerLabel = new Label("Owner: ---");
             ownerLabel.style.color = Color.white;
 
-            developmentLabel = new Label("Development: 0");
-            developmentLabel.style.color = Color.white;
+            terrainLabel = new Label("Terrain: ---");
+            terrainLabel.style.color = Color.white;
 
             panel.Add(nameLabel);
             panel.Add(ownerLabel);
-            panel.Add(developmentLabel);
+            panel.Add(terrainLabel);
             root.Add(panel);
         }
 
@@ -560,15 +561,15 @@ namespace MyGame.UI
 
         void ShowProvince(ushort provinceId)
         {
-            var state = gameState.Provinces.GetState(provinceId);
-            string provinceName = gameState.ProvinceQueries.GetName(provinceId);
+            var state = gameState.Provinces.GetProvinceState(provinceId);
+            string provinceName = LocalizationManager.Get($"PROV{provinceId}");
             string ownerTag = state.ownerID > 0
                 ? gameState.CountryQueries.GetTag(state.ownerID)
                 : "Unowned";
 
             nameLabel.text = provinceName;
             ownerLabel.text = $"Owner: {ownerTag}";
-            developmentLabel.text = $"Development: {state.development}";
+            terrainLabel.text = $"Terrain: {state.terrainType}";
 
             Show();
         }

@@ -117,7 +117,7 @@ var gameState = GameState.Instance;
 gameState.Provinces      // Province data
 gameState.Countries      // Country data
 gameState.EventBus       // Event system
-gameState.CommandProcessor  // Execute commands
+gameState.TryExecuteCommand()  // Execute commands
 
 // Access queries (read-only helpers)
 gameState.ProvinceQueries  // Query province data
@@ -137,7 +137,7 @@ var cmd = new TransferProvinceCommand {
     ProvinceId = provinceId,
     NewOwner = newOwner
 };
-gameState.CommandProcessor.Execute(cmd);
+gameState.TryExecuteCommand(cmd);
 ```
 
 Commands enable: multiplayer sync, undo, replay, save/load.
@@ -182,7 +182,7 @@ If you're doing strictly singleplayer it's more accepted to use normal numeric d
 
 ```csharp
 // Hot: 8-byte struct, accessed constantly
-ProvinceState state = gameState.Provinces.GetState(provinceId);
+ProvinceState state = gameState.Provinces.GetProvinceState(provinceId);
 
 // Cold: loaded on-demand when player clicks
 ProvinceHistoryData history = historySystem.GetHistory(provinceId);

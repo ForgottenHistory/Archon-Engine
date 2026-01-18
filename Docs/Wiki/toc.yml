@@ -4,6 +4,8 @@
   href: Getting-Started.md
 - name: Your First Game
   href: Your-First-Game.md
+- name: Cookbook
+  href: Cookbook.md
 - name: Feature Guides
   items:
     - name: Commands
@@ -38,3 +40,11 @@
       href: UI-Patterns.md
     - name: Localization
       href: Localization.md
+- name: Troubleshooting
+  items:
+    - name: Performance Issues
+      href: Troubleshooting-Performance.md
+    - name: GPU & Rendering
+      href: Troubleshooting-GPU.md
+    - name: Common Issues
+      href: Troubleshooting-Common.md
