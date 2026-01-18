@@ -1,4 +1,8 @@
+- name: Getting Started
+  href: wiki/Getting-Started.html
+- name: Feature Guides
+  href: wiki/
 - name: API Reference
   href: api/
 - name: Architecture
-  href: Docs/Engine/
+  href: architecture/

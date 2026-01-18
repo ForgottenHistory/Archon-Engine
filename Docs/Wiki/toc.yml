@@ -1,0 +1,20 @@
+- name: Home
+  href: Home.md
+- name: Getting Started
+  href: Getting-Started.md
+- name: Your First Game
+  href: Your-First-Game.md
+- name: Feature Guides
+  items:
+    - name: Commands
+      href: Commands.md
+    - name: Events
+      href: Events.md
+    - name: Economy
+      href: Economy.md
+    - name: Buildings
+      href: Buildings.md
+    - name: Units
+      href: Units.md
+    - name: Map Modes
+      href: Map-Modes.md

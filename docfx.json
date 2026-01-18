@@ -3,8 +3,24 @@
     {
       "src": [
         {
-          "src": "../..",
-          "files": ["Core.csproj", "MapAssembly.csproj", "StarterKit.csproj", "Utils.csproj"]
+          "files": ["Scripts/Core/**/*.cs"],
+          "src": "."
+        },
+        {
+          "files": ["Scripts/Map/**/*.cs"],
+          "src": "."
+        },
+        {
+          "files": ["Scripts/StarterKit/**/*.cs"],
+          "src": "."
+        },
+        {
+          "files": ["Scripts/Engine/**/*.cs"],
+          "src": "."
+        },
+        {
+          "files": ["Scripts/Utils/**/*.cs"],
+          "src": "."
         }
       ],
       "dest": "api",
@@ -21,6 +37,10 @@
       },
       {
         "files": ["index.md", "toc.yml"]
+      },
+      {
+        "files": ["Docs/Wiki/*.md", "Docs/Wiki/toc.yml"],
+        "dest": "wiki"
       },
       {
         "files": ["Docs/Engine/*.md"],
