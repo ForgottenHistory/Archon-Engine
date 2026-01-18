@@ -8,6 +8,7 @@ items:
   - Map.Rendering.Terrain.TerrainBlendMapGenerator.Generate(UnityEngine.RenderTexture,UnityEngine.ComputeBuffer,System.Int32,System.Int32)
   - Map.Rendering.Terrain.TerrainBlendMapGenerator.GetActiveTerrainRenderer(System.String)
   - Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
+  - Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels
   langs:
   - csharp
   - vb
@@ -63,6 +64,34 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels
+  commentId: M:Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels
+  id: InitializeKernels
+  parent: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  langs:
+  - csharp
+  - vb
+  name: InitializeKernels()
+  nameWithType: TerrainBlendMapGenerator.InitializeKernels()
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InitializeKernels
+    path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
+    startLine: 59
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Terrain
+  summary: Initialize compute shader kernels. Called by ArchonEngine.
+  example: []
+  syntax:
+    content: public void InitializeKernels()
+    content.vb: Public Sub InitializeKernels()
+  overload: Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels*
 - uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
   commentId: M:Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize(Map.Rendering.MapTextureManager)
   id: Initialize(Map.Rendering.MapTextureManager)
@@ -81,7 +110,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 70
+    startLine: 77
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -115,7 +144,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetActiveTerrainRenderer
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 112
+    startLine: 120
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -151,7 +180,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Generate
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 129
+    startLine: 137
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -264,6 +293,12 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels*
+  commentId: Overload:Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html#Map_Rendering_Terrain_TerrainBlendMapGenerator_InitializeKernels
+  name: InitializeKernels
+  nameWithType: TerrainBlendMapGenerator.InitializeKernels
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator.InitializeKernels
 - uid: Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize*
   commentId: Overload:Map.Rendering.Terrain.TerrainBlendMapGenerator.Initialize
   href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html#Map_Rendering_Terrain_TerrainBlendMapGenerator_Initialize_Map_Rendering_MapTextureManager_

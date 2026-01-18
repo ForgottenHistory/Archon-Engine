@@ -5,21 +5,22 @@ items:
   id: GameSettings
   parent: Core
   children:
+  - Core.GameSettings.AutoUpdateBorders
+  - Core.GameSettings.AutoUpdateMapModeTextures
   - Core.GameSettings.CreateDefault
   - Core.GameSettings.DataDirectory
-  - Core.GameSettings.DebugOutputDirectory
   - Core.GameSettings.EnableDataValidation
   - Core.GameSettings.EnableMemoryLeakDetection
   - Core.GameSettings.EnableParallelLoading
-  - Core.GameSettings.EnableVerboseLogging
   - Core.GameSettings.Instance
   - Core.GameSettings.LogConfiguration
-  - Core.GameSettings.MapDirectory
+  - Core.GameSettings.LogLevel
   - Core.GameSettings.RegisterAsActive
   - Core.GameSettings.RetryAttempts
+  - Core.GameSettings.ShouldLog(Core.LogLevel)
   - Core.GameSettings.ShowDetailedErrors
   - Core.GameSettings.SkipCacheWarming
-  - Core.GameSettings.TemplateDataDirectory
+  - Core.GameSettings.TextureUpdateBatchDelay
   - Core.GameSettings.UseGracefulDegradation
   - Core.GameSettings.ValidatePaths
   langs:
@@ -36,7 +37,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GameSettings
     path: Scripts/Core/GameSettings.cs
-    startLine: 8
+    startLine: 20
   assemblies:
   - Core
   namespace: Core
@@ -90,7 +91,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Instance
     path: Scripts/Core/GameSettings.cs
-    startLine: 15
+    startLine: 27
   assemblies:
   - Core
   namespace: Core
@@ -124,7 +125,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterAsActive
     path: Scripts/Core/GameSettings.cs
-    startLine: 21
+    startLine: 33
   assemblies:
   - Core
   namespace: Core
@@ -155,7 +156,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DataDirectory
     path: Scripts/Core/GameSettings.cs
-    startLine: 29
+    startLine: 41
   assemblies:
   - Core
   namespace: Core
@@ -185,123 +186,6 @@ items:
     arguments:
     - type: System.String
       value: Root data directory containing all game data
-- uid: Core.GameSettings.TemplateDataDirectory
-  commentId: F:Core.GameSettings.TemplateDataDirectory
-  id: TemplateDataDirectory
-  parent: Core.GameSettings
-  langs:
-  - csharp
-  - vb
-  name: TemplateDataDirectory
-  nameWithType: GameSettings.TemplateDataDirectory
-  fullName: Core.GameSettings.TemplateDataDirectory
-  type: Field
-  source:
-    remote:
-      path: Scripts/Core/GameSettings.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: TemplateDataDirectory
-    path: Scripts/Core/GameSettings.cs
-    startLine: 32
-  assemblies:
-  - Core
-  namespace: Core
-  syntax:
-    content: >-
-      [Tooltip("Template data directory for StarterKit (units, buildings, etc.)")]
-
-      public string TemplateDataDirectory
-    return:
-      type: System.String
-    content.vb: >-
-      <Tooltip("Template data directory for StarterKit (units, buildings, etc.)")>
-
-      Public TemplateDataDirectory As String
-  attributes:
-  - type: UnityEngine.TooltipAttribute
-    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Template data directory for StarterKit (units, buildings, etc.)
-- uid: Core.GameSettings.MapDirectory
-  commentId: F:Core.GameSettings.MapDirectory
-  id: MapDirectory
-  parent: Core.GameSettings
-  langs:
-  - csharp
-  - vb
-  name: MapDirectory
-  nameWithType: GameSettings.MapDirectory
-  fullName: Core.GameSettings.MapDirectory
-  type: Field
-  source:
-    remote:
-      path: Scripts/Core/GameSettings.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: MapDirectory
-    path: Scripts/Core/GameSettings.cs
-    startLine: 35
-  assemblies:
-  - Core
-  namespace: Core
-  syntax:
-    content: >-
-      [Tooltip("Map data directory")]
-
-      public string MapDirectory
-    return:
-      type: System.String
-    content.vb: >-
-      <Tooltip("Map data directory")>
-
-      Public MapDirectory As String
-  attributes:
-  - type: UnityEngine.TooltipAttribute
-    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Map data directory
-- uid: Core.GameSettings.DebugOutputDirectory
-  commentId: F:Core.GameSettings.DebugOutputDirectory
-  id: DebugOutputDirectory
-  parent: Core.GameSettings
-  langs:
-  - csharp
-  - vb
-  name: DebugOutputDirectory
-  nameWithType: GameSettings.DebugOutputDirectory
-  fullName: Core.GameSettings.DebugOutputDirectory
-  type: Field
-  source:
-    remote:
-      path: Scripts/Core/GameSettings.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: DebugOutputDirectory
-    path: Scripts/Core/GameSettings.cs
-    startLine: 38
-  assemblies:
-  - Core
-  namespace: Core
-  syntax:
-    content: >-
-      [Tooltip("Debug/Screenshots output directory")]
-
-      public string DebugOutputDirectory
-    return:
-      type: System.String
-    content.vb: >-
-      <Tooltip("Debug/Screenshots output directory")>
-
-      Public DebugOutputDirectory As String
-  attributes:
-  - type: UnityEngine.TooltipAttribute
-    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Debug/Screenshots output directory
 - uid: Core.GameSettings.EnableParallelLoading
   commentId: F:Core.GameSettings.EnableParallelLoading
   id: EnableParallelLoading
@@ -320,7 +204,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EnableParallelLoading
     path: Scripts/Core/GameSettings.cs
-    startLine: 42
+    startLine: 45
   assemblies:
   - Core
   namespace: Core
@@ -368,7 +252,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EnableDataValidation
     path: Scripts/Core/GameSettings.cs
-    startLine: 45
+    startLine: 48
   assemblies:
   - Core
   namespace: Core
@@ -407,7 +291,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UseGracefulDegradation
     path: Scripts/Core/GameSettings.cs
-    startLine: 49
+    startLine: 52
   assemblies:
   - Core
   namespace: Core
@@ -455,7 +339,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ShowDetailedErrors
     path: Scripts/Core/GameSettings.cs
-    startLine: 52
+    startLine: 55
   assemblies:
   - Core
   namespace: Core
@@ -494,7 +378,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RetryAttempts
     path: Scripts/Core/GameSettings.cs
-    startLine: 56
+    startLine: 59
   assemblies:
   - Core
   namespace: Core
@@ -526,54 +410,6 @@ items:
       value: 0
     - type: System.Single
       value: 5
-- uid: Core.GameSettings.EnableVerboseLogging
-  commentId: F:Core.GameSettings.EnableVerboseLogging
-  id: EnableVerboseLogging
-  parent: Core.GameSettings
-  langs:
-  - csharp
-  - vb
-  name: EnableVerboseLogging
-  nameWithType: GameSettings.EnableVerboseLogging
-  fullName: Core.GameSettings.EnableVerboseLogging
-  type: Field
-  source:
-    remote:
-      path: Scripts/Core/GameSettings.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: EnableVerboseLogging
-    path: Scripts/Core/GameSettings.cs
-    startLine: 60
-  assemblies:
-  - Core
-  namespace: Core
-  syntax:
-    content: >-
-      [Header("Development Options")]
-
-      [Tooltip("Enable verbose logging during development")]
-
-      public bool EnableVerboseLogging
-    return:
-      type: System.Boolean
-    content.vb: >-
-      <Header("Development Options")>
-
-      <Tooltip("Enable verbose logging during development")>
-
-      Public EnableVerboseLogging As Boolean
-  attributes:
-  - type: UnityEngine.HeaderAttribute
-    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Development Options
-  - type: UnityEngine.TooltipAttribute
-    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
-    arguments:
-    - type: System.String
-      value: Enable verbose logging during development
 - uid: Core.GameSettings.EnableMemoryLeakDetection
   commentId: F:Core.GameSettings.EnableMemoryLeakDetection
   id: EnableMemoryLeakDetection
@@ -598,16 +434,25 @@ items:
   namespace: Core
   syntax:
     content: >-
+      [Header("Development Options")]
+
       [Tooltip("Enable memory leak detection")]
 
       public bool EnableMemoryLeakDetection
     return:
       type: System.Boolean
     content.vb: >-
+      <Header("Development Options")>
+
       <Tooltip("Enable memory leak detection")>
 
       Public EnableMemoryLeakDetection As Boolean
   attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Development Options
   - type: UnityEngine.TooltipAttribute
     ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
     arguments:
@@ -652,6 +497,224 @@ items:
     arguments:
     - type: System.String
       value: Skip cache warming for faster iteration
+- uid: Core.GameSettings.LogLevel
+  commentId: F:Core.GameSettings.LogLevel
+  id: LogLevel
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: LogLevel
+  nameWithType: GameSettings.LogLevel
+  fullName: Core.GameSettings.LogLevel
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogLevel
+    path: Scripts/Core/GameSettings.cs
+    startLine: 70
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Logging")]
+
+      [Tooltip("Global logging verbosity level for all systems")]
+
+      public LogLevel LogLevel
+    return:
+      type: Core.LogLevel
+    content.vb: >-
+      <Header("Logging")>
+
+      <Tooltip("Global logging verbosity level for all systems")>
+
+      Public LogLevel As LogLevel
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Logging
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Global logging verbosity level for all systems
+- uid: Core.GameSettings.AutoUpdateBorders
+  commentId: F:Core.GameSettings.AutoUpdateBorders
+  id: AutoUpdateBorders
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: AutoUpdateBorders
+  nameWithType: GameSettings.AutoUpdateBorders
+  fullName: Core.GameSettings.AutoUpdateBorders
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AutoUpdateBorders
+    path: Scripts/Core/GameSettings.cs
+    startLine: 74
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Header("Map Rendering")]
+
+      [Tooltip("Automatically update borders when ownership changes")]
+
+      public bool AutoUpdateBorders
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Map Rendering")>
+
+      <Tooltip("Automatically update borders when ownership changes")>
+
+      Public AutoUpdateBorders As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Map Rendering
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Automatically update borders when ownership changes
+- uid: Core.GameSettings.AutoUpdateMapModeTextures
+  commentId: F:Core.GameSettings.AutoUpdateMapModeTextures
+  id: AutoUpdateMapModeTextures
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: AutoUpdateMapModeTextures
+  nameWithType: GameSettings.AutoUpdateMapModeTextures
+  fullName: Core.GameSettings.AutoUpdateMapModeTextures
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AutoUpdateMapModeTextures
+    path: Scripts/Core/GameSettings.cs
+    startLine: 77
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Automatically update map mode textures")]
+
+      public bool AutoUpdateMapModeTextures
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Tooltip("Automatically update map mode textures")>
+
+      Public AutoUpdateMapModeTextures As Boolean
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Automatically update map mode textures
+- uid: Core.GameSettings.TextureUpdateBatchDelay
+  commentId: F:Core.GameSettings.TextureUpdateBatchDelay
+  id: TextureUpdateBatchDelay
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: TextureUpdateBatchDelay
+  nameWithType: GameSettings.TextureUpdateBatchDelay
+  fullName: Core.GameSettings.TextureUpdateBatchDelay
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TextureUpdateBatchDelay
+    path: Scripts/Core/GameSettings.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: >-
+      [Tooltip("Delay between batched texture updates (seconds)")]
+
+      [Range(0.05, 1)]
+
+      public float TextureUpdateBatchDelay
+    return:
+      type: System.Single
+    content.vb: >-
+      <Tooltip("Delay between batched texture updates (seconds)")>
+
+      <Range(0.05, 1)>
+
+      Public TextureUpdateBatchDelay As Single
+  attributes:
+  - type: UnityEngine.TooltipAttribute
+    ctor: UnityEngine.TooltipAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Delay between batched texture updates (seconds)
+  - type: UnityEngine.RangeAttribute
+    ctor: UnityEngine.RangeAttribute.#ctor(System.Single,System.Single)
+    arguments:
+    - type: System.Single
+      value: 0.05
+    - type: System.Single
+      value: 1
+- uid: Core.GameSettings.ShouldLog(Core.LogLevel)
+  commentId: M:Core.GameSettings.ShouldLog(Core.LogLevel)
+  id: ShouldLog(Core.LogLevel)
+  parent: Core.GameSettings
+  langs:
+  - csharp
+  - vb
+  name: ShouldLog(LogLevel)
+  nameWithType: GameSettings.ShouldLog(LogLevel)
+  fullName: Core.GameSettings.ShouldLog(Core.LogLevel)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ShouldLog
+    path: Scripts/Core/GameSettings.cs
+    startLine: 86
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Check if logging is enabled at the specified level.
+  example: []
+  syntax:
+    content: public bool ShouldLog(LogLevel level)
+    parameters:
+    - id: level
+      type: Core.LogLevel
+    return:
+      type: System.Boolean
+    content.vb: Public Function ShouldLog(level As LogLevel) As Boolean
+  overload: Core.GameSettings.ShouldLog*
 - uid: Core.GameSettings.ValidatePaths
   commentId: M:Core.GameSettings.ValidatePaths
   id: ValidatePaths
@@ -670,7 +733,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValidatePaths
     path: Scripts/Core/GameSettings.cs
-    startLine: 71
+    startLine: 91
   assemblies:
   - Core
   namespace: Core
@@ -700,7 +763,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateDefault
     path: Scripts/Core/GameSettings.cs
-    startLine: 168
+    startLine: 188
   assemblies:
   - Core
   namespace: Core
@@ -730,7 +793,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LogConfiguration
     path: Scripts/Core/GameSettings.cs
-    startLine: 178
+    startLine: 198
   assemblies:
   - Core
   namespace: Core
@@ -832,6 +895,29 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
+- uid: Core.LogLevel
+  commentId: T:Core.LogLevel
+  parent: Core
+  href: Core.LogLevel.html
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: Core.LogLevel
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Core.GameSettings.ShouldLog*
+  commentId: Overload:Core.GameSettings.ShouldLog
+  href: Core.GameSettings.html#Core_GameSettings_ShouldLog_Core_LogLevel_
+  name: ShouldLog
+  nameWithType: GameSettings.ShouldLog
+  fullName: Core.GameSettings.ShouldLog
 - uid: Core.GameSettings.ValidatePaths*
   commentId: Overload:Core.GameSettings.ValidatePaths
   href: Core.GameSettings.html#Core_GameSettings_ValidatePaths

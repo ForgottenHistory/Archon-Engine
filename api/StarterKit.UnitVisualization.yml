@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnitVisualization
     path: Scripts/StarterKit/Visualization/UnitVisualization.cs
-    startLine: 15
+    startLine: 14
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -57,7 +57,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/StarterKit/Visualization/UnitVisualization.cs
-    startLine: 57
+    startLine: 56
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -86,7 +86,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/StarterKit/Visualization/UnitVisualization.cs
-    startLine: 59
+    startLine: 58
   assemblies:
   - StarterKit
   namespace: StarterKit

@@ -5,6 +5,7 @@ items:
   id: OwnerTextureDispatcher
   parent: Map.Rendering
   children:
+  - Map.Rendering.OwnerTextureDispatcher.Initialize
   - Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
   - Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
   langs:
@@ -43,6 +44,34 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.OwnerTextureDispatcher.Initialize
+  commentId: M:Map.Rendering.OwnerTextureDispatcher.Initialize
+  id: Initialize
+  parent: Map.Rendering.OwnerTextureDispatcher
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: OwnerTextureDispatcher.Initialize()
+  fullName: Map.Rendering.OwnerTextureDispatcher.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize compute shader kernels. Called by ArchonEngine.
+  example: []
+  syntax:
+    content: public void Initialize()
+    content.vb: Public Sub Initialize()
+  overload: Map.Rendering.OwnerTextureDispatcher.Initialize*
 - uid: Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
   commentId: M:Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
   id: SetTextureManager(Map.Rendering.MapTextureManager)
@@ -61,7 +90,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 76
+    startLine: 82
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -92,7 +121,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateOwnerTexture
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 86
+    startLine: 92
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -194,6 +223,12 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Rendering.OwnerTextureDispatcher.Initialize*
+  commentId: Overload:Map.Rendering.OwnerTextureDispatcher.Initialize
+  href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_Initialize
+  name: Initialize
+  nameWithType: OwnerTextureDispatcher.Initialize
+  fullName: Map.Rendering.OwnerTextureDispatcher.Initialize
 - uid: Map.Rendering.OwnerTextureDispatcher.SetTextureManager*
   commentId: Overload:Map.Rendering.OwnerTextureDispatcher.SetTextureManager
   href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_SetTextureManager_Map_Rendering_MapTextureManager_

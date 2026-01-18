@@ -32,7 +32,6 @@ items:
 references:
 - uid: Map.Loading.MapDataLoader
   commentId: T:Map.Loading.MapDataLoader
-  parent: Map.Loading
   href: Map.Loading.MapDataLoader.html
   name: MapDataLoader
   nameWithType: MapDataLoader
@@ -211,7 +210,6 @@ references:
     href: Map.Loading.ProvinceMapProcessor.ProvinceDefinition.html
 - uid: Map.Loading.IMapDataProvider
   commentId: T:Map.Loading.IMapDataProvider
-  parent: Map.Loading
   href: Map.Loading.IMapDataProvider.html
   name: IMapDataProvider
   nameWithType: IMapDataProvider

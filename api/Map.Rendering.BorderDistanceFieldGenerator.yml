@@ -7,6 +7,7 @@ items:
   children:
   - Map.Rendering.BorderDistanceFieldGenerator.GenerateDistanceField
   - Map.Rendering.BorderDistanceFieldGenerator.GenerateQuarterResolutionDistanceField(UnityEngine.RenderTexture)
+  - Map.Rendering.BorderDistanceFieldGenerator.Initialize
   - Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
   - Map.Rendering.BorderDistanceFieldGenerator.TestGeneration
   langs:
@@ -53,6 +54,34 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.BorderDistanceFieldGenerator.Initialize
+  commentId: M:Map.Rendering.BorderDistanceFieldGenerator.Initialize
+  id: Initialize
+  parent: Map.Rendering.BorderDistanceFieldGenerator
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: BorderDistanceFieldGenerator.Initialize()
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
+    startLine: 46
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize compute shader kernels. Called by ArchonEngine.
+  example: []
+  syntax:
+    content: public void Initialize()
+    content.vb: Public Sub Initialize()
+  overload: Map.Rendering.BorderDistanceFieldGenerator.Initialize*
 - uid: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
   commentId: M:Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager(Map.Rendering.MapTextureManager)
   id: SetTextureManager(Map.Rendering.MapTextureManager)
@@ -71,7 +100,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 91
+    startLine: 97
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -100,7 +129,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateDistanceField
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 100
+    startLine: 106
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -131,7 +160,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateQuarterResolutionDistanceField
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 148
+    startLine: 154
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -173,7 +202,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TestGeneration
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 419
+    startLine: 425
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -266,6 +295,12 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Rendering.BorderDistanceFieldGenerator.Initialize*
+  commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.Initialize
+  href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_Initialize
+  name: Initialize
+  nameWithType: BorderDistanceFieldGenerator.Initialize
+  fullName: Map.Rendering.BorderDistanceFieldGenerator.Initialize
 - uid: Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager*
   commentId: Overload:Map.Rendering.BorderDistanceFieldGenerator.SetTextureManager
   href: Map.Rendering.BorderDistanceFieldGenerator.html#Map_Rendering_BorderDistanceFieldGenerator_SetTextureManager_Map_Rendering_MapTextureManager_

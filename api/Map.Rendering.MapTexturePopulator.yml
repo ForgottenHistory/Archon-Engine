@@ -5,7 +5,7 @@ items:
   id: MapTexturePopulator
   parent: Map.Rendering
   children:
-  - Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping)
+  - Map.Rendering.MapTexturePopulator.#ctor(Map.Rendering.OwnerTextureDispatcher,System.Boolean)
   - Map.Rendering.MapTexturePopulator.PopulateWithSimulationData(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState)
   - Map.Rendering.MapTexturePopulator.UpdateSimulationData(Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState,System.UInt16[])
   langs:
@@ -22,28 +22,54 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapTexturePopulator
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 16
+    startLine: 12
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
-    Handles population of map textures from province data
+    Handles population of map textures from province data.
 
-    Extracted from MapGenerator to follow single responsibility principle
-
-    Manages conversion from bitmap data to GPU textures with simulation integration
-
-    Architecture: Uses GPU compute shader for owner texture (NO CPU pixel ops)
+    Plain C# class - dependencies passed via constructor.
   example: []
   syntax:
-    content: 'public class MapTexturePopulator : MonoBehaviour'
-    content.vb: Public Class MapTexturePopulator Inherits MonoBehaviour
+    content: public class MapTexturePopulator
+    content.vb: Public Class MapTexturePopulator
   inheritance:
   - System.Object
-  - UnityEngine.Object
-  - UnityEngine.Component
-  - UnityEngine.Behaviour
-  - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.MapTexturePopulator.#ctor(Map.Rendering.OwnerTextureDispatcher,System.Boolean)
+  commentId: M:Map.Rendering.MapTexturePopulator.#ctor(Map.Rendering.OwnerTextureDispatcher,System.Boolean)
+  id: '#ctor(Map.Rendering.OwnerTextureDispatcher,System.Boolean)'
+  parent: Map.Rendering.MapTexturePopulator
+  langs:
+  - csharp
+  - vb
+  name: MapTexturePopulator(OwnerTextureDispatcher, bool)
+  nameWithType: MapTexturePopulator.MapTexturePopulator(OwnerTextureDispatcher, bool)
+  fullName: Map.Rendering.MapTexturePopulator.MapTexturePopulator(Map.Rendering.OwnerTextureDispatcher, bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Rendering/MapTexturePopulator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Rendering/MapTexturePopulator.cs
+    startLine: 18
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  syntax:
+    content: public MapTexturePopulator(OwnerTextureDispatcher ownerDispatcher, bool logProgress = true)
+    parameters:
+    - id: ownerDispatcher
+      type: Map.Rendering.OwnerTextureDispatcher
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub New(ownerDispatcher As OwnerTextureDispatcher, logProgress As Boolean = True)
+  overload: Map.Rendering.MapTexturePopulator.#ctor*
+  nameWithType.vb: MapTexturePopulator.New(OwnerTextureDispatcher, Boolean)
+  fullName.vb: Map.Rendering.MapTexturePopulator.New(Map.Rendering.OwnerTextureDispatcher, Boolean)
+  name.vb: New(OwnerTextureDispatcher, Boolean)
 - uid: Map.Rendering.MapTexturePopulator.PopulateWithSimulationData(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState)
   commentId: M:Map.Rendering.MapTexturePopulator.PopulateWithSimulationData(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState)
   id: PopulateWithSimulationData(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState)
@@ -62,14 +88,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateWithSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 29
+    startLine: 37
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: >-
-    Populate MapTextureManager textures using data from Core simulation systems
-
-    This method integrates bitmap visual data with simulation layer province/country data
+  summary: Populate textures using simulation data.
   example: []
   syntax:
     content: public void PopulateWithSimulationData(ProvinceMapProcessor.ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping, GameState gameState)
@@ -84,44 +107,6 @@ items:
       type: Core.GameState
     content.vb: Public Sub PopulateWithSimulationData(provinceResult As ProvinceMapProcessor.ProvinceMapResult, textureManager As MapTextureManager, mapping As ProvinceMapping, gameState As GameState)
   overload: Map.Rendering.MapTexturePopulator.PopulateWithSimulationData*
-- uid: Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping)
-  commentId: M:Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping)
-  id: PopulateFromProvinceResult(Map.Loading.ProvinceMapProcessor.ProvinceMapResult,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping)
-  parent: Map.Rendering.MapTexturePopulator
-  langs:
-  - csharp
-  - vb
-  name: PopulateFromProvinceResult(ProvinceMapResult, MapTextureManager, ProvinceMapping)
-  nameWithType: MapTexturePopulator.PopulateFromProvinceResult(ProvinceMapProcessor.ProvinceMapResult, MapTextureManager, ProvinceMapping)
-  fullName: Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult(Map.Loading.ProvinceMapProcessor.ProvinceMapResult, Map.Rendering.MapTextureManager, Map.Rendering.ProvinceMapping)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Map/Rendering/MapTexturePopulator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: PopulateFromProvinceResult
-    path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 157
-  assemblies:
-  - MapAssembly
-  namespace: Map.Rendering
-  summary: >-
-    Populate MapTextureManager textures from province processing result
-
-    Legacy method for standalone operation without simulation integration
-  example: []
-  syntax:
-    content: public void PopulateFromProvinceResult(ProvinceMapProcessor.ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping)
-    parameters:
-    - id: provinceResult
-      type: Map.Loading.ProvinceMapProcessor.ProvinceMapResult
-    - id: textureManager
-      type: Map.Rendering.MapTextureManager
-    - id: mapping
-      type: Map.Rendering.ProvinceMapping
-    content.vb: Public Sub PopulateFromProvinceResult(provinceResult As ProvinceMapProcessor.ProvinceMapResult, textureManager As MapTextureManager, mapping As ProvinceMapping)
-  overload: Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult*
 - uid: Map.Rendering.MapTexturePopulator.UpdateSimulationData(Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState,System.UInt16[])
   commentId: M:Map.Rendering.MapTexturePopulator.UpdateSimulationData(Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState,System.UInt16[])
   id: UpdateSimulationData(Map.Rendering.MapTextureManager,Map.Rendering.ProvinceMapping,Core.GameState,System.UInt16[])
@@ -140,16 +125,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 225
+    startLine: 126
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: >-
-    Update texture manager with live simulation data changes
-
-    Optimized method for runtime updates without full repopulation
-
-    Architecture: Uses GPU compute shader for owner texture updates (NO CPU pixel ops)
+  summary: Update owner texture for changed provinces (runtime updates).
   example: []
   syntax:
     content: public void UpdateSimulationData(MapTextureManager textureManager, ProvinceMapping mapping, GameState gameState, ushort[] changedProvinces)
@@ -200,46 +180,38 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: UnityEngine.Object
-  commentId: T:UnityEngine.Object
-  parent: UnityEngine
-  isExternal: true
-  name: Object
-  nameWithType: Object
-  fullName: UnityEngine.Object
-- uid: UnityEngine.Component
-  commentId: T:UnityEngine.Component
-  parent: UnityEngine
-  isExternal: true
-  name: Component
-  nameWithType: Component
-  fullName: UnityEngine.Component
-- uid: UnityEngine.Behaviour
-  commentId: T:UnityEngine.Behaviour
-  parent: UnityEngine
-  isExternal: true
-  name: Behaviour
-  nameWithType: Behaviour
-  fullName: UnityEngine.Behaviour
-- uid: UnityEngine.MonoBehaviour
-  commentId: T:UnityEngine.MonoBehaviour
-  parent: UnityEngine
-  isExternal: true
-  name: MonoBehaviour
-  nameWithType: MonoBehaviour
-  fullName: UnityEngine.MonoBehaviour
 - uid: System
   commentId: N:System
   isExternal: true
   name: System
   nameWithType: System
   fullName: System
-- uid: UnityEngine
-  commentId: N:UnityEngine
+- uid: Map.Rendering.MapTexturePopulator.#ctor*
+  commentId: Overload:Map.Rendering.MapTexturePopulator.#ctor
+  href: Map.Rendering.MapTexturePopulator.html#Map_Rendering_MapTexturePopulator__ctor_Map_Rendering_OwnerTextureDispatcher_System_Boolean_
+  name: MapTexturePopulator
+  nameWithType: MapTexturePopulator.MapTexturePopulator
+  fullName: Map.Rendering.MapTexturePopulator.MapTexturePopulator
+  nameWithType.vb: MapTexturePopulator.New
+  fullName.vb: Map.Rendering.MapTexturePopulator.New
+  name.vb: New
+- uid: Map.Rendering.OwnerTextureDispatcher
+  commentId: T:Map.Rendering.OwnerTextureDispatcher
+  parent: Map.Rendering
+  href: Map.Rendering.OwnerTextureDispatcher.html
+  name: OwnerTextureDispatcher
+  nameWithType: OwnerTextureDispatcher
+  fullName: Map.Rendering.OwnerTextureDispatcher
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
   isExternal: true
-  name: UnityEngine
-  nameWithType: UnityEngine
-  fullName: UnityEngine
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: Map.Rendering.MapTexturePopulator.PopulateWithSimulationData*
   commentId: Overload:Map.Rendering.MapTexturePopulator.PopulateWithSimulationData
   href: Map.Rendering.MapTexturePopulator.html#Map_Rendering_MapTexturePopulator_PopulateWithSimulationData_Map_Loading_ProvinceMapProcessor_ProvinceMapResult_Map_Rendering_MapTextureManager_Map_Rendering_ProvinceMapping_Core_GameState_
@@ -318,12 +290,6 @@ references:
   name: Core
   nameWithType: Core
   fullName: Core
-- uid: Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult*
-  commentId: Overload:Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult
-  href: Map.Rendering.MapTexturePopulator.html#Map_Rendering_MapTexturePopulator_PopulateFromProvinceResult_Map_Loading_ProvinceMapProcessor_ProvinceMapResult_Map_Rendering_MapTextureManager_Map_Rendering_ProvinceMapping_
-  name: PopulateFromProvinceResult
-  nameWithType: MapTexturePopulator.PopulateFromProvinceResult
-  fullName: Map.Rendering.MapTexturePopulator.PopulateFromProvinceResult
 - uid: Map.Rendering.MapTexturePopulator.UpdateSimulationData*
   commentId: Overload:Map.Rendering.MapTexturePopulator.UpdateSimulationData
   href: Map.Rendering.MapTexturePopulator.html#Map_Rendering_MapTexturePopulator_UpdateSimulationData_Map_Rendering_MapTextureManager_Map_Rendering_ProvinceMapping_Core_GameState_System_UInt16___

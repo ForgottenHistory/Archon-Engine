@@ -26,7 +26,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValidationResult
     path: Scripts/Core/GameSettings.cs
-    startLine: 129
+    startLine: 149
   assemblies:
   - Core
   namespace: Core
@@ -53,7 +53,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Errors
     path: Scripts/Core/GameSettings.cs
-    startLine: 131
+    startLine: 151
   assemblies:
   - Core
   namespace: Core
@@ -80,7 +80,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Warnings
     path: Scripts/Core/GameSettings.cs
-    startLine: 132
+    startLine: 152
   assemblies:
   - Core
   namespace: Core
@@ -107,7 +107,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Core/GameSettings.cs
-    startLine: 134
+    startLine: 154
   assemblies:
   - Core
   namespace: Core
@@ -136,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasWarnings
     path: Scripts/Core/GameSettings.cs
-    startLine: 135
+    startLine: 155
   assemblies:
   - Core
   namespace: Core
@@ -165,7 +165,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddError
     path: Scripts/Core/GameSettings.cs
-    startLine: 137
+    startLine: 157
   assemblies:
   - Core
   namespace: Core
@@ -197,7 +197,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddWarning
     path: Scripts/Core/GameSettings.cs
-    startLine: 143
+    startLine: 163
   assemblies:
   - Core
   namespace: Core
@@ -229,7 +229,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSummary
     path: Scripts/Core/GameSettings.cs
-    startLine: 149
+    startLine: 169
   assemblies:
   - Core
   namespace: Core

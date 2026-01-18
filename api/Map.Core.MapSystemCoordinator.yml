@@ -5,16 +5,22 @@ items:
   id: MapSystemCoordinator
   parent: Map.Core
   children:
-  - Map.Core.MapSystemCoordinator.GenerateMapFromFiles(System.String,System.String,System.Boolean)
-  - Map.Core.MapSystemCoordinator.GenerateMapFromSimulation(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
+  - Map.Core.MapSystemCoordinator.BorderDispatcher
+  - Map.Core.MapSystemCoordinator.Configure(UnityEngine.Camera,UnityEngine.MeshRenderer,Core.GameSettings,Map.Rendering.MapTextureManager,Map.Rendering.BorderComputeDispatcher,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator)
+  - Map.Core.MapSystemCoordinator.DataDirectory
   - Map.Core.MapSystemCoordinator.GetMapPlaneTransform
   - Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
-  - Map.Core.MapSystemCoordinator.HandleSimulationReady(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  - Map.Core.MapSystemCoordinator.InitializeSystem(UnityEngine.Camera,UnityEngine.MeshRenderer)
-  - Map.Core.MapSystemCoordinator.OnGenerationProgress
+  - Map.Core.MapSystemCoordinator.Initialize(Core.SimulationDataReadyEvent)
+  - Map.Core.MapSystemCoordinator.IsInitialized
+  - Map.Core.MapSystemCoordinator.MapCamera
+  - Map.Core.MapSystemCoordinator.MapModeManager
+  - Map.Core.MapSystemCoordinator.MeshRenderer
+  - Map.Core.MapSystemCoordinator.OnComplete
+  - Map.Core.MapSystemCoordinator.OnProgress
+  - Map.Core.MapSystemCoordinator.ProvinceHighlighter
   - Map.Core.MapSystemCoordinator.ProvinceMapping
+  - Map.Core.MapSystemCoordinator.ProvinceSelector
   - Map.Core.MapSystemCoordinator.RefreshAllVisuals
-  - Map.Core.MapSystemCoordinator.SetMapMode(System.Int32)
   - Map.Core.MapSystemCoordinator.TextureManager
   langs:
   - csharp
@@ -30,16 +36,19 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapSystemCoordinator
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - MapAssembly
   namespace: Map.Core
   summary: >-
-    Central coordinator for the entire map system
+    Coordinator for map system runtime operations.
 
-    Manages all map components internally without exposing them to MapGenerator
 
-    Follows facade pattern to simplify MapGenerator's responsibilities
+    IMPORTANT: This class does NOT initialize components.
+
+    All components must be initialized by ArchonEngine BEFORE calling Configure().
+
+    This class only coordinates runtime operations (map loading, rendering, interaction).
   example: []
   syntax:
     content: 'public class MapSystemCoordinator : MonoBehaviour'
@@ -50,33 +59,6 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
-- uid: Map.Core.MapSystemCoordinator.OnGenerationProgress
-  commentId: F:Map.Core.MapSystemCoordinator.OnGenerationProgress
-  id: OnGenerationProgress
-  parent: Map.Core.MapSystemCoordinator
-  langs:
-  - csharp
-  - vb
-  name: OnGenerationProgress
-  nameWithType: MapSystemCoordinator.OnGenerationProgress
-  fullName: Map.Core.MapSystemCoordinator.OnGenerationProgress
-  type: Field
-  source:
-    remote:
-      path: Scripts/Map/Core/MapSystemCoordinator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: OnGenerationProgress
-    path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 23
-  assemblies:
-  - MapAssembly
-  namespace: Map.Core
-  syntax:
-    content: public Action<float, string> OnGenerationProgress
-    return:
-      type: System.Action{System.Single,System.String}
-    content.vb: Public OnGenerationProgress As Action(Of Single, String)
 - uid: Map.Core.MapSystemCoordinator.ProvinceMapping
   commentId: P:Map.Core.MapSystemCoordinator.ProvinceMapping
   id: ProvinceMapping
@@ -95,10 +77,12 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceMapping
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 40
+    startLine: 56
   assemblies:
   - MapAssembly
   namespace: Map.Core
+  summary: Province color-to-ID mapping for texture lookups.
+  example: []
   syntax:
     content: public ProvinceMapping ProvinceMapping { get; }
     parameters: []
@@ -124,10 +108,12 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TextureManager
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 41
+    startLine: 59
   assemblies:
   - MapAssembly
   namespace: Map.Core
+  summary: Map texture manager for province textures.
+  example: []
   syntax:
     content: public MapTextureManager TextureManager { get; }
     parameters: []
@@ -135,258 +121,394 @@ items:
       type: Map.Rendering.MapTextureManager
     content.vb: Public ReadOnly Property TextureManager As MapTextureManager
   overload: Map.Core.MapSystemCoordinator.TextureManager*
-- uid: Map.Core.MapSystemCoordinator.GetMapPlaneTransform
-  commentId: M:Map.Core.MapSystemCoordinator.GetMapPlaneTransform
-  id: GetMapPlaneTransform
+- uid: Map.Core.MapSystemCoordinator.ProvinceSelector
+  commentId: P:Map.Core.MapSystemCoordinator.ProvinceSelector
+  id: ProvinceSelector
   parent: Map.Core.MapSystemCoordinator
   langs:
   - csharp
   - vb
-  name: GetMapPlaneTransform()
-  nameWithType: MapSystemCoordinator.GetMapPlaneTransform()
-  fullName: Map.Core.MapSystemCoordinator.GetMapPlaneTransform()
-  type: Method
+  name: ProvinceSelector
+  nameWithType: MapSystemCoordinator.ProvinceSelector
+  fullName: Map.Core.MapSystemCoordinator.ProvinceSelector
+  type: Property
   source:
     remote:
       path: Scripts/Map/Core/MapSystemCoordinator.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GetMapPlaneTransform
+    id: ProvinceSelector
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 46
+    startLine: 62
   assemblies:
   - MapAssembly
   namespace: Map.Core
-  summary: Get the map plane transform for border mesh scaling
+  summary: Province selector for mouse interaction.
   example: []
   syntax:
-    content: public Transform GetMapPlaneTransform()
+    content: public ProvinceSelector ProvinceSelector { get; }
+    parameters: []
     return:
-      type: UnityEngine.Transform
-    content.vb: Public Function GetMapPlaneTransform() As Transform
-  overload: Map.Core.MapSystemCoordinator.GetMapPlaneTransform*
-- uid: Map.Core.MapSystemCoordinator.InitializeSystem(UnityEngine.Camera,UnityEngine.MeshRenderer)
-  commentId: M:Map.Core.MapSystemCoordinator.InitializeSystem(UnityEngine.Camera,UnityEngine.MeshRenderer)
-  id: InitializeSystem(UnityEngine.Camera,UnityEngine.MeshRenderer)
+      type: Map.Interaction.ProvinceSelector
+    content.vb: Public ReadOnly Property ProvinceSelector As ProvinceSelector
+  overload: Map.Core.MapSystemCoordinator.ProvinceSelector*
+- uid: Map.Core.MapSystemCoordinator.ProvinceHighlighter
+  commentId: P:Map.Core.MapSystemCoordinator.ProvinceHighlighter
+  id: ProvinceHighlighter
   parent: Map.Core.MapSystemCoordinator
   langs:
   - csharp
   - vb
-  name: InitializeSystem(Camera, MeshRenderer)
-  nameWithType: MapSystemCoordinator.InitializeSystem(Camera, MeshRenderer)
-  fullName: Map.Core.MapSystemCoordinator.InitializeSystem(UnityEngine.Camera, UnityEngine.MeshRenderer)
-  type: Method
+  name: ProvinceHighlighter
+  nameWithType: MapSystemCoordinator.ProvinceHighlighter
+  fullName: Map.Core.MapSystemCoordinator.ProvinceHighlighter
+  type: Property
   source:
     remote:
       path: Scripts/Map/Core/MapSystemCoordinator.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: InitializeSystem
+    id: ProvinceHighlighter
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 51
+    startLine: 65
   assemblies:
   - MapAssembly
   namespace: Map.Core
-  summary: Initialize the entire map system with proper references
+  summary: Province highlighter for selection visuals.
   example: []
   syntax:
-    content: public void InitializeSystem(Camera camera, MeshRenderer renderer)
-    parameters:
-    - id: camera
-      type: UnityEngine.Camera
-    - id: renderer
-      type: UnityEngine.MeshRenderer
-    content.vb: Public Sub InitializeSystem(camera As Camera, renderer As MeshRenderer)
-  overload: Map.Core.MapSystemCoordinator.InitializeSystem*
-- uid: Map.Core.MapSystemCoordinator.GenerateMapFromFiles(System.String,System.String,System.Boolean)
-  commentId: M:Map.Core.MapSystemCoordinator.GenerateMapFromFiles(System.String,System.String,System.Boolean)
-  id: GenerateMapFromFiles(System.String,System.String,System.Boolean)
+    content: public ProvinceHighlighter ProvinceHighlighter { get; }
+    parameters: []
+    return:
+      type: Map.Interaction.ProvinceHighlighter
+    content.vb: Public ReadOnly Property ProvinceHighlighter As ProvinceHighlighter
+  overload: Map.Core.MapSystemCoordinator.ProvinceHighlighter*
+- uid: Map.Core.MapSystemCoordinator.MapModeManager
+  commentId: P:Map.Core.MapSystemCoordinator.MapModeManager
+  id: MapModeManager
   parent: Map.Core.MapSystemCoordinator
   langs:
   - csharp
   - vb
-  name: GenerateMapFromFiles(string, string, bool)
-  nameWithType: MapSystemCoordinator.GenerateMapFromFiles(string, string, bool)
-  fullName: Map.Core.MapSystemCoordinator.GenerateMapFromFiles(string, string, bool)
-  type: Method
+  name: MapModeManager
+  nameWithType: MapSystemCoordinator.MapModeManager
+  fullName: Map.Core.MapSystemCoordinator.MapModeManager
+  type: Property
   source:
     remote:
       path: Scripts/Map/Core/MapSystemCoordinator.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GenerateMapFromFiles
+    id: MapModeManager
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 68
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Map mode manager for visualization modes.
+  example: []
+  syntax:
+    content: public MapModeManager MapModeManager { get; }
+    parameters: []
+    return:
+      type: Map.MapModes.MapModeManager
+    content.vb: Public ReadOnly Property MapModeManager As MapModeManager
+  overload: Map.Core.MapSystemCoordinator.MapModeManager*
+- uid: Map.Core.MapSystemCoordinator.BorderDispatcher
+  commentId: P:Map.Core.MapSystemCoordinator.BorderDispatcher
+  id: BorderDispatcher
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: BorderDispatcher
+  nameWithType: MapSystemCoordinator.BorderDispatcher
+  fullName: Map.Core.MapSystemCoordinator.BorderDispatcher
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BorderDispatcher
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Border compute dispatcher for border rendering.
+  example: []
+  syntax:
+    content: public BorderComputeDispatcher BorderDispatcher { get; }
+    parameters: []
+    return:
+      type: Map.Rendering.BorderComputeDispatcher
+    content.vb: Public ReadOnly Property BorderDispatcher As BorderComputeDispatcher
+  overload: Map.Core.MapSystemCoordinator.BorderDispatcher*
+- uid: Map.Core.MapSystemCoordinator.MapCamera
+  commentId: P:Map.Core.MapSystemCoordinator.MapCamera
+  id: MapCamera
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: MapCamera
+  nameWithType: MapSystemCoordinator.MapCamera
+  fullName: Map.Core.MapSystemCoordinator.MapCamera
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MapCamera
     path: Scripts/Map/Core/MapSystemCoordinator.cs
     startLine: 74
   assemblies:
   - MapAssembly
   namespace: Map.Core
-  summary: Generate map from files (legacy method)
+  summary: Camera used for map rendering.
   example: []
   syntax:
-    content: public Task<bool> GenerateMapFromFiles(string bitmapPath, string csvPath, bool useDefinition)
-    parameters:
-    - id: bitmapPath
-      type: System.String
-    - id: csvPath
-      type: System.String
-    - id: useDefinition
-      type: System.Boolean
+    content: public Camera MapCamera { get; }
+    parameters: []
     return:
-      type: System.Threading.Tasks.Task{System.Boolean}
-    content.vb: Public Function GenerateMapFromFiles(bitmapPath As String, csvPath As String, useDefinition As Boolean) As Task(Of Boolean)
-  overload: Map.Core.MapSystemCoordinator.GenerateMapFromFiles*
-  nameWithType.vb: MapSystemCoordinator.GenerateMapFromFiles(String, String, Boolean)
-  fullName.vb: Map.Core.MapSystemCoordinator.GenerateMapFromFiles(String, String, Boolean)
-  name.vb: GenerateMapFromFiles(String, String, Boolean)
-- uid: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  commentId: M:Map.Core.MapSystemCoordinator.GenerateMapFromSimulation(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  id: GenerateMapFromSimulation(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
+      type: UnityEngine.Camera
+    content.vb: Public ReadOnly Property MapCamera As Camera
+  overload: Map.Core.MapSystemCoordinator.MapCamera*
+- uid: Map.Core.MapSystemCoordinator.MeshRenderer
+  commentId: P:Map.Core.MapSystemCoordinator.MeshRenderer
+  id: MeshRenderer
   parent: Map.Core.MapSystemCoordinator
   langs:
   - csharp
   - vb
-  name: GenerateMapFromSimulation(SimulationDataReadyEvent, string, string, bool)
-  nameWithType: MapSystemCoordinator.GenerateMapFromSimulation(SimulationDataReadyEvent, string, string, bool)
-  fullName: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation(Core.SimulationDataReadyEvent, string, string, bool)
+  name: MeshRenderer
+  nameWithType: MapSystemCoordinator.MeshRenderer
+  fullName: Map.Core.MapSystemCoordinator.MeshRenderer
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: MeshRenderer
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 77
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Mesh renderer for the map quad.
+  example: []
+  syntax:
+    content: public MeshRenderer MeshRenderer { get; }
+    parameters: []
+    return:
+      type: UnityEngine.MeshRenderer
+    content.vb: Public ReadOnly Property MeshRenderer As MeshRenderer
+  overload: Map.Core.MapSystemCoordinator.MeshRenderer*
+- uid: Map.Core.MapSystemCoordinator.DataDirectory
+  commentId: P:Map.Core.MapSystemCoordinator.DataDirectory
+  id: DataDirectory
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: DataDirectory
+  nameWithType: MapSystemCoordinator.DataDirectory
+  fullName: Map.Core.MapSystemCoordinator.DataDirectory
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DataDirectory
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 80
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Data directory from GameSettings.
+  example: []
+  syntax:
+    content: public string DataDirectory { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public ReadOnly Property DataDirectory As String
+  overload: Map.Core.MapSystemCoordinator.DataDirectory*
+- uid: Map.Core.MapSystemCoordinator.IsInitialized
+  commentId: P:Map.Core.MapSystemCoordinator.IsInitialized
+  id: IsInitialized
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: MapSystemCoordinator.IsInitialized
+  fullName: Map.Core.MapSystemCoordinator.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 83
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: True when map system is fully initialized.
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsInitialized As Boolean
+  overload: Map.Core.MapSystemCoordinator.IsInitialized*
+- uid: Map.Core.MapSystemCoordinator.OnProgress
+  commentId: F:Map.Core.MapSystemCoordinator.OnProgress
+  id: OnProgress
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: OnProgress
+  nameWithType: MapSystemCoordinator.OnProgress
+  fullName: Map.Core.MapSystemCoordinator.OnProgress
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnProgress
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 86
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Progress callback for loading screen (0-100, status message).
+  example: []
+  syntax:
+    content: public Action<float, string> OnProgress
+    return:
+      type: System.Action{System.Single,System.String}
+    content.vb: Public OnProgress As Action(Of Single, String)
+- uid: Map.Core.MapSystemCoordinator.OnComplete
+  commentId: F:Map.Core.MapSystemCoordinator.OnComplete
+  id: OnComplete
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: OnComplete
+  nameWithType: MapSystemCoordinator.OnComplete
+  fullName: Map.Core.MapSystemCoordinator.OnComplete
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnComplete
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 89
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Completion callback (success, message).
+  example: []
+  syntax:
+    content: public Action<bool, string> OnComplete
+    return:
+      type: System.Action{System.Boolean,System.String}
+    content.vb: Public OnComplete As Action(Of Boolean, String)
+- uid: Map.Core.MapSystemCoordinator.Configure(UnityEngine.Camera,UnityEngine.MeshRenderer,Core.GameSettings,Map.Rendering.MapTextureManager,Map.Rendering.BorderComputeDispatcher,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator)
+  commentId: M:Map.Core.MapSystemCoordinator.Configure(UnityEngine.Camera,UnityEngine.MeshRenderer,Core.GameSettings,Map.Rendering.MapTextureManager,Map.Rendering.BorderComputeDispatcher,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator)
+  id: Configure(UnityEngine.Camera,UnityEngine.MeshRenderer,Core.GameSettings,Map.Rendering.MapTextureManager,Map.Rendering.BorderComputeDispatcher,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator)
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: Configure(Camera, MeshRenderer, GameSettings, MapTextureManager, BorderComputeDispatcher, OwnerTextureDispatcher, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator)
+  nameWithType: MapSystemCoordinator.Configure(Camera, MeshRenderer, GameSettings, MapTextureManager, BorderComputeDispatcher, OwnerTextureDispatcher, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator)
+  fullName: Map.Core.MapSystemCoordinator.Configure(UnityEngine.Camera, UnityEngine.MeshRenderer, Core.GameSettings, Map.Rendering.MapTextureManager, Map.Rendering.BorderComputeDispatcher, Map.Rendering.OwnerTextureDispatcher, Map.Rendering.ProvinceTerrainAnalyzer, Map.Rendering.Terrain.TerrainBlendMapGenerator)
   type: Method
   source:
     remote:
       path: Scripts/Map/Core/MapSystemCoordinator.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GenerateMapFromSimulation
+    id: Configure
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 110
+    startLine: 99
   assemblies:
   - MapAssembly
   namespace: Map.Core
-  summary: Generate map from simulation data (preferred method)
+  summary: >-
+    Configure the coordinator with required references and already-initialized components.
+
+    All components must be initialized by ArchonEngine BEFORE calling this method.
   example: []
   syntax:
-    content: public Task<bool> GenerateMapFromSimulation(SimulationDataReadyEvent simulationData, string bitmapPath, string csvPath, bool useDefinition)
+    content: public void Configure(Camera camera, MeshRenderer mesh, GameSettings settings, MapTextureManager textures, BorderComputeDispatcher borders, OwnerTextureDispatcher ownerDispatcher, ProvinceTerrainAnalyzer terrain, TerrainBlendMapGenerator blendGen)
+    parameters:
+    - id: camera
+      type: UnityEngine.Camera
+    - id: mesh
+      type: UnityEngine.MeshRenderer
+    - id: settings
+      type: Core.GameSettings
+    - id: textures
+      type: Map.Rendering.MapTextureManager
+    - id: borders
+      type: Map.Rendering.BorderComputeDispatcher
+    - id: ownerDispatcher
+      type: Map.Rendering.OwnerTextureDispatcher
+    - id: terrain
+      type: Map.Rendering.ProvinceTerrainAnalyzer
+    - id: blendGen
+      type: Map.Rendering.Terrain.TerrainBlendMapGenerator
+    content.vb: Public Sub Configure(camera As Camera, mesh As MeshRenderer, settings As GameSettings, textures As MapTextureManager, borders As BorderComputeDispatcher, ownerDispatcher As OwnerTextureDispatcher, terrain As ProvinceTerrainAnalyzer, blendGen As TerrainBlendMapGenerator)
+  overload: Map.Core.MapSystemCoordinator.Configure*
+- uid: Map.Core.MapSystemCoordinator.Initialize(Core.SimulationDataReadyEvent)
+  commentId: M:Map.Core.MapSystemCoordinator.Initialize(Core.SimulationDataReadyEvent)
+  id: Initialize(Core.SimulationDataReadyEvent)
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: Initialize(SimulationDataReadyEvent)
+  nameWithType: MapSystemCoordinator.Initialize(SimulationDataReadyEvent)
+  fullName: Map.Core.MapSystemCoordinator.Initialize(Core.SimulationDataReadyEvent)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 132
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: >-
+    Initialize the map system with simulation data.
+
+    Call this after Configure() and after simulation is ready.
+  example: []
+  syntax:
+    content: public void Initialize(SimulationDataReadyEvent simulationData)
     parameters:
     - id: simulationData
       type: Core.SimulationDataReadyEvent
-    - id: bitmapPath
-      type: System.String
-    - id: csvPath
-      type: System.String
-    - id: useDefinition
-      type: System.Boolean
-    return:
-      type: System.Threading.Tasks.Task{System.Boolean}
-    content.vb: Public Function GenerateMapFromSimulation(simulationData As SimulationDataReadyEvent, bitmapPath As String, csvPath As String, useDefinition As Boolean) As Task(Of Boolean)
-  overload: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation*
-  nameWithType.vb: MapSystemCoordinator.GenerateMapFromSimulation(SimulationDataReadyEvent, String, String, Boolean)
-  fullName.vb: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation(Core.SimulationDataReadyEvent, String, String, Boolean)
-  name.vb: GenerateMapFromSimulation(SimulationDataReadyEvent, String, String, Boolean)
-- uid: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
-  commentId: M:Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
-  id: GetProvinceAtWorldPosition(UnityEngine.Vector3)
-  parent: Map.Core.MapSystemCoordinator
-  langs:
-  - csharp
-  - vb
-  name: GetProvinceAtWorldPosition(Vector3)
-  nameWithType: MapSystemCoordinator.GetProvinceAtWorldPosition(Vector3)
-  fullName: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Map/Core/MapSystemCoordinator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GetProvinceAtWorldPosition
-    path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 180
-  assemblies:
-  - MapAssembly
-  namespace: Map.Core
-  summary: Get province ID at world position
-  example: []
-  syntax:
-    content: public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
-    parameters:
-    - id: worldPosition
-      type: UnityEngine.Vector3
-    return:
-      type: System.UInt16
-    content.vb: Public Function GetProvinceAtWorldPosition(worldPosition As Vector3) As UShort
-  overload: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition*
-- uid: Map.Core.MapSystemCoordinator.SetMapMode(System.Int32)
-  commentId: M:Map.Core.MapSystemCoordinator.SetMapMode(System.Int32)
-  id: SetMapMode(System.Int32)
-  parent: Map.Core.MapSystemCoordinator
-  langs:
-  - csharp
-  - vb
-  name: SetMapMode(int)
-  nameWithType: MapSystemCoordinator.SetMapMode(int)
-  fullName: Map.Core.MapSystemCoordinator.SetMapMode(int)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Map/Core/MapSystemCoordinator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: SetMapMode
-    path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 188
-  assemblies:
-  - MapAssembly
-  namespace: Map.Core
-  summary: Set map mode
-  example: []
-  syntax:
-    content: public void SetMapMode(int modeId)
-    parameters:
-    - id: modeId
-      type: System.Int32
-    content.vb: Public Sub SetMapMode(modeId As Integer)
-  overload: Map.Core.MapSystemCoordinator.SetMapMode*
-  nameWithType.vb: MapSystemCoordinator.SetMapMode(Integer)
-  fullName.vb: Map.Core.MapSystemCoordinator.SetMapMode(Integer)
-  name.vb: SetMapMode(Integer)
-- uid: Map.Core.MapSystemCoordinator.HandleSimulationReady(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  commentId: M:Map.Core.MapSystemCoordinator.HandleSimulationReady(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  id: HandleSimulationReady(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  parent: Map.Core.MapSystemCoordinator
-  langs:
-  - csharp
-  - vb
-  name: HandleSimulationReady(SimulationDataReadyEvent, string, string, bool)
-  nameWithType: MapSystemCoordinator.HandleSimulationReady(SimulationDataReadyEvent, string, string, bool)
-  fullName: Map.Core.MapSystemCoordinator.HandleSimulationReady(Core.SimulationDataReadyEvent, string, string, bool)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Map/Core/MapSystemCoordinator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: HandleSimulationReady
-    path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 196
-  assemblies:
-  - MapAssembly
-  namespace: Map.Core
-  summary: Handle simulation ready event (called by MapInitializer after components are initialized)
-  example: []
-  syntax:
-    content: public void HandleSimulationReady(SimulationDataReadyEvent simulationData, string bitmapPath, string csvPath, bool useDefinition)
-    parameters:
-    - id: simulationData
-      type: Core.SimulationDataReadyEvent
-    - id: bitmapPath
-      type: System.String
-    - id: csvPath
-      type: System.String
-    - id: useDefinition
-      type: System.Boolean
-    content.vb: Public Sub HandleSimulationReady(simulationData As SimulationDataReadyEvent, bitmapPath As String, csvPath As String, useDefinition As Boolean)
-  overload: Map.Core.MapSystemCoordinator.HandleSimulationReady*
-  nameWithType.vb: MapSystemCoordinator.HandleSimulationReady(SimulationDataReadyEvent, String, String, Boolean)
-  fullName.vb: Map.Core.MapSystemCoordinator.HandleSimulationReady(Core.SimulationDataReadyEvent, String, String, Boolean)
-  name.vb: HandleSimulationReady(SimulationDataReadyEvent, String, String, Boolean)
+    content.vb: Public Sub Initialize(simulationData As SimulationDataReadyEvent)
+  overload: Map.Core.MapSystemCoordinator.Initialize*
 - uid: Map.Core.MapSystemCoordinator.RefreshAllVisuals
   commentId: M:Map.Core.MapSystemCoordinator.RefreshAllVisuals
   id: RefreshAllVisuals
@@ -405,7 +527,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RefreshAllVisuals
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 388
+    startLine: 376
   assemblies:
   - MapAssembly
   namespace: Map.Core
@@ -418,6 +540,69 @@ items:
     content: public void RefreshAllVisuals()
     content.vb: Public Sub RefreshAllVisuals()
   overload: Map.Core.MapSystemCoordinator.RefreshAllVisuals*
+- uid: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  commentId: M:Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  id: GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceAtWorldPosition(Vector3)
+  nameWithType: MapSystemCoordinator.GetProvinceAtWorldPosition(Vector3)
+  fullName: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition(UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceAtWorldPosition
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 413
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Get province ID at world position.
+  example: []
+  syntax:
+    content: public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
+    parameters:
+    - id: worldPosition
+      type: UnityEngine.Vector3
+    return:
+      type: System.UInt16
+    content.vb: Public Function GetProvinceAtWorldPosition(worldPosition As Vector3) As UShort
+  overload: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition*
+- uid: Map.Core.MapSystemCoordinator.GetMapPlaneTransform
+  commentId: M:Map.Core.MapSystemCoordinator.GetMapPlaneTransform
+  id: GetMapPlaneTransform
+  parent: Map.Core.MapSystemCoordinator
+  langs:
+  - csharp
+  - vb
+  name: GetMapPlaneTransform()
+  nameWithType: MapSystemCoordinator.GetMapPlaneTransform()
+  fullName: Map.Core.MapSystemCoordinator.GetMapPlaneTransform()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Core/MapSystemCoordinator.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetMapPlaneTransform
+    path: Scripts/Map/Core/MapSystemCoordinator.cs
+    startLine: 421
+  assemblies:
+  - MapAssembly
+  namespace: Map.Core
+  summary: Get the map plane transform for border mesh scaling.
+  example: []
+  syntax:
+    content: public Transform GetMapPlaneTransform()
+    return:
+      type: UnityEngine.Transform
+    content.vb: Public Function GetMapPlaneTransform() As Transform
+  overload: Map.Core.MapSystemCoordinator.GetMapPlaneTransform*
 references:
 - uid: Map.Core
   commentId: N:Map.Core
@@ -491,6 +676,208 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Core.MapSystemCoordinator.ProvinceMapping*
+  commentId: Overload:Map.Core.MapSystemCoordinator.ProvinceMapping
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_ProvinceMapping
+  name: ProvinceMapping
+  nameWithType: MapSystemCoordinator.ProvinceMapping
+  fullName: Map.Core.MapSystemCoordinator.ProvinceMapping
+- uid: Map.Rendering.ProvinceMapping
+  commentId: T:Map.Rendering.ProvinceMapping
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceMapping.html
+  name: ProvinceMapping
+  nameWithType: ProvinceMapping
+  fullName: Map.Rendering.ProvinceMapping
+- uid: Map.Rendering
+  commentId: N:Map.Rendering
+  href: Map.html
+  name: Map.Rendering
+  nameWithType: Map.Rendering
+  fullName: Map.Rendering
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+- uid: Map.Core.MapSystemCoordinator.TextureManager*
+  commentId: Overload:Map.Core.MapSystemCoordinator.TextureManager
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_TextureManager
+  name: TextureManager
+  nameWithType: MapSystemCoordinator.TextureManager
+  fullName: Map.Core.MapSystemCoordinator.TextureManager
+- uid: Map.Rendering.MapTextureManager
+  commentId: T:Map.Rendering.MapTextureManager
+  parent: Map.Rendering
+  href: Map.Rendering.MapTextureManager.html
+  name: MapTextureManager
+  nameWithType: MapTextureManager
+  fullName: Map.Rendering.MapTextureManager
+- uid: Map.Core.MapSystemCoordinator.ProvinceSelector*
+  commentId: Overload:Map.Core.MapSystemCoordinator.ProvinceSelector
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_ProvinceSelector
+  name: ProvinceSelector
+  nameWithType: MapSystemCoordinator.ProvinceSelector
+  fullName: Map.Core.MapSystemCoordinator.ProvinceSelector
+- uid: Map.Interaction.ProvinceSelector
+  commentId: T:Map.Interaction.ProvinceSelector
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceSelector.html
+  name: ProvinceSelector
+  nameWithType: ProvinceSelector
+  fullName: Map.Interaction.ProvinceSelector
+- uid: Map.Interaction
+  commentId: N:Map.Interaction
+  href: Map.html
+  name: Map.Interaction
+  nameWithType: Map.Interaction
+  fullName: Map.Interaction
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Interaction
+    name: Interaction
+    href: Map.Interaction.html
+- uid: Map.Core.MapSystemCoordinator.ProvinceHighlighter*
+  commentId: Overload:Map.Core.MapSystemCoordinator.ProvinceHighlighter
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_ProvinceHighlighter
+  name: ProvinceHighlighter
+  nameWithType: MapSystemCoordinator.ProvinceHighlighter
+  fullName: Map.Core.MapSystemCoordinator.ProvinceHighlighter
+- uid: Map.Interaction.ProvinceHighlighter
+  commentId: T:Map.Interaction.ProvinceHighlighter
+  parent: Map.Interaction
+  href: Map.Interaction.ProvinceHighlighter.html
+  name: ProvinceHighlighter
+  nameWithType: ProvinceHighlighter
+  fullName: Map.Interaction.ProvinceHighlighter
+- uid: Map.Core.MapSystemCoordinator.MapModeManager*
+  commentId: Overload:Map.Core.MapSystemCoordinator.MapModeManager
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_MapModeManager
+  name: MapModeManager
+  nameWithType: MapSystemCoordinator.MapModeManager
+  fullName: Map.Core.MapSystemCoordinator.MapModeManager
+- uid: Map.MapModes.MapModeManager
+  commentId: T:Map.MapModes.MapModeManager
+  parent: Map.MapModes
+  href: Map.MapModes.MapModeManager.html
+  name: MapModeManager
+  nameWithType: MapModeManager
+  fullName: Map.MapModes.MapModeManager
+- uid: Map.MapModes
+  commentId: N:Map.MapModes
+  href: Map.html
+  name: Map.MapModes
+  nameWithType: Map.MapModes
+  fullName: Map.MapModes
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.MapModes
+    name: MapModes
+    href: Map.MapModes.html
+- uid: Map.Core.MapSystemCoordinator.BorderDispatcher*
+  commentId: Overload:Map.Core.MapSystemCoordinator.BorderDispatcher
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_BorderDispatcher
+  name: BorderDispatcher
+  nameWithType: MapSystemCoordinator.BorderDispatcher
+  fullName: Map.Core.MapSystemCoordinator.BorderDispatcher
+- uid: Map.Rendering.BorderComputeDispatcher
+  commentId: T:Map.Rendering.BorderComputeDispatcher
+  parent: Map.Rendering
+  href: Map.Rendering.BorderComputeDispatcher.html
+  name: BorderComputeDispatcher
+  nameWithType: BorderComputeDispatcher
+  fullName: Map.Rendering.BorderComputeDispatcher
+- uid: Map.Core.MapSystemCoordinator.MapCamera*
+  commentId: Overload:Map.Core.MapSystemCoordinator.MapCamera
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_MapCamera
+  name: MapCamera
+  nameWithType: MapSystemCoordinator.MapCamera
+  fullName: Map.Core.MapSystemCoordinator.MapCamera
+- uid: UnityEngine.Camera
+  commentId: T:UnityEngine.Camera
+  parent: UnityEngine
+  isExternal: true
+  name: Camera
+  nameWithType: Camera
+  fullName: UnityEngine.Camera
+- uid: Map.Core.MapSystemCoordinator.MeshRenderer*
+  commentId: Overload:Map.Core.MapSystemCoordinator.MeshRenderer
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_MeshRenderer
+  name: MeshRenderer
+  nameWithType: MapSystemCoordinator.MeshRenderer
+  fullName: Map.Core.MapSystemCoordinator.MeshRenderer
+- uid: UnityEngine.MeshRenderer
+  commentId: T:UnityEngine.MeshRenderer
+  parent: UnityEngine
+  isExternal: true
+  name: MeshRenderer
+  nameWithType: MeshRenderer
+  fullName: UnityEngine.MeshRenderer
+- uid: Map.Core.MapSystemCoordinator.DataDirectory*
+  commentId: Overload:Map.Core.MapSystemCoordinator.DataDirectory
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_DataDirectory
+  name: DataDirectory
+  nameWithType: MapSystemCoordinator.DataDirectory
+  fullName: Map.Core.MapSystemCoordinator.DataDirectory
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Core.MapSystemCoordinator.IsInitialized*
+  commentId: Overload:Map.Core.MapSystemCoordinator.IsInitialized
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_IsInitialized
+  name: IsInitialized
+  nameWithType: MapSystemCoordinator.IsInitialized
+  fullName: Map.Core.MapSystemCoordinator.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: System.Action{System.Single,System.String}
   commentId: T:System.Action{System.Single,System.String}
   parent: System
@@ -562,135 +949,33 @@ references:
   - name: " "
   - name: T2
   - name: )
-- uid: Map.Core.MapSystemCoordinator.ProvinceMapping*
-  commentId: Overload:Map.Core.MapSystemCoordinator.ProvinceMapping
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_ProvinceMapping
-  name: ProvinceMapping
-  nameWithType: MapSystemCoordinator.ProvinceMapping
-  fullName: Map.Core.MapSystemCoordinator.ProvinceMapping
-- uid: Map.Rendering.ProvinceMapping
-  commentId: T:Map.Rendering.ProvinceMapping
-  parent: Map.Rendering
-  href: Map.Rendering.ProvinceMapping.html
-  name: ProvinceMapping
-  nameWithType: ProvinceMapping
-  fullName: Map.Rendering.ProvinceMapping
-- uid: Map.Rendering
-  commentId: N:Map.Rendering
-  href: Map.html
-  name: Map.Rendering
-  nameWithType: Map.Rendering
-  fullName: Map.Rendering
-  spec.csharp:
-  - uid: Map
-    name: Map
-    href: Map.html
-  - name: .
-  - uid: Map.Rendering
-    name: Rendering
-    href: Map.Rendering.html
-  spec.vb:
-  - uid: Map
-    name: Map
-    href: Map.html
-  - name: .
-  - uid: Map.Rendering
-    name: Rendering
-    href: Map.Rendering.html
-- uid: Map.Core.MapSystemCoordinator.TextureManager*
-  commentId: Overload:Map.Core.MapSystemCoordinator.TextureManager
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_TextureManager
-  name: TextureManager
-  nameWithType: MapSystemCoordinator.TextureManager
-  fullName: Map.Core.MapSystemCoordinator.TextureManager
-- uid: Map.Rendering.MapTextureManager
-  commentId: T:Map.Rendering.MapTextureManager
-  parent: Map.Rendering
-  href: Map.Rendering.MapTextureManager.html
-  name: MapTextureManager
-  nameWithType: MapTextureManager
-  fullName: Map.Rendering.MapTextureManager
-- uid: Map.Core.MapSystemCoordinator.GetMapPlaneTransform*
-  commentId: Overload:Map.Core.MapSystemCoordinator.GetMapPlaneTransform
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_GetMapPlaneTransform
-  name: GetMapPlaneTransform
-  nameWithType: MapSystemCoordinator.GetMapPlaneTransform
-  fullName: Map.Core.MapSystemCoordinator.GetMapPlaneTransform
-- uid: UnityEngine.Transform
-  commentId: T:UnityEngine.Transform
-  parent: UnityEngine
-  isExternal: true
-  name: Transform
-  nameWithType: Transform
-  fullName: UnityEngine.Transform
-- uid: Map.Core.MapSystemCoordinator.InitializeSystem*
-  commentId: Overload:Map.Core.MapSystemCoordinator.InitializeSystem
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_InitializeSystem_UnityEngine_Camera_UnityEngine_MeshRenderer_
-  name: InitializeSystem
-  nameWithType: MapSystemCoordinator.InitializeSystem
-  fullName: Map.Core.MapSystemCoordinator.InitializeSystem
-- uid: UnityEngine.Camera
-  commentId: T:UnityEngine.Camera
-  parent: UnityEngine
-  isExternal: true
-  name: Camera
-  nameWithType: Camera
-  fullName: UnityEngine.Camera
-- uid: UnityEngine.MeshRenderer
-  commentId: T:UnityEngine.MeshRenderer
-  parent: UnityEngine
-  isExternal: true
-  name: MeshRenderer
-  nameWithType: MeshRenderer
-  fullName: UnityEngine.MeshRenderer
-- uid: Map.Core.MapSystemCoordinator.GenerateMapFromFiles*
-  commentId: Overload:Map.Core.MapSystemCoordinator.GenerateMapFromFiles
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_GenerateMapFromFiles_System_String_System_String_System_Boolean_
-  name: GenerateMapFromFiles
-  nameWithType: MapSystemCoordinator.GenerateMapFromFiles
-  fullName: Map.Core.MapSystemCoordinator.GenerateMapFromFiles
-- uid: System.String
-  commentId: T:System.String
+- uid: System.Action{System.Boolean,System.String}
+  commentId: T:System.Action{System.Boolean,System.String}
   parent: System
-  isExternal: true
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
-- uid: System.Threading.Tasks.Task{System.Boolean}
-  commentId: T:System.Threading.Tasks.Task{System.Boolean}
-  parent: System.Threading.Tasks
-  definition: System.Threading.Tasks.Task`1
-  name: Task<bool>
-  nameWithType: Task<bool>
-  fullName: System.Threading.Tasks.Task<bool>
-  nameWithType.vb: Task(Of Boolean)
-  fullName.vb: System.Threading.Tasks.Task(Of Boolean)
-  name.vb: Task(Of Boolean)
+  definition: System.Action`2
+  name: Action<bool, string>
+  nameWithType: Action<bool, string>
+  fullName: System.Action<bool, string>
+  nameWithType.vb: Action(Of Boolean, String)
+  fullName.vb: System.Action(Of Boolean, String)
+  name.vb: Action(Of Boolean, String)
   spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
+  - uid: System.Action`2
+    name: Action
     isExternal: true
   - name: <
   - uid: System.Boolean
     name: bool
     isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
   - name: '>'
   spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
+  - uid: System.Action`2
+    name: Action
     isExternal: true
   - name: (
   - name: Of
@@ -698,68 +983,88 @@ references:
   - uid: System.Boolean
     name: Boolean
     isExternal: true
-  - name: )
-- uid: System.Threading.Tasks.Task`1
-  commentId: T:System.Threading.Tasks.Task`1
-  isExternal: true
-  name: Task<TResult>
-  nameWithType: Task<TResult>
-  fullName: System.Threading.Tasks.Task<TResult>
-  nameWithType.vb: Task(Of TResult)
-  fullName.vb: System.Threading.Tasks.Task(Of TResult)
-  name.vb: Task(Of TResult)
-  spec.csharp:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-  - name: <
-  - name: TResult
-  - name: '>'
-  spec.vb:
-  - uid: System.Threading.Tasks.Task`1
-    name: Task
-    isExternal: true
-  - name: (
-  - name: Of
+  - name: ','
   - name: " "
-  - name: TResult
+  - uid: System.String
+    name: String
+    isExternal: true
   - name: )
-- uid: System.Threading.Tasks
-  commentId: N:System.Threading.Tasks
-  isExternal: true
-  name: System.Threading.Tasks
-  nameWithType: System.Threading.Tasks
-  fullName: System.Threading.Tasks
+- uid: Map.Core.MapSystemCoordinator.Configure*
+  commentId: Overload:Map.Core.MapSystemCoordinator.Configure
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_Configure_UnityEngine_Camera_UnityEngine_MeshRenderer_Core_GameSettings_Map_Rendering_MapTextureManager_Map_Rendering_BorderComputeDispatcher_Map_Rendering_OwnerTextureDispatcher_Map_Rendering_ProvinceTerrainAnalyzer_Map_Rendering_Terrain_TerrainBlendMapGenerator_
+  name: Configure
+  nameWithType: MapSystemCoordinator.Configure
+  fullName: Map.Core.MapSystemCoordinator.Configure
+- uid: Core.GameSettings
+  commentId: T:Core.GameSettings
+  parent: Core
+  href: Core.GameSettings.html
+  name: GameSettings
+  nameWithType: GameSettings
+  fullName: Core.GameSettings
+- uid: Map.Rendering.OwnerTextureDispatcher
+  commentId: T:Map.Rendering.OwnerTextureDispatcher
+  parent: Map.Rendering
+  href: Map.Rendering.OwnerTextureDispatcher.html
+  name: OwnerTextureDispatcher
+  nameWithType: OwnerTextureDispatcher
+  fullName: Map.Rendering.OwnerTextureDispatcher
+- uid: Map.Rendering.ProvinceTerrainAnalyzer
+  commentId: T:Map.Rendering.ProvinceTerrainAnalyzer
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceTerrainAnalyzer.html
+  name: ProvinceTerrainAnalyzer
+  nameWithType: ProvinceTerrainAnalyzer
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  commentId: T:Map.Rendering.Terrain.TerrainBlendMapGenerator
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html
+  name: TerrainBlendMapGenerator
+  nameWithType: TerrainBlendMapGenerator
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
   spec.csharp:
-  - uid: System
-    name: System
-    isExternal: true
+  - uid: Map
+    name: Map
+    href: Map.html
   - name: .
-  - uid: System.Threading
-    name: Threading
-    isExternal: true
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
   - name: .
-  - uid: System.Threading.Tasks
-    name: Tasks
-    isExternal: true
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
   spec.vb:
-  - uid: System
-    name: System
-    isExternal: true
+  - uid: Map
+    name: Map
+    href: Map.html
   - name: .
-  - uid: System.Threading
-    name: Threading
-    isExternal: true
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
   - name: .
-  - uid: System.Threading.Tasks
-    name: Tasks
-    isExternal: true
-- uid: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation*
-  commentId: Overload:Map.Core.MapSystemCoordinator.GenerateMapFromSimulation
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_GenerateMapFromSimulation_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
-  name: GenerateMapFromSimulation
-  nameWithType: MapSystemCoordinator.GenerateMapFromSimulation
-  fullName: Map.Core.MapSystemCoordinator.GenerateMapFromSimulation
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+- uid: Map.Core.MapSystemCoordinator.Initialize*
+  commentId: Overload:Map.Core.MapSystemCoordinator.Initialize
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_Initialize_Core_SimulationDataReadyEvent_
+  name: Initialize
+  nameWithType: MapSystemCoordinator.Initialize
+  fullName: Map.Core.MapSystemCoordinator.Initialize
 - uid: Core.SimulationDataReadyEvent
   commentId: T:Core.SimulationDataReadyEvent
   parent: Core
@@ -767,12 +1072,12 @@ references:
   name: SimulationDataReadyEvent
   nameWithType: SimulationDataReadyEvent
   fullName: Core.SimulationDataReadyEvent
-- uid: Core
-  commentId: N:Core
-  href: Core.html
-  name: Core
-  nameWithType: Core
-  fullName: Core
+- uid: Map.Core.MapSystemCoordinator.RefreshAllVisuals*
+  commentId: Overload:Map.Core.MapSystemCoordinator.RefreshAllVisuals
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_RefreshAllVisuals
+  name: RefreshAllVisuals
+  nameWithType: MapSystemCoordinator.RefreshAllVisuals
+  fullName: Map.Core.MapSystemCoordinator.RefreshAllVisuals
 - uid: Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition*
   commentId: Overload:Map.Core.MapSystemCoordinator.GetProvinceAtWorldPosition
   href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_GetProvinceAtWorldPosition_UnityEngine_Vector3_
@@ -796,31 +1101,16 @@ references:
   nameWithType.vb: UShort
   fullName.vb: UShort
   name.vb: UShort
-- uid: Map.Core.MapSystemCoordinator.SetMapMode*
-  commentId: Overload:Map.Core.MapSystemCoordinator.SetMapMode
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_SetMapMode_System_Int32_
-  name: SetMapMode
-  nameWithType: MapSystemCoordinator.SetMapMode
-  fullName: Map.Core.MapSystemCoordinator.SetMapMode
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
+- uid: Map.Core.MapSystemCoordinator.GetMapPlaneTransform*
+  commentId: Overload:Map.Core.MapSystemCoordinator.GetMapPlaneTransform
+  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_GetMapPlaneTransform
+  name: GetMapPlaneTransform
+  nameWithType: MapSystemCoordinator.GetMapPlaneTransform
+  fullName: Map.Core.MapSystemCoordinator.GetMapPlaneTransform
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
   isExternal: true
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
-- uid: Map.Core.MapSystemCoordinator.HandleSimulationReady*
-  commentId: Overload:Map.Core.MapSystemCoordinator.HandleSimulationReady
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_HandleSimulationReady_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
-  name: HandleSimulationReady
-  nameWithType: MapSystemCoordinator.HandleSimulationReady
-  fullName: Map.Core.MapSystemCoordinator.HandleSimulationReady
-- uid: Map.Core.MapSystemCoordinator.RefreshAllVisuals*
-  commentId: Overload:Map.Core.MapSystemCoordinator.RefreshAllVisuals
-  href: Map.Core.MapSystemCoordinator.html#Map_Core_MapSystemCoordinator_RefreshAllVisuals
-  name: RefreshAllVisuals
-  nameWithType: MapSystemCoordinator.RefreshAllVisuals
-  fullName: Map.Core.MapSystemCoordinator.RefreshAllVisuals
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform

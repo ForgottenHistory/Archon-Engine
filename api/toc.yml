@@ -34,6 +34,9 @@ items:
   - uid: Core.IGameEvent
     name: IGameEvent
     type: Interface
+  - uid: Core.LogLevel
+    name: LogLevel
+    type: Enum
   - uid: Core.ReadOnlyAttribute
     name: ReadOnlyAttribute
     type: Class
@@ -1203,9 +1206,6 @@ items:
   - uid: Map.Core.EngineMapInitializer
     name: EngineMapInitializer
     type: Class
-  - uid: Map.Core.MapInitializer
-    name: MapInitializer
-    type: Class
   - uid: Map.Core.MapSystemCoordinator
     name: MapSystemCoordinator
     type: Class
@@ -1593,9 +1593,6 @@ items:
     type: Class
   - uid: Map.Rendering.MapRendererRegistry
     name: MapRendererRegistry
-    type: Class
-  - uid: Map.Rendering.MapRenderingCoordinator
-    name: MapRenderingCoordinator
     type: Class
   - uid: Map.Rendering.MapTextureManager
     name: MapTextureManager

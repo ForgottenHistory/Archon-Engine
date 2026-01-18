@@ -14,6 +14,7 @@ items:
   - Core.GameStateInitializedEvent
   - Core.GameStateSnapshot
   - Core.IGameEvent
+  - Core.LogLevel
   - Core.ReadOnlyAttribute
   - Core.ReadOnlyDrawer
   - Core.SimulationDataReadyEvent
@@ -66,6 +67,13 @@ references:
   name: ReadOnlyDrawer
   nameWithType: ReadOnlyDrawer
   fullName: Core.ReadOnlyDrawer
+- uid: Core.LogLevel
+  commentId: T:Core.LogLevel
+  parent: Core
+  href: Core.LogLevel.html
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: Core.LogLevel
 - uid: Core.GameSettings
   commentId: T:Core.GameSettings
   parent: Core

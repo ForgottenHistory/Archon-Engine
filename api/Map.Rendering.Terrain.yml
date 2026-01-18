@@ -31,6 +31,7 @@ references:
   fullName: Map.Rendering.Terrain.TerrainBitmapReader
 - uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
   commentId: T:Map.Rendering.Terrain.TerrainBlendMapGenerator
+  parent: Map.Rendering.Terrain
   href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html
   name: TerrainBlendMapGenerator
   nameWithType: TerrainBlendMapGenerator

@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AISystem
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 20
+    startLine: 19
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 38
+    startLine: 37
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 208
+    startLine: 207
   assemblies:
   - StarterKit
   namespace: StarterKit

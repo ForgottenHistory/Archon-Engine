@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceInfoUI
     path: Scripts/StarterKit/UI/ProvinceInfoUI.cs
-    startLine: 21
+    startLine: 20
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -125,7 +125,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/StarterKit/UI/ProvinceInfoUI.cs
-    startLine: 61
+    startLine: 60
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -166,7 +166,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnDestroy
     path: Scripts/StarterKit/UI/ProvinceInfoUI.cs
-    startLine: 119
+    startLine: 118
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -198,7 +198,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateUI
     path: Scripts/StarterKit/UI/ProvinceInfoUI.cs
-    startLine: 132
+    startLine: 131
   assemblies:
   - StarterKit
   namespace: StarterKit

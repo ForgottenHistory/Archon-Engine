@@ -5,7 +5,6 @@ items:
   id: Map.Core
   children:
   - Map.Core.EngineMapInitializer
-  - Map.Core.MapInitializer
   - Map.Core.MapSystemCoordinator
   langs:
   - csharp
@@ -29,9 +28,3 @@ references:
   name: EngineMapInitializer
   nameWithType: EngineMapInitializer
   fullName: Map.Core.EngineMapInitializer
-- uid: Map.Core.MapInitializer
-  commentId: T:Map.Core.MapInitializer
-  href: Map.Core.MapInitializer.html
-  name: MapInitializer
-  nameWithType: MapInitializer
-  fullName: Map.Core.MapInitializer

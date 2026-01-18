@@ -6,7 +6,7 @@ items:
   parent: Map.Rendering
   children:
   - Map.Rendering.TextureUpdateBridge.ForceUpdate
-  - Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+  - Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.BorderComputeDispatcher)
   langs:
   - csharp
   - vb
@@ -21,16 +21,19 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TextureUpdateBridge
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
     Simple bridge component that listens to province change events
 
-    and updates textures via MapTexturePopulator
+    and updates textures via MapTexturePopulator.
 
-    Replaces the complex SimulationTextureUpdater with a lightweight event-driven approach
+    Replaces the complex SimulationTextureUpdater with a lightweight event-driven approach.
+
+
+    Configuration comes from GameSettings - no Inspector assignments needed.
   example: []
   syntax:
     content: 'public class TextureUpdateBridge : MonoBehaviour'
@@ -41,16 +44,16 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
-- uid: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
-  commentId: M:Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
-  id: Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping)
+- uid: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.BorderComputeDispatcher)
+  commentId: M:Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.BorderComputeDispatcher)
+  id: Initialize(Core.GameState,Map.Rendering.MapTextureManager,Map.Rendering.MapTexturePopulator,Map.Rendering.ProvinceMapping,Map.Rendering.OwnerTextureDispatcher,Map.Rendering.BorderComputeDispatcher)
   parent: Map.Rendering.TextureUpdateBridge
   langs:
   - csharp
   - vb
-  name: Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping)
-  nameWithType: TextureUpdateBridge.Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping)
-  fullName: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState, Map.Rendering.MapTextureManager, Map.Rendering.MapTexturePopulator, Map.Rendering.ProvinceMapping)
+  name: Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping, OwnerTextureDispatcher, BorderComputeDispatcher)
+  nameWithType: TextureUpdateBridge.Initialize(GameState, MapTextureManager, MapTexturePopulator, ProvinceMapping, OwnerTextureDispatcher, BorderComputeDispatcher)
+  fullName: Map.Rendering.TextureUpdateBridge.Initialize(Core.GameState, Map.Rendering.MapTextureManager, Map.Rendering.MapTexturePopulator, Map.Rendering.ProvinceMapping, Map.Rendering.OwnerTextureDispatcher, Map.Rendering.BorderComputeDispatcher)
   type: Method
   source:
     remote:
@@ -59,14 +62,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 35
+    startLine: 37
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Initialize the bridge with required components
+  summary: Initialize the bridge with required components.
   example: []
   syntax:
-    content: public void Initialize(GameState gameState, MapTextureManager textureManager, MapTexturePopulator texturePopulator, ProvinceMapping provinceMapping)
+    content: public void Initialize(GameState gameState, MapTextureManager textureManager, MapTexturePopulator texturePopulator, ProvinceMapping provinceMapping, OwnerTextureDispatcher ownerDispatcher = null, BorderComputeDispatcher borderDispatcher = null)
     parameters:
     - id: gameState
       type: Core.GameState
@@ -76,7 +79,11 @@ items:
       type: Map.Rendering.MapTexturePopulator
     - id: provinceMapping
       type: Map.Rendering.ProvinceMapping
-    content.vb: Public Sub Initialize(gameState As GameState, textureManager As MapTextureManager, texturePopulator As MapTexturePopulator, provinceMapping As ProvinceMapping)
+    - id: ownerDispatcher
+      type: Map.Rendering.OwnerTextureDispatcher
+    - id: borderDispatcher
+      type: Map.Rendering.BorderComputeDispatcher
+    content.vb: Public Sub Initialize(gameState As GameState, textureManager As MapTextureManager, texturePopulator As MapTexturePopulator, provinceMapping As ProvinceMapping, ownerDispatcher As OwnerTextureDispatcher = Nothing, borderDispatcher As BorderComputeDispatcher = Nothing)
   overload: Map.Rendering.TextureUpdateBridge.Initialize*
 - uid: Map.Rendering.TextureUpdateBridge.ForceUpdate
   commentId: M:Map.Rendering.TextureUpdateBridge.ForceUpdate
@@ -96,7 +103,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceUpdate
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 136
+    startLine: 141
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -181,7 +188,7 @@ references:
   fullName: UnityEngine
 - uid: Map.Rendering.TextureUpdateBridge.Initialize*
   commentId: Overload:Map.Rendering.TextureUpdateBridge.Initialize
-  href: Map.Rendering.TextureUpdateBridge.html#Map_Rendering_TextureUpdateBridge_Initialize_Core_GameState_Map_Rendering_MapTextureManager_Map_Rendering_MapTexturePopulator_Map_Rendering_ProvinceMapping_
+  href: Map.Rendering.TextureUpdateBridge.html#Map_Rendering_TextureUpdateBridge_Initialize_Core_GameState_Map_Rendering_MapTextureManager_Map_Rendering_MapTexturePopulator_Map_Rendering_ProvinceMapping_Map_Rendering_OwnerTextureDispatcher_Map_Rendering_BorderComputeDispatcher_
   name: Initialize
   nameWithType: TextureUpdateBridge.Initialize
   fullName: Map.Rendering.TextureUpdateBridge.Initialize
@@ -213,6 +220,20 @@ references:
   name: ProvinceMapping
   nameWithType: ProvinceMapping
   fullName: Map.Rendering.ProvinceMapping
+- uid: Map.Rendering.OwnerTextureDispatcher
+  commentId: T:Map.Rendering.OwnerTextureDispatcher
+  parent: Map.Rendering
+  href: Map.Rendering.OwnerTextureDispatcher.html
+  name: OwnerTextureDispatcher
+  nameWithType: OwnerTextureDispatcher
+  fullName: Map.Rendering.OwnerTextureDispatcher
+- uid: Map.Rendering.BorderComputeDispatcher
+  commentId: T:Map.Rendering.BorderComputeDispatcher
+  parent: Map.Rendering
+  href: Map.Rendering.BorderComputeDispatcher.html
+  name: BorderComputeDispatcher
+  nameWithType: BorderComputeDispatcher
+  fullName: Map.Rendering.BorderComputeDispatcher
 - uid: Core
   commentId: N:Core
   href: Core.html

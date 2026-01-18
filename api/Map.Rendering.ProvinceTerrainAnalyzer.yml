@@ -6,6 +6,7 @@ items:
   parent: Map.Rendering
   children:
   - Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
+  - Map.Rendering.ProvinceTerrainAnalyzer.Initialize(System.String)
   langs:
   - csharp
   - vb
@@ -40,6 +41,40 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
+- uid: Map.Rendering.ProvinceTerrainAnalyzer.Initialize(System.String)
+  commentId: M:Map.Rendering.ProvinceTerrainAnalyzer.Initialize(System.String)
+  id: Initialize(System.String)
+  parent: Map.Rendering.ProvinceTerrainAnalyzer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(string)
+  nameWithType: ProvinceTerrainAnalyzer.Initialize(string)
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer.Initialize(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
+    startLine: 43
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Initialize terrain analyzer. Called by ArchonEngine after GameSettings is registered.
+  example: []
+  syntax:
+    content: public void Initialize(string dataDirectory)
+    parameters:
+    - id: dataDirectory
+      type: System.String
+    content.vb: Public Sub Initialize(dataDirectory As String)
+  overload: Map.Rendering.ProvinceTerrainAnalyzer.Initialize*
+  nameWithType.vb: ProvinceTerrainAnalyzer.Initialize(String)
+  fullName.vb: Map.Rendering.ProvinceTerrainAnalyzer.Initialize(String)
+  name.vb: Initialize(String)
 - uid: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
   commentId: M:Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
   id: AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture,UnityEngine.Texture2D,System.UInt16[])
@@ -58,7 +93,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AnalyzeAndGetTerrainTypes
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 70
+    startLine: 73
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -158,6 +193,22 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Rendering.ProvinceTerrainAnalyzer.Initialize*
+  commentId: Overload:Map.Rendering.ProvinceTerrainAnalyzer.Initialize
+  href: Map.Rendering.ProvinceTerrainAnalyzer.html#Map_Rendering_ProvinceTerrainAnalyzer_Initialize_System_String_
+  name: Initialize
+  nameWithType: ProvinceTerrainAnalyzer.Initialize
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer.Initialize
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
 - uid: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes*
   commentId: Overload:Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes
   href: Map.Rendering.ProvinceTerrainAnalyzer.html#Map_Rendering_ProvinceTerrainAnalyzer_AnalyzeAndGetTerrainTypes_UnityEngine_RenderTexture_UnityEngine_Texture2D_System_UInt16___

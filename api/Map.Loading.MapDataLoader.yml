@@ -5,8 +5,11 @@ items:
   id: MapDataLoader
   parent: Map.Loading
   children:
+  - Map.Loading.MapDataLoader.#ctor(System.Boolean)
   - Map.Loading.MapDataLoader.AnalyzeProvinceTerrainAfterMapInit(Core.GameState)
-  - Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,System.String)
+  - Map.Loading.MapDataLoader.Dispose
+  - Map.Loading.MapDataLoader.GetProvinceTerrainBuffer
+  - Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator,System.String)
   - Map.Loading.MapDataLoader.LoadFromFilesAsync(System.String,System.String,System.Boolean)
   - Map.Loading.MapDataLoader.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
   langs:
@@ -23,38 +26,62 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapDataLoader
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 15
+    startLine: 14
   assemblies:
   - MapAssembly
   namespace: Map.Loading
   summary: >-
-    Handles loading of province map data from files or simulation systems
+    Handles loading of province map data from files or simulation systems.
 
-    Orchestrates specialized bitmap loaders for terrain, heightmap, and normal map
-
-    Follows single responsibility principle by delegating bitmap loading to specialized classes
+    Plain C# class - dependencies passed via constructor/Initialize.
   example: []
   syntax:
-    content: 'public class MapDataLoader : MonoBehaviour, IMapDataProvider'
-    content.vb: Public Class MapDataLoader Inherits MonoBehaviour Implements IMapDataProvider
+    content: public class MapDataLoader
+    content.vb: Public Class MapDataLoader
   inheritance:
   - System.Object
-  - UnityEngine.Object
-  - UnityEngine.Component
-  - UnityEngine.Behaviour
-  - UnityEngine.MonoBehaviour
-  implements:
-  - Map.Loading.IMapDataProvider
-- uid: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,System.String)
-  commentId: M:Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,System.String)
-  id: Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,System.String)
+- uid: Map.Loading.MapDataLoader.#ctor(System.Boolean)
+  commentId: M:Map.Loading.MapDataLoader.#ctor(System.Boolean)
+  id: '#ctor(System.Boolean)'
   parent: Map.Loading.MapDataLoader
   langs:
   - csharp
   - vb
-  name: Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, string)
-  nameWithType: MapDataLoader.Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, string)
-  fullName: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor, Map.Rendering.BorderComputeDispatcher, Map.Rendering.MapTextureManager, string)
+  name: MapDataLoader(bool)
+  nameWithType: MapDataLoader.MapDataLoader(bool)
+  fullName: Map.Loading.MapDataLoader.MapDataLoader(bool)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Map/Loading/MapDataLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Map/Loading/MapDataLoader.cs
+    startLine: 34
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  syntax:
+    content: public MapDataLoader(bool logProgress = true)
+    parameters:
+    - id: logProgress
+      type: System.Boolean
+    content.vb: Public Sub New(logProgress As Boolean = True)
+  overload: Map.Loading.MapDataLoader.#ctor*
+  nameWithType.vb: MapDataLoader.New(Boolean)
+  fullName.vb: Map.Loading.MapDataLoader.New(Boolean)
+  name.vb: New(Boolean)
+- uid: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator,System.String)
+  commentId: M:Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator,System.String)
+  id: Initialize(Map.Loading.ProvinceMapProcessor,Map.Rendering.BorderComputeDispatcher,Map.Rendering.MapTextureManager,Map.Rendering.ProvinceTerrainAnalyzer,Map.Rendering.Terrain.TerrainBlendMapGenerator,System.String)
+  parent: Map.Loading.MapDataLoader
+  langs:
+  - csharp
+  - vb
+  name: Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator, string)
+  nameWithType: MapDataLoader.Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator, string)
+  fullName: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor, Map.Rendering.BorderComputeDispatcher, Map.Rendering.MapTextureManager, Map.Rendering.ProvinceTerrainAnalyzer, Map.Rendering.Terrain.TerrainBlendMapGenerator, string)
   type: Method
   source:
     remote:
@@ -68,7 +95,7 @@ items:
   - MapAssembly
   namespace: Map.Loading
   syntax:
-    content: public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures, string dataDirectory = null)
+    content: public void Initialize(ProvinceMapProcessor processor, BorderComputeDispatcher borders, MapTextureManager textures, ProvinceTerrainAnalyzer analyzer, TerrainBlendMapGenerator blendGen, string dataDir)
     parameters:
     - id: processor
       type: Map.Loading.ProvinceMapProcessor
@@ -76,13 +103,17 @@ items:
       type: Map.Rendering.BorderComputeDispatcher
     - id: textures
       type: Map.Rendering.MapTextureManager
-    - id: dataDirectory
+    - id: analyzer
+      type: Map.Rendering.ProvinceTerrainAnalyzer
+    - id: blendGen
+      type: Map.Rendering.Terrain.TerrainBlendMapGenerator
+    - id: dataDir
       type: System.String
-    content.vb: Public Sub Initialize(processor As ProvinceMapProcessor, borders As BorderComputeDispatcher, textures As MapTextureManager, dataDirectory As String = Nothing)
+    content.vb: Public Sub Initialize(processor As ProvinceMapProcessor, borders As BorderComputeDispatcher, textures As MapTextureManager, analyzer As ProvinceTerrainAnalyzer, blendGen As TerrainBlendMapGenerator, dataDir As String)
   overload: Map.Loading.MapDataLoader.Initialize*
-  nameWithType.vb: MapDataLoader.Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, String)
-  fullName.vb: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor, Map.Rendering.BorderComputeDispatcher, Map.Rendering.MapTextureManager, String)
-  name.vb: Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, String)
+  nameWithType.vb: MapDataLoader.Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator, String)
+  fullName.vb: Map.Loading.MapDataLoader.Initialize(Map.Loading.ProvinceMapProcessor, Map.Rendering.BorderComputeDispatcher, Map.Rendering.MapTextureManager, Map.Rendering.ProvinceTerrainAnalyzer, Map.Rendering.Terrain.TerrainBlendMapGenerator, String)
+  name.vb: Initialize(ProvinceMapProcessor, BorderComputeDispatcher, MapTextureManager, ProvinceTerrainAnalyzer, TerrainBlendMapGenerator, String)
 - uid: Map.Loading.MapDataLoader.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
   commentId: M:Map.Loading.MapDataLoader.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
   id: LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
@@ -105,10 +136,7 @@ items:
   assemblies:
   - MapAssembly
   namespace: Map.Loading
-  summary: >-
-    Load province map data from simulation systems (preferred method)
-
-    Follows dual-layer architecture by getting data from Core layer
+  summary: Load province map data from simulation systems (preferred method).
   example: []
   syntax:
     content: public Task<ProvinceMapProcessor.ProvinceMapResult?> LoadFromSimulationAsync(SimulationDataReadyEvent simulationData, string bitmapPath, string csvPath, bool useDefinition)
@@ -125,8 +153,6 @@ items:
       type: System.Threading.Tasks.Task{System.Nullable{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}}
     content.vb: Public Function LoadFromSimulationAsync(simulationData As SimulationDataReadyEvent, bitmapPath As String, csvPath As String, useDefinition As Boolean) As Task(Of ProvinceMapProcessor.ProvinceMapResult?)
   overload: Map.Loading.MapDataLoader.LoadFromSimulationAsync*
-  implements:
-  - Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
   nameWithType.vb: MapDataLoader.LoadFromSimulationAsync(SimulationDataReadyEvent, String, String, Boolean)
   fullName.vb: Map.Loading.MapDataLoader.LoadFromSimulationAsync(Core.SimulationDataReadyEvent, String, String, Boolean)
   name.vb: LoadFromSimulationAsync(SimulationDataReadyEvent, String, String, Boolean)
@@ -148,14 +174,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadFromFilesAsync
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 162
+    startLine: 139
   assemblies:
   - MapAssembly
   namespace: Map.Loading
-  summary: >-
-    Load province map data directly from files (legacy/standalone method)
-
-    Used when simulation layer is not available
+  summary: Load province map data directly from files (legacy method).
   example: []
   syntax:
     content: public Task<ProvinceMapProcessor.ProvinceMapResult?> LoadFromFilesAsync(string bitmapPath, string csvPath, bool useDefinition)
@@ -170,8 +193,6 @@ items:
       type: System.Threading.Tasks.Task{System.Nullable{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}}
     content.vb: Public Function LoadFromFilesAsync(bitmapPath As String, csvPath As String, useDefinition As Boolean) As Task(Of ProvinceMapProcessor.ProvinceMapResult?)
   overload: Map.Loading.MapDataLoader.LoadFromFilesAsync*
-  implements:
-  - Map.Loading.IMapDataProvider.LoadFromFilesAsync(System.String,System.String,System.Boolean)
   nameWithType.vb: MapDataLoader.LoadFromFilesAsync(String, String, Boolean)
   fullName.vb: Map.Loading.MapDataLoader.LoadFromFilesAsync(String, String, Boolean)
   name.vb: LoadFromFilesAsync(String, String, Boolean)
@@ -193,16 +214,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AnalyzeProvinceTerrainAfterMapInit
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 236
+    startLine: 195
   assemblies:
   - MapAssembly
   namespace: Map.Loading
   summary: >-
-    Analyze terrain.bmp to create province terrain lookup (hybrid terrain system)
+    Analyze terrain after map init (GPU compute shader).
 
-    Runs GPU compute shader to determine dominant terrain type per province via majority voting
-
-    CRITICAL: Must be called AFTER ProvinceIDTexture is populated!
+    Must be called AFTER ProvinceIDTexture is populated.
   example: []
   syntax:
     content: public void AnalyzeProvinceTerrainAfterMapInit(GameState gameState)
@@ -211,6 +230,63 @@ items:
       type: Core.GameState
     content.vb: Public Sub AnalyzeProvinceTerrainAfterMapInit(gameState As GameState)
   overload: Map.Loading.MapDataLoader.AnalyzeProvinceTerrainAfterMapInit*
+- uid: Map.Loading.MapDataLoader.GetProvinceTerrainBuffer
+  commentId: M:Map.Loading.MapDataLoader.GetProvinceTerrainBuffer
+  id: GetProvinceTerrainBuffer
+  parent: Map.Loading.MapDataLoader
+  langs:
+  - csharp
+  - vb
+  name: GetProvinceTerrainBuffer()
+  nameWithType: MapDataLoader.GetProvinceTerrainBuffer()
+  fullName: Map.Loading.MapDataLoader.GetProvinceTerrainBuffer()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/MapDataLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetProvinceTerrainBuffer
+    path: Scripts/Map/Loading/MapDataLoader.cs
+    startLine: 290
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  summary: Get the province terrain buffer for material binding.
+  example: []
+  syntax:
+    content: public ComputeBuffer GetProvinceTerrainBuffer()
+    return:
+      type: UnityEngine.ComputeBuffer
+    content.vb: Public Function GetProvinceTerrainBuffer() As ComputeBuffer
+  overload: Map.Loading.MapDataLoader.GetProvinceTerrainBuffer*
+- uid: Map.Loading.MapDataLoader.Dispose
+  commentId: M:Map.Loading.MapDataLoader.Dispose
+  id: Dispose
+  parent: Map.Loading.MapDataLoader
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: MapDataLoader.Dispose()
+  fullName: Map.Loading.MapDataLoader.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/MapDataLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Map/Loading/MapDataLoader.cs
+    startLine: 292
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Map.Loading.MapDataLoader.Dispose*
 references:
 - uid: Map.Loading
   commentId: N:Map.Loading
@@ -244,56 +320,34 @@ references:
   nameWithType.vb: Object
   fullName.vb: Object
   name.vb: Object
-- uid: UnityEngine.Object
-  commentId: T:UnityEngine.Object
-  parent: UnityEngine
-  isExternal: true
-  name: Object
-  nameWithType: Object
-  fullName: UnityEngine.Object
-- uid: UnityEngine.Component
-  commentId: T:UnityEngine.Component
-  parent: UnityEngine
-  isExternal: true
-  name: Component
-  nameWithType: Component
-  fullName: UnityEngine.Component
-- uid: UnityEngine.Behaviour
-  commentId: T:UnityEngine.Behaviour
-  parent: UnityEngine
-  isExternal: true
-  name: Behaviour
-  nameWithType: Behaviour
-  fullName: UnityEngine.Behaviour
-- uid: UnityEngine.MonoBehaviour
-  commentId: T:UnityEngine.MonoBehaviour
-  parent: UnityEngine
-  isExternal: true
-  name: MonoBehaviour
-  nameWithType: MonoBehaviour
-  fullName: UnityEngine.MonoBehaviour
-- uid: Map.Loading.IMapDataProvider
-  commentId: T:Map.Loading.IMapDataProvider
-  parent: Map.Loading
-  href: Map.Loading.IMapDataProvider.html
-  name: IMapDataProvider
-  nameWithType: IMapDataProvider
-  fullName: Map.Loading.IMapDataProvider
 - uid: System
   commentId: N:System
   isExternal: true
   name: System
   nameWithType: System
   fullName: System
-- uid: UnityEngine
-  commentId: N:UnityEngine
+- uid: Map.Loading.MapDataLoader.#ctor*
+  commentId: Overload:Map.Loading.MapDataLoader.#ctor
+  href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader__ctor_System_Boolean_
+  name: MapDataLoader
+  nameWithType: MapDataLoader.MapDataLoader
+  fullName: Map.Loading.MapDataLoader.MapDataLoader
+  nameWithType.vb: MapDataLoader.New
+  fullName.vb: Map.Loading.MapDataLoader.New
+  name.vb: New
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
   isExternal: true
-  name: UnityEngine
-  nameWithType: UnityEngine
-  fullName: UnityEngine
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: Map.Loading.MapDataLoader.Initialize*
   commentId: Overload:Map.Loading.MapDataLoader.Initialize
-  href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_Initialize_Map_Loading_ProvinceMapProcessor_Map_Rendering_BorderComputeDispatcher_Map_Rendering_MapTextureManager_System_String_
+  href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_Initialize_Map_Loading_ProvinceMapProcessor_Map_Rendering_BorderComputeDispatcher_Map_Rendering_MapTextureManager_Map_Rendering_ProvinceTerrainAnalyzer_Map_Rendering_Terrain_TerrainBlendMapGenerator_System_String_
   name: Initialize
   nameWithType: MapDataLoader.Initialize
   fullName: Map.Loading.MapDataLoader.Initialize
@@ -318,6 +372,20 @@ references:
   name: MapTextureManager
   nameWithType: MapTextureManager
   fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.ProvinceTerrainAnalyzer
+  commentId: T:Map.Rendering.ProvinceTerrainAnalyzer
+  parent: Map.Rendering
+  href: Map.Rendering.ProvinceTerrainAnalyzer.html
+  name: ProvinceTerrainAnalyzer
+  nameWithType: ProvinceTerrainAnalyzer
+  fullName: Map.Rendering.ProvinceTerrainAnalyzer
+- uid: Map.Rendering.Terrain.TerrainBlendMapGenerator
+  commentId: T:Map.Rendering.Terrain.TerrainBlendMapGenerator
+  parent: Map.Rendering.Terrain
+  href: Map.Rendering.Terrain.TerrainBlendMapGenerator.html
+  name: TerrainBlendMapGenerator
+  nameWithType: TerrainBlendMapGenerator
+  fullName: Map.Rendering.Terrain.TerrainBlendMapGenerator
 - uid: System.String
   commentId: T:System.String
   parent: System
@@ -350,69 +418,42 @@ references:
   - uid: Map.Rendering
     name: Rendering
     href: Map.Rendering.html
+- uid: Map.Rendering.Terrain
+  commentId: N:Map.Rendering.Terrain
+  href: Map.html
+  name: Map.Rendering.Terrain
+  nameWithType: Map.Rendering.Terrain
+  fullName: Map.Rendering.Terrain
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Terrain
+    name: Terrain
+    href: Map.Rendering.Terrain.html
 - uid: Map.Loading.MapDataLoader.LoadFromSimulationAsync*
   commentId: Overload:Map.Loading.MapDataLoader.LoadFromSimulationAsync
   href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_LoadFromSimulationAsync_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
   name: LoadFromSimulationAsync
   nameWithType: MapDataLoader.LoadFromSimulationAsync
   fullName: Map.Loading.MapDataLoader.LoadFromSimulationAsync
-- uid: Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  commentId: M:Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-  parent: Map.Loading.IMapDataProvider
-  isExternal: true
-  href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromSimulationAsync_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
-  name: LoadFromSimulationAsync(SimulationDataReadyEvent, string, string, bool)
-  nameWithType: IMapDataProvider.LoadFromSimulationAsync(SimulationDataReadyEvent, string, string, bool)
-  fullName: Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent, string, string, bool)
-  nameWithType.vb: IMapDataProvider.LoadFromSimulationAsync(SimulationDataReadyEvent, String, String, Boolean)
-  fullName.vb: Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent, String, String, Boolean)
-  name.vb: LoadFromSimulationAsync(SimulationDataReadyEvent, String, String, Boolean)
-  spec.csharp:
-  - uid: Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-    name: LoadFromSimulationAsync
-    href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromSimulationAsync_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
-  - name: (
-  - uid: Core.SimulationDataReadyEvent
-    name: SimulationDataReadyEvent
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-  - name: )
-  spec.vb:
-  - uid: Map.Loading.IMapDataProvider.LoadFromSimulationAsync(Core.SimulationDataReadyEvent,System.String,System.String,System.Boolean)
-    name: LoadFromSimulationAsync
-    href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromSimulationAsync_Core_SimulationDataReadyEvent_System_String_System_String_System_Boolean_
-  - name: (
-  - uid: Core.SimulationDataReadyEvent
-    name: SimulationDataReadyEvent
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-  - name: )
 - uid: Core.SimulationDataReadyEvent
   commentId: T:Core.SimulationDataReadyEvent
   parent: Core
@@ -420,16 +461,6 @@ references:
   name: SimulationDataReadyEvent
   nameWithType: SimulationDataReadyEvent
   fullName: Core.SimulationDataReadyEvent
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
 - uid: System.Threading.Tasks.Task{System.Nullable{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}}
   commentId: T:System.Threading.Tasks.Task{System.Nullable{Map.Loading.ProvinceMapProcessor.ProvinceMapResult}}
   parent: System.Threading.Tasks
@@ -538,55 +569,6 @@ references:
   name: LoadFromFilesAsync
   nameWithType: MapDataLoader.LoadFromFilesAsync
   fullName: Map.Loading.MapDataLoader.LoadFromFilesAsync
-- uid: Map.Loading.IMapDataProvider.LoadFromFilesAsync(System.String,System.String,System.Boolean)
-  commentId: M:Map.Loading.IMapDataProvider.LoadFromFilesAsync(System.String,System.String,System.Boolean)
-  parent: Map.Loading.IMapDataProvider
-  isExternal: true
-  href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromFilesAsync_System_String_System_String_System_Boolean_
-  name: LoadFromFilesAsync(string, string, bool)
-  nameWithType: IMapDataProvider.LoadFromFilesAsync(string, string, bool)
-  fullName: Map.Loading.IMapDataProvider.LoadFromFilesAsync(string, string, bool)
-  nameWithType.vb: IMapDataProvider.LoadFromFilesAsync(String, String, Boolean)
-  fullName.vb: Map.Loading.IMapDataProvider.LoadFromFilesAsync(String, String, Boolean)
-  name.vb: LoadFromFilesAsync(String, String, Boolean)
-  spec.csharp:
-  - uid: Map.Loading.IMapDataProvider.LoadFromFilesAsync(System.String,System.String,System.Boolean)
-    name: LoadFromFilesAsync
-    href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromFilesAsync_System_String_System_String_System_Boolean_
-  - name: (
-  - uid: System.String
-    name: string
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: string
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: bool
-    isExternal: true
-  - name: )
-  spec.vb:
-  - uid: Map.Loading.IMapDataProvider.LoadFromFilesAsync(System.String,System.String,System.Boolean)
-    name: LoadFromFilesAsync
-    href: Map.Loading.IMapDataProvider.html#Map_Loading_IMapDataProvider_LoadFromFilesAsync_System_String_System_String_System_Boolean_
-  - name: (
-  - uid: System.String
-    name: String
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.String
-    name: String
-    isExternal: true
-  - name: ','
-  - name: " "
-  - uid: System.Boolean
-    name: Boolean
-    isExternal: true
-  - name: )
 - uid: Map.Loading.MapDataLoader.AnalyzeProvinceTerrainAfterMapInit*
   commentId: Overload:Map.Loading.MapDataLoader.AnalyzeProvinceTerrainAfterMapInit
   href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_AnalyzeProvinceTerrainAfterMapInit_Core_GameState_
@@ -600,3 +582,28 @@ references:
   name: GameState
   nameWithType: GameState
   fullName: Core.GameState
+- uid: Map.Loading.MapDataLoader.GetProvinceTerrainBuffer*
+  commentId: Overload:Map.Loading.MapDataLoader.GetProvinceTerrainBuffer
+  href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_GetProvinceTerrainBuffer
+  name: GetProvinceTerrainBuffer
+  nameWithType: MapDataLoader.GetProvinceTerrainBuffer
+  fullName: Map.Loading.MapDataLoader.GetProvinceTerrainBuffer
+- uid: UnityEngine.ComputeBuffer
+  commentId: T:UnityEngine.ComputeBuffer
+  parent: UnityEngine
+  isExternal: true
+  name: ComputeBuffer
+  nameWithType: ComputeBuffer
+  fullName: UnityEngine.ComputeBuffer
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Loading.MapDataLoader.Dispose*
+  commentId: Overload:Map.Loading.MapDataLoader.Dispose
+  href: Map.Loading.MapDataLoader.html#Map_Loading_MapDataLoader_Dispose
+  name: Dispose
+  nameWithType: MapDataLoader.Dispose
+  fullName: Map.Loading.MapDataLoader.Dispose

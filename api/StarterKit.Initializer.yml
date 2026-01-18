@@ -34,14 +34,14 @@ items:
   - StarterKit
   namespace: StarterKit
   summary: >-
-    Coordinates EngineMapInitializer + StarterKit systems.
+    GAME layer initializer for StarterKit.
 
-    Use this as the entry point for StarterKit scenes.
-
-    Owns PlayerState and EconomySystem as plain classes.
+    Waits for ArchonEngine to initialize, then creates game-specific systems.
 
 
     Access via Initializer.Instance for commands and other systems.
+
+    Access ENGINE via ArchonEngine.Instance.
   example: []
   syntax:
     content: 'public class Initializer : MonoBehaviour'
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 80
+    startLine: 77
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -135,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PlayerState
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 83
+    startLine: 80
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -166,7 +166,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EconomySystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 86
+    startLine: 83
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -197,7 +197,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnitSystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 89
+    startLine: 86
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -228,7 +228,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BuildingSystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 92
+    startLine: 89
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -259,7 +259,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AISystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 95
+    startLine: 92
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -290,7 +290,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: StartInitialization
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 127
+    startLine: 124
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -316,7 +316,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 566
+    startLine: 540
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -347,7 +347,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCurrentMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 574
+    startLine: 548
   assemblies:
   - StarterKit
   namespace: StarterKit

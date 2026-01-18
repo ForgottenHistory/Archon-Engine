@@ -22,7 +22,6 @@ items:
   - Map.Rendering.InstancedBillboardRenderer
   - Map.Rendering.MapRenderer
   - Map.Rendering.MapRendererRegistry
-  - Map.Rendering.MapRenderingCoordinator
   - Map.Rendering.MapTextureManager
   - Map.Rendering.MapTexturePopulator
   - Map.Rendering.NormalMapGenerator
@@ -63,13 +62,13 @@ references:
   fullName: Map.Rendering.BorderComputeDispatcher
 - uid: Map.Rendering.ProvinceTerrainAnalyzer
   commentId: T:Map.Rendering.ProvinceTerrainAnalyzer
+  parent: Map.Rendering
   href: Map.Rendering.ProvinceTerrainAnalyzer.html
   name: ProvinceTerrainAnalyzer
   nameWithType: ProvinceTerrainAnalyzer
   fullName: Map.Rendering.ProvinceTerrainAnalyzer
 - uid: Map.Rendering.FogOfWarSystem
   commentId: T:Map.Rendering.FogOfWarSystem
-  parent: Map.Rendering
   href: Map.Rendering.FogOfWarSystem.html
   name: FogOfWarSystem
   nameWithType: FogOfWarSystem
@@ -187,13 +186,6 @@ references:
   name: CoreTextureSet
   nameWithType: CoreTextureSet
   fullName: Map.Rendering.CoreTextureSet
-- uid: Map.Rendering.MapRenderingCoordinator
-  commentId: T:Map.Rendering.MapRenderingCoordinator
-  parent: Map.Rendering
-  href: Map.Rendering.MapRenderingCoordinator.html
-  name: MapRenderingCoordinator
-  nameWithType: MapRenderingCoordinator
-  fullName: Map.Rendering.MapRenderingCoordinator
 - uid: Map.Rendering.MapTextureManager
   commentId: T:Map.Rendering.MapTextureManager
   parent: Map.Rendering
@@ -261,7 +253,6 @@ references:
   fullName: Map.Rendering.PaletteTextureManager
 - uid: Map.Rendering.TextureUpdateBridge
   commentId: T:Map.Rendering.TextureUpdateBridge
-  parent: Map.Rendering
   href: Map.Rendering.TextureUpdateBridge.html
   name: TextureUpdateBridge
   nameWithType: TextureUpdateBridge

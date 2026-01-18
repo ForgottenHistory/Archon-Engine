@@ -1,0 +1,179 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.LogLevel
+  commentId: T:Core.LogLevel
+  id: LogLevel
+  parent: Core
+  children:
+  - Core.LogLevel.Debug
+  - Core.LogLevel.Errors
+  - Core.LogLevel.Info
+  - Core.LogLevel.None
+  - Core.LogLevel.Warnings
+  langs:
+  - csharp
+  - vb
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: Core.LogLevel
+  type: Enum
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LogLevel
+    path: Scripts/Core/GameSettings.cs
+    startLine: 7
+  assemblies:
+  - Core
+  namespace: Core
+  summary: Logging verbosity level for all engine and game systems.
+  example: []
+  syntax:
+    content: public enum LogLevel
+    content.vb: Public Enum LogLevel
+- uid: Core.LogLevel.None
+  commentId: F:Core.LogLevel.None
+  id: None
+  parent: Core.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: LogLevel.None
+  fullName: Core.LogLevel.None
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: None
+    path: Scripts/Core/GameSettings.cs
+    startLine: 9
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: None = 0
+    return:
+      type: Core.LogLevel
+- uid: Core.LogLevel.Errors
+  commentId: F:Core.LogLevel.Errors
+  id: Errors
+  parent: Core.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Errors
+  nameWithType: LogLevel.Errors
+  fullName: Core.LogLevel.Errors
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Errors
+    path: Scripts/Core/GameSettings.cs
+    startLine: 10
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Errors = 1
+    return:
+      type: Core.LogLevel
+- uid: Core.LogLevel.Warnings
+  commentId: F:Core.LogLevel.Warnings
+  id: Warnings
+  parent: Core.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Warnings
+  nameWithType: LogLevel.Warnings
+  fullName: Core.LogLevel.Warnings
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Warnings
+    path: Scripts/Core/GameSettings.cs
+    startLine: 11
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Warnings = 2
+    return:
+      type: Core.LogLevel
+- uid: Core.LogLevel.Info
+  commentId: F:Core.LogLevel.Info
+  id: Info
+  parent: Core.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Info
+  nameWithType: LogLevel.Info
+  fullName: Core.LogLevel.Info
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Info
+    path: Scripts/Core/GameSettings.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Info = 3
+    return:
+      type: Core.LogLevel
+- uid: Core.LogLevel.Debug
+  commentId: F:Core.LogLevel.Debug
+  id: Debug
+  parent: Core.LogLevel
+  langs:
+  - csharp
+  - vb
+  name: Debug
+  nameWithType: LogLevel.Debug
+  fullName: Core.LogLevel.Debug
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/GameSettings.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Debug
+    path: Scripts/Core/GameSettings.cs
+    startLine: 13
+  assemblies:
+  - Core
+  namespace: Core
+  syntax:
+    content: Debug = 4
+    return:
+      type: Core.LogLevel
+references:
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.LogLevel
+  commentId: T:Core.LogLevel
+  parent: Core
+  href: Core.LogLevel.html
+  name: LogLevel
+  nameWithType: LogLevel
+  fullName: Core.LogLevel
