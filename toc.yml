@@ -1,16 +1,16 @@
 - name: Getting Started
-  href: wiki/Home.md
+  href: Docs/Wiki/Home.md
 - name: Feature Guides
-  href: wiki/
+  href: Docs/Wiki/
 - name: API Reference
   href: api/
 - name: Architecture
-  href: architecture/
+  href: Docs/Engine/
 - name: File Registries
   items:
     - name: Core Layer
-      href: guides/core/FILE_REGISTRY.md
+      href: Scripts/Core/FILE_REGISTRY.md
     - name: Map Layer
-      href: guides/map/FILE_REGISTRY.md
+      href: Scripts/Map/FILE_REGISTRY.md
     - name: Scripting Layer
-      href: guides/scripting/FILE_REGISTRY.md
+      href: Scripts/Scripting/FILE_REGISTRY.md
