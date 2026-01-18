@@ -23,24 +23,19 @@
         "files": ["index.md", "toc.yml"]
       },
       {
-        "files": ["Docs/Wiki/*.md", "Docs/Wiki/toc.yml"],
-        "dest": "wiki"
+        "files": ["Docs/Wiki/*.md", "Docs/Wiki/toc.yml"]
       },
       {
-        "files": ["Docs/Engine/*.md", "Docs/Engine/toc.yml"],
-        "dest": "architecture"
+        "files": ["Docs/Engine/*.md", "Docs/Engine/toc.yml"]
       },
       {
-        "files": ["Scripts/Core/FILE_REGISTRY.md"],
-        "dest": "guides/core"
+        "files": ["Scripts/Core/FILE_REGISTRY.md"]
       },
       {
-        "files": ["Scripts/Map/FILE_REGISTRY.md"],
-        "dest": "guides/map"
+        "files": ["Scripts/Map/FILE_REGISTRY.md"]
       },
       {
-        "files": ["Scripts/Scripting/FILE_REGISTRY.md"],
-        "dest": "guides/scripting"
+        "files": ["Scripts/Scripting/FILE_REGISTRY.md"]
       }
     ],
     "resource": [
