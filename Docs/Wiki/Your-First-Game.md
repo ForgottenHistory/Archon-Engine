@@ -36,7 +36,7 @@ The Initializer is your game's entry point. Create `Assets/Game/MyGameInitialize
 using UnityEngine;
 using System.Collections;
 using Core;
-using Map.Core;
+using Engine;
 
 namespace MyGame
 {
@@ -62,21 +62,14 @@ namespace MyGame
         {
             Debug.Log("MyGame: Waiting for ENGINE...");
 
-            // Wait for ENGINE to initialize
-            var engineInit = FindFirstObjectByType<EngineMapInitializer>();
-            if (engineInit == null)
-            {
-                Debug.LogError("MyGame: EngineMapInitializer not found!");
-                yield break;
-            }
-
-            while (!engineInit.IsInitialized)
+            // Wait for ArchonEngine to initialize
+            while (ArchonEngine.Instance == null || !ArchonEngine.Instance.IsInitialized)
                 yield return null;
 
             Debug.Log("MyGame: ENGINE ready, initializing game systems...");
 
-            // Get the central GameState
-            var gameState = GameState.Instance;
+            // Get the central GameState from ArchonEngine
+            var gameState = ArchonEngine.Instance.GameState;
 
             // Create your systems
             playerState = new PlayerState(gameState);
@@ -588,12 +581,16 @@ namespace MyGame.UI
 
 ## Step 8: Set Up the Scene
 
-1. **Add EngineMapInitializer** to your scene (from ENGINE)
-2. **Add MyGameInitializer** component to a new GameObject
-3. **Add UIDocument** component for each UI panel
-4. **Wire up references** in the Inspector
+1. **Drag ArchonEngine prefab** into your scene from `Assets/Archon-Engine/Prefabs/ArchonEngine.prefab`
+2. **Create a Map Quad** - GameObject with MeshRenderer using one of the Archon map shaders/materials
+3. **Assign references** on ArchonEngine:
+   - Set `Map Mesh Renderer` to your map quad's MeshRenderer
+   - Optionally set `Map Camera` to your camera
+4. **Add MyGameInitializer** component to a new GameObject
+5. **Add UIDocument** component for each UI panel
+6. **Wire up UI references** in the Inspector
 
-Or copy the StarterKit scene and modify it.
+Or copy the StarterKit scene (`Assets/Archon-Engine/Scenes/StarterKit.unity`) and modify it.
 
 ## Step 9: Test Your Game
 

@@ -7,6 +7,7 @@ using Map.Interaction;
 using Map.MapModes;
 using Map.Rendering;
 using Map.Rendering.Border;
+using Map.CameraControllers;
 using Core.SaveLoad;
 using Archon.Engine.Map;
 using ProvinceSystem;
@@ -162,6 +163,12 @@ namespace Engine
         /// Map camera used for rendering.
         /// </summary>
         public Camera MapCamera => mapCamera;
+
+        /// <summary>
+        /// Camera controller for map navigation (pan, zoom, etc).
+        /// May be null if no camera controller is in the scene.
+        /// </summary>
+        public BaseCameraController CameraController { get; private set; }
 
         #endregion
 
@@ -664,10 +671,32 @@ namespace Engine
                 }
             }
 
+            // Initialize camera controller if present
+            InitializeCameraController();
+
             yield return null;
 
             if (LogProgress)
                 ArchonLogger.Log("ArchonEngine: Interaction ready", "map_interaction");
+        }
+
+        /// <summary>
+        /// Initialize camera controller if present in the scene.
+        /// </summary>
+        private void InitializeCameraController()
+        {
+            CameraController = FindFirstObjectByType<BaseCameraController>();
+            if (CameraController != null)
+            {
+                CameraController.Initialize();
+                if (LogProgress)
+                    ArchonLogger.Log($"ArchonEngine: Camera controller initialized ({CameraController.GetType().Name})", "map_initialization");
+            }
+            else
+            {
+                if (LogProgress)
+                    ArchonLogger.Log("ArchonEngine: No camera controller found (optional)", "map_initialization");
+            }
         }
 
         #endregion

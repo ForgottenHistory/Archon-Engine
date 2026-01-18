@@ -8,7 +8,7 @@ Before starting, ensure you have:
 
 - **Unity 2022.3 LTS** or newer (2023.x recommended)
 - **Git** for version control
-- Basic C# knowledge
+- Intermediate C# knowledge
 - Familiarity with Unity's component system
 
 ## Understanding the Architecture
@@ -80,17 +80,18 @@ The **StarterKit** (`Assets/Archon-Engine/Scripts/StarterKit/`) is a complete ex
 
 2. **Create an Initializer** that waits for ENGINE, then sets up your systems:
    ```csharp
+   using Engine;
+
    public class MyGameInitializer : MonoBehaviour
    {
        IEnumerator Start()
        {
            // Wait for ENGINE to initialize
-           var engineInit = FindFirstObjectByType<EngineMapInitializer>();
-           while (!engineInit.IsInitialized)
+           while (ArchonEngine.Instance == null || !ArchonEngine.Instance.IsInitialized)
                yield return null;
 
            // Get GameState (ENGINE provides this)
-           var gameState = GameState.Instance;
+           var gameState = ArchonEngine.Instance.GameState;
 
            // Create your systems
            myEconomySystem = new MyEconomySystem(gameState);
@@ -162,7 +163,7 @@ gameState.EventBus.Emit(new MyCustomEvent { Data = value });
 
 ### 4. FixedPoint64 for Determinism
 
-**Never use `float` or `double` in simulation code.** Use `FixedPoint64`:
+**Avoid use of `float` or `double` in simulation code.** Use `FixedPoint64`:
 
 ```csharp
 // ❌ WRONG - floats cause desyncs in multiplayer
@@ -171,6 +172,8 @@ float income = provinces * 1.5f;
 // ✅ CORRECT - FixedPoint64 is deterministic
 FixedPoint64 income = provinceCount * FixedPoint64.FromFraction(3, 2); // 1.5
 ```
+
+If you're doing strictly singleplayer it's more accepted to use normal numeric datatypes, however the engine still expects FixedPoint mostly. Important for determinism.
 
 ### 5. Hot vs Cold Data
 
@@ -189,13 +192,16 @@ ProvinceHistoryData history = historySystem.GetHistory(provinceId);
 
 A typical Archon game scene needs:
 
-1. **EngineMapInitializer** - Initializes ENGINE (Core + Map layers)
+1. **ArchonEngine prefab** - Drag from `Assets/Archon-Engine/Prefabs/ArchonEngine.prefab`
+   - Contains MapGenerator with all required components
+   - Assign your map mesh renderer in the Inspector
+   - Optionally assign your camera
 2. **Your Game Initializer** - Initializes your GAME systems
-3. **Map Quad** - GameObject with map material
+3. **Map Quad** - GameObject with MeshRenderer and map material
 4. **Camera** - To view the map
 5. **UI Canvas** - For your UI panels
 
-The StarterKit scene (`Assets/Archon-Engine/Scenes/StarterKitScene.unity`) shows a working setup.
+The StarterKit scene (`Assets/Archon-Engine/Scenes/StarterKit.unity`) shows a working setup.
 
 ## File Organization
 

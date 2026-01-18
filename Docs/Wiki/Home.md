@@ -4,11 +4,14 @@
 
 ## Quick Links
 
-| Getting Started | Reference | Advanced |
-|-----------------|-----------|----------|
-| [Getting Started](Getting-Started.md) | [Architecture Overview](Architecture-Overview.md) | [API Documentation](../api/index.html) |
-| [Your First Game](Your-First-Game.md) | [Cookbook](Cookbook.md) | [Engine Architecture Docs](../Engine/) |
-| [Project Setup](Project-Setup.md) | [Troubleshooting](Troubleshooting.md) | [Session Logs](../Log/) |
+| Getting Started | Feature Guides | Reference |
+|-----------------|----------------|-----------|
+| [Getting Started](Getting-Started.md) | [Commands](Commands.md) | [Architecture Overview](Architecture-Overview.md) |
+| [Your First Game](Your-First-Game.md) | [Events](Events.md) | [Engine Architecture Docs](../Engine/) |
+| | [Economy](Economy.md) | [Session Logs](../Log/) |
+| | [Buildings](Buildings.md) | |
+| | [Units](Units.md) | |
+| | [Map Modes](Map-Modes.md) | |
 
 ## What is Archon?
 
@@ -95,18 +98,10 @@ Assets/
 
 1. **New to Archon?** → Start with [Getting Started](Getting-Started.md)
 2. **Want to build a game?** → Follow [Your First Game](Your-First-Game.md)
-3. **Looking for examples?** → Check the [Cookbook](Cookbook.md)
-4. **Something not working?** → See [Troubleshooting](Troubleshooting.md)
+3. **Adding features?** → See [Commands](Commands.md), [Events](Events.md), [Economy](Economy.md)
+4. **Custom visuals?** → See [Map Modes](Map-Modes.md)
 
 ## Getting Help
 
-- Check the [Troubleshooting](Troubleshooting.md) guide
 - Search the [API Documentation](../api/index.html)
 - Review the [StarterKit source code](../../Scripts/StarterKit/)
-
-## Contributing
-
-Archon Engine is developed alongside Hegemon. If you find bugs or have improvements:
-1. Check existing issues in the repository
-2. Create a detailed bug report or feature request
-3. For code contributions, follow the patterns in [Architecture Overview](Architecture-Overview.md)
