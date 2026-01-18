@@ -8,7 +8,7 @@ namespace Core.AI
     {
         /// <summary>
         /// Maximum distance (in province hops) for this tier.
-        /// Countries at distance <= maxDistance are assigned to this tier.
+        /// Countries at distance at or below maxDistance are assigned to this tier.
         /// Use 255 for "everything else" tier.
         /// </summary>
         public byte maxDistance;
@@ -28,20 +28,10 @@ namespace Core.AI
 
     /// <summary>
     /// ENGINE LAYER - Configuration for AI scheduling system.
-    ///
     /// Provides mechanism for tier-based AI processing.
     /// GAME layer provides policy (specific tier definitions).
-    ///
-    /// Design:
-    /// - Tiers ordered by distance (closest first)
-    /// - Each tier has distance threshold and processing interval
-    /// - Countries assigned to first tier where distance <= maxDistance
-    ///
-    /// Default tiers (can be overridden by GAME):
-    /// - Tier 0: Neighbors (distance 0-1), every 1 hour
-    /// - Tier 1: Near (distance 2-4), every 6 hours
-    /// - Tier 2: Medium (distance 5-8), every 24 hours
-    /// - Tier 3: Far (distance 9+), every 72 hours
+    /// Tiers ordered by distance (closest first), each with distance threshold and interval.
+    /// Countries assigned to first tier where distance is at or below maxDistance.
     /// </summary>
     public class AISchedulingConfig
     {
@@ -70,7 +60,7 @@ namespace Core.AI
 
         /// <summary>
         /// Get tier index for a given distance.
-        /// Returns first tier where distance <= maxDistance.
+        /// Returns first tier where distance is at or below maxDistance.
         /// </summary>
         public byte GetTierForDistance(byte distance)
         {

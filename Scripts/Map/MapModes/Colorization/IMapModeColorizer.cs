@@ -103,7 +103,7 @@ namespace Map.MapModes.Colorization
         public Color OceanColor;
 
         /// <summary>
-        /// Color for provinces with no data (value < 0)
+        /// Color for provinces with no data (negative value).
         /// </summary>
         public Color NoDataColor;
 

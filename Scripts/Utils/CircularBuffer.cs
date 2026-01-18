@@ -4,10 +4,12 @@ using System.Collections.Generic;
 namespace Utils
 {
     /// <summary>
-    /// Fixed-size circular buffer for bounded data storage
-    /// Prevents unbounded growth in late-game scenarios
-    /// Used for province history, event logs, etc.
+    /// Fixed-size circular buffer for bounded data storage.
+    /// Prevents unbounded growth in late-game scenarios.
+    /// When full, adding new items overwrites the oldest.
+    /// Used for province history, event logs, replay buffers, etc.
     /// </summary>
+    /// <typeparam name="T">Type of elements stored in the buffer.</typeparam>
     public class CircularBuffer<T>
     {
         private readonly T[] buffer;
@@ -16,6 +18,11 @@ namespace Utils
         private int tail;
         private int count;
 
+        /// <summary>
+        /// Creates a new circular buffer with the specified capacity.
+        /// </summary>
+        /// <param name="capacity">Maximum number of items the buffer can hold.</param>
+        /// <exception cref="ArgumentException">Thrown if capacity is not positive.</exception>
         public CircularBuffer(int capacity)
         {
             if (capacity <= 0)
@@ -28,9 +35,16 @@ namespace Utils
             this.count = 0;
         }
 
+        /// <summary>Current number of items in the buffer.</summary>
         public int Count => count;
+
+        /// <summary>Maximum number of items the buffer can hold.</summary>
         public int Capacity => capacity;
+
+        /// <summary>True if the buffer contains no items.</summary>
         public bool IsEmpty => count == 0;
+
+        /// <summary>True if the buffer is at capacity (next Add will overwrite oldest).</summary>
         public bool IsFull => count == capacity;
 
         /// <summary>

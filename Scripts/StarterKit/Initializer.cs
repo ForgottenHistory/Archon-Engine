@@ -77,11 +77,22 @@ namespace StarterKit
 
         private bool isInitialized;
 
+        /// <summary>True when all StarterKit systems are initialized and ready.</summary>
         public bool IsInitialized => isInitialized;
+
+        /// <summary>Player state tracking which country the player controls.</summary>
         public PlayerState PlayerState => playerState;
+
+        /// <summary>Economy system for gold, income, and resource management.</summary>
         public EconomySystem EconomySystem => economySystem;
+
+        /// <summary>Unit system for creating, moving, and managing military units.</summary>
         public UnitSystem UnitSystem => unitSystem;
+
+        /// <summary>Building system for constructing and managing province improvements.</summary>
         public BuildingSystem BuildingSystem => buildingSystem;
+
+        /// <summary>AI system for non-player country decision making.</summary>
         public AISystem AISystem => aiSystem;
 
         #endregion

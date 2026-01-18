@@ -208,7 +208,8 @@ namespace Map.Province
         }
 
         /// <summary>
-        /// Sort colors by frequency (descending)
+        /// Sort colors by frequency in descending order (most common first).
+        /// Uses insertion sort which is efficient for typical province counts.
         /// </summary>
         private static void SortColorsByFrequency(NativeList<Color32> colors, NativeList<int> frequencies)
         {

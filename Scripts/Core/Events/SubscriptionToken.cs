@@ -5,11 +5,6 @@ namespace Core.Events
     /// <summary>
     /// Disposable token representing an event subscription.
     /// Dispose to unsubscribe from the event.
-    ///
-    /// Usage:
-    /// var token = eventBus.Subscribe<MyEvent>(HandleEvent);
-    /// // Later...
-    /// token.Dispose(); // Unsubscribes
     /// </summary>
     public sealed class SubscriptionToken<T> : IDisposable where T : struct, IGameEvent
     {

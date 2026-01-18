@@ -6,13 +6,6 @@ namespace Core.Events
     /// <summary>
     /// Groups multiple IDisposable objects for batch disposal.
     /// Useful for managing multiple event subscriptions.
-    ///
-    /// Usage:
-    /// var subscriptions = new CompositeDisposable();
-    /// subscriptions.Add(eventBus.Subscribe<EventA>(HandleA));
-    /// subscriptions.Add(eventBus.Subscribe<EventB>(HandleB));
-    /// // Later...
-    /// subscriptions.Dispose(); // Unsubscribes all
     /// </summary>
     public sealed class CompositeDisposable : IDisposable
     {

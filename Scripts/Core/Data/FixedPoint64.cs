@@ -100,16 +100,21 @@ namespace Core.Data
             return new FixedPoint64((long)(value * ONE_RAW));
         }
 
-        // Arithmetic operators
+        #region Arithmetic Operators
+
+        /// <summary>Adds two fixed-point values.</summary>
         public static FixedPoint64 operator +(FixedPoint64 a, FixedPoint64 b) =>
             new FixedPoint64(a.RawValue + b.RawValue);
 
+        /// <summary>Subtracts two fixed-point values.</summary>
         public static FixedPoint64 operator -(FixedPoint64 a, FixedPoint64 b) =>
             new FixedPoint64(a.RawValue - b.RawValue);
 
+        /// <summary>Negates a fixed-point value.</summary>
         public static FixedPoint64 operator -(FixedPoint64 a) =>
             new FixedPoint64(-a.RawValue);
 
+        /// <summary>Multiplies two fixed-point values using 128-bit intermediate to prevent overflow.</summary>
         public static FixedPoint64 operator *(FixedPoint64 a, FixedPoint64 b)
         {
             // Use 128-bit intermediate to avoid overflow
@@ -127,6 +132,7 @@ namespace Core.Data
             return new FixedPoint64(result);
         }
 
+        /// <summary>Divides two fixed-point values. Throws DivideByZeroException if divisor is zero.</summary>
         public static FixedPoint64 operator /(FixedPoint64 a, FixedPoint64 b)
         {
             if (b.RawValue == 0)
@@ -147,19 +153,24 @@ namespace Core.Data
             return new FixedPoint64(negativeResult ? -result : result);
         }
 
+        /// <summary>Returns the remainder after division.</summary>
         public static FixedPoint64 operator %(FixedPoint64 a, FixedPoint64 b)
         {
             return new FixedPoint64(a.RawValue % b.RawValue);
         }
 
-        // Integer multiplication/division (more efficient)
+        /// <summary>Multiplies by an integer (more efficient than FixedPoint64 multiplication).</summary>
         public static FixedPoint64 operator *(FixedPoint64 a, int b) =>
             new FixedPoint64(a.RawValue * b);
 
+        /// <summary>Divides by an integer (more efficient than FixedPoint64 division).</summary>
         public static FixedPoint64 operator /(FixedPoint64 a, int b) =>
             new FixedPoint64(a.RawValue / b);
 
-        // Comparison operators
+        #endregion
+
+        #region Comparison Operators
+
         public static bool operator ==(FixedPoint64 a, FixedPoint64 b) => a.RawValue == b.RawValue;
         public static bool operator !=(FixedPoint64 a, FixedPoint64 b) => a.RawValue != b.RawValue;
         public static bool operator <(FixedPoint64 a, FixedPoint64 b) => a.RawValue < b.RawValue;
@@ -167,8 +178,14 @@ namespace Core.Data
         public static bool operator <=(FixedPoint64 a, FixedPoint64 b) => a.RawValue <= b.RawValue;
         public static bool operator >=(FixedPoint64 a, FixedPoint64 b) => a.RawValue >= b.RawValue;
 
-        // Conversion to primitives
+        #endregion
+
+        #region Conversion Methods
+
+        /// <summary>Truncates to integer (rounds toward zero).</summary>
         public int ToInt() => (int)(RawValue >> FRACTIONAL_BITS);
+
+        /// <summary>Truncates to long integer (rounds toward zero).</summary>
         public long ToLong() => RawValue >> FRACTIONAL_BITS;
 
         /// <summary>
@@ -181,16 +198,23 @@ namespace Core.Data
         /// </summary>
         public double ToDouble() => (double)RawValue / ONE_RAW;
 
-        // Math functions
+        #endregion
+
+        #region Math Functions
+
+        /// <summary>Returns the absolute value.</summary>
         public static FixedPoint64 Abs(FixedPoint64 value) =>
             value.RawValue >= 0 ? value : new FixedPoint64(-value.RawValue);
 
+        /// <summary>Returns the smaller of two values.</summary>
         public static FixedPoint64 Min(FixedPoint64 a, FixedPoint64 b) =>
             a.RawValue < b.RawValue ? a : b;
 
+        /// <summary>Returns the larger of two values.</summary>
         public static FixedPoint64 Max(FixedPoint64 a, FixedPoint64 b) =>
             a.RawValue > b.RawValue ? a : b;
 
+        /// <summary>Clamps a value to the specified range.</summary>
         public static FixedPoint64 Clamp(FixedPoint64 value, FixedPoint64 min, FixedPoint64 max)
         {
             if (value.RawValue < min.RawValue) return min;
@@ -425,3 +449,5 @@ namespace Core.Data
         }
     }
 }
+
+#endregion

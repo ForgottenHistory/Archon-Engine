@@ -4,8 +4,8 @@ using UnityEngine;
 namespace Core.Initialization.Phases
 {
     /// <summary>
-    /// Phase 7 & 8: Initialize derived systems, warm caches, and validate
-    /// Final phase before game is ready to play
+    /// Phase 7 and 8: Initialize derived systems, warm caches, and validate.
+    /// Final phase before game is ready to play.
     /// </summary>
     public class SystemsWarmupPhase : IInitializationPhase
     {

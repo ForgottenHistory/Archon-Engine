@@ -19,17 +19,13 @@ namespace Core.AI
     {
         /// <summary>
         /// Select goal(s) to execute for a country.
-        ///
-        /// Parameters:
-        /// - countryID: The country making the decision
-        /// - evaluatedGoals: Goals with their scores (pre-evaluated)
-        /// - gameState: Current game state
-        /// - aiState: Current AI state for this country
-        ///
-        /// Returns: The goal to execute (null if none).
-        ///
-        /// Note: Goals with score <= 0 are already filtered out.
+        /// Goals with score of zero or less are already filtered out.
         /// </summary>
+        /// <param name="countryID">The country making the decision.</param>
+        /// <param name="evaluatedGoals">Goals with their scores (pre-evaluated).</param>
+        /// <param name="gameState">Current game state.</param>
+        /// <param name="aiState">Current AI state for this country.</param>
+        /// <returns>The goal to execute, or null if none.</returns>
         AIGoal SelectGoal(
             ushort countryID,
             IReadOnlyList<GoalEvaluation> evaluatedGoals,

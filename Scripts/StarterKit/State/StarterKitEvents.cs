@@ -13,9 +13,16 @@ namespace StarterKit
     /// </summary>
     public struct GoldChangedEvent : IGameEvent
     {
+        /// <summary>The country whose gold changed.</summary>
         public ushort CountryId;
+
+        /// <summary>Gold amount before the change.</summary>
         public int OldValue;
+
+        /// <summary>Gold amount after the change.</summary>
         public int NewValue;
+
+        /// <inheritdoc/>
         public float TimeStamp { get; set; }
     }
 
@@ -25,9 +32,16 @@ namespace StarterKit
     /// </summary>
     public struct BuildingConstructedEvent : IGameEvent
     {
+        /// <summary>The province where the building was constructed.</summary>
         public ushort ProvinceId;
+
+        /// <summary>The type of building that was constructed.</summary>
         public ushort BuildingTypeId;
+
+        /// <summary>The country that owns the building.</summary>
         public ushort CountryId;
+
+        /// <inheritdoc/>
         public float TimeStamp { get; set; }
     }
 

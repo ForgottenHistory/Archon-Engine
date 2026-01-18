@@ -14,9 +14,17 @@ namespace StarterKit
         private readonly bool logStateChanges;
         private ushort playerCountryId;
 
+        /// <summary>The country ID the player is currently controlling (0 if none selected).</summary>
         public ushort PlayerCountryId => playerCountryId;
+
+        /// <summary>True if the player has selected a country to control.</summary>
         public bool HasPlayerCountry => playerCountryId != 0;
 
+        /// <summary>
+        /// Create a new PlayerState instance.
+        /// </summary>
+        /// <param name="gameStateRef">Reference to the game state.</param>
+        /// <param name="log">Whether to log state changes.</param>
         public PlayerState(GameState gameStateRef, bool log = true)
         {
             gameState = gameStateRef;
@@ -28,6 +36,10 @@ namespace StarterKit
             }
         }
 
+        /// <summary>
+        /// Set the player's controlled country.
+        /// </summary>
+        /// <param name="countryId">The country ID to control (must be non-zero).</param>
         public void SetPlayerCountry(ushort countryId)
         {
             if (countryId == 0)
@@ -45,6 +57,9 @@ namespace StarterKit
             }
         }
 
+        /// <summary>
+        /// Clear the player's country selection (sets to 0/none).
+        /// </summary>
         public void ClearPlayerCountry()
         {
             if (logStateChanges && playerCountryId != 0)
@@ -54,12 +69,20 @@ namespace StarterKit
             playerCountryId = 0;
         }
 
+        /// <summary>
+        /// Get the 3-letter tag for the player's country.
+        /// </summary>
+        /// <returns>Country tag (e.g., "ROM") or "NONE" if no country selected.</returns>
         public string GetPlayerCountryTag()
         {
             if (!HasPlayerCountry) return "NONE";
             return gameState.CountryQueries.GetTag(playerCountryId);
         }
 
+        /// <summary>
+        /// Get the map color for the player's country.
+        /// </summary>
+        /// <returns>Country color, or gray if no country selected.</returns>
         public Color32 GetPlayerCountryColor()
         {
             if (!HasPlayerCountry)
@@ -69,6 +92,11 @@ namespace StarterKit
             return gameState.CountryQueries.GetColor(playerCountryId);
         }
 
+        /// <summary>
+        /// Check if a given country is the player's country.
+        /// </summary>
+        /// <param name="countryId">The country ID to check.</param>
+        /// <returns>True if the player controls this country.</returns>
         public bool IsPlayerCountry(ushort countryId)
         {
             return HasPlayerCountry && countryId == playerCountryId;

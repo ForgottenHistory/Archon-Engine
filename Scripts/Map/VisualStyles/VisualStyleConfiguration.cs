@@ -416,7 +416,7 @@ namespace Archon.Engine.Map
             public bool showValueLabels = false;
 
             [Header("Special Colors")]
-            [Tooltip("Color for provinces with no data (value < 0).")]
+            [Tooltip("Color for provinces with no data (negative value).")]
             public Color noDataColor = new Color(0.25f, 0.25f, 0.25f, 1f);
 
             /// <summary>

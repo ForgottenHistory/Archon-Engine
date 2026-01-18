@@ -91,19 +91,38 @@ namespace Map.Rendering.Border
     /// </summary>
     public struct BorderStyleParams
     {
+        /// <summary>Color of borders between countries.</summary>
         public Color CountryBorderColor;
+
+        /// <summary>Color of borders between provinces within the same country.</summary>
         public Color ProvinceBorderColor;
+
+        /// <summary>Visibility strength of country borders (0 = hidden, 1 = full).</summary>
         public float CountryBorderStrength;
+
+        /// <summary>Visibility strength of province borders (0 = hidden, 1 = full).</summary>
         public float ProvinceBorderStrength;
 
-        // Pixel-perfect specific
+        // Pixel-perfect mode parameters
+
+        /// <summary>Country border thickness in pixels (PixelPerfect mode only).</summary>
         public int PixelPerfectCountryThickness;
+
+        /// <summary>Province border thickness in pixels (PixelPerfect mode only).</summary>
         public int PixelPerfectProvinceThickness;
+
+        /// <summary>Anti-aliasing gradient width (PixelPerfect mode only).</summary>
         public float PixelPerfectAntiAliasing;
 
-        // Distance field specific
+        // Distance field mode parameters
+
+        /// <summary>Sharp edge width in pixels (DistanceField mode only).</summary>
         public float EdgeWidth;
+
+        /// <summary>Soft gradient falloff distance (DistanceField mode only).</summary>
         public float GradientWidth;
+
+        /// <summary>Anti-aliasing smoothness factor (DistanceField mode only).</summary>
         public float EdgeSmoothness;
     }
 }

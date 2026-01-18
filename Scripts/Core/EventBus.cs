@@ -81,7 +81,7 @@ namespace Core
 
         /// <summary>
         /// Emit an event - queued for frame-coherent processing
-        /// ZERO ALLOCATION: Event stays as struct T in EventQueue<T>
+        /// ZERO ALLOCATION: Event stays as struct T in EventQueue{T}
         /// </summary>
         public void Emit<T>(T gameEvent) where T : struct, IGameEvent
         {
@@ -179,8 +179,10 @@ namespace Core
         #endif
 
         /// <summary>
-        /// Internal interface for type-erased event queue storage
-        /// Virtual method calls don't box value types
+        /// Internal interface for type-erased event queue storage.
+        /// Enables storing different EventQueue&lt;T&gt; instances in one dictionary.
+        /// Virtual method calls on this interface do NOT box value types because
+        /// the actual event processing happens inside the typed EventQueue&lt;T&gt;.
         /// </summary>
         private interface IEventQueue
         {
@@ -271,11 +273,16 @@ namespace Core
     }
 
     /// <summary>
-    /// Base interface for all game events
-    /// Events MUST be structs to avoid allocations
+    /// Base interface for all game events.
+    /// Events MUST be structs (not classes) to avoid heap allocations during gameplay.
+    /// The EventBus uses generic EventQueue&lt;T&gt; which keeps events as value types throughout,
+    /// ensuring zero boxing and zero GC pressure.
     /// </summary>
     public interface IGameEvent
     {
+        /// <summary>
+        /// Timestamp when the event was emitted (set automatically by EventBus).
+        /// </summary>
         float TimeStamp { get; set; }
     }
 }

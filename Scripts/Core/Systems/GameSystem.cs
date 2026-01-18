@@ -196,7 +196,7 @@ namespace Core.Systems
         /// Usage:
         /// protected override void OnInitialize()
         /// {
-        ///     Subscribe<MonthlyTickEvent>(HandleMonthlyTick);
+        ///     Subscribe{MonthlyTickEvent}(HandleMonthlyTick);
         /// }
         /// // No OnShutdown override needed for unsubscription
         /// </summary>

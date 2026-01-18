@@ -12,8 +12,8 @@ namespace Core.Commands
     public interface ICommand
     {
         /// <summary>
-        /// Validate that this command can be executed in the current game state
-        /// Should be fast (< 0.001ms) and have no side effects
+        /// Validate that this command can be executed in the current game state.
+        /// Should be fast and have no side effects.
         /// </summary>
         /// <param name="gameState">Current game state for validation</param>
         /// <returns>True if command can be executed</returns>

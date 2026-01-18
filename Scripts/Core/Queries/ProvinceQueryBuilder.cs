@@ -450,6 +450,11 @@ namespace Core.Queries
 
         #endregion
 
+        /// <summary>
+        /// Disposes resources allocated during query execution.
+        /// Call this (or use 'using' statement) after Execute() if WithinDistance() filter was used,
+        /// as it allocates a GraphDistanceCalculator internally.
+        /// </summary>
         public void Dispose()
         {
             if (distanceCalculatorOwned && distanceCalculator != null)

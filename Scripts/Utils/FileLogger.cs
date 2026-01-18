@@ -375,6 +375,10 @@ public class FileLogger : MonoBehaviour
             WriteSystemLog(message, systemName, logType);
         }
 
+        /// <summary>
+        /// Log a separator line for visual grouping.
+        /// </summary>
+        /// <param name="title">Optional title to include in separator.</param>
         public void LogSeparator(string title = null)
         {
             if (string.IsNullOrEmpty(title))
@@ -387,16 +391,26 @@ public class FileLogger : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// Log a section header for visual separation.
+        /// </summary>
+        /// <param name="sectionName">Name of the section.</param>
         public void LogSection(string sectionName)
         {
             WriteLogDirect($"\n========== {sectionName} ==========\n");
         }
 
+        /// <summary>
+        /// Get the full path to the main log file.
+        /// </summary>
         public string GetLogFilePath()
         {
             return logFilePath;
         }
 
+        /// <summary>
+        /// Open the log file in the system's default text editor.
+        /// </summary>
         public void OpenLogFile()
         {
             if (!string.IsNullOrEmpty(logFilePath) && File.Exists(logFilePath))
@@ -405,6 +419,9 @@ public class FileLogger : MonoBehaviour
             }
         }
 
+        /// <summary>
+        /// Delete and recreate the log file, clearing all previous entries.
+        /// </summary>
         public void ClearLogFile()
         {
             if (logWriter != null)

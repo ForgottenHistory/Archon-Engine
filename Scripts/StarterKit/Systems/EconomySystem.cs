@@ -51,7 +51,13 @@ namespace StarterKit
         /// </summary>
         public FixedPoint64 GoldFixed => GetCountryGold(playerState?.PlayerCountryId ?? 0);
 
-
+        /// <summary>
+        /// Create a new EconomySystem.
+        /// </summary>
+        /// <param name="gameStateRef">Reference to the game state.</param>
+        /// <param name="playerStateRef">Reference to player state for identifying player country.</param>
+        /// <param name="modifierSystemRef">Modifier system for building bonuses.</param>
+        /// <param name="log">Whether to log income collection.</param>
         public EconomySystem(GameState gameStateRef, PlayerState playerStateRef, ModifierSystem modifierSystemRef, bool log = true)
         {
             gameState = gameStateRef;

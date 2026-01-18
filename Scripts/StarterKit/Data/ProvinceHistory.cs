@@ -12,10 +12,16 @@ namespace StarterKit
     /// </summary>
     public struct OwnershipRecord
     {
+        /// <summary>The country that owned the province during this period.</summary>
         public ushort CountryId;
-        public int StartDay;    // Game day when ownership started
-        public int EndDay;      // Game day when ownership ended (0 = current owner)
 
+        /// <summary>Game day when this country gained ownership.</summary>
+        public int StartDay;
+
+        /// <summary>Game day when ownership ended (0 = still current owner).</summary>
+        public int EndDay;
+
+        /// <summary>True if this record represents the current owner.</summary>
         public bool IsCurrent => EndDay == 0;
     }
 

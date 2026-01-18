@@ -25,7 +25,7 @@ namespace Core.Commands
         public string Description { get; set; }
 
         /// <summary>
-        /// Usage example (e.g., "add_gold <amount> [countryId]")
+        /// Usage example showing command syntax.
         /// </summary>
         public string Usage { get; set; }
 
