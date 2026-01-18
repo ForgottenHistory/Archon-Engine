@@ -2,13 +2,10 @@
   href: wiki/Home.md
 - name: Feature Guides
   href: wiki/
-  homepage: wiki/Home.md
 - name: API Reference
   href: api/
-  homepage: api/index.md
 - name: Architecture
   href: architecture/
-  homepage: architecture/ARCHITECTURE_OVERVIEW.md
 - name: File Registries
   items:
     - name: Core Layer
