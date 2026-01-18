@@ -299,4 +299,33 @@ Create `Template-Data/buildings/mybuilding.json5`:
 ### ENGINE Features Demonstrated
 
 - **Fluent Validation** - `Core.Validation.Validate.For(gs).Province(id).Result()` with GAME extensions
-- **Query Builders** - `ProvinceQueryBuilder`, `CountryQueryBuilder` for fluent filtering
+- **Query Builders** - `ProvinceQueryBuilder`, `CountryQueryBuilder`, `UnitQueryBuilder` for fluent filtering
+
+---
+
+## Intentionally Omitted
+
+### Combat System
+
+Combat is **intentionally not included** in StarterKit. Every grand strategy game handles combat differently:
+- EU4: Stack-based with dice rolls and morale
+- HOI4: Front lines with division combat width
+- Victoria 3: General-based with battle conditions
+- CK3: Knight duels and army composition
+
+Combat is pure **GAME-layer policy** - ENGINE provides the building blocks:
+
+```csharp
+// Find enemy units in a province
+using var enemies = Query.Units(unitSystem)
+    .InProvince(provinceId)
+    .NotOwnedBy(myCountryId)
+    .Execute(Allocator.Temp);
+
+// GAME layer decides resolution (dice? morale? terrain?)
+if (enemies.Length > 0)
+    ResolveCombat(myUnitId, enemies);  // Your implementation
+```
+
+ENGINE provides: `UnitSystem`, `UnitQueryBuilder`, `EventBus` for combat events, `Commands` for state changes.
+GAME decides: Combat resolution, morale, terrain bonuses, retreats, casualties.

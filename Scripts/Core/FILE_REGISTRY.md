@@ -133,9 +133,10 @@
 ---
 
 ## Queries/
-- **Core.Queries.Query** - Static entry point for fluent query builders: `Query.Provinces(gameState)`, `Query.Countries(gameState)`
+- **Core.Queries.Query** - Static entry point for fluent query builders: `Query.Provinces(gameState)`, `Query.Countries(gameState)`, `Query.Units(unitSystem)`
 - **Core.Queries.ProvinceQueryBuilder** - Fluent province filtering: OwnedBy, WithTerrain, IsLand, AdjacentTo, BorderingCountry, WithinDistance; terminal ops Execute, Count, Any, FirstOrDefault
 - **Core.Queries.CountryQueryBuilder** - Fluent country filtering: WithMinProvinces, WithMaxProvinces, BorderingCountry, HasProvinces, WithGraphicalCulture
+- **Core.Queries.UnitQueryBuilder** - Fluent unit filtering: OwnedBy, NotOwnedBy, InProvince, OfType, WithMinTroops, WithMaxTroops; terminal ops Execute, Count, Any, FirstOrDefault, TotalTroops
 - **Core.Queries.ProvinceQueries** - Read-only province operations; includes distance queries (GetDistanceBetween, GetProvincesWithinDistance), connected region queries (GetConnectedLandmasses, GetLandmassCount), and border queries (GetProvincesBorderingCountry)
 - **Core.Queries.CountryQueries** - High-performance country access with frame-coherent caching; includes relationship queries (SharesBorder, GetBorderingCountries)
 

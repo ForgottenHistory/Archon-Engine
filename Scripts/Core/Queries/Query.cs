@@ -1,4 +1,5 @@
 using Core.Systems;
+using Core.Units;
 
 namespace Core.Queries
 {
@@ -13,6 +14,11 @@ namespace Core.Queries
     ///
     ///   using var countries = Query.Countries(gameState)
     ///       .WithMinProvinces(5)
+    ///       .Execute(Allocator.Temp);
+    ///
+    ///   using var units = Query.Units(unitSystem)
+    ///       .OwnedBy(countryId)
+    ///       .InProvince(provinceId)
     ///       .Execute(Allocator.Temp);
     /// </summary>
     public static class Query
@@ -47,6 +53,14 @@ namespace Core.Queries
         public static CountryQueryBuilder Countries(CountrySystem countrySystem, ProvinceSystem provinceSystem = null, AdjacencySystem adjacencySystem = null)
         {
             return new CountryQueryBuilder(countrySystem, provinceSystem, adjacencySystem);
+        }
+
+        /// <summary>
+        /// Create a unit query builder.
+        /// </summary>
+        public static UnitQueryBuilder Units(UnitSystem unitSystem)
+        {
+            return new UnitQueryBuilder(unitSystem);
         }
     }
 }
