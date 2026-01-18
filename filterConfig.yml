@@ -1,0 +1,18 @@
+apiRules:
+  # Include these namespaces
+  - include:
+      uidRegex: ^Core
+      type: Namespace
+  - include:
+      uidRegex: ^Map
+      type: Namespace
+  - include:
+      uidRegex: ^StarterKit
+      type: Namespace
+  - include:
+      uidRegex: ^Utils
+      type: Namespace
+  # Exclude everything else
+  - exclude:
+      uidRegex: .+
+      type: Namespace

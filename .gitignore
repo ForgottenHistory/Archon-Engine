@@ -99,3 +99,7 @@ Assets/Scenes/SampleScene.unity
 Assets/count_lines.py
 Assets/count_lines.py.meta
 tmpclaude-*
+
+# DocFX generated files
+_site/
+api/
