@@ -151,19 +151,15 @@ foreach (var type in unitSystem.GetAllUnitTypes())
 
 ## UnitState Structure (ENGINE)
 
-The ENGINE stores units as fixed-size structs:
+The ENGINE stores units as fixed-size structs
 
 ```csharp
-public struct UnitState  // 16 bytes
+public struct UnitState  // 8 bytes
 {
-    public ushort unitID;
-    public ushort ownerID;
-    public ushort provinceID;
-    public ushort typeID;
-    public ushort organization;
-    public ushort morale;
-    public ushort strength;
-    public ushort unitCount;  // 0 = dead/disbanded
+    public ushort provinceID;   // Current location
+    public ushort countryID;    // Owning country
+    public ushort unitTypeID;   // Unit type (infantry, cavalry, etc.)
+    public ushort unitCount;    // 0 = dead/disbanded
 }
 ```
 
@@ -179,12 +175,12 @@ gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnUnitDestroyed);
 
 void OnUnitCreated(UnitCreatedEvent evt)
 {
-    Debug.Log($"Unit {evt.UnitId} created in province {evt.ProvinceId}");
+    Debug.Log($"Unit {evt.UnitID} created in province {evt.ProvinceID}");
 }
 
 void OnUnitMoved(UnitMovedEvent evt)
 {
-    Debug.Log($"Unit {evt.UnitId} moved from {evt.FromProvince} to {evt.ToProvince}");
+    Debug.Log($"Unit {evt.UnitID} moved from {evt.OldProvinceID} to {evt.NewProvinceID}");
 }
 ```
 

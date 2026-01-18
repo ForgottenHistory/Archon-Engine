@@ -167,10 +167,12 @@ How often the map mode refreshes:
 public enum UpdateFrequency
 {
     Never,        // Static data (terrain)
-    PerConquest,  // When provinces change hands
-    Monthly,      // Every game month
-    Weekly,       // Every game week
-    Daily         // Every game day (expensive!)
+    Yearly,       // Very slow changes (culture)
+    Monthly,      // Slow changes (development)
+    Weekly,       // Regular changes (trade)
+    Daily,        // Fast changes (military during war)
+    PerConquest,  // Event-driven (political ownership)
+    RealTime      // Continuous updates (selected highlights)
 }
 ```
 

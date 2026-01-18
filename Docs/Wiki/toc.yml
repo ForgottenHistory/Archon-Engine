@@ -18,3 +18,23 @@
       href: Units.md
     - name: Map Modes
       href: Map-Modes.md
+    - name: AI
+      href: AI.md
+    - name: Diplomacy
+      href: Diplomacy.md
+    - name: Time System
+      href: Time-System.md
+    - name: Save/Load
+      href: Save-Load.md
+    - name: Modifiers
+      href: Modifiers.md
+    - name: Queries
+      href: Queries.md
+    - name: Pathfinding
+      href: Pathfinding.md
+    - name: Map Rendering
+      href: Map-Rendering.md
+    - name: UI Patterns
+      href: UI-Patterns.md
+    - name: Localization
+      href: Localization.md

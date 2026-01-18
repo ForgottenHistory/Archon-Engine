@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Core.Data;
+using Core.Data.Ids;
 
 namespace Core.Commands
 {
@@ -108,6 +109,9 @@ namespace Core.Commands
                 var fp = (FixedPoint64)value;
                 writer.Write(fp.RawValue);
             }
+            // Type-safe ID wrappers (serialized as ushort)
+            else if (type == typeof(ProvinceId)) writer.Write(((ProvinceId)value).Value);
+            else if (type == typeof(CountryId)) writer.Write(((CountryId)value).Value);
             else
             {
                 throw new NotSupportedException($"SimpleCommand: Unsupported property type {type.Name} on {prop.Name}");
@@ -129,6 +133,9 @@ namespace Core.Commands
             if (type == typeof(bool)) return reader.ReadBoolean();
             if (type == typeof(string)) return reader.ReadString();
             if (type == typeof(FixedPoint64)) return FixedPoint64.FromRaw(reader.ReadInt64());
+            // Type-safe ID wrappers (deserialized from ushort)
+            if (type == typeof(ProvinceId)) return new ProvinceId(reader.ReadUInt16());
+            if (type == typeof(CountryId)) return new CountryId(reader.ReadUInt16());
 
             throw new NotSupportedException($"SimpleCommand: Unsupported property type {type.Name}");
         }

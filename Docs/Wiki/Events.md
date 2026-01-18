@@ -165,12 +165,14 @@ IDisposable sub = gameState.EventBus.Subscribe<SomeEvent>(evt =>
 
 The ENGINE provides these events (subscribe via `gameState.EventBus`):
 
-### Time Events (Core.Events)
+### Time Events (Core.Systems)
 - `HourlyTickEvent` - Every game hour
 - `DailyTickEvent` - Every game day
 - `WeeklyTickEvent` - Every game week
 - `MonthlyTickEvent` - Every game month
 - `YearlyTickEvent` - Every game year
+- `TimeStateChangedEvent` - Pause/unpause or speed change
+- `TimeChangedEvent` - Game time updated
 
 ### Province Events
 - `ProvinceOwnershipChangedEvent` - Province changed owner
@@ -181,12 +183,18 @@ The ENGINE provides these events (subscribe via `gameState.EventBus`):
 
 ### Unit Events (Core.Units)
 - `UnitCreatedEvent` - Unit created
-- `UnitMovedEvent` - Unit moved
-- `UnitDisbandedEvent` - Unit disbanded
+- `UnitMovedEvent` - Unit moved to new province
+- `UnitDestroyedEvent` - Unit destroyed (disbanded, combat, attrition)
+- `UnitCountChangedEvent` - Unit count changed (combat, reinforcement)
 
-### Diplomacy Events
+### Diplomacy Events (Core.Diplomacy)
 - `DiplomacyWarDeclaredEvent` - War declared
 - `DiplomacyPeaceMadeEvent` - Peace made
+- `DiplomacyOpinionChangedEvent` - Opinion between countries changed
+- `AllianceFormedEvent` / `AllianceBrokenEvent` - Alliance status
+- `NonAggressionPactFormedEvent` / `NonAggressionPactBrokenEvent` - NAP status
+- `GuaranteeGrantedEvent` / `GuaranteeRevokedEvent` - Independence guarantee
+- `MilitaryAccessGrantedEvent` / `MilitaryAccessRevokedEvent` - Military access
 
 ## When to Use Events vs Direct Calls
 

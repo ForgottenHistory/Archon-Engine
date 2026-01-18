@@ -109,18 +109,20 @@ public override bool Validate(GameState gameState)
     return Validate.For(gameState)
         .Province(provinceId)           // Province ID is valid
         .ProvinceOwnedBy(provinceId, countryId)  // Owned by country
-        .IsPositive(amount)             // Amount > 0
+        .Check(amount > 0, "Amount must be positive")  // Custom check
         .Result(out validationError);   // Get error message
 }
 ```
 
 ### ENGINE Validators (Core.Validation)
-- `.Province(id)` - Province exists
-- `.Country(id)` - Country exists
+- `.Province(id)` - Province exists and is valid
+- `.Country(id)` - Country exists and is valid
 - `.ProvinceOwnedBy(province, country)` - Ownership check
-- `.IsPositive(value)` - Value > 0
-- `.IsInRange(value, min, max)` - Range check
-- `.NotNull(obj)` - Null check
+- `.ProvinceUnowned(provinceId)` - Province has no owner
+- `.NotSameCountry(countryA, countryB)` - Countries are different
+- `.NotSameProvince(provinceA, provinceB)` - Provinces are different
+- `.ProvincesAdjacent(provinceA, provinceB)` - Provinces are neighbors
+- `.Check(condition, reason)` - Generic condition check
 
 ### Adding GAME Validators
 
@@ -181,11 +183,11 @@ Commands with `[Command]` attribute are available in the debug console:
 Use type-safe ID wrappers for compile-time safety:
 
 ```csharp
-[Arg(1, "provinceId")]
-public ProvinceId ProvinceId { get; set; }  // Not ushort
+[Arg(0, "province")]
+public ProvinceId TargetProvince { get; set; }  // Not ushort
 
-[Arg(0, "countryId")]
-public CountryId CountryId { get; set; }    // Not ushort
+[Arg(1, "country")]
+public CountryId TargetCountry { get; set; }    // Not ushort
 ```
 
 This prevents accidentally passing a province ID where a country ID is expected.
@@ -196,7 +198,7 @@ This prevents accidentally passing a province ID where a country ID is expected.
 - Integers: `int`, `uint`, `short`, `ushort`, `byte`, `sbyte`, `long`, `ulong`
 - Floating point: `float`, `double` (avoid in simulation!)
 - Other: `bool`, `string`, `FixedPoint64`
-- Type-safe IDs: `ProvinceId`, `CountryId` (ushort wrappers)
+- Type-safe IDs: `ProvinceId`, `CountryId` (serialized as ushort)
 
 ## When to Use BaseCommand
 
