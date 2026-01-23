@@ -1,0 +1,28 @@
+{
+    "name": "Network",
+    "rootNamespace": "Archon.Network",
+    "references": [
+        "Unity.Networking.Transport",
+        "Unity.Collections",
+        "Unity.Burst",
+        "Utils",
+        "Core"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "UNITY_TRANSPORT_ENABLED"
+    ],
+    "versionDefines": [
+        {
+            "name": "com.unity.transport",
+            "expression": "2.0.0",
+            "define": "UNITY_TRANSPORT_ENABLED"
+        }
+    ],
+    "noEngineReferences": false
+}

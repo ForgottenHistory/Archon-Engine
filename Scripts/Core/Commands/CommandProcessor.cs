@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.Collections;
 using UnityEngine;
 using Core.Systems;
+using Core.Network;
 
 namespace Core.Commands
 {
@@ -17,6 +18,9 @@ namespace Core.Commands
         private readonly List<CommandExecutionRecord> executionHistory;
         private uint currentTick;
         private bool isDisposed;
+
+        // Network bridge for multiplayer (null for single-player)
+        private INetworkBridge networkBridge;
 
         // Statistics for monitoring
         private int commandsExecuted;
@@ -40,6 +44,45 @@ namespace Core.Commands
         /// Number of pending commands
         /// </summary>
         public int PendingCommandCount => pendingCommands.Count;
+
+        /// <summary>
+        /// Whether we are in a multiplayer session.
+        /// </summary>
+        public bool IsMultiplayer => networkBridge?.IsConnected ?? false;
+
+        /// <summary>
+        /// Whether we are the authoritative host (or single-player).
+        /// </summary>
+        public bool IsAuthoritative => networkBridge == null || networkBridge.IsHost;
+
+        /// <summary>
+        /// Set the network bridge for multiplayer.
+        /// Pass null for single-player mode.
+        /// </summary>
+        public void SetNetworkBridge(INetworkBridge bridge)
+        {
+            // Unsubscribe from old bridge
+            if (networkBridge != null)
+            {
+                networkBridge.OnCommandReceived -= HandleRemoteCommand;
+            }
+
+            networkBridge = bridge;
+
+            // Subscribe to new bridge
+            if (networkBridge != null)
+            {
+                networkBridge.OnCommandReceived += HandleRemoteCommand;
+                ArchonLogger.Log("Network bridge attached to CommandProcessor", "core_commands");
+            }
+        }
+
+        private void HandleRemoteCommand(int peerId, byte[] commandData, uint tick)
+        {
+            // TODO: Deserialize and submit command
+            // This requires a command serialization system
+            ArchonLogger.Log($"Received remote command from peer {peerId} ({commandData.Length} bytes)", "core_commands");
+        }
 
         /// <summary>
         /// Add a command to be processed
@@ -83,8 +126,41 @@ namespace Core.Commands
                 command.ExecutionTick = currentTick + 1;
             }
 
+            // Multiplayer: clients send to host instead of executing locally
+            if (IsMultiplayer && !IsAuthoritative)
+            {
+                // Serialize and send to host
+                var commandData = SerializeCommand(command);
+                networkBridge.SendCommandToHost(commandData, command.ExecutionTick);
+                command.Dispose();
+                return CommandSubmissionResult.Success();
+            }
+
             pendingCommands.Enqueue(command);
             return CommandSubmissionResult.Success();
+        }
+
+        /// <summary>
+        /// Serialize a command for network transmission.
+        /// </summary>
+        private byte[] SerializeCommand(IProvinceCommand command)
+        {
+            int size = command.GetSerializedSize();
+            var buffer = new byte[size + 4]; // +4 for command type header
+
+            // Write command type
+            buffer[0] = command.CommandType;
+            buffer[1] = (byte)(command.PlayerID & 0xFF);
+            buffer[2] = (byte)(command.PlayerID >> 8);
+            buffer[3] = 0; // Reserved
+
+            // Write command data
+            var commandBuffer = new NativeArray<byte>(size, Allocator.Temp);
+            command.Serialize(commandBuffer, 0);
+            NativeArray<byte>.Copy(commandBuffer, 0, buffer, 4, size);
+            commandBuffer.Dispose();
+
+            return buffer;
         }
 
         /// <summary>
@@ -180,6 +256,13 @@ namespace Core.Commands
                             StateChecksumAfter = executionResult.NewStateChecksum
                         };
                         executionHistory.Add(record);
+
+                        // Multiplayer: host broadcasts executed command to all clients
+                        if (IsMultiplayer && IsAuthoritative)
+                        {
+                            var commandData = SerializeCommand(command);
+                            networkBridge.BroadcastCommand(commandData, currentTick);
+                        }
                     }
                     else
                     {
@@ -256,6 +339,9 @@ namespace Core.Commands
         public void Dispose()
         {
             if (isDisposed) return;
+
+            // Unsubscribe from network bridge
+            SetNetworkBridge(null);
 
             // Dispose all pending commands
             while (pendingCommands.Count > 0)
