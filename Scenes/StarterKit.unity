@@ -1358,6 +1358,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1564546580865607850, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
+      propertyPath: borderDetectionCompute
+      value: 
+      objectReference: {fileID: 7200000, guid: 94a40ea7a11beff419eb4204de213fd6, type: 3}
     - target: {fileID: 5350819791196625206, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
       propertyPath: mapCamera
       value: 
