@@ -96,7 +96,7 @@ namespace StarterKit.Validation
         }
 
         /// <summary>
-        /// Validate that a building can be constructed in a province.
+        /// Validate that a building can be constructed in a province (player only).
         /// </summary>
         public static ValidationBuilder CanConstructBuilding(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId)
         {
@@ -109,6 +109,47 @@ namespace StarterKit.Validation
             if (!buildings.CanConstruct(provinceId, buildingTypeId, out string reason))
             {
                 return v.Fail(reason);
+            }
+
+            return v;
+        }
+
+        /// <summary>
+        /// Validate that a building can be constructed in a province for a specific country.
+        /// Used by both player and AI commands.
+        /// </summary>
+        public static ValidationBuilder CanConstructBuildingForCountry(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId, ushort countryId)
+        {
+            var buildings = Initializer.Instance?.BuildingSystem;
+            if (buildings == null)
+            {
+                return v.Fail("BuildingSystem not available");
+            }
+
+            if (!buildings.CanConstructForCountry(provinceId, buildingTypeId, countryId, out string reason))
+            {
+                return v.Fail(reason);
+            }
+
+            return v;
+        }
+
+        /// <summary>
+        /// Validate that a province is owned by a specific country.
+        /// Used by multiplayer commands where country ID is explicit.
+        /// </summary>
+        public static ValidationBuilder ProvinceOwnedByCountry(this ValidationBuilder v, ProvinceId provinceId, ushort countryId)
+        {
+            var provinceSystem = v.GameState?.GetComponent<Core.Systems.ProvinceSystem>();
+            if (provinceSystem == null)
+            {
+                return v.Fail("ProvinceSystem not available");
+            }
+
+            ushort owner = provinceSystem.GetProvinceOwner(provinceId.Value);
+            if (owner != countryId)
+            {
+                return v.Fail($"Province {provinceId} is not owned by country {countryId} (owned by {owner})");
             }
 
             return v;

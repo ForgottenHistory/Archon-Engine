@@ -7,6 +7,7 @@
         "Engine",
         "Utils",
         "Unity.Collections",
+        "Unity.Mathematics",
         "Network"
     ],
     "includePlatforms": [],

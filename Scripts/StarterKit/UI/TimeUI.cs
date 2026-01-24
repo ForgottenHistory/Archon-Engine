@@ -4,6 +4,7 @@ using Core;
 using Core.Systems;
 using Core.Localization;
 using Core.UI;
+using Archon.Network;
 
 namespace StarterKit
 {
@@ -11,11 +12,15 @@ namespace StarterKit
     /// STARTERKIT - Simple time control UI.
     /// Shows date/time, pause button, and speed buttons.
     /// Positioned in top-left corner.
+    ///
+    /// In multiplayer: Only the host can pause/unpause and change speed.
+    /// Clients see the display but controls are disabled.
     /// </summary>
     public class TimeUI : StarterKitPanel
     {
         [Header("Speed Settings")]
         [SerializeField] private Color activeSpeedColor = new Color(0.3f, 0.7f, 0.3f, 1f);
+        [SerializeField] private Color disabledColor = new Color(0.3f, 0.3f, 0.3f, 0.5f);
 
         // UI Elements
         private Label dateTimeLabel;
@@ -58,6 +63,7 @@ namespace StarterKit
                 return;
 
             UpdateDisplay();
+            UpdateControlsEnabled();
         }
 
         protected override void CreateUI()
@@ -136,12 +142,80 @@ namespace StarterKit
 
         private void OnPauseClicked()
         {
-            timeManager?.TogglePause();
+            if (!CanControlTime())
+                return;
+
+            var networkInit = Initializer.Instance?.NetworkInitializer;
+            if (networkInit?.IsMultiplayer == true && networkInit.TimeSync != null)
+            {
+                // In multiplayer, use NetworkTimeSync for proper broadcasting
+                networkInit.TimeSync.TogglePause();
+            }
+            else
+            {
+                timeManager?.TogglePause();
+            }
         }
 
         private void OnSpeedClicked(int speed)
         {
-            timeManager?.SetSpeed(speed);
+            if (!CanControlTime())
+                return;
+
+            var networkInit = Initializer.Instance?.NetworkInitializer;
+            if (networkInit?.IsMultiplayer == true && networkInit.TimeSync != null)
+            {
+                // In multiplayer, use NetworkTimeSync for proper broadcasting
+                networkInit.TimeSync.SetSpeed(speed);
+            }
+            else
+            {
+                timeManager?.SetSpeed(speed);
+            }
+        }
+
+        /// <summary>
+        /// Check if we can control time (singleplayer or host in multiplayer).
+        /// </summary>
+        private bool CanControlTime()
+        {
+            var networkInit = Initializer.Instance?.NetworkInitializer;
+
+            // No network initializer = singleplayer, can control
+            if (networkInit == null)
+                return true;
+
+            // Not in multiplayer session = can control
+            if (!networkInit.IsMultiplayer)
+                return true;
+
+            // In multiplayer: only host can control
+            return networkInit.IsHost;
+        }
+
+        /// <summary>
+        /// Update button enabled states based on time control permissions.
+        /// </summary>
+        private void UpdateControlsEnabled()
+        {
+            bool canControl = CanControlTime();
+
+            if (pauseButton != null)
+            {
+                pauseButton.SetEnabled(canControl);
+                if (!canControl)
+                {
+                    pauseButton.style.backgroundColor = disabledColor;
+                }
+            }
+
+            if (speedButtons != null)
+            {
+                foreach (var btn in speedButtons)
+                {
+                    btn.SetEnabled(canControl);
+                }
+            }
         }
     }
 }

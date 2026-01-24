@@ -50,6 +50,7 @@ namespace Core
         // Core Infrastructure
         public EventBus EventBus { get; private set; }
         public CommandProcessor CommandProcessor { get; private set; }
+        public GameCommandProcessor GameCommandProcessor { get; private set; }
 
         // Game Layer System Registration (Engine mechanism, Game policy)
         // Engine doesn't know about specific Game layer types (EconomySystem, BuildingSystem, etc.)
@@ -197,8 +198,9 @@ namespace Core
             ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
-            // 10. Command processor (for multiplayer command execution)
+            // 10. Command processors (for multiplayer command execution)
             CommandProcessor = new CommandProcessor(Provinces);
+            GameCommandProcessor = new GameCommandProcessor(this);
 
             // 11. Initialize systems
             Provinces.Initialize(EventBus);
@@ -223,7 +225,8 @@ namespace Core
         }
 
         /// <summary>
-        /// Execute a command with detailed result message (for console/UI feedback)
+        /// Execute a command with detailed result message (for console/UI feedback).
+        /// In multiplayer, routes through GameCommandProcessor for network synchronization.
         /// </summary>
         public bool TryExecuteCommand<T>(T command, out string resultMessage) where T : ICommand
         {
@@ -234,67 +237,8 @@ namespace Core
                 return false;
             }
 
-            // Validate command
-            if (!command.Validate(this))
-            {
-                // Try to get a detailed validation error from the command
-                resultMessage = GetCommandValidationError(command);
-                ArchonLogger.LogWarning($"Command validation failed: {command.GetType().Name}", "core_simulation");
-                return false;
-            }
-
-            // Execute command
-            try
-            {
-                command.Execute(this);
-
-                // Get success message from command
-                resultMessage = GetCommandSuccessMessage(command);
-
-                // Emit command executed event for systems that need to react
-                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), IsSuccess = true });
-
-                return true;
-            }
-            catch (System.Exception e)
-            {
-                resultMessage = $"Execution error: {e.Message}";
-                ArchonLogger.LogError($"Command execution failed: {command.GetType().Name} - {e.Message}", "core_simulation");
-                EventBus.Emit(new CommandExecutedEvent { CommandType = typeof(T), IsSuccess = false, Error = e.Message });
-                return false;
-            }
-        }
-
-        /// <summary>
-        /// Get a user-friendly validation error message from a command
-        /// </summary>
-        private string GetCommandValidationError<T>(T command) where T : ICommand
-        {
-            // Check if command has a GetValidationError method (via reflection for now)
-            var method = command.GetType().GetMethod("GetValidationError");
-            if (method != null && method.ReturnType == typeof(string))
-            {
-                return (string)method.Invoke(command, new object[] { this });
-            }
-
-            // Fallback to generic message
-            return $"{command.GetType().Name} failed validation";
-        }
-
-        /// <summary>
-        /// Get a user-friendly success message from a command
-        /// </summary>
-        private string GetCommandSuccessMessage<T>(T command) where T : ICommand
-        {
-            // Check if command has a GetSuccessMessage method (via reflection for now)
-            var method = command.GetType().GetMethod("GetSuccessMessage");
-            if (method != null && method.ReturnType == typeof(string))
-            {
-                return (string)method.Invoke(command, new object[] { this });
-            }
-
-            // Fallback to generic message
-            return $"{command.GetType().Name} executed successfully";
+            // Route through GameCommandProcessor for network-aware execution
+            return GameCommandProcessor.SubmitCommand(command, out resultMessage);
         }
 
         /// <summary>
@@ -329,6 +273,7 @@ namespace Core
             if (Instance == this)
             {
                 // Clean up ENGINE layer systems
+                GameCommandProcessor?.Dispose();
                 CommandProcessor?.Dispose();
                 CountryQueries?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
                 Adjacencies?.Dispose();     // Dispose NativeParallelMultiHashMap

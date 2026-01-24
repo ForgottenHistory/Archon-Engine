@@ -146,15 +146,16 @@ namespace StarterKit
             quadMesh.RecalculateNormals();
             quadMesh.RecalculateBounds();
 
-            // Use the InstancedAtlasBadge shader for number display
-            Shader shader = Shader.Find("Engine/InstancedAtlasBadge");
-            if (shader == null)
+            // Load material from Resources (ensures shader is included in build)
+            var baseMaterial = Resources.Load<Material>("Shaders/InstancedAtlasBadgeMaterial");
+            if (baseMaterial == null)
             {
-                ArchonLogger.LogError("UnitVisualization: Engine/InstancedAtlasBadge shader not found!", "starter_kit");
+                ArchonLogger.LogError("UnitVisualization: Shaders/InstancedAtlasBadgeMaterial not found in Resources!", "starter_kit");
                 return;
             }
 
-            badgeMaterial = new Material(shader);
+            // Create instance so we don't modify the asset
+            badgeMaterial = new Material(baseMaterial);
             badgeMaterial.enableInstancing = true;
             badgeMaterial.renderQueue = 3000; // Render on top of map
 
@@ -182,7 +183,7 @@ namespace StarterKit
 
             propertyBlock = new MaterialPropertyBlock();
 
-            ArchonLogger.Log($"UnitVisualization: Created material with shader '{shader.name}'", "starter_kit");
+            ArchonLogger.Log($"UnitVisualization: Created material with shader '{badgeMaterial.shader.name}'", "starter_kit");
         }
 
         private void OnUnitCreated(UnitCreatedEvent evt)
@@ -230,14 +231,18 @@ namespace StarterKit
             // Render all badges with per-instance display values
             if (matrices.Count > 0 && badgeMaterial != null && quadMesh != null)
             {
-                // Set per-instance properties
-                if (displayValues.Count > 0)
+                // Clear and set per-instance properties
+                propertyBlock.Clear();
+                propertyBlock.SetFloatArray("_DisplayValue", displayValues.ToArray());
+                propertyBlock.SetFloatArray("_Scale", scaleValues.ToArray());
+
+                // Debug: log occasionally to see if rendering is happening
+                if (Time.frameCount % 300 == 0 && logDebug)
                 {
-                    propertyBlock.SetFloatArray("_DisplayValue", displayValues);
-                    propertyBlock.SetFloatArray("_Scale", scaleValues);
+                    ArchonLogger.Log($"UnitVisualization: Rendering {matrices.Count} badges", "starter_kit");
                 }
 
-                Graphics.DrawMeshInstanced(quadMesh, 0, badgeMaterial, matrices, propertyBlock);
+                Graphics.DrawMeshInstanced(quadMesh, 0, badgeMaterial, matrices.ToArray(), matrices.Count, propertyBlock);
             }
         }
 

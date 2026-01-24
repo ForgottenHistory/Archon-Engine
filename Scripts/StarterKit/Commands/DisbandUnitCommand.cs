@@ -23,6 +23,7 @@ namespace StarterKit.Commands
         // For undo - store unit state before disbanding
         private ProvinceId previousProvinceId;
         private ushort previousUnitTypeId;
+        private ushort previousCountryId;
         private string validationError;
 
         public override bool Validate(GameState gameState)
@@ -46,6 +47,7 @@ namespace StarterKit.Commands
             var unit = units.GetUnit(UnitId);
             previousProvinceId = unit.provinceID;
             previousUnitTypeId = unit.unitTypeID;
+            previousCountryId = unit.countryID;
 
             units.DisbandUnit(UnitId);
             LogExecution($"Disbanded unit {UnitId}");
@@ -57,7 +59,7 @@ namespace StarterKit.Commands
             if (units == null) return;
 
             // Recreate the unit (note: may get different ID)
-            ushort newUnitId = units.CreateUnit(previousProvinceId, previousUnitTypeId);
+            ushort newUnitId = units.CreateUnit(previousProvinceId.Value, previousUnitTypeId, previousCountryId);
             LogExecution($"Undid disband (recreated as unit {newUnitId})");
         }
     }

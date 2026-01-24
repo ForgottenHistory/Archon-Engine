@@ -1,12 +1,14 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Data.Ids;
 using Core.Events;
 using Core.Localization;
 using Core.Systems;
 using Core.UI;
 using Map.Interaction;
 using Map.Rendering.Terrain;
+using StarterKit.Commands;
 
 namespace StarterKit
 {
@@ -35,7 +37,6 @@ namespace StarterKit
         // Colonization UI
         private VisualElement colonizeContainer;
         private Button colonizeButton;
-        private const int COLONIZE_COST = 20;
 
         // History UI (Pattern 4: Hot/Cold Data Separation demo)
         private VisualElement historyContainer;
@@ -185,7 +186,7 @@ namespace StarterKit
             colonizeContainer.style.marginTop = SpacingMd;
             colonizeContainer.style.display = DisplayStyle.None;
 
-            string buyLandText = $"{LocalizationManager.Get("UI_BUY_LAND")} ({COLONIZE_COST} {LocalizationManager.Get("UI_GOLD").ToLower()})";
+            string buyLandText = $"{LocalizationManager.Get("UI_BUY_LAND")} ({ColonizeCommand.COLONIZE_COST} {LocalizationManager.Get("UI_GOLD").ToLower()})";
             colonizeButton = CreateStyledButton(buyLandText, OnColonizeClicked);
 
             colonizeContainer.Add(colonizeButton);
@@ -318,9 +319,9 @@ namespace StarterKit
                 return;
             }
 
-            if (economySystem.Gold < COLONIZE_COST)
+            if (economySystem.Gold < ColonizeCommand.COLONIZE_COST)
             {
-                ArchonLogger.LogWarning($"ProvinceInfoUI: Not enough gold (need {COLONIZE_COST}, have {economySystem.Gold})", "starter_kit");
+                ArchonLogger.LogWarning($"ProvinceInfoUI: Not enough gold (need {ColonizeCommand.COLONIZE_COST}, have {economySystem.Gold})", "starter_kit");
                 return;
             }
 
@@ -347,10 +348,19 @@ namespace StarterKit
                 return;
             }
 
-            economySystem.RemoveGold(COLONIZE_COST);
-            gameState.Provinces.SetProvinceOwner(currentProvinceID, playerState.PlayerCountryId);
+            // Use command for network sync
+            var command = new ColonizeCommand
+            {
+                ProvinceId = new ProvinceId(currentProvinceID),
+                CountryId = playerState.PlayerCountryId
+            };
 
-            ArchonLogger.Log($"ProvinceInfoUI: Colonized province {currentProvinceID} for {COLONIZE_COST} gold", "starter_kit");
+            bool success = gameState.TryExecuteCommand(command, out string message);
+            if (!success)
+            {
+                ArchonLogger.LogWarning($"ProvinceInfoUI: Colonization failed - {message}", "starter_kit");
+            }
+
             UpdatePanel();
         }
 
@@ -513,14 +523,14 @@ namespace StarterKit
 
             colonizeContainer.style.display = DisplayStyle.Flex;
 
-            bool canAfford = economySystem.Gold >= COLONIZE_COST;
+            bool canAfford = economySystem.Gold >= ColonizeCommand.COLONIZE_COST;
             colonizeButton.SetEnabled(canAfford);
             string buyLand = LocalizationManager.Get("UI_BUY_LAND");
             string gold = LocalizationManager.Get("UI_GOLD").ToLower();
             string notEnough = LocalizationManager.Get("UI_NOT_ENOUGH_GOLD");
             colonizeButton.text = canAfford
-                ? $"{buyLand} ({COLONIZE_COST} {gold})"
-                : $"{buyLand} ({COLONIZE_COST} {gold}) - {notEnough}";
+                ? $"{buyLand} ({ColonizeCommand.COLONIZE_COST} {gold})"
+                : $"{buyLand} ({ColonizeCommand.COLONIZE_COST} {gold}) - {notEnough}";
         }
 
         private bool IsAdjacentToPlayerTerritory(ushort provinceId)

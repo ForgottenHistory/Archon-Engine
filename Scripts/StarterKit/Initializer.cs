@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Core;
 using Core.Modifiers;
 using Engine;
@@ -96,6 +97,9 @@ namespace StarterKit
 
         /// <summary>AI system for non-player country decision making.</summary>
         public AISystem AISystem => aiSystem;
+
+        /// <summary>Network initializer for multiplayer state queries.</summary>
+        public NetworkInitializer NetworkInitializer => networkInitializer;
 
         #endregion
 
@@ -194,6 +198,10 @@ namespace StarterKit
             var highlighter = engine.ProvinceHighlighter;
             var saveManager = engine.SaveManager;
             mapModeManager = engine.MapModeManager;
+
+            // Register StarterKit commands for network synchronization
+            // Order must be identical on all clients!
+            RegisterNetworkCommands(gameState);
 
             // Scan province adjacencies (required for colonization neighbor check)
             yield return ScanProvinceAdjacencies(gameState);
@@ -303,6 +311,12 @@ namespace StarterKit
             // Subscribe to initialize UIs after country selection
             gameState.EventBus.Subscribe<PlayerCountrySelectedEvent>(evt =>
                 {
+                    // Re-enable province selection now that game has started
+                    if (selector != null)
+                    {
+                        selector.SelectionEnabled = true;
+                    }
+
                     // Initialize diplomacy panel first (so it can be passed to other UIs)
                     if (diplomacyPanel != null)
                     {
@@ -686,6 +700,50 @@ namespace StarterKit
             Object.Destroy(scannerObj);
 
             yield return null;
+        }
+
+        #endregion
+
+        #region Network Command Registration
+
+        /// <summary>
+        /// Auto-discover and register all commands in StarterKit.Commands namespace.
+        /// Uses reflection to find all classes extending BaseCommand with parameterless constructor.
+        /// Sorted alphabetically by full name for deterministic order across all clients.
+        /// </summary>
+        private void RegisterNetworkCommands(GameState gameState)
+        {
+            var processor = gameState.GameCommandProcessor;
+            if (processor == null)
+            {
+                ArchonLogger.LogWarning("Initializer: GameCommandProcessor not available - commands won't sync", "starter_kit");
+                return;
+            }
+
+            // Find all command types in StarterKit.Commands namespace
+            var assembly = typeof(Initializer).Assembly;
+            var commandTypes = assembly.GetTypes()
+                .Where(t => t.Namespace == "StarterKit.Commands"
+                         && typeof(Core.Commands.BaseCommand).IsAssignableFrom(t)
+                         && !t.IsAbstract
+                         && t.GetConstructor(System.Type.EmptyTypes) != null)
+                .OrderBy(t => t.FullName) // Alphabetical for deterministic order
+                .ToList();
+
+            // Register each command type via reflection
+            var registerMethod = typeof(Core.Commands.GameCommandProcessor)
+                .GetMethod("RegisterCommandType");
+
+            int count = 0;
+            foreach (var commandType in commandTypes)
+            {
+                var genericMethod = registerMethod.MakeGenericMethod(commandType);
+                genericMethod.Invoke(processor, null);
+                count++;
+            }
+
+            if (logProgress)
+                ArchonLogger.Log($"Initializer: Auto-registered {count} commands for network sync", "starter_kit");
         }
 
         #endregion

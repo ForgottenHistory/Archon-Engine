@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Data.Ids;
 using Core.Events;
 using Core.Localization;
 using Core.Systems;
@@ -258,24 +259,24 @@ namespace StarterKit
                 return;
             }
 
-            var infantryType = unitSystem.GetUnitType("infantry");
-            int cost = infantryType?.Cost ?? 20;
-
-            if (economySystem != null)
+            var playerState = Initializer.Instance?.PlayerState;
+            if (playerState == null || !playerState.HasPlayerCountry)
             {
-                if (!economySystem.RemoveGold(cost))
-                {
-                    ArchonLogger.Log($"UnitInfoUI: Not enough gold to recruit unit (need {cost}g, have {economySystem.Gold}g)", "starter_kit");
-                    return;
-                }
+                ArchonLogger.LogWarning("UnitInfoUI: No player country", "starter_kit");
+                return;
             }
 
-            ushort unitId = unitSystem.CreateUnit(selectedProvinceID, "infantry");
-
-            if (unitId == 0)
+            // Use CreateUnitCommand for network sync
+            var command = new StarterKit.Commands.CreateUnitCommand
             {
-                economySystem?.AddGold(cost);
-                ArchonLogger.LogWarning("UnitInfoUI: Failed to create unit", "starter_kit");
+                UnitTypeId = "infantry",
+                ProvinceId = new ProvinceId(selectedProvinceID),
+                CountryId = playerState.PlayerCountryId
+            };
+
+            if (!gameState.TryExecuteCommand(command, out string message))
+            {
+                ArchonLogger.LogWarning($"UnitInfoUI: Failed to create unit - {message}", "starter_kit");
             }
         }
 

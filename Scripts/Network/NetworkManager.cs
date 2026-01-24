@@ -50,6 +50,12 @@ namespace Archon.Network
         /// <summary>Fired when game speed changes (from host).</summary>
         public event Action<byte> OnGameSpeedChanged;
 
+        /// <summary>Fired when tick sync received (clients only).</summary>
+        public event Action<TickSyncMessage> OnTickSyncReceived;
+
+        /// <summary>Fired when tick ack received (host only, per peer).</summary>
+        public event Action<int, TickAckMessage> OnTickAckReceived;
+
         /// <summary>Fired when lobby state updates (player list, ready states).</summary>
         public event Action<LobbyUpdateHeader, LobbyPlayerSlot[]> OnLobbyUpdated;
 
@@ -226,6 +232,46 @@ namespace Archon.Network
             var message = CreateMessage(NetworkMessageType.GameSpeedChange, tick, data);
 
             transport.SendToAll(message, DeliveryMethod.ReliableOrdered);
+        }
+
+        /// <summary>
+        /// Broadcast tick sync to all clients. Host only.
+        /// Called periodically (e.g., every tick or every N ticks).
+        /// </summary>
+        public void SendTickSync(ulong currentTick, byte gameSpeed, bool isPaused)
+        {
+            if (!IsHost) return;
+
+            var syncMsg = new TickSyncMessage
+            {
+                CurrentTick = currentTick,
+                GameSpeed = gameSpeed,
+                IsPaused = (byte)(isPaused ? 1 : 0)
+            };
+            var data = StructToBytes(syncMsg);
+            var message = CreateMessage(NetworkMessageType.TickSync, (uint)(currentTick & 0xFFFFFFFF), data);
+
+            // Use unreliable for frequent tick syncs - missing one is fine
+            transport.SendToAll(message, DeliveryMethod.Unreliable);
+        }
+
+        /// <summary>
+        /// Send tick acknowledgement to host. Clients only.
+        /// </summary>
+        public void SendTickAck(ulong acknowledgedTick, ushort ticksBehind)
+        {
+            if (IsHost) return;
+
+            var ackMsg = new TickAckMessage
+            {
+                AcknowledgedTick = acknowledgedTick,
+                TicksBehind = ticksBehind
+            };
+            var data = StructToBytes(ackMsg);
+            var message = CreateMessage(NetworkMessageType.TickAck, (uint)(acknowledgedTick & 0xFFFFFFFF), data);
+
+            // Send to host (peer 0)
+            transport.Send(hostPeerId, message, DeliveryMethod.Unreliable);
         }
 
         #region Lobby Methods
@@ -488,6 +534,14 @@ namespace Archon.Network
                     HandleGameSpeedChange(payload);
                     break;
 
+                case NetworkMessageType.TickSync:
+                    HandleTickSync(payload);
+                    break;
+
+                case NetworkMessageType.TickAck:
+                    HandleTickAck(peerId, payload);
+                    break;
+
                 case NetworkMessageType.Heartbeat:
                     HandleHeartbeat(peerId, header.Tick);
                     break;
@@ -571,12 +625,15 @@ namespace Archon.Network
 
                 var selfPeer = new NetworkPeer(localPeerId)
                 {
-                    State = PeerState.Synchronizing,
+                    State = PeerState.Connected,
                     DisplayName = "Local"
                 };
                 peers[localPeerId] = selfPeer;
 
                 ArchonLogger.Log($"Connected to host, assigned peer ID {localPeerId}", ArchonLogger.Systems.Network);
+
+                // Notify that we've connected (client-side)
+                OnPeerConnected?.Invoke(selfPeer);
             }
             else
             {
@@ -645,6 +702,22 @@ namespace Archon.Network
         {
             var speedMsg = BytesToStruct<GameSpeedMessage>(payload, 0);
             OnGameSpeedChanged?.Invoke(speedMsg.SpeedLevel);
+        }
+
+        private void HandleTickSync(byte[] payload)
+        {
+            if (IsHost) return;  // Host doesn't receive tick syncs
+
+            var syncMsg = BytesToStruct<TickSyncMessage>(payload, 0);
+            OnTickSyncReceived?.Invoke(syncMsg);
+        }
+
+        private void HandleTickAck(int peerId, byte[] payload)
+        {
+            if (!IsHost) return;  // Only host receives tick acks
+
+            var ackMsg = BytesToStruct<TickAckMessage>(payload, 0);
+            OnTickAckReceived?.Invoke(peerId, ackMsg);
         }
 
         private void HandleHeartbeat(int peerId, uint tick)

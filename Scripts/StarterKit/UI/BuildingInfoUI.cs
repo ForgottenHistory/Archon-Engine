@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
+using Core.Data.Ids;
 using Core.Events;
 using Core.Localization;
 using Core.Systems;
 using Core.UI;
 using Map.Interaction;
+using StarterKit.Commands;
 using System.Collections.Generic;
 
 namespace StarterKit
@@ -297,11 +299,23 @@ namespace StarterKit
                 return;
             }
 
-            bool success = buildingSystem.Construct(selectedProvinceID, buildingTypeId);
+            // Resolve country ID NOW (before network send) - don't use 0
+            var playerState = Initializer.Instance?.PlayerState;
+            ushort countryId = playerState?.PlayerCountryId ?? 0;
+
+            // Use command for network sync
+            var command = new ConstructBuildingCommand
+            {
+                BuildingTypeId = buildingTypeId,
+                ProvinceId = new ProvinceId(selectedProvinceID),
+                CountryId = countryId // Explicit country ID for network
+            };
+
+            bool success = gameState.TryExecuteCommand(command, out string message);
 
             if (!success)
             {
-                ArchonLogger.LogWarning("BuildingInfoUI: Failed to construct building", "starter_kit");
+                ArchonLogger.LogWarning($"BuildingInfoUI: {message}", "starter_kit");
             }
         }
     }

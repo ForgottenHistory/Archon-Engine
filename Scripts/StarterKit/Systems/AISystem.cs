@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Unity.Collections;
 using Core;
+using Core.Commands;
+using Core.Data;
+using Core.Data.Ids;
 using Core.Events;
 using Core.Queries;
 using Core.Systems;
 using Map.Rendering.Terrain;
+using StarterKit.Commands;
 
 namespace StarterKit
 {
@@ -19,7 +23,6 @@ namespace StarterKit
     /// </summary>
     public class AISystem : IDisposable
     {
-        private const int COLONIZE_COST = 20;
 
         private readonly GameState gameState;
         private readonly PlayerState playerState;
@@ -29,8 +32,8 @@ namespace StarterKit
         private readonly CompositeDisposable subscriptions = new CompositeDisposable();
         private bool isDisposed;
 
-        // Random for province selection
-        private System.Random random;
+        // Deterministic random for multiplayer sync (seeded per-tick)
+        private DeterministicRandom random;
 
         // Terrain lookup for ownable checks
         private TerrainRGBLookup terrainLookup;
@@ -43,7 +46,8 @@ namespace StarterKit
             economySystem = economySystemRef;
             logProgress = log;
 
-            random = new System.Random();
+            // Initialize deterministic random with fixed seed (will be reseeded each tick)
+            random = new DeterministicRandom(12345);
 
             // Initialize terrain lookup for ownable checks (use DataDirectory from GameSettings)
             var engine = Engine.ArchonEngine.Instance;
@@ -70,6 +74,11 @@ namespace StarterKit
             if (!playerState.HasPlayerCountry)
                 return;
 
+            // In multiplayer, only host runs AI (commands are broadcast to clients)
+            var networkInit = Initializer.Instance?.NetworkInitializer;
+            if (networkInit != null && networkInit.IsMultiplayer && !networkInit.IsHost)
+                return;
+
             var countrySystem = gameState.GetComponent<CountrySystem>();
             if (countrySystem == null)
                 return;
@@ -77,6 +86,14 @@ namespace StarterKit
             var provinceSystem = gameState.GetComponent<Core.Systems.ProvinceSystem>();
             if (provinceSystem == null)
                 return;
+
+            // Reseed random with current tick for deterministic multiplayer behavior
+            // All clients at the same tick will generate the same random sequence
+            var timeManager = gameState.GetComponent<TimeManager>();
+            if (timeManager != null)
+            {
+                random.SetSeed((uint)timeManager.CurrentTick);
+            }
 
             ushort playerCountryId = playerState.PlayerCountryId;
             int countryCount = countrySystem.CountryCount;
@@ -88,6 +105,10 @@ namespace StarterKit
                 if (countryId == playerCountryId)
                     continue;
 
+                // Skip countries controlled by other human players in multiplayer
+                if (networkInit != null && networkInit.IsCountryHumanControlled(countryId))
+                    continue;
+
                 // Skip if country doesn't exist
                 if (!countrySystem.HasCountry(countryId))
                     continue;
@@ -96,23 +117,21 @@ namespace StarterKit
                 int currentGold = economySystem.GetCountryGoldInt(countryId);
 
                 // Priority 1: Try to colonize if we can afford it (expand first)
-                if (currentGold >= COLONIZE_COST)
+                if (currentGold >= ColonizeCommand.COLONIZE_COST)
                 {
                     if (TryColonize(countryId, provinceSystem))
                     {
-                        economySystem.RemoveGoldFromCountry(countryId, COLONIZE_COST);
+                        // Gold deducted inside ColonizeCommand
                         continue; // Move to next country after colonizing
                     }
                 }
 
                 // Priority 2: Try to build a farm if we can afford it (develop after expanding)
+                // Note: Gold is deducted inside ConstructBuildingCommand via ConstructForCountry
                 var farmType = buildingSystem.GetBuildingType("farm");
                 if (farmType != null && currentGold >= farmType.Cost)
                 {
-                    if (TryBuildFarm(countryId, provinceSystem, farmType.Cost))
-                    {
-                        economySystem.RemoveGoldFromCountry(countryId, farmType.Cost);
-                    }
+                    TryBuildFarm(countryId, provinceSystem);
                 }
             }
         }
@@ -147,20 +166,26 @@ namespace StarterKit
                 return false;
 
             // Pick random province to colonize
-            ushort targetProvince = colonizeCandidates[random.Next(colonizeCandidates.Count)];
+            ushort targetProvince = colonizeCandidates[random.NextInt(colonizeCandidates.Count)];
 
-            // Colonize (set owner)
-            gameState.Provinces.SetProvinceOwner(targetProvince, countryId);
-
-            if (logProgress)
+            // Colonize via ColonizeCommand (handles gold + ownership, syncs over network)
+            var command = new ColonizeCommand
             {
-                ArchonLogger.Log($"AISystem: Country {countryId} colonized province {targetProvince} (spent {COLONIZE_COST} gold)", "starter_kit");
+                ProvinceId = new ProvinceId(targetProvince),
+                CountryId = countryId
+            };
+
+            bool success = gameState.TryExecuteCommand(command, out string message);
+
+            if (success && logProgress)
+            {
+                ArchonLogger.Log($"AISystem: Country {countryId} colonized province {targetProvince} (spent {ColonizeCommand.COLONIZE_COST} gold)", "starter_kit");
             }
 
-            return true;
+            return success;
         }
 
-        private bool TryBuildFarm(ushort countryId, Core.Systems.ProvinceSystem provinceSystem, int cost)
+        private bool TryBuildFarm(ushort countryId, Core.Systems.ProvinceSystem provinceSystem)
         {
             var farmType = buildingSystem.GetBuildingType("farm");
             if (farmType == null)
@@ -192,14 +217,14 @@ namespace StarterKit
                 return false;
 
             // Pick random province
-            ushort targetProvince = validProvinces[random.Next(validProvinces.Count)];
+            ushort targetProvince = validProvinces[random.NextInt(validProvinces.Count)];
 
-            // Build farm
-            bool success = buildingSystem.ConstructForAI(targetProvince, "farm");
+            // Build farm directly (BuildingSystem is GAME layer, runs deterministically on all clients)
+            bool success = buildingSystem.ConstructForCountry(targetProvince, "farm", countryId);
 
             if (success && logProgress)
             {
-                ArchonLogger.Log($"AISystem: Country {countryId} built farm in province {targetProvince} (spent {cost} gold)", "starter_kit");
+                ArchonLogger.Log($"AISystem: Country {countryId} built farm in province {targetProvince}", "starter_kit");
             }
 
             return success;

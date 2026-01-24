@@ -23,6 +23,7 @@ namespace StarterKit
         private LateJoinHandler lateJoinHandler;
         private DesyncDetector desyncDetector;
         private DesyncRecovery desyncRecovery;
+        private NetworkTimeSync networkTimeSync;
 
         // References
         private GameState gameState;
@@ -44,6 +45,26 @@ namespace StarterKit
 
         /// <summary>The NetworkManager instance.</summary>
         public NetworkManager NetworkManager => networkManager;
+
+        /// <summary>The NetworkTimeSync for multiplayer time control.</summary>
+        public NetworkTimeSync TimeSync => networkTimeSync;
+
+        /// <summary>
+        /// Check if a country is controlled by a human player in multiplayer.
+        /// </summary>
+        public bool IsCountryHumanControlled(ushort countryId)
+        {
+            if (!IsMultiplayer || networkManager == null)
+                return false;
+
+            var players = networkManager.GetLobbyPlayers();
+            foreach (var player in players)
+            {
+                if (player.CountryId == countryId)
+                    return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Initialize networking components.
@@ -175,14 +196,22 @@ namespace StarterKit
             networkManager = new NetworkManager();
             networkManager.Initialize(transport);
 
-            // Create bridge and attach to CommandProcessor
+            // Create bridge and attach to both CommandProcessors
             networkBridge = new NetworkBridge(networkManager);
             commandProcessor.SetNetworkBridge(networkBridge);
+            gameState.GameCommandProcessor?.SetNetworkBridge(networkBridge);
 
             // Create sync components
             lateJoinHandler = new LateJoinHandler(networkManager, networkBridge);
             desyncDetector = new DesyncDetector(networkManager, networkBridge);
             desyncRecovery = new DesyncRecovery(networkManager, desyncDetector, lateJoinHandler);
+
+            // Create time sync (requires TimeManager from GameState)
+            var timeManager = gameState?.GetComponent<Core.Systems.TimeManager>();
+            if (timeManager != null)
+            {
+                networkTimeSync = new NetworkTimeSync(networkManager, timeManager, logProgress);
+            }
 
             // Subscribe to network events
             networkManager.OnPeerConnected += HandlePeerConnected;
@@ -204,8 +233,9 @@ namespace StarterKit
         {
             if (!isNetworkActive) return;
 
-            // Detach from CommandProcessor
+            // Detach from CommandProcessors
             commandProcessor?.SetNetworkBridge(null);
+            gameState?.GameCommandProcessor?.SetNetworkBridge(null);
 
             // Unsubscribe from events
             if (networkManager != null)
@@ -228,6 +258,7 @@ namespace StarterKit
             }
 
             // Cleanup sync components
+            networkTimeSync?.Dispose();
             desyncRecovery?.Detach();
             desyncDetector?.Detach();
             lateJoinHandler?.Detach();
@@ -243,6 +274,7 @@ namespace StarterKit
             lateJoinHandler = null;
             desyncDetector = null;
             desyncRecovery = null;
+            networkTimeSync = null;
 
             isNetworkActive = false;
 
@@ -302,6 +334,9 @@ namespace StarterKit
         {
             if (logProgress)
                 ArchonLogger.Log("NetworkInitializer: Game started", "starter_kit");
+
+            // Start multiplayer time sync
+            networkTimeSync?.StartMultiplayerSync();
 
             // Get the country selected in the lobby
             ushort selectedCountry = lobbyUI?.SelectedCountryId ?? 0;

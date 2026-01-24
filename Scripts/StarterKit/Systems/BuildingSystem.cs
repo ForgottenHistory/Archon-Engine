@@ -304,9 +304,96 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Construct a building for AI (no gold cost, no ownership check).
-        /// Applies modifiers via ModifierSystem.
+        /// Check if a building can be constructed in a province by a specific country.
+        /// Used by both player and AI.
         /// </summary>
+        public bool CanConstructForCountry(ushort provinceId, string buildingTypeId, ushort countryId, out string reason)
+        {
+            reason = null;
+
+            // Get building type
+            var buildingType = GetBuildingType(buildingTypeId);
+            if (buildingType == null)
+            {
+                reason = "Unknown building type";
+                return false;
+            }
+
+            // Check ownership
+            ushort ownerId = gameState.ProvinceQueries.GetOwner(provinceId);
+            if (ownerId != countryId)
+            {
+                reason = $"Province not owned by country {countryId}";
+                return false;
+            }
+
+            // Check gold
+            int currentGold = economySystem.GetCountryGoldInt(countryId);
+            if (currentGold < buildingType.Cost)
+            {
+                reason = $"Not enough gold (need {buildingType.Cost}, have {currentGold})";
+                return false;
+            }
+
+            // Check max per province
+            int currentCount = GetBuildingCount(provinceId, buildingType.ID);
+            if (currentCount >= buildingType.MaxPerProvince)
+            {
+                reason = $"Max {buildingType.MaxPerProvince} per province";
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Construct a building in a province for a specific country.
+        /// Used by both player and AI via ConstructBuildingCommand.
+        /// </summary>
+        public bool ConstructForCountry(ushort provinceId, string buildingTypeId, ushort countryId)
+        {
+            if (!CanConstructForCountry(provinceId, buildingTypeId, countryId, out var reason))
+            {
+                ArchonLogger.LogWarning($"BuildingSystem: Cannot construct {buildingTypeId} in province {provinceId} for country {countryId}: {reason}", "starter_kit");
+                return false;
+            }
+
+            var buildingType = GetBuildingType(buildingTypeId);
+
+            // Deduct gold from the country
+            economySystem.RemoveGoldFromCountry(countryId, buildingType.Cost);
+
+            // Add building to province
+            if (!provinceBuildings.TryGetValue(provinceId, out var data))
+            {
+                data = new ProvinceBuildingData { BuildingCounts = new Dictionary<ushort, int>() };
+                provinceBuildings[provinceId] = data;
+            }
+
+            if (!data.BuildingCounts.ContainsKey(buildingType.ID))
+            {
+                data.BuildingCounts[buildingType.ID] = 0;
+            }
+            data.BuildingCounts[buildingType.ID]++;
+
+            // Apply modifiers via ModifierSystem
+            ApplyBuildingModifiers(provinceId, countryId, buildingType);
+
+            if (logProgress)
+            {
+                ArchonLogger.Log($"BuildingSystem: Country {countryId} constructed {buildingType.Name} in province {provinceId}", "starter_kit");
+            }
+
+            // Emit event via EventBus (Pattern 3)
+            EmitBuildingConstructed(provinceId, buildingType.ID, countryId);
+            return true;
+        }
+
+        /// <summary>
+        /// DEPRECATED: Use ConstructForCountry instead.
+        /// Construct a building for AI (no gold cost, no ownership check).
+        /// </summary>
+        [System.Obsolete("Use ConstructForCountry with proper command flow instead")]
         public bool ConstructForAI(ushort provinceId, string buildingTypeId)
         {
             var buildingType = GetBuildingType(buildingTypeId);

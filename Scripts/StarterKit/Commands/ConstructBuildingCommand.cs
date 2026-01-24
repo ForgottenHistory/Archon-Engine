@@ -8,7 +8,7 @@ namespace StarterKit.Commands
 {
     /// <summary>
     /// StarterKit command: Construct a building in a province.
-    /// Demonstrates fluent validation with multiple GAME-layer validators.
+    /// Used by both player (via console) and AI (programmatically).
     /// Uses type-safe ProvinceId wrapper for compile-time safety.
     /// </summary>
     [Command("build",
@@ -23,15 +23,31 @@ namespace StarterKit.Commands
         [Arg(1, "provinceId")]
         public ProvinceId ProvinceId { get; set; }
 
+        /// <summary>
+        /// Country executing the command. If 0, uses player's country.
+        /// Set by AI when executing for AI countries.
+        /// Optional for console use (defaults to 0 = player).
+        /// </summary>
+        [Arg(2, "countryId", Optional = true)]
+        public ushort CountryId { get; set; }
+
         private string validationError;
 
         public override bool Validate(GameState gameState)
         {
-            // Fluent validation: province valid, building type exists, can construct
+            // Resolve country ID (0 = player's country)
+            ushort effectiveCountryId = CountryId;
+            if (effectiveCountryId == 0)
+            {
+                var playerState = Initializer.Instance?.PlayerState;
+                effectiveCountryId = playerState?.PlayerCountryId ?? 0;
+            }
+
+            // Fluent validation: province valid, building type exists, can construct for country
             return Core.Validation.Validate.For(gameState)
                 .Province(ProvinceId)
                 .BuildingTypeExists(BuildingTypeId)
-                .CanConstructBuilding(ProvinceId, BuildingTypeId)
+                .CanConstructBuildingForCountry(ProvinceId, BuildingTypeId, effectiveCountryId)
                 .Result(out validationError);
         }
 
@@ -44,17 +60,25 @@ namespace StarterKit.Commands
                 return;
             }
 
-            bool success = buildings.Construct(ProvinceId, BuildingTypeId);
+            // Resolve country ID (0 = player's country)
+            ushort effectiveCountryId = CountryId;
+            if (effectiveCountryId == 0)
+            {
+                var playerState = Initializer.Instance?.PlayerState;
+                effectiveCountryId = playerState?.PlayerCountryId ?? 0;
+            }
+
+            bool success = buildings.ConstructForCountry(ProvinceId, BuildingTypeId, effectiveCountryId);
 
             if (success)
-                LogExecution($"Constructed {BuildingTypeId} in province {ProvinceId}");
+                LogExecution($"Country {effectiveCountryId} constructed {BuildingTypeId} in province {ProvinceId}");
             else
             {
-                buildings.CanConstruct(ProvinceId, BuildingTypeId, out string reason);
+                buildings.CanConstructForCountry(ProvinceId, BuildingTypeId, effectiveCountryId, out string reason);
                 ArchonLogger.LogWarning($"ConstructBuildingCommand: Failed - {reason}", "starter_kit");
             }
         }
 
-        // Note: Undo not supported - BuildingSystem doesn't have demolish
+        // Serialization handled automatically by SimpleCommand via [Arg] attributes
     }
 }

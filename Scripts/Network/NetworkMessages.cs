@@ -28,6 +28,8 @@ namespace Archon.Network
         ChecksumRequest = 0x30,
         ChecksumResponse = 0x31,
         DesyncRecovery = 0x32,
+        TickSync = 0x33,            // Host broadcasts current tick to clients
+        TickAck = 0x34,             // Client acknowledges tick (for speed adaptation)
 
         // Lobby (0x40-0x4F)
         LobbyUpdate = 0x40,
@@ -109,6 +111,33 @@ namespace Archon.Network
     public struct GameSpeedMessage
     {
         public byte SpeedLevel;           // 0 = paused, 1-5 = speed levels
+    }
+
+    /// <summary>
+    /// Tick sync message. Host sends this to clients periodically.
+    /// Clients use this to synchronize their game time.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct TickSyncMessage
+    {
+        public ulong CurrentTick;         // 8 bytes - host's current tick
+        public byte GameSpeed;            // 1 byte - current speed level
+        public byte IsPaused;             // 1 byte - pause state
+
+        public const int Size = 10;
+    }
+
+    /// <summary>
+    /// Tick acknowledgement message. Client sends this to confirm tick processing.
+    /// Host uses these to detect slow clients and adapt speed.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct TickAckMessage
+    {
+        public ulong AcknowledgedTick;    // 8 bytes - last tick client has processed
+        public ushort TicksBehind;        // 2 bytes - how many ticks client is behind
+
+        public const int Size = 10;
     }
 
     /// <summary>

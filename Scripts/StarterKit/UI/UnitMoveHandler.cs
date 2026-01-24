@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.Localization;
+using StarterKit.Commands;
 using System.Collections.Generic;
 
 namespace StarterKit
@@ -143,14 +144,6 @@ namespace StarterKit
                 return;
             }
 
-            var movementQueue = gameState.Units?.MovementQueue;
-            if (movementQueue == null)
-            {
-                ArchonLogger.LogWarning("UnitMoveHandler: MovementQueue not available", "starter_kit");
-                ExitMoveMode();
-                return;
-            }
-
             // Find path
             var playerState = Initializer.Instance?.PlayerState;
             ushort countryId = playerState?.PlayerCountryId ?? 0;
@@ -162,7 +155,7 @@ namespace StarterKit
                 return;
             }
 
-            // Issue movement orders
+            // Issue movement orders via command for network sync
             int ordersIssued = 0;
             foreach (var unitId in unitsToMove)
             {
@@ -172,9 +165,23 @@ namespace StarterKit
                     var unitType = unitSystem.GetUnitType(unit.unitTypeID);
                     int movementDays = unitType?.Speed ?? 2;
 
-                    ushort firstDestination = path[1];
-                    movementQueue.StartMovement(unitId, firstDestination, movementDays, path);
-                    ordersIssued++;
+                    // Use QueueUnitMovementCommand for network sync
+                    var command = new QueueUnitMovementCommand
+                    {
+                        UnitId = unitId,
+                        Path = new List<ushort>(path),
+                        MovementDays = movementDays,
+                        CountryId = countryId
+                    };
+
+                    if (gameState.TryExecuteCommand(command, out string message))
+                    {
+                        ordersIssued++;
+                    }
+                    else
+                    {
+                        ArchonLogger.LogWarning($"UnitMoveHandler: Failed to queue movement for unit {unitId} - {message}", "starter_kit");
+                    }
                 }
             }
 

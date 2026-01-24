@@ -173,17 +173,11 @@ namespace StarterKit
         }
 
         /// <summary>
-        /// Create a unit at specified province for player's country.
+        /// Create a unit at specified province for a specific country.
         /// Returns unit ID, or 0 if failed.
         /// </summary>
-        public ushort CreateUnit(ushort provinceId, string unitTypeStringId)
+        public ushort CreateUnit(ushort provinceId, string unitTypeStringId, ushort countryId)
         {
-            if (!playerState.HasPlayerCountry)
-            {
-                ArchonLogger.LogWarning("UnitSystem: Cannot create unit - no player country", "starter_kit");
-                return 0;
-            }
-
             var unitType = GetUnitType(unitTypeStringId);
             if (unitType == null)
             {
@@ -191,35 +185,29 @@ namespace StarterKit
                 return 0;
             }
 
-            return CreateUnit(provinceId, unitType.ID);
+            return CreateUnit(provinceId, unitType.ID, countryId);
         }
 
         /// <summary>
-        /// Create a unit at specified province for player's country.
+        /// Create a unit at specified province for a specific country.
         /// Returns unit ID, or 0 if failed.
         /// </summary>
-        public ushort CreateUnit(ushort provinceId, ushort unitTypeId)
+        public ushort CreateUnit(ushort provinceId, ushort unitTypeId, ushort countryId)
         {
-            if (!playerState.HasPlayerCountry)
-            {
-                ArchonLogger.LogWarning("UnitSystem: Cannot create unit - no player country", "starter_kit");
-                return 0;
-            }
-
             var unitSystem = gameState.Units;
             if (unitSystem == null)
             {
-                ArchonLogger.LogError("UnitSystem: UnitSystem not available", "starter_kit");
+                ArchonLogger.LogError("UnitSystem: Core UnitSystem not available", "starter_kit");
                 return 0;
             }
 
-            ushort unitId = unitSystem.CreateUnit(provinceId, playerState.PlayerCountryId, unitTypeId);
+            ushort unitId = unitSystem.CreateUnit(provinceId, countryId, unitTypeId);
 
             if (logProgress && unitId != 0)
             {
                 var unitType = GetUnitType(unitTypeId);
                 string typeName = unitType?.Name ?? $"Type{unitTypeId}";
-                ArchonLogger.Log($"UnitSystem: Created {typeName} (ID={unitId}) in province {provinceId}", "starter_kit");
+                ArchonLogger.Log($"UnitSystem: Created {typeName} (ID={unitId}) for country {countryId} in province {provinceId}", "starter_kit");
             }
 
             return unitId;
