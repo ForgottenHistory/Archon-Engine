@@ -62,17 +62,13 @@
 ## Commands/
 - **Core.Commands.ICommand** - Base command interface: Validate, Execute, Undo, Serialize/Deserialize
 - **Core.Commands.BaseCommand** - Abstract base with common utilities and logging
+- **Core.Commands.SimpleCommand** - Simplified command base with auto-serialization via [Arg] attributes
 - **Core.Commands.CommandResult** - Execution result struct with success/error info
 - **Core.Commands.ICommandFactory** - Factory interface for creating commands from string input
 - **Core.Commands.CommandMetadataAttribute** - Attribute for auto-discovery (name, aliases, description, examples)
 - **Core.Commands.CommandRegistry** - Auto-discovery registry with multi-assembly support
-- **Core.Commands.IProvinceCommand** - Province-specific command interface
-- **Core.Commands.ChangeOwnerCommand** - Change province ownership
 - **Core.Commands.ProvinceCommands** - Collection of common province commands
-- **Core.Commands.CommandProcessor** - Deterministic command validation and execution for ENGINE layer (IProvinceCommand)
-- **Core.Commands.GameCommandProcessor** - GAME layer command processor with network sync; auto-registers commands, routes client→host→broadcast
-- **Core.Commands.CommandBuffer** - Ring buffer for command storage (rollback support)
-- **Core.Commands.CommandSerializer** - Serialize commands for network transmission
+- **Core.Commands.CommandProcessor** - Command validation and execution with network sync; auto-registers commands, routes client→host→broadcast
 - **Core.Commands.CommandLogger** - Ring buffer for command history (last 6000 commands)
 
 ---

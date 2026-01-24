@@ -43,7 +43,7 @@ networkInitializer.Connect("192.168.1.100", port: 7777);
 
 ## Command Synchronization
 
-All GAME layer commands sync automatically via `GameCommandProcessor`:
+All commands sync automatically via `CommandProcessor`:
 
 ```csharp
 // UI creates command with explicit CountryId
@@ -54,14 +54,14 @@ var cmd = new CreateUnitCommand
     UnitTypeId = unitType
 };
 
-// Submit through GameCommandProcessor (not CommandProcessor)
-gameCommandProcessor.SubmitCommand(cmd, out string result);
+// Submit through CommandProcessor (or gameState.TryExecuteCommand)
+gameState.TryExecuteCommand(cmd, out string result);
 ```
 
 ### Command Flow
 
 ```
-Client UI → Command → GameCommandProcessor.SubmitCommand()
+Client UI → Command → CommandProcessor.SubmitCommand()
     ↓
 Send to Host (if multiplayer client)
     ↓
@@ -264,8 +264,8 @@ See [Commands](Commands.md) for command pattern details.
 
 **Commands not syncing:**
 - Check command has `Serialize()`/`Deserialize()`
-- Verify using `GameCommandProcessor`, not `CommandProcessor`
-- Ensure command is in `StarterKit.Commands` namespace
+- Verify command is registered with `CommandProcessor.RegisterCommandType<T>()`
+- Ensure command is in `StarterKit.Commands` namespace (for auto-registration)
 
 **State diverges:**
 - Check for float math in simulation

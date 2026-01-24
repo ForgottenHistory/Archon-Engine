@@ -229,6 +229,6 @@ See `Scripts/StarterKit/Commands/` for complete implementations.
 ## Multiplayer Commands
 
 For multiplayer, commands need explicit CountryId and custom serialization. See [Multiplayer](Multiplayer.md) for:
-- Using `GameCommandProcessor` instead of `CommandProcessor`
+- Registering commands with `CommandProcessor.RegisterCommandType<T>()`
 - Custom `Serialize()`/`Deserialize()` methods
 - Why commands must carry explicit CountryId

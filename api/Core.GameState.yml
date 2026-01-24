@@ -11,7 +11,6 @@ items:
   - Core.GameState.CountryQueries
   - Core.GameState.Diplomacy
   - Core.GameState.EventBus
-  - Core.GameState.GameCommandProcessor
   - Core.GameState.GetAllRegisteredGameSystems
   - Core.GameState.GetCountryColor(System.UInt16)
   - Core.GameState.GetCountryProvinces(System.UInt16)
@@ -484,35 +483,6 @@ items:
       type: Core.Commands.CommandProcessor
     content.vb: Public Property CommandProcessor As CommandProcessor
   overload: Core.GameState.CommandProcessor*
-- uid: Core.GameState.GameCommandProcessor
-  commentId: P:Core.GameState.GameCommandProcessor
-  id: GameCommandProcessor
-  parent: Core.GameState
-  langs:
-  - csharp
-  - vb
-  name: GameCommandProcessor
-  nameWithType: GameState.GameCommandProcessor
-  fullName: Core.GameState.GameCommandProcessor
-  type: Property
-  source:
-    remote:
-      path: Scripts/Core/GameState.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GameCommandProcessor
-    path: Scripts/Core/GameState.cs
-    startLine: 52
-  assemblies:
-  - Core
-  namespace: Core
-  syntax:
-    content: public GameCommandProcessor GameCommandProcessor { get; }
-    parameters: []
-    return:
-      type: Core.Commands.GameCommandProcessor
-    content.vb: Public Property GameCommandProcessor As GameCommandProcessor
-  overload: Core.GameState.GameCommandProcessor*
 - uid: Core.GameState.IsInitialized
   commentId: P:Core.GameState.IsInitialized
   id: IsInitialized
@@ -531,7 +501,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/Core/GameState.cs
-    startLine: 60
+    startLine: 59
   assemblies:
   - Core
   namespace: Core
@@ -560,7 +530,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsLoading
     path: Scripts/Core/GameState.cs
-    startLine: 61
+    startLine: 60
   assemblies:
   - Core
   namespace: Core
@@ -589,7 +559,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadingProgress
     path: Scripts/Core/GameState.cs
-    startLine: 62
+    startLine: 61
   assemblies:
   - Core
   namespace: Core
@@ -618,7 +588,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Instance
     path: Scripts/Core/GameState.cs
-    startLine: 67
+    startLine: 66
   assemblies:
   - Core
   namespace: Core
@@ -649,7 +619,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetRegistries
     path: Scripts/Core/GameState.cs
-    startLine: 89
+    startLine: 88
   assemblies:
   - Core
   namespace: Core
@@ -680,7 +650,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterGameSystem
     path: Scripts/Core/GameState.cs
-    startLine: 100
+    startLine: 99
   assemblies:
   - Core
   namespace: Core
@@ -721,7 +691,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetGameSystem
     path: Scripts/Core/GameState.cs
-    startLine: 122
+    startLine: 121
   assemblies:
   - Core
   namespace: Core
@@ -759,7 +729,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasGameSystem
     path: Scripts/Core/GameState.cs
-    startLine: 135
+    startLine: 134
   assemblies:
   - Core
   namespace: Core
@@ -794,7 +764,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllRegisteredGameSystems
     path: Scripts/Core/GameState.cs
-    startLine: 144
+    startLine: 143
   assemblies:
   - Core
   namespace: Core
@@ -827,7 +797,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InitializeSystems
     path: Scripts/Core/GameState.cs
-    startLine: 158
+    startLine: 157
   assemblies:
   - Core
   namespace: Core
@@ -855,7 +825,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryExecuteCommand
     path: Scripts/Core/GameState.cs
-    startLine: 221
+    startLine: 219
   assemblies:
   - Core
   namespace: Core
@@ -896,14 +866,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryExecuteCommand
     path: Scripts/Core/GameState.cs
-    startLine: 230
+    startLine: 228
   assemblies:
   - Core
   namespace: Core
   summary: >-
     Execute a command with detailed result message (for console/UI feedback).
 
-    In multiplayer, routes through GameCommandProcessor for network synchronization.
+    In multiplayer, routes through CommandProcessor for network synchronization.
   example: []
   syntax:
     content: 'public bool TryExecuteCommand<T>(T command, out string resultMessage) where T : ICommand'
@@ -939,7 +909,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceOwner
     path: Scripts/Core/GameState.cs
-    startLine: 246
+    startLine: 244
   assemblies:
   - Core
   namespace: Core
@@ -975,7 +945,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryColor
     path: Scripts/Core/GameState.cs
-    startLine: 254
+    startLine: 252
   assemblies:
   - Core
   namespace: Core
@@ -1011,7 +981,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryProvinces
     path: Scripts/Core/GameState.cs
-    startLine: 262
+    startLine: 260
   assemblies:
   - Core
   namespace: Core
@@ -1444,19 +1414,6 @@ references:
   - uid: Core.Commands
     name: Commands
     href: Core.Commands.html
-- uid: Core.GameState.GameCommandProcessor*
-  commentId: Overload:Core.GameState.GameCommandProcessor
-  href: Core.GameState.html#Core_GameState_GameCommandProcessor
-  name: GameCommandProcessor
-  nameWithType: GameState.GameCommandProcessor
-  fullName: Core.GameState.GameCommandProcessor
-- uid: Core.Commands.GameCommandProcessor
-  commentId: T:Core.Commands.GameCommandProcessor
-  parent: Core.Commands
-  href: Core.Commands.GameCommandProcessor.html
-  name: GameCommandProcessor
-  nameWithType: GameCommandProcessor
-  fullName: Core.Commands.GameCommandProcessor
 - uid: Core.GameState.IsInitialized*
   commentId: Overload:Core.GameState.IsInitialized
   href: Core.GameState.html#Core_GameState_IsInitialized

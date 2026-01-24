@@ -50,7 +50,6 @@ namespace Core
         // Core Infrastructure
         public EventBus EventBus { get; private set; }
         public CommandProcessor CommandProcessor { get; private set; }
-        public GameCommandProcessor GameCommandProcessor { get; private set; }
 
         // Game Layer System Registration (Engine mechanism, Game policy)
         // Engine doesn't know about specific Game layer types (EconomySystem, BuildingSystem, etc.)
@@ -198,9 +197,8 @@ namespace Core
             ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
-            // 10. Command processors (for multiplayer command execution)
-            CommandProcessor = new CommandProcessor(Provinces);
-            GameCommandProcessor = new GameCommandProcessor(this);
+            // 10. Command processor (for multiplayer command execution)
+            CommandProcessor = new CommandProcessor(this);
 
             // 11. Initialize systems
             Provinces.Initialize(EventBus);
@@ -226,7 +224,7 @@ namespace Core
 
         /// <summary>
         /// Execute a command with detailed result message (for console/UI feedback).
-        /// In multiplayer, routes through GameCommandProcessor for network synchronization.
+        /// In multiplayer, routes through CommandProcessor for network synchronization.
         /// </summary>
         public bool TryExecuteCommand<T>(T command, out string resultMessage) where T : ICommand
         {
@@ -237,8 +235,8 @@ namespace Core
                 return false;
             }
 
-            // Route through GameCommandProcessor for network-aware execution
-            return GameCommandProcessor.SubmitCommand(command, out resultMessage);
+            // Route through CommandProcessor for network-aware execution
+            return CommandProcessor.SubmitCommand(command, out resultMessage);
         }
 
         /// <summary>
@@ -273,7 +271,6 @@ namespace Core
             if (Instance == this)
             {
                 // Clean up ENGINE layer systems
-                GameCommandProcessor?.Dispose();
                 CommandProcessor?.Dispose();
                 CountryQueries?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
                 Adjacencies?.Dispose();     // Dispose NativeParallelMultiHashMap

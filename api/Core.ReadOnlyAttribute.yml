@@ -19,7 +19,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ReadOnlyAttribute
     path: Scripts/Core/GameState.cs
-    startLine: 352
+    startLine: 349
   assemblies:
   - Core
   namespace: Core

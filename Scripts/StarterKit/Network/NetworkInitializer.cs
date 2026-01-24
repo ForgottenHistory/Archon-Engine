@@ -196,10 +196,9 @@ namespace StarterKit
             networkManager = new NetworkManager();
             networkManager.Initialize(transport);
 
-            // Create bridge and attach to both CommandProcessors
+            // Create bridge and attach to CommandProcessor
             networkBridge = new NetworkBridge(networkManager);
             commandProcessor.SetNetworkBridge(networkBridge);
-            gameState.GameCommandProcessor?.SetNetworkBridge(networkBridge);
 
             // Create sync components
             lateJoinHandler = new LateJoinHandler(networkManager, networkBridge);
@@ -233,9 +232,8 @@ namespace StarterKit
         {
             if (!isNetworkActive) return;
 
-            // Detach from CommandProcessors
+            // Detach from CommandProcessor
             commandProcessor?.SetNetworkBridge(null);
-            gameState?.GameCommandProcessor?.SetNetworkBridge(null);
 
             // Unsubscribe from events
             if (networkManager != null)

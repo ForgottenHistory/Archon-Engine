@@ -1,59 +1,69 @@
 using System;
 using System.Collections.Generic;
-using Unity.Collections;
-using UnityEngine;
-using Core.Systems;
+using System.IO;
 using Core.Network;
 
 namespace Core.Commands
 {
     /// <summary>
-    /// Processes and executes commands in deterministic order
-    /// Ensures multiplayer consistency through command validation and execution
+    /// Processes commands (ICommand) with network synchronization.
+    /// All game state changes flow through this processor.
+    ///
+    /// Commands are validated locally, then:
+    /// - Host: executes locally and broadcasts to clients
+    /// - Client: sends to host for validation and execution
     /// </summary>
     public class CommandProcessor : IDisposable
     {
-        private readonly ProvinceSystem provinceSystem;
-        private readonly Queue<IProvinceCommand> pendingCommands;
-        private readonly List<CommandExecutionRecord> executionHistory;
-        private uint currentTick;
-        private bool isDisposed;
+        private readonly GameState gameState;
+        private readonly Dictionary<ushort, Func<ICommand>> commandFactories;
+        private readonly Dictionary<Type, ushort> commandTypeIds;
 
-        // Network bridge for multiplayer (null for single-player)
         private INetworkBridge networkBridge;
+        private ushort nextCommandTypeId = 1;
+        private bool disposed;
 
-        // Statistics for monitoring
-        private int commandsExecuted;
-        private int commandsRejected;
-        private int validationFailures;
-
-        public CommandProcessor(ProvinceSystem provinceSystem)
-        {
-            this.provinceSystem = provinceSystem ?? throw new ArgumentNullException(nameof(provinceSystem));
-            this.pendingCommands = new Queue<IProvinceCommand>();
-            this.executionHistory = new List<CommandExecutionRecord>();
-            this.currentTick = 0;
-        }
-
-        /// <summary>
-        /// Current game tick
-        /// </summary>
-        public uint CurrentTick => currentTick;
-
-        /// <summary>
-        /// Number of pending commands
-        /// </summary>
-        public int PendingCommandCount => pendingCommands.Count;
+        // Network state
+        private bool isMultiplayer;
+        private bool isHost;
 
         /// <summary>
         /// Whether we are in a multiplayer session.
         /// </summary>
-        public bool IsMultiplayer => networkBridge?.IsConnected ?? false;
+        public bool IsMultiplayer => isMultiplayer && networkBridge?.IsConnected == true;
 
         /// <summary>
         /// Whether we are the authoritative host (or single-player).
         /// </summary>
-        public bool IsAuthoritative => networkBridge == null || networkBridge.IsHost;
+        public bool IsAuthoritative => !IsMultiplayer || (networkBridge?.IsHost ?? true);
+
+        public CommandProcessor(GameState gameState)
+        {
+            this.gameState = gameState ?? throw new ArgumentNullException(nameof(gameState));
+            this.commandFactories = new Dictionary<ushort, Func<ICommand>>();
+            this.commandTypeIds = new Dictionary<Type, ushort>();
+        }
+
+        /// <summary>
+        /// Register a command type for network serialization.
+        /// Must be called for all command types that will be networked.
+        /// Call order must be identical on all clients!
+        /// </summary>
+        public void RegisterCommandType<T>() where T : ICommand, new()
+        {
+            Type type = typeof(T);
+            if (commandTypeIds.ContainsKey(type))
+            {
+                ArchonLogger.LogWarning($"CommandProcessor: Command type {type.Name} already registered", "core_commands");
+                return;
+            }
+
+            ushort typeId = nextCommandTypeId++;
+            commandTypeIds[type] = typeId;
+            commandFactories[typeId] = () => new T();
+
+            ArchonLogger.Log($"CommandProcessor: Registered {type.Name} as type ID {typeId}", "core_commands");
+        }
 
         /// <summary>
         /// Set the network bridge for multiplayer.
@@ -68,346 +78,232 @@ namespace Core.Commands
             }
 
             networkBridge = bridge;
+            isMultiplayer = bridge != null;
+            isHost = bridge?.IsHost ?? true;
 
             // Subscribe to new bridge
             if (networkBridge != null)
             {
                 networkBridge.OnCommandReceived += HandleRemoteCommand;
-                ArchonLogger.Log("Network bridge attached to CommandProcessor", "core_commands");
+                ArchonLogger.Log("CommandProcessor: Network bridge attached", "core_commands");
             }
-        }
-
-        private void HandleRemoteCommand(int peerId, byte[] commandData, uint tick)
-        {
-            // TODO: Deserialize and submit command
-            // This requires a command serialization system
-            ArchonLogger.Log($"Received remote command from peer {peerId} ({commandData.Length} bytes)", "core_commands");
         }
 
         /// <summary>
-        /// Add a command to be processed
-        /// Commands are validated immediately but executed later
+        /// Submit a command for execution.
+        /// In multiplayer:
+        /// - Clients send to host for validation
+        /// - Host validates, executes, and broadcasts
         /// </summary>
-        public CommandSubmissionResult SubmitCommand(IProvinceCommand command)
+        public bool SubmitCommand<T>(T command, out string resultMessage) where T : ICommand
         {
-            if (isDisposed)
-                return CommandSubmissionResult.Failure("CommandProcessor is disposed");
-
-            if (command == null)
-                return CommandSubmissionResult.Failure("Command cannot be null");
-
-            // Validate command structure
-            try
+            if (disposed)
             {
-                var checksum = command.GetChecksum();
-                var serializedSize = command.GetSerializedSize();
+                resultMessage = "CommandProcessor is disposed";
+                return false;
+            }
 
-                if (serializedSize <= 0 || serializedSize > 256)
+            // Get command type ID for networking (use runtime type, not compile-time)
+            Type commandType = command.GetType();
+            if (!commandTypeIds.TryGetValue(commandType, out ushort typeId))
+            {
+                // Command type not registered - can't network it
+                // Fall back to local execution only (with warning in multiplayer)
+                if (IsMultiplayer)
                 {
-                    return CommandSubmissionResult.Failure($"Invalid serialized size: {serializedSize}");
+                    ArchonLogger.LogWarning($"CommandProcessor: Command type {commandType.Name} not registered for networking - executing locally only!", "core_commands");
                 }
-            }
-            catch (Exception ex)
-            {
-                return CommandSubmissionResult.Failure($"Command structure validation failed: {ex.Message}");
+                return ExecuteLocally(command, out resultMessage);
             }
 
-            // Pre-validate against current game state
-            var validationResult = command.Validate(provinceSystem);
-            if (!validationResult.IsValid)
+            ArchonLogger.Log($"CommandProcessor: Submitting {commandType.Name} (typeId={typeId}, multiplayer={IsMultiplayer}, authoritative={IsAuthoritative})", "core_commands");
+
+            // Local validation first
+            if (!command.Validate(gameState))
             {
-                validationFailures++;
-                return CommandSubmissionResult.Failure($"Validation failed: {validationResult.ErrorMessage}");
+                resultMessage = GetCommandValidationError(command);
+                return false;
             }
 
-            // Set execution tick if not set
-            if (command.ExecutionTick <= currentTick)
-            {
-                command.ExecutionTick = currentTick + 1;
-            }
-
-            // Multiplayer: clients send to host instead of executing locally
+            // Multiplayer routing
             if (IsMultiplayer && !IsAuthoritative)
             {
-                // Serialize and send to host
-                var commandData = SerializeCommand(command);
-                networkBridge.SendCommandToHost(commandData, command.ExecutionTick);
-                command.Dispose();
-                return CommandSubmissionResult.Success();
+                // Client: send to host
+                byte[] commandData = SerializeCommand(typeId, command);
+                networkBridge.SendCommandToHost(commandData, 0); // tick managed by host
+                resultMessage = "Command sent to host for validation";
+                return true; // Assume success - host will validate
             }
 
-            pendingCommands.Enqueue(command);
-            return CommandSubmissionResult.Success();
+            // Host or single-player: execute locally
+            bool success = ExecuteLocally(command, out resultMessage);
+
+            // Host: broadcast to clients
+            if (success && IsMultiplayer && IsAuthoritative)
+            {
+                byte[] commandData = SerializeCommand(typeId, command);
+                ArchonLogger.Log($"CommandProcessor: Broadcasting {commandType.Name} ({commandData.Length} bytes) to clients", "core_commands");
+                networkBridge.BroadcastCommand(commandData, 0);
+            }
+
+            return success;
+        }
+
+        /// <summary>
+        /// Execute a command locally without network routing.
+        /// Used by host after validation and by clients after receiving from host.
+        /// </summary>
+        private bool ExecuteLocally<T>(T command, out string resultMessage) where T : ICommand
+        {
+            // Validate
+            if (!command.Validate(gameState))
+            {
+                resultMessage = GetCommandValidationError(command);
+                return false;
+            }
+
+            // Execute
+            try
+            {
+                command.Execute(gameState);
+                resultMessage = GetCommandSuccessMessage(command);
+
+                // Emit event
+                gameState.EventBus.Emit(new CommandExecutedEvent
+                {
+                    CommandType = typeof(T),
+                    IsSuccess = true
+                });
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                resultMessage = $"Execution error: {e.Message}";
+                ArchonLogger.LogError($"CommandProcessor: Command execution failed - {e.Message}", "core_commands");
+
+                gameState.EventBus.Emit(new CommandExecutedEvent
+                {
+                    CommandType = typeof(T),
+                    IsSuccess = false,
+                    Error = e.Message
+                });
+
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Handle command received from network.
+        /// </summary>
+        private void HandleRemoteCommand(int peerId, byte[] commandData, uint tick)
+        {
+            ArchonLogger.Log($"CommandProcessor: HandleRemoteCommand from peer {peerId} ({commandData?.Length ?? 0} bytes)", "core_commands");
+
+            if (commandData == null || commandData.Length < 2)
+            {
+                ArchonLogger.LogWarning($"CommandProcessor: Invalid command data from peer {peerId}", "core_commands");
+                return;
+            }
+
+            // Read type ID from first 2 bytes
+            ushort typeId = (ushort)(commandData[0] | (commandData[1] << 8));
+
+            // Check if this is one of our registered types
+            if (!commandFactories.TryGetValue(typeId, out var factory))
+            {
+                // Not a GameCommand - let CommandProcessor handle it
+                ArchonLogger.Log($"CommandProcessor: TypeId {typeId} not registered, ignoring", "core_commands");
+                return;
+            }
+
+            try
+            {
+                // Deserialize command
+                ICommand command = factory();
+                using (var stream = new MemoryStream(commandData, 2, commandData.Length - 2))
+                using (var reader = new BinaryReader(stream))
+                {
+                    command.Deserialize(reader);
+                }
+
+                if (IsAuthoritative)
+                {
+                    // Host received from client - validate and broadcast
+                    if (command.Validate(gameState))
+                    {
+                        command.Execute(gameState);
+
+                        // Broadcast to all clients (including sender)
+                        networkBridge.BroadcastCommand(commandData, tick);
+
+                        ArchonLogger.Log($"CommandProcessor: Executed and broadcast command from peer {peerId}", "core_commands");
+                    }
+                    else
+                    {
+                        ArchonLogger.LogWarning($"CommandProcessor: Rejected invalid command from peer {peerId}", "core_commands");
+                    }
+                }
+                else
+                {
+                    // Client received from host - execute directly (already validated)
+                    command.Execute(gameState);
+                    ArchonLogger.Log($"CommandProcessor: Executed command from host", "core_commands");
+                }
+            }
+            catch (Exception e)
+            {
+                ArchonLogger.LogError($"CommandProcessor: Failed to process remote command - {e.Message}", "core_commands");
+            }
         }
 
         /// <summary>
         /// Serialize a command for network transmission.
+        /// Format: [typeId:2][serialized command data]
         /// </summary>
-        private byte[] SerializeCommand(IProvinceCommand command)
+        private byte[] SerializeCommand<T>(ushort typeId, T command) where T : ICommand
         {
-            int size = command.GetSerializedSize();
-            var buffer = new byte[size + 4]; // +4 for command type header
+            using (var stream = new MemoryStream())
+            using (var writer = new BinaryWriter(stream))
+            {
+                // Write type ID
+                writer.Write(typeId);
 
-            // Write command type
-            buffer[0] = command.CommandType;
-            buffer[1] = (byte)(command.PlayerID & 0xFF);
-            buffer[2] = (byte)(command.PlayerID >> 8);
-            buffer[3] = 0; // Reserved
+                // Write command data
+                command.Serialize(writer);
 
-            // Write command data
-            var commandBuffer = new NativeArray<byte>(size, Allocator.Temp);
-            command.Serialize(commandBuffer, 0);
-            NativeArray<byte>.Copy(commandBuffer, 0, buffer, 4, size);
-            commandBuffer.Dispose();
-
-            return buffer;
+                return stream.ToArray();
+            }
         }
 
-        /// <summary>
-        /// Process all commands scheduled for the current tick
-        /// Should be called once per game tick in deterministic order
-        /// </summary>
-        public TickProcessingResult ProcessTick()
+        private string GetCommandValidationError<T>(T command) where T : ICommand
         {
-            if (isDisposed)
-                throw new ObjectDisposedException(nameof(CommandProcessor));
-
-            currentTick++;
-
-            var result = new TickProcessingResult
+            var method = command.GetType().GetMethod("GetValidationError");
+            if (method != null && method.ReturnType == typeof(string))
             {
-                Tick = currentTick,
-                CommandsProcessed = 0,
-                CommandsExecuted = 0,
-                CommandsRejected = 0,
-                AffectedProvinces = new List<ushort>()
-            };
-
-            // Process all commands scheduled for this tick
-            var commandsToProcess = new List<IProvinceCommand>();
-            var remainingCommands = new Queue<IProvinceCommand>();
-
-            // Separate commands by execution tick
-            while (pendingCommands.Count > 0)
-            {
-                var command = pendingCommands.Dequeue();
-                if (command.ExecutionTick == currentTick)
-                {
-                    commandsToProcess.Add(command);
-                }
-                else if (command.ExecutionTick > currentTick)
-                {
-                    remainingCommands.Enqueue(command);
-                }
-                else
-                {
-                    // Command is too late - reject it
-                    ArchonLogger.LogWarning($"Rejecting late command: {command} (current tick: {currentTick})", "core_commands");
-                    command.Dispose();
-                    result.CommandsRejected++;
-                }
+                return (string)method.Invoke(command, new object[] { gameState });
             }
-
-            // Restore remaining commands
-            while (remainingCommands.Count > 0)
-            {
-                pendingCommands.Enqueue(remainingCommands.Dequeue());
-            }
-
-            result.CommandsProcessed = commandsToProcess.Count;
-
-            // Execute commands in deterministic order (sorted by command type, then by player ID)
-            commandsToProcess.Sort((a, b) =>
-            {
-                int typeComparison = a.CommandType.CompareTo(b.CommandType);
-                if (typeComparison != 0) return typeComparison;
-                return a.PlayerID.CompareTo(b.PlayerID);
-            });
-
-            // Execute each command
-            foreach (var command in commandsToProcess)
-            {
-                try
-                {
-                    var executionResult = ExecuteCommand(command);
-                    if (executionResult.IsSuccess)
-                    {
-                        result.CommandsExecuted++;
-
-                        // Track affected provinces
-                        if (executionResult.AffectedProvinces.IsCreated)
-                        {
-                            for (int i = 0; i < executionResult.AffectedProvinces.Length; i++)
-                            {
-                                if (!result.AffectedProvinces.Contains(executionResult.AffectedProvinces[i]))
-                                {
-                                    result.AffectedProvinces.Add(executionResult.AffectedProvinces[i]);
-                                }
-                            }
-                        }
-
-                        // Record execution for history
-                        var record = new CommandExecutionRecord
-                        {
-                            Tick = currentTick,
-                            CommandType = command.CommandType,
-                            PlayerID = command.PlayerID,
-                            Checksum = command.GetChecksum(),
-                            StateChecksumAfter = executionResult.NewStateChecksum
-                        };
-                        executionHistory.Add(record);
-
-                        // Multiplayer: host broadcasts executed command to all clients
-                        if (IsMultiplayer && IsAuthoritative)
-                        {
-                            var commandData = SerializeCommand(command);
-                            networkBridge.BroadcastCommand(commandData, currentTick);
-                        }
-                    }
-                    else
-                    {
-                        result.CommandsRejected++;
-                        commandsRejected++;
-                    }
-
-                    executionResult.Dispose();
-                }
-                catch (Exception ex)
-                {
-                    ArchonLogger.LogError($"Command execution failed: {ex}", "core_commands");
-                    result.CommandsRejected++;
-                    commandsRejected++;
-                }
-                finally
-                {
-                    command.Dispose();
-                }
-            }
-
-            result.FinalStateChecksum = provinceSystem.GetStateChecksum();
-            return result;
+            return $"{command.GetType().Name} failed validation";
         }
 
-        /// <summary>
-        /// Execute a single command with full validation
-        /// </summary>
-        private CommandExecutionResult ExecuteCommand(IProvinceCommand command)
+        private string GetCommandSuccessMessage<T>(T command) where T : ICommand
         {
-            // Final validation before execution
-            var validationResult = command.Validate(provinceSystem);
-            if (!validationResult.IsValid)
+            var method = command.GetType().GetMethod("GetSuccessMessage");
+            if (method != null && method.ReturnType == typeof(string))
             {
-                ArchonLogger.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}", "core_commands");
-                return new CommandExecutionResult { IsSuccess = false };
+                return (string)method.Invoke(command, new object[] { gameState });
             }
-
-            // Execute the command
-            var result = command.Execute(provinceSystem);
-            if (result.IsSuccess)
-            {
-                commandsExecuted++;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Get processing statistics
-        /// </summary>
-        public CommandProcessorStatistics GetStatistics()
-        {
-            return new CommandProcessorStatistics
-            {
-                CurrentTick = currentTick,
-                PendingCommands = pendingCommands.Count,
-                CommandsExecuted = commandsExecuted,
-                CommandsRejected = commandsRejected,
-                ValidationFailures = validationFailures,
-                ExecutionHistorySize = executionHistory.Count
-            };
-        }
-
-        /// <summary>
-        /// Clear execution history older than specified ticks (for memory management)
-        /// </summary>
-        public void ClearOldHistory(uint ticksToKeep = 1000)
-        {
-            uint cutoffTick = currentTick > ticksToKeep ? currentTick - ticksToKeep : 0;
-            executionHistory.RemoveAll(record => record.Tick < cutoffTick);
+            return $"{command.GetType().Name} executed successfully";
         }
 
         public void Dispose()
         {
-            if (isDisposed) return;
+            if (disposed) return;
+            disposed = true;
 
-            // Unsubscribe from network bridge
             SetNetworkBridge(null);
-
-            // Dispose all pending commands
-            while (pendingCommands.Count > 0)
-            {
-                pendingCommands.Dequeue()?.Dispose();
-            }
-
-            executionHistory.Clear();
-            isDisposed = true;
-        }
-    }
-
-    /// <summary>
-    /// Result of command submission
-    /// </summary>
-    public struct CommandSubmissionResult
-    {
-        public bool IsSuccess;
-        public string ErrorMessage;
-
-        public static CommandSubmissionResult Success() => new CommandSubmissionResult { IsSuccess = true };
-        public static CommandSubmissionResult Failure(string message) =>
-            new CommandSubmissionResult { IsSuccess = false, ErrorMessage = message };
-    }
-
-    /// <summary>
-    /// Result of tick processing
-    /// </summary>
-    public struct TickProcessingResult
-    {
-        public uint Tick;
-        public int CommandsProcessed;
-        public int CommandsExecuted;
-        public int CommandsRejected;
-        public List<ushort> AffectedProvinces;
-        public uint FinalStateChecksum;
-    }
-
-    /// <summary>
-    /// Record of command execution for history/debugging
-    /// </summary>
-    public struct CommandExecutionRecord
-    {
-        public uint Tick;
-        public byte CommandType;
-        public ushort PlayerID;
-        public uint Checksum;
-        public uint StateChecksumAfter;
-    }
-
-    /// <summary>
-    /// Command processor statistics
-    /// </summary>
-    public struct CommandProcessorStatistics
-    {
-        public uint CurrentTick;
-        public int PendingCommands;
-        public int CommandsExecuted;
-        public int CommandsRejected;
-        public int ValidationFailures;
-        public int ExecutionHistorySize;
-
-        public override string ToString()
-        {
-            return $"Tick:{CurrentTick}, Pending:{PendingCommands}, Executed:{CommandsExecuted}, " +
-                   $"Rejected:{CommandsRejected}, Failures:{ValidationFailures}, History:{ExecutionHistorySize}";
+            commandFactories.Clear();
+            commandTypeIds.Clear();
         }
     }
 }

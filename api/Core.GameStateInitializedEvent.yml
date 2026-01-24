@@ -20,7 +20,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GameStateInitializedEvent
     path: Scripts/Core/GameState.cs
-    startLine: 336
+    startLine: 333
   assemblies:
   - Core
   namespace: Core
@@ -49,7 +49,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TimeStamp
     path: Scripts/Core/GameState.cs
-    startLine: 338
+    startLine: 335
   assemblies:
   - Core
   namespace: Core

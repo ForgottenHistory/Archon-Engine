@@ -92,7 +92,7 @@ All state changes go through commands (Pattern 2). Commands are auto-registered 
 | `build <type> <province>` | Construct a building |
 | `colonize <province>` | Colonize an unowned province |
 
-Commands use ENGINE infrastructure (`Core.Commands`) and sync via `GameCommandProcessor`.
+Commands use ENGINE infrastructure (`Core.Commands`) and sync via `CommandProcessor`.
 
 ### Fluent Validation Pattern
 
@@ -259,7 +259,7 @@ Client Action → Command → Send to Host
 |-----------|---------|
 | **NetworkInitializer** | Setup host/client, manage lobby state |
 | **LobbyUI** | Host/Join/Ready UI |
-| **GameCommandProcessor** | Routes GAME commands through network |
+| **CommandProcessor** | Routes commands through network |
 
 ### Command Sync
 

@@ -548,9 +548,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Player Slots** - Track connected players with country assignments
 
 ### Command Synchronization
-- **Dual Command Processors:**
-  - **CommandProcessor** - ENGINE layer (IProvinceCommand)
-  - **GameCommandProcessor** - GAME layer (ICommand) with network sync
+- **Unified CommandProcessor** - All commands (ICommand) with network sync
 - **Client→Host→Broadcast** - Clients send commands to host, host validates and broadcasts
 - **Auto-Registration** - Commands discovered via reflection, sorted alphabetically for determinism
 - **Explicit CountryId** - Commands carry country ID (never use local playerState)
@@ -572,7 +570,7 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ### Key Files
 - **Network/** - INetworkTransport, DirectTransport, NetworkManager, NetworkBridge, NetworkTimeSync
-- **Core/Commands/GameCommandProcessor** - GAME layer command networking
+- **Core/Commands/CommandProcessor** - Command networking with multiplayer sync
 - **StarterKit/Network/** - NetworkInitializer, LobbyUI
 
 ---

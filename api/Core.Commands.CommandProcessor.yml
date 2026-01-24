@@ -5,17 +5,13 @@ items:
   id: CommandProcessor
   parent: Core.Commands
   children:
-  - Core.Commands.CommandProcessor.#ctor(Core.Systems.ProvinceSystem)
-  - Core.Commands.CommandProcessor.ClearOldHistory(System.UInt32)
-  - Core.Commands.CommandProcessor.CurrentTick
+  - Core.Commands.CommandProcessor.#ctor(Core.GameState)
   - Core.Commands.CommandProcessor.Dispose
-  - Core.Commands.CommandProcessor.GetStatistics
   - Core.Commands.CommandProcessor.IsAuthoritative
   - Core.Commands.CommandProcessor.IsMultiplayer
-  - Core.Commands.CommandProcessor.PendingCommandCount
-  - Core.Commands.CommandProcessor.ProcessTick
+  - Core.Commands.CommandProcessor.RegisterCommandType``1
   - Core.Commands.CommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
-  - Core.Commands.CommandProcessor.SubmitCommand(Core.Commands.IProvinceCommand)
+  - Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
   langs:
   - csharp
   - vb
@@ -30,114 +26,27 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CommandProcessor
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - Core
   namespace: Core.Commands
   summary: >-
-    Processes and executes commands in deterministic order
+    Processes commands (ICommand) with network synchronization.
 
-    Ensures multiplayer consistency through command validation and execution
+    All game state changes flow through this processor.
+
+
+    Commands are validated locally, then:
+
+    - Host: executes locally and broadcasts to clients
+
+    - Client: sends to host for validation and execution
   example: []
   syntax:
     content: public class CommandProcessor
     content.vb: Public Class CommandProcessor
   inheritance:
   - System.Object
-- uid: Core.Commands.CommandProcessor.#ctor(Core.Systems.ProvinceSystem)
-  commentId: M:Core.Commands.CommandProcessor.#ctor(Core.Systems.ProvinceSystem)
-  id: '#ctor(Core.Systems.ProvinceSystem)'
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: CommandProcessor(ProvinceSystem)
-  nameWithType: CommandProcessor.CommandProcessor(ProvinceSystem)
-  fullName: Core.Commands.CommandProcessor.CommandProcessor(Core.Systems.ProvinceSystem)
-  type: Constructor
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: .ctor
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 29
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  syntax:
-    content: public CommandProcessor(ProvinceSystem provinceSystem)
-    parameters:
-    - id: provinceSystem
-      type: Core.Systems.ProvinceSystem
-    content.vb: Public Sub New(provinceSystem As ProvinceSystem)
-  overload: Core.Commands.CommandProcessor.#ctor*
-  nameWithType.vb: CommandProcessor.New(ProvinceSystem)
-  fullName.vb: Core.Commands.CommandProcessor.New(Core.Systems.ProvinceSystem)
-  name.vb: New(ProvinceSystem)
-- uid: Core.Commands.CommandProcessor.CurrentTick
-  commentId: P:Core.Commands.CommandProcessor.CurrentTick
-  id: CurrentTick
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: CurrentTick
-  nameWithType: CommandProcessor.CurrentTick
-  fullName: Core.Commands.CommandProcessor.CurrentTick
-  type: Property
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: CurrentTick
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 40
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  summary: Current game tick
-  example: []
-  syntax:
-    content: public uint CurrentTick { get; }
-    parameters: []
-    return:
-      type: System.UInt32
-    content.vb: Public ReadOnly Property CurrentTick As UInteger
-  overload: Core.Commands.CommandProcessor.CurrentTick*
-- uid: Core.Commands.CommandProcessor.PendingCommandCount
-  commentId: P:Core.Commands.CommandProcessor.PendingCommandCount
-  id: PendingCommandCount
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: PendingCommandCount
-  nameWithType: CommandProcessor.PendingCommandCount
-  fullName: Core.Commands.CommandProcessor.PendingCommandCount
-  type: Property
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: PendingCommandCount
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 45
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  summary: Number of pending commands
-  example: []
-  syntax:
-    content: public int PendingCommandCount { get; }
-    parameters: []
-    return:
-      type: System.Int32
-    content.vb: Public ReadOnly Property PendingCommandCount As Integer
-  overload: Core.Commands.CommandProcessor.PendingCommandCount*
 - uid: Core.Commands.CommandProcessor.IsMultiplayer
   commentId: P:Core.Commands.CommandProcessor.IsMultiplayer
   id: IsMultiplayer
@@ -156,7 +65,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsMultiplayer
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 50
+    startLine: 32
   assemblies:
   - Core
   namespace: Core.Commands
@@ -187,7 +96,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsAuthoritative
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 55
+    startLine: 37
   assemblies:
   - Core
   namespace: Core.Commands
@@ -200,6 +109,76 @@ items:
       type: System.Boolean
     content.vb: Public ReadOnly Property IsAuthoritative As Boolean
   overload: Core.Commands.CommandProcessor.IsAuthoritative*
+- uid: Core.Commands.CommandProcessor.#ctor(Core.GameState)
+  commentId: M:Core.Commands.CommandProcessor.#ctor(Core.GameState)
+  id: '#ctor(Core.GameState)'
+  parent: Core.Commands.CommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: CommandProcessor(GameState)
+  nameWithType: CommandProcessor.CommandProcessor(GameState)
+  fullName: Core.Commands.CommandProcessor.CommandProcessor(Core.GameState)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public CommandProcessor(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Sub New(gameState As GameState)
+  overload: Core.Commands.CommandProcessor.#ctor*
+  nameWithType.vb: CommandProcessor.New(GameState)
+  fullName.vb: Core.Commands.CommandProcessor.New(Core.GameState)
+  name.vb: New(GameState)
+- uid: Core.Commands.CommandProcessor.RegisterCommandType``1
+  commentId: M:Core.Commands.CommandProcessor.RegisterCommandType``1
+  id: RegisterCommandType``1
+  parent: Core.Commands.CommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: RegisterCommandType<T>()
+  nameWithType: CommandProcessor.RegisterCommandType<T>()
+  fullName: Core.Commands.CommandProcessor.RegisterCommandType<T>()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterCommandType
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Register a command type for network serialization.
+
+    Must be called for all command types that will be networked.
+
+    Call order must be identical on all clients!
+  example: []
+  syntax:
+    content: 'public void RegisterCommandType<T>() where T : ICommand, new()'
+    typeParameters:
+    - id: T
+    content.vb: Public Sub RegisterCommandType(Of T As {ICommand, New})()
+  overload: Core.Commands.CommandProcessor.RegisterCommandType*
+  nameWithType.vb: CommandProcessor.RegisterCommandType(Of T)()
+  fullName.vb: Core.Commands.CommandProcessor.RegisterCommandType(Of T)()
+  name.vb: RegisterCommandType(Of T)()
 - uid: Core.Commands.CommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
   commentId: M:Core.Commands.CommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
   id: SetNetworkBridge(Core.Network.INetworkBridge)
@@ -218,7 +197,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetNetworkBridge
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 61
+    startLine: 71
   assemblies:
   - Core
   namespace: Core.Commands
@@ -234,16 +213,16 @@ items:
       type: Core.Network.INetworkBridge
     content.vb: Public Sub SetNetworkBridge(bridge As INetworkBridge)
   overload: Core.Commands.CommandProcessor.SetNetworkBridge*
-- uid: Core.Commands.CommandProcessor.SubmitCommand(Core.Commands.IProvinceCommand)
-  commentId: M:Core.Commands.CommandProcessor.SubmitCommand(Core.Commands.IProvinceCommand)
-  id: SubmitCommand(Core.Commands.IProvinceCommand)
+- uid: Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
+  commentId: M:Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
+  id: SubmitCommand``1(``0,System.String@)
   parent: Core.Commands.CommandProcessor
   langs:
   - csharp
   - vb
-  name: SubmitCommand(IProvinceCommand)
-  nameWithType: CommandProcessor.SubmitCommand(IProvinceCommand)
-  fullName: Core.Commands.CommandProcessor.SubmitCommand(Core.Commands.IProvinceCommand)
+  name: SubmitCommand<T>(T, out string)
+  nameWithType: CommandProcessor.SubmitCommand<T>(T, out string)
+  fullName: Core.Commands.CommandProcessor.SubmitCommand<T>(T, out string)
   type: Method
   source:
     remote:
@@ -252,121 +231,35 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SubmitCommand
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 90
+    startLine: 97
   assemblies:
   - Core
   namespace: Core.Commands
   summary: >-
-    Add a command to be processed
+    Submit a command for execution.
 
-    Commands are validated immediately but executed later
+    In multiplayer:
+
+    - Clients send to host for validation
+
+    - Host validates, executes, and broadcasts
   example: []
   syntax:
-    content: public CommandSubmissionResult SubmitCommand(IProvinceCommand command)
+    content: 'public bool SubmitCommand<T>(T command, out string resultMessage) where T : ICommand'
     parameters:
     - id: command
-      type: Core.Commands.IProvinceCommand
+      type: '{T}'
+    - id: resultMessage
+      type: System.String
+    typeParameters:
+    - id: T
     return:
-      type: Core.Commands.CommandSubmissionResult
-    content.vb: Public Function SubmitCommand(command As IProvinceCommand) As CommandSubmissionResult
+      type: System.Boolean
+    content.vb: Public Function SubmitCommand(Of T As ICommand)(command As T, resultMessage As String) As Boolean
   overload: Core.Commands.CommandProcessor.SubmitCommand*
-- uid: Core.Commands.CommandProcessor.ProcessTick
-  commentId: M:Core.Commands.CommandProcessor.ProcessTick
-  id: ProcessTick
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: ProcessTick()
-  nameWithType: CommandProcessor.ProcessTick()
-  fullName: Core.Commands.CommandProcessor.ProcessTick()
-  type: Method
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: ProcessTick
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 169
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  summary: >-
-    Process all commands scheduled for the current tick
-
-    Should be called once per game tick in deterministic order
-  example: []
-  syntax:
-    content: public TickProcessingResult ProcessTick()
-    return:
-      type: Core.Commands.TickProcessingResult
-    content.vb: Public Function ProcessTick() As TickProcessingResult
-  overload: Core.Commands.CommandProcessor.ProcessTick*
-- uid: Core.Commands.CommandProcessor.GetStatistics
-  commentId: M:Core.Commands.CommandProcessor.GetStatistics
-  id: GetStatistics
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: GetStatistics()
-  nameWithType: CommandProcessor.GetStatistics()
-  fullName: Core.Commands.CommandProcessor.GetStatistics()
-  type: Method
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GetStatistics
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 316
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  summary: Get processing statistics
-  example: []
-  syntax:
-    content: public CommandProcessorStatistics GetStatistics()
-    return:
-      type: Core.Commands.CommandProcessorStatistics
-    content.vb: Public Function GetStatistics() As CommandProcessorStatistics
-  overload: Core.Commands.CommandProcessor.GetStatistics*
-- uid: Core.Commands.CommandProcessor.ClearOldHistory(System.UInt32)
-  commentId: M:Core.Commands.CommandProcessor.ClearOldHistory(System.UInt32)
-  id: ClearOldHistory(System.UInt32)
-  parent: Core.Commands.CommandProcessor
-  langs:
-  - csharp
-  - vb
-  name: ClearOldHistory(uint)
-  nameWithType: CommandProcessor.ClearOldHistory(uint)
-  fullName: Core.Commands.CommandProcessor.ClearOldHistory(uint)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Core/Commands/CommandProcessor.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: ClearOldHistory
-    path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 332
-  assemblies:
-  - Core
-  namespace: Core.Commands
-  summary: Clear execution history older than specified ticks (for memory management)
-  example: []
-  syntax:
-    content: public void ClearOldHistory(uint ticksToKeep = 1000)
-    parameters:
-    - id: ticksToKeep
-      type: System.UInt32
-    content.vb: Public Sub ClearOldHistory(ticksToKeep As UInteger = 1000)
-  overload: Core.Commands.CommandProcessor.ClearOldHistory*
-  nameWithType.vb: CommandProcessor.ClearOldHistory(UInteger)
-  fullName.vb: Core.Commands.CommandProcessor.ClearOldHistory(UInteger)
-  name.vb: ClearOldHistory(UInteger)
+  nameWithType.vb: CommandProcessor.SubmitCommand(Of T)(T, String)
+  fullName.vb: Core.Commands.CommandProcessor.SubmitCommand(Of T)(T, String)
+  name.vb: SubmitCommand(Of T)(T, String)
 - uid: Core.Commands.CommandProcessor.Dispose
   commentId: M:Core.Commands.CommandProcessor.Dispose
   id: Dispose
@@ -385,7 +278,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 338
+    startLine: 298
   assemblies:
   - Core
   namespace: Core.Commands
@@ -433,76 +326,6 @@ references:
   name: System
   nameWithType: System
   fullName: System
-- uid: Core.Commands.CommandProcessor.#ctor*
-  commentId: Overload:Core.Commands.CommandProcessor.#ctor
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor__ctor_Core_Systems_ProvinceSystem_
-  name: CommandProcessor
-  nameWithType: CommandProcessor.CommandProcessor
-  fullName: Core.Commands.CommandProcessor.CommandProcessor
-  nameWithType.vb: CommandProcessor.New
-  fullName.vb: Core.Commands.CommandProcessor.New
-  name.vb: New
-- uid: Core.Systems.ProvinceSystem
-  commentId: T:Core.Systems.ProvinceSystem
-  parent: Core.Systems
-  href: Core.Systems.ProvinceSystem.html
-  name: ProvinceSystem
-  nameWithType: ProvinceSystem
-  fullName: Core.Systems.ProvinceSystem
-- uid: Core.Systems
-  commentId: N:Core.Systems
-  href: Core.html
-  name: Core.Systems
-  nameWithType: Core.Systems
-  fullName: Core.Systems
-  spec.csharp:
-  - uid: Core
-    name: Core
-    href: Core.html
-  - name: .
-  - uid: Core.Systems
-    name: Systems
-    href: Core.Systems.html
-  spec.vb:
-  - uid: Core
-    name: Core
-    href: Core.html
-  - name: .
-  - uid: Core.Systems
-    name: Systems
-    href: Core.Systems.html
-- uid: Core.Commands.CommandProcessor.CurrentTick*
-  commentId: Overload:Core.Commands.CommandProcessor.CurrentTick
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_CurrentTick
-  name: CurrentTick
-  nameWithType: CommandProcessor.CurrentTick
-  fullName: Core.Commands.CommandProcessor.CurrentTick
-- uid: System.UInt32
-  commentId: T:System.UInt32
-  parent: System
-  isExternal: true
-  name: uint
-  nameWithType: uint
-  fullName: uint
-  nameWithType.vb: UInteger
-  fullName.vb: UInteger
-  name.vb: UInteger
-- uid: Core.Commands.CommandProcessor.PendingCommandCount*
-  commentId: Overload:Core.Commands.CommandProcessor.PendingCommandCount
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_PendingCommandCount
-  name: PendingCommandCount
-  nameWithType: CommandProcessor.PendingCommandCount
-  fullName: Core.Commands.CommandProcessor.PendingCommandCount
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: Core.Commands.CommandProcessor.IsMultiplayer*
   commentId: Overload:Core.Commands.CommandProcessor.IsMultiplayer
   href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_IsMultiplayer
@@ -525,6 +348,34 @@ references:
   name: IsAuthoritative
   nameWithType: CommandProcessor.IsAuthoritative
   fullName: Core.Commands.CommandProcessor.IsAuthoritative
+- uid: Core.Commands.CommandProcessor.#ctor*
+  commentId: Overload:Core.Commands.CommandProcessor.#ctor
+  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor__ctor_Core_GameState_
+  name: CommandProcessor
+  nameWithType: CommandProcessor.CommandProcessor
+  fullName: Core.Commands.CommandProcessor.CommandProcessor
+  nameWithType.vb: CommandProcessor.New
+  fullName.vb: Core.Commands.CommandProcessor.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Commands.CommandProcessor.RegisterCommandType*
+  commentId: Overload:Core.Commands.CommandProcessor.RegisterCommandType
+  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_RegisterCommandType__1
+  name: RegisterCommandType
+  nameWithType: CommandProcessor.RegisterCommandType
+  fullName: Core.Commands.CommandProcessor.RegisterCommandType
 - uid: Core.Commands.CommandProcessor.SetNetworkBridge*
   commentId: Overload:Core.Commands.CommandProcessor.SetNetworkBridge
   href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_SetNetworkBridge_Core_Network_INetworkBridge_
@@ -562,56 +413,30 @@ references:
     href: Core.Network.html
 - uid: Core.Commands.CommandProcessor.SubmitCommand*
   commentId: Overload:Core.Commands.CommandProcessor.SubmitCommand
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_SubmitCommand_Core_Commands_IProvinceCommand_
+  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_SubmitCommand__1___0_System_String__
   name: SubmitCommand
   nameWithType: CommandProcessor.SubmitCommand
   fullName: Core.Commands.CommandProcessor.SubmitCommand
-- uid: Core.Commands.IProvinceCommand
-  commentId: T:Core.Commands.IProvinceCommand
-  parent: Core.Commands
-  href: Core.Commands.IProvinceCommand.html
-  name: IProvinceCommand
-  nameWithType: IProvinceCommand
-  fullName: Core.Commands.IProvinceCommand
-- uid: Core.Commands.CommandSubmissionResult
-  commentId: T:Core.Commands.CommandSubmissionResult
-  parent: Core.Commands
-  href: Core.Commands.CommandSubmissionResult.html
-  name: CommandSubmissionResult
-  nameWithType: CommandSubmissionResult
-  fullName: Core.Commands.CommandSubmissionResult
-- uid: Core.Commands.CommandProcessor.ProcessTick*
-  commentId: Overload:Core.Commands.CommandProcessor.ProcessTick
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_ProcessTick
-  name: ProcessTick
-  nameWithType: CommandProcessor.ProcessTick
-  fullName: Core.Commands.CommandProcessor.ProcessTick
-- uid: Core.Commands.TickProcessingResult
-  commentId: T:Core.Commands.TickProcessingResult
-  parent: Core.Commands
-  href: Core.Commands.TickProcessingResult.html
-  name: TickProcessingResult
-  nameWithType: TickProcessingResult
-  fullName: Core.Commands.TickProcessingResult
-- uid: Core.Commands.CommandProcessor.GetStatistics*
-  commentId: Overload:Core.Commands.CommandProcessor.GetStatistics
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_GetStatistics
-  name: GetStatistics
-  nameWithType: CommandProcessor.GetStatistics
-  fullName: Core.Commands.CommandProcessor.GetStatistics
-- uid: Core.Commands.CommandProcessorStatistics
-  commentId: T:Core.Commands.CommandProcessorStatistics
-  parent: Core.Commands
-  href: Core.Commands.CommandProcessorStatistics.html
-  name: CommandProcessorStatistics
-  nameWithType: CommandProcessorStatistics
-  fullName: Core.Commands.CommandProcessorStatistics
-- uid: Core.Commands.CommandProcessor.ClearOldHistory*
-  commentId: Overload:Core.Commands.CommandProcessor.ClearOldHistory
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_ClearOldHistory_System_UInt32_
-  name: ClearOldHistory
-  nameWithType: CommandProcessor.ClearOldHistory
-  fullName: Core.Commands.CommandProcessor.ClearOldHistory
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
 - uid: Core.Commands.CommandProcessor.Dispose*
   commentId: Overload:Core.Commands.CommandProcessor.Dispose
   href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_Dispose

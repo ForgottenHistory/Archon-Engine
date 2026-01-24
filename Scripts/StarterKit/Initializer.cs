@@ -734,10 +734,10 @@ namespace StarterKit
         /// </summary>
         private void RegisterNetworkCommands(GameState gameState)
         {
-            var processor = gameState.GameCommandProcessor;
+            var processor = gameState.CommandProcessor;
             if (processor == null)
             {
-                ArchonLogger.LogWarning("Initializer: GameCommandProcessor not available - commands won't sync", "starter_kit");
+                ArchonLogger.LogWarning("Initializer: CommandProcessor not available - commands won't sync", "starter_kit");
                 return;
             }
 
@@ -752,7 +752,7 @@ namespace StarterKit
                 .ToList();
 
             // Register each command type via reflection
-            var registerMethod = typeof(Core.Commands.GameCommandProcessor)
+            var registerMethod = typeof(Core.Commands.CommandProcessor)
                 .GetMethod("RegisterCommandType");
 
             int count = 0;

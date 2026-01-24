@@ -72,21 +72,17 @@ Traditional approaches fail:
 
 ---
 
-### Decision 2: Dual Command Processors
+### Decision 2: Unified Command Processor
 
-**Context:** ENGINE provides IProvinceCommand, but GAME layer has its own commands (ICommand).
+**Context:** All state changes must flow through commands for multiplayer to work.
 
-**Decision:** Two separate processors with different network behavior.
-
-| Processor | Layer | Network Behavior |
-|-----------|-------|-----------------|
-| CommandProcessor | ENGINE | Local execution only |
-| GameCommandProcessor | GAME | Client→Host→Broadcast sync |
+**Decision:** Single `CommandProcessor` handles all commands with network synchronization.
 
 **Rationale:**
-- ENGINE remains transport-agnostic
-- GAME layer controls what syncs
-- Clear separation of concerns (Pattern 1)
+- All commands use `ICommand` interface with `BaseCommand`/`SimpleCommand` base classes
+- Single path simplifies mental model
+- Network sync is automatic for registered commands
+- Unregistered commands execute locally (with warning in multiplayer)
 
 ---
 
