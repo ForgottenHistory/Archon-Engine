@@ -16,7 +16,7 @@ namespace Archon.Network
 
         private int localPeerId = -1;
         private int hostPeerId = 0;  // Host is always peer 0
-        private int nextPeerId = 1;  // Next ID to assign to connecting clients
+        // Note: Peer IDs are assigned by the transport layer (DirectTransport.nextPeerId)
 
         private bool disposed;
 
@@ -382,21 +382,45 @@ namespace Archon.Network
 
         #endregion
 
-        private void HandleClientConnected(int transportId)
+        private void HandleClientConnected(int transportPeerId)
         {
-            if (!IsHost) return;
-
-            int peerId = nextPeerId++;
-            var peer = new NetworkPeer(peerId)
+            if (IsHost)
             {
-                State = PeerState.Connecting,
-                DisplayName = $"Player {peerId}"
+                // Host: a new client connected at transport level
+                // Use the transport's peer ID directly (transport already assigned it)
+                var peer = new NetworkPeer(transportPeerId)
+                {
+                    State = PeerState.Connecting,
+                    DisplayName = $"Player {transportPeerId}"
+                };
+                peers[transportPeerId] = peer;
+
+                ArchonLogger.Log($"Client connected with peer ID {transportPeerId}", ArchonLogger.Systems.Network);
+
+                // Note: Full connection completes after handshake and state sync
+            }
+            else
+            {
+                // Client: we connected to host, send handshake
+                ArchonLogger.Log("Connected to host, sending handshake", ArchonLogger.Systems.Network);
+                SendHandshake();
+            }
+        }
+
+        /// <summary>
+        /// Send handshake message to host. Called when client connects.
+        /// </summary>
+        private void SendHandshake()
+        {
+            var handshake = new HandshakeMessage
+            {
+                ProtocolVersion = HandshakeMessage.CurrentProtocolVersion,
+                GameVersion = 1  // TODO: Get from build info
             };
-            peers[peerId] = peer;
 
-            ArchonLogger.Log($"Client connected, assigned peer ID {peerId}", ArchonLogger.Systems.Network);
-
-            // Note: Full connection completes after handshake and state sync
+            var data = StructToBytes(handshake);
+            var message = CreateMessage(NetworkMessageType.Handshake, 0, data);
+            transport.Send(0, message, DeliveryMethod.ReliableOrdered);
         }
 
         private void HandleClientDisconnected(int transportId)

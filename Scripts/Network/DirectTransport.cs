@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Unity.Collections;
 using Unity.Networking.Transport;
+using Unity.Networking.Transport.Utilities;
 
 namespace Archon.Network
 {
@@ -49,7 +50,15 @@ namespace Archon.Network
                 return;
             }
 
-            driver = NetworkDriver.Create();
+            // Configure network settings for faster connection
+            var settings = new NetworkSettings();
+            settings.WithNetworkConfigParameters(
+                connectTimeoutMS: 500,
+                maxConnectAttempts: 20,
+                disconnectTimeoutMS: 10000
+            );
+
+            driver = NetworkDriver.Create(settings);
             connections = new NativeList<NetworkConnection>(16, Allocator.Persistent);
 
             var endpoint = NetworkEndpoint.AnyIpv4.WithPort((ushort)port);
@@ -97,7 +106,16 @@ namespace Archon.Network
                 return;
             }
 
-            driver = NetworkDriver.Create();
+            // Configure network settings for faster connection
+            var settings = new NetworkSettings();
+            settings.WithNetworkConfigParameters(
+                connectTimeoutMS: 500,
+                maxConnectAttempts: 20,
+                disconnectTimeoutMS: 10000
+            );
+
+            driver = NetworkDriver.Create(settings);
+            // Note: Do NOT call Bind() on client - Unity Transport auto-binds to ephemeral port
 
             // Handle localhost specially - NetworkEndpoint.Parse doesn't recognize it
             NetworkEndpoint endpoint;
@@ -247,9 +265,33 @@ namespace Archon.Network
 
         private void PollClient()
         {
-            if (!clientConnection.IsCreated) return;
+            if (!clientConnection.IsCreated)
+            {
+                return;
+            }
 
-            ProcessConnectionEvents(clientConnection);
+            // Client must use connection.PopEvent(), not driver.PopEventForConnection()
+            // This is a key difference from server-side event handling
+            NetworkEvent.Type eventType;
+            while ((eventType = clientConnection.PopEvent(driver, out var reader)) != NetworkEvent.Type.Empty)
+            {
+                switch (eventType)
+                {
+                    case NetworkEvent.Type.Connect:
+                        ArchonLogger.Log("Connected to host", ArchonLogger.Systems.Network);
+                        OnClientConnected?.Invoke(0); // 0 = host from client perspective
+                        break;
+
+                    case NetworkEvent.Type.Data:
+                        HandleReceivedData(clientConnection, ref reader);
+                        break;
+
+                    case NetworkEvent.Type.Disconnect:
+                        ArchonLogger.Log("Disconnected from host", ArchonLogger.Systems.Network);
+                        clientConnection = default;
+                        break;
+                }
+            }
 
             if (!clientConnection.IsCreated)
             {
@@ -292,8 +334,13 @@ namespace Archon.Network
                 return;
             }
 
+            // Read into NativeArray first, then copy to managed array
+            var nativeData = new NativeArray<byte>(length, Allocator.Temp);
+            reader.ReadBytes(nativeData);
+
             var data = new byte[length];
-            reader.ReadBytes(new NativeArray<byte>(data, Allocator.Temp));
+            nativeData.CopyTo(data);
+            nativeData.Dispose();
 
             int peerId = 0;
             if (isHost && connectionToPeerId.TryGetValue(connection, out int id))
@@ -325,8 +372,17 @@ namespace Archon.Network
 
         private void SendData(NetworkConnection connection, byte[] data, NetworkPipeline pipeline)
         {
-            driver.BeginSend(pipeline, connection, out var writer);
-            writer.WriteBytes(new NativeArray<byte>(data, Allocator.Temp));
+            var status = driver.BeginSend(pipeline, connection, out var writer);
+            if (status != (int)Unity.Networking.Transport.Error.StatusCode.Success)
+            {
+                ArchonLogger.LogWarning($"BeginSend failed with status {status}", ArchonLogger.Systems.Network);
+                return;
+            }
+
+            var nativeData = new NativeArray<byte>(data, Allocator.Temp);
+            writer.WriteBytes(nativeData);
+            nativeData.Dispose();
+
             driver.EndSend(writer);
         }
 

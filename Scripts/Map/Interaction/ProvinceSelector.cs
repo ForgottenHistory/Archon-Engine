@@ -17,6 +17,15 @@ namespace Map.Interaction
         [SerializeField] private bool logSelectionDebug = false;
         [SerializeField] private bool enableSelection = true;
 
+        /// <summary>
+        /// Enable or disable province selection.
+        /// </summary>
+        public bool SelectionEnabled
+        {
+            get => enableSelection;
+            set => enableSelection = value;
+        }
+
         // Events for Game layer to subscribe to
         public event Action<ushort> OnProvinceClicked;
         public event Action<ushort> OnProvinceRightClicked;

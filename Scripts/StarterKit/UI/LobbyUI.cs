@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Core;
 using Core.UI;
+using Map.Interaction;
 using Archon.Network;
 
 namespace StarterKit
@@ -9,12 +10,16 @@ namespace StarterKit
     /// <summary>
     /// STARTERKIT - Lobby UI for multiplayer mode selection.
     /// Shows connected players and allows host to start the game.
+    /// Players can click the map to select their country.
     /// </summary>
     public class LobbyUI : StarterKitPanel
     {
         [Header("Network Settings")]
         [SerializeField] private int defaultPort = 7777;
         [SerializeField] private string defaultAddress = "127.0.0.1";
+
+        [Header("Country Selection")]
+        [SerializeField] private Color countryHighlightColor = new Color(1f, 0.84f, 0f, 0.5f);
 
         [Header("Debug")]
         [SerializeField] private bool logProgress = true;
@@ -23,6 +28,7 @@ namespace StarterKit
         private VisualElement contentBox;
         private Label titleLabel;
         private Label statusLabel;
+        private Label selectionHintLabel;
         private TextField addressField;
         private TextField portField;
         private Button singlePlayerButton;
@@ -36,12 +42,21 @@ namespace StarterKit
         private VisualElement lobbyPanel;
         private VisualElement playerListContainer;
 
+        // Country selection references
+        private ProvinceSelector provinceSelector;
+        private ProvinceHighlighter provinceHighlighter;
+        private NetworkManager networkManager;
+        private ushort selectedCountryId;
+
         // State
         private LobbyState currentState = LobbyState.ModeSelection;
         private bool isHost;
 
         /// <summary>Current lobby state.</summary>
         public LobbyState CurrentState => currentState;
+
+        /// <summary>The country ID selected by this player in the lobby.</summary>
+        public ushort SelectedCountryId => selectedCountryId;
 
         /// <summary>Fired when single player is selected.</summary>
         public event System.Action OnSinglePlayerSelected;
@@ -65,31 +80,49 @@ namespace StarterKit
                 return;
             }
 
+            // Find province selector for country selection
+            provinceSelector = FindFirstObjectByType<ProvinceSelector>();
+            provinceHighlighter = FindFirstObjectByType<ProvinceHighlighter>();
+
+            // Disable province selection until we enter the lobby
+            if (provinceSelector != null)
+            {
+                provinceSelector.SelectionEnabled = false;
+            }
+
             if (logProgress)
             {
                 ArchonLogger.Log("LobbyUI: Initialized", "starter_kit");
             }
         }
 
+        /// <summary>
+        /// Set the network manager reference for country selection sync.
+        /// </summary>
+        public void SetNetworkManager(NetworkManager manager)
+        {
+            networkManager = manager;
+        }
+
         protected override void CreateUI()
         {
-            // Container at center of screen
+            // Container on the left side of screen
             panelContainer = new VisualElement();
             panelContainer.name = "lobby-container";
             panelContainer.style.position = Position.Absolute;
-            panelContainer.style.left = 0;
-            panelContainer.style.right = 0;
-            panelContainer.style.top = 0;
-            panelContainer.style.bottom = 0;
-            panelContainer.style.alignItems = Align.Center;
-            panelContainer.style.justifyContent = Justify.Center;
+            panelContainer.style.left = 20f;
+            panelContainer.style.top = 100f;
+            panelContainer.style.bottom = 20f;
+            panelContainer.style.width = 320f;
+            panelContainer.style.alignItems = Align.Stretch;
+            panelContainer.style.justifyContent = Justify.FlexStart;
 
             // Content box
             contentBox = CreateStyledPanel("lobby-content");
             UIHelper.SetBorderRadius(contentBox, RadiusLg);
-            UIHelper.SetPadding(contentBox, SpacingLg, 40f);
-            contentBox.style.alignItems = Align.Center;
-            contentBox.style.minWidth = 400f;
+            UIHelper.SetPadding(contentBox, SpacingMd, SpacingLg);
+            contentBox.style.alignItems = Align.Stretch;
+            contentBox.style.flexGrow = 0;
 
             // Title
             titleLabel = CreateHeader("Multiplayer");
@@ -115,23 +148,20 @@ namespace StarterKit
         {
             modeSelectionPanel = new VisualElement();
             modeSelectionPanel.name = "mode-selection-panel";
-            modeSelectionPanel.style.alignItems = Align.Center;
+            modeSelectionPanel.style.alignItems = Align.Stretch;
 
             // Single Player button
             singlePlayerButton = CreateStyledButton("Single Player", OnSinglePlayerClicked);
-            singlePlayerButton.style.width = 200f;
             singlePlayerButton.style.marginBottom = SpacingMd;
             modeSelectionPanel.Add(singlePlayerButton);
 
             // Host button
             hostButton = CreateStyledButton("Host Game", OnHostClicked);
-            hostButton.style.width = 200f;
             hostButton.style.marginBottom = SpacingMd;
             modeSelectionPanel.Add(hostButton);
 
             // Join button
             joinButton = CreateStyledButton("Join Game", OnJoinClicked);
-            joinButton.style.width = 200f;
             modeSelectionPanel.Add(joinButton);
 
             contentBox.Add(modeSelectionPanel);
@@ -142,15 +172,14 @@ namespace StarterKit
             connectionPanel = new VisualElement();
             connectionPanel.name = "connection-panel";
             connectionPanel.style.display = DisplayStyle.None;
-            connectionPanel.style.alignItems = Align.Center;
+            connectionPanel.style.alignItems = Align.Stretch;
 
             // Address field (for joining)
             var addressRow = CreateRow(Justify.SpaceBetween);
-            addressRow.style.width = 280f;
             addressRow.style.marginBottom = SpacingSm;
 
             var addressLabel = CreateText("Address:");
-            addressLabel.style.width = 80f;
+            addressLabel.style.width = 70f;
             addressRow.Add(addressLabel);
 
             addressField = new TextField();
@@ -162,11 +191,10 @@ namespace StarterKit
 
             // Port field
             var portRow = CreateRow(Justify.SpaceBetween);
-            portRow.style.width = 280f;
             portRow.style.marginBottom = SpacingLg;
 
             var portLabel = CreateText("Port:");
-            portLabel.style.width = 80f;
+            portLabel.style.width = 70f;
             portRow.Add(portLabel);
 
             portField = new TextField();
@@ -178,15 +206,14 @@ namespace StarterKit
 
             // Confirm/Cancel buttons
             var buttonRow = CreateRow(Justify.Center);
-            buttonRow.style.width = 280f;
 
             var confirmButton = CreateStyledButton("Connect", OnConfirmConnection);
-            confirmButton.style.width = 100f;
-            confirmButton.style.marginRight = SpacingMd;
+            confirmButton.style.flexGrow = 1;
+            confirmButton.style.marginRight = SpacingSm;
             buttonRow.Add(confirmButton);
 
             backButton = CreateStyledButton("Back", OnBackToModeSelection);
-            backButton.style.width = 100f;
+            backButton.style.flexGrow = 1;
             buttonRow.Add(backButton);
 
             connectionPanel.Add(buttonRow);
@@ -199,31 +226,37 @@ namespace StarterKit
             lobbyPanel = new VisualElement();
             lobbyPanel.name = "lobby-panel";
             lobbyPanel.style.display = DisplayStyle.None;
-            lobbyPanel.style.alignItems = Align.Center;
-            lobbyPanel.style.width = 350f;
+            lobbyPanel.style.alignItems = Align.Stretch;
 
             // Status label
             statusLabel = CreateText("Waiting for players...");
             statusLabel.style.marginBottom = SpacingMd;
+            statusLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
             lobbyPanel.Add(statusLabel);
 
             // Player list header
-            var headerLabel = CreateSecondaryText("Connected Players:");
+            var headerLabel = CreateSecondaryText("Players:");
             headerLabel.style.marginBottom = SpacingSm;
-            headerLabel.style.alignSelf = Align.FlexStart;
             lobbyPanel.Add(headerLabel);
 
             // Player list container
             playerListContainer = new VisualElement();
             playerListContainer.name = "player-list";
             playerListContainer.style.width = new Length(100, LengthUnit.Percent);
-            playerListContainer.style.minHeight = 100f;
+            playerListContainer.style.minHeight = 80f;
             playerListContainer.style.maxHeight = 200f;
             playerListContainer.style.backgroundColor = new Color(0.1f, 0.1f, 0.1f, 0.8f);
             UIHelper.SetBorderRadius(playerListContainer, RadiusMd);
             UIHelper.SetPadding(playerListContainer, SpacingSm, SpacingSm);
-            playerListContainer.style.marginBottom = SpacingLg;
+            playerListContainer.style.marginBottom = SpacingMd;
             lobbyPanel.Add(playerListContainer);
+
+            // Selection hint
+            selectionHintLabel = CreateSecondaryText("Click the map to select your country");
+            selectionHintLabel.style.unityTextAlign = TextAnchor.MiddleCenter;
+            selectionHintLabel.style.marginBottom = SpacingMd;
+            selectionHintLabel.style.unityFontStyleAndWeight = FontStyle.Italic;
+            lobbyPanel.Add(selectionHintLabel);
 
             // Button row
             var buttonRow = CreateRow(Justify.Center);
@@ -231,14 +264,14 @@ namespace StarterKit
 
             // Start game button (host only)
             startGameButton = CreateStyledButton("Start Game", OnStartGameButtonClicked);
-            startGameButton.style.width = 120f;
-            startGameButton.style.marginRight = SpacingMd;
-            startGameButton.style.backgroundColor = new Color(0.2f, 0.4f, 0.2f, 1f);
+            startGameButton.style.flexGrow = 1;
+            startGameButton.style.marginRight = SpacingSm;
+            startGameButton.style.backgroundColor = new Color(0.2f, 0.5f, 0.2f, 1f);
             buttonRow.Add(startGameButton);
 
             // Cancel/Leave button
             cancelButton = CreateStyledButton("Leave", OnCancelClicked);
-            cancelButton.style.width = 100f;
+            cancelButton.style.flexGrow = 1;
             buttonRow.Add(cancelButton);
 
             lobbyPanel.Add(buttonRow);
@@ -248,7 +281,19 @@ namespace StarterKit
 
         private void SetState(LobbyState state)
         {
+            var previousState = currentState;
             currentState = state;
+
+            // Unsubscribe from province clicks when leaving lobby
+            if (previousState == LobbyState.InLobby && state != LobbyState.InLobby)
+            {
+                if (provinceSelector != null)
+                {
+                    provinceSelector.OnProvinceClicked -= HandleProvinceClicked;
+                    provinceSelector.SelectionEnabled = false;
+                }
+                provinceHighlighter?.ClearHighlight();
+            }
 
             // Hide all panels
             modeSelectionPanel.style.display = DisplayStyle.None;
@@ -258,8 +303,11 @@ namespace StarterKit
             switch (state)
             {
                 case LobbyState.ModeSelection:
-                    titleLabel.text = "Multiplayer";
+                    titleLabel.text = "Main Menu";
                     modeSelectionPanel.style.display = DisplayStyle.Flex;
+                    // Disable map interaction in main menu
+                    if (provinceSelector != null)
+                        provinceSelector.SelectionEnabled = false;
                     break;
 
                 case LobbyState.EnteringHostInfo:
@@ -275,9 +323,15 @@ namespace StarterKit
                     break;
 
                 case LobbyState.InLobby:
-                    titleLabel.text = isHost ? "Hosting Game" : "Game Lobby";
+                    titleLabel.text = isHost ? "Hosting" : "Lobby";
                     startGameButton.style.display = isHost ? DisplayStyle.Flex : DisplayStyle.None;
                     lobbyPanel.style.display = DisplayStyle.Flex;
+                    // Enable province clicks for country selection
+                    if (provinceSelector != null)
+                    {
+                        provinceSelector.SelectionEnabled = true;
+                        provinceSelector.OnProvinceClicked += HandleProvinceClicked;
+                    }
                     break;
 
                 case LobbyState.Connecting:
@@ -286,6 +340,41 @@ namespace StarterKit
                     lobbyPanel.style.display = DisplayStyle.Flex;
                     startGameButton.style.display = DisplayStyle.None;
                     break;
+            }
+        }
+
+        private void HandleProvinceClicked(ushort provinceId)
+        {
+            if (currentState != LobbyState.InLobby) return;
+            if (provinceId == 0) return;
+
+            var provinceQueries = gameState?.ProvinceQueries;
+            if (provinceQueries == null) return;
+
+            ushort ownerId = provinceQueries.GetOwner(provinceId);
+            if (ownerId == 0) return;
+
+            // Highlight the selected country
+            provinceHighlighter?.HighlightCountry(ownerId, countryHighlightColor);
+
+            // Update local state
+            selectedCountryId = ownerId;
+
+            // Update hint label
+            var countryQueries = gameState?.CountryQueries;
+            string countryTag = countryQueries?.GetTag(ownerId) ?? $"Country {ownerId}";
+            if (selectionHintLabel != null)
+            {
+                selectionHintLabel.text = $"Selected: {countryTag}";
+                selectionHintLabel.style.color = TextGold;
+            }
+
+            // Send country selection to network
+            networkManager?.SetCountrySelection(ownerId);
+
+            if (logProgress)
+            {
+                ArchonLogger.Log($"LobbyUI: Selected country {countryTag} (ID: {ownerId})", "starter_kit");
             }
         }
 
@@ -347,7 +436,9 @@ namespace StarterKit
         private void OnCancelClicked()
         {
             if (logProgress)
-                ArchonLogger.Log("LobbyUI: Connection cancelled", "starter_kit");
+            {
+                ArchonLogger.Log("LobbyUI: Leave clicked", "starter_kit");
+            }
 
             OnCancelled?.Invoke();
             SetState(LobbyState.ModeSelection);
@@ -370,29 +461,39 @@ namespace StarterKit
 
             playerListContainer.Clear();
 
+            var countryQueries = gameState?.CountryQueries;
+
             foreach (var player in players)
             {
                 var playerRow = CreateRowEntry(player.IsHost == 1);
+                playerRow.style.paddingTop = 2f;
+                playerRow.style.paddingBottom = 2f;
 
                 // Host indicator or player number
-                var prefixLabel = CreateText(player.IsHost == 1 ? "[HOST]" : $"P{player.PeerId}");
-                prefixLabel.style.width = 60f;
-                prefixLabel.style.color = player.IsHost == 1 ? TextGold : TextPrimary;
+                var prefixLabel = CreateText(player.IsHost == 1 ? "[Host]" : $"[P{player.PeerId}]");
+                prefixLabel.style.width = 50f;
+                prefixLabel.style.fontSize = FontSizeSmall;
+                prefixLabel.style.color = player.IsHost == 1 ? TextGold : TextSecondary;
                 playerRow.Add(prefixLabel);
 
-                // Country selection (or "Not Selected")
-                var countryLabel = CreateText(player.CountryId > 0 ? $"Country {player.CountryId}" : "Not Selected");
+                // Country selection (or "---")
+                string countryName = "---";
+                if (player.CountryId > 0)
+                {
+                    countryName = countryQueries?.GetTag(player.CountryId) ?? $"Country {player.CountryId}";
+                }
+                var countryLabel = CreateText(countryName);
                 countryLabel.style.flexGrow = 1;
                 countryLabel.style.color = player.CountryId > 0 ? TextPrimary : TextSecondary;
                 playerRow.Add(countryLabel);
 
-                // Ready status
-                var readyLabel = CreateText(player.IsReady == 1 ? "Ready" : "");
-                readyLabel.style.width = 50f;
-                readyLabel.style.color = TextIncome;
-                playerRow.Add(readyLabel);
-
                 playerListContainer.Add(playerRow);
+            }
+
+            // Update status
+            if (statusLabel != null)
+            {
+                statusLabel.text = $"{players.Length} player(s) in lobby";
             }
         }
 

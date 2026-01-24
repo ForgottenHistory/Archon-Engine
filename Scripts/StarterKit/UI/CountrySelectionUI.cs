@@ -219,5 +219,27 @@ namespace StarterKit
                 ArchonLogger.Log($"CountrySelectionUI: Game started as {countryTag}", "starter_kit");
             }
         }
+
+        public override void Show()
+        {
+            base.Show();
+
+            // Enable province selection when showing
+            if (provinceSelector != null)
+            {
+                provinceSelector.SelectionEnabled = true;
+            }
+        }
+
+        public override void Hide()
+        {
+            base.Hide();
+
+            // Disable province selection when hiding
+            if (provinceSelector != null)
+            {
+                provinceSelector.SelectionEnabled = false;
+            }
+        }
     }
 }

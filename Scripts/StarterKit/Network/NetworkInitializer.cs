@@ -193,6 +193,9 @@ namespace StarterKit
             desyncRecovery.OnDesyncDetected += HandleDesyncDetected;
             desyncRecovery.OnResyncComplete += HandleResyncComplete;
 
+            // Give LobbyUI reference to NetworkManager for country selection
+            lobbyUI?.SetNetworkManager(networkManager);
+
             if (logProgress)
                 ArchonLogger.Log("NetworkInitializer: Network components created", "starter_kit");
         }
@@ -300,9 +303,36 @@ namespace StarterKit
             if (logProgress)
                 ArchonLogger.Log("NetworkInitializer: Game started", "starter_kit");
 
-            // Hide lobby and show country selection
+            // Get the country selected in the lobby
+            ushort selectedCountry = lobbyUI?.SelectedCountryId ?? 0;
+
+            // Hide lobby (don't show country selection - it was done in lobby)
             lobbyUI?.Hide();
-            countrySelectionUI?.Show();
+
+            if (selectedCountry > 0)
+            {
+                // Set the player's country from lobby selection
+                var playerState = Initializer.Instance?.PlayerState;
+                playerState?.SetPlayerCountry(selectedCountry);
+
+                // Emit event to start the game
+                gameState?.EventBus.Emit(new PlayerCountrySelectedEvent
+                {
+                    CountryId = selectedCountry,
+                    TimeStamp = UnityEngine.Time.time
+                });
+
+                if (logProgress)
+                {
+                    var countryTag = gameState?.CountryQueries?.GetTag(selectedCountry) ?? selectedCountry.ToString();
+                    ArchonLogger.Log($"NetworkInitializer: Starting game as {countryTag}", "starter_kit");
+                }
+            }
+            else
+            {
+                ArchonLogger.LogWarning("NetworkInitializer: No country selected, showing country selection UI", "starter_kit");
+                countrySelectionUI?.Show();
+            }
         }
 
         private void HandleStateReceived(byte[] stateData, uint tick)
