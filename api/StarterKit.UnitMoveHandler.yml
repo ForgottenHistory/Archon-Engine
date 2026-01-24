@@ -26,7 +26,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnitMoveHandler
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnMoveComplete
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 31
+    startLine: 32
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -85,7 +85,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInMoveMode
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -114,7 +114,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -148,7 +148,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetUIElements
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 44
+    startLine: 45
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -187,7 +187,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryEnterMoveMode
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 56
+    startLine: 57
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -223,7 +223,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExitMoveMode
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 95
+    startLine: 96
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -251,7 +251,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HandleProvinceClick
     path: Scripts/StarterKit/UI/UnitMoveHandler.cs
-    startLine: 111
+    startLine: 112
   assemblies:
   - StarterKit
   namespace: StarterKit

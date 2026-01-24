@@ -31,6 +31,7 @@ items:
   - Core.Data.ProvinceInitialStateLoadResult
   - Core.Data.ProvinceState
   - Core.Data.ProvinceStateSerializer
+  - Core.Data.ProvinceStateSerializer.DeserializeResult
   - Core.Data.ProvinceStateSerializer.SerializationStats
   - Core.Data.RawCountryData
   - Core.Data.RawProvinceData
@@ -47,7 +48,6 @@ items:
 references:
 - uid: Core.Data.ProvinceColdData
   commentId: T:Core.Data.ProvinceColdData
-  parent: Core.Data
   href: Core.Data.ProvinceColdData.html
   name: ProvinceColdData
   nameWithType: ProvinceColdData
@@ -178,6 +178,29 @@ references:
   name: ProvinceStateSerializer
   nameWithType: ProvinceStateSerializer
   fullName: Core.Data.ProvinceStateSerializer
+- uid: Core.Data.ProvinceStateSerializer.DeserializeResult
+  commentId: T:Core.Data.ProvinceStateSerializer.DeserializeResult
+  parent: Core.Data
+  href: Core.Data.ProvinceStateSerializer.html
+  name: ProvinceStateSerializer.DeserializeResult
+  nameWithType: ProvinceStateSerializer.DeserializeResult
+  fullName: Core.Data.ProvinceStateSerializer.DeserializeResult
+  spec.csharp:
+  - uid: Core.Data.ProvinceStateSerializer
+    name: ProvinceStateSerializer
+    href: Core.Data.ProvinceStateSerializer.html
+  - name: .
+  - uid: Core.Data.ProvinceStateSerializer.DeserializeResult
+    name: DeserializeResult
+    href: Core.Data.ProvinceStateSerializer.DeserializeResult.html
+  spec.vb:
+  - uid: Core.Data.ProvinceStateSerializer
+    name: ProvinceStateSerializer
+    href: Core.Data.ProvinceStateSerializer.html
+  - name: .
+  - uid: Core.Data.ProvinceStateSerializer.DeserializeResult
+    name: DeserializeResult
+    href: Core.Data.ProvinceStateSerializer.DeserializeResult.html
 - uid: Core.Data.ProvinceStateSerializer.SerializationStats
   commentId: T:Core.Data.ProvinceStateSerializer.SerializationStats
   parent: Core.Data

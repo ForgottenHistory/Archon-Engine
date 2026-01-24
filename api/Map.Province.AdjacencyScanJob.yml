@@ -1,0 +1,517 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.AdjacencyScanJob
+  commentId: T:Map.Province.AdjacencyScanJob
+  id: AdjacencyScanJob
+  parent: Map.Province
+  children:
+  - Map.Province.AdjacencyScanJob.Execute(System.Int32)
+  - Map.Province.AdjacencyScanJob.adjacencyPairs
+  - Map.Province.AdjacencyScanJob.blackThreshold
+  - Map.Province.AdjacencyScanJob.height
+  - Map.Province.AdjacencyScanJob.ignoreDiagonals
+  - Map.Province.AdjacencyScanJob.pixels
+  - Map.Province.AdjacencyScanJob.width
+  langs:
+  - csharp
+  - vb
+  name: AdjacencyScanJob
+  nameWithType: AdjacencyScanJob
+  fullName: Map.Province.AdjacencyScanJob
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdjacencyScanJob
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 267
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Burst-compiled job for parallel adjacency scanning
+  example: []
+  syntax:
+    content: >-
+      [BurstCompile]
+
+      public struct AdjacencyScanJob
+    content.vb: >-
+      <BurstCompile>
+
+      Public Structure AdjacencyScanJob
+  attributes:
+  - type: Unity.Burst.BurstCompileAttribute
+    ctor: Unity.Burst.BurstCompileAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.pixels
+  commentId: F:Map.Province.AdjacencyScanJob.pixels
+  id: pixels
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: pixels
+  nameWithType: AdjacencyScanJob.pixels
+  fullName: Map.Province.AdjacencyScanJob.pixels
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: pixels
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 270
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public NativeArray<Color32> pixels
+    return:
+      type: Unity.Collections.NativeArray{UnityEngine.Color32}
+    content.vb: >-
+      <ReadOnly>
+
+      Public pixels As NativeArray(Of Color32)
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.width
+  commentId: F:Map.Province.AdjacencyScanJob.width
+  id: width
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: width
+  nameWithType: AdjacencyScanJob.width
+  fullName: Map.Province.AdjacencyScanJob.width
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: width
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 271
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int width
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public width As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.height
+  commentId: F:Map.Province.AdjacencyScanJob.height
+  id: height
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: height
+  nameWithType: AdjacencyScanJob.height
+  fullName: Map.Province.AdjacencyScanJob.height
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: height
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 272
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public int height
+    return:
+      type: System.Int32
+    content.vb: >-
+      <ReadOnly>
+
+      Public height As Integer
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.blackThreshold
+  commentId: F:Map.Province.AdjacencyScanJob.blackThreshold
+  id: blackThreshold
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: blackThreshold
+  nameWithType: AdjacencyScanJob.blackThreshold
+  fullName: Map.Province.AdjacencyScanJob.blackThreshold
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: blackThreshold
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 273
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public float blackThreshold
+    return:
+      type: System.Single
+    content.vb: >-
+      <ReadOnly>
+
+      Public blackThreshold As Single
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.ignoreDiagonals
+  commentId: F:Map.Province.AdjacencyScanJob.ignoreDiagonals
+  id: ignoreDiagonals
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: ignoreDiagonals
+  nameWithType: AdjacencyScanJob.ignoreDiagonals
+  fullName: Map.Province.AdjacencyScanJob.ignoreDiagonals
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ignoreDiagonals
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 274
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [ReadOnly]
+
+      public bool ignoreDiagonals
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <ReadOnly>
+
+      Public ignoreDiagonals As Boolean
+  attributes:
+  - type: Unity.Collections.ReadOnlyAttribute
+    ctor: Unity.Collections.ReadOnlyAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.adjacencyPairs
+  commentId: F:Map.Province.AdjacencyScanJob.adjacencyPairs
+  id: adjacencyPairs
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: adjacencyPairs
+  nameWithType: AdjacencyScanJob.adjacencyPairs
+  fullName: Map.Province.AdjacencyScanJob.adjacencyPairs
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: adjacencyPairs
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 277
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [NativeDisableParallelForRestriction]
+
+      public NativeParallelHashSet<ulong>.ParallelWriter adjacencyPairs
+    return:
+      type: Unity.Collections.NativeParallelHashSet{System.UInt64}.ParallelWriter
+    content.vb: >-
+      <NativeDisableParallelForRestriction>
+
+      Public adjacencyPairs As NativeParallelHashSet(Of ULong).ParallelWriter
+  attributes:
+  - type: Unity.Collections.NativeDisableParallelForRestrictionAttribute
+    ctor: Unity.Collections.NativeDisableParallelForRestrictionAttribute.#ctor
+    arguments: []
+- uid: Map.Province.AdjacencyScanJob.Execute(System.Int32)
+  commentId: M:Map.Province.AdjacencyScanJob.Execute(System.Int32)
+  id: Execute(System.Int32)
+  parent: Map.Province.AdjacencyScanJob
+  langs:
+  - csharp
+  - vb
+  name: Execute(int)
+  nameWithType: AdjacencyScanJob.Execute(int)
+  fullName: Map.Province.AdjacencyScanJob.Execute(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Execute
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 279
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: <p>Performs work against a specific iteration index.</p>
+  example: []
+  syntax:
+    content: public void Execute(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+      description: The index of the Parallel for loop at which to perform work.
+    content.vb: Public Sub Execute(index As Integer)
+  overload: Map.Province.AdjacencyScanJob.Execute*
+  nameWithType.vb: AdjacencyScanJob.Execute(Integer)
+  fullName.vb: Map.Province.AdjacencyScanJob.Execute(Integer)
+  name.vb: Execute(Integer)
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: Unity.Collections.NativeArray{UnityEngine.Color32}
+  commentId: T:Unity.Collections.NativeArray{UnityEngine.Color32}
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeArray`1
+  name: NativeArray<Color32>
+  nameWithType: NativeArray<Color32>
+  fullName: Unity.Collections.NativeArray<UnityEngine.Color32>
+  nameWithType.vb: NativeArray(Of Color32)
+  fullName.vb: Unity.Collections.NativeArray(Of UnityEngine.Color32)
+  name.vb: NativeArray(Of Color32)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+- uid: Unity.Collections.NativeArray`1
+  commentId: T:Unity.Collections.NativeArray`1
+  isExternal: true
+  name: NativeArray<T>
+  nameWithType: NativeArray<T>
+  fullName: Unity.Collections.NativeArray<T>
+  nameWithType.vb: NativeArray(Of T)
+  fullName.vb: Unity.Collections.NativeArray(Of T)
+  name.vb: NativeArray(Of T)
+  spec.csharp:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: Unity.Collections.NativeArray`1
+    name: NativeArray
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Unity.Collections
+  commentId: N:Unity.Collections
+  isExternal: true
+  name: Unity.Collections
+  nameWithType: Unity.Collections
+  fullName: Unity.Collections
+  spec.csharp:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+  spec.vb:
+  - uid: Unity
+    name: Unity
+    isExternal: true
+  - name: .
+  - uid: Unity.Collections
+    name: Collections
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Unity.Collections.NativeParallelHashSet{System.UInt64}.ParallelWriter
+  commentId: T:Unity.Collections.NativeParallelHashSet{System.UInt64}.ParallelWriter
+  parent: Unity.Collections
+  definition: Unity.Collections.NativeParallelHashSet`1.ParallelWriter
+  name: NativeParallelHashSet<ulong>.ParallelWriter
+  nameWithType: NativeParallelHashSet<ulong>.ParallelWriter
+  fullName: Unity.Collections.NativeParallelHashSet<ulong>.ParallelWriter
+  nameWithType.vb: NativeParallelHashSet(Of ULong).ParallelWriter
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of ULong).ParallelWriter
+  name.vb: NativeParallelHashSet(Of ULong).ParallelWriter
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - uid: System.UInt64
+    name: ulong
+    isExternal: true
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeParallelHashSet{System.UInt64}.ParallelWriter
+    name: ParallelWriter
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.UInt64
+    name: ULong
+    isExternal: true
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeParallelHashSet{System.UInt64}.ParallelWriter
+    name: ParallelWriter
+    isExternal: true
+- uid: Unity.Collections.NativeParallelHashSet`1.ParallelWriter
+  commentId: T:Unity.Collections.NativeParallelHashSet`1.ParallelWriter
+  isExternal: true
+  name: NativeParallelHashSet<T>.ParallelWriter
+  nameWithType: NativeParallelHashSet<T>.ParallelWriter
+  fullName: Unity.Collections.NativeParallelHashSet<T>.ParallelWriter
+  nameWithType.vb: NativeParallelHashSet(Of T).ParallelWriter
+  fullName.vb: Unity.Collections.NativeParallelHashSet(Of T).ParallelWriter
+  name.vb: NativeParallelHashSet(Of T).ParallelWriter
+  spec.csharp:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  - name: .
+  - uid: Unity.Collections.NativeParallelHashSet`1.ParallelWriter
+    name: ParallelWriter
+    isExternal: true
+  spec.vb:
+  - uid: Unity.Collections.NativeParallelHashSet`1
+    name: NativeParallelHashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+  - name: .
+  - uid: Unity.Collections.NativeParallelHashSet`1.ParallelWriter
+    name: ParallelWriter
+    isExternal: true
+- uid: Map.Province.AdjacencyScanJob.Execute*
+  commentId: Overload:Map.Province.AdjacencyScanJob.Execute
+  href: Map.Province.AdjacencyScanJob.html#Map_Province_AdjacencyScanJob_Execute_System_Int32_
+  name: Execute
+  nameWithType: AdjacencyScanJob.Execute
+  fullName: Map.Province.AdjacencyScanJob.Execute

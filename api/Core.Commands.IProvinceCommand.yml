@@ -7,13 +7,13 @@ items:
   children:
   - Core.Commands.IProvinceCommand.CommandType
   - Core.Commands.IProvinceCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
-  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
   - Core.Commands.IProvinceCommand.ExecutionTick
   - Core.Commands.IProvinceCommand.GetChecksum
   - Core.Commands.IProvinceCommand.GetSerializedSize
   - Core.Commands.IProvinceCommand.PlayerID
   - Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
-  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
   langs:
   - csharp
   - vb
@@ -141,16 +141,16 @@ items:
       type: System.UInt16
     content.vb: Property PlayerID As UShort
   overload: Core.Commands.IProvinceCommand.PlayerID*
-- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
-  id: Validate(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
+  id: Validate(Core.Systems.ProvinceSystem)
   parent: Core.Commands.IProvinceCommand
   langs:
   - csharp
   - vb
-  name: Validate(ProvinceSimulation)
-  nameWithType: IProvinceCommand.Validate(ProvinceSimulation)
-  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  name: Validate(ProvinceSystem)
+  nameWithType: IProvinceCommand.Validate(ProvinceSystem)
+  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -169,26 +169,25 @@ items:
     Must be deterministic - same result across all clients
   example: []
   syntax:
-    content: CommandValidationResult Validate(ProvinceSimulation simulation)
+    content: CommandValidationResult Validate(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
-      description: Current simulation state
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Core.Commands.CommandValidationResult
       description: True if command can be executed
-    content.vb: Function Validate(simulation As ProvinceSimulation) As CommandValidationResult
+    content.vb: Function Validate(provinceSystem As ProvinceSystem) As CommandValidationResult
   overload: Core.Commands.IProvinceCommand.Validate*
-- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
-  id: Execute(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
+  id: Execute(Core.Systems.ProvinceSystem)
   parent: Core.Commands.IProvinceCommand
   langs:
   - csharp
   - vb
-  name: Execute(ProvinceSimulation)
-  nameWithType: IProvinceCommand.Execute(ProvinceSimulation)
-  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  name: Execute(ProvinceSystem)
+  nameWithType: IProvinceCommand.Execute(ProvinceSystem)
+  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -207,15 +206,14 @@ items:
     Must be deterministic - same result across all clients
   example: []
   syntax:
-    content: CommandExecutionResult Execute(ProvinceSimulation simulation)
+    content: CommandExecutionResult Execute(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
-      description: Simulation to modify
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Core.Commands.CommandExecutionResult
       description: Execution result with affected provinces
-    content.vb: Function Execute(simulation As ProvinceSimulation) As CommandExecutionResult
+    content.vb: Function Execute(provinceSystem As ProvinceSystem) As CommandExecutionResult
   overload: Core.Commands.IProvinceCommand.Execute*
 - uid: Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
   commentId: M:Core.Commands.IProvinceCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
@@ -450,17 +448,17 @@ references:
   name.vb: UShort
 - uid: Core.Commands.IProvinceCommand.Validate*
   commentId: Overload:Core.Commands.IProvinceCommand.Validate
-  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSystem_
   name: Validate
   nameWithType: IProvinceCommand.Validate
   fullName: Core.Commands.IProvinceCommand.Validate
-- uid: Core.Systems.ProvinceSimulation
-  commentId: T:Core.Systems.ProvinceSimulation
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
   parent: Core.Systems
-  href: Core.Systems.ProvinceSimulation.html
-  name: ProvinceSimulation
-  nameWithType: ProvinceSimulation
-  fullName: Core.Systems.ProvinceSimulation
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
 - uid: Core.Commands.CommandValidationResult
   commentId: T:Core.Commands.CommandValidationResult
   parent: Core.Commands
@@ -492,7 +490,7 @@ references:
     href: Core.Systems.html
 - uid: Core.Commands.IProvinceCommand.Execute*
   commentId: Overload:Core.Commands.IProvinceCommand.Execute
-  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSystem_
   name: Execute
   nameWithType: IProvinceCommand.Execute
   fullName: Core.Commands.IProvinceCommand.Execute

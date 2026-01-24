@@ -53,7 +53,9 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 
 ### After Installation
 1. Open your Unity project - let it import and compile
-2. Install required package: **Window → Package Manager → + → Add by name** → `com.unity.nuget.newtonsoft-json`
+2. Install required packages via **Window → Package Manager → + → Add by name**:
+   - `com.unity.nuget.newtonsoft-json` (JSON parsing)
+   - `com.unity.transport` (Multiplayer networking)
 3. Open the StarterKit scene: `Assets/Archon-Engine/Scenes/StarterKit.unity`
 4. Press Play to verify everything works
 
@@ -102,10 +104,12 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 - Single draw call for entire map
 - 3D MAP TO BE DETERMINED
 
-**Multiplayer-Ready Architecture:**
+**Multiplayer:**
+- Lockstep command synchronization (working)
+- Player-hosted sessions with lobby system
+- Time sync across all clients
+- Automatic desync detection and recovery
 - Deterministic fixed-point math (no floats in simulation)
-- Command pattern for all state changes
-- Built for lockstep synchronization from day one
 
 **Tested with ~4,000 provinces:**
 - Province updates: 0.24ms (target: <5ms)
@@ -120,10 +124,10 @@ Assets/Archon-Engine/
 ├── Scripts/
 │   ├── Core/           # Deterministic simulation layer
 │   ├── Map/            # GPU-accelerated presentation
-│   └── StarterKit      # Scripts to start from/look at
+│   ├── Network/        # Multiplayer networking
+│   └── StarterKit/     # Scripts to start from/look at
 ├── Shaders/            # Compute shaders for rendering
 └── Docs/
-
     ├── Engine/         # Architecture documentation
     ├── Planning/       # Future features
     └── Log/            # Development journal
@@ -137,10 +141,11 @@ A complete 7,000+ line game template demonstrating all ENGINE patterns. Use it a
 
 **What's Included:**
 - **EconomySystem** - Gold economy with province income and building bonuses
-- **UnitSystem** - Military units with movement, and visualization
+- **UnitSystem** - Military units with movement and visualization
 - **BuildingSystem** - Province buildings with construction and effects
 - **AISystem** - Goal-oriented AI (economy, expansion)
 - **DiplomacySystem** - War, peace, relations, and opinion modifiers
+- **Multiplayer** - Lobby, country selection, lockstep sync, time sync
 - **Command Pattern** - All state changes through validated commands
 - **Map Modes** - Political, economic, diplomatic visualization
 - **UI Components** - Country selection, resource bar, province info, unit management, tooltips
@@ -164,18 +169,26 @@ See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for implementat
 - Zero-allocation EventBus and performance optimizations
 - AI system with goal-oriented behavior
 
+**Multiplayer (Complete):**
+- Lockstep command synchronization
+- Player-hosted sessions with lobby UI
+- Country selection and ready/start flow
+- Time synchronization across clients
+- Desync detection and automatic recovery infrastructure
+
 **Map Layer (In Progress):**
 
 As in, practical implementation of core systems.
 
 - Vector like borders, razor thin
-- 3D terrain tessallation and smart texturing for realistic terrain
+- 3D terrain tessellation and smart texturing for realistic terrain
 
 ![early-3d-map](Promotion-Assets/Images/simple_terrain.png)
 *Simple province terrain, auto terrain assignment from texture*
 
 **Planned Features:**
-- Multiplayer (lockstep command synchronization)
+- Steam transport (currently using DirectTransport for LAN/IP)
+- Host migration
 - Modding API (scripting support)
 
 ## Documentation

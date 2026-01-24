@@ -1,0 +1,46 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Network
+  commentId: N:Core.Network
+  id: Core.Network
+  children:
+  - Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: Core.Network
+  nameWithType: Core.Network
+  fullName: Core.Network
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Network.INetworkBridge
+  commentId: T:Core.Network.INetworkBridge
+  parent: Core.Network
+  href: Core.Network.INetworkBridge.html
+  name: INetworkBridge
+  nameWithType: INetworkBridge
+  fullName: Core.Network.INetworkBridge
+- uid: Core.Network
+  commentId: N:Core.Network
+  href: Core.html
+  name: Core.Network
+  nameWithType: Core.Network
+  fullName: Core.Network
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html

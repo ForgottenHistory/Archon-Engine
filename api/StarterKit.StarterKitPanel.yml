@@ -104,6 +104,7 @@ items:
   - StarterKit.CountrySelectionUI
   - StarterKit.DiplomacyPanel
   - StarterKit.LedgerUI
+  - StarterKit.LobbyUI
   - StarterKit.ProvinceInfoUI
   - StarterKit.ResourceBarUI
   - StarterKit.TimeUI

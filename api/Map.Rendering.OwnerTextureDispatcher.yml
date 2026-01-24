@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OwnerTextureDispatcher
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -90,7 +90,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 82
+    startLine: 78
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -121,7 +121,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateOwnerTexture
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 92
+    startLine: 88
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

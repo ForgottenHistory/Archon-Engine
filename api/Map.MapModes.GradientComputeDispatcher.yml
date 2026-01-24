@@ -23,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GradientComputeDispatcher
     path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
-    startLine: 25
+    startLine: 26
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -89,7 +89,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -118,7 +118,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispatch
     path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
-    startLine: 72
+    startLine: 62
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -164,7 +164,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/MapModes/GradientComputeDispatcher.cs
-    startLine: 157
+    startLine: 147
   assemblies:
   - MapAssembly
   namespace: Map.MapModes

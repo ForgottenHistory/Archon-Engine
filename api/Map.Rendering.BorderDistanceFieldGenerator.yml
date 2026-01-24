@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderDistanceFieldGenerator
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 16
+    startLine: 17
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -72,7 +72,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 46
+    startLine: 47
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -100,7 +100,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 97
+    startLine: 94
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -129,7 +129,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateDistanceField
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 106
+    startLine: 103
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -160,7 +160,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateQuarterResolutionDistanceField
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 154
+    startLine: 151
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -202,7 +202,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TestGeneration
     path: Scripts/Map/Rendering/Border/BorderDistanceFieldGenerator.cs
-    startLine: 425
+    startLine: 422
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

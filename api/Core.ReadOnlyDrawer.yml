@@ -20,7 +20,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ReadOnlyDrawer
     path: Scripts/Core/GameState.cs
-    startLine: 403
+    startLine: 355
   assemblies:
   - Core
   namespace: Core
@@ -61,7 +61,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnGUI
     path: Scripts/Core/GameState.cs
-    startLine: 406
+    startLine: 358
   assemblies:
   - Core
   namespace: Core

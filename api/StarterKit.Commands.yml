@@ -5,10 +5,12 @@ items:
   id: StarterKit.Commands
   children:
   - StarterKit.Commands.AddGoldCommand
+  - StarterKit.Commands.ColonizeCommand
   - StarterKit.Commands.ConstructBuildingCommand
   - StarterKit.Commands.CreateUnitCommand
   - StarterKit.Commands.DisbandUnitCommand
   - StarterKit.Commands.MoveUnitCommand
+  - StarterKit.Commands.QueueUnitMovementCommand
   langs:
   - csharp
   - vb
@@ -25,12 +27,24 @@ references:
   name: CreateUnitCommand
   nameWithType: CreateUnitCommand
   fullName: StarterKit.Commands.CreateUnitCommand
+- uid: StarterKit.Commands.QueueUnitMovementCommand
+  commentId: T:StarterKit.Commands.QueueUnitMovementCommand
+  href: StarterKit.Commands.QueueUnitMovementCommand.html
+  name: QueueUnitMovementCommand
+  nameWithType: QueueUnitMovementCommand
+  fullName: StarterKit.Commands.QueueUnitMovementCommand
 - uid: StarterKit.Commands.AddGoldCommand
   commentId: T:StarterKit.Commands.AddGoldCommand
   href: StarterKit.Commands.AddGoldCommand.html
   name: AddGoldCommand
   nameWithType: AddGoldCommand
   fullName: StarterKit.Commands.AddGoldCommand
+- uid: StarterKit.Commands.ColonizeCommand
+  commentId: T:StarterKit.Commands.ColonizeCommand
+  href: StarterKit.Commands.ColonizeCommand.html
+  name: ColonizeCommand
+  nameWithType: ColonizeCommand
+  fullName: StarterKit.Commands.ColonizeCommand
 - uid: StarterKit.Commands.MoveUnitCommand
   commentId: T:StarterKit.Commands.MoveUnitCommand
   href: StarterKit.Commands.MoveUnitCommand.html

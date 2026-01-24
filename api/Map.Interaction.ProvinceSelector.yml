@@ -15,6 +15,7 @@ items:
   - Map.Interaction.ProvinceSelector.OnProvinceHovered
   - Map.Interaction.ProvinceSelector.OnProvinceRightClicked
   - Map.Interaction.ProvinceSelector.OnSelectionCleared
+  - Map.Interaction.ProvinceSelector.SelectionEnabled
   langs:
   - csharp
   - vb
@@ -49,6 +50,37 @@ items:
   - UnityEngine.Component
   - UnityEngine.Behaviour
   - UnityEngine.MonoBehaviour
+- uid: Map.Interaction.ProvinceSelector.SelectionEnabled
+  commentId: P:Map.Interaction.ProvinceSelector.SelectionEnabled
+  id: SelectionEnabled
+  parent: Map.Interaction.ProvinceSelector
+  langs:
+  - csharp
+  - vb
+  name: SelectionEnabled
+  nameWithType: ProvinceSelector.SelectionEnabled
+  fullName: Map.Interaction.ProvinceSelector.SelectionEnabled
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Interaction/ProvinceSelector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SelectionEnabled
+    path: Scripts/Map/Interaction/ProvinceSelector.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Interaction
+  summary: Enable or disable province selection.
+  example: []
+  syntax:
+    content: public bool SelectionEnabled { get; set; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property SelectionEnabled As Boolean
+  overload: Map.Interaction.ProvinceSelector.SelectionEnabled*
 - uid: Map.Interaction.ProvinceSelector.OnProvinceClicked
   commentId: E:Map.Interaction.ProvinceSelector.OnProvinceClicked
   id: OnProvinceClicked
@@ -67,7 +99,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceClicked
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 20
+    startLine: 29
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -94,7 +126,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceRightClicked
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 21
+    startLine: 30
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -121,7 +153,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceHovered
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 22
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -148,7 +180,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnSelectionCleared
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 23
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -175,7 +207,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 35
+    startLine: 44
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -206,7 +238,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSelectedProvince
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 142
+    startLine: 151
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -236,7 +268,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHoveredProvince
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 147
+    startLine: 156
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -266,7 +298,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtWorldPosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 155
+    startLine: 164
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -304,7 +336,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtScreenPosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 203
+    startLine: 212
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -342,7 +374,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtMousePosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 225
+    startLine: 234
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -432,6 +464,22 @@ references:
   name: UnityEngine
   nameWithType: UnityEngine
   fullName: UnityEngine
+- uid: Map.Interaction.ProvinceSelector.SelectionEnabled*
+  commentId: Overload:Map.Interaction.ProvinceSelector.SelectionEnabled
+  href: Map.Interaction.ProvinceSelector.html#Map_Interaction_ProvinceSelector_SelectionEnabled
+  name: SelectionEnabled
+  nameWithType: ProvinceSelector.SelectionEnabled
+  fullName: Map.Interaction.ProvinceSelector.SelectionEnabled
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: System.Action{System.UInt16}
   commentId: T:System.Action{System.UInt16}
   parent: System

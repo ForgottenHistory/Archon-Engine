@@ -1,0 +1,795 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Network.INetworkBridge
+  commentId: T:Core.Network.INetworkBridge
+  id: INetworkBridge
+  parent: Core.Network
+  children:
+  - Core.Network.INetworkBridge.BroadcastChecksum(System.UInt32,System.UInt32)
+  - Core.Network.INetworkBridge.BroadcastCommand(System.Byte[],System.UInt32)
+  - Core.Network.INetworkBridge.IsConnected
+  - Core.Network.INetworkBridge.IsHost
+  - Core.Network.INetworkBridge.OnChecksumReceived
+  - Core.Network.INetworkBridge.OnCommandReceived
+  - Core.Network.INetworkBridge.OnStateReceived
+  - Core.Network.INetworkBridge.OnStateSyncRequested
+  - Core.Network.INetworkBridge.SendCommandToHost(System.Byte[],System.UInt32)
+  - Core.Network.INetworkBridge.SendStateToPeer(System.Int32,System.Byte[],System.UInt32)
+  langs:
+  - csharp
+  - vb
+  name: INetworkBridge
+  nameWithType: INetworkBridge
+  fullName: Core.Network.INetworkBridge
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: INetworkBridge
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 14
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Bridge interface for network communication.
+
+    Core defines this interface, Network (or any custom solution) implements it.
+
+    This allows Core to remain network-agnostic while supporting multiplayer.
+
+
+    Implementations:
+
+    - Archon.Network.NetworkBridge (Unity Transport / Steam)
+
+    - Custom implementations for other networking solutions
+
+    - MockNetworkBridge for testing/replay
+  example: []
+  syntax:
+    content: public interface INetworkBridge
+    content.vb: Public Interface INetworkBridge
+- uid: Core.Network.INetworkBridge.IsHost
+  commentId: P:Core.Network.INetworkBridge.IsHost
+  id: IsHost
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: IsHost
+  nameWithType: INetworkBridge.IsHost
+  fullName: Core.Network.INetworkBridge.IsHost
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsHost
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Whether we are the authoritative host.
+
+    Host validates and broadcasts commands.
+
+    Clients send commands to host for validation.
+  example: []
+  syntax:
+    content: bool IsHost { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsHost As Boolean
+  overload: Core.Network.INetworkBridge.IsHost*
+- uid: Core.Network.INetworkBridge.IsConnected
+  commentId: P:Core.Network.INetworkBridge.IsConnected
+  id: IsConnected
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: IsConnected
+  nameWithType: INetworkBridge.IsConnected
+  fullName: Core.Network.INetworkBridge.IsConnected
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsConnected
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Whether we are connected to a multiplayer session.
+
+    False for single-player.
+  example: []
+  syntax:
+    content: bool IsConnected { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: ReadOnly Property IsConnected As Boolean
+  overload: Core.Network.INetworkBridge.IsConnected*
+- uid: Core.Network.INetworkBridge.BroadcastCommand(System.Byte[],System.UInt32)
+  commentId: M:Core.Network.INetworkBridge.BroadcastCommand(System.Byte[],System.UInt32)
+  id: BroadcastCommand(System.Byte[],System.UInt32)
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: BroadcastCommand(byte[], uint)
+  nameWithType: INetworkBridge.BroadcastCommand(byte[], uint)
+  fullName: Core.Network.INetworkBridge.BroadcastCommand(byte[], uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BroadcastCommand
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Broadcast a command to all connected peers.
+
+    Called by CommandProcessor after executing a command (host only).
+  example: []
+  syntax:
+    content: void BroadcastCommand(byte[] commandData, uint tick)
+    parameters:
+    - id: commandData
+      type: System.Byte[]
+      description: Serialized command data
+    - id: tick
+      type: System.UInt32
+      description: Game tick the command was executed on
+    content.vb: Sub BroadcastCommand(commandData As Byte(), tick As UInteger)
+  overload: Core.Network.INetworkBridge.BroadcastCommand*
+  nameWithType.vb: INetworkBridge.BroadcastCommand(Byte(), UInteger)
+  fullName.vb: Core.Network.INetworkBridge.BroadcastCommand(Byte(), UInteger)
+  name.vb: BroadcastCommand(Byte(), UInteger)
+- uid: Core.Network.INetworkBridge.SendCommandToHost(System.Byte[],System.UInt32)
+  commentId: M:Core.Network.INetworkBridge.SendCommandToHost(System.Byte[],System.UInt32)
+  id: SendCommandToHost(System.Byte[],System.UInt32)
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: SendCommandToHost(byte[], uint)
+  nameWithType: INetworkBridge.SendCommandToHost(byte[], uint)
+  fullName: Core.Network.INetworkBridge.SendCommandToHost(byte[], uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SendCommandToHost
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 43
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Send a command to the host for validation.
+
+    Called by clients when they want to execute a command.
+  example: []
+  syntax:
+    content: void SendCommandToHost(byte[] commandData, uint tick)
+    parameters:
+    - id: commandData
+      type: System.Byte[]
+      description: Serialized command data
+    - id: tick
+      type: System.UInt32
+      description: Game tick the command should execute on
+    content.vb: Sub SendCommandToHost(commandData As Byte(), tick As UInteger)
+  overload: Core.Network.INetworkBridge.SendCommandToHost*
+  nameWithType.vb: INetworkBridge.SendCommandToHost(Byte(), UInteger)
+  fullName.vb: Core.Network.INetworkBridge.SendCommandToHost(Byte(), UInteger)
+  name.vb: SendCommandToHost(Byte(), UInteger)
+- uid: Core.Network.INetworkBridge.BroadcastChecksum(System.UInt32,System.UInt32)
+  commentId: M:Core.Network.INetworkBridge.BroadcastChecksum(System.UInt32,System.UInt32)
+  id: BroadcastChecksum(System.UInt32,System.UInt32)
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: BroadcastChecksum(uint, uint)
+  nameWithType: INetworkBridge.BroadcastChecksum(uint, uint)
+  fullName: Core.Network.INetworkBridge.BroadcastChecksum(uint, uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: BroadcastChecksum
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 50
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: Broadcast current state checksum for desync detection.
+  example: []
+  syntax:
+    content: void BroadcastChecksum(uint tick, uint checksum)
+    parameters:
+    - id: tick
+      type: System.UInt32
+      description: Game tick this checksum is for
+    - id: checksum
+      type: System.UInt32
+      description: State checksum
+    content.vb: Sub BroadcastChecksum(tick As UInteger, checksum As UInteger)
+  overload: Core.Network.INetworkBridge.BroadcastChecksum*
+  nameWithType.vb: INetworkBridge.BroadcastChecksum(UInteger, UInteger)
+  fullName.vb: Core.Network.INetworkBridge.BroadcastChecksum(UInteger, UInteger)
+  name.vb: BroadcastChecksum(UInteger, UInteger)
+- uid: Core.Network.INetworkBridge.SendStateToPeer(System.Int32,System.Byte[],System.UInt32)
+  commentId: M:Core.Network.INetworkBridge.SendStateToPeer(System.Int32,System.Byte[],System.UInt32)
+  id: SendStateToPeer(System.Int32,System.Byte[],System.UInt32)
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: SendStateToPeer(int, byte[], uint)
+  nameWithType: INetworkBridge.SendStateToPeer(int, byte[], uint)
+  fullName: Core.Network.INetworkBridge.SendStateToPeer(int, byte[], uint)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SendStateToPeer
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 59
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Send full game state to a specific peer (late join / desync recovery).
+
+    Host only.
+  example: []
+  syntax:
+    content: void SendStateToPeer(int peerId, byte[] stateData, uint tick)
+    parameters:
+    - id: peerId
+      type: System.Int32
+      description: Target peer
+    - id: stateData
+      type: System.Byte[]
+      description: Serialized game state
+    - id: tick
+      type: System.UInt32
+      description: Current game tick
+    content.vb: Sub SendStateToPeer(peerId As Integer, stateData As Byte(), tick As UInteger)
+  overload: Core.Network.INetworkBridge.SendStateToPeer*
+  nameWithType.vb: INetworkBridge.SendStateToPeer(Integer, Byte(), UInteger)
+  fullName.vb: Core.Network.INetworkBridge.SendStateToPeer(Integer, Byte(), UInteger)
+  name.vb: SendStateToPeer(Integer, Byte(), UInteger)
+- uid: Core.Network.INetworkBridge.OnCommandReceived
+  commentId: E:Core.Network.INetworkBridge.OnCommandReceived
+  id: OnCommandReceived
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: OnCommandReceived
+  nameWithType: INetworkBridge.OnCommandReceived
+  fullName: Core.Network.INetworkBridge.OnCommandReceived
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnCommandReceived
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 66
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: >-
+    Fired when a command is received from the network.
+
+    Host: receives commands from clients for validation.
+
+    Client: receives validated commands from host for execution.
+  example: []
+  syntax:
+    content: event Action<int, byte[], uint> OnCommandReceived
+    return:
+      type: System.Action{System.Int32,System.Byte[],System.UInt32}
+    content.vb: Event OnCommandReceived As Action(Of Integer, Byte(), UInteger)
+- uid: Core.Network.INetworkBridge.OnStateReceived
+  commentId: E:Core.Network.INetworkBridge.OnStateReceived
+  id: OnStateReceived
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: OnStateReceived
+  nameWithType: INetworkBridge.OnStateReceived
+  fullName: Core.Network.INetworkBridge.OnStateReceived
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnStateReceived
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: Fired when full state is received (clients only, for late join / desync recovery).
+  example: []
+  syntax:
+    content: event Action<byte[], uint> OnStateReceived
+    return:
+      type: System.Action{System.Byte[],System.UInt32}
+    content.vb: Event OnStateReceived As Action(Of Byte(), UInteger)
+- uid: Core.Network.INetworkBridge.OnChecksumReceived
+  commentId: E:Core.Network.INetworkBridge.OnChecksumReceived
+  id: OnChecksumReceived
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: OnChecksumReceived
+  nameWithType: INetworkBridge.OnChecksumReceived
+  fullName: Core.Network.INetworkBridge.OnChecksumReceived
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnChecksumReceived
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: Fired when a checksum is received for comparison.
+  example: []
+  syntax:
+    content: event Action<int, uint, uint> OnChecksumReceived
+    return:
+      type: System.Action{System.Int32,System.UInt32,System.UInt32}
+    content.vb: Event OnChecksumReceived As Action(Of Integer, UInteger, UInteger)
+- uid: Core.Network.INetworkBridge.OnStateSyncRequested
+  commentId: E:Core.Network.INetworkBridge.OnStateSyncRequested
+  id: OnStateSyncRequested
+  parent: Core.Network.INetworkBridge
+  langs:
+  - csharp
+  - vb
+  name: OnStateSyncRequested
+  nameWithType: INetworkBridge.OnStateSyncRequested
+  fullName: Core.Network.INetworkBridge.OnStateSyncRequested
+  type: Event
+  source:
+    remote:
+      path: Scripts/Core/Network/INetworkBridge.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: OnStateSyncRequested
+    path: Scripts/Core/Network/INetworkBridge.cs
+    startLine: 81
+  assemblies:
+  - Core
+  namespace: Core.Network
+  summary: Fired when a peer requests full state (host only, for late join).
+  example: []
+  syntax:
+    content: event Action<int> OnStateSyncRequested
+    return:
+      type: System.Action{System.Int32}
+    content.vb: Event OnStateSyncRequested As Action(Of Integer)
+references:
+- uid: Core.Network
+  commentId: N:Core.Network
+  href: Core.html
+  name: Core.Network
+  nameWithType: Core.Network
+  fullName: Core.Network
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html
+- uid: Core.Network.INetworkBridge.IsHost*
+  commentId: Overload:Core.Network.INetworkBridge.IsHost
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_IsHost
+  name: IsHost
+  nameWithType: INetworkBridge.IsHost
+  fullName: Core.Network.INetworkBridge.IsHost
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Network.INetworkBridge.IsConnected*
+  commentId: Overload:Core.Network.INetworkBridge.IsConnected
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_IsConnected
+  name: IsConnected
+  nameWithType: INetworkBridge.IsConnected
+  fullName: Core.Network.INetworkBridge.IsConnected
+- uid: Core.Network.INetworkBridge.BroadcastCommand*
+  commentId: Overload:Core.Network.INetworkBridge.BroadcastCommand
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_BroadcastCommand_System_Byte___System_UInt32_
+  name: BroadcastCommand
+  nameWithType: INetworkBridge.BroadcastCommand
+  fullName: Core.Network.INetworkBridge.BroadcastCommand
+- uid: System.Byte[]
+  isExternal: true
+  name: byte[]
+  nameWithType: byte[]
+  fullName: byte[]
+  nameWithType.vb: Byte()
+  fullName.vb: Byte()
+  name.vb: Byte()
+  spec.csharp:
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+- uid: System.UInt32
+  commentId: T:System.UInt32
+  parent: System
+  isExternal: true
+  name: uint
+  nameWithType: uint
+  fullName: uint
+  nameWithType.vb: UInteger
+  fullName.vb: UInteger
+  name.vb: UInteger
+- uid: Core.Network.INetworkBridge.SendCommandToHost*
+  commentId: Overload:Core.Network.INetworkBridge.SendCommandToHost
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_SendCommandToHost_System_Byte___System_UInt32_
+  name: SendCommandToHost
+  nameWithType: INetworkBridge.SendCommandToHost
+  fullName: Core.Network.INetworkBridge.SendCommandToHost
+- uid: Core.Network.INetworkBridge.BroadcastChecksum*
+  commentId: Overload:Core.Network.INetworkBridge.BroadcastChecksum
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_BroadcastChecksum_System_UInt32_System_UInt32_
+  name: BroadcastChecksum
+  nameWithType: INetworkBridge.BroadcastChecksum
+  fullName: Core.Network.INetworkBridge.BroadcastChecksum
+- uid: Core.Network.INetworkBridge.SendStateToPeer*
+  commentId: Overload:Core.Network.INetworkBridge.SendStateToPeer
+  href: Core.Network.INetworkBridge.html#Core_Network_INetworkBridge_SendStateToPeer_System_Int32_System_Byte___System_UInt32_
+  name: SendStateToPeer
+  nameWithType: INetworkBridge.SendStateToPeer
+  fullName: Core.Network.INetworkBridge.SendStateToPeer
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Action{System.Int32,System.Byte[],System.UInt32}
+  commentId: T:System.Action{System.Int32,System.Byte[],System.UInt32}
+  parent: System
+  definition: System.Action`3
+  name: Action<int, byte[], uint>
+  nameWithType: Action<int, byte[], uint>
+  fullName: System.Action<int, byte[], uint>
+  nameWithType.vb: Action(Of Integer, Byte(), UInteger)
+  fullName.vb: System.Action(Of Integer, Byte(), UInteger)
+  name.vb: Action(Of Integer, Byte(), UInteger)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: System.Action`3
+  commentId: T:System.Action`3
+  isExternal: true
+  name: Action<T1, T2, T3>
+  nameWithType: Action<T1, T2, T3>
+  fullName: System.Action<T1, T2, T3>
+  nameWithType.vb: Action(Of T1, T2, T3)
+  fullName.vb: System.Action(Of T1, T2, T3)
+  name.vb: Action(Of T1, T2, T3)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
+  - name: )
+- uid: System.Action{System.Byte[],System.UInt32}
+  commentId: T:System.Action{System.Byte[],System.UInt32}
+  parent: System
+  definition: System.Action`2
+  name: Action<byte[], uint>
+  nameWithType: Action<byte[], uint>
+  fullName: System.Action<byte[], uint>
+  nameWithType.vb: Action(Of Byte(), UInteger)
+  fullName.vb: System.Action(Of Byte(), UInteger)
+  name.vb: Action(Of Byte(), UInteger)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Byte
+    name: byte
+    isExternal: true
+  - name: '['
+  - name: ']'
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Byte
+    name: Byte
+    isExternal: true
+  - name: (
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: System.Action`2
+  commentId: T:System.Action`2
+  isExternal: true
+  name: Action<T1, T2>
+  nameWithType: Action<T1, T2>
+  fullName: System.Action<T1, T2>
+  nameWithType.vb: Action(Of T1, T2)
+  fullName.vb: System.Action(Of T1, T2)
+  name.vb: Action(Of T1, T2)
+  spec.csharp:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`2
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T1
+  - name: ','
+  - name: " "
+  - name: T2
+  - name: )
+- uid: System.Action{System.Int32,System.UInt32,System.UInt32}
+  commentId: T:System.Action{System.Int32,System.UInt32,System.UInt32}
+  parent: System
+  definition: System.Action`3
+  name: Action<int, uint, uint>
+  nameWithType: Action<int, uint, uint>
+  fullName: System.Action<int, uint, uint>
+  nameWithType.vb: Action(Of Integer, UInteger, UInteger)
+  fullName.vb: System.Action(Of Integer, UInteger, UInteger)
+  name.vb: Action(Of Integer, UInteger, UInteger)
+  spec.csharp:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`3
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: )
+- uid: System.Action{System.Int32}
+  commentId: T:System.Action{System.Int32}
+  parent: System
+  definition: System.Action`1
+  name: Action<int>
+  nameWithType: Action<int>
+  fullName: System.Action<int>
+  nameWithType.vb: Action(Of Integer)
+  fullName.vb: System.Action(Of Integer)
+  name.vb: Action(Of Integer)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )

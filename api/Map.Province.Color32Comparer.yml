@@ -1,0 +1,184 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.Color32Comparer
+  commentId: T:Map.Province.Color32Comparer
+  id: Color32Comparer
+  parent: Map.Province
+  children:
+  - Map.Province.Color32Comparer.Equals(UnityEngine.Color32,UnityEngine.Color32)
+  - Map.Province.Color32Comparer.GetHashCode(UnityEngine.Color32)
+  langs:
+  - csharp
+  - vb
+  name: Color32Comparer
+  nameWithType: Color32Comparer
+  fullName: Map.Province.Color32Comparer
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Color32Comparer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Color32Comparer
+    path: Scripts/Map/Color32Comparer.cs
+    startLine: 8
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Custom equality comparer for Color32 to ensure proper dictionary/hashset behavior
+  example: []
+  syntax:
+    content: public class Color32Comparer
+    content.vb: Public Class Color32Comparer
+  inheritance:
+  - System.Object
+- uid: Map.Province.Color32Comparer.Equals(UnityEngine.Color32,UnityEngine.Color32)
+  commentId: M:Map.Province.Color32Comparer.Equals(UnityEngine.Color32,UnityEngine.Color32)
+  id: Equals(UnityEngine.Color32,UnityEngine.Color32)
+  parent: Map.Province.Color32Comparer
+  langs:
+  - csharp
+  - vb
+  name: Equals(Color32, Color32)
+  nameWithType: Color32Comparer.Equals(Color32, Color32)
+  fullName: Map.Province.Color32Comparer.Equals(UnityEngine.Color32, UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Color32Comparer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Equals
+    path: Scripts/Map/Color32Comparer.cs
+    startLine: 10
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  example: []
+  syntax:
+    content: public bool Equals(Color32 x, Color32 y)
+    parameters:
+    - id: x
+      type: UnityEngine.Color32
+    - id: y
+      type: UnityEngine.Color32
+    return:
+      type: System.Boolean
+    content.vb: Public Function Equals(x As Color32, y As Color32) As Boolean
+  overload: Map.Province.Color32Comparer.Equals*
+- uid: Map.Province.Color32Comparer.GetHashCode(UnityEngine.Color32)
+  commentId: M:Map.Province.Color32Comparer.GetHashCode(UnityEngine.Color32)
+  id: GetHashCode(UnityEngine.Color32)
+  parent: Map.Province.Color32Comparer
+  langs:
+  - csharp
+  - vb
+  name: GetHashCode(Color32)
+  nameWithType: Color32Comparer.GetHashCode(Color32)
+  fullName: Map.Province.Color32Comparer.GetHashCode(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Color32Comparer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetHashCode
+    path: Scripts/Map/Color32Comparer.cs
+    startLine: 15
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  example: []
+  syntax:
+    content: public int GetHashCode(Color32 obj)
+    parameters:
+    - id: obj
+      type: UnityEngine.Color32
+    return:
+      type: System.Int32
+    content.vb: Public Function GetHashCode(obj As Color32) As Integer
+  overload: Map.Province.Color32Comparer.GetHashCode*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Province.Color32Comparer.Equals*
+  commentId: Overload:Map.Province.Color32Comparer.Equals
+  href: Map.Province.Color32Comparer.html#Map_Province_Color32Comparer_Equals_UnityEngine_Color32_UnityEngine_Color32_
+  name: Equals
+  nameWithType: Color32Comparer.Equals
+  fullName: Map.Province.Color32Comparer.Equals
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Province.Color32Comparer.GetHashCode*
+  commentId: Overload:Map.Province.Color32Comparer.GetHashCode
+  href: Map.Province.Color32Comparer.html#Map_Province_Color32Comparer_GetHashCode_UnityEngine_Color32_
+  name: GetHashCode
+  nameWithType: Color32Comparer.GetHashCode
+  fullName: Map.Province.Color32Comparer.GetHashCode
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer

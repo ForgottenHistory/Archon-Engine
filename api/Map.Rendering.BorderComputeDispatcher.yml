@@ -36,7 +36,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderComputeDispatcher
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 21
+    startLine: 22
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -86,7 +86,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CurrentBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -115,7 +115,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 87
+    startLine: 88
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -143,7 +143,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 135
+    startLine: 159
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -174,7 +174,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InitializeSmoothBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 147
+    startLine: 171
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -216,7 +216,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetActiveBorderRenderer
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 334
+    startLine: 358
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -246,7 +246,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetActiveBorderRenderer
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 351
+    startLine: 375
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -285,7 +285,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderRenderingMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 400
+    startLine: 424
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -316,7 +316,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GeneratePixelPerfectBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 458
+    startLine: 482
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -347,7 +347,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetectBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 500
+    startLine: 524
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -375,7 +375,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 518
+    startLine: 542
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -403,7 +403,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 529
+    startLine: 553
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -434,7 +434,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetPixelPerfectParameters
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 546
+    startLine: 570
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -475,7 +475,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ClearBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 562
+    startLine: 586
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -503,7 +503,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DebugFillBordersWhite
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 570
+    startLine: 594
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -531,7 +531,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToggleBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 578
+    startLine: 602
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -571,7 +571,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceProvinceMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 590
+    startLine: 614
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -611,7 +611,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateCurveDebugTexture
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 600
+    startLine: 624
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

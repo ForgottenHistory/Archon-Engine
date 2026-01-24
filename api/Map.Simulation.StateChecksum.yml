@@ -6,14 +6,12 @@ items:
   parent: Map.Simulation
   children:
   - Map.Simulation.StateChecksum.CalculatedAt
-  - Map.Simulation.StateChecksum.DevelopmentHash
   - Map.Simulation.StateChecksum.GetCompactHash
   - Map.Simulation.StateChecksum.Invalid
   - Map.Simulation.StateChecksum.IsValid
   - Map.Simulation.StateChecksum.MainHash
   - Map.Simulation.StateChecksum.OwnershipHash
   - Map.Simulation.StateChecksum.ProvinceCount
-  - Map.Simulation.StateChecksum.StateVersion
   - Map.Simulation.StateChecksum.TerrainHash
   - Map.Simulation.StateChecksum.ToString
   langs:
@@ -30,11 +28,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: StateChecksum
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 358
+    startLine: 297
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
-  summary: Comprehensive checksum of simulation state
+  summary: Comprehensive checksum of simulation state.
   example: []
   syntax:
     content: public struct StateChecksum
@@ -57,7 +55,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 360
+    startLine: 299
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -84,7 +82,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MainHash
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 361
+    startLine: 300
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -111,7 +109,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OwnershipHash
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 362
+    startLine: 301
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -120,33 +118,6 @@ items:
     return:
       type: System.UInt32
     content.vb: Public OwnershipHash As UInteger
-- uid: Map.Simulation.StateChecksum.DevelopmentHash
-  commentId: F:Map.Simulation.StateChecksum.DevelopmentHash
-  id: DevelopmentHash
-  parent: Map.Simulation.StateChecksum
-  langs:
-  - csharp
-  - vb
-  name: DevelopmentHash
-  nameWithType: StateChecksum.DevelopmentHash
-  fullName: Map.Simulation.StateChecksum.DevelopmentHash
-  type: Field
-  source:
-    remote:
-      path: Scripts/Map/Simulation/StateValidator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: DevelopmentHash
-    path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 363
-  assemblies:
-  - MapAssembly
-  namespace: Map.Simulation
-  syntax:
-    content: public uint DevelopmentHash
-    return:
-      type: System.UInt32
-    content.vb: Public DevelopmentHash As UInteger
 - uid: Map.Simulation.StateChecksum.TerrainHash
   commentId: F:Map.Simulation.StateChecksum.TerrainHash
   id: TerrainHash
@@ -165,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainHash
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 364
+    startLine: 302
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -192,7 +163,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceCount
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 365
+    startLine: 303
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -201,33 +172,6 @@ items:
     return:
       type: System.UInt32
     content.vb: Public ProvinceCount As UInteger
-- uid: Map.Simulation.StateChecksum.StateVersion
-  commentId: F:Map.Simulation.StateChecksum.StateVersion
-  id: StateVersion
-  parent: Map.Simulation.StateChecksum
-  langs:
-  - csharp
-  - vb
-  name: StateVersion
-  nameWithType: StateChecksum.StateVersion
-  fullName: Map.Simulation.StateChecksum.StateVersion
-  type: Field
-  source:
-    remote:
-      path: Scripts/Map/Simulation/StateValidator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: StateVersion
-    path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 366
-  assemblies:
-  - MapAssembly
-  namespace: Map.Simulation
-  syntax:
-    content: public uint StateVersion
-    return:
-      type: System.UInt32
-    content.vb: Public StateVersion As UInteger
 - uid: Map.Simulation.StateChecksum.CalculatedAt
   commentId: F:Map.Simulation.StateChecksum.CalculatedAt
   id: CalculatedAt
@@ -246,7 +190,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CalculatedAt
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 367
+    startLine: 304
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -273,7 +217,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Invalid
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 369
+    startLine: 306
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -301,7 +245,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToString
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 371
+    startLine: 308
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -331,11 +275,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCompactHash
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 382
+    startLine: 318
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
-  summary: Get a compact representation for network transmission
+  summary: Get a compact representation for network transmission.
   example: []
   syntax:
     content: public ulong GetCompactHash()

@@ -8,7 +8,7 @@
 
 ## Overview
 
-This document catalogs the 21 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
+This document catalogs the 22 core architectural patterns that make Archon Engine scalable, maintainable, and reusable. Each pattern solves specific problems encountered in grand strategy game development.
 
 **Why Patterns Matter:**
 - Consistent solutions to recurring problems
@@ -496,6 +496,52 @@ Define interface → Add attribute to implementations → Registry scans assembl
 
 ---
 
+## Pattern 22: Lockstep Command Synchronization
+
+**Principle:** All state changes flow through commands; commands sync across network; identical execution produces identical state
+
+**Components:**
+1. **Transport Abstraction** - Pluggable network backend (DirectTransport, SteamTransport)
+2. **Command Processors** - ENGINE (local) + GAME (synced) processors
+3. **Host Authority** - Host validates and broadcasts commands
+4. **Desync Recovery** - Periodic checksums + automatic state resync
+
+**Command Flow:**
+```
+Client UI → Command → Send to Host → Host validates → Broadcast → All execute
+```
+
+**Key Rules:**
+- Commands carry explicit parameters (no local state lookups)
+- AI runs only on host (prevents divergent decisions)
+- Same command + same state = identical result
+- FixedPoint64 for all simulation math (Pattern 5)
+
+**Benefits:**
+- Minimal bandwidth (commands, not state)
+- Deterministic replay
+- Graceful desync recovery
+- Reuses save/load infrastructure
+
+**When to Use:**
+- Grand strategy / turn-based games
+- Pausable real-time with latency tolerance
+- Determinism achievable
+
+**When NOT to Use:**
+- Twitch gameplay (<50ms latency required)
+- Massive player counts (>16)
+- Non-deterministic simulation
+
+**Related Patterns:**
+- Pattern 2 (Command) - Foundation for sync
+- Pattern 5 (FixedPoint) - Determinism requirement
+- Pattern 14 (Save/Load) - State sync reuses serialization
+
+**Architecture Doc:** [multiplayer-architecture.md](multiplayer-architecture.md)
+
+---
+
 ## Pattern Selection Guide
 
 **Need to change game state?** → Pattern 2 (Command Pattern)
@@ -533,6 +579,8 @@ Define interface → Add attribute to implementations → Registry scans assembl
 **GAME needs custom implementation of ENGINE capability?** → Pattern 20 (Pluggable Implementation)
 
 **Auto-discover factories across assemblies?** → Pattern 21 (Auto-Discovery Factory)
+
+**Need multiplayer sync?** → Pattern 22 (Lockstep Command Sync)
 
 ---
 
@@ -583,5 +631,5 @@ Define interface → Add attribute to implementations → Registry scans assembl
 
 ---
 
-*Last Updated: 2026-01-14*
+*Last Updated: 2026-01-24*
 *These patterns are battle-tested and production-ready. Use them.*

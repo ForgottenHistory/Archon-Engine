@@ -1,0 +1,976 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.FastAdjacencyScanner
+  commentId: T:Map.Province.FastAdjacencyScanner
+  id: FastAdjacencyScanner
+  parent: Map.Province
+  children:
+  - Map.Province.FastAdjacencyScanner.ColorAdjacencies
+  - Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies(System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32})
+  - Map.Province.FastAdjacencyScanner.ExportAdjacencies
+  - Map.Province.FastAdjacencyScanner.GetNeighborsForColor(UnityEngine.Color32)
+  - Map.Province.FastAdjacencyScanner.GetNeighborsForId(System.Int32)
+  - Map.Province.FastAdjacencyScanner.IdAdjacencies
+  - Map.Province.FastAdjacencyScanner.LastScanTime
+  - Map.Province.FastAdjacencyScanner.ScanForAdjacencies
+  - Map.Province.FastAdjacencyScanner.blackThreshold
+  - Map.Province.FastAdjacencyScanner.ignoreDiagonals
+  - Map.Province.FastAdjacencyScanner.provinceMap
+  - Map.Province.FastAdjacencyScanner.scanOnStart
+  - Map.Province.FastAdjacencyScanner.showDebugInfo
+  langs:
+  - csharp
+  - vb
+  name: FastAdjacencyScanner
+  nameWithType: FastAdjacencyScanner
+  fullName: Map.Province.FastAdjacencyScanner
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FastAdjacencyScanner
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 14
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Fast adjacency scanner that mimics how Paradox games detect neighbors
+
+    Single-pass algorithm that finds borders as it scans the bitmap
+  example: []
+  syntax:
+    content: 'public class FastAdjacencyScanner : MonoBehaviour'
+    content.vb: Public Class FastAdjacencyScanner Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: Map.Province.FastAdjacencyScanner.provinceMap
+  commentId: F:Map.Province.FastAdjacencyScanner.provinceMap
+  id: provinceMap
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: provinceMap
+  nameWithType: FastAdjacencyScanner.provinceMap
+  fullName: Map.Province.FastAdjacencyScanner.provinceMap
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceMap
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 17
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [Header("References")]
+
+      public Texture2D provinceMap
+    return:
+      type: UnityEngine.Texture2D
+    content.vb: >-
+      <Header("References")>
+
+      Public provinceMap As Texture2D
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: References
+- uid: Map.Province.FastAdjacencyScanner.scanOnStart
+  commentId: F:Map.Province.FastAdjacencyScanner.scanOnStart
+  id: scanOnStart
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: scanOnStart
+  nameWithType: FastAdjacencyScanner.scanOnStart
+  fullName: Map.Province.FastAdjacencyScanner.scanOnStart
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: scanOnStart
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 20
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [Header("Settings")]
+
+      public bool scanOnStart
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Settings")>
+
+      Public scanOnStart As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Settings
+- uid: Map.Province.FastAdjacencyScanner.ignoreDiagonals
+  commentId: F:Map.Province.FastAdjacencyScanner.ignoreDiagonals
+  id: ignoreDiagonals
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: ignoreDiagonals
+  nameWithType: FastAdjacencyScanner.ignoreDiagonals
+  fullName: Map.Province.FastAdjacencyScanner.ignoreDiagonals
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ignoreDiagonals
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public bool ignoreDiagonals
+    return:
+      type: System.Boolean
+    content.vb: Public ignoreDiagonals As Boolean
+- uid: Map.Province.FastAdjacencyScanner.blackThreshold
+  commentId: F:Map.Province.FastAdjacencyScanner.blackThreshold
+  id: blackThreshold
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: blackThreshold
+  nameWithType: FastAdjacencyScanner.blackThreshold
+  fullName: Map.Province.FastAdjacencyScanner.blackThreshold
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: blackThreshold
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 22
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float blackThreshold
+    return:
+      type: System.Single
+    content.vb: Public blackThreshold As Single
+- uid: Map.Province.FastAdjacencyScanner.showDebugInfo
+  commentId: F:Map.Province.FastAdjacencyScanner.showDebugInfo
+  id: showDebugInfo
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: showDebugInfo
+  nameWithType: FastAdjacencyScanner.showDebugInfo
+  fullName: Map.Province.FastAdjacencyScanner.showDebugInfo
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: showDebugInfo
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 25
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: >-
+      [Header("Debug")]
+
+      public bool showDebugInfo
+    return:
+      type: System.Boolean
+    content.vb: >-
+      <Header("Debug")>
+
+      Public showDebugInfo As Boolean
+  attributes:
+  - type: UnityEngine.HeaderAttribute
+    ctor: UnityEngine.HeaderAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Debug
+- uid: Map.Province.FastAdjacencyScanner.ScanForAdjacencies
+  commentId: M:Map.Province.FastAdjacencyScanner.ScanForAdjacencies
+  id: ScanForAdjacencies
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: ScanForAdjacencies()
+  nameWithType: FastAdjacencyScanner.ScanForAdjacencies()
+  fullName: Map.Province.FastAdjacencyScanner.ScanForAdjacencies()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScanForAdjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 53
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Parallel province adjacency scanning using Unity Job System + Burst compilation
+
+    Single-pass algorithm that finds borders as it scans the bitmap
+  example: []
+  syntax:
+    content: >-
+      [ContextMenu("Scan For Adjacencies")]
+
+      public FastAdjacencyScanner.ScanResult ScanForAdjacencies()
+    return:
+      type: Map.Province.FastAdjacencyScanner.ScanResult
+    content.vb: >-
+      <ContextMenu("Scan For Adjacencies")>
+
+      Public Function ScanForAdjacencies() As FastAdjacencyScanner.ScanResult
+  overload: Map.Province.FastAdjacencyScanner.ScanForAdjacencies*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Scan For Adjacencies
+- uid: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies(System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32})
+  commentId: M:Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies(System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32})
+  id: ConvertToIdAdjacencies(System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32})
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: ConvertToIdAdjacencies(Dictionary<Color32, int>)
+  nameWithType: FastAdjacencyScanner.ConvertToIdAdjacencies(Dictionary<Color32, int>)
+  fullName: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies(System.Collections.Generic.Dictionary<UnityEngine.Color32, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConvertToIdAdjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 166
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Convert color adjacencies to ID adjacencies using a color-&gt;ID map
+  example: []
+  syntax:
+    content: public void ConvertToIdAdjacencies(Dictionary<Color32, int> colorToIdMap)
+    parameters:
+    - id: colorToIdMap
+      type: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32}
+    content.vb: Public Sub ConvertToIdAdjacencies(colorToIdMap As Dictionary(Of Color32, Integer))
+  overload: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies*
+  nameWithType.vb: FastAdjacencyScanner.ConvertToIdAdjacencies(Dictionary(Of Color32, Integer))
+  fullName.vb: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies(System.Collections.Generic.Dictionary(Of UnityEngine.Color32, Integer))
+  name.vb: ConvertToIdAdjacencies(Dictionary(Of Color32, Integer))
+- uid: Map.Province.FastAdjacencyScanner.GetNeighborsForColor(UnityEngine.Color32)
+  commentId: M:Map.Province.FastAdjacencyScanner.GetNeighborsForColor(UnityEngine.Color32)
+  id: GetNeighborsForColor(UnityEngine.Color32)
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborsForColor(Color32)
+  nameWithType: FastAdjacencyScanner.GetNeighborsForColor(Color32)
+  fullName: Map.Province.FastAdjacencyScanner.GetNeighborsForColor(UnityEngine.Color32)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborsForColor
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 193
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get neighbors for a specific province color
+  example: []
+  syntax:
+    content: public HashSet<Color32> GetNeighborsForColor(Color32 provinceColor)
+    parameters:
+    - id: provinceColor
+      type: UnityEngine.Color32
+    return:
+      type: System.Collections.Generic.HashSet{UnityEngine.Color32}
+    content.vb: Public Function GetNeighborsForColor(provinceColor As Color32) As HashSet(Of Color32)
+  overload: Map.Province.FastAdjacencyScanner.GetNeighborsForColor*
+- uid: Map.Province.FastAdjacencyScanner.GetNeighborsForId(System.Int32)
+  commentId: M:Map.Province.FastAdjacencyScanner.GetNeighborsForId(System.Int32)
+  id: GetNeighborsForId(System.Int32)
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: GetNeighborsForId(int)
+  nameWithType: FastAdjacencyScanner.GetNeighborsForId(int)
+  fullName: Map.Province.FastAdjacencyScanner.GetNeighborsForId(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetNeighborsForId
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 205
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Get neighbors for a specific province ID
+  example: []
+  syntax:
+    content: public HashSet<int> GetNeighborsForId(int provinceId)
+    parameters:
+    - id: provinceId
+      type: System.Int32
+    return:
+      type: System.Collections.Generic.HashSet{System.Int32}
+    content.vb: Public Function GetNeighborsForId(provinceId As Integer) As HashSet(Of Integer)
+  overload: Map.Province.FastAdjacencyScanner.GetNeighborsForId*
+  nameWithType.vb: FastAdjacencyScanner.GetNeighborsForId(Integer)
+  fullName.vb: Map.Province.FastAdjacencyScanner.GetNeighborsForId(Integer)
+  name.vb: GetNeighborsForId(Integer)
+- uid: Map.Province.FastAdjacencyScanner.ExportAdjacencies
+  commentId: M:Map.Province.FastAdjacencyScanner.ExportAdjacencies
+  id: ExportAdjacencies
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: ExportAdjacencies()
+  nameWithType: FastAdjacencyScanner.ExportAdjacencies()
+  fullName: Map.Province.FastAdjacencyScanner.ExportAdjacencies()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExportAdjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 217
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: Export adjacencies to CSV format (like Paradox adjacencies.csv)
+  example: []
+  syntax:
+    content: >-
+      [ContextMenu("Export Adjacencies")]
+
+      public void ExportAdjacencies()
+    content.vb: >-
+      <ContextMenu("Export Adjacencies")>
+
+      Public Sub ExportAdjacencies()
+  overload: Map.Province.FastAdjacencyScanner.ExportAdjacencies*
+  attributes:
+  - type: UnityEngine.ContextMenu
+    ctor: UnityEngine.ContextMenu.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Export Adjacencies
+- uid: Map.Province.FastAdjacencyScanner.ColorAdjacencies
+  commentId: P:Map.Province.FastAdjacencyScanner.ColorAdjacencies
+  id: ColorAdjacencies
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: ColorAdjacencies
+  nameWithType: FastAdjacencyScanner.ColorAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ColorAdjacencies
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ColorAdjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 259
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public Dictionary<Color32, HashSet<Color32>> ColorAdjacencies { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+    content.vb: Public ReadOnly Property ColorAdjacencies As Dictionary(Of Color32, HashSet(Of Color32))
+  overload: Map.Province.FastAdjacencyScanner.ColorAdjacencies*
+- uid: Map.Province.FastAdjacencyScanner.IdAdjacencies
+  commentId: P:Map.Province.FastAdjacencyScanner.IdAdjacencies
+  id: IdAdjacencies
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: IdAdjacencies
+  nameWithType: FastAdjacencyScanner.IdAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.IdAdjacencies
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IdAdjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 260
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public Dictionary<int, HashSet<int>> IdAdjacencies { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+    content.vb: Public ReadOnly Property IdAdjacencies As Dictionary(Of Integer, HashSet(Of Integer))
+  overload: Map.Province.FastAdjacencyScanner.IdAdjacencies*
+- uid: Map.Province.FastAdjacencyScanner.LastScanTime
+  commentId: P:Map.Province.FastAdjacencyScanner.LastScanTime
+  id: LastScanTime
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: LastScanTime
+  nameWithType: FastAdjacencyScanner.LastScanTime
+  fullName: Map.Province.FastAdjacencyScanner.LastScanTime
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LastScanTime
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 261
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float LastScanTime { get; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public ReadOnly Property LastScanTime As Single
+  overload: Map.Province.FastAdjacencyScanner.LastScanTime*
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Province.FastAdjacencyScanner.ScanForAdjacencies*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.ScanForAdjacencies
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_ScanForAdjacencies
+  name: ScanForAdjacencies
+  nameWithType: FastAdjacencyScanner.ScanForAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ScanForAdjacencies
+- uid: Map.Province.FastAdjacencyScanner.ScanResult
+  commentId: T:Map.Province.FastAdjacencyScanner.ScanResult
+  parent: Map.Province
+  href: Map.Province.FastAdjacencyScanner.html
+  name: FastAdjacencyScanner.ScanResult
+  nameWithType: FastAdjacencyScanner.ScanResult
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult
+  spec.csharp:
+  - uid: Map.Province.FastAdjacencyScanner
+    name: FastAdjacencyScanner
+    href: Map.Province.FastAdjacencyScanner.html
+  - name: .
+  - uid: Map.Province.FastAdjacencyScanner.ScanResult
+    name: ScanResult
+    href: Map.Province.FastAdjacencyScanner.ScanResult.html
+  spec.vb:
+  - uid: Map.Province.FastAdjacencyScanner
+    name: FastAdjacencyScanner
+    href: Map.Province.FastAdjacencyScanner.html
+  - name: .
+  - uid: Map.Province.FastAdjacencyScanner.ScanResult
+    name: ScanResult
+    href: Map.Province.FastAdjacencyScanner.ScanResult.html
+- uid: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_ConvertToIdAdjacencies_System_Collections_Generic_Dictionary_UnityEngine_Color32_System_Int32__
+  name: ConvertToIdAdjacencies
+  nameWithType: FastAdjacencyScanner.ConvertToIdAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ConvertToIdAdjacencies
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Color32, int>
+  nameWithType: Dictionary<Color32, int>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Color32, int>
+  nameWithType.vb: Dictionary(Of Color32, Integer)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Color32, Integer)
+  name.vb: Dictionary(Of Color32, Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.Province.FastAdjacencyScanner.GetNeighborsForColor*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.GetNeighborsForColor
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_GetNeighborsForColor_UnityEngine_Color32_
+  name: GetNeighborsForColor
+  nameWithType: FastAdjacencyScanner.GetNeighborsForColor
+  fullName: Map.Province.FastAdjacencyScanner.GetNeighborsForColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
+  parent: UnityEngine
+  isExternal: true
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: System.Collections.Generic.HashSet{UnityEngine.Color32}
+  commentId: T:System.Collections.Generic.HashSet{UnityEngine.Color32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<Color32>
+  nameWithType: HashSet<Color32>
+  fullName: System.Collections.Generic.HashSet<UnityEngine.Color32>
+  nameWithType.vb: HashSet(Of Color32)
+  fullName.vb: System.Collections.Generic.HashSet(Of UnityEngine.Color32)
+  name.vb: HashSet(Of Color32)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.HashSet`1
+  commentId: T:System.Collections.Generic.HashSet`1
+  isExternal: true
+  name: HashSet<T>
+  nameWithType: HashSet<T>
+  fullName: System.Collections.Generic.HashSet<T>
+  nameWithType.vb: HashSet(Of T)
+  fullName.vb: System.Collections.Generic.HashSet(Of T)
+  name.vb: HashSet(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Map.Province.FastAdjacencyScanner.GetNeighborsForId*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.GetNeighborsForId
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_GetNeighborsForId_System_Int32_
+  name: GetNeighborsForId
+  nameWithType: FastAdjacencyScanner.GetNeighborsForId
+  fullName: Map.Province.FastAdjacencyScanner.GetNeighborsForId
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Collections.Generic.HashSet{System.Int32}
+  commentId: T:System.Collections.Generic.HashSet{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.HashSet`1
+  name: HashSet<int>
+  nameWithType: HashSet<int>
+  fullName: System.Collections.Generic.HashSet<int>
+  nameWithType.vb: HashSet(Of Integer)
+  fullName.vb: System.Collections.Generic.HashSet(Of Integer)
+  name.vb: HashSet(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: Map.Province.FastAdjacencyScanner.ExportAdjacencies*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.ExportAdjacencies
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_ExportAdjacencies
+  name: ExportAdjacencies
+  nameWithType: FastAdjacencyScanner.ExportAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ExportAdjacencies
+- uid: Map.Province.FastAdjacencyScanner.ColorAdjacencies*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.ColorAdjacencies
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_ColorAdjacencies
+  name: ColorAdjacencies
+  nameWithType: FastAdjacencyScanner.ColorAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ColorAdjacencies
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Color32, HashSet<Color32>>
+  nameWithType: Dictionary<Color32, HashSet<Color32>>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Color32, System.Collections.Generic.HashSet<UnityEngine.Color32>>
+  nameWithType.vb: Dictionary(Of Color32, HashSet(Of Color32))
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Color32, System.Collections.Generic.HashSet(Of UnityEngine.Color32))
+  name.vb: Dictionary(Of Color32, HashSet(Of Color32))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Map.Province.FastAdjacencyScanner.IdAdjacencies*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.IdAdjacencies
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_IdAdjacencies
+  name: IdAdjacencies
+  nameWithType: FastAdjacencyScanner.IdAdjacencies
+  fullName: Map.Province.FastAdjacencyScanner.IdAdjacencies
+- uid: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  commentId: T:System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<int, HashSet<int>>
+  nameWithType: Dictionary<int, HashSet<int>>
+  fullName: System.Collections.Generic.Dictionary<int, System.Collections.Generic.HashSet<int>>
+  nameWithType.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  fullName.vb: System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.HashSet(Of Integer))
+  name.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+  - name: )
+- uid: Map.Province.FastAdjacencyScanner.LastScanTime*
+  commentId: Overload:Map.Province.FastAdjacencyScanner.LastScanTime
+  href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_LastScanTime
+  name: LastScanTime
+  nameWithType: FastAdjacencyScanner.LastScanTime
+  fullName: Map.Province.FastAdjacencyScanner.LastScanTime

@@ -1,0 +1,369 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modding.ModLoader
+  commentId: T:Core.Modding.ModLoader
+  id: ModLoader
+  parent: Core.Modding
+  children:
+  - Core.Modding.ModLoader.GetLoadedMods
+  - Core.Modding.ModLoader.HasModdedAsset``1(System.String)
+  - Core.Modding.ModLoader.Initialize
+  - Core.Modding.ModLoader.LoadAssetWithFallback``1(System.String,System.String)
+  - Core.Modding.ModLoader.LoadAsset``1(System.String)
+  - Core.Modding.ModLoader.UnloadAll
+  langs:
+  - csharp
+  - vb
+  name: ModLoader
+  nameWithType: ModLoader
+  fullName: Core.Modding.ModLoader
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModLoader
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 21
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  syntax:
+    content: public static class ModLoader
+    content.vb: Public Module ModLoader
+  inheritance:
+  - System.Object
+- uid: Core.Modding.ModLoader.Initialize
+  commentId: M:Core.Modding.ModLoader.Initialize
+  id: Initialize
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: ModLoader.Initialize()
+  fullName: Core.Modding.ModLoader.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: Initialize the mod loader. Call once at game startup.
+  example: []
+  syntax:
+    content: public static void Initialize()
+    content.vb: Public Shared Sub Initialize()
+  overload: Core.Modding.ModLoader.Initialize*
+- uid: Core.Modding.ModLoader.LoadAsset``1(System.String)
+  commentId: M:Core.Modding.ModLoader.LoadAsset``1(System.String)
+  id: LoadAsset``1(System.String)
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadAsset<T>(string)
+  nameWithType: ModLoader.LoadAsset<T>(string)
+  fullName: Core.Modding.ModLoader.LoadAsset<T>(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadAsset
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 117
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: >-
+    Try to load an asset from any loaded mod bundle.
+
+    Returns null if not found in any mod.
+  example: []
+  syntax:
+    content: 'public static T LoadAsset<T>(string assetName) where T : Object'
+    parameters:
+    - id: assetName
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Shared Function LoadAsset(Of T As [Object])(assetName As String) As T
+  overload: Core.Modding.ModLoader.LoadAsset*
+  nameWithType.vb: ModLoader.LoadAsset(Of T)(String)
+  fullName.vb: Core.Modding.ModLoader.LoadAsset(Of T)(String)
+  name.vb: LoadAsset(Of T)(String)
+- uid: Core.Modding.ModLoader.LoadAssetWithFallback``1(System.String,System.String)
+  commentId: M:Core.Modding.ModLoader.LoadAssetWithFallback``1(System.String,System.String)
+  id: LoadAssetWithFallback``1(System.String,System.String)
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: LoadAssetWithFallback<T>(string, string)
+  nameWithType: ModLoader.LoadAssetWithFallback<T>(string, string)
+  fullName: Core.Modding.ModLoader.LoadAssetWithFallback<T>(string, string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LoadAssetWithFallback
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 162
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: >-
+    Load asset with fallback to Resources folder.
+
+    Use this for assets that have default versions.
+  example: []
+  syntax:
+    content: 'public static T LoadAssetWithFallback<T>(string assetName, string resourcesPath) where T : Object'
+    parameters:
+    - id: assetName
+      type: System.String
+    - id: resourcesPath
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: '{T}'
+    content.vb: Public Shared Function LoadAssetWithFallback(Of T As [Object])(assetName As String, resourcesPath As String) As T
+  overload: Core.Modding.ModLoader.LoadAssetWithFallback*
+  nameWithType.vb: ModLoader.LoadAssetWithFallback(Of T)(String, String)
+  fullName.vb: Core.Modding.ModLoader.LoadAssetWithFallback(Of T)(String, String)
+  name.vb: LoadAssetWithFallback(Of T)(String, String)
+- uid: Core.Modding.ModLoader.HasModdedAsset``1(System.String)
+  commentId: M:Core.Modding.ModLoader.HasModdedAsset``1(System.String)
+  id: HasModdedAsset``1(System.String)
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: HasModdedAsset<T>(string)
+  nameWithType: ModLoader.HasModdedAsset<T>(string)
+  fullName: Core.Modding.ModLoader.HasModdedAsset<T>(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasModdedAsset
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: Check if any mod provides an asset
+  example: []
+  syntax:
+    content: 'public static bool HasModdedAsset<T>(string assetName) where T : Object'
+    parameters:
+    - id: assetName
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function HasModdedAsset(Of T As [Object])(assetName As String) As Boolean
+  overload: Core.Modding.ModLoader.HasModdedAsset*
+  nameWithType.vb: ModLoader.HasModdedAsset(Of T)(String)
+  fullName.vb: Core.Modding.ModLoader.HasModdedAsset(Of T)(String)
+  name.vb: HasModdedAsset(Of T)(String)
+- uid: Core.Modding.ModLoader.GetLoadedMods
+  commentId: M:Core.Modding.ModLoader.GetLoadedMods
+  id: GetLoadedMods
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: GetLoadedMods()
+  nameWithType: ModLoader.GetLoadedMods()
+  fullName: Core.Modding.ModLoader.GetLoadedMods()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetLoadedMods
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 186
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: Get list of loaded mod names
+  example: []
+  syntax:
+    content: public static string[] GetLoadedMods()
+    return:
+      type: System.String[]
+    content.vb: Public Shared Function GetLoadedMods() As String()
+  overload: Core.Modding.ModLoader.GetLoadedMods*
+- uid: Core.Modding.ModLoader.UnloadAll
+  commentId: M:Core.Modding.ModLoader.UnloadAll
+  id: UnloadAll
+  parent: Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: UnloadAll()
+  nameWithType: ModLoader.UnloadAll()
+  fullName: Core.Modding.ModLoader.UnloadAll()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modding/ModLoader.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UnloadAll
+    path: Scripts/Core/Modding/ModLoader.cs
+    startLine: 200
+  assemblies:
+  - Core
+  namespace: Core.Modding
+  summary: Unload all mod bundles. Call on game exit or when reloading mods.
+  example: []
+  syntax:
+    content: public static void UnloadAll()
+    content.vb: Public Shared Sub UnloadAll()
+  overload: Core.Modding.ModLoader.UnloadAll*
+references:
+- uid: Core.Modding
+  commentId: N:Core.Modding
+  href: Core.html
+  name: Core.Modding
+  nameWithType: Core.Modding
+  fullName: Core.Modding
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modding
+    name: Modding
+    href: Core.Modding.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Modding
+    name: Modding
+    href: Core.Modding.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Modding.ModLoader.Initialize*
+  commentId: Overload:Core.Modding.ModLoader.Initialize
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_Initialize
+  name: Initialize
+  nameWithType: ModLoader.Initialize
+  fullName: Core.Modding.ModLoader.Initialize
+- uid: Core.Modding.ModLoader.LoadAsset*
+  commentId: Overload:Core.Modding.ModLoader.LoadAsset
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_LoadAsset__1_System_String_
+  name: LoadAsset
+  nameWithType: ModLoader.LoadAsset
+  fullName: Core.Modding.ModLoader.LoadAsset
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Modding.ModLoader.LoadAssetWithFallback*
+  commentId: Overload:Core.Modding.ModLoader.LoadAssetWithFallback
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_LoadAssetWithFallback__1_System_String_System_String_
+  name: LoadAssetWithFallback
+  nameWithType: ModLoader.LoadAssetWithFallback
+  fullName: Core.Modding.ModLoader.LoadAssetWithFallback
+- uid: Core.Modding.ModLoader.HasModdedAsset*
+  commentId: Overload:Core.Modding.ModLoader.HasModdedAsset
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_HasModdedAsset__1_System_String_
+  name: HasModdedAsset
+  nameWithType: ModLoader.HasModdedAsset
+  fullName: Core.Modding.ModLoader.HasModdedAsset
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Modding.ModLoader.GetLoadedMods*
+  commentId: Overload:Core.Modding.ModLoader.GetLoadedMods
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_GetLoadedMods
+  name: GetLoadedMods
+  nameWithType: ModLoader.GetLoadedMods
+  fullName: Core.Modding.ModLoader.GetLoadedMods
+- uid: System.String[]
+  isExternal: true
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: (
+  - name: )
+- uid: Core.Modding.ModLoader.UnloadAll*
+  commentId: Overload:Core.Modding.ModLoader.UnloadAll
+  href: Core.Modding.ModLoader.html#Core_Modding_ModLoader_UnloadAll
+  name: UnloadAll
+  nameWithType: ModLoader.UnloadAll
+  fullName: Core.Modding.ModLoader.UnloadAll

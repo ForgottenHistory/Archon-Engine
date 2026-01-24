@@ -7,8 +7,10 @@ items:
   children:
   - StarterKit.BuildingSystem.#ctor(Core.GameState,StarterKit.PlayerState,StarterKit.EconomySystem,Core.Modifiers.ModifierSystem,System.Boolean)
   - StarterKit.BuildingSystem.CanConstruct(System.UInt16,System.String,System.String@)
+  - StarterKit.BuildingSystem.CanConstructForCountry(System.UInt16,System.String,System.UInt16,System.String@)
   - StarterKit.BuildingSystem.Construct(System.UInt16,System.String)
   - StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
+  - StarterKit.BuildingSystem.ConstructForCountry(System.UInt16,System.String,System.UInt16)
   - StarterKit.BuildingSystem.Deserialize(System.Byte[])
   - StarterKit.BuildingSystem.Dispose
   - StarterKit.BuildingSystem.GetAllBuildingTypes
@@ -335,6 +337,94 @@ items:
   nameWithType.vb: BuildingSystem.Construct(UShort, String)
   fullName.vb: StarterKit.BuildingSystem.Construct(UShort, String)
   name.vb: Construct(UShort, String)
+- uid: StarterKit.BuildingSystem.CanConstructForCountry(System.UInt16,System.String,System.UInt16,System.String@)
+  commentId: M:StarterKit.BuildingSystem.CanConstructForCountry(System.UInt16,System.String,System.UInt16,System.String@)
+  id: CanConstructForCountry(System.UInt16,System.String,System.UInt16,System.String@)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: CanConstructForCountry(ushort, string, ushort, out string)
+  nameWithType: BuildingSystem.CanConstructForCountry(ushort, string, ushort, out string)
+  fullName: StarterKit.BuildingSystem.CanConstructForCountry(ushort, string, ushort, out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanConstructForCountry
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 309
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Check if a building can be constructed in a province by a specific country.
+
+    Used by both player and AI.
+  example: []
+  syntax:
+    content: public bool CanConstructForCountry(ushort provinceId, string buildingTypeId, ushort countryId, out string reason)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.String
+    - id: countryId
+      type: System.UInt16
+    - id: reason
+      type: System.String
+    return:
+      type: System.Boolean
+    content.vb: Public Function CanConstructForCountry(provinceId As UShort, buildingTypeId As String, countryId As UShort, reason As String) As Boolean
+  overload: StarterKit.BuildingSystem.CanConstructForCountry*
+  nameWithType.vb: BuildingSystem.CanConstructForCountry(UShort, String, UShort, String)
+  fullName.vb: StarterKit.BuildingSystem.CanConstructForCountry(UShort, String, UShort, String)
+  name.vb: CanConstructForCountry(UShort, String, UShort, String)
+- uid: StarterKit.BuildingSystem.ConstructForCountry(System.UInt16,System.String,System.UInt16)
+  commentId: M:StarterKit.BuildingSystem.ConstructForCountry(System.UInt16,System.String,System.UInt16)
+  id: ConstructForCountry(System.UInt16,System.String,System.UInt16)
+  parent: StarterKit.BuildingSystem
+  langs:
+  - csharp
+  - vb
+  name: ConstructForCountry(ushort, string, ushort)
+  nameWithType: BuildingSystem.ConstructForCountry(ushort, string, ushort)
+  fullName: StarterKit.BuildingSystem.ConstructForCountry(ushort, string, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/BuildingSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ConstructForCountry
+    path: Scripts/StarterKit/Systems/BuildingSystem.cs
+    startLine: 352
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Construct a building in a province for a specific country.
+
+    Used by both player and AI via ConstructBuildingCommand.
+  example: []
+  syntax:
+    content: public bool ConstructForCountry(ushort provinceId, string buildingTypeId, ushort countryId)
+    parameters:
+    - id: provinceId
+      type: System.UInt16
+    - id: buildingTypeId
+      type: System.String
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function ConstructForCountry(provinceId As UShort, buildingTypeId As String, countryId As UShort) As Boolean
+  overload: StarterKit.BuildingSystem.ConstructForCountry*
+  nameWithType.vb: BuildingSystem.ConstructForCountry(UShort, String, UShort)
+  fullName.vb: StarterKit.BuildingSystem.ConstructForCountry(UShort, String, UShort)
+  name.vb: ConstructForCountry(UShort, String, UShort)
 - uid: StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
   commentId: M:StarterKit.BuildingSystem.ConstructForAI(System.UInt16,System.String)
   id: ConstructForAI(System.UInt16,System.String)
@@ -353,17 +443,20 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ConstructForAI
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 309
+    startLine: 395
   assemblies:
   - StarterKit
   namespace: StarterKit
   summary: >-
-    Construct a building for AI (no gold cost, no ownership check).
+    DEPRECATED: Use ConstructForCountry instead.
 
-    Applies modifiers via ModifierSystem.
+    Construct a building for AI (no gold cost, no ownership check).
   example: []
   syntax:
-    content: public bool ConstructForAI(ushort provinceId, string buildingTypeId)
+    content: >-
+      [Obsolete("Use ConstructForCountry with proper command flow instead")]
+
+      public bool ConstructForAI(ushort provinceId, string buildingTypeId)
     parameters:
     - id: provinceId
       type: System.UInt16
@@ -371,8 +464,17 @@ items:
       type: System.String
     return:
       type: System.Boolean
-    content.vb: Public Function ConstructForAI(provinceId As UShort, buildingTypeId As String) As Boolean
+    content.vb: >-
+      <Obsolete("Use ConstructForCountry with proper command flow instead")>
+
+      Public Function ConstructForAI(provinceId As UShort, buildingTypeId As String) As Boolean
   overload: StarterKit.BuildingSystem.ConstructForAI*
+  attributes:
+  - type: System.ObsoleteAttribute
+    ctor: System.ObsoleteAttribute.#ctor(System.String)
+    arguments:
+    - type: System.String
+      value: Use ConstructForCountry with proper command flow instead
   nameWithType.vb: BuildingSystem.ConstructForAI(UShort, String)
   fullName.vb: StarterKit.BuildingSystem.ConstructForAI(UShort, String)
   name.vb: ConstructForAI(UShort, String)
@@ -394,7 +496,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetBuildingCount
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 360
+    startLine: 447
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -432,7 +534,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetTotalBuildingCount
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 371
+    startLine: 458
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -468,7 +570,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceBuildings
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 429
+    startLine: 516
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -504,7 +606,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsProvinceOwnedByPlayer
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 440
+    startLine: 527
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -540,7 +642,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 453
+    startLine: 540
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -567,7 +669,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 475
+    startLine: 562
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -597,7 +699,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/StarterKit/Systems/BuildingSystem.cs
-    startLine: 503
+    startLine: 590
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -860,6 +962,18 @@ references:
   name: Construct
   nameWithType: BuildingSystem.Construct
   fullName: StarterKit.BuildingSystem.Construct
+- uid: StarterKit.BuildingSystem.CanConstructForCountry*
+  commentId: Overload:StarterKit.BuildingSystem.CanConstructForCountry
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_CanConstructForCountry_System_UInt16_System_String_System_UInt16_System_String__
+  name: CanConstructForCountry
+  nameWithType: BuildingSystem.CanConstructForCountry
+  fullName: StarterKit.BuildingSystem.CanConstructForCountry
+- uid: StarterKit.BuildingSystem.ConstructForCountry*
+  commentId: Overload:StarterKit.BuildingSystem.ConstructForCountry
+  href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_ConstructForCountry_System_UInt16_System_String_System_UInt16_
+  name: ConstructForCountry
+  nameWithType: BuildingSystem.ConstructForCountry
+  fullName: StarterKit.BuildingSystem.ConstructForCountry
 - uid: StarterKit.BuildingSystem.ConstructForAI*
   commentId: Overload:StarterKit.BuildingSystem.ConstructForAI
   href: StarterKit.BuildingSystem.html#StarterKit_BuildingSystem_ConstructForAI_System_UInt16_System_String_

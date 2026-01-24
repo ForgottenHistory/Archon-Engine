@@ -32,7 +32,6 @@ items:
   - Core.Systems.ProvinceDevelopmentChangedEvent
   - Core.Systems.ProvinceInitialStatesLoadedEvent
   - Core.Systems.ProvinceOwnershipChangedEvent
-  - Core.Systems.ProvinceSimulation
   - Core.Systems.ProvinceSystem
   - Core.Systems.ProvinceSystemInitializedEvent
   - Core.Systems.StandardCalendar
@@ -239,13 +238,6 @@ references:
   name: TerrainMovementCostCalculator
   nameWithType: TerrainMovementCostCalculator
   fullName: Core.Systems.TerrainMovementCostCalculator
-- uid: Core.Systems.ProvinceSimulation
-  commentId: T:Core.Systems.ProvinceSimulation
-  parent: Core.Systems
-  href: Core.Systems.ProvinceSimulation.html
-  name: ProvinceSimulation
-  nameWithType: ProvinceSimulation
-  fullName: Core.Systems.ProvinceSimulation
 - uid: Core.Systems.GameSystem
   commentId: T:Core.Systems.GameSystem
   parent: Core.Systems

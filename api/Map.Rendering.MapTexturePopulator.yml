@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapTexturePopulator
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -54,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -88,7 +88,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateWithSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 37
+    startLine: 34
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -125,7 +125,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 126
+    startLine: 123
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

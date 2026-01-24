@@ -26,7 +26,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GradientMapModeColorizer
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 15
+    startLine: 16
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -87,7 +87,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ColorizerId
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -119,7 +119,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DisplayName
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -151,7 +151,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -180,7 +180,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -214,7 +214,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InitializeColorizer
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -246,7 +246,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DoColorize
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 67
+    startLine: 59
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization
@@ -290,7 +290,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DisposeResources
     path: Scripts/Map/MapModes/Colorization/Implementations/GradientMapModeColorizer.cs
-    startLine: 110
+    startLine: 102
   assemblies:
   - MapAssembly
   namespace: Map.MapModes.Colorization

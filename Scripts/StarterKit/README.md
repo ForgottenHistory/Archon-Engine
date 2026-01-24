@@ -18,8 +18,9 @@ A lightweight implementation showing how to build a game on Archon-Engine. Use i
 ```
 StarterKit/
 ├── Initializer.cs          # Entry point, coordinates all systems
-├── Commands/               # Console commands for state changes
+├── Commands/               # Commands for state changes (network-synced)
 ├── MapModes/               # Custom map modes (extends ENGINE map system)
+├── Network/                # Multiplayer (NetworkInitializer, LobbyUI)
 ├── State/                  # Player state and events
 ├── Systems/                # Game systems (economy, units, buildings, AI)
 ├── UI/                     # All UI components
@@ -80,17 +81,18 @@ Terminal operations: `.Execute()`, `.Count()`, `.Any()`, `.FirstOrDefault()`
 
 ## Commands (`Commands/`)
 
-All state changes go through commands (Pattern 2):
+All state changes go through commands (Pattern 2). Commands are auto-registered for network sync.
 
 | Command | Description |
 |---------|-------------|
 | `add_gold <amount>` | Add/remove gold from treasury |
 | `create_unit <type> <province>` | Spawn a unit |
-| `move_unit <unitId> <province>` | Move unit to province |
+| `queue_movement <unitId> <path>` | Queue unit movement along path |
 | `disband_unit <unitId>` | Remove a unit |
 | `build <type> <province>` | Construct a building |
+| `colonize <province>` | Colonize an unowned province |
 
-Commands use ENGINE infrastructure (`Core.Commands`).
+Commands use ENGINE infrastructure (`Core.Commands`) and sync via `GameCommandProcessor`.
 
 ### Fluent Validation Pattern
 
@@ -225,6 +227,66 @@ Located in `Assets/Archon-Engine/Template-Data/`:
 units/          - Unit type definitions (*.json5)
 buildings/      - Building type definitions (*.json5)
 ```
+
+---
+
+## Multiplayer
+
+StarterKit includes full multiplayer support using lockstep synchronization.
+
+### Quick Start
+1. Launch game → Select "Host Game" or "Join Game" from lobby
+2. Host selects country, clients join and select their countries
+3. All players click "Ready", host clicks "Start Game"
+
+### Architecture
+
+**Lockstep Pattern:** All state changes go through commands. Host validates and broadcasts, clients execute identically.
+
+```
+Client Action → Command → Send to Host
+                              ↓
+                    Host validates & executes
+                              ↓
+                    Broadcast to all clients
+                              ↓
+                    Clients execute (identical state)
+```
+
+### Key Components
+
+| Component | Purpose |
+|-----------|---------|
+| **NetworkInitializer** | Setup host/client, manage lobby state |
+| **LobbyUI** | Host/Join/Ready UI |
+| **GameCommandProcessor** | Routes GAME commands through network |
+
+### Command Sync
+
+All StarterKit commands extend `BaseCommand` with serialization:
+
+```csharp
+public class CreateUnitCommand : BaseCommand
+{
+    public ushort CountryId { get; set; }  // Explicit - never use playerState
+
+    public override void Serialize(BinaryWriter writer)
+    {
+        writer.Write(CountryId);
+        writer.Write(ProvinceId.Value);
+        // ...
+    }
+}
+```
+
+**Critical Rules:**
+- Commands MUST include explicit `CountryId` (not from playerState)
+- All state changes MUST go through commands
+- AI runs ONLY on host (`NetworkInitializer.IsHost`)
+
+### Time Synchronization
+
+`NetworkTimeSync` keeps game time aligned across clients. Host controls time, clients follow.
 
 ---
 

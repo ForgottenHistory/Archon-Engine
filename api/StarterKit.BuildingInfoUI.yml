@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BuildingInfoUI
     path: Scripts/StarterKit/UI/BuildingInfoUI.cs
-    startLine: 17
+    startLine: 19
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -120,7 +120,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/StarterKit/UI/BuildingInfoUI.cs
-    startLine: 35
+    startLine: 37
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -153,7 +153,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnDestroy
     path: Scripts/StarterKit/UI/BuildingInfoUI.cs
-    startLine: 68
+    startLine: 70
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -185,7 +185,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateUI
     path: Scripts/StarterKit/UI/BuildingInfoUI.cs
-    startLine: 80
+    startLine: 82
   assemblies:
   - StarterKit
   namespace: StarterKit

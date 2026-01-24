@@ -27,7 +27,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderShaderManager
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 13
+    startLine: 14
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -68,7 +68,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderDetectionShader
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 26
+    startLine: 27
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -97,7 +97,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderCurveRasterizerShader
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -126,7 +126,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderSDFShader
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -155,7 +155,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetectDualBordersKernel
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 29
+    startLine: 30
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -184,7 +184,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 31
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -216,7 +216,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InitializeKernels
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 40
+    startLine: 41
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -254,7 +254,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 121
+    startLine: 106
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -284,7 +284,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SupportsRenderingMode
     path: Scripts/Map/Rendering/Border/BorderShaderManager.cs
-    startLine: 129
+    startLine: 114
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border

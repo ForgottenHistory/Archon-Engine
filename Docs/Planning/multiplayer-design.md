@@ -1118,25 +1118,26 @@ This approach turns a game-breaking issue into a minor hiccup.
 
 ### Implementation Phases
 
-#### Phase 1: Core Transport (Development)
-- [ ] Implement `INetworkTransport` interface
-- [ ] Implement `DirectTransport` using Unity Transport Package
-- [ ] Basic `NetworkManager` with host/client modes
-- [ ] Wire up to existing `CommandSerializer`
-- [ ] Simple lobby UI (host game / join by IP)
+#### Phase 1: Core Transport (Development) ✅ COMPLETE
+- [x] Implement `INetworkTransport` interface
+- [x] Implement `DirectTransport` using Unity Transport Package
+- [x] Basic `NetworkManager` with host/client modes
+- [x] Wire up to existing `CommandSerializer`
+- [x] Simple lobby UI (host game / join by IP)
 
-#### Phase 2: Game Integration
-- [ ] Player assignment (which client controls which country)
-- [ ] Game speed synchronization (host controls speed)
-- [ ] Pause/resume synchronization
-- [ ] Late joiner state sync
-- [ ] `GameState.ComputeChecksum()` implementation
-- [ ] `GameState.SerializeFull()` / `DeserializeFull()` for state sync
+#### Phase 2: Game Integration ✅ COMPLETE
+- [x] Player assignment (which client controls which country)
+- [x] Game speed synchronization (host controls speed) - `NetworkTimeSync`
+- [x] Pause/resume synchronization
+- [x] Country selection in lobby with visual feedback
+- [x] Ready/Start game flow
+- [x] `GameCommandProcessor` for GAME layer command sync
+- [x] AI runs only on host (`NetworkInitializer.IsHost`)
 
 #### Phase 2.5: Desync Detection & Recovery (Key Differentiator)
+- [x] `DesyncDetector` - checksum comparison logic (infrastructure ready)
+- [x] `DesyncRecovery` - automatic state resync (infrastructure ready)
 - [ ] Periodic checksum broadcasting (every N ticks)
-- [ ] `DesyncDetector` - checksum comparison logic
-- [ ] `DesyncRecovery` - automatic state resync
 - [ ] Resync UI ("Resyncing..." notification)
 - [ ] Debug: State dump on desync for comparison
 - [ ] Debug: Diff tool to find first divergence
@@ -1153,23 +1154,62 @@ This approach turns a game-breaking issue into a minor hiccup.
 - [ ] Network statistics UI (ping, bandwidth)
 - [ ] Improved desync recovery
 
-### File Structure
+### File Structure (Implemented)
 
 ```
 Scripts/
-└── Core/
-    └── Network/
-        ├── INetworkTransport.cs        # Transport interface
-        ├── DirectTransport.cs          # Unity Transport implementation
-        ├── SteamTransport.cs           # Steamworks implementation (Phase 3)
-        ├── NetworkManager.cs           # High-level network coordinator
-        ├── NetworkPeer.cs              # Per-connection state
-        ├── NetworkMessages.cs          # Message types and headers
-        ├── LateJoinHandler.cs          # State sync for joining players
-        ├── DesyncDetector.cs           # Periodic checksum verification
-        ├── DesyncRecovery.cs           # Automatic state resync
-        └── DesyncDebugger.cs           # Debug tools for finding desync causes
+├── Core/
+│   ├── Commands/
+│   │   └── GameCommandProcessor.cs     # GAME layer command sync (client→host→broadcast)
+│   └── Network/
+│       └── INetworkBridge.cs           # Interface for network integration
+│
+├── Network/                            # ENGINE network layer
+│   ├── INetworkTransport.cs            # Transport interface
+│   ├── DirectTransport.cs              # Unity Transport implementation
+│   ├── NetworkManager.cs               # High-level network coordinator
+│   ├── NetworkBridge.cs                # Implements INetworkBridge
+│   ├── NetworkPeer.cs                  # Per-connection state
+│   ├── NetworkMessages.cs              # Message types and headers
+│   ├── NetworkTimeSync.cs              # Game time synchronization
+│   ├── LateJoinHandler.cs              # State sync for joining players
+│   ├── DesyncDetector.cs               # Periodic checksum verification
+│   └── DesyncRecovery.cs               # Automatic state resync
+│
+└── StarterKit/                         # GAME layer
+    ├── Network/
+    │   ├── NetworkInitializer.cs       # Setup host/client, lobby state
+    │   └── LobbyUI.cs                  # Host/Join/Ready UI
+    └── Commands/                       # All commands network-synced
+        ├── CreateUnitCommand.cs        # With explicit CountryId
+        ├── DisbandUnitCommand.cs
+        ├── ConstructBuildingCommand.cs
+        ├── ColonizeCommand.cs
+        └── QueueUnitMovementCommand.cs # Custom path serialization
 ```
+
+### Key Implementation Details
+
+**Two Command Systems:**
+- `CommandProcessor` - ENGINE layer (IProvinceCommand)
+- `GameCommandProcessor` - GAME layer (ICommand) with network sync
+
+**Command Flow:**
+```
+Client UI → Command → GameCommandProcessor.SubmitCommand()
+    ↓ (if client)
+Send to Host via NetworkBridge
+    ↓ (host validates & executes)
+Broadcast to all clients
+    ↓
+All clients execute identically
+```
+
+**Critical Rules Enforced:**
+1. Commands include explicit `CountryId` (never use `playerState.PlayerCountryId`)
+2. AI runs only on host (`NetworkInitializer.IsHost`)
+3. System methods take explicit countryId parameter
+4. Commands auto-registered via reflection (sorted alphabetically for determinism)
 
 ---
 

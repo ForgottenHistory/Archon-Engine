@@ -1,6 +1,6 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2026-01-14
+**Last Updated:** 2026-01-24
 
 ---
 
@@ -12,9 +12,11 @@
 
 **Map:** Texture-based rendering, three border modes (distance field/mesh/pixelated), terrain blending, map modes, visual styles
 
-**Infrastructure:** JSON5 loading, phase-based init, save/load, localization, Burst compilation, sparse collections
+**Multiplayer:** Lockstep sync, lobby system, time sync, dual command processors (ENGINE + GAME layer), auto desync recovery
 
-**Not Implemented:** Multiplayer networking, modding system
+**Infrastructure:** JSON5 loading, phase-based init, save/load, localization, Burst compilation, sparse collections, mod loading
+
+**Not Implemented:** Steam transport, host migration
 
 ---
 
@@ -531,14 +533,56 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-## Multiplayer-Ready Features
+## Multiplayer System
 
-- **Deterministic Math** - FixedPoint64 for identical results across platforms
-- **Command Checksums** - Validation for state consistency
-- **State Serialization** - 80KB for complete 10k province state
-- **Command Pattern** - Network-friendly state changes
-- **Rollback Support** - Command buffer for client prediction (designed, not implemented)
+### Network Architecture
+- **Lockstep Synchronization** - All clients run identical simulation, synced via commands
+- **Player-Hosted Sessions** - One player hosts (server + client), others connect as clients
+- **Transport Abstraction** - INetworkTransport interface for pluggable backends
+- **DirectTransport** - Unity Transport Package implementation for LAN/direct IP
+
+### Lobby System
+- **Host/Join Flow** - Host game or join by IP address
+- **Country Selection** - Players select countries in lobby with visual feedback
+- **Ready/Start** - All players ready before host can start
+- **Player Slots** - Track connected players with country assignments
+
+### Command Synchronization
+- **Dual Command Processors:**
+  - **CommandProcessor** - ENGINE layer (IProvinceCommand)
+  - **GameCommandProcessor** - GAME layer (ICommand) with network sync
+- **Client→Host→Broadcast** - Clients send commands to host, host validates and broadcasts
+- **Auto-Registration** - Commands discovered via reflection, sorted alphabetically for determinism
+- **Explicit CountryId** - Commands carry country ID (never use local playerState)
+
+### Time Synchronization
+- **NetworkTimeSync** - Game time aligned across all clients
+- **Host-Controlled Speed** - Host sets game speed, clients follow
+- **Pause Synchronization** - Pause state synced across all clients
+
+### Desync Handling
+- **DesyncDetector** - Periodic checksum verification infrastructure
+- **DesyncRecovery** - Automatic state resync (reuses late-join sync)
+- **Graceful Recovery** - Brief pause (1-3 seconds) vs Paradox-style rehost
+
+### AI in Multiplayer
+- **Host-Only AI** - AI runs only on host to prevent divergent decisions
+- **Human Country Detection** - Skip AI processing for human-controlled countries
+- **Command Pattern** - AI uses same commands as players for sync
+
+### Key Files
+- **Network/** - INetworkTransport, DirectTransport, NetworkManager, NetworkBridge, NetworkTimeSync
+- **Core/Commands/GameCommandProcessor** - GAME layer command networking
+- **StarterKit/Network/** - NetworkInitializer, LobbyUI
 
 ---
 
-*Updated: 2026-01-14*
+## Modding System
+
+- **ModLoader** - Mod discovery from StreamingAssets/Mods directory
+- **Mod Manifest** - mod.json files with metadata (name, version, dependencies)
+- **Load Order** - Mods loaded after base game data
+
+---
+
+*Updated: 2026-01-24*

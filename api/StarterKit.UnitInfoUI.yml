@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnitInfoUI
     path: Scripts/StarterKit/UI/UnitInfoUI.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -120,7 +120,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/StarterKit/UI/UnitInfoUI.cs
-    startLine: 39
+    startLine: 40
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -155,7 +155,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnDestroy
     path: Scripts/StarterKit/UI/UnitInfoUI.cs
-    startLine: 80
+    startLine: 81
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -187,7 +187,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateUI
     path: Scripts/StarterKit/UI/UnitInfoUI.cs
-    startLine: 92
+    startLine: 93
   assemblies:
   - StarterKit
   namespace: StarterKit

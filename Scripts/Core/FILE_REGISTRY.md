@@ -69,7 +69,8 @@
 - **Core.Commands.IProvinceCommand** - Province-specific command interface
 - **Core.Commands.ChangeOwnerCommand** - Change province ownership
 - **Core.Commands.ProvinceCommands** - Collection of common province commands
-- **Core.Commands.CommandProcessor** - Deterministic command validation and execution
+- **Core.Commands.CommandProcessor** - Deterministic command validation and execution for ENGINE layer (IProvinceCommand)
+- **Core.Commands.GameCommandProcessor** - GAME layer command processor with network sync; auto-registers commands, routes client→host→broadcast
 - **Core.Commands.CommandBuffer** - Ring buffer for command storage (rollback support)
 - **Core.Commands.CommandSerializer** - Serialize commands for network transmission
 - **Core.Commands.CommandLogger** - Ring buffer for command history (last 6000 commands)
@@ -277,7 +278,17 @@
 
 ---
 
-*Updated: 2026-01-14*
-*Added: Query/ProvinceQueryBuilder/CountryQueryBuilder fluent API; Graph/ namespace with GraphDistanceCalculator*
+## Network/
+- **Core.Network.INetworkBridge** - Interface for network layer integration; SendCommandToHost, BroadcastCommand, OnCommandReceived
+
+---
+
+## Modding/
+- **Core.Modding.ModLoader** - Mod discovery and loading from StreamingAssets/Mods; loads mod.json manifests
+
+---
+
+*Updated: 2026-01-24*
+*Added: GameCommandProcessor for GAME layer network sync; INetworkBridge interface; ModLoader for mod support*
 
 **Note:** Lua scripting is in separate `Scripting` assembly (optional, requires MOONSHARP_ENABLED). See `Scripts/Scripting/FILE_REGISTRY.md`.

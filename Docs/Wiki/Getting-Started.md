@@ -35,8 +35,8 @@ This keeps Archon versioned separately and makes updates easy with `git submodul
 
 2. **Install required packages** via Package Manager (**Window → Package Manager**):
    - Click **+ → Add package by name**
-   - Enter: `com.unity.nuget.newtonsoft-json`
-   - Click Add
+   - Enter: `com.unity.nuget.newtonsoft-json` → Click Add
+   - Enter: `com.unity.transport` → Click Add (for multiplayer)
 
 3. **Verify URP is configured**:
    - Check **Edit → Project Settings → Graphics** has a URP asset assigned
@@ -53,6 +53,7 @@ This keeps Archon versioned separately and makes updates easy with `git submodul
 |-------|----------|
 | Pink/magenta materials | URP not configured - assign URP asset in Graphics settings |
 | Compiler errors about Json | Install Newtonsoft Json.NET package |
+| Compiler errors about Transport | Install Unity Transport package (`com.unity.transport`) |
 | Nothing renders | Check MapGenerator has mesh renderer assigned in Inspector |
 | Console spam on Play | Check Logs/ folder for detailed error info |
 

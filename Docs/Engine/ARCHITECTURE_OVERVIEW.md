@@ -130,10 +130,12 @@ The engine has working implementations of:
 - Map modes with pluggable colorizers
 - Visual styles system
 - Data loading with phase-based initialization
+- Multiplayer with lockstep synchronization, lobby, time sync
+- Mod loading infrastructure
 
 What's designed but not implemented:
-- Multiplayer networking
-- Modding system
+- Steam transport (using DirectTransport for LAN/IP)
+- Host migration
 
 See CURRENT_FEATURES.md for detailed feature inventory.
 
@@ -157,8 +159,9 @@ See CURRENT_FEATURES.md for detailed feature inventory.
 - Engine-Game Separation - Philosophy of mechanism vs policy
 - Data Flow Architecture - Command and event patterns
 - Map System Architecture - Texture-based rendering
+- Multiplayer Architecture - Lockstep synchronization patterns
 - Performance Architecture Guide - Optimization patterns
-- Architecture Patterns - Catalog of 19 patterns used throughout
+- Architecture Patterns - Catalog of 22 patterns used throughout
 
 ---
 

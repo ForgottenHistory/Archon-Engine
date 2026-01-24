@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HighlightMode
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 43
+    startLine: 44
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -46,7 +46,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Fill
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 45
+    startLine: 46
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -72,7 +72,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderOnly
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 46
+    startLine: 47
   assemblies:
   - MapAssembly
   namespace: Map.Interaction

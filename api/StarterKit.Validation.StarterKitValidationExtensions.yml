@@ -7,7 +7,9 @@ items:
   children:
   - StarterKit.Validation.StarterKitValidationExtensions.BuildingTypeExists(Core.Validation.ValidationBuilder,System.String)
   - StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String)
+  - StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String,System.UInt16)
   - StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
+  - StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.UInt16)
   - StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByPlayer(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId)
   - StarterKit.Validation.StarterKitValidationExtensions.UnitExists(Core.Validation.ValidationBuilder,System.UInt16)
   - StarterKit.Validation.StarterKitValidationExtensions.UnitTypeExists(Core.Validation.ValidationBuilder,System.String)
@@ -227,7 +229,7 @@ items:
   assemblies:
   - StarterKit
   namespace: StarterKit.Validation
-  summary: Validate that a building can be constructed in a province.
+  summary: Validate that a building can be constructed in a province (player only).
   example: []
   syntax:
     content: public static ValidationBuilder CanConstructBuilding(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId)
@@ -245,6 +247,96 @@ items:
   nameWithType.vb: StarterKitValidationExtensions.CanConstructBuilding(ValidationBuilder, ProvinceId, String)
   fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, String)
   name.vb: CanConstructBuilding(ValidationBuilder, ProvinceId, String)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String,System.UInt16)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String,System.UInt16)
+  id: CanConstructBuildingForCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.String,System.UInt16)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: CanConstructBuildingForCountry(ValidationBuilder, ProvinceId, string, ushort)
+  nameWithType: StarterKitValidationExtensions.CanConstructBuildingForCountry(ValidationBuilder, ProvinceId, string, ushort)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, string, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CanConstructBuildingForCountry
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 120
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: >-
+    Validate that a building can be constructed in a province for a specific country.
+
+    Used by both player and AI commands.
+  example: []
+  syntax:
+    content: public static ValidationBuilder CanConstructBuildingForCountry(this ValidationBuilder v, ProvinceId provinceId, string buildingTypeId, ushort countryId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: provinceId
+      type: Core.Data.Ids.ProvinceId
+    - id: buildingTypeId
+      type: System.String
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function CanConstructBuildingForCountry(v As ValidationBuilder, provinceId As ProvinceId, buildingTypeId As String, countryId As UShort) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry*
+  nameWithType.vb: StarterKitValidationExtensions.CanConstructBuildingForCountry(ValidationBuilder, ProvinceId, String, UShort)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, String, UShort)
+  name.vb: CanConstructBuildingForCountry(ValidationBuilder, ProvinceId, String, UShort)
+- uid: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.UInt16)
+  commentId: M:StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.UInt16)
+  id: ProvinceOwnedByCountry(Core.Validation.ValidationBuilder,Core.Data.Ids.ProvinceId,System.UInt16)
+  isExtensionMethod: true
+  parent: StarterKit.Validation.StarterKitValidationExtensions
+  langs:
+  - csharp
+  - vb
+  name: ProvinceOwnedByCountry(ValidationBuilder, ProvinceId, ushort)
+  nameWithType: StarterKitValidationExtensions.ProvinceOwnedByCountry(ValidationBuilder, ProvinceId, ushort)
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ProvinceOwnedByCountry
+    path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
+    startLine: 140
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Validation
+  summary: >-
+    Validate that a province is owned by a specific country.
+
+    Used by multiplayer commands where country ID is explicit.
+  example: []
+  syntax:
+    content: public static ValidationBuilder ProvinceOwnedByCountry(this ValidationBuilder v, ProvinceId provinceId, ushort countryId)
+    parameters:
+    - id: v
+      type: Core.Validation.ValidationBuilder
+    - id: provinceId
+      type: Core.Data.Ids.ProvinceId
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: Core.Validation.ValidationBuilder
+    content.vb: Public Shared Function ProvinceOwnedByCountry(v As ValidationBuilder, provinceId As ProvinceId, countryId As UShort) As ValidationBuilder
+  overload: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry*
+  nameWithType.vb: StarterKitValidationExtensions.ProvinceOwnedByCountry(ValidationBuilder, ProvinceId, UShort)
+  fullName.vb: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry(Core.Validation.ValidationBuilder, Core.Data.Ids.ProvinceId, UShort)
+  name.vb: ProvinceOwnedByCountry(ValidationBuilder, ProvinceId, UShort)
 - uid: StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
   commentId: M:StarterKit.Validation.StarterKitValidationExtensions.HasGold(Core.Validation.ValidationBuilder,System.Int32)
   id: HasGold(Core.Validation.ValidationBuilder,System.Int32)
@@ -264,7 +356,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasGold
     path: Scripts/StarterKit/Validation/StarterKitValidationExtensions.cs
-    startLine: 119
+    startLine: 160
   assemblies:
   - StarterKit
   namespace: StarterKit.Validation
@@ -439,6 +531,18 @@ references:
   name: CanConstructBuilding
   nameWithType: StarterKitValidationExtensions.CanConstructBuilding
   fullName: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuilding
+- uid: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_CanConstructBuildingForCountry_Core_Validation_ValidationBuilder_Core_Data_Ids_ProvinceId_System_String_System_UInt16_
+  name: CanConstructBuildingForCountry
+  nameWithType: StarterKitValidationExtensions.CanConstructBuildingForCountry
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.CanConstructBuildingForCountry
+- uid: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry*
+  commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry
+  href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_ProvinceOwnedByCountry_Core_Validation_ValidationBuilder_Core_Data_Ids_ProvinceId_System_UInt16_
+  name: ProvinceOwnedByCountry
+  nameWithType: StarterKitValidationExtensions.ProvinceOwnedByCountry
+  fullName: StarterKit.Validation.StarterKitValidationExtensions.ProvinceOwnedByCountry
 - uid: StarterKit.Validation.StarterKitValidationExtensions.HasGold*
   commentId: Overload:StarterKit.Validation.StarterKitValidationExtensions.HasGold
   href: StarterKit.Validation.StarterKitValidationExtensions.html#StarterKit_Validation_StarterKitValidationExtensions_HasGold_Core_Validation_ValidationBuilder_System_Int32_

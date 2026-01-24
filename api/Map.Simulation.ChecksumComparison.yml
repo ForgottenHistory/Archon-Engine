@@ -24,11 +24,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ChecksumComparison
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 391
+    startLine: 327
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
-  summary: Result of checksum comparison
+  summary: Result of checksum comparison.
   example: []
   syntax:
     content: public struct ChecksumComparison
@@ -51,7 +51,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Match
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 393
+    startLine: 329
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -78,7 +78,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ChecksumA
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 394
+    startLine: 330
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -105,7 +105,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ChecksumB
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 395
+    startLine: 331
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -132,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Differences
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 396
+    startLine: 332
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -159,7 +159,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToString
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 398
+    startLine: 334
   assemblies:
   - MapAssembly
   namespace: Map.Simulation

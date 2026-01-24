@@ -23,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainBlendMapGenerator
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -82,7 +82,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InitializeKernels
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 59
+    startLine: 60
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -110,7 +110,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 77
+    startLine: 87
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -144,7 +144,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetActiveTerrainRenderer
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 120
+    startLine: 130
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain
@@ -180,7 +180,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Generate
     path: Scripts/Map/Rendering/Terrain/TerrainBlendMapGenerator.cs
-    startLine: 137
+    startLine: 147
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Terrain

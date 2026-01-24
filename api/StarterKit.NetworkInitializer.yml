@@ -1,0 +1,452 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.NetworkInitializer
+  commentId: T:StarterKit.NetworkInitializer
+  id: NetworkInitializer
+  parent: StarterKit
+  children:
+  - StarterKit.NetworkInitializer.Initialize(Core.GameState,StarterKit.LobbyUI,StarterKit.CountrySelectionUI)
+  - StarterKit.NetworkInitializer.IsCountryHumanControlled(System.UInt16)
+  - StarterKit.NetworkInitializer.IsHost
+  - StarterKit.NetworkInitializer.IsInitialized
+  - StarterKit.NetworkInitializer.IsMultiplayer
+  - StarterKit.NetworkInitializer.NetworkManager
+  - StarterKit.NetworkInitializer.TimeSync
+  langs:
+  - csharp
+  - vb
+  name: NetworkInitializer
+  nameWithType: NetworkInitializer
+  fullName: StarterKit.NetworkInitializer
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NetworkInitializer
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 13
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    STARTERKIT - Initializes multiplayer networking.
+
+    Wires up transport, manager, and bridge to CommandProcessor.
+
+    Handles lobby flow: mode selection → lobby → game start.
+  example: []
+  syntax:
+    content: 'public class NetworkInitializer : MonoBehaviour'
+    content.vb: Public Class NetworkInitializer Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+- uid: StarterKit.NetworkInitializer.IsInitialized
+  commentId: P:StarterKit.NetworkInitializer.IsInitialized
+  id: IsInitialized
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsInitialized
+  nameWithType: NetworkInitializer.IsInitialized
+  fullName: StarterKit.NetworkInitializer.IsInitialized
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsInitialized
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 37
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Whether network is initialized and ready.
+  example: []
+  syntax:
+    content: public bool IsInitialized { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsInitialized As Boolean
+  overload: StarterKit.NetworkInitializer.IsInitialized*
+- uid: StarterKit.NetworkInitializer.IsMultiplayer
+  commentId: P:StarterKit.NetworkInitializer.IsMultiplayer
+  id: IsMultiplayer
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplayer
+  nameWithType: NetworkInitializer.IsMultiplayer
+  fullName: StarterKit.NetworkInitializer.IsMultiplayer
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsMultiplayer
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 40
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Whether we are in a multiplayer session.
+  example: []
+  syntax:
+    content: public bool IsMultiplayer { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsMultiplayer As Boolean
+  overload: StarterKit.NetworkInitializer.IsMultiplayer*
+- uid: StarterKit.NetworkInitializer.IsHost
+  commentId: P:StarterKit.NetworkInitializer.IsHost
+  id: IsHost
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsHost
+  nameWithType: NetworkInitializer.IsHost
+  fullName: StarterKit.NetworkInitializer.IsHost
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsHost
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 43
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Whether we are the host.
+  example: []
+  syntax:
+    content: public bool IsHost { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsHost As Boolean
+  overload: StarterKit.NetworkInitializer.IsHost*
+- uid: StarterKit.NetworkInitializer.NetworkManager
+  commentId: P:StarterKit.NetworkInitializer.NetworkManager
+  id: NetworkManager
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: NetworkManager
+  nameWithType: NetworkInitializer.NetworkManager
+  fullName: StarterKit.NetworkInitializer.NetworkManager
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NetworkManager
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 46
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The NetworkManager instance.
+  example: []
+  syntax:
+    content: public NetworkManager NetworkManager { get; }
+    parameters: []
+    return:
+      type: Archon.Network.NetworkManager
+    content.vb: Public ReadOnly Property NetworkManager As NetworkManager
+  overload: StarterKit.NetworkInitializer.NetworkManager*
+- uid: StarterKit.NetworkInitializer.TimeSync
+  commentId: P:StarterKit.NetworkInitializer.TimeSync
+  id: TimeSync
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: TimeSync
+  nameWithType: NetworkInitializer.TimeSync
+  fullName: StarterKit.NetworkInitializer.TimeSync
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TimeSync
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 49
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: The NetworkTimeSync for multiplayer time control.
+  example: []
+  syntax:
+    content: public NetworkTimeSync TimeSync { get; }
+    parameters: []
+    return:
+      type: Archon.Network.NetworkTimeSync
+    content.vb: Public ReadOnly Property TimeSync As NetworkTimeSync
+  overload: StarterKit.NetworkInitializer.TimeSync*
+- uid: StarterKit.NetworkInitializer.IsCountryHumanControlled(System.UInt16)
+  commentId: M:StarterKit.NetworkInitializer.IsCountryHumanControlled(System.UInt16)
+  id: IsCountryHumanControlled(System.UInt16)
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: IsCountryHumanControlled(ushort)
+  nameWithType: NetworkInitializer.IsCountryHumanControlled(ushort)
+  fullName: StarterKit.NetworkInitializer.IsCountryHumanControlled(ushort)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCountryHumanControlled
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 54
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Check if a country is controlled by a human player in multiplayer.
+  example: []
+  syntax:
+    content: public bool IsCountryHumanControlled(ushort countryId)
+    parameters:
+    - id: countryId
+      type: System.UInt16
+    return:
+      type: System.Boolean
+    content.vb: Public Function IsCountryHumanControlled(countryId As UShort) As Boolean
+  overload: StarterKit.NetworkInitializer.IsCountryHumanControlled*
+  nameWithType.vb: NetworkInitializer.IsCountryHumanControlled(UShort)
+  fullName.vb: StarterKit.NetworkInitializer.IsCountryHumanControlled(UShort)
+  name.vb: IsCountryHumanControlled(UShort)
+- uid: StarterKit.NetworkInitializer.Initialize(Core.GameState,StarterKit.LobbyUI,StarterKit.CountrySelectionUI)
+  commentId: M:StarterKit.NetworkInitializer.Initialize(Core.GameState,StarterKit.LobbyUI,StarterKit.CountrySelectionUI)
+  id: Initialize(Core.GameState,StarterKit.LobbyUI,StarterKit.CountrySelectionUI)
+  parent: StarterKit.NetworkInitializer
+  langs:
+  - csharp
+  - vb
+  name: Initialize(GameState, LobbyUI, CountrySelectionUI)
+  nameWithType: NetworkInitializer.Initialize(GameState, LobbyUI, CountrySelectionUI)
+  fullName: StarterKit.NetworkInitializer.Initialize(Core.GameState, StarterKit.LobbyUI, StarterKit.CountrySelectionUI)
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Network/NetworkInitializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/StarterKit/Network/NetworkInitializer.cs
+    startLine: 72
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: >-
+    Initialize networking components.
+
+    Called by Initializer after ENGINE is ready.
+  example: []
+  syntax:
+    content: public void Initialize(GameState gameStateRef, LobbyUI lobbyUIRef, CountrySelectionUI countrySelectionUIRef)
+    parameters:
+    - id: gameStateRef
+      type: Core.GameState
+    - id: lobbyUIRef
+      type: StarterKit.LobbyUI
+    - id: countrySelectionUIRef
+      type: StarterKit.CountrySelectionUI
+    content.vb: Public Sub Initialize(gameStateRef As GameState, lobbyUIRef As LobbyUI, countrySelectionUIRef As CountrySelectionUI)
+  overload: StarterKit.NetworkInitializer.Initialize*
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: StarterKit.NetworkInitializer.IsInitialized*
+  commentId: Overload:StarterKit.NetworkInitializer.IsInitialized
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_IsInitialized
+  name: IsInitialized
+  nameWithType: NetworkInitializer.IsInitialized
+  fullName: StarterKit.NetworkInitializer.IsInitialized
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: StarterKit.NetworkInitializer.IsMultiplayer*
+  commentId: Overload:StarterKit.NetworkInitializer.IsMultiplayer
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_IsMultiplayer
+  name: IsMultiplayer
+  nameWithType: NetworkInitializer.IsMultiplayer
+  fullName: StarterKit.NetworkInitializer.IsMultiplayer
+- uid: StarterKit.NetworkInitializer.IsHost*
+  commentId: Overload:StarterKit.NetworkInitializer.IsHost
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_IsHost
+  name: IsHost
+  nameWithType: NetworkInitializer.IsHost
+  fullName: StarterKit.NetworkInitializer.IsHost
+- uid: StarterKit.NetworkInitializer.NetworkManager*
+  commentId: Overload:StarterKit.NetworkInitializer.NetworkManager
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_NetworkManager
+  name: NetworkManager
+  nameWithType: NetworkInitializer.NetworkManager
+  fullName: StarterKit.NetworkInitializer.NetworkManager
+- uid: Archon.Network.NetworkManager
+  commentId: T:Archon.Network.NetworkManager
+  parent: Archon.Network
+  name: NetworkManager
+  nameWithType: NetworkManager
+  fullName: Archon.Network.NetworkManager
+- uid: Archon.Network
+  commentId: N:Archon.Network
+  name: Archon.Network
+  nameWithType: Archon.Network
+  fullName: Archon.Network
+  spec.csharp:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Network
+    name: Network
+  spec.vb:
+  - uid: Archon
+    name: Archon
+  - name: .
+  - uid: Archon.Network
+    name: Network
+- uid: StarterKit.NetworkInitializer.TimeSync*
+  commentId: Overload:StarterKit.NetworkInitializer.TimeSync
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_TimeSync
+  name: TimeSync
+  nameWithType: NetworkInitializer.TimeSync
+  fullName: StarterKit.NetworkInitializer.TimeSync
+- uid: Archon.Network.NetworkTimeSync
+  commentId: T:Archon.Network.NetworkTimeSync
+  parent: Archon.Network
+  name: NetworkTimeSync
+  nameWithType: NetworkTimeSync
+  fullName: Archon.Network.NetworkTimeSync
+- uid: StarterKit.NetworkInitializer.IsCountryHumanControlled*
+  commentId: Overload:StarterKit.NetworkInitializer.IsCountryHumanControlled
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_IsCountryHumanControlled_System_UInt16_
+  name: IsCountryHumanControlled
+  nameWithType: NetworkInitializer.IsCountryHumanControlled
+  fullName: StarterKit.NetworkInitializer.IsCountryHumanControlled
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
+- uid: StarterKit.NetworkInitializer.Initialize*
+  commentId: Overload:StarterKit.NetworkInitializer.Initialize
+  href: StarterKit.NetworkInitializer.html#StarterKit_NetworkInitializer_Initialize_Core_GameState_StarterKit_LobbyUI_StarterKit_CountrySelectionUI_
+  name: Initialize
+  nameWithType: NetworkInitializer.Initialize
+  fullName: StarterKit.NetworkInitializer.Initialize
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: StarterKit.LobbyUI
+  commentId: T:StarterKit.LobbyUI
+  parent: StarterKit
+  href: StarterKit.LobbyUI.html
+  name: LobbyUI
+  nameWithType: LobbyUI
+  fullName: StarterKit.LobbyUI
+- uid: StarterKit.CountrySelectionUI
+  commentId: T:StarterKit.CountrySelectionUI
+  parent: StarterKit
+  href: StarterKit.CountrySelectionUI.html
+  name: CountrySelectionUI
+  nameWithType: CountrySelectionUI
+  fullName: StarterKit.CountrySelectionUI
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core

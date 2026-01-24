@@ -1,0 +1,179 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.LobbyState
+  commentId: T:StarterKit.LobbyState
+  id: LobbyState
+  parent: StarterKit
+  children:
+  - StarterKit.LobbyState.Connecting
+  - StarterKit.LobbyState.EnteringHostInfo
+  - StarterKit.LobbyState.EnteringJoinInfo
+  - StarterKit.LobbyState.InLobby
+  - StarterKit.LobbyState.ModeSelection
+  langs:
+  - csharp
+  - vb
+  name: LobbyState
+  nameWithType: LobbyState
+  fullName: StarterKit.LobbyState
+  type: Enum
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LobbyState
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 550
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Lobby UI states.
+  example: []
+  syntax:
+    content: public enum LobbyState
+    content.vb: Public Enum LobbyState
+- uid: StarterKit.LobbyState.ModeSelection
+  commentId: F:StarterKit.LobbyState.ModeSelection
+  id: ModeSelection
+  parent: StarterKit.LobbyState
+  langs:
+  - csharp
+  - vb
+  name: ModeSelection
+  nameWithType: LobbyState.ModeSelection
+  fullName: StarterKit.LobbyState.ModeSelection
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ModeSelection
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 552
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: ModeSelection = 0
+    return:
+      type: StarterKit.LobbyState
+- uid: StarterKit.LobbyState.EnteringHostInfo
+  commentId: F:StarterKit.LobbyState.EnteringHostInfo
+  id: EnteringHostInfo
+  parent: StarterKit.LobbyState
+  langs:
+  - csharp
+  - vb
+  name: EnteringHostInfo
+  nameWithType: LobbyState.EnteringHostInfo
+  fullName: StarterKit.LobbyState.EnteringHostInfo
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnteringHostInfo
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 553
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: EnteringHostInfo = 1
+    return:
+      type: StarterKit.LobbyState
+- uid: StarterKit.LobbyState.EnteringJoinInfo
+  commentId: F:StarterKit.LobbyState.EnteringJoinInfo
+  id: EnteringJoinInfo
+  parent: StarterKit.LobbyState
+  langs:
+  - csharp
+  - vb
+  name: EnteringJoinInfo
+  nameWithType: LobbyState.EnteringJoinInfo
+  fullName: StarterKit.LobbyState.EnteringJoinInfo
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: EnteringJoinInfo
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 554
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: EnteringJoinInfo = 2
+    return:
+      type: StarterKit.LobbyState
+- uid: StarterKit.LobbyState.Connecting
+  commentId: F:StarterKit.LobbyState.Connecting
+  id: Connecting
+  parent: StarterKit.LobbyState
+  langs:
+  - csharp
+  - vb
+  name: Connecting
+  nameWithType: LobbyState.Connecting
+  fullName: StarterKit.LobbyState.Connecting
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Connecting
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 555
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: Connecting = 3
+    return:
+      type: StarterKit.LobbyState
+- uid: StarterKit.LobbyState.InLobby
+  commentId: F:StarterKit.LobbyState.InLobby
+  id: InLobby
+  parent: StarterKit.LobbyState
+  langs:
+  - csharp
+  - vb
+  name: InLobby
+  nameWithType: LobbyState.InLobby
+  fullName: StarterKit.LobbyState.InLobby
+  type: Field
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/LobbyUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InLobby
+    path: Scripts/StarterKit/UI/LobbyUI.cs
+    startLine: 556
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  syntax:
+    content: InLobby = 4
+    return:
+      type: StarterKit.LobbyState
+references:
+- uid: StarterKit
+  commentId: N:StarterKit
+  href: StarterKit.html
+  name: StarterKit
+  nameWithType: StarterKit
+  fullName: StarterKit
+- uid: StarterKit.LobbyState
+  commentId: T:StarterKit.LobbyState
+  parent: StarterKit
+  href: StarterKit.LobbyState.html
+  name: LobbyState
+  nameWithType: LobbyState
+  fullName: StarterKit.LobbyState

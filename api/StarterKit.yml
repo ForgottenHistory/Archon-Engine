@@ -17,8 +17,11 @@ items:
   - StarterKit.Initializer
   - StarterKit.LandUnitCostCalculator
   - StarterKit.LedgerUI
+  - StarterKit.LobbyState
+  - StarterKit.LobbyUI
   - StarterKit.ModifierType
   - StarterKit.ModifierTypeHelper
+  - StarterKit.NetworkInitializer
   - StarterKit.OwnershipRecord
   - StarterKit.PlayerCountrySelectedEvent
   - StarterKit.PlayerState
@@ -48,6 +51,7 @@ items:
 references:
 - uid: StarterKit.CountrySelectionUI
   commentId: T:StarterKit.CountrySelectionUI
+  parent: StarterKit
   href: StarterKit.CountrySelectionUI.html
   name: CountrySelectionUI
   nameWithType: CountrySelectionUI
@@ -212,6 +216,13 @@ references:
   name: ProvinceInfoPresenter
   nameWithType: ProvinceInfoPresenter
   fullName: StarterKit.ProvinceInfoPresenter
+- uid: StarterKit.NetworkInitializer
+  commentId: T:StarterKit.NetworkInitializer
+  parent: StarterKit
+  href: StarterKit.NetworkInitializer.html
+  name: NetworkInitializer
+  nameWithType: NetworkInitializer
+  fullName: StarterKit.NetworkInitializer
 - uid: StarterKit.TimeUI
   commentId: T:StarterKit.TimeUI
   href: StarterKit.TimeUI.html
@@ -238,6 +249,20 @@ references:
   name: PlayerState
   nameWithType: PlayerState
   fullName: StarterKit.PlayerState
+- uid: StarterKit.LobbyUI
+  commentId: T:StarterKit.LobbyUI
+  parent: StarterKit
+  href: StarterKit.LobbyUI.html
+  name: LobbyUI
+  nameWithType: LobbyUI
+  fullName: StarterKit.LobbyUI
+- uid: StarterKit.LobbyState
+  commentId: T:StarterKit.LobbyState
+  parent: StarterKit
+  href: StarterKit.LobbyState.html
+  name: LobbyState
+  nameWithType: LobbyState
+  fullName: StarterKit.LobbyState
 - uid: StarterKit.UnitType
   commentId: T:StarterKit.UnitType
   parent: StarterKit

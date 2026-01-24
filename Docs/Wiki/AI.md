@@ -265,6 +265,31 @@ Debug.Log($"Timeouts: {stats.TimeoutCount}");
 Debug.Log($"Avg Processing Time: {stats.AverageProcessingTimeMs}ms");
 ```
 
+## Multiplayer
+
+In multiplayer, AI runs **only on host** to prevent divergent decisions:
+
+```csharp
+public void ProcessHourlyAI(...)
+{
+    // Skip AI entirely on clients
+    if (networkInitializer.IsMultiplayer && !networkInitializer.IsHost)
+        return;
+
+    foreach (var countryId in countries)
+    {
+        // Skip human-controlled countries
+        if (networkInitializer.IsCountryHumanControlled(countryId))
+            continue;
+
+        // Process AI - commands will be broadcast to clients
+        ProcessCountryAI(countryId);
+    }
+}
+```
+
+AI commands are broadcast to all clients via the normal command sync system. See [Multiplayer](Multiplayer.md) for details.
+
 ## Performance Tips
 
 1. **Return 0 early** - If goal is impossible, return score 0 immediately

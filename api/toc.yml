@@ -214,6 +214,9 @@ items:
   - uid: Core.Commands.DeserializationResult
     name: DeserializationResult
     type: Struct
+  - uid: Core.Commands.GameCommandProcessor
+    name: GameCommandProcessor
+    type: Class
   - uid: Core.Commands.ICommand
     name: ICommand
     type: Interface
@@ -360,6 +363,9 @@ items:
   - uid: Core.Data.ProvinceStateSerializer
     name: ProvinceStateSerializer
     type: Class
+  - uid: Core.Data.ProvinceStateSerializer.DeserializeResult
+    name: ProvinceStateSerializer.DeserializeResult
+    type: Struct
   - uid: Core.Data.ProvinceStateSerializer.SerializationStats
     name: ProvinceStateSerializer.SerializationStats
     type: Struct
@@ -818,6 +824,13 @@ items:
   - uid: Core.Localization.YAMLTokenizer.YAMLTokenizeResult
     name: YAMLTokenizer.YAMLTokenizeResult
     type: Struct
+- uid: Core.Modding
+  name: Core.Modding
+  type: Namespace
+  items:
+  - uid: Core.Modding.ModLoader
+    name: ModLoader
+    type: Class
 - uid: Core.Modifiers
   name: Core.Modifiers
   type: Namespace
@@ -846,6 +859,13 @@ items:
   - uid: Core.Modifiers.ScopedModifierContainer
     name: ScopedModifierContainer
     type: Struct
+- uid: Core.Network
+  name: Core.Network
+  type: Namespace
+  items:
+  - uid: Core.Network.INetworkBridge
+    name: INetworkBridge
+    type: Interface
 - uid: Core.Queries
   name: Core.Queries
   type: Namespace
@@ -1058,9 +1078,6 @@ items:
   - uid: Core.Systems.ProvinceOwnershipChangedEvent
     name: ProvinceOwnershipChangedEvent
     type: Struct
-  - uid: Core.Systems.ProvinceSimulation
-    name: ProvinceSimulation
-    type: Class
   - uid: Core.Systems.ProvinceSystem
     name: ProvinceSystem
     type: Class
@@ -1485,6 +1502,18 @@ items:
   name: Map.Province
   type: Namespace
   items:
+  - uid: Map.Province.AdjacencyScanJob
+    name: AdjacencyScanJob
+    type: Struct
+  - uid: Map.Province.Color32Comparer
+    name: Color32Comparer
+    type: Class
+  - uid: Map.Province.FastAdjacencyScanner
+    name: FastAdjacencyScanner
+    type: Class
+  - uid: Map.Province.FastAdjacencyScanner.ScanResult
+    name: FastAdjacencyScanner.ScanResult
+    type: Class
   - uid: Map.Province.GPUProvinceNeighborDetector
     name: GPUProvinceNeighborDetector
     type: Class
@@ -1817,18 +1846,6 @@ items:
   - uid: Map.Simulation.ChecksumComparison
     name: ChecksumComparison
     type: Struct
-  - uid: Map.Simulation.SimulationMapLoader
-    name: SimulationMapLoader
-    type: Class
-  - uid: Map.Simulation.SimulationMapLoader.ProvinceBounds
-    name: SimulationMapLoader.ProvinceBounds
-    type: Struct
-  - uid: Map.Simulation.SimulationMapLoader.SimulationLoadResult
-    name: SimulationMapLoader.SimulationLoadResult
-    type: Struct
-  - uid: Map.Simulation.SimulationMapLoader.SimulationMapData
-    name: SimulationMapLoader.SimulationMapData
-    type: Struct
   - uid: Map.Simulation.StateChecksum
     name: StateChecksum
     type: Struct
@@ -1888,11 +1905,20 @@ items:
   - uid: StarterKit.LedgerUI
     name: LedgerUI
     type: Class
+  - uid: StarterKit.LobbyState
+    name: LobbyState
+    type: Enum
+  - uid: StarterKit.LobbyUI
+    name: LobbyUI
+    type: Class
   - uid: StarterKit.ModifierType
     name: ModifierType
     type: Enum
   - uid: StarterKit.ModifierTypeHelper
     name: ModifierTypeHelper
+    type: Class
+  - uid: StarterKit.NetworkInitializer
+    name: NetworkInitializer
     type: Class
   - uid: StarterKit.OwnershipRecord
     name: OwnershipRecord
@@ -1952,6 +1978,9 @@ items:
   - uid: StarterKit.Commands.AddGoldCommand
     name: AddGoldCommand
     type: Class
+  - uid: StarterKit.Commands.ColonizeCommand
+    name: ColonizeCommand
+    type: Class
   - uid: StarterKit.Commands.ConstructBuildingCommand
     name: ConstructBuildingCommand
     type: Class
@@ -1963,6 +1992,9 @@ items:
     type: Class
   - uid: StarterKit.Commands.MoveUnitCommand
     name: MoveUnitCommand
+    type: Class
+  - uid: StarterKit.Commands.QueueUnitMovementCommand
+    name: QueueUnitMovementCommand
     type: Class
 - uid: StarterKit.MapModes
   name: StarterKit.MapModes

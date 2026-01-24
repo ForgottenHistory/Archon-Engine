@@ -1015,12 +1015,12 @@ references:
   commentId: T:System.ValueTuple{System.Int32,System.Int32,System.Int32}
   parent: System
   definition: System.ValueTuple`3
-  name: (int totalBytes, int hotBytes, int coldBytes)
-  nameWithType: (int totalBytes, int hotBytes, int coldBytes)
-  fullName: (int totalBytes, int hotBytes, int coldBytes)
-  nameWithType.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
-  fullName.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
-  name.vb: (totalBytes As Integer, hotBytes As Integer, coldBytes As Integer)
+  name: (int totalBytes, int provinceBytes, int lookupBytes)
+  nameWithType: (int totalBytes, int provinceBytes, int lookupBytes)
+  fullName: (int totalBytes, int provinceBytes, int lookupBytes)
+  nameWithType.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
+  fullName.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
+  name.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
   spec.csharp:
   - name: (
   - uid: System.Int32
@@ -1035,16 +1035,16 @@ references:
     name: int
     isExternal: true
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
-    name: hotBytes
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.provinceBytes
+    name: provinceBytes
   - name: ','
   - name: " "
   - uid: System.Int32
     name: int
     isExternal: true
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
-    name: coldBytes
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.lookupBytes
+    name: lookupBytes
   - name: )
   spec.vb:
   - name: (
@@ -1058,8 +1058,8 @@ references:
     isExternal: true
   - name: ','
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.hotBytes
-    name: hotBytes
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.provinceBytes
+    name: provinceBytes
   - name: " "
   - name: As
   - name: " "
@@ -1068,8 +1068,8 @@ references:
     isExternal: true
   - name: ','
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.coldBytes
-    name: coldBytes
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.lookupBytes
+    name: lookupBytes
   - name: " "
   - name: As
   - name: " "

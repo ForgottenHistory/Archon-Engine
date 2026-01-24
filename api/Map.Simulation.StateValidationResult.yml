@@ -8,9 +8,7 @@ items:
   - Map.Simulation.StateValidationResult.CheckedAt
   - Map.Simulation.StateValidationResult.IsValid
   - Map.Simulation.StateValidationResult.Issues
-  - Map.Simulation.StateValidationResult.MemoryUsage
   - Map.Simulation.StateValidationResult.ProvinceCount
-  - Map.Simulation.StateValidationResult.StateVersion
   - Map.Simulation.StateValidationResult.ToString
   langs:
   - csharp
@@ -26,11 +24,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: StateValidationResult
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 414
+    startLine: 350
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
-  summary: Result of state validation
+  summary: Result of state validation.
   example: []
   syntax:
     content: public struct StateValidationResult
@@ -53,7 +51,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 416
+    startLine: 352
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -80,7 +78,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Issues
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 417
+    startLine: 353
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -107,7 +105,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CheckedAt
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 418
+    startLine: 354
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -134,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceCount
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 419
+    startLine: 355
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -143,60 +141,6 @@ items:
     return:
       type: System.Int32
     content.vb: Public ProvinceCount As Integer
-- uid: Map.Simulation.StateValidationResult.StateVersion
-  commentId: F:Map.Simulation.StateValidationResult.StateVersion
-  id: StateVersion
-  parent: Map.Simulation.StateValidationResult
-  langs:
-  - csharp
-  - vb
-  name: StateVersion
-  nameWithType: StateValidationResult.StateVersion
-  fullName: Map.Simulation.StateValidationResult.StateVersion
-  type: Field
-  source:
-    remote:
-      path: Scripts/Map/Simulation/StateValidator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: StateVersion
-    path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 420
-  assemblies:
-  - MapAssembly
-  namespace: Map.Simulation
-  syntax:
-    content: public uint StateVersion
-    return:
-      type: System.UInt32
-    content.vb: Public StateVersion As UInteger
-- uid: Map.Simulation.StateValidationResult.MemoryUsage
-  commentId: F:Map.Simulation.StateValidationResult.MemoryUsage
-  id: MemoryUsage
-  parent: Map.Simulation.StateValidationResult
-  langs:
-  - csharp
-  - vb
-  name: MemoryUsage
-  nameWithType: StateValidationResult.MemoryUsage
-  fullName: Map.Simulation.StateValidationResult.MemoryUsage
-  type: Field
-  source:
-    remote:
-      path: Scripts/Map/Simulation/StateValidator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: MemoryUsage
-    path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 421
-  assemblies:
-  - MapAssembly
-  namespace: Map.Simulation
-  syntax:
-    content: public int MemoryUsage
-    return:
-      type: System.Int32
-    content.vb: Public MemoryUsage As Integer
 - uid: Map.Simulation.StateValidationResult.ToString
   commentId: M:Map.Simulation.StateValidationResult.ToString
   id: ToString
@@ -215,7 +159,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToString
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 423
+    startLine: 357
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
@@ -371,16 +315,6 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: System.UInt32
-  commentId: T:System.UInt32
-  parent: System
-  isExternal: true
-  name: uint
-  nameWithType: uint
-  fullName: uint
-  nameWithType.vb: UInteger
-  fullName.vb: UInteger
-  name.vb: UInteger
 - uid: System.ValueType.ToString
   commentId: M:System.ValueType.ToString
   parent: System.ValueType

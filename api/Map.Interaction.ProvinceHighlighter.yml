@@ -29,7 +29,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceHighlighter
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -67,7 +67,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 99
+    startLine: 91
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetActiveHighlightRenderer
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 146
+    startLine: 138
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HighlightProvince
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 161
+    startLine: 153
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -178,7 +178,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HighlightProvince
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 226
+    startLine: 218
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -214,7 +214,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HighlightCountry
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 237
+    startLine: 229
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -255,7 +255,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ClearHighlight
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 293
+    startLine: 285
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -283,7 +283,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetHighlightMode
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 325
+    startLine: 317
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -314,7 +314,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderThickness
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 339
+    startLine: 331
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -348,7 +348,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHighlightedProvince
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 353
+    startLine: 345
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -378,7 +378,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsProvinceHighlighted
     path: Scripts/Map/Interaction/ProvinceHighlighter.cs
-    startLine: 358
+    startLine: 350
   assemblies:
   - MapAssembly
   namespace: Map.Interaction

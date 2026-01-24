@@ -9,14 +9,14 @@ items:
   - Core.Commands.ChangeOwnerCommand.CommandType
   - Core.Commands.ChangeOwnerCommand.Deserialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
   - Core.Commands.ChangeOwnerCommand.Dispose
-  - Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSystem)
   - Core.Commands.ChangeOwnerCommand.ExecutionTick
   - Core.Commands.ChangeOwnerCommand.GetChecksum
   - Core.Commands.ChangeOwnerCommand.GetSerializedSize
   - Core.Commands.ChangeOwnerCommand.PlayerID
   - Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
   - Core.Commands.ChangeOwnerCommand.ToString
-  - Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  - Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSystem)
   - Core.Commands.ChangeOwnerCommand.executionTick
   - Core.Commands.ChangeOwnerCommand.newControllerID
   - Core.Commands.ChangeOwnerCommand.newOwnerID
@@ -330,16 +330,16 @@ items:
   nameWithType.vb: ChangeOwnerCommand.New(UInteger, UShort, UShort, UShort, UShort)
   fullName.vb: Core.Commands.ChangeOwnerCommand.New(UInteger, UShort, UShort, UShort, UShort)
   name.vb: New(UInteger, UShort, UShort, UShort, UShort)
-- uid: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
-  id: Validate(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSystem)
+  id: Validate(Core.Systems.ProvinceSystem)
   parent: Core.Commands.ChangeOwnerCommand
   langs:
   - csharp
   - vb
-  name: Validate(ProvinceSimulation)
-  nameWithType: ChangeOwnerCommand.Validate(ProvinceSimulation)
-  fullName: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSimulation)
+  name: Validate(ProvinceSystem)
+  nameWithType: ChangeOwnerCommand.Validate(ProvinceSystem)
+  fullName: Core.Commands.ChangeOwnerCommand.Validate(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -358,28 +358,27 @@ items:
     Must be deterministic - same result across all clients
   example: []
   syntax:
-    content: public CommandValidationResult Validate(ProvinceSimulation simulation)
+    content: public CommandValidationResult Validate(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
-      description: Current simulation state
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Core.Commands.CommandValidationResult
       description: True if command can be executed
-    content.vb: Public Function Validate(simulation As ProvinceSimulation) As CommandValidationResult
+    content.vb: Public Function Validate(provinceSystem As ProvinceSystem) As CommandValidationResult
   overload: Core.Commands.ChangeOwnerCommand.Validate*
   implements:
-  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
-- uid: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
-  id: Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
+- uid: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSystem)
+  id: Execute(Core.Systems.ProvinceSystem)
   parent: Core.Commands.ChangeOwnerCommand
   langs:
   - csharp
   - vb
-  name: Execute(ProvinceSimulation)
-  nameWithType: ChangeOwnerCommand.Execute(ProvinceSimulation)
-  fullName: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSimulation)
+  name: Execute(ProvinceSystem)
+  nameWithType: ChangeOwnerCommand.Execute(ProvinceSystem)
+  fullName: Core.Commands.ChangeOwnerCommand.Execute(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -398,18 +397,17 @@ items:
     Must be deterministic - same result across all clients
   example: []
   syntax:
-    content: public CommandExecutionResult Execute(ProvinceSimulation simulation)
+    content: public CommandExecutionResult Execute(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
-      description: Simulation to modify
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Core.Commands.CommandExecutionResult
       description: Execution result with affected provinces
-    content.vb: Public Function Execute(simulation As ProvinceSimulation) As CommandExecutionResult
+    content.vb: Public Function Execute(provinceSystem As ProvinceSystem) As CommandExecutionResult
   overload: Core.Commands.ChangeOwnerCommand.Execute*
   implements:
-  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  - Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
 - uid: Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
   commentId: M:Core.Commands.ChangeOwnerCommand.Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
   id: Serialize(Unity.Collections.NativeArray{System.Byte},System.Int32)
@@ -745,42 +743,42 @@ references:
   name.vb: New
 - uid: Core.Commands.ChangeOwnerCommand.Validate*
   commentId: Overload:Core.Commands.ChangeOwnerCommand.Validate
-  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Validate_Core_Systems_ProvinceSimulation_
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Validate_Core_Systems_ProvinceSystem_
   name: Validate
   nameWithType: ChangeOwnerCommand.Validate
   fullName: Core.Commands.ChangeOwnerCommand.Validate
-- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
   parent: Core.Commands.IProvinceCommand
-  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
-  name: Validate(ProvinceSimulation)
-  nameWithType: IProvinceCommand.Validate(ProvinceSimulation)
-  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSystem_
+  name: Validate(ProvinceSystem)
+  nameWithType: IProvinceCommand.Validate(ProvinceSystem)
+  fullName: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
   spec.csharp:
-  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
     name: Validate
-    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSystem_
   - name: (
-  - uid: Core.Systems.ProvinceSimulation
-    name: ProvinceSimulation
-    href: Core.Systems.ProvinceSimulation.html
+  - uid: Core.Systems.ProvinceSystem
+    name: ProvinceSystem
+    href: Core.Systems.ProvinceSystem.html
   - name: )
   spec.vb:
-  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSimulation)
+  - uid: Core.Commands.IProvinceCommand.Validate(Core.Systems.ProvinceSystem)
     name: Validate
-    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSimulation_
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Validate_Core_Systems_ProvinceSystem_
   - name: (
-  - uid: Core.Systems.ProvinceSimulation
-    name: ProvinceSimulation
-    href: Core.Systems.ProvinceSimulation.html
+  - uid: Core.Systems.ProvinceSystem
+    name: ProvinceSystem
+    href: Core.Systems.ProvinceSystem.html
   - name: )
-- uid: Core.Systems.ProvinceSimulation
-  commentId: T:Core.Systems.ProvinceSimulation
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
   parent: Core.Systems
-  href: Core.Systems.ProvinceSimulation.html
-  name: ProvinceSimulation
-  nameWithType: ProvinceSimulation
-  fullName: Core.Systems.ProvinceSimulation
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
 - uid: Core.Commands.CommandValidationResult
   commentId: T:Core.Commands.CommandValidationResult
   parent: Core.Commands
@@ -812,34 +810,34 @@ references:
     href: Core.Systems.html
 - uid: Core.Commands.ChangeOwnerCommand.Execute*
   commentId: Overload:Core.Commands.ChangeOwnerCommand.Execute
-  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Execute_Core_Systems_ProvinceSimulation_
+  href: Core.Commands.ChangeOwnerCommand.html#Core_Commands_ChangeOwnerCommand_Execute_Core_Systems_ProvinceSystem_
   name: Execute
   nameWithType: ChangeOwnerCommand.Execute
   fullName: Core.Commands.ChangeOwnerCommand.Execute
-- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
-  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+- uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
+  commentId: M:Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
   parent: Core.Commands.IProvinceCommand
-  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
-  name: Execute(ProvinceSimulation)
-  nameWithType: IProvinceCommand.Execute(ProvinceSimulation)
-  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSystem_
+  name: Execute(ProvinceSystem)
+  nameWithType: IProvinceCommand.Execute(ProvinceSystem)
+  fullName: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
   spec.csharp:
-  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
     name: Execute
-    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSystem_
   - name: (
-  - uid: Core.Systems.ProvinceSimulation
-    name: ProvinceSimulation
-    href: Core.Systems.ProvinceSimulation.html
+  - uid: Core.Systems.ProvinceSystem
+    name: ProvinceSystem
+    href: Core.Systems.ProvinceSystem.html
   - name: )
   spec.vb:
-  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSimulation)
+  - uid: Core.Commands.IProvinceCommand.Execute(Core.Systems.ProvinceSystem)
     name: Execute
-    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSimulation_
+    href: Core.Commands.IProvinceCommand.html#Core_Commands_IProvinceCommand_Execute_Core_Systems_ProvinceSystem_
   - name: (
-  - uid: Core.Systems.ProvinceSimulation
-    name: ProvinceSimulation
-    href: Core.Systems.ProvinceSimulation.html
+  - uid: Core.Systems.ProvinceSystem
+    name: ProvinceSystem
+    href: Core.Systems.ProvinceSystem.html
   - name: )
 - uid: Core.Commands.CommandExecutionResult
   commentId: T:Core.Commands.CommandExecutionResult

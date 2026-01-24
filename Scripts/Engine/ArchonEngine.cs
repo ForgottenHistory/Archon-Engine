@@ -609,6 +609,15 @@ namespace Engine
             if (LogProgress)
                 ArchonLogger.Log(GameState.Adjacencies.GetStatistics(), "map_initialization");
 
+            // Initialize pathfinding system now that adjacencies are ready
+            if (GameState.Pathfinding != null && GameState.Adjacencies.IsInitialized)
+            {
+                GameState.Pathfinding.Initialize(GameState.Adjacencies);
+
+                if (LogProgress)
+                    ArchonLogger.Log("ArchonEngine: PathfindingSystem initialized", "map_initialization");
+            }
+
             // Cleanup
             Object.Destroy(scannerObj);
 

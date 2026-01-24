@@ -128,7 +128,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Validate
     path: Scripts/StarterKit/Commands/DisbandUnitCommand.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -162,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/StarterKit/Commands/DisbandUnitCommand.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -194,7 +194,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Undo
     path: Scripts/StarterKit/Commands/DisbandUnitCommand.cs
-    startLine: 53
+    startLine: 55
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands

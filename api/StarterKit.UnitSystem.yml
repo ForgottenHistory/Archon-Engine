@@ -6,8 +6,8 @@ items:
   parent: StarterKit
   children:
   - StarterKit.UnitSystem.#ctor(Core.GameState,StarterKit.PlayerState,System.Boolean)
-  - StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String)
-  - StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16)
+  - StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String,System.UInt16)
+  - StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16)
   - StarterKit.UnitSystem.DisbandUnit(System.UInt16)
   - StarterKit.UnitSystem.Dispose
   - StarterKit.UnitSystem.GetAllUnitTypes
@@ -217,16 +217,16 @@ items:
       type: System.Collections.Generic.IEnumerable{StarterKit.UnitType}
     content.vb: Public Function GetAllUnitTypes() As IEnumerable(Of UnitType)
   overload: StarterKit.UnitSystem.GetAllUnitTypes*
-- uid: StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String)
-  commentId: M:StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String)
-  id: CreateUnit(System.UInt16,System.String)
+- uid: StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String,System.UInt16)
+  commentId: M:StarterKit.UnitSystem.CreateUnit(System.UInt16,System.String,System.UInt16)
+  id: CreateUnit(System.UInt16,System.String,System.UInt16)
   parent: StarterKit.UnitSystem
   langs:
   - csharp
   - vb
-  name: CreateUnit(ushort, string)
-  nameWithType: UnitSystem.CreateUnit(ushort, string)
-  fullName: StarterKit.UnitSystem.CreateUnit(ushort, string)
+  name: CreateUnit(ushort, string, ushort)
+  nameWithType: UnitSystem.CreateUnit(ushort, string, ushort)
+  fullName: StarterKit.UnitSystem.CreateUnit(ushort, string, ushort)
   type: Method
   source:
     remote:
@@ -240,34 +240,36 @@ items:
   - StarterKit
   namespace: StarterKit
   summary: >-
-    Create a unit at specified province for player's country.
+    Create a unit at specified province for a specific country.
 
     Returns unit ID, or 0 if failed.
   example: []
   syntax:
-    content: public ushort CreateUnit(ushort provinceId, string unitTypeStringId)
+    content: public ushort CreateUnit(ushort provinceId, string unitTypeStringId, ushort countryId)
     parameters:
     - id: provinceId
       type: System.UInt16
     - id: unitTypeStringId
       type: System.String
+    - id: countryId
+      type: System.UInt16
     return:
       type: System.UInt16
-    content.vb: Public Function CreateUnit(provinceId As UShort, unitTypeStringId As String) As UShort
+    content.vb: Public Function CreateUnit(provinceId As UShort, unitTypeStringId As String, countryId As UShort) As UShort
   overload: StarterKit.UnitSystem.CreateUnit*
-  nameWithType.vb: UnitSystem.CreateUnit(UShort, String)
-  fullName.vb: StarterKit.UnitSystem.CreateUnit(UShort, String)
-  name.vb: CreateUnit(UShort, String)
-- uid: StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16)
-  commentId: M:StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16)
-  id: CreateUnit(System.UInt16,System.UInt16)
+  nameWithType.vb: UnitSystem.CreateUnit(UShort, String, UShort)
+  fullName.vb: StarterKit.UnitSystem.CreateUnit(UShort, String, UShort)
+  name.vb: CreateUnit(UShort, String, UShort)
+- uid: StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16)
+  commentId: M:StarterKit.UnitSystem.CreateUnit(System.UInt16,System.UInt16,System.UInt16)
+  id: CreateUnit(System.UInt16,System.UInt16,System.UInt16)
   parent: StarterKit.UnitSystem
   langs:
   - csharp
   - vb
-  name: CreateUnit(ushort, ushort)
-  nameWithType: UnitSystem.CreateUnit(ushort, ushort)
-  fullName: StarterKit.UnitSystem.CreateUnit(ushort, ushort)
+  name: CreateUnit(ushort, ushort, ushort)
+  nameWithType: UnitSystem.CreateUnit(ushort, ushort, ushort)
+  fullName: StarterKit.UnitSystem.CreateUnit(ushort, ushort, ushort)
   type: Method
   source:
     remote:
@@ -276,29 +278,31 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateUnit
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 200
+    startLine: 194
   assemblies:
   - StarterKit
   namespace: StarterKit
   summary: >-
-    Create a unit at specified province for player's country.
+    Create a unit at specified province for a specific country.
 
     Returns unit ID, or 0 if failed.
   example: []
   syntax:
-    content: public ushort CreateUnit(ushort provinceId, ushort unitTypeId)
+    content: public ushort CreateUnit(ushort provinceId, ushort unitTypeId, ushort countryId)
     parameters:
     - id: provinceId
       type: System.UInt16
     - id: unitTypeId
       type: System.UInt16
+    - id: countryId
+      type: System.UInt16
     return:
       type: System.UInt16
-    content.vb: Public Function CreateUnit(provinceId As UShort, unitTypeId As UShort) As UShort
+    content.vb: Public Function CreateUnit(provinceId As UShort, unitTypeId As UShort, countryId As UShort) As UShort
   overload: StarterKit.UnitSystem.CreateUnit*
-  nameWithType.vb: UnitSystem.CreateUnit(UShort, UShort)
-  fullName.vb: StarterKit.UnitSystem.CreateUnit(UShort, UShort)
-  name.vb: CreateUnit(UShort, UShort)
+  nameWithType.vb: UnitSystem.CreateUnit(UShort, UShort, UShort)
+  fullName.vb: StarterKit.UnitSystem.CreateUnit(UShort, UShort, UShort)
+  name.vb: CreateUnit(UShort, UShort, UShort)
 - uid: StarterKit.UnitSystem.GetUnitsInProvince(System.UInt16)
   commentId: M:StarterKit.UnitSystem.GetUnitsInProvince(System.UInt16)
   id: GetUnitsInProvince(System.UInt16)
@@ -317,7 +321,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUnitsInProvince
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 230
+    startLine: 218
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -353,7 +357,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUnitCountInProvince
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 239
+    startLine: 227
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -389,7 +393,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetPlayerUnits
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 248
+    startLine: 236
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -419,7 +423,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUnit
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 260
+    startLine: 248
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -455,7 +459,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MoveUnit
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 269
+    startLine: 257
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -491,7 +495,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DisbandUnit
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 278
+    startLine: 266
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -525,7 +529,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsProvinceOwnedByPlayer
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 287
+    startLine: 275
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -561,7 +565,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/UnitSystem.cs
-    startLine: 296
+    startLine: 284
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -765,7 +769,7 @@ references:
     isExternal: true
 - uid: StarterKit.UnitSystem.CreateUnit*
   commentId: Overload:StarterKit.UnitSystem.CreateUnit
-  href: StarterKit.UnitSystem.html#StarterKit_UnitSystem_CreateUnit_System_UInt16_System_String_
+  href: StarterKit.UnitSystem.html#StarterKit_UnitSystem_CreateUnit_System_UInt16_System_String_System_UInt16_
   name: CreateUnit
   nameWithType: UnitSystem.CreateUnit
   fullName: StarterKit.UnitSystem.CreateUnit

@@ -5,12 +5,11 @@ items:
   id: StateValidator
   parent: Map.Simulation
   children:
-  - Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSimulation)
-  - Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSimulation)
-  - Map.Simulation.StateValidator.CalculateStateOnlyChecksum(Core.Systems.ProvinceSimulation)
+  - Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSystem)
+  - Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSystem)
   - Map.Simulation.StateValidator.ChecksumsMatch(Map.Simulation.StateChecksum,Map.Simulation.StateChecksum)
   - Map.Simulation.StateValidator.CompareChecksums(Map.Simulation.StateChecksum,Map.Simulation.StateChecksum)
-  - Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSimulation)
+  - Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSystem)
   langs:
   - csharp
   - vb
@@ -30,25 +29,27 @@ items:
   - MapAssembly
   namespace: Map.Simulation
   summary: >-
-    Validates simulation state integrity and calculates checksums for multiplayer synchronization
+    Validates simulation state integrity and calculates checksums for multiplayer synchronization.
 
-    Provides comprehensive state verification and desync detection
+    Provides comprehensive state verification and desync detection.
+
+    Works with ProvinceSystem's double-buffered state architecture.
   example: []
   syntax:
     content: public static class StateValidator
     content.vb: Public Module StateValidator
   inheritance:
   - System.Object
-- uid: Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSimulation)
-  commentId: M:Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSimulation)
-  id: CalculateStateChecksum(Core.Systems.ProvinceSimulation)
+- uid: Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSystem)
+  commentId: M:Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSystem)
+  id: CalculateStateChecksum(Core.Systems.ProvinceSystem)
   parent: Map.Simulation.StateValidator
   langs:
   - csharp
   - vb
-  name: CalculateStateChecksum(ProvinceSimulation)
-  nameWithType: StateValidator.CalculateStateChecksum(ProvinceSimulation)
-  fullName: Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSimulation)
+  name: CalculateStateChecksum(ProvinceSystem)
+  nameWithType: StateValidator.CalculateStateChecksum(ProvinceSystem)
+  fullName: Map.Simulation.StateValidator.CalculateStateChecksum(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -62,18 +63,18 @@ items:
   - MapAssembly
   namespace: Map.Simulation
   summary: >-
-    Calculate comprehensive checksum of simulation state
+    Calculate comprehensive checksum of simulation state.
 
-    Uses rolling hash for efficiency with large datasets
+    Uses rolling hash for efficiency with large datasets.
   example: []
   syntax:
-    content: public static StateChecksum CalculateStateChecksum(ProvinceSimulation simulation)
+    content: public static StateChecksum CalculateStateChecksum(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Map.Simulation.StateChecksum
-    content.vb: Public Shared Function CalculateStateChecksum(simulation As ProvinceSimulation) As StateChecksum
+    content.vb: Public Shared Function CalculateStateChecksum(provinceSystem As ProvinceSystem) As StateChecksum
   overload: Map.Simulation.StateValidator.CalculateStateChecksum*
 - uid: Map.Simulation.StateValidator.ChecksumsMatch(Map.Simulation.StateChecksum,Map.Simulation.StateChecksum)
   commentId: M:Map.Simulation.StateValidator.ChecksumsMatch(Map.Simulation.StateChecksum,Map.Simulation.StateChecksum)
@@ -93,11 +94,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ChecksumsMatch
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 156
+    startLine: 142
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
-  summary: Compare two checksums for equality
+  summary: Compare two checksums for equality.
   example: []
   syntax:
     content: public static bool ChecksumsMatch(StateChecksum a, StateChecksum b)
@@ -128,14 +129,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CompareChecksums
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 170
+    startLine: 155
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
   summary: >-
-    Perform detailed comparison of two checksums
+    Perform detailed comparison of two checksums.
 
-    Returns information about what differs
+    Returns information about what differs.
   example: []
   syntax:
     content: public static ChecksumComparison CompareChecksums(StateChecksum a, StateChecksum b)
@@ -148,16 +149,16 @@ items:
       type: Map.Simulation.ChecksumComparison
     content.vb: Public Shared Function CompareChecksums(a As StateChecksum, b As StateChecksum) As ChecksumComparison
   overload: Map.Simulation.StateValidator.CompareChecksums*
-- uid: Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSimulation)
-  commentId: M:Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSimulation)
-  id: ValidateSimulationState(Core.Systems.ProvinceSimulation)
+- uid: Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSystem)
+  commentId: M:Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSystem)
+  id: ValidateSimulationState(Core.Systems.ProvinceSystem)
   parent: Map.Simulation.StateValidator
   langs:
   - csharp
   - vb
-  name: ValidateSimulationState(ProvinceSimulation)
-  nameWithType: StateValidator.ValidateSimulationState(ProvinceSimulation)
-  fullName: Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSimulation)
+  name: ValidateSimulationState(ProvinceSystem)
+  nameWithType: StateValidator.ValidateSimulationState(ProvinceSystem)
+  fullName: Map.Simulation.StateValidator.ValidateSimulationState(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -166,34 +167,34 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValidateSimulationState
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 211
+    startLine: 190
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
   summary: >-
-    Validate simulation state integrity
+    Validate simulation state integrity.
 
-    Checks for common corruption patterns and invariant violations
+    Checks for common corruption patterns and invariant violations.
   example: []
   syntax:
-    content: public static StateValidationResult ValidateSimulationState(ProvinceSimulation simulation)
+    content: public static StateValidationResult ValidateSimulationState(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: Map.Simulation.StateValidationResult
-    content.vb: Public Shared Function ValidateSimulationState(simulation As ProvinceSimulation) As StateValidationResult
+    content.vb: Public Shared Function ValidateSimulationState(provinceSystem As ProvinceSystem) As StateValidationResult
   overload: Map.Simulation.StateValidator.ValidateSimulationState*
-- uid: Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSimulation)
-  commentId: M:Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSimulation)
-  id: CalculateLightweightChecksum(Core.Systems.ProvinceSimulation)
+- uid: Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSystem)
+  commentId: M:Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSystem)
+  id: CalculateLightweightChecksum(Core.Systems.ProvinceSystem)
   parent: Map.Simulation.StateValidator
   langs:
   - csharp
   - vb
-  name: CalculateLightweightChecksum(ProvinceSimulation)
-  nameWithType: StateValidator.CalculateLightweightChecksum(ProvinceSimulation)
-  fullName: Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSimulation)
+  name: CalculateLightweightChecksum(ProvinceSystem)
+  nameWithType: StateValidator.CalculateLightweightChecksum(ProvinceSystem)
+  fullName: Map.Simulation.StateValidator.CalculateLightweightChecksum(Core.Systems.ProvinceSystem)
   type: Method
   source:
     remote:
@@ -202,62 +203,24 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CalculateLightweightChecksum
     path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 307
+    startLine: 272
   assemblies:
   - MapAssembly
   namespace: Map.Simulation
   summary: >-
-    Create a lightweight checksum for frequent network synchronization
+    Create a lightweight checksum for frequent network synchronization.
 
-    Only includes frequently changing data (ownership)
-
-    NOTE: Development removed (game-specific)
+    Only includes frequently changing data (ownership).
   example: []
   syntax:
-    content: public static uint CalculateLightweightChecksum(ProvinceSimulation simulation)
+    content: public static uint CalculateLightweightChecksum(ProvinceSystem provinceSystem)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     return:
       type: System.UInt32
-    content.vb: Public Shared Function CalculateLightweightChecksum(simulation As ProvinceSimulation) As UInteger
+    content.vb: Public Shared Function CalculateLightweightChecksum(provinceSystem As ProvinceSystem) As UInteger
   overload: Map.Simulation.StateValidator.CalculateLightweightChecksum*
-- uid: Map.Simulation.StateValidator.CalculateStateOnlyChecksum(Core.Systems.ProvinceSimulation)
-  commentId: M:Map.Simulation.StateValidator.CalculateStateOnlyChecksum(Core.Systems.ProvinceSimulation)
-  id: CalculateStateOnlyChecksum(Core.Systems.ProvinceSimulation)
-  parent: Map.Simulation.StateValidator
-  langs:
-  - csharp
-  - vb
-  name: CalculateStateOnlyChecksum(ProvinceSimulation)
-  nameWithType: StateValidator.CalculateStateOnlyChecksum(ProvinceSimulation)
-  fullName: Map.Simulation.StateValidator.CalculateStateOnlyChecksum(Core.Systems.ProvinceSimulation)
-  type: Method
-  source:
-    remote:
-      path: Scripts/Map/Simulation/StateValidator.cs
-      branch: main
-      repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: CalculateStateOnlyChecksum
-    path: Scripts/Map/Simulation/StateValidator.cs
-    startLine: 330
-  assemblies:
-  - MapAssembly
-  namespace: Map.Simulation
-  summary: >-
-    Calculate state-only checksum (excluding version) for comparing identical game states
-
-    Used for testing that identical states produce identical checksums regardless of how they were reached
-  example: []
-  syntax:
-    content: public static uint CalculateStateOnlyChecksum(ProvinceSimulation simulation)
-    parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
-    return:
-      type: System.UInt32
-    content.vb: Public Shared Function CalculateStateOnlyChecksum(simulation As ProvinceSimulation) As UInteger
-  overload: Map.Simulation.StateValidator.CalculateStateOnlyChecksum*
 references:
 - uid: Map.Simulation
   commentId: N:Map.Simulation
@@ -299,17 +262,17 @@ references:
   fullName: System
 - uid: Map.Simulation.StateValidator.CalculateStateChecksum*
   commentId: Overload:Map.Simulation.StateValidator.CalculateStateChecksum
-  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_CalculateStateChecksum_Core_Systems_ProvinceSimulation_
+  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_CalculateStateChecksum_Core_Systems_ProvinceSystem_
   name: CalculateStateChecksum
   nameWithType: StateValidator.CalculateStateChecksum
   fullName: Map.Simulation.StateValidator.CalculateStateChecksum
-- uid: Core.Systems.ProvinceSimulation
-  commentId: T:Core.Systems.ProvinceSimulation
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
   parent: Core.Systems
-  href: Core.Systems.ProvinceSimulation.html
-  name: ProvinceSimulation
-  nameWithType: ProvinceSimulation
-  fullName: Core.Systems.ProvinceSimulation
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
 - uid: Map.Simulation.StateChecksum
   commentId: T:Map.Simulation.StateChecksum
   parent: Map.Simulation
@@ -370,7 +333,7 @@ references:
   fullName: Map.Simulation.ChecksumComparison
 - uid: Map.Simulation.StateValidator.ValidateSimulationState*
   commentId: Overload:Map.Simulation.StateValidator.ValidateSimulationState
-  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_ValidateSimulationState_Core_Systems_ProvinceSimulation_
+  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_ValidateSimulationState_Core_Systems_ProvinceSystem_
   name: ValidateSimulationState
   nameWithType: StateValidator.ValidateSimulationState
   fullName: Map.Simulation.StateValidator.ValidateSimulationState
@@ -383,7 +346,7 @@ references:
   fullName: Map.Simulation.StateValidationResult
 - uid: Map.Simulation.StateValidator.CalculateLightweightChecksum*
   commentId: Overload:Map.Simulation.StateValidator.CalculateLightweightChecksum
-  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_CalculateLightweightChecksum_Core_Systems_ProvinceSimulation_
+  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_CalculateLightweightChecksum_Core_Systems_ProvinceSystem_
   name: CalculateLightweightChecksum
   nameWithType: StateValidator.CalculateLightweightChecksum
   fullName: Map.Simulation.StateValidator.CalculateLightweightChecksum
@@ -397,9 +360,3 @@ references:
   nameWithType.vb: UInteger
   fullName.vb: UInteger
   name.vb: UInteger
-- uid: Map.Simulation.StateValidator.CalculateStateOnlyChecksum*
-  commentId: Overload:Map.Simulation.StateValidator.CalculateStateOnlyChecksum
-  href: Map.Simulation.StateValidator.html#Map_Simulation_StateValidator_CalculateStateOnlyChecksum_Core_Systems_ProvinceSimulation_
-  name: CalculateStateOnlyChecksum
-  nameWithType: StateValidator.CalculateStateOnlyChecksum
-  fullName: Map.Simulation.StateValidator.CalculateStateOnlyChecksum

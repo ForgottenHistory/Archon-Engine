@@ -11,6 +11,7 @@ items:
   - StarterKit.Initializer.GetCurrentMapMode
   - StarterKit.Initializer.Instance
   - StarterKit.Initializer.IsInitialized
+  - StarterKit.Initializer.NetworkInitializer
   - StarterKit.Initializer.PlayerState
   - StarterKit.Initializer.SetMapMode(Map.MapModes.MapMode)
   - StarterKit.Initializer.StartInitialization
@@ -29,7 +30,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initializer
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -70,7 +71,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Instance
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 32
+    startLine: 33
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -104,7 +105,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 77
+    startLine: 83
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -135,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PlayerState
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 80
+    startLine: 86
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -166,7 +167,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EconomySystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 83
+    startLine: 89
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -197,7 +198,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnitSystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 86
+    startLine: 92
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -228,7 +229,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BuildingSystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 89
+    startLine: 95
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -259,7 +260,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AISystem
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 92
+    startLine: 98
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -272,6 +273,37 @@ items:
       type: StarterKit.AISystem
     content.vb: Public ReadOnly Property AISystem As AISystem
   overload: StarterKit.Initializer.AISystem*
+- uid: StarterKit.Initializer.NetworkInitializer
+  commentId: P:StarterKit.Initializer.NetworkInitializer
+  id: NetworkInitializer
+  parent: StarterKit.Initializer
+  langs:
+  - csharp
+  - vb
+  name: NetworkInitializer
+  nameWithType: Initializer.NetworkInitializer
+  fullName: StarterKit.Initializer.NetworkInitializer
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Initializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: NetworkInitializer
+    path: Scripts/StarterKit/Initializer.cs
+    startLine: 101
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Network initializer for multiplayer state queries.
+  example: []
+  syntax:
+    content: public NetworkInitializer NetworkInitializer { get; }
+    parameters: []
+    return:
+      type: StarterKit.NetworkInitializer
+    content.vb: Public ReadOnly Property NetworkInitializer As NetworkInitializer
+  overload: StarterKit.Initializer.NetworkInitializer*
 - uid: StarterKit.Initializer.StartInitialization
   commentId: M:StarterKit.Initializer.StartInitialization
   id: StartInitialization
@@ -290,7 +322,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: StartInitialization
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 124
+    startLine: 133
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -316,7 +348,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 540
+    startLine: 585
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -347,7 +379,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCurrentMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 548
+    startLine: 593
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -510,6 +542,19 @@ references:
   name: AISystem
   nameWithType: AISystem
   fullName: StarterKit.AISystem
+- uid: StarterKit.Initializer.NetworkInitializer*
+  commentId: Overload:StarterKit.Initializer.NetworkInitializer
+  href: StarterKit.Initializer.html#StarterKit_Initializer_NetworkInitializer
+  name: NetworkInitializer
+  nameWithType: Initializer.NetworkInitializer
+  fullName: StarterKit.Initializer.NetworkInitializer
+- uid: StarterKit.NetworkInitializer
+  commentId: T:StarterKit.NetworkInitializer
+  parent: StarterKit
+  href: StarterKit.NetworkInitializer.html
+  name: NetworkInitializer
+  nameWithType: NetworkInitializer
+  fullName: StarterKit.NetworkInitializer
 - uid: StarterKit.Initializer.StartInitialization*
   commentId: Overload:StarterKit.Initializer.StartInitialization
   href: StarterKit.Initializer.html#StarterKit_Initializer_StartInitialization

@@ -1,0 +1,314 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Province.FastAdjacencyScanner.ScanResult
+  commentId: T:Map.Province.FastAdjacencyScanner.ScanResult
+  id: FastAdjacencyScanner.ScanResult
+  parent: Map.Province
+  children:
+  - Map.Province.FastAdjacencyScanner.ScanResult.adjacencies
+  - Map.Province.FastAdjacencyScanner.ScanResult.connectionCount
+  - Map.Province.FastAdjacencyScanner.ScanResult.provinceCount
+  - Map.Province.FastAdjacencyScanner.ScanResult.scanTime
+  langs:
+  - csharp
+  - vb
+  name: FastAdjacencyScanner.ScanResult
+  nameWithType: FastAdjacencyScanner.ScanResult
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ScanResult
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public class FastAdjacencyScanner.ScanResult
+    content.vb: Public Class FastAdjacencyScanner.ScanResult
+  inheritance:
+  - System.Object
+- uid: Map.Province.FastAdjacencyScanner.ScanResult.adjacencies
+  commentId: F:Map.Province.FastAdjacencyScanner.ScanResult.adjacencies
+  id: adjacencies
+  parent: Map.Province.FastAdjacencyScanner.ScanResult
+  langs:
+  - csharp
+  - vb
+  name: adjacencies
+  nameWithType: FastAdjacencyScanner.ScanResult.adjacencies
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult.adjacencies
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: adjacencies
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 35
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public Dictionary<Color32, HashSet<Color32>> adjacencies
+    return:
+      type: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+    content.vb: Public adjacencies As Dictionary(Of Color32, HashSet(Of Color32))
+- uid: Map.Province.FastAdjacencyScanner.ScanResult.provinceCount
+  commentId: F:Map.Province.FastAdjacencyScanner.ScanResult.provinceCount
+  id: provinceCount
+  parent: Map.Province.FastAdjacencyScanner.ScanResult
+  langs:
+  - csharp
+  - vb
+  name: provinceCount
+  nameWithType: FastAdjacencyScanner.ScanResult.provinceCount
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult.provinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceCount
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 36
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int provinceCount
+    return:
+      type: System.Int32
+    content.vb: Public provinceCount As Integer
+- uid: Map.Province.FastAdjacencyScanner.ScanResult.connectionCount
+  commentId: F:Map.Province.FastAdjacencyScanner.ScanResult.connectionCount
+  id: connectionCount
+  parent: Map.Province.FastAdjacencyScanner.ScanResult
+  langs:
+  - csharp
+  - vb
+  name: connectionCount
+  nameWithType: FastAdjacencyScanner.ScanResult.connectionCount
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult.connectionCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: connectionCount
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 37
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public int connectionCount
+    return:
+      type: System.Int32
+    content.vb: Public connectionCount As Integer
+- uid: Map.Province.FastAdjacencyScanner.ScanResult.scanTime
+  commentId: F:Map.Province.FastAdjacencyScanner.ScanResult.scanTime
+  id: scanTime
+  parent: Map.Province.FastAdjacencyScanner.ScanResult
+  langs:
+  - csharp
+  - vb
+  name: scanTime
+  nameWithType: FastAdjacencyScanner.ScanResult.scanTime
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult.scanTime
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: scanTime
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 38
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  syntax:
+    content: public float scanTime
+    return:
+      type: System.Single
+    content.vb: Public scanTime As Single
+references:
+- uid: Map.Province
+  commentId: N:Map.Province
+  href: Map.html
+  name: Map.Province
+  nameWithType: Map.Province
+  fullName: Map.Province
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Province
+    name: Province
+    href: Map.Province.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Color32,System.Collections.Generic.HashSet{UnityEngine.Color32}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Color32, HashSet<Color32>>
+  nameWithType: Dictionary<Color32, HashSet<Color32>>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Color32, System.Collections.Generic.HashSet<UnityEngine.Color32>>
+  nameWithType.vb: Dictionary(Of Color32, HashSet(Of Color32))
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Color32, System.Collections.Generic.HashSet(Of UnityEngine.Color32))
+  name.vb: Dictionary(Of Color32, HashSet(Of Color32))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single

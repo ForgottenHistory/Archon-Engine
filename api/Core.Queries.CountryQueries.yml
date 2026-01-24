@@ -8,6 +8,7 @@ items:
   - Core.Queries.CountryQueries.#ctor(Core.Systems.CountrySystem,Core.Systems.ProvinceSystem,Core.Systems.AdjacencySystem)
   - Core.Queries.CountryQueries.ClearCache
   - Core.Queries.CountryQueries.CompareProvinceCount(System.UInt16,System.UInt16)
+  - Core.Queries.CountryQueries.Dispose
   - Core.Queries.CountryQueries.Exists(System.UInt16)
   - Core.Queries.CountryQueries.GetAllCountryIds(Unity.Collections.Allocator)
   - Core.Queries.CountryQueries.GetBorderingCountries(System.UInt16,Unity.Collections.Allocator)
@@ -903,6 +904,33 @@ items:
     content: public void ClearCache()
     content.vb: Public Sub ClearCache()
   overload: Core.Queries.CountryQueries.ClearCache*
+- uid: Core.Queries.CountryQueries.Dispose
+  commentId: M:Core.Queries.CountryQueries.Dispose
+  id: Dispose
+  parent: Core.Queries.CountryQueries
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: CountryQueries.Dispose()
+  fullName: Core.Queries.CountryQueries.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/CountryQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Queries/CountryQueries.cs
+    startLine: 439
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Queries.CountryQueries.Dispose*
 references:
 - uid: Core.Queries
   commentId: N:Core.Queries
@@ -1359,3 +1387,9 @@ references:
   name: ClearCache
   nameWithType: CountryQueries.ClearCache
   fullName: Core.Queries.CountryQueries.ClearCache
+- uid: Core.Queries.CountryQueries.Dispose*
+  commentId: Overload:Core.Queries.CountryQueries.Dispose
+  href: Core.Queries.CountryQueries.html#Core_Queries_CountryQueries_Dispose
+  name: Dispose
+  nameWithType: CountryQueries.Dispose
+  fullName: Core.Queries.CountryQueries.Dispose

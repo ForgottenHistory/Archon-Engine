@@ -225,3 +225,10 @@ See `Scripts/StarterKit/Commands/` for complete implementations.
 4. **Use type-safe IDs** - ProvinceId, CountryId prevent mix-ups
 5. **Log execution** - Call `LogExecution()` for debugging
 6. **Keep commands focused** - One command = one logical action
+
+## Multiplayer Commands
+
+For multiplayer, commands need explicit CountryId and custom serialization. See [Multiplayer](Multiplayer.md) for:
+- Using `GameCommandProcessor` instead of `CommandProcessor`
+- Custom `Serialize()`/`Deserialize()` methods
+- Why commands must carry explicit CountryId

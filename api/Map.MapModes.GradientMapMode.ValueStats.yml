@@ -23,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValueStats
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 463
+    startLine: 455
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -50,7 +50,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MinValue
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 465
+    startLine: 457
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -77,7 +77,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MaxValue
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 466
+    startLine: 458
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AvgValue
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 467
+    startLine: 459
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -131,7 +131,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValidProvinces
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 468
+    startLine: 460
   assemblies:
   - MapAssembly
   namespace: Map.MapModes

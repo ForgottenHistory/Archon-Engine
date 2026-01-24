@@ -5,7 +5,7 @@ items:
   id: CommandBuffer
   parent: Core.Commands
   children:
-  - Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
+  - Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSystem,Core.Commands.CommandProcessor)
   - Core.Commands.CommandBuffer.AddConfirmedCommand(Core.Commands.IProvinceCommand,System.UInt32)
   - Core.Commands.CommandBuffer.AddPredictedCommand(Core.Commands.IProvinceCommand)
   - Core.Commands.CommandBuffer.ConfirmedTick
@@ -42,16 +42,16 @@ items:
     content.vb: Public Class CommandBuffer
   inheritance:
   - System.Object
-- uid: Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
-  commentId: M:Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)
-  id: '#ctor(Core.Systems.ProvinceSimulation,Core.Commands.CommandProcessor)'
+- uid: Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSystem,Core.Commands.CommandProcessor)
+  commentId: M:Core.Commands.CommandBuffer.#ctor(Core.Systems.ProvinceSystem,Core.Commands.CommandProcessor)
+  id: '#ctor(Core.Systems.ProvinceSystem,Core.Commands.CommandProcessor)'
   parent: Core.Commands.CommandBuffer
   langs:
   - csharp
   - vb
-  name: CommandBuffer(ProvinceSimulation, CommandProcessor)
-  nameWithType: CommandBuffer.CommandBuffer(ProvinceSimulation, CommandProcessor)
-  fullName: Core.Commands.CommandBuffer.CommandBuffer(Core.Systems.ProvinceSimulation, Core.Commands.CommandProcessor)
+  name: CommandBuffer(ProvinceSystem, CommandProcessor)
+  nameWithType: CommandBuffer.CommandBuffer(ProvinceSystem, CommandProcessor)
+  fullName: Core.Commands.CommandBuffer.CommandBuffer(Core.Systems.ProvinceSystem, Core.Commands.CommandProcessor)
   type: Constructor
   source:
     remote:
@@ -65,17 +65,17 @@ items:
   - Core
   namespace: Core.Commands
   syntax:
-    content: public CommandBuffer(ProvinceSimulation simulation, CommandProcessor processor)
+    content: public CommandBuffer(ProvinceSystem provinceSystem, CommandProcessor processor)
     parameters:
-    - id: simulation
-      type: Core.Systems.ProvinceSimulation
+    - id: provinceSystem
+      type: Core.Systems.ProvinceSystem
     - id: processor
       type: Core.Commands.CommandProcessor
-    content.vb: Public Sub New(simulation As ProvinceSimulation, processor As CommandProcessor)
+    content.vb: Public Sub New(provinceSystem As ProvinceSystem, processor As CommandProcessor)
   overload: Core.Commands.CommandBuffer.#ctor*
-  nameWithType.vb: CommandBuffer.New(ProvinceSimulation, CommandProcessor)
-  fullName.vb: Core.Commands.CommandBuffer.New(Core.Systems.ProvinceSimulation, Core.Commands.CommandProcessor)
-  name.vb: New(ProvinceSimulation, CommandProcessor)
+  nameWithType.vb: CommandBuffer.New(ProvinceSystem, CommandProcessor)
+  fullName.vb: Core.Commands.CommandBuffer.New(Core.Systems.ProvinceSystem, Core.Commands.CommandProcessor)
+  name.vb: New(ProvinceSystem, CommandProcessor)
 - uid: Core.Commands.CommandBuffer.ConfirmedTick
   commentId: P:Core.Commands.CommandBuffer.ConfirmedTick
   id: ConfirmedTick
@@ -377,20 +377,20 @@ references:
   fullName: System
 - uid: Core.Commands.CommandBuffer.#ctor*
   commentId: Overload:Core.Commands.CommandBuffer.#ctor
-  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer__ctor_Core_Systems_ProvinceSimulation_Core_Commands_CommandProcessor_
+  href: Core.Commands.CommandBuffer.html#Core_Commands_CommandBuffer__ctor_Core_Systems_ProvinceSystem_Core_Commands_CommandProcessor_
   name: CommandBuffer
   nameWithType: CommandBuffer.CommandBuffer
   fullName: Core.Commands.CommandBuffer.CommandBuffer
   nameWithType.vb: CommandBuffer.New
   fullName.vb: Core.Commands.CommandBuffer.New
   name.vb: New
-- uid: Core.Systems.ProvinceSimulation
-  commentId: T:Core.Systems.ProvinceSimulation
+- uid: Core.Systems.ProvinceSystem
+  commentId: T:Core.Systems.ProvinceSystem
   parent: Core.Systems
-  href: Core.Systems.ProvinceSimulation.html
-  name: ProvinceSimulation
-  nameWithType: ProvinceSimulation
-  fullName: Core.Systems.ProvinceSimulation
+  href: Core.Systems.ProvinceSystem.html
+  name: ProvinceSystem
+  nameWithType: ProvinceSystem
+  fullName: Core.Systems.ProvinceSystem
 - uid: Core.Commands.CommandProcessor
   commentId: T:Core.Commands.CommandProcessor
   parent: Core.Commands

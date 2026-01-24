@@ -45,7 +45,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GradientMapMode
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -110,7 +110,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OceanColor
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 31
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -139,7 +139,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnownedColor
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 32
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -168,7 +168,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MarkDirty
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 61
+    startLine: 62
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -203,7 +203,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsActive
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 73
+    startLine: 74
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -234,7 +234,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterWithMapModeManager
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 79
+    startLine: 80
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -268,7 +268,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnMapModeActivated
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 168
+    startLine: 160
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -299,7 +299,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Mode
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 177
+    startLine: 169
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -332,7 +332,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Name
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 178
+    startLine: 170
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -365,7 +365,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ShaderModeID
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 179
+    startLine: 171
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -398,7 +398,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RequiresFrequentUpdates
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 180
+    startLine: 172
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -431,7 +431,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnActivate
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 181
+    startLine: 173
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -469,7 +469,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnDeactivate
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 182
+    startLine: 174
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -505,7 +505,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceTooltip
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 183
+    startLine: 175
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -547,7 +547,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUpdateFrequency
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 184
+    startLine: 176
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -579,7 +579,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetGradient
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 189
+    startLine: 181
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -609,7 +609,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetValueForProvince
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 195
+    startLine: 187
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -652,7 +652,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetValueCategory
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 201
+    startLine: 193
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -691,7 +691,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCategoryThreshold
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 215
+    startLine: 207
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -730,7 +730,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: FormatValue
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 231
+    startLine: 223
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -769,7 +769,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateTextures
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 236
+    startLine: 228
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -817,7 +817,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DisableAllMapModeKeywords
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 419
+    startLine: 411
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -848,7 +848,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EnableMapModeKeyword
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 428
+    startLine: 420
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -884,7 +884,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetShaderMode
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 437
+    startLine: 429
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -920,7 +920,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LogActivation
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 447
+    startLine: 439
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -954,7 +954,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LogDeactivation
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 455
+    startLine: 447
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -988,7 +988,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/MapModes/GradientMapMode.cs
-    startLine: 474
+    startLine: 466
   assemblies:
   - MapAssembly
   namespace: Map.MapModes

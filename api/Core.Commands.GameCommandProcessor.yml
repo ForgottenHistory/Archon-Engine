@@ -1,0 +1,454 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.GameCommandProcessor
+  commentId: T:Core.Commands.GameCommandProcessor
+  id: GameCommandProcessor
+  parent: Core.Commands
+  children:
+  - Core.Commands.GameCommandProcessor.#ctor(Core.GameState)
+  - Core.Commands.GameCommandProcessor.Dispose
+  - Core.Commands.GameCommandProcessor.IsAuthoritative
+  - Core.Commands.GameCommandProcessor.IsMultiplayer
+  - Core.Commands.GameCommandProcessor.RegisterCommandType``1
+  - Core.Commands.GameCommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
+  - Core.Commands.GameCommandProcessor.SubmitCommand``1(``0,System.String@)
+  langs:
+  - csharp
+  - vb
+  name: GameCommandProcessor
+  nameWithType: GameCommandProcessor
+  fullName: Core.Commands.GameCommandProcessor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GameCommandProcessor
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 20
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Processes GAME layer commands (ICommand) with network synchronization.
+
+    Complements CommandProcessor (which handles IProvinceCommand for ENGINE layer).
+
+
+    ARCHITECTURE:
+
+    - IProvinceCommand (ENGINE) → CommandProcessor → province state changes
+
+    - ICommand (GAME) → GameCommandProcessor → gameplay state changes
+
+
+    Both use the same network bridge for multiplayer synchronization.
+
+    Commands are validated locally, then:
+
+    - Host: executes locally and broadcasts to clients
+
+    - Client: sends to host for validation and execution
+  example: []
+  syntax:
+    content: public class GameCommandProcessor
+    content.vb: Public Class GameCommandProcessor
+  inheritance:
+  - System.Object
+- uid: Core.Commands.GameCommandProcessor.IsMultiplayer
+  commentId: P:Core.Commands.GameCommandProcessor.IsMultiplayer
+  id: IsMultiplayer
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: IsMultiplayer
+  nameWithType: GameCommandProcessor.IsMultiplayer
+  fullName: Core.Commands.GameCommandProcessor.IsMultiplayer
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsMultiplayer
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 37
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Whether we are in a multiplayer session.
+  example: []
+  syntax:
+    content: public bool IsMultiplayer { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsMultiplayer As Boolean
+  overload: Core.Commands.GameCommandProcessor.IsMultiplayer*
+- uid: Core.Commands.GameCommandProcessor.IsAuthoritative
+  commentId: P:Core.Commands.GameCommandProcessor.IsAuthoritative
+  id: IsAuthoritative
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: IsAuthoritative
+  nameWithType: GameCommandProcessor.IsAuthoritative
+  fullName: Core.Commands.GameCommandProcessor.IsAuthoritative
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsAuthoritative
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 42
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: Whether we are the authoritative host (or single-player).
+  example: []
+  syntax:
+    content: public bool IsAuthoritative { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsAuthoritative As Boolean
+  overload: Core.Commands.GameCommandProcessor.IsAuthoritative*
+- uid: Core.Commands.GameCommandProcessor.#ctor(Core.GameState)
+  commentId: M:Core.Commands.GameCommandProcessor.#ctor(Core.GameState)
+  id: '#ctor(Core.GameState)'
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: GameCommandProcessor(GameState)
+  nameWithType: GameCommandProcessor.GameCommandProcessor(GameState)
+  fullName: Core.Commands.GameCommandProcessor.GameCommandProcessor(Core.GameState)
+  type: Constructor
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: .ctor
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: public GameCommandProcessor(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    content.vb: Public Sub New(gameState As GameState)
+  overload: Core.Commands.GameCommandProcessor.#ctor*
+  nameWithType.vb: GameCommandProcessor.New(GameState)
+  fullName.vb: Core.Commands.GameCommandProcessor.New(Core.GameState)
+  name.vb: New(GameState)
+- uid: Core.Commands.GameCommandProcessor.RegisterCommandType``1
+  commentId: M:Core.Commands.GameCommandProcessor.RegisterCommandType``1
+  id: RegisterCommandType``1
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: RegisterCommandType<T>()
+  nameWithType: GameCommandProcessor.RegisterCommandType<T>()
+  fullName: Core.Commands.GameCommandProcessor.RegisterCommandType<T>()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RegisterCommandType
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 56
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Register a command type for network serialization.
+
+    Must be called for all command types that will be networked.
+
+    Call order must be identical on all clients!
+  example: []
+  syntax:
+    content: 'public void RegisterCommandType<T>() where T : ICommand, new()'
+    typeParameters:
+    - id: T
+    content.vb: Public Sub RegisterCommandType(Of T As {ICommand, New})()
+  overload: Core.Commands.GameCommandProcessor.RegisterCommandType*
+  nameWithType.vb: GameCommandProcessor.RegisterCommandType(Of T)()
+  fullName.vb: Core.Commands.GameCommandProcessor.RegisterCommandType(Of T)()
+  name.vb: RegisterCommandType(Of T)()
+- uid: Core.Commands.GameCommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
+  commentId: M:Core.Commands.GameCommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
+  id: SetNetworkBridge(Core.Network.INetworkBridge)
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: SetNetworkBridge(INetworkBridge)
+  nameWithType: GameCommandProcessor.SetNetworkBridge(INetworkBridge)
+  fullName: Core.Commands.GameCommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetNetworkBridge
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 76
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Set the network bridge for multiplayer.
+
+    Pass null for single-player mode.
+  example: []
+  syntax:
+    content: public void SetNetworkBridge(INetworkBridge bridge)
+    parameters:
+    - id: bridge
+      type: Core.Network.INetworkBridge
+    content.vb: Public Sub SetNetworkBridge(bridge As INetworkBridge)
+  overload: Core.Commands.GameCommandProcessor.SetNetworkBridge*
+- uid: Core.Commands.GameCommandProcessor.SubmitCommand``1(``0,System.String@)
+  commentId: M:Core.Commands.GameCommandProcessor.SubmitCommand``1(``0,System.String@)
+  id: SubmitCommand``1(``0,System.String@)
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: SubmitCommand<T>(T, out string)
+  nameWithType: GameCommandProcessor.SubmitCommand<T>(T, out string)
+  fullName: Core.Commands.GameCommandProcessor.SubmitCommand<T>(T, out string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SubmitCommand
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 102
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Submit a command for execution.
+
+    In multiplayer:
+
+    - Clients send to host for validation
+
+    - Host validates, executes, and broadcasts
+  example: []
+  syntax:
+    content: 'public bool SubmitCommand<T>(T command, out string resultMessage) where T : ICommand'
+    parameters:
+    - id: command
+      type: '{T}'
+    - id: resultMessage
+      type: System.String
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Function SubmitCommand(Of T As ICommand)(command As T, resultMessage As String) As Boolean
+  overload: Core.Commands.GameCommandProcessor.SubmitCommand*
+  nameWithType.vb: GameCommandProcessor.SubmitCommand(Of T)(T, String)
+  fullName.vb: Core.Commands.GameCommandProcessor.SubmitCommand(Of T)(T, String)
+  name.vb: SubmitCommand(Of T)(T, String)
+- uid: Core.Commands.GameCommandProcessor.Dispose
+  commentId: M:Core.Commands.GameCommandProcessor.Dispose
+  id: Dispose
+  parent: Core.Commands.GameCommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: GameCommandProcessor.Dispose()
+  fullName: Core.Commands.GameCommandProcessor.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/GameCommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Dispose
+    path: Scripts/Core/Commands/GameCommandProcessor.cs
+    startLine: 303
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Core.Commands.GameCommandProcessor.Dispose*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.GameCommandProcessor.IsMultiplayer*
+  commentId: Overload:Core.Commands.GameCommandProcessor.IsMultiplayer
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_IsMultiplayer
+  name: IsMultiplayer
+  nameWithType: GameCommandProcessor.IsMultiplayer
+  fullName: Core.Commands.GameCommandProcessor.IsMultiplayer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.Commands.GameCommandProcessor.IsAuthoritative*
+  commentId: Overload:Core.Commands.GameCommandProcessor.IsAuthoritative
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_IsAuthoritative
+  name: IsAuthoritative
+  nameWithType: GameCommandProcessor.IsAuthoritative
+  fullName: Core.Commands.GameCommandProcessor.IsAuthoritative
+- uid: Core.Commands.GameCommandProcessor.#ctor*
+  commentId: Overload:Core.Commands.GameCommandProcessor.#ctor
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor__ctor_Core_GameState_
+  name: GameCommandProcessor
+  nameWithType: GameCommandProcessor.GameCommandProcessor
+  fullName: Core.Commands.GameCommandProcessor.GameCommandProcessor
+  nameWithType.vb: GameCommandProcessor.New
+  fullName.vb: Core.Commands.GameCommandProcessor.New
+  name.vb: New
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: Core.Commands.GameCommandProcessor.RegisterCommandType*
+  commentId: Overload:Core.Commands.GameCommandProcessor.RegisterCommandType
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_RegisterCommandType__1
+  name: RegisterCommandType
+  nameWithType: GameCommandProcessor.RegisterCommandType
+  fullName: Core.Commands.GameCommandProcessor.RegisterCommandType
+- uid: Core.Commands.GameCommandProcessor.SetNetworkBridge*
+  commentId: Overload:Core.Commands.GameCommandProcessor.SetNetworkBridge
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_SetNetworkBridge_Core_Network_INetworkBridge_
+  name: SetNetworkBridge
+  nameWithType: GameCommandProcessor.SetNetworkBridge
+  fullName: Core.Commands.GameCommandProcessor.SetNetworkBridge
+- uid: Core.Network.INetworkBridge
+  commentId: T:Core.Network.INetworkBridge
+  parent: Core.Network
+  href: Core.Network.INetworkBridge.html
+  name: INetworkBridge
+  nameWithType: INetworkBridge
+  fullName: Core.Network.INetworkBridge
+- uid: Core.Network
+  commentId: N:Core.Network
+  href: Core.html
+  name: Core.Network
+  nameWithType: Core.Network
+  fullName: Core.Network
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Network
+    name: Network
+    href: Core.Network.html
+- uid: Core.Commands.GameCommandProcessor.SubmitCommand*
+  commentId: Overload:Core.Commands.GameCommandProcessor.SubmitCommand
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_SubmitCommand__1___0_System_String__
+  name: SubmitCommand
+  nameWithType: GameCommandProcessor.SubmitCommand
+  fullName: Core.Commands.GameCommandProcessor.SubmitCommand
+- uid: '{T}'
+  commentId: '!:T'
+  definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: Core.Commands.GameCommandProcessor.Dispose*
+  commentId: Overload:Core.Commands.GameCommandProcessor.Dispose
+  href: Core.Commands.GameCommandProcessor.html#Core_Commands_GameCommandProcessor_Dispose
+  name: Dispose
+  nameWithType: GameCommandProcessor.Dispose
+  fullName: Core.Commands.GameCommandProcessor.Dispose

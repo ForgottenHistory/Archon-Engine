@@ -6,6 +6,7 @@ items:
   parent: StarterKit.Commands
   children:
   - StarterKit.Commands.ConstructBuildingCommand.BuildingTypeId
+  - StarterKit.Commands.ConstructBuildingCommand.CountryId
   - StarterKit.Commands.ConstructBuildingCommand.Execute(Core.GameState)
   - StarterKit.Commands.ConstructBuildingCommand.ProvinceId
   - StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
@@ -30,7 +31,7 @@ items:
   summary: >-
     StarterKit command: Construct a building in a province.
 
-    Demonstrates fluent validation with multiple GAME-layer validators.
+    Used by both player (via console) and AI (programmatically).
 
     Uses type-safe ProvinceId wrapper for compile-time safety.
   example: []
@@ -154,6 +155,60 @@ items:
       value: 1
     - type: System.String
       value: provinceId
+- uid: StarterKit.Commands.ConstructBuildingCommand.CountryId
+  commentId: P:StarterKit.Commands.ConstructBuildingCommand.CountryId
+  id: CountryId
+  parent: StarterKit.Commands.ConstructBuildingCommand
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: ConstructBuildingCommand.CountryId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.CountryId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
+    startLine: 30
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  summary: >-
+    Country executing the command. If 0, uses player's country.
+
+    Set by AI when executing for AI countries.
+
+    Optional for console use (defaults to 0 = player).
+  example: []
+  syntax:
+    content: >-
+      [Arg(2, "countryId", Optional = true)]
+
+      public ushort CountryId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: >-
+      <Arg(2, "countryId", Optional:=True)>
+
+      Public Property CountryId As UShort
+  overload: StarterKit.Commands.ConstructBuildingCommand.CountryId*
+  attributes:
+  - type: Core.Commands.ArgAttribute
+    ctor: Core.Commands.ArgAttribute.#ctor(System.Int32,System.String)
+    arguments:
+    - type: System.Int32
+      value: 2
+    - type: System.String
+      value: countryId
+    namedArguments:
+    - name: Optional
+      type: System.Boolean
+      value: true
 - uid: StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
   commentId: M:StarterKit.Commands.ConstructBuildingCommand.Validate(Core.GameState)
   id: Validate(Core.GameState)
@@ -172,7 +227,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Validate
     path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
-    startLine: 27
+    startLine: 35
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -206,7 +261,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/StarterKit/Commands/ConstructBuildingCommand.cs
-    startLine: 37
+    startLine: 53
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -548,6 +603,22 @@ references:
   - uid: Core.Data.Ids
     name: Ids
     href: Core.Data.Ids.html
+- uid: StarterKit.Commands.ConstructBuildingCommand.CountryId*
+  commentId: Overload:StarterKit.Commands.ConstructBuildingCommand.CountryId
+  href: StarterKit.Commands.ConstructBuildingCommand.html#StarterKit_Commands_ConstructBuildingCommand_CountryId
+  name: CountryId
+  nameWithType: ConstructBuildingCommand.CountryId
+  fullName: StarterKit.Commands.ConstructBuildingCommand.CountryId
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
 - uid: Core.Commands.SimpleCommand.Validate(Core.GameState)
   commentId: M:Core.Commands.SimpleCommand.Validate(Core.GameState)
   parent: Core.Commands.SimpleCommand

@@ -25,7 +25,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CountryStatistics
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 455
+    startLine: 465
   assemblies:
   - Core
   namespace: Core.Queries
@@ -57,7 +57,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalCountries
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 457
+    startLine: 467
   assemblies:
   - Core
   namespace: Core.Queries
@@ -84,7 +84,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CountriesWithProvinces
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 458
+    startLine: 468
   assemblies:
   - Core
   namespace: Core.Queries
@@ -111,7 +111,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalProvinces
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 459
+    startLine: 469
   assemblies:
   - Core
   namespace: Core.Queries
@@ -138,7 +138,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AverageProvincesPerCountry
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 460
+    startLine: 470
   assemblies:
   - Core
   namespace: Core.Queries
@@ -165,7 +165,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LargestCountryProvinces
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 461
+    startLine: 471
   assemblies:
   - Core
   namespace: Core.Queries
@@ -192,7 +192,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LargestCountryId
     path: Scripts/Core/Queries/CountryQueries.cs
-    startLine: 462
+    startLine: 472
   assemblies:
   - Core
   namespace: Core.Queries

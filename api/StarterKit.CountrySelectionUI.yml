@@ -7,9 +7,11 @@ items:
   children:
   - StarterKit.CountrySelectionUI.CreateUI
   - StarterKit.CountrySelectionUI.HasSelectedCountry
+  - StarterKit.CountrySelectionUI.Hide
   - StarterKit.CountrySelectionUI.Initialize(Core.GameState,StarterKit.PlayerState)
   - StarterKit.CountrySelectionUI.OnDestroy
   - StarterKit.CountrySelectionUI.SelectedCountryId
+  - StarterKit.CountrySelectionUI.Show
   langs:
   - csharp
   - vb
@@ -96,8 +98,6 @@ items:
   - Core.UI.BasePanel.IsInitialized
   - Core.UI.BasePanel.IsVisible
   - Core.UI.BasePanel.InitializeBase
-  - Core.UI.BasePanel.Show
-  - Core.UI.BasePanel.Hide
   - Core.UI.BasePanel.Toggle
   - Core.UI.BasePanel.OnShow
   - Core.UI.BasePanel.OnHide
@@ -257,6 +257,64 @@ items:
     content.vb: Protected Overrides Sub CreateUI()
   overridden: Core.UI.BasePanel.CreateUI
   overload: StarterKit.CountrySelectionUI.CreateUI*
+- uid: StarterKit.CountrySelectionUI.Show
+  commentId: M:StarterKit.CountrySelectionUI.Show
+  id: Show
+  parent: StarterKit.CountrySelectionUI
+  langs:
+  - csharp
+  - vb
+  name: Show()
+  nameWithType: CountrySelectionUI.Show()
+  fullName: StarterKit.CountrySelectionUI.Show()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/CountrySelectionUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Show
+    path: Scripts/StarterKit/UI/CountrySelectionUI.cs
+    startLine: 222
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Show the panel.
+  example: []
+  syntax:
+    content: public override void Show()
+    content.vb: Public Overrides Sub Show()
+  overridden: Core.UI.BasePanel.Show
+  overload: StarterKit.CountrySelectionUI.Show*
+- uid: StarterKit.CountrySelectionUI.Hide
+  commentId: M:StarterKit.CountrySelectionUI.Hide
+  id: Hide
+  parent: StarterKit.CountrySelectionUI
+  langs:
+  - csharp
+  - vb
+  name: Hide()
+  nameWithType: CountrySelectionUI.Hide()
+  fullName: StarterKit.CountrySelectionUI.Hide()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/UI/CountrySelectionUI.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Hide
+    path: Scripts/StarterKit/UI/CountrySelectionUI.cs
+    startLine: 233
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Hide the panel.
+  example: []
+  syntax:
+    content: public override void Hide()
+    content.vb: Public Overrides Sub Hide()
+  overridden: Core.UI.BasePanel.Hide
+  overload: StarterKit.CountrySelectionUI.Hide*
 references:
 - uid: StarterKit
   commentId: N:StarterKit
@@ -1025,38 +1083,6 @@ references:
     name: InitializeBase
   - name: (
   - name: )
-- uid: Core.UI.BasePanel.Show
-  commentId: M:Core.UI.BasePanel.Show
-  parent: Core.UI.BasePanel
-  name: Show()
-  nameWithType: BasePanel.Show()
-  fullName: Core.UI.BasePanel.Show()
-  spec.csharp:
-  - uid: Core.UI.BasePanel.Show
-    name: Show
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: Core.UI.BasePanel.Show
-    name: Show
-  - name: (
-  - name: )
-- uid: Core.UI.BasePanel.Hide
-  commentId: M:Core.UI.BasePanel.Hide
-  parent: Core.UI.BasePanel
-  name: Hide()
-  nameWithType: BasePanel.Hide()
-  fullName: Core.UI.BasePanel.Hide()
-  spec.csharp:
-  - uid: Core.UI.BasePanel.Hide
-    name: Hide
-  - name: (
-  - name: )
-  spec.vb:
-  - uid: Core.UI.BasePanel.Hide
-    name: Hide
-  - name: (
-  - name: )
 - uid: Core.UI.BasePanel.Toggle
   commentId: M:Core.UI.BasePanel.Toggle
   parent: Core.UI.BasePanel
@@ -1424,3 +1450,47 @@ references:
   name: CreateUI
   nameWithType: CountrySelectionUI.CreateUI
   fullName: StarterKit.CountrySelectionUI.CreateUI
+- uid: Core.UI.BasePanel.Show
+  commentId: M:Core.UI.BasePanel.Show
+  parent: Core.UI.BasePanel
+  name: Show()
+  nameWithType: BasePanel.Show()
+  fullName: Core.UI.BasePanel.Show()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Show
+    name: Show
+  - name: (
+  - name: )
+- uid: StarterKit.CountrySelectionUI.Show*
+  commentId: Overload:StarterKit.CountrySelectionUI.Show
+  href: StarterKit.CountrySelectionUI.html#StarterKit_CountrySelectionUI_Show
+  name: Show
+  nameWithType: CountrySelectionUI.Show
+  fullName: StarterKit.CountrySelectionUI.Show
+- uid: Core.UI.BasePanel.Hide
+  commentId: M:Core.UI.BasePanel.Hide
+  parent: Core.UI.BasePanel
+  name: Hide()
+  nameWithType: BasePanel.Hide()
+  fullName: Core.UI.BasePanel.Hide()
+  spec.csharp:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Core.UI.BasePanel.Hide
+    name: Hide
+  - name: (
+  - name: )
+- uid: StarterKit.CountrySelectionUI.Hide*
+  commentId: Overload:StarterKit.CountrySelectionUI.Hide
+  href: StarterKit.CountrySelectionUI.html#StarterKit_CountrySelectionUI_Hide
+  name: Hide
+  nameWithType: CountrySelectionUI.Hide
+  fullName: StarterKit.CountrySelectionUI.Hide

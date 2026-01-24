@@ -9,7 +9,7 @@ items:
   - Core.Data.ProvinceStateSerializer.SerializationStats.Count
   - Core.Data.ProvinceStateSerializer.SerializationStats.IsValid
   - Core.Data.ProvinceStateSerializer.SerializationStats.Magic
-  - Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  - Core.Data.ProvinceStateSerializer.SerializationStats.Reserved
   - Core.Data.ProvinceStateSerializer.SerializationStats.ToString
   - Core.Data.ProvinceStateSerializer.SerializationStats.TotalSize
   - Core.Data.ProvinceStateSerializer.SerializationStats.Version
@@ -27,10 +27,12 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SerializationStats
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 313
+    startLine: 292
   assemblies:
   - Core
   namespace: Core.Data
+  summary: Serialization statistics
+  example: []
   syntax:
     content: public struct ProvinceStateSerializer.SerializationStats
     content.vb: Public Structure ProvinceStateSerializer.SerializationStats
@@ -52,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Magic
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 315
+    startLine: 294
   assemblies:
   - Core
   namespace: Core.Data
@@ -79,7 +81,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Version
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 316
+    startLine: 295
   assemblies:
   - Core
   namespace: Core.Data
@@ -88,33 +90,33 @@ items:
     return:
       type: System.UInt32
     content.vb: Public Version As UInteger
-- uid: Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
-  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
-  id: StateVersion
+- uid: Core.Data.ProvinceStateSerializer.SerializationStats.Reserved
+  commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Reserved
+  id: Reserved
   parent: Core.Data.ProvinceStateSerializer.SerializationStats
   langs:
   - csharp
   - vb
-  name: StateVersion
-  nameWithType: ProvinceStateSerializer.SerializationStats.StateVersion
-  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.StateVersion
+  name: Reserved
+  nameWithType: ProvinceStateSerializer.SerializationStats.Reserved
+  fullName: Core.Data.ProvinceStateSerializer.SerializationStats.Reserved
   type: Field
   source:
     remote:
       path: Scripts/Core/Data/ProvinceStateSerializer.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: StateVersion
+    id: Reserved
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 317
+    startLine: 296
   assemblies:
   - Core
   namespace: Core.Data
   syntax:
-    content: public uint StateVersion
+    content: public uint Reserved
     return:
       type: System.UInt32
-    content.vb: Public StateVersion As UInteger
+    content.vb: Public Reserved As UInteger
 - uid: Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
   commentId: F:Core.Data.ProvinceStateSerializer.SerializationStats.Checksum
   id: Checksum
@@ -133,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Checksum
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 318
+    startLine: 297
   assemblies:
   - Core
   namespace: Core.Data
@@ -160,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Count
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 319
+    startLine: 298
   assemblies:
   - Core
   namespace: Core.Data
@@ -187,7 +189,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalSize
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 320
+    startLine: 299
   assemblies:
   - Core
   namespace: Core.Data
@@ -214,7 +216,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 321
+    startLine: 300
   assemblies:
   - Core
   namespace: Core.Data
@@ -241,7 +243,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToString
     path: Scripts/Core/Data/ProvinceStateSerializer.cs
-    startLine: 323
+    startLine: 302
   assemblies:
   - Core
   namespace: Core.Data

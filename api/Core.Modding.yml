@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Modding
+  commentId: N:Core.Modding
+  id: Core.Modding
+  children:
+  - Core.Modding.ModLoader
+  langs:
+  - csharp
+  - vb
+  name: Core.Modding
+  nameWithType: Core.Modding
+  fullName: Core.Modding
+  type: Namespace
+  assemblies:
+  - Core
+references:
+- uid: Core.Modding.ModLoader
+  commentId: T:Core.Modding.ModLoader
+  href: Core.Modding.ModLoader.html
+  name: ModLoader
+  nameWithType: ModLoader
+  fullName: Core.Modding.ModLoader

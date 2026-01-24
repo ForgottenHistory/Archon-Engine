@@ -4,6 +4,10 @@ items:
   commentId: N:Map.Province
   id: Map.Province
   children:
+  - Map.Province.AdjacencyScanJob
+  - Map.Province.Color32Comparer
+  - Map.Province.FastAdjacencyScanner
+  - Map.Province.FastAdjacencyScanner.ScanResult
   - Map.Province.GPUProvinceNeighborDetector
   - Map.Province.ProvinceColorHasher
   - Map.Province.ProvinceData
@@ -31,6 +35,41 @@ items:
   assemblies:
   - MapAssembly
 references:
+- uid: Map.Province.FastAdjacencyScanner
+  commentId: T:Map.Province.FastAdjacencyScanner
+  href: Map.Province.FastAdjacencyScanner.html
+  name: FastAdjacencyScanner
+  nameWithType: FastAdjacencyScanner
+  fullName: Map.Province.FastAdjacencyScanner
+- uid: Map.Province.FastAdjacencyScanner.ScanResult
+  commentId: T:Map.Province.FastAdjacencyScanner.ScanResult
+  parent: Map.Province
+  href: Map.Province.FastAdjacencyScanner.html
+  name: FastAdjacencyScanner.ScanResult
+  nameWithType: FastAdjacencyScanner.ScanResult
+  fullName: Map.Province.FastAdjacencyScanner.ScanResult
+  spec.csharp:
+  - uid: Map.Province.FastAdjacencyScanner
+    name: FastAdjacencyScanner
+    href: Map.Province.FastAdjacencyScanner.html
+  - name: .
+  - uid: Map.Province.FastAdjacencyScanner.ScanResult
+    name: ScanResult
+    href: Map.Province.FastAdjacencyScanner.ScanResult.html
+  spec.vb:
+  - uid: Map.Province.FastAdjacencyScanner
+    name: FastAdjacencyScanner
+    href: Map.Province.FastAdjacencyScanner.html
+  - name: .
+  - uid: Map.Province.FastAdjacencyScanner.ScanResult
+    name: ScanResult
+    href: Map.Province.FastAdjacencyScanner.ScanResult.html
+- uid: Map.Province.AdjacencyScanJob
+  commentId: T:Map.Province.AdjacencyScanJob
+  href: Map.Province.AdjacencyScanJob.html
+  name: AdjacencyScanJob
+  nameWithType: AdjacencyScanJob
+  fullName: Map.Province.AdjacencyScanJob
 - uid: Map.Province.GPUProvinceNeighborDetector
   commentId: T:Map.Province.GPUProvinceNeighborDetector
   href: Map.Province.GPUProvinceNeighborDetector.html
@@ -261,6 +300,12 @@ references:
   - uid: Map.Province.ProvinceMetadataGenerator.MetadataResult
     name: MetadataResult
     href: Map.Province.ProvinceMetadataGenerator.MetadataResult.html
+- uid: Map.Province.Color32Comparer
+  commentId: T:Map.Province.Color32Comparer
+  href: Map.Province.Color32Comparer.html
+  name: Color32Comparer
+  nameWithType: Color32Comparer
+  fullName: Map.Province.Color32Comparer
 - uid: Map.Province.ProvinceData
   commentId: T:Map.Province.ProvinceData
   parent: Map.Province

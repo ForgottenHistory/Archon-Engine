@@ -31,6 +31,7 @@ items:
   - Core.Commands.CommandValidationError
   - Core.Commands.CommandValidationResult
   - Core.Commands.DeserializationResult
+  - Core.Commands.GameCommandProcessor
   - Core.Commands.ICommand
   - Core.Commands.ICommandFactory
   - Core.Commands.INetworkCommand
@@ -162,6 +163,13 @@ references:
   name: CommandTypes
   nameWithType: CommandTypes
   fullName: Core.Commands.CommandTypes
+- uid: Core.Commands.GameCommandProcessor
+  commentId: T:Core.Commands.GameCommandProcessor
+  parent: Core.Commands
+  href: Core.Commands.GameCommandProcessor.html
+  name: GameCommandProcessor
+  nameWithType: GameCommandProcessor
+  fullName: Core.Commands.GameCommandProcessor
 - uid: Core.Commands.ChangeOwnerCommand
   commentId: T:Core.Commands.ChangeOwnerCommand
   href: Core.Commands.ChangeOwnerCommand.html

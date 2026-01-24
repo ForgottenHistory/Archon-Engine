@@ -30,6 +30,7 @@
 - **Map.Rendering.NormalMapGenerator** - Generate normal maps from heightmaps for 3D terrain
 - **Map.Rendering.TreeInstanceGenerator** - Generate tree instance positions and types
 - **Map.Rendering.TreeInstanceRenderer** - Render trees using GPU instancing
+- **Map.Rendering.UnitPathRenderer** - Render unit movement path lines; subscribes to UnitMovementStartedEvent/CompletedEvent/CancelledEvent
 
 ### Rendering/Border/ (Pluggable via IBorderRenderer)
 - **Map.Rendering.Border.IBorderRenderer** - Interface for pluggable border generation (Pattern 20)
@@ -231,5 +232,5 @@ Map.MapRenderer (renders)
 
 ---
 
-*Updated: 2026-01-12*
-*Added: Pluggable Rendering Architecture (Pattern 20) - 6 pluggable renderer interfaces (IBorderRenderer, IHighlightRenderer, IFogOfWarRenderer, ITerrainRenderer, IMapModeColorizer, IShaderCompositor), MapRendererRegistry, Compositing system with blend modes*
+*Updated: 2026-01-24*
+*Added: UnitPathRenderer for movement visualization*

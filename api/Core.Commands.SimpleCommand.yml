@@ -61,6 +61,7 @@ items:
   - Core.Commands.BaseCommand
   derivedClasses:
   - StarterKit.Commands.AddGoldCommand
+  - StarterKit.Commands.ColonizeCommand
   - StarterKit.Commands.ConstructBuildingCommand
   - StarterKit.Commands.CreateUnitCommand
   - StarterKit.Commands.DisbandUnitCommand

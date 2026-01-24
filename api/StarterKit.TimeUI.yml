@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TimeUI
     path: Scripts/StarterKit/UI/TimeUI.cs
-    startLine: 14
+    startLine: 18
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -31,6 +31,11 @@ items:
     Shows date/time, pause button, and speed buttons.
 
     Positioned in top-left corner.
+
+
+    In multiplayer: Only the host can pause/unpause and change speed.
+
+    Clients see the display but controls are disabled.
   example: []
   syntax:
     content: 'public class TimeUI : StarterKitPanel'
@@ -120,7 +125,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/StarterKit/UI/TimeUI.cs
-    startLine: 30
+    startLine: 35
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -156,7 +161,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateUI
     path: Scripts/StarterKit/UI/TimeUI.cs
-    startLine: 62
+    startLine: 68
   assemblies:
   - StarterKit
   namespace: StarterKit

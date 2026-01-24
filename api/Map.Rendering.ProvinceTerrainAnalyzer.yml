@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceTerrainAnalyzer
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -59,7 +59,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 43
+    startLine: 44
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -93,7 +93,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AnalyzeAndGetTerrainTypes
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 73
+    startLine: 83
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

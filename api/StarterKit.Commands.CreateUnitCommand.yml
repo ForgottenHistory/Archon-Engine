@@ -5,6 +5,7 @@ items:
   id: CreateUnitCommand
   parent: StarterKit.Commands
   children:
+  - StarterKit.Commands.CreateUnitCommand.CountryId
   - StarterKit.Commands.CreateUnitCommand.Execute(Core.GameState)
   - StarterKit.Commands.CreateUnitCommand.ProvinceId
   - StarterKit.Commands.CreateUnitCommand.Undo(Core.GameState)
@@ -31,7 +32,7 @@ items:
   summary: >-
     StarterKit command: Create a unit at a province.
 
-    Demonstrates fluent validation pattern with GAME-layer extensions.
+    Handles gold cost and creates the unit.
 
     Uses type-safe ProvinceId wrapper for compile-time safety.
   example: []
@@ -154,6 +155,49 @@ items:
       value: 1
     - type: System.String
       value: provinceId
+- uid: StarterKit.Commands.CreateUnitCommand.CountryId
+  commentId: P:StarterKit.Commands.CreateUnitCommand.CountryId
+  id: CountryId
+  parent: StarterKit.Commands.CreateUnitCommand
+  langs:
+  - csharp
+  - vb
+  name: CountryId
+  nameWithType: CreateUnitCommand.CountryId
+  fullName: StarterKit.Commands.CreateUnitCommand.CountryId
+  type: Property
+  source:
+    remote:
+      path: Scripts/StarterKit/Commands/CreateUnitCommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CountryId
+    path: Scripts/StarterKit/Commands/CreateUnitCommand.cs
+    startLine: 25
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Commands
+  syntax:
+    content: >-
+      [Arg(2, "countryId")]
+
+      public ushort CountryId { get; set; }
+    parameters: []
+    return:
+      type: System.UInt16
+    content.vb: >-
+      <Arg(2, "countryId")>
+
+      Public Property CountryId As UShort
+  overload: StarterKit.Commands.CreateUnitCommand.CountryId*
+  attributes:
+  - type: Core.Commands.ArgAttribute
+    ctor: Core.Commands.ArgAttribute.#ctor(System.Int32,System.String)
+    arguments:
+    - type: System.Int32
+      value: 2
+    - type: System.String
+      value: countryId
 - uid: StarterKit.Commands.CreateUnitCommand.Validate(Core.GameState)
   commentId: M:StarterKit.Commands.CreateUnitCommand.Validate(Core.GameState)
   id: Validate(Core.GameState)
@@ -172,7 +216,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Validate
     path: Scripts/StarterKit/Commands/CreateUnitCommand.cs
-    startLine: 29
+    startLine: 33
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -206,7 +250,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/StarterKit/Commands/CreateUnitCommand.cs
-    startLine: 40
+    startLine: 58
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -238,7 +282,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Undo
     path: Scripts/StarterKit/Commands/CreateUnitCommand.cs
-    startLine: 57
+    startLine: 93
   assemblies:
   - StarterKit
   namespace: StarterKit.Commands
@@ -560,6 +604,22 @@ references:
   - uid: Core.Data.Ids
     name: Ids
     href: Core.Data.Ids.html
+- uid: StarterKit.Commands.CreateUnitCommand.CountryId*
+  commentId: Overload:StarterKit.Commands.CreateUnitCommand.CountryId
+  href: StarterKit.Commands.CreateUnitCommand.html#StarterKit_Commands_CreateUnitCommand_CountryId
+  name: CountryId
+  nameWithType: CreateUnitCommand.CountryId
+  fullName: StarterKit.Commands.CreateUnitCommand.CountryId
+- uid: System.UInt16
+  commentId: T:System.UInt16
+  parent: System
+  isExternal: true
+  name: ushort
+  nameWithType: ushort
+  fullName: ushort
+  nameWithType.vb: UShort
+  fullName.vb: UShort
+  name.vb: UShort
 - uid: Core.Commands.SimpleCommand.Validate(Core.GameState)
   commentId: M:Core.Commands.SimpleCommand.Validate(Core.GameState)
   parent: Core.Commands.SimpleCommand

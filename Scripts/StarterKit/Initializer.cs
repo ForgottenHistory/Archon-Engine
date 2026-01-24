@@ -606,11 +606,15 @@ namespace StarterKit
         /// </summary>
         private IEnumerator ScanProvinceAdjacencies(GameState gameState)
         {
-            // Skip if already initialized by ArchonEngine
+            // Skip scan if already initialized by ArchonEngine, but still set up GAME layer cost calculator
             if (gameState.Adjacencies.IsInitialized)
             {
                 if (logProgress)
                     ArchonLogger.Log("Adjacencies already initialized by ArchonEngine - skipping scan", "starter_kit");
+
+                // Set up terrain-based movement costs (GAME layer policy)
+                // ENGINE initialized pathfinding with uniform costs, GAME adds terrain policy
+                SetupTerrainCostCalculator(gameState);
                 yield break;
             }
 
@@ -677,29 +681,46 @@ namespace StarterKit
             {
                 gameState.Pathfinding.Initialize(gameState.Adjacencies);
 
-                // Set up terrain-based movement costs (Pattern 1: Engine-Game Separation)
-                // ENGINE: TerrainMovementCostCalculator provides terrain cost lookups
-                // GAME: LandUnitCostCalculator adds policy (land units can't cross water)
-                if (gameState.Registries?.Terrains != null && gameState.Registries.Terrains.Count > 0)
-                {
-                    var terrainCalculator = new TerrainMovementCostCalculator(
-                        gameState.Provinces,
-                        gameState.Registries.Terrains);
-                    var landUnitCalculator = new LandUnitCostCalculator(terrainCalculator);
-                    gameState.Pathfinding.SetDefaultCostCalculator(landUnitCalculator);
-
-                    if (logProgress)
-                        ArchonLogger.Log("Initializer: Terrain-based pathfinding enabled", "starter_kit");
-                }
-
                 if (logProgress)
                     ArchonLogger.Log("Initializer: PathfindingSystem initialized", "starter_kit");
             }
+
+            // Set up terrain-based movement costs (GAME layer policy)
+            SetupTerrainCostCalculator(gameState);
 
             // Cleanup
             Object.Destroy(scannerObj);
 
             yield return null;
+        }
+
+        /// <summary>
+        /// Set up terrain-based movement cost calculator (GAME layer policy).
+        /// ENGINE provides uniform costs, GAME adds terrain policy (land units can't cross water).
+        /// </summary>
+        private void SetupTerrainCostCalculator(GameState gameState)
+        {
+            if (gameState.Pathfinding == null || !gameState.Pathfinding.IsInitialized)
+            {
+                ArchonLogger.LogWarning("Initializer: Pathfinding not initialized - cannot set terrain costs", "starter_kit");
+                return;
+            }
+
+            if (gameState.Registries?.Terrains == null || gameState.Registries.Terrains.Count == 0)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: No terrain data - using uniform movement costs", "starter_kit");
+                return;
+            }
+
+            var terrainCalculator = new TerrainMovementCostCalculator(
+                gameState.Provinces,
+                gameState.Registries.Terrains);
+            var landUnitCalculator = new LandUnitCostCalculator(terrainCalculator);
+            gameState.Pathfinding.SetDefaultCostCalculator(landUnitCalculator);
+
+            if (logProgress)
+                ArchonLogger.Log("Initializer: Terrain-based pathfinding enabled", "starter_kit");
         }
 
         #endregion

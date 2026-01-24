@@ -61,6 +61,7 @@ items:
   - Core.Units.CreateUnitCommand
   - Core.Units.DisbandUnitCommand
   - Core.Units.MoveUnitCommand
+  - StarterKit.Commands.QueueUnitMovementCommand
   implements:
   - Core.Commands.ICommand
 - uid: Core.Commands.BaseCommand.Priority

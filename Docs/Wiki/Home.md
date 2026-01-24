@@ -11,6 +11,7 @@
 | | [Economy](Economy.md) | [Session Logs](../Log/) |
 | | [Buildings](Buildings.md) | |
 | | [Units](Units.md) | |
+| | [Multiplayer](Multiplayer.md) | |
 | | [Map Modes](Map-Modes.md) | |
 
 ## What is Archon?
@@ -21,6 +22,7 @@ Archon is split into two parts:
    - Province/country systems with GPU-accelerated map rendering
    - Command pattern for deterministic state changes
    - Event-driven architecture with zero allocations
+   - Multiplayer with lockstep synchronization
    - Save/load, pathfinding, modifiers, time management
 
 2. **GAME** (your code) - Game-specific rules and content
@@ -73,6 +75,7 @@ Assets/
 │   ├── Scripts/
 │   │   ├── Core/            # Simulation: provinces, countries, commands
 │   │   ├── Map/             # Rendering: textures, borders, selection
+│   │   ├── Network/         # Multiplayer: transport, sync, lobby
 │   │   ├── StarterKit/      # Example GAME layer (copy this!)
 │   │   └── Utils/           # Logging, circular buffers
 │   └── Docs/
@@ -99,7 +102,8 @@ Assets/
 1. **New to Archon?** → Start with [Getting Started](Getting-Started.md)
 2. **Want to build a game?** → Follow [Your First Game](Your-First-Game.md)
 3. **Adding features?** → See [Commands](Commands.md), [Events](Events.md), [Economy](Economy.md)
-4. **Custom visuals?** → See [Map Modes](Map-Modes.md)
+4. **Adding multiplayer?** → See [Multiplayer](Multiplayer.md)
+5. **Custom visuals?** → See [Map Modes](Map-Modes.md)
 
 ## Getting Help
 
