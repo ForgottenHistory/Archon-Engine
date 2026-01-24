@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using Core.Modding;
 
 namespace Map.MapModes
 {
@@ -32,22 +33,11 @@ namespace Map.MapModes
 
         private void LoadComputeShader()
         {
-            // Load compute shader from Resources or find in project
-            gradientCompute = Resources.Load<ComputeShader>("GradientMapMode");
-
-            #if UNITY_EDITOR
-            if (gradientCompute == null)
-            {
-                // Try to find it in the project
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("GradientMapMode t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    gradientCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"GradientComputeDispatcher: Found compute shader at {path}", "map_initialization");
-                }
-            }
-            #endif
+            // Load compute shader - check mods first, then fall back to Resources
+            gradientCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "GradientMapMode",
+                "Shaders/GradientMapMode"
+            );
 
             if (gradientCompute == null)
             {

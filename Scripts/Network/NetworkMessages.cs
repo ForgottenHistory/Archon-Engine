@@ -27,7 +27,13 @@ namespace Archon.Network
         // Synchronization (0x30-0x3F)
         ChecksumRequest = 0x30,
         ChecksumResponse = 0x31,
-        DesyncRecovery = 0x32
+        DesyncRecovery = 0x32,
+
+        // Lobby (0x40-0x4F)
+        LobbyUpdate = 0x40,
+        PlayerReady = 0x41,
+        GameStart = 0x42,
+        PlayerCountrySelected = 0x43
     }
 
     /// <summary>
@@ -103,5 +109,59 @@ namespace Archon.Network
     public struct GameSpeedMessage
     {
         public byte SpeedLevel;           // 0 = paused, 1-5 = speed levels
+    }
+
+    /// <summary>
+    /// Player slot info for lobby updates.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct LobbyPlayerSlot
+    {
+        public int PeerId;                // 4 bytes
+        public ushort CountryId;          // 2 bytes - 0 = not selected
+        public byte IsReady;              // 1 byte - 0 = not ready, 1 = ready
+        public byte IsHost;               // 1 byte - 0 = client, 1 = host
+
+        public const int Size = 8;
+    }
+
+    /// <summary>
+    /// Lobby state update message. Sent by host to all clients.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct LobbyUpdateHeader
+    {
+        public byte PlayerCount;          // Number of players in lobby
+        public byte LobbyState;           // 0 = waiting, 1 = starting, 2 = in game
+
+        public const int Size = 2;
+    }
+
+    /// <summary>
+    /// Lobby state enum.
+    /// </summary>
+    public enum LobbyGameState : byte
+    {
+        Waiting = 0,
+        Starting = 1,
+        InGame = 2
+    }
+
+    /// <summary>
+    /// Player ready message.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct PlayerReadyMessage
+    {
+        public byte IsReady;              // 0 = not ready, 1 = ready
+    }
+
+    /// <summary>
+    /// Player country selection message.
+    /// </summary>
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public struct PlayerCountryMessage
+    {
+        public ushort CountryId;          // Selected country ID (0 = none)
     }
 }

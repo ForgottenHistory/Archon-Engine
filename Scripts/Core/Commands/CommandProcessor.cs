@@ -13,7 +13,7 @@ namespace Core.Commands
     /// </summary>
     public class CommandProcessor : IDisposable
     {
-        private readonly ProvinceSimulation simulation;
+        private readonly ProvinceSystem provinceSystem;
         private readonly Queue<IProvinceCommand> pendingCommands;
         private readonly List<CommandExecutionRecord> executionHistory;
         private uint currentTick;
@@ -27,9 +27,9 @@ namespace Core.Commands
         private int commandsRejected;
         private int validationFailures;
 
-        public CommandProcessor(ProvinceSimulation simulation)
+        public CommandProcessor(ProvinceSystem provinceSystem)
         {
-            this.simulation = simulation ?? throw new ArgumentNullException(nameof(simulation));
+            this.provinceSystem = provinceSystem ?? throw new ArgumentNullException(nameof(provinceSystem));
             this.pendingCommands = new Queue<IProvinceCommand>();
             this.executionHistory = new List<CommandExecutionRecord>();
             this.currentTick = 0;
@@ -113,7 +113,7 @@ namespace Core.Commands
             }
 
             // Pre-validate against current game state
-            var validationResult = command.Validate(simulation);
+            var validationResult = command.Validate(provinceSystem);
             if (!validationResult.IsValid)
             {
                 validationFailures++;
@@ -284,7 +284,7 @@ namespace Core.Commands
                 }
             }
 
-            result.FinalStateChecksum = simulation.GetStateChecksum();
+            result.FinalStateChecksum = provinceSystem.GetStateChecksum();
             return result;
         }
 
@@ -294,7 +294,7 @@ namespace Core.Commands
         private CommandExecutionResult ExecuteCommand(IProvinceCommand command)
         {
             // Final validation before execution
-            var validationResult = command.Validate(simulation);
+            var validationResult = command.Validate(provinceSystem);
             if (!validationResult.IsValid)
             {
                 ArchonLogger.LogWarning($"Command validation failed at execution time: {validationResult.ErrorMessage}", "core_commands");
@@ -302,7 +302,7 @@ namespace Core.Commands
             }
 
             // Execute the command
-            var result = command.Execute(simulation);
+            var result = command.Execute(provinceSystem);
             if (result.IsSuccess)
             {
                 commandsExecuted++;

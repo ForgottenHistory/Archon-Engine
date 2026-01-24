@@ -2,6 +2,7 @@ using UnityEngine;
 using Map.Rendering;
 using Map.Rendering.Highlight;
 using Utils;
+using Core.Modding;
 
 namespace Map.Interaction
 {
@@ -12,8 +13,8 @@ namespace Map.Interaction
     /// </summary>
     public class ProvinceHighlighter : MonoBehaviour
     {
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader highlightCompute;
+        // Loaded via ModLoader
+        private ComputeShader highlightCompute;
 
         [Header("Highlight Settings")]
         [SerializeField] private HighlightMode highlightMode = HighlightMode.Fill;
@@ -59,24 +60,15 @@ namespace Map.Interaction
         {
             if (highlightCompute == null)
             {
-                // Try to find the compute shader in the project
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("ProvinceHighlight t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    highlightCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-
-                    if (logOperations)
-                    {
-                        ArchonLogger.Log($"ProvinceHighlighter: Found compute shader at {path}", "map_initialization");
-                    }
-                }
-                #endif
+                // Load compute shader - check mods first, then fall back to Resources
+                highlightCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "ProvinceHighlight",
+                    "Shaders/ProvinceHighlight"
+                );
 
                 if (highlightCompute == null)
                 {
-                    ArchonLogger.LogWarning("ProvinceHighlighter: Highlight compute shader not assigned. Highlighting will not work.", "map_interaction");
+                    ArchonLogger.LogWarning("ProvinceHighlighter: Compute shader not found!", "map_interaction");
                     return;
                 }
             }

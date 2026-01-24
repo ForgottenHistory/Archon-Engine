@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-namespace ProvinceSystem
+namespace Map.Province
 {
     /// <summary>
     /// Custom equality comparer for Color32 to ensure proper dictionary/hashset behavior

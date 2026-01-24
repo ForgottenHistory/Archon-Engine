@@ -1,26 +1,26 @@
 using System;
 using System.Collections.Generic;
-using Core.Data;
 using Core.Systems;
+using Core.Data;
 using Unity.Collections;
-using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 
 namespace Map.Simulation
 {
     /// <summary>
-    /// Validates simulation state integrity and calculates checksums for multiplayer synchronization
-    /// Provides comprehensive state verification and desync detection
+    /// Validates simulation state integrity and calculates checksums for multiplayer synchronization.
+    /// Provides comprehensive state verification and desync detection.
+    /// Works with ProvinceSystem's double-buffered state architecture.
     /// </summary>
     public static class StateValidator
     {
         /// <summary>
-        /// Calculate comprehensive checksum of simulation state
-        /// Uses rolling hash for efficiency with large datasets
+        /// Calculate comprehensive checksum of simulation state.
+        /// Uses rolling hash for efficiency with large datasets.
         /// </summary>
-        public static StateChecksum CalculateStateChecksum(ProvinceSimulation simulation)
+        public static StateChecksum CalculateStateChecksum(ProvinceSystem provinceSystem)
         {
-            if (simulation == null || !simulation.IsInitialized)
+            if (provinceSystem == null || !provinceSystem.IsInitialized)
             {
                 return StateChecksum.Invalid();
             }
@@ -30,28 +30,30 @@ namespace Map.Simulation
 
             try
             {
+                int provinceCount = provinceSystem.ProvinceCount;
+
                 // Hash basic simulation properties
-                hash = HashUInt(hash, (uint)simulation.ProvinceCount);
-                hash = HashUInt(hash, simulation.StateVersion);
+                hash = HashUInt(hash, (uint)provinceCount);
+
+                // Get province IDs and states
+                using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+                var stateBuffer = provinceSystem.GetUIReadBuffer();
 
                 // Hash all province states in deterministic order
-                var allProvinceIDs = simulation.GetAllProvinceIDs();
-
-                foreach (var provinceID in allProvinceIDs)
+                for (int i = 0; i < provinceIds.Length && i < stateBuffer.Length; i++)
                 {
-                    var state = simulation.GetProvinceState(provinceID);
-                    hash = HashProvinceState(hash, provinceID, state);
+                    ushort provinceId = provinceIds[i];
+                    var state = stateBuffer[i];
+                    hash = HashProvinceState(hash, provinceId, state);
                 }
 
                 checksum.MainHash = hash;
-                checksum.ProvinceCount = (uint)simulation.ProvinceCount;
-                checksum.StateVersion = simulation.StateVersion;
+                checksum.ProvinceCount = (uint)provinceCount;
                 checksum.CalculatedAt = DateTime.UtcNow;
 
                 // Calculate sub-checksums for granular validation
-                checksum.OwnershipHash = CalculateOwnershipHash(simulation);
-                checksum.DevelopmentHash = CalculateDevelopmentHash(simulation);
-                checksum.TerrainHash = CalculateTerrainHash(simulation);
+                checksum.OwnershipHash = CalculateOwnershipHash(provinceSystem);
+                checksum.TerrainHash = CalculateTerrainHash(provinceSystem);
 
                 checksum.IsValid = true;
                 return checksum;
@@ -64,17 +66,20 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// Calculate checksum of only ownership data (for network optimization)
+        /// Calculate checksum of only ownership data (for network optimization).
         /// </summary>
-        private static uint CalculateOwnershipHash(ProvinceSimulation simulation)
+        private static uint CalculateOwnershipHash(ProvinceSystem provinceSystem)
         {
             uint hash = 0x811C9DC5;
-            var allProvinceIDs = simulation.GetAllProvinceIDs();
 
-            foreach (var provinceID in allProvinceIDs)
+            using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+            var stateBuffer = provinceSystem.GetUIReadBuffer();
+
+            for (int i = 0; i < provinceIds.Length && i < stateBuffer.Length; i++)
             {
-                var state = simulation.GetProvinceState(provinceID);
-                hash = HashUInt(hash, provinceID);
+                ushort provinceId = provinceIds[i];
+                var state = stateBuffer[i];
+                hash = HashUInt(hash, provinceId);
                 hash = HashUInt(hash, state.ownerID);
                 hash = HashUInt(hash, state.controllerID);
             }
@@ -83,50 +88,41 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// Calculate checksum of development data (REMOVED - game-specific)
-        /// NOTE: Development is game-specific, moved to game layer
+        /// Calculate checksum of terrain data (should be static after map load).
         /// </summary>
-        private static uint CalculateDevelopmentHash(ProvinceSimulation simulation)
-        {
-            // REMOVED: development and fortLevel no longer in engine ProvinceState
-            // Game layer should calculate its own checksums for game-specific data
-            return 0;
-        }
-
-        /// <summary>
-        /// Calculate checksum of terrain data (should be static after map load)
-        /// </summary>
-        private static uint CalculateTerrainHash(ProvinceSimulation simulation)
+        private static uint CalculateTerrainHash(ProvinceSystem provinceSystem)
         {
             uint hash = 0x811C9DC5;
-            var allProvinceIDs = simulation.GetAllProvinceIDs();
 
-            foreach (var provinceID in allProvinceIDs)
+            using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+            var stateBuffer = provinceSystem.GetUIReadBuffer();
+
+            for (int i = 0; i < provinceIds.Length && i < stateBuffer.Length; i++)
             {
-                var state = simulation.GetProvinceState(provinceID);
-                hash = HashUInt(hash, provinceID);
-                hash = HashUInt(hash, state.terrainType); // Changed from byte to ushort
+                ushort provinceId = provinceIds[i];
+                var state = stateBuffer[i];
+                hash = HashUInt(hash, provinceId);
+                hash = HashUInt(hash, state.terrainType);
             }
 
             return hash;
         }
 
         /// <summary>
-        /// Hash a single province state (engine data only)
+        /// Hash a single province state (engine data only).
         /// </summary>
         private static uint HashProvinceState(uint hash, ushort provinceID, ProvinceState state)
         {
             hash = HashUInt(hash, provinceID);
             hash = HashUInt(hash, state.ownerID);
             hash = HashUInt(hash, state.controllerID);
-            hash = HashUInt(hash, state.terrainType);  // Now ushort
-            hash = HashUInt(hash, state.gameDataSlot);  // New field
-            // REMOVED: development, fortLevel, flags (game-specific)
+            hash = HashUInt(hash, state.terrainType);
+            hash = HashUInt(hash, state.gameDataSlot);
             return hash;
         }
 
         /// <summary>
-        /// FNV-1a hash for uint values
+        /// FNV-1a hash for uint values.
         /// </summary>
         private static uint HashUInt(uint hash, uint value)
         {
@@ -142,17 +138,7 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// FNV-1a hash for byte values
-        /// </summary>
-        private static uint HashByte(uint hash, byte value)
-        {
-            hash ^= value;
-            hash *= 0x01000193;
-            return hash;
-        }
-
-        /// <summary>
-        /// Compare two checksums for equality
+        /// Compare two checksums for equality.
         /// </summary>
         public static bool ChecksumsMatch(StateChecksum a, StateChecksum b)
         {
@@ -160,13 +146,12 @@ namespace Map.Simulation
                 return false;
 
             return a.MainHash == b.MainHash &&
-                   a.ProvinceCount == b.ProvinceCount &&
-                   a.StateVersion == b.StateVersion;
+                   a.ProvinceCount == b.ProvinceCount;
         }
 
         /// <summary>
-        /// Perform detailed comparison of two checksums
-        /// Returns information about what differs
+        /// Perform detailed comparison of two checksums.
+        /// Returns information about what differs.
         /// </summary>
         public static ChecksumComparison CompareChecksums(StateChecksum a, StateChecksum b)
         {
@@ -187,14 +172,8 @@ namespace Map.Simulation
                 if (a.ProvinceCount != b.ProvinceCount)
                     differences.Add($"ProvinceCount: {a.ProvinceCount} vs {b.ProvinceCount}");
 
-                if (a.StateVersion != b.StateVersion)
-                    differences.Add($"StateVersion: {a.StateVersion} vs {b.StateVersion}");
-
                 if (a.OwnershipHash != b.OwnershipHash)
                     differences.Add($"OwnershipHash: {a.OwnershipHash:X8} vs {b.OwnershipHash:X8}");
-
-                if (a.DevelopmentHash != b.DevelopmentHash)
-                    differences.Add($"DevelopmentHash: {a.DevelopmentHash:X8} vs {b.DevelopmentHash:X8}");
 
                 if (a.TerrainHash != b.TerrainHash)
                     differences.Add($"TerrainHash: {a.TerrainHash:X8} vs {b.TerrainHash:X8}");
@@ -206,10 +185,10 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// Validate simulation state integrity
-        /// Checks for common corruption patterns and invariant violations
+        /// Validate simulation state integrity.
+        /// Checks for common corruption patterns and invariant violations.
         /// </summary>
-        public static StateValidationResult ValidateSimulationState(ProvinceSimulation simulation)
+        public static StateValidationResult ValidateSimulationState(ProvinceSystem provinceSystem)
         {
             var result = new StateValidationResult
             {
@@ -221,74 +200,61 @@ namespace Map.Simulation
             try
             {
                 // Check if simulation is initialized
-                if (!simulation.IsInitialized)
+                if (!provinceSystem.IsInitialized)
                 {
                     result.IsValid = false;
-                    result.Issues.Add("Simulation is not initialized");
+                    result.Issues.Add("ProvinceSystem is not initialized");
                     return result;
                 }
 
-                // Get all province IDs for validation
-                var allProvinceIDs = simulation.GetAllProvinceIDs();
+                int provinceCount = provinceSystem.ProvinceCount;
+
+                // Get province IDs for validation
+                using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+                var stateBuffer = provinceSystem.GetUIReadBuffer();
 
                 // Check province count consistency
-                if (allProvinceIDs.Length != simulation.ProvinceCount)
+                if (provinceIds.Length != provinceCount)
                 {
                     result.IsValid = false;
-                    result.Issues.Add($"Province count mismatch: reported {simulation.ProvinceCount}, actual {allProvinceIDs.Length}");
+                    result.Issues.Add($"Province count mismatch: reported {provinceCount}, IDs array {provinceIds.Length}");
                 }
 
-                // Check for duplicate province IDs (should not happen due to implementation, but validate)
+                // Check for duplicate province IDs
                 var seenIDs = new HashSet<ushort>();
-                foreach (var provinceID in allProvinceIDs)
+                for (int i = 0; i < provinceIds.Length; i++)
                 {
-                    if (seenIDs.Contains(provinceID))
+                    ushort provinceId = provinceIds[i];
+                    if (seenIDs.Contains(provinceId))
                     {
                         result.IsValid = false;
-                        result.Issues.Add($"Duplicate province ID: {provinceID}");
+                        result.Issues.Add($"Duplicate province ID: {provinceId}");
                     }
-                    seenIDs.Add(provinceID);
+                    seenIDs.Add(provinceId);
                 }
 
                 // Check province state validity
-                foreach (var provinceID in allProvinceIDs)
+                for (int i = 0; i < provinceIds.Length && i < stateBuffer.Length; i++)
                 {
-                    var state = simulation.GetProvinceState(provinceID);
+                    ushort provinceId = provinceIds[i];
+                    var state = stateBuffer[i];
 
                     // Check owner ID bounds
-                    if (state.ownerID > 255)
+                    if (state.ownerID > 65535)
                     {
-                        result.Issues.Add($"Province {provinceID}: invalid owner ID {state.ownerID}");
+                        result.Issues.Add($"Province {provinceId}: invalid owner ID {state.ownerID}");
                     }
 
                     // Check controller ID bounds
-                    if (state.controllerID > 255)
+                    if (state.controllerID > 65535)
                     {
-                        result.Issues.Add($"Province {provinceID}: invalid controller ID {state.controllerID}");
+                        result.Issues.Add($"Province {provinceId}: invalid controller ID {state.controllerID}");
                     }
-
-                    // REMOVED: Development and fort validation (game-specific)
-                    // Game layer should validate its own data
-
-                    // Check terrain type validity
-                    if (!Enum.IsDefined(typeof(TerrainType), state.terrainType))
-                    {
-                        result.Issues.Add($"Province {provinceID}: invalid terrain type {state.terrainType}");
-                    }
-                }
-
-                // Check memory usage is within bounds
-                var (totalBytes, hotBytes, coldBytes) = simulation.GetMemoryUsage();
-                if (hotBytes != simulation.ProvinceCount * 8)
-                {
-                    result.Issues.Add($"Hot memory size mismatch: expected {simulation.ProvinceCount * 8}, got {hotBytes}");
                 }
 
                 // Set final validation result
                 result.IsValid = result.Issues.Count == 0;
-                result.ProvinceCount = simulation.ProvinceCount;
-                result.StateVersion = simulation.StateVersion;
-                result.MemoryUsage = totalBytes;
+                result.ProvinceCount = provinceCount;
 
                 return result;
             }
@@ -301,52 +267,25 @@ namespace Map.Simulation
         }
 
         /// <summary>
-        /// Create a lightweight checksum for frequent network synchronization
-        /// Only includes frequently changing data (ownership)
-        /// NOTE: Development removed (game-specific)
+        /// Create a lightweight checksum for frequent network synchronization.
+        /// Only includes frequently changing data (ownership).
         /// </summary>
-        public static uint CalculateLightweightChecksum(ProvinceSimulation simulation)
+        public static uint CalculateLightweightChecksum(ProvinceSystem provinceSystem)
         {
             uint hash = 0x811C9DC5;
 
-            hash = HashUInt(hash, simulation.StateVersion);
+            hash = HashUInt(hash, (uint)provinceSystem.ProvinceCount);
 
-            var allProvinceIDs = simulation.GetAllProvinceIDs();
-            foreach (var provinceID in allProvinceIDs)
+            using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+            var stateBuffer = provinceSystem.GetUIReadBuffer();
+
+            for (int i = 0; i < provinceIds.Length && i < stateBuffer.Length; i++)
             {
-                var state = simulation.GetProvinceState(provinceID);
-                hash = HashUInt(hash, provinceID);
+                ushort provinceId = provinceIds[i];
+                var state = stateBuffer[i];
+                hash = HashUInt(hash, provinceId);
                 hash = HashUInt(hash, state.ownerID);
                 hash = HashUInt(hash, state.controllerID);
-                // REMOVED: development (game-specific)
-            }
-
-            return hash;
-        }
-
-        /// <summary>
-        /// Calculate state-only checksum (excluding version) for comparing identical game states
-        /// Used for testing that identical states produce identical checksums regardless of how they were reached
-        /// </summary>
-        public static uint CalculateStateOnlyChecksum(ProvinceSimulation simulation)
-        {
-            if (simulation == null || !simulation.IsInitialized)
-            {
-                return 0;
-            }
-
-            uint hash = 0x811C9DC5;
-
-            // Hash province count but NOT state version
-            hash = HashUInt(hash, (uint)simulation.ProvinceCount);
-
-            // Hash all province states in deterministic order
-            var allProvinceIDs = simulation.GetAllProvinceIDs();
-
-            foreach (var provinceID in allProvinceIDs)
-            {
-                var state = simulation.GetProvinceState(provinceID);
-                hash = HashProvinceState(hash, provinceID, state);
             }
 
             return hash;
@@ -354,17 +293,15 @@ namespace Map.Simulation
     }
 
     /// <summary>
-    /// Comprehensive checksum of simulation state
+    /// Comprehensive checksum of simulation state.
     /// </summary>
     public struct StateChecksum
     {
         public bool IsValid;
         public uint MainHash;           // Hash of all state data
         public uint OwnershipHash;      // Hash of ownership data only
-        public uint DevelopmentHash;    // Hash of development data only
         public uint TerrainHash;        // Hash of terrain data only (should be stable)
         public uint ProvinceCount;      // Number of provinces
-        public uint StateVersion;       // Current state version
         public DateTime CalculatedAt;   // When this checksum was calculated
 
         public static StateChecksum Invalid() => new StateChecksum { IsValid = false };
@@ -372,22 +309,21 @@ namespace Map.Simulation
         public override string ToString()
         {
             return IsValid
-                ? $"StateChecksum[Main:{MainHash:X8}, Own:{OwnershipHash:X8}, Dev:{DevelopmentHash:X8}, " +
-                  $"Terr:{TerrainHash:X8}, Count:{ProvinceCount}, Ver:{StateVersion}]"
+                ? $"StateChecksum[Main:{MainHash:X8}, Own:{OwnershipHash:X8}, Terr:{TerrainHash:X8}, Count:{ProvinceCount}]"
                 : "StateChecksum[Invalid]";
         }
 
         /// <summary>
-        /// Get a compact representation for network transmission
+        /// Get a compact representation for network transmission.
         /// </summary>
         public ulong GetCompactHash()
         {
-            return ((ulong)MainHash << 32) | StateVersion;
+            return ((ulong)MainHash << 32) | ProvinceCount;
         }
     }
 
     /// <summary>
-    /// Result of checksum comparison
+    /// Result of checksum comparison.
     /// </summary>
     public struct ChecksumComparison
     {
@@ -410,7 +346,7 @@ namespace Map.Simulation
     }
 
     /// <summary>
-    /// Result of state validation
+    /// Result of state validation.
     /// </summary>
     public struct StateValidationResult
     {
@@ -418,13 +354,11 @@ namespace Map.Simulation
         public List<string> Issues;
         public DateTime CheckedAt;
         public int ProvinceCount;
-        public uint StateVersion;
-        public int MemoryUsage;
 
         public override string ToString()
         {
             if (IsValid)
-                return $"State valid: {ProvinceCount} provinces, version {StateVersion}, {MemoryUsage} bytes";
+                return $"State valid: {ProvinceCount} provinces";
 
             string issuesText = Issues != null && Issues.Count > 0
                 ? string.Join("; ", Issues)

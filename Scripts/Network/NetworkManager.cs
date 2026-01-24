@@ -50,6 +50,16 @@ namespace Archon.Network
         /// <summary>Fired when game speed changes (from host).</summary>
         public event Action<byte> OnGameSpeedChanged;
 
+        /// <summary>Fired when lobby state updates (player list, ready states).</summary>
+        public event Action<LobbyUpdateHeader, LobbyPlayerSlot[]> OnLobbyUpdated;
+
+        /// <summary>Fired when host starts the game.</summary>
+        public event Action OnGameStarted;
+
+        // Lobby state (host-authoritative)
+        private LobbyGameState lobbyState = LobbyGameState.Waiting;
+        private readonly Dictionary<int, LobbyPlayerSlot> lobbyPlayers = new();
+
         /// <summary>
         /// Initialize with a transport implementation.
         /// </summary>
@@ -82,6 +92,17 @@ namespace Archon.Network
                 DisplayName = "Host"
             };
             peers[localPeerId] = selfPeer;
+
+            // Initialize lobby with host
+            lobbyState = LobbyGameState.Waiting;
+            lobbyPlayers.Clear();
+            lobbyPlayers[localPeerId] = new LobbyPlayerSlot
+            {
+                PeerId = localPeerId,
+                CountryId = 0,
+                IsReady = 0,
+                IsHost = 1
+            };
 
             ArchonLogger.Log($"Hosting on port {port}", ArchonLogger.Systems.Network);
         }
@@ -207,6 +228,160 @@ namespace Archon.Network
             transport.SendToAll(message, DeliveryMethod.ReliableOrdered);
         }
 
+        #region Lobby Methods
+
+        /// <summary>
+        /// Set local player's ready state.
+        /// </summary>
+        public void SetReady(bool isReady)
+        {
+            if (!IsConnected) return;
+
+            var readyMsg = new PlayerReadyMessage { IsReady = (byte)(isReady ? 1 : 0) };
+            var data = StructToBytes(readyMsg);
+            var message = CreateMessage(NetworkMessageType.PlayerReady, 0, data);
+
+            if (IsHost)
+            {
+                // Host updates locally and broadcasts
+                if (lobbyPlayers.TryGetValue(localPeerId, out var slot))
+                {
+                    slot.IsReady = readyMsg.IsReady;
+                    lobbyPlayers[localPeerId] = slot;
+                    BroadcastLobbyUpdate();
+                }
+            }
+            else
+            {
+                // Client sends to host
+                transport.Send(hostPeerId, message, DeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        /// <summary>
+        /// Set local player's country selection.
+        /// </summary>
+        public void SetCountrySelection(ushort countryId)
+        {
+            if (!IsConnected) return;
+
+            var countryMsg = new PlayerCountryMessage { CountryId = countryId };
+            var data = StructToBytes(countryMsg);
+            var message = CreateMessage(NetworkMessageType.PlayerCountrySelected, 0, data);
+
+            if (IsHost)
+            {
+                // Host updates locally and broadcasts
+                if (lobbyPlayers.TryGetValue(localPeerId, out var slot))
+                {
+                    slot.CountryId = countryId;
+                    lobbyPlayers[localPeerId] = slot;
+                    BroadcastLobbyUpdate();
+                }
+            }
+            else
+            {
+                // Client sends to host
+                transport.Send(hostPeerId, message, DeliveryMethod.ReliableOrdered);
+            }
+        }
+
+        /// <summary>
+        /// Start the game. Host only.
+        /// </summary>
+        public void StartGame()
+        {
+            if (!IsHost)
+            {
+                ArchonLogger.LogWarning("Only host can start the game", ArchonLogger.Systems.Network);
+                return;
+            }
+
+            if (lobbyState != LobbyGameState.Waiting)
+            {
+                ArchonLogger.LogWarning("Game already starting or started", ArchonLogger.Systems.Network);
+                return;
+            }
+
+            lobbyState = LobbyGameState.Starting;
+            BroadcastLobbyUpdate();
+
+            // Send game start message
+            var message = CreateMessage(NetworkMessageType.GameStart, 0, Array.Empty<byte>());
+            transport.SendToAll(message, DeliveryMethod.ReliableOrdered);
+
+            lobbyState = LobbyGameState.InGame;
+
+            ArchonLogger.Log("Host started the game", ArchonLogger.Systems.Network);
+            OnGameStarted?.Invoke();
+        }
+
+        /// <summary>
+        /// Get current lobby players.
+        /// </summary>
+        public LobbyPlayerSlot[] GetLobbyPlayers()
+        {
+            var slots = new LobbyPlayerSlot[lobbyPlayers.Count];
+            int i = 0;
+            foreach (var slot in lobbyPlayers.Values)
+            {
+                slots[i++] = slot;
+            }
+            return slots;
+        }
+
+        /// <summary>
+        /// Check if a country is already selected by another player.
+        /// </summary>
+        public bool IsCountryTaken(ushort countryId, out int takenByPeerId)
+        {
+            foreach (var kvp in lobbyPlayers)
+            {
+                if (kvp.Value.CountryId == countryId && kvp.Key != localPeerId)
+                {
+                    takenByPeerId = kvp.Key;
+                    return true;
+                }
+            }
+            takenByPeerId = -1;
+            return false;
+        }
+
+        private void BroadcastLobbyUpdate()
+        {
+            if (!IsHost) return;
+
+            // Build lobby update message
+            var header = new LobbyUpdateHeader
+            {
+                PlayerCount = (byte)lobbyPlayers.Count,
+                LobbyState = (byte)lobbyState
+            };
+
+            // Serialize header + all player slots
+            var headerBytes = StructToBytes(header);
+            var slotsBytes = new byte[lobbyPlayers.Count * LobbyPlayerSlot.Size];
+            int offset = 0;
+            foreach (var slot in lobbyPlayers.Values)
+            {
+                var slotBytes = StructToBytes(slot);
+                Array.Copy(slotBytes, 0, slotsBytes, offset, LobbyPlayerSlot.Size);
+                offset += LobbyPlayerSlot.Size;
+            }
+
+            var payload = new byte[headerBytes.Length + slotsBytes.Length];
+            Array.Copy(headerBytes, 0, payload, 0, headerBytes.Length);
+            Array.Copy(slotsBytes, 0, payload, headerBytes.Length, slotsBytes.Length);
+
+            var message = CreateMessage(NetworkMessageType.LobbyUpdate, 0, payload);
+            transport.SendToAll(message, DeliveryMethod.ReliableOrdered);
+
+            // Also notify local UI
+            OnLobbyUpdated?.Invoke(header, GetLobbyPlayers());
+        }
+
+        #endregion
+
         private void HandleClientConnected(int transportId)
         {
             if (!IsHost) return;
@@ -232,6 +407,16 @@ namespace Archon.Network
             {
                 peer.State = PeerState.Disconnected;
                 peers.Remove(transportId);
+
+                // Remove from lobby
+                if (lobbyPlayers.ContainsKey(transportId))
+                {
+                    lobbyPlayers.Remove(transportId);
+                    if (IsHost && lobbyState == LobbyGameState.Waiting)
+                    {
+                        BroadcastLobbyUpdate();
+                    }
+                }
 
                 ArchonLogger.Log($"Peer {transportId} disconnected", ArchonLogger.Systems.Network);
                 OnPeerDisconnected?.Invoke(peer);
@@ -283,6 +468,22 @@ namespace Archon.Network
                     HandleHeartbeat(peerId, header.Tick);
                     break;
 
+                case NetworkMessageType.LobbyUpdate:
+                    HandleLobbyUpdate(payload);
+                    break;
+
+                case NetworkMessageType.PlayerReady:
+                    HandlePlayerReady(peerId, payload);
+                    break;
+
+                case NetworkMessageType.PlayerCountrySelected:
+                    HandlePlayerCountry(peerId, payload);
+                    break;
+
+                case NetworkMessageType.GameStart:
+                    HandleGameStart();
+                    break;
+
                 default:
                     ArchonLogger.LogWarning($"Unknown message type {header.Type} from peer {peerId}", ArchonLogger.Systems.Network);
                     break;
@@ -316,10 +517,21 @@ namespace Archon.Network
 
             if (rejectReason == 0 && peers.TryGetValue(peerId, out var peer))
             {
-                peer.State = PeerState.Synchronizing;
+                peer.State = PeerState.Connected;
                 ArchonLogger.Log($"Handshake accepted for peer {peerId}", ArchonLogger.Systems.Network);
 
-                // TODO: Trigger state sync to this peer
+                // Add to lobby
+                lobbyPlayers[peerId] = new LobbyPlayerSlot
+                {
+                    PeerId = peerId,
+                    CountryId = 0,
+                    IsReady = 0,
+                    IsHost = 0
+                };
+
+                // Notify local and broadcast to all
+                OnPeerConnected?.Invoke(peer);
+                BroadcastLobbyUpdate();
             }
         }
 
@@ -417,6 +629,80 @@ namespace Archon.Network
             {
                 peer.LastHeartbeatTick = tick;
             }
+        }
+
+        private void HandleLobbyUpdate(byte[] payload)
+        {
+            if (IsHost) return;  // Host doesn't receive lobby updates
+
+            if (payload.Length < LobbyUpdateHeader.Size)
+            {
+                ArchonLogger.LogWarning("Received undersized lobby update", ArchonLogger.Systems.Network);
+                return;
+            }
+
+            var header = BytesToStruct<LobbyUpdateHeader>(payload, 0);
+            lobbyState = (LobbyGameState)header.LobbyState;
+
+            // Parse player slots
+            lobbyPlayers.Clear();
+            int offset = LobbyUpdateHeader.Size;
+            for (int i = 0; i < header.PlayerCount && offset + LobbyPlayerSlot.Size <= payload.Length; i++)
+            {
+                var slot = BytesToStruct<LobbyPlayerSlot>(payload, offset);
+                lobbyPlayers[slot.PeerId] = slot;
+                offset += LobbyPlayerSlot.Size;
+            }
+
+            ArchonLogger.Log($"Lobby update: {header.PlayerCount} players, state={lobbyState}", ArchonLogger.Systems.Network);
+            OnLobbyUpdated?.Invoke(header, GetLobbyPlayers());
+        }
+
+        private void HandlePlayerReady(int peerId, byte[] payload)
+        {
+            if (!IsHost) return;
+
+            var readyMsg = BytesToStruct<PlayerReadyMessage>(payload, 0);
+
+            if (lobbyPlayers.TryGetValue(peerId, out var slot))
+            {
+                slot.IsReady = readyMsg.IsReady;
+                lobbyPlayers[peerId] = slot;
+                ArchonLogger.Log($"Player {peerId} ready={readyMsg.IsReady}", ArchonLogger.Systems.Network);
+                BroadcastLobbyUpdate();
+            }
+        }
+
+        private void HandlePlayerCountry(int peerId, byte[] payload)
+        {
+            if (!IsHost) return;
+
+            var countryMsg = BytesToStruct<PlayerCountryMessage>(payload, 0);
+
+            // Check if country is already taken by another player
+            if (countryMsg.CountryId != 0 && IsCountryTaken(countryMsg.CountryId, out int takenBy) && takenBy != peerId)
+            {
+                ArchonLogger.LogWarning($"Player {peerId} tried to select country {countryMsg.CountryId} already taken by {takenBy}", ArchonLogger.Systems.Network);
+                // Could send rejection message here
+                return;
+            }
+
+            if (lobbyPlayers.TryGetValue(peerId, out var slot))
+            {
+                slot.CountryId = countryMsg.CountryId;
+                lobbyPlayers[peerId] = slot;
+                ArchonLogger.Log($"Player {peerId} selected country {countryMsg.CountryId}", ArchonLogger.Systems.Network);
+                BroadcastLobbyUpdate();
+            }
+        }
+
+        private void HandleGameStart()
+        {
+            if (IsHost) return;  // Host initiates, doesn't receive
+
+            lobbyState = LobbyGameState.InGame;
+            ArchonLogger.Log("Game started by host", ArchonLogger.Systems.Network);
+            OnGameStarted?.Invoke();
         }
 
         private byte[] CreateMessage(NetworkMessageType type, uint tick, byte[] payload)

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Utils;
 using Map.Rendering;
+using Core.Modding;
 
 namespace Map.Rendering.Terrain
 {
@@ -24,8 +25,8 @@ namespace Map.Rendering.Terrain
     /// </summary>
     public class TerrainBlendMapGenerator : MonoBehaviour
     {
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader terrainBlendMapCompute;
+        // Loaded via ModLoader
+        private ComputeShader terrainBlendMapCompute;
 
         [Header("Parameters")]
         [Tooltip("Sample radius for terrain blending (2 = 5x5 sampling, 5 = 11x11 sampling). Higher values create smoother, wider transitions between terrain types.")]
@@ -64,8 +65,17 @@ namespace Map.Rendering.Terrain
 
             if (terrainBlendMapCompute == null)
             {
-                ArchonLogger.LogError("TerrainBlendMapGenerator: No compute shader assigned!", "map_rendering");
-                return;
+                // Load compute shader - check mods first, then fall back to Resources
+                terrainBlendMapCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "TerrainBlendMapGenerator",
+                    "Shaders/TerrainBlendMapGenerator"
+                );
+
+                if (terrainBlendMapCompute == null)
+                {
+                    ArchonLogger.LogError("TerrainBlendMapGenerator: Compute shader not found!", "map_rendering");
+                    return;
+                }
             }
 
             generateKernel = terrainBlendMapCompute.FindKernel("GenerateBlendMaps");

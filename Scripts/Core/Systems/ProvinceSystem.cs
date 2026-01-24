@@ -249,11 +249,9 @@ namespace Core.Systems
                     continue;
                 }
 
-                // Update terrain if specified
-                if (initialState.Terrain != 0)
-                {
-                    dataManager.SetProvinceTerrain(provinceId, initialState.Terrain);
-                }
+                // Apply full province state (owner, controller, terrain, etc.)
+                var state = initialState.ToProvinceState();
+                dataManager.SetProvinceState(provinceId, state);
 
                 appliedCount++;
             }
@@ -291,6 +289,31 @@ namespace Core.Systems
         public int GetProvinceCountForCountry(ushort countryId) => dataManager.GetProvinceCountForCountry(countryId);
         public NativeArray<ushort> GetAllProvinceIds(Allocator allocator = Allocator.TempJob) => dataManager.GetAllProvinceIds(allocator);
         public bool HasProvince(ushort provinceId) => dataManager.HasProvince(provinceId);
+
+        /// <summary>
+        /// Calculate checksum of all province states for network sync verification.
+        /// Used by CommandProcessor for desync detection.
+        /// </summary>
+        public uint GetStateChecksum()
+        {
+            if (!isInitialized || snapshot == null)
+                return 0;
+
+            var buffer = snapshot.GetProvinceWriteBuffer();
+            if (!buffer.IsCreated)
+                return 0;
+
+            uint checksum = 0;
+            int count = ProvinceCount;
+
+            for (int i = 0; i < count; i++)
+            {
+                checksum = checksum * 31 + (uint)buffer[i].GetHashCode();
+            }
+
+            checksum = checksum * 31 + (uint)count;
+            return checksum;
+        }
 
         // ===== LOADING OPERATIONS (delegated to ProvinceStateLoader) =====
 

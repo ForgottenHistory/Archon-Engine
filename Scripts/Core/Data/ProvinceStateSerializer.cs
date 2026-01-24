@@ -7,30 +7,36 @@ using Core.Systems;
 namespace Core.Data
 {
     /// <summary>
-    /// High-performance serialization for province simulation state
-    /// Optimized for networking with minimal bandwidth usage
+    /// High-performance serialization for province state data.
+    /// Optimized for networking with minimal bandwidth usage.
+    /// Uses ProvinceSystem's double-buffered state for thread-safe reads.
     /// </summary>
     public static class ProvinceStateSerializer
     {
-        private const uint SERIALIZATION_VERSION = 1;
+        private const uint SERIALIZATION_VERSION = 2;  // Bumped for ProvinceSystem compatibility
         private const uint MAGIC_HEADER = 0x50524F56; // "PROV" in ASCII
 
         /// <summary>
-        /// Serialize entire simulation state for networking (full sync)
-        /// Output: Header + Count + States = ~80KB for 10k provinces
+        /// Serialize entire province state for networking (full sync).
+        /// Output: Header + Count + ProvinceIDs + States
         /// </summary>
-        public static byte[] SerializeFullState(ProvinceSimulation simulation)
+        public static byte[] SerializeFullState(ProvinceSystem provinceSystem)
         {
-            if (!simulation.IsInitialized)
+            if (provinceSystem == null || !provinceSystem.IsInitialized)
             {
-                throw new InvalidOperationException("Simulation not initialized");
+                throw new InvalidOperationException("ProvinceSystem not initialized");
             }
 
-            var provinces = simulation.GetAllProvinces();
-            int provinceCount = provinces.Length;
+            // Get province data
+            var stateBuffer = provinceSystem.GetUIReadBuffer();
+            int provinceCount = provinceSystem.ProvinceCount;
+            uint checksum = provinceSystem.GetStateChecksum();
 
-            // Calculate total size: header(16) + count(4) + states(provinceCount * 8)
-            int totalSize = 20 + (provinceCount * 8);
+            // Get province IDs for mapping
+            using var provinceIds = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+
+            // Calculate total size: header(16) + count(4) + ids(count * 2) + states(count * 8)
+            int totalSize = 20 + (provinceCount * 2) + (provinceCount * 8);
             byte[] buffer = new byte[totalSize];
 
             unsafe
@@ -44,18 +50,28 @@ namespace Core.Data
                     offset += 4;
                     *(uint*)(ptr + offset) = SERIALIZATION_VERSION;
                     offset += 4;
-                    *(uint*)(ptr + offset) = simulation.StateVersion;
+                    *(uint*)(ptr + offset) = 0;  // Reserved (was StateVersion)
                     offset += 4;
-                    *(uint*)(ptr + offset) = simulation.CalculateStateChecksum();
+                    *(uint*)(ptr + offset) = checksum;
                     offset += 4;
 
                     // Province count
                     *(int*)(ptr + offset) = provinceCount;
                     offset += 4;
 
+                    // Province IDs (needed for mapping on deserialization)
+                    for (int i = 0; i < provinceCount && i < provinceIds.Length; i++)
+                    {
+                        *(ushort*)(ptr + offset) = provinceIds[i];
+                        offset += 2;
+                    }
+
                     // Province states (direct memory copy for maximum performance)
-                    byte* statePtr = (byte*)provinces.GetUnsafeReadOnlyPtr();
-                    UnsafeUtility.MemCpy(ptr + offset, statePtr, provinceCount * 8);
+                    if (stateBuffer.IsCreated && provinceCount > 0)
+                    {
+                        byte* statePtr = (byte*)stateBuffer.GetUnsafeReadOnlyPtr();
+                        UnsafeUtility.MemCpy(ptr + offset, statePtr, provinceCount * 8);
+                    }
                 }
             }
 
@@ -63,16 +79,17 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Deserialize full simulation state from network data
+        /// Deserialize full province state from network data.
+        /// Returns province IDs and states for the caller to apply.
         /// </summary>
-        public static bool DeserializeFullState(byte[] data, ProvinceSimulation simulation, out string errorMessage)
+        public static DeserializeResult DeserializeFullState(byte[] data)
         {
-            errorMessage = null;
+            var result = new DeserializeResult();
 
             if (data == null || data.Length < 20)
             {
-                errorMessage = "Invalid data: too short";
-                return false;
+                result.ErrorMessage = "Invalid data: too short";
+                return result;
             }
 
             unsafe
@@ -85,23 +102,23 @@ namespace Core.Data
                     uint magic = *(uint*)(ptr + offset);
                     if (magic != MAGIC_HEADER)
                     {
-                        errorMessage = $"Invalid magic header: 0x{magic:X8}";
-                        return false;
+                        result.ErrorMessage = $"Invalid magic header: 0x{magic:X8}";
+                        return result;
                     }
                     offset += 4;
 
                     uint version = *(uint*)(ptr + offset);
                     if (version != SERIALIZATION_VERSION)
                     {
-                        errorMessage = $"Unsupported version: {version}";
-                        return false;
+                        result.ErrorMessage = $"Unsupported version: {version} (expected {SERIALIZATION_VERSION})";
+                        return result;
                     }
                     offset += 4;
 
-                    uint stateVersion = *(uint*)(ptr + offset);
+                    // Skip reserved field
                     offset += 4;
 
-                    uint expectedChecksum = *(uint*)(ptr + offset);
+                    result.Checksum = *(uint*)(ptr + offset);
                     offset += 4;
 
                     // Get province count
@@ -110,79 +127,40 @@ namespace Core.Data
 
                     if (provinceCount < 0 || provinceCount > 65535)
                     {
-                        errorMessage = $"Invalid province count: {provinceCount}";
-                        return false;
+                        result.ErrorMessage = $"Invalid province count: {provinceCount}";
+                        return result;
                     }
 
                     // Validate remaining data size
-                    int expectedSize = 20 + (provinceCount * 8);
+                    int expectedSize = 20 + (provinceCount * 2) + (provinceCount * 8);
                     if (data.Length != expectedSize)
                     {
-                        errorMessage = $"Data size mismatch: expected {expectedSize}, got {data.Length}";
-                        return false;
+                        result.ErrorMessage = $"Data size mismatch: expected {expectedSize}, got {data.Length}";
+                        return result;
                     }
 
-                    // TODO: Apply deserialized state to simulation
-                    // This would require extending ProvinceSimulation with batch loading capabilities
-
-                    ArchonLogger.Log($"Successfully deserialized {provinceCount} provinces (version {stateVersion})", "core_data_linking");
-                    return true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Serialize delta changes for efficient networking
-        /// Only sends provinces that have changed since last sync
-        /// </summary>
-        public static byte[] SerializeDeltaState(ProvinceSimulation simulation)
-        {
-            if (!simulation.IsDirty)
-                return Array.Empty<byte>();
-
-            var dirtyIndices = simulation.GetDirtyIndices();
-            var allProvinces = simulation.GetAllProvinces();
-
-            // Calculate size: header(16) + count(4) + (index(4) + state(8)) * dirtyCount
-            int dirtyCount = dirtyIndices.Count;
-            int totalSize = 20 + (dirtyCount * 12);
-            byte[] buffer = new byte[totalSize];
-
-            unsafe
-            {
-                fixed (byte* ptr = buffer)
-                {
-                    int offset = 0;
-
-                    // Header
-                    *(uint*)(ptr + offset) = MAGIC_HEADER;
-                    offset += 4;
-                    *(uint*)(ptr + offset) = SERIALIZATION_VERSION;
-                    offset += 4;
-                    *(uint*)(ptr + offset) = simulation.StateVersion;
-                    offset += 4;
-                    *(uint*)(ptr + offset) = simulation.CalculateStateChecksum();
-                    offset += 4;
-
-                    // Delta count
-                    *(int*)(ptr + offset) = dirtyCount;
-                    offset += 4;
-
-                    // Delta entries
-                    foreach (int index in dirtyIndices)
+                    // Read province IDs
+                    result.ProvinceIds = new ushort[provinceCount];
+                    for (int i = 0; i < provinceCount; i++)
                     {
-                        *(int*)(ptr + offset) = index;
-                        offset += 4;
+                        result.ProvinceIds[i] = *(ushort*)(ptr + offset);
+                        offset += 2;
+                    }
 
-                        var state = allProvinces[index];
-                        *(ProvinceState*)(ptr + offset) = state;
+                    // Read province states
+                    result.States = new ProvinceState[provinceCount];
+                    for (int i = 0; i < provinceCount; i++)
+                    {
+                        result.States[i] = *(ProvinceState*)(ptr + offset);
                         offset += 8;
                     }
+
+                    result.IsSuccess = true;
+                    result.ProvinceCount = provinceCount;
                 }
             }
 
-            ArchonLogger.Log($"Serialized delta state: {dirtyCount} changed provinces, {totalSize} bytes", "core_data_linking");
-            return buffer;
+            return result;
         }
 
         /// <summary>
@@ -228,19 +206,6 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Calculate compression ratio for debugging
-        /// </summary>
-        public static float CalculateCompressionRatio(int originalProvinceCount, int deltaProvinceCount)
-        {
-            if (originalProvinceCount == 0) return 1f;
-
-            int fullSize = 20 + (originalProvinceCount * 8);
-            int deltaSize = 20 + (deltaProvinceCount * 12);
-
-            return (float)deltaSize / fullSize;
-        }
-
-        /// <summary>
         /// Validate serialized data integrity
         /// </summary>
         public static bool ValidateSerializedData(byte[] data, out string errorMessage)
@@ -276,8 +241,6 @@ namespace Core.Data
                         errorMessage = $"Unsupported version: {version}";
                         return false;
                     }
-
-                    // Additional validation could be added here
                 }
             }
 
@@ -300,7 +263,7 @@ namespace Core.Data
                 {
                     stats.Magic = *(uint*)ptr;
                     stats.Version = *(uint*)(ptr + 4);
-                    stats.StateVersion = *(uint*)(ptr + 8);
+                    stats.Reserved = *(uint*)(ptr + 8);
                     stats.Checksum = *(uint*)(ptr + 12);
                     stats.Count = *(int*)(ptr + 16);
                     stats.TotalSize = data.Length;
@@ -311,11 +274,27 @@ namespace Core.Data
             return stats;
         }
 
+        /// <summary>
+        /// Result of deserialization
+        /// </summary>
+        public struct DeserializeResult
+        {
+            public bool IsSuccess;
+            public string ErrorMessage;
+            public int ProvinceCount;
+            public uint Checksum;
+            public ushort[] ProvinceIds;
+            public ProvinceState[] States;
+        }
+
+        /// <summary>
+        /// Serialization statistics
+        /// </summary>
         public struct SerializationStats
         {
             public uint Magic;
             public uint Version;
-            public uint StateVersion;
+            public uint Reserved;
             public uint Checksum;
             public int Count;
             public int TotalSize;
@@ -323,7 +302,7 @@ namespace Core.Data
 
             public override string ToString()
             {
-                return $"Serialization Stats: Version={StateVersion}, Count={Count}, Size={TotalSize} bytes, Valid={IsValid}";
+                return $"Serialization Stats: Count={Count}, Size={TotalSize} bytes, Checksum=0x{Checksum:X8}, Valid={IsValid}";
             }
         }
     }

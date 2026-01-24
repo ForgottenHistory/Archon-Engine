@@ -10,7 +10,7 @@ namespace Core.Queries
     /// Provides optimized queries for country/nation information
     /// Performance: All basic queries &lt;0.01ms, cached complex queries
     /// </summary>
-    public class CountryQueries
+    public class CountryQueries : System.IDisposable
     {
         private readonly Systems.CountrySystem countrySystem;
         private readonly Systems.ProvinceSystem provinceSystem;
@@ -431,6 +431,16 @@ namespace Core.Queries
         public void ClearCache()
         {
             cachedData.Clear();
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            if (neighborBuffer.IsCreated)
+                neighborBuffer.Dispose();
         }
 
         #endregion

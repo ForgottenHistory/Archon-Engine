@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Collections;
 using Core.Queries;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -12,8 +13,8 @@ namespace Map.Rendering
     /// </summary>
     public class OwnerTextureDispatcher : MonoBehaviour
     {
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader populateOwnerCompute;
+        // Loaded via ModLoader
+        private ComputeShader populateOwnerCompute;
 
         [Header("Debug")]
         [SerializeField] private bool logPerformance = true;
@@ -50,20 +51,15 @@ namespace Map.Rendering
         {
             if (populateOwnerCompute == null)
             {
-                // Try to find the compute shader in the project
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("PopulateOwnerTexture t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    populateOwnerCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"OwnerTextureDispatcher: Found compute shader at {path}", "map_initialization");
-                }
-                #endif
+                // Load compute shader - check mods first, then fall back to Resources
+                populateOwnerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "PopulateOwnerTexture",
+                    "Shaders/PopulateOwnerTexture"
+                );
 
                 if (populateOwnerCompute == null)
                 {
-                    ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not assigned. Owner texture population will not work.", "map_rendering");
+                    ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not found!", "map_rendering");
                     return;
                 }
             }

@@ -12,7 +12,7 @@ namespace Core.Commands
     /// </summary>
     public class CommandBuffer : IDisposable
     {
-        private readonly ProvinceSimulation simulation;
+        private readonly ProvinceSystem provinceSystem;
         private readonly CommandProcessor processor;
         private readonly CircularBuffer<StateSnapshot> stateHistory;
         private readonly Dictionary<uint, List<IProvinceCommand>> pendingCommands;
@@ -23,9 +23,9 @@ namespace Core.Commands
         private const int MAX_ROLLBACK_FRAMES = 30; // 0.5 seconds at 60fps
         private bool isDisposed;
 
-        public CommandBuffer(ProvinceSimulation simulation, CommandProcessor processor)
+        public CommandBuffer(ProvinceSystem provinceSystem, CommandProcessor processor)
         {
-            this.simulation = simulation ?? throw new ArgumentNullException(nameof(simulation));
+            this.provinceSystem = provinceSystem ?? throw new ArgumentNullException(nameof(provinceSystem));
             this.processor = processor ?? throw new ArgumentNullException(nameof(processor));
             this.stateHistory = new CircularBuffer<StateSnapshot>(MAX_ROLLBACK_FRAMES + 1);
             this.pendingCommands = new Dictionary<uint, List<IProvinceCommand>>();
@@ -265,7 +265,7 @@ namespace Core.Commands
                 var snapshot = new StateSnapshot
                 {
                     Tick = predictedTick,
-                    StateChecksum = simulation.GetStateChecksum(),
+                    StateChecksum = provinceSystem.GetStateChecksum(),
                     Timestamp = DateTime.UtcNow
                 };
 
@@ -300,11 +300,11 @@ namespace Core.Commands
         /// </summary>
         private void RestoreStateSnapshot(StateSnapshot snapshot)
         {
-            // In a full implementation, this would restore the complete simulation state
+            // In a full implementation, this would restore the complete provinceSystem state
             // For now, this is a placeholder that would need to be implemented based on
-            // the specific needs of the simulation system
+            // the specific needs of the provinceSystem system
 
-            ArchonLogger.LogWarning("RestoreStateSnapshot is not fully implemented - would restore complete simulation state", "core_commands");
+            ArchonLogger.LogWarning("RestoreStateSnapshot is not fully implemented - would restore complete provinceSystem state", "core_commands");
 
             // Reset processor tick to match snapshot
             // Note: This would require additional CommandProcessor API to support state restoration

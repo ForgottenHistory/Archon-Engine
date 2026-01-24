@@ -6,7 +6,7 @@ using Unity.Burst;
 using Unity.Mathematics;
 using Core;
 
-namespace ProvinceSystem
+namespace Map.Province
 {
     /// <summary>
     /// Fast adjacency scanner that mimics how Paradox games detect neighbors

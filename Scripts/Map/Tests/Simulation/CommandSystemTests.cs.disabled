@@ -14,13 +14,13 @@ namespace Map.Tests.Simulation
     [TestFixture]
     public class CommandSystemTests
     {
-        private ProvinceSimulation testSimulation;
+        private ProvinceSystem testSimulation;
         private CommandProcessor commandProcessor;
 
         [SetUp]
         public void Setup()
         {
-            testSimulation = new ProvinceSimulation(10);
+            testSimulation = new ProvinceSystem(10);
             testSimulation.AddProvince(1, TerrainType.Grassland);
             testSimulation.AddProvince(2, TerrainType.Hills);
             testSimulation.AddProvince(3, TerrainType.Forest);

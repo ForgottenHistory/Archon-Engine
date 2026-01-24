@@ -35,12 +35,19 @@ Transport-agnostic multiplayer networking. Sits alongside Core, imports Core for
 | `DesyncRecovery.cs` | Automatic state resync (key differentiator) | `[SYNC]` |
 | `DesyncDebugger.cs` | Debug tools for finding causes | `[TODO]` `[DEBUG]` |
 
+### Lobby System
+| File | Purpose | Tags |
+|------|---------|------|
+| `NetworkMessages.cs` | LobbyPlayerSlot, LobbyUpdateHeader, PlayerReadyMessage, PlayerCountryMessage | `[PROTOCOL]` |
+| `NetworkManager.cs` | Lobby state management, SetReady, SetCountrySelection, StartGame | `[COORDINATOR]` |
+
 ## Quick Reference
 
 **Need to add transport backend?** → Implement `INetworkTransport`
 **Need to add message type?** → Add to `NetworkMessageType` enum in `NetworkMessages.cs`
 **Need peer state?** → Check `NetworkPeer.cs`
 **Need to send/receive?** → Use `NetworkManager` methods
+**Need lobby functionality?** → Use `NetworkManager.SetReady()`, `SetCountrySelection()`, `StartGame()`
 
 ## Implementation Phases
 

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Map.Core;
 using Map.Rendering.Terrain;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -12,8 +13,8 @@ namespace Map.Rendering
     /// </summary>
     public class ProvinceTerrainAnalyzer : MonoBehaviour
     {
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader terrainAnalyzerCompute;
+        // Loaded via ModLoader
+        private ComputeShader terrainAnalyzerCompute;
 
         [Header("Debug")]
         [SerializeField] private bool logAnalysis = true;
@@ -48,8 +49,17 @@ namespace Map.Rendering
 
             if (terrainAnalyzerCompute == null)
             {
-                Debug.LogError("ProvinceTerrainAnalyzer: No compute shader assigned!");
-                return;
+                // Load compute shader - check mods first, then fall back to Resources
+                terrainAnalyzerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "ProvinceTerrainAnalyzer",
+                    "Shaders/ProvinceTerrainAnalyzer"
+                );
+
+                if (terrainAnalyzerCompute == null)
+                {
+                    ArchonLogger.LogError("ProvinceTerrainAnalyzer: Compute shader not found!", "map_rendering");
+                    return;
+                }
             }
 
             // Find kernel indices

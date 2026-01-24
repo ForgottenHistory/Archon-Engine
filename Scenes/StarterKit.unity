@@ -185,6 +185,73 @@ MonoBehaviour:
   gridSize: 10
   textColor: {r: 1, g: 1, b: 1, a: 1}
   backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+--- !u!1 &58760266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 58760269}
+  - component: {fileID: 58760268}
+  - component: {fileID: 58760267}
+  m_Layer: 0
+  m_Name: LobbyUI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &58760267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58760266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1396acd154cb3f847b56ee7d553eaa91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultPort: 7777
+  defaultAddress: 127.0.0.1
+  logProgress: 1
+--- !u!114 &58760268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58760266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PanelSettings: {fileID: 11400000, guid: 4916e544b871de14bb98836a4377f8e7, type: 2}
+  m_ParentUI: {fileID: 0}
+  sourceAsset: {fileID: 0}
+  m_SortingOrder: 0
+  m_WorldSpaceSizeMode: 1
+  m_WorldSpaceWidth: 1920
+  m_WorldSpaceHeight: 1080
+--- !u!4 &58760269
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 58760266}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -17.913025, y: -441.1258, z: -263.4595}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &73886532
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,6 +548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 625129541}
   - component: {fileID: 625129540}
+  - component: {fileID: 625129542}
   m_Layer: 0
   m_Name: StarterKit
   m_TagString: Untagged
@@ -510,6 +578,9 @@ MonoBehaviour:
   toolbarUI: {fileID: 1053708175}
   diplomacyPanel: {fileID: 2069782368}
   unitVisualization: {fileID: 431119}
+  lobbyUI: {fileID: 58760267}
+  networkInitializer: {fileID: 625129542}
+  enableMultiplayer: 1
   initializeOnStart: 1
   logProgress: 1
 --- !u!4 &625129541
@@ -527,6 +598,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &625129542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 625129539}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ece0afb095263c48b277ee0930e996d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  logProgress: 1
 --- !u!1 &1040298674 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7228059538790358213, guid: cdfb68fba67a5464ea31c5f9fb50aad5, type: 3}
@@ -1374,3 +1458,4 @@ SceneRoots:
   - {fileID: 1456546914}
   - {fileID: 1053708177}
   - {fileID: 2069782371}
+  - {fileID: 58760269}

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 using Utils;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -26,16 +27,11 @@ namespace Map.Rendering
 
         public NormalMapGenerator()
         {
-            // Auto-load compute shader in editor
-            #if UNITY_EDITOR
-            string[] guids = UnityEditor.AssetDatabase.FindAssets("GenerateNormalMap t:ComputeShader");
-            if (guids.Length > 0)
-            {
-                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                generateNormalMapCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                ArchonLogger.Log($"NormalMapGenerator: Found compute shader at {path}", "map_initialization");
-            }
-            #endif
+            // Load compute shader - check mods first, then fall back to Resources
+            generateNormalMapCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "GenerateNormalMap",
+                "Shaders/GenerateNormalMap"
+            );
 
             if (generateNormalMapCompute == null)
             {

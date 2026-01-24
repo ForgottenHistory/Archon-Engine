@@ -4,6 +4,7 @@ using Core.Systems;
 using Map.Rendering.Border;
 using ProvinceSystemType = Core.Systems.ProvinceSystem;
 using Core.Queries;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -21,10 +22,10 @@ namespace Map.Rendering
     /// </summary>
     public class BorderComputeDispatcher : MonoBehaviour
     {
-        [Header("Compute Shaders")]
-        [SerializeField] private ComputeShader borderDetectionCompute;
-        [SerializeField] private ComputeShader borderCurveRasterizerCompute;
-        [SerializeField] private ComputeShader borderSDFCompute;
+        // Loaded via ModLoader (passed to BorderShaderManager)
+        private ComputeShader borderDetectionCompute;
+        private ComputeShader borderCurveRasterizerCompute;
+        private ComputeShader borderSDFCompute;
 
         [Header("Border Settings")]
         [Tooltip("Which borders to show (set via VisualStyles for runtime control)")]
@@ -88,6 +89,29 @@ namespace Map.Rendering
         public void Initialize()
         {
             if (isInitialized) return;
+
+            // Load compute shaders via ModLoader (mods first, then Resources)
+            if (borderDetectionCompute == null)
+            {
+                borderDetectionCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderDetection",
+                    "Shaders/BorderDetection"
+                );
+            }
+            if (borderCurveRasterizerCompute == null)
+            {
+                borderCurveRasterizerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderCurveRasterizer",
+                    "Shaders/BorderCurveRasterizer"
+                );
+            }
+            if (borderSDFCompute == null)
+            {
+                borderSDFCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderSDF",
+                    "Shaders/BorderSDF"
+                );
+            }
 
             // Initialize helper classes
             shaderManager = new BorderShaderManager(logPerformance);

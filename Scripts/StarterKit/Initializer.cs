@@ -10,7 +10,7 @@ using Core.Systems;
 using Map.Core;
 using Map.Interaction;
 using Map.MapModes;
-using ProvinceSystem;
+using Map.Province;
 using StarterKit.MapModes;
 
 namespace StarterKit
@@ -49,6 +49,11 @@ namespace StarterKit
 
         [Header("Visualization")]
         [SerializeField] private UnitVisualization unitVisualization;
+
+        [Header("Network")]
+        [SerializeField] private LobbyUI lobbyUI;
+        [SerializeField] private NetworkInitializer networkInitializer;
+        [SerializeField] private bool enableMultiplayer = true;
 
         [Header("Configuration")]
         [SerializeField] private bool initializeOnStart = true;
@@ -158,6 +163,10 @@ namespace StarterKit
                 toolbarUI = FindFirstObjectByType<ToolbarUI>();
             if (unitVisualization == null)
                 unitVisualization = FindFirstObjectByType<UnitVisualization>();
+            if (lobbyUI == null)
+                lobbyUI = FindFirstObjectByType<LobbyUI>();
+            if (networkInitializer == null)
+                networkInitializer = FindFirstObjectByType<NetworkInitializer>();
 
             // Wait for ArchonEngine to initialize
             if (logProgress)
@@ -346,12 +355,34 @@ namespace StarterKit
 
             yield return null;
 
-            // Initialize country selection UI
+            // Initialize country selection UI (but don't show yet if multiplayer)
             if (logProgress)
                 ArchonLogger.Log("Initializing country selection UI...", "starter_kit");
 
             if (countrySelectionUI != null)
                 countrySelectionUI.Initialize(gameState, playerState);
+
+            yield return null;
+
+            // Initialize network components and lobby UI
+            if (enableMultiplayer)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Initializing network components...", "starter_kit");
+
+                if (lobbyUI != null)
+                    lobbyUI.Initialize(gameState);
+
+                if (networkInitializer != null)
+                    networkInitializer.Initialize(gameState, lobbyUI, countrySelectionUI);
+
+                // Hide country selection, show lobby instead
+                if (countrySelectionUI != null)
+                    countrySelectionUI.Hide();
+
+                if (lobbyUI != null)
+                    lobbyUI.Show();
+            }
 
             isInitialized = true;
 

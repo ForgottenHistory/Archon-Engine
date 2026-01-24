@@ -2,6 +2,7 @@ using UnityEngine;
 using Core.Queries;
 using Utils;
 using Map.Rendering.FogOfWar;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -18,7 +19,9 @@ namespace Map.Rendering
     {
         [Header("Dependencies")]
         [SerializeField] private MapTextureManager textureManager;
-        [SerializeField] private ComputeShader fogOfWarCompute;
+
+        // Loaded via ModLoader
+        private ComputeShader fogOfWarCompute;
 
         [Header("Debug")]
         [SerializeField] private bool logVisibilityUpdates = false;
@@ -235,13 +238,16 @@ namespace Map.Rendering
             if (fogOfWarTexture == null || textureManager == null)
                 return;
 
-            // Load compute shader if not assigned
+            // Load compute shader if not assigned - check mods first, then Resources
             if (fogOfWarCompute == null)
             {
-                fogOfWarCompute = Resources.Load<ComputeShader>("PopulateFogOfWarTexture");
+                fogOfWarCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "PopulateFogOfWarTexture",
+                    "Shaders/PopulateFogOfWarTexture"
+                );
                 if (fogOfWarCompute == null)
                 {
-                    ArchonLogger.LogError("FogOfWarSystem: PopulateFogOfWarTexture.compute not found in Resources!", "map_rendering");
+                    ArchonLogger.LogError("FogOfWarSystem: PopulateFogOfWarTexture compute shader not found!", "map_rendering");
                     return;
                 }
             }

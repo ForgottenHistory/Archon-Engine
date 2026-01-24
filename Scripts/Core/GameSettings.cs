@@ -38,8 +38,26 @@ namespace Core
         }
 
         [Header("Data File Paths")]
-        [Tooltip("Root data directory containing all game data")]
-        public string DataDirectory = "Assets/Archon-Engine/Template-Data";
+        [Tooltip("Root data directory containing all game data (relative to project in Editor, StreamingAssets in build)")]
+        [SerializeField]
+        private string editorDataDirectory = "Assets/Archon-Engine/Template-Data";
+
+        /// <summary>
+        /// Gets the correct data directory path based on whether we're in Editor or build.
+        /// In Editor: Uses editorDataDirectory (Assets/Archon-Engine/Template-Data)
+        /// In Build: Uses StreamingAssets/Data
+        /// </summary>
+        public string DataDirectory
+        {
+            get
+            {
+#if UNITY_EDITOR
+                return editorDataDirectory;
+#else
+                return System.IO.Path.Combine(Application.streamingAssetsPath, "Data");
+#endif
+            }
+        }
 
         [Header("Loading Configuration")]
         [Tooltip("Enable parallel loading where possible")]

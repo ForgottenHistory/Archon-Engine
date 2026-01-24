@@ -32,9 +32,9 @@ namespace Core.Commands
         /// Validate if this command can be executed in the current game state
         /// Must be deterministic - same result across all clients
         /// </summary>
-        /// <param name="simulation">Current simulation state</param>
+        /// <param name="simulation">Current province system</param>
         /// <returns>True if command can be executed</returns>
-        CommandValidationResult Validate(ProvinceSimulation simulation);
+        CommandValidationResult Validate(ProvinceSystem provinceSystem);
 
         /// <summary>
         /// Execute this command, modifying the simulation state
@@ -42,7 +42,7 @@ namespace Core.Commands
         /// </summary>
         /// <param name="simulation">Simulation to modify</param>
         /// <returns>Execution result with affected provinces</returns>
-        CommandExecutionResult Execute(ProvinceSimulation simulation);
+        CommandExecutionResult Execute(ProvinceSystem provinceSystem);
 
         /// <summary>
         /// Serialize command to binary format for network transmission

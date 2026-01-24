@@ -1,4 +1,5 @@
 using UnityEngine;
+using Core.Modding;
 
 namespace Map.MapModes.Colorization
 {
@@ -38,22 +39,13 @@ namespace Map.MapModes.Colorization
 
         protected override void InitializeColorizer()
         {
-            // Load compute shader if not provided via constructor
+            // Load compute shader - check mods first, then fall back to Resources
             if (gradientCompute == null)
             {
-                gradientCompute = Resources.Load<ComputeShader>("GradientMapMode");
-
-                #if UNITY_EDITOR
-                if (gradientCompute == null)
-                {
-                    string[] guids = UnityEditor.AssetDatabase.FindAssets("GradientMapMode t:ComputeShader");
-                    if (guids.Length > 0)
-                    {
-                        string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                        gradientCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    }
-                }
-                #endif
+                gradientCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "GradientMapMode",
+                    "Shaders/GradientMapMode"
+                );
             }
 
             if (gradientCompute == null)

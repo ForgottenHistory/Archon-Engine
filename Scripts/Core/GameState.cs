@@ -49,6 +49,7 @@ namespace Core
 
         // Core Infrastructure
         public EventBus EventBus { get; private set; }
+        public CommandProcessor CommandProcessor { get; private set; }
 
         // Game Layer System Registration (Engine mechanism, Game policy)
         // Engine doesn't know about specific Game layer types (EconomySystem, BuildingSystem, etc.)
@@ -196,7 +197,10 @@ namespace Core
             ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
-            // 10. Initialize systems
+            // 10. Command processor (for multiplayer command execution)
+            CommandProcessor = new CommandProcessor(Provinces);
+
+            // 11. Initialize systems
             Provinces.Initialize(EventBus);
             Countries.Initialize(EventBus);
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
@@ -325,6 +329,9 @@ namespace Core
             if (Instance == this)
             {
                 // Clean up ENGINE layer systems
+                CommandProcessor?.Dispose();
+                CountryQueries?.Dispose();  // Dispose NativeList<ushort> neighborBuffer
+                Adjacencies?.Dispose();     // Dispose NativeParallelMultiHashMap
                 Provinces?.Dispose();
                 Countries?.Dispose();
                 Modifiers?.Dispose();

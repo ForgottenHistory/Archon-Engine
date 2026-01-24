@@ -10,7 +10,7 @@ using Map.Rendering.Border;
 using Map.CameraControllers;
 using Core.SaveLoad;
 using Archon.Engine.Map;
-using ProvinceSystem;
+using Map.Province;
 
 namespace Engine
 {
@@ -571,7 +571,7 @@ namespace Engine
 
             // Create FastAdjacencyScanner
             GameObject scannerObj = new GameObject("FastAdjacencyScanner_Temp");
-            var scanner = scannerObj.AddComponent<ProvinceSystem.FastAdjacencyScanner>();
+            var scanner = scannerObj.AddComponent<FastAdjacencyScanner>();
             scanner.provinceMap = provinceMapTexture;
             scanner.ignoreDiagonals = false;
             scanner.blackThreshold = 10f;

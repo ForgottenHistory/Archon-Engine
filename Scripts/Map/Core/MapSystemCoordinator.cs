@@ -440,5 +440,15 @@ namespace Map.Core
         }
 
         #endregion
+
+        #region Lifecycle
+
+        private void OnDestroy()
+        {
+            // Dispose resources that have native allocations
+            dataLoader?.Dispose();
+        }
+
+        #endregion
     }
 }

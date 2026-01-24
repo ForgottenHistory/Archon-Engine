@@ -99,7 +99,18 @@ namespace Archon.Network
 
             driver = NetworkDriver.Create();
 
-            var endpoint = NetworkEndpoint.Parse(address, (ushort)port);
+            // Handle localhost specially - NetworkEndpoint.Parse doesn't recognize it
+            NetworkEndpoint endpoint;
+            if (address.Equals("localhost", StringComparison.OrdinalIgnoreCase) ||
+                address == "127.0.0.1")
+            {
+                endpoint = NetworkEndpoint.LoopbackIpv4.WithPort((ushort)port);
+            }
+            else
+            {
+                endpoint = NetworkEndpoint.Parse(address, (ushort)port);
+            }
+
             if (!endpoint.IsValid)
             {
                 ArchonLogger.LogError($"Invalid endpoint: {address}:{port}", ArchonLogger.Systems.Network);

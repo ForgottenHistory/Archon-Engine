@@ -2,6 +2,7 @@ using UnityEngine;
 using Unity.Collections;
 using Core.Queries;
 using Map.Rendering;
+using Core.Modding;
 
 namespace Map.MapModes
 {
@@ -113,20 +114,11 @@ namespace Map.MapModes
         /// </summary>
         private void InitializeGPUResources()
         {
-            // Load compute shader
-            gradientCompute = Resources.Load<ComputeShader>("GradientMapMode");
-
-            #if UNITY_EDITOR
-            if (gradientCompute == null)
-            {
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("GradientMapMode t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    gradientCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                }
-            }
-            #endif
+            // Load compute shader - check mods first, then fall back to Resources
+            gradientCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "GradientMapMode",
+                "Shaders/GradientMapMode"
+            );
 
             if (gradientCompute == null)
             {

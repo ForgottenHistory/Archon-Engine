@@ -1,4 +1,5 @@
 using UnityEngine;
+using Core.Modding;
 
 namespace Map.Rendering.Border
 {
@@ -40,67 +41,51 @@ namespace Map.Rendering.Border
         /// </summary>
         public void InitializeKernels(ComputeShader borderDetection = null, ComputeShader borderCurveRasterizer = null, ComputeShader borderSDF = null)
         {
-            // Use provided shaders or attempt to load them
+            // Use provided shaders or attempt to load from Resources
             borderDetectionCompute = borderDetection;
             borderCurveRasterizerCompute = borderCurveRasterizer;
             borderSDFCompute = borderSDF;
 
-            // Load BorderDetection compute shader
+            // Load BorderDetection compute shader - check mods first, then fall back to Resources
             if (borderDetectionCompute == null)
             {
-                // Try to find the compute shader in the project
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderDetection t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    borderDetectionCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"BorderShaderManager: Found BorderDetection shader at {path}", "map_initialization");
-                }
-                #endif
+                borderDetectionCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderDetection",
+                    "Shaders/BorderDetection"
+                );
 
                 if (borderDetectionCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderShaderManager: Border detection compute shader not assigned. Borders will not be generated.", "map_rendering");
+                    ArchonLogger.LogWarning("BorderShaderManager: BorderDetection not found!", "map_rendering");
                     return;
                 }
             }
 
-            // Load BorderCurveRasterizer compute shader (for smooth curves)
+            // Load BorderCurveRasterizer compute shader - check mods first, then fall back to Resources
             if (borderCurveRasterizerCompute == null)
             {
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderCurveRasterizer t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    borderCurveRasterizerCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"BorderShaderManager: Found BorderCurveRasterizer shader at {path}", "map_initialization");
-                }
-                #endif
+                borderCurveRasterizerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderCurveRasterizer",
+                    "Shaders/BorderCurveRasterizer"
+                );
 
                 if (borderCurveRasterizerCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderShaderManager: BorderCurveRasterizer compute shader not found - rasterization rendering will not be available", "map_initialization");
+                    ArchonLogger.LogWarning("BorderShaderManager: BorderCurveRasterizer not found - rasterization rendering will not be available", "map_initialization");
                 }
             }
 
-            // Load BorderSDF compute shader (for resolution-independent SDF rendering)
+            // Load BorderSDF compute shader - check mods first, then fall back to Resources
             if (borderSDFCompute == null)
             {
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderSDF t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    borderSDFCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"BorderShaderManager: Found BorderSDF shader at {path}", "map_initialization");
-                }
-                #endif
+                borderSDFCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderSDF",
+                    "Shaders/BorderSDF"
+                );
 
                 if (borderSDFCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderShaderManager: BorderSDF compute shader not found - SDF rendering will not be available", "map_initialization");
+                    ArchonLogger.LogWarning("BorderShaderManager: BorderSDF not found - SDF rendering will not be available", "map_initialization");
                 }
             }
 

@@ -6,7 +6,8 @@
         "MapAssembly",
         "Engine",
         "Utils",
-        "Unity.Collections"
+        "Unity.Collections",
+        "Network"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

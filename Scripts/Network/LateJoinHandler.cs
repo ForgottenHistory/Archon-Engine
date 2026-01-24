@@ -23,9 +23,9 @@ namespace Archon.Network
         private const int ChunkSize = 32 * 1024;
 
         /// <summary>
-        /// Fired when a late joiner needs full state (host should provide simulation).
+        /// Fired when a late joiner needs full state (host should provide ProvinceSystem).
         /// </summary>
-        public event Func<ProvinceSimulation> OnSimulationRequested;
+        public event Func<ProvinceSystem> OnProvinceSystemRequested;
 
         /// <summary>
         /// Fired when full state has been received and applied (client-side).
@@ -36,6 +36,11 @@ namespace Archon.Network
         /// Fired when state sync fails.
         /// </summary>
         public event Action<int, string> OnStateSyncFailed;  // peerId, error
+
+        /// <summary>
+        /// Fired when state data is received (client should apply to their ProvinceSystem).
+        /// </summary>
+        public event Action<ProvinceStateSerializer.DeserializeResult, uint> OnStateDataReceived;
 
         public LateJoinHandler(NetworkManager networkManager, INetworkBridge networkBridge)
         {
@@ -62,27 +67,27 @@ namespace Archon.Network
             ArchonLogger.Log($"Preparing state sync for peer {peerId}", ArchonLogger.Systems.Network);
             pendingSyncRequests[peerId] = UnityEngine.Time.realtimeSinceStartup;
 
-            // Request simulation from game layer
-            var simulation = OnSimulationRequested?.Invoke();
-            if (simulation == null)
+            // Request ProvinceSystem from game layer
+            var provinceSystem = OnProvinceSystemRequested?.Invoke();
+            if (provinceSystem == null || !provinceSystem.IsInitialized)
             {
-                ArchonLogger.LogError($"Failed to get simulation for state sync to peer {peerId}", ArchonLogger.Systems.Network);
-                OnStateSyncFailed?.Invoke(peerId, "Simulation not available");
+                ArchonLogger.LogError($"Failed to get ProvinceSystem for sync to peer {peerId}", ArchonLogger.Systems.Network);
+                OnStateSyncFailed?.Invoke(peerId, "ProvinceSystem not available");
                 return;
             }
 
-            SendFullState(peerId, simulation);
+            SendFullState(peerId, provinceSystem);
         }
 
         /// <summary>
         /// Host: Serialize and send full state to a peer.
         /// </summary>
-        private void SendFullState(int peerId, ProvinceSimulation simulation)
+        private void SendFullState(int peerId, ProvinceSystem provinceSystem)
         {
             try
             {
-                // Serialize full state
-                byte[] stateData = ProvinceStateSerializer.SerializeFullState(simulation);
+                // Serialize full state using ProvinceStateSerializer
+                byte[] stateData = ProvinceStateSerializer.SerializeFullState(provinceSystem);
                 uint currentTick = 0;  // TODO: Get from CommandProcessor or TimeManager
 
                 ArchonLogger.Log($"Sending state sync to peer {peerId}: {stateData.Length} bytes", ArchonLogger.Systems.Network);
@@ -134,8 +139,19 @@ namespace Archon.Network
             var stats = ProvinceStateSerializer.GetSerializationStats(stateData);
             ArchonLogger.Log($"State sync stats: {stats}", ArchonLogger.Systems.Network);
 
-            // The actual deserialization and application will be handled by the game layer
-            // We just notify that state is ready
+            // Deserialize and notify game layer
+            var deserializeResult = ProvinceStateSerializer.DeserializeFullState(stateData);
+            if (!deserializeResult.IsSuccess)
+            {
+                ArchonLogger.LogError($"State sync deserialization failed: {deserializeResult.ErrorMessage}", ArchonLogger.Systems.Network);
+                OnStateSyncFailed?.Invoke(-1, deserializeResult.ErrorMessage);
+                return;
+            }
+
+            // Notify game layer to apply the state
+            OnStateDataReceived?.Invoke(deserializeResult, tick);
+
+            // Notify completion
             OnStateSyncComplete?.Invoke(tick);
         }
 

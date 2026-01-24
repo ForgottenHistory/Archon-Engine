@@ -1,6 +1,7 @@
 using UnityEngine;
 using Map.Loading;
 using Core;
+using Core.Modding;
 using Utils;
 using static Map.Loading.ProvinceMapProcessor;
 
@@ -21,15 +22,11 @@ namespace Map.Rendering
             this.ownerTextureDispatcher = ownerDispatcher;
             this.logProgress = logProgress;
 
-            // Try to load compute shader
-            #if UNITY_EDITOR
-            string[] guids = UnityEditor.AssetDatabase.FindAssets("PopulateProvinceIDTexture t:ComputeShader");
-            if (guids.Length > 0)
-            {
-                string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                populateProvinceIDCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-            }
-            #endif
+            // Load compute shader - check mods first, then fall back to Resources
+            populateProvinceIDCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "PopulateProvinceIDTexture",
+                "Shaders/PopulateProvinceIDTexture"
+            );
         }
 
         /// <summary>

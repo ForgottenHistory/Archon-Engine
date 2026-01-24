@@ -39,10 +39,10 @@ namespace Core.Commands
             newControllerID = newController == 0 ? newOwner : newController;  // Default controller = owner
         }
 
-        public CommandValidationResult Validate(ProvinceSimulation simulation)
+        public CommandValidationResult Validate(ProvinceSystem provinceSystem)
         {
             // Check if province exists
-            if (!simulation.HasProvince(provinceID))
+            if (!provinceSystem.HasProvince(provinceID))
             {
                 return CommandValidationResult.Fail(CommandValidationError.InvalidProvince,
                     $"Province {provinceID} does not exist");
@@ -71,7 +71,7 @@ namespace Core.Commands
             return CommandValidationResult.Success();
         }
 
-        public CommandExecutionResult Execute(ProvinceSimulation simulation)
+        public CommandExecutionResult Execute(ProvinceSystem provinceSystem)
         {
             var result = new CommandExecutionResult();
             result.AffectedProvinces = new NativeList<ushort>(1, Allocator.Temp);
@@ -79,18 +79,18 @@ namespace Core.Commands
             try
             {
                 // Get current state
-                var currentState = simulation.GetProvinceState(provinceID);
+                var currentState = provinceSystem.GetProvinceState(provinceID);
 
                 // Apply changes
                 currentState.ownerID = newOwnerID;
                 currentState.controllerID = newControllerID;
 
-                // Update simulation
-                simulation.SetProvinceState(provinceID, currentState);
+                // Update province system
+                provinceSystem.SetProvinceState(provinceID, currentState);
 
                 result.AffectedProvinces.Add(provinceID);
                 result.IsSuccess = true;
-                result.NewStateChecksum = simulation.GetStateChecksum();
+                result.NewStateChecksum = provinceSystem.GetStateChecksum();
 
                 return result;
             }

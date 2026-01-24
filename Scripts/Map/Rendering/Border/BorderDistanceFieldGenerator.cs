@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
+using Core.Modding;
 
 namespace Map.Rendering
 {
@@ -16,8 +17,8 @@ namespace Map.Rendering
     /// </summary>
     public class BorderDistanceFieldGenerator : MonoBehaviour
     {
-        [Header("Compute Shader")]
-        [SerializeField] private ComputeShader distanceFieldCompute;
+        // Loaded via ModLoader
+        private ComputeShader distanceFieldCompute;
 
         [Header("Distance Field Settings")]
         [SerializeField] private int maxDistanceRadius = 16; // How far to propagate distances (pixels)
@@ -55,19 +56,15 @@ namespace Map.Rendering
         {
             if (distanceFieldCompute == null)
             {
-                #if UNITY_EDITOR
-                string[] guids = UnityEditor.AssetDatabase.FindAssets("BorderDistanceField t:ComputeShader");
-                if (guids.Length > 0)
-                {
-                    string path = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                    distanceFieldCompute = UnityEditor.AssetDatabase.LoadAssetAtPath<ComputeShader>(path);
-                    ArchonLogger.Log($"BorderDistanceFieldGenerator: Found compute shader at {path}", "map_initialization");
-                }
-                #endif
+                // Load compute shader - check mods first, then fall back to Resources
+                distanceFieldCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                    "BorderDistanceField",
+                    "Shaders/BorderDistanceField"
+                );
 
                 if (distanceFieldCompute == null)
                 {
-                    ArchonLogger.LogWarning("BorderDistanceFieldGenerator: Compute shader not assigned", "map_rendering");
+                    ArchonLogger.LogWarning("BorderDistanceFieldGenerator: Compute shader not found!", "map_rendering");
                     return;
                 }
             }
