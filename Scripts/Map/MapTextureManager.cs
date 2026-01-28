@@ -10,11 +10,11 @@ namespace Map.Rendering
     /// </summary>
     public class MapTextureManager : MonoBehaviour
     {
-        [Header("Map Dimensions")]
-        [SerializeField] private int mapWidth = 5632;
-        [SerializeField] private int mapHeight = 2048;
-        [SerializeField] private int normalMapWidth = 2816;
-        [SerializeField] private int normalMapHeight = 1024;
+        // Map dimensions - set dynamically from loaded map image
+        private int mapWidth;
+        private int mapHeight;
+        private int normalMapWidth;
+        private int normalMapHeight;
 
         [Header("Debug")]
         [SerializeField] private bool logTextureCreation = true;
@@ -59,12 +59,21 @@ namespace Map.Rendering
         private bool isInitialized = false;
 
         /// <summary>
-        /// Initialize texture manager. Called by ArchonEngine after GameSettings is registered.
+        /// Initialize texture manager with map dimensions from loaded image.
         /// </summary>
-        public void Initialize()
+        /// <param name="width">Map width in pixels (from provinces.png/bmp)</param>
+        /// <param name="height">Map height in pixels (from provinces.png/bmp)</param>
+        public void Initialize(int width, int height)
         {
             if (isInitialized) return;
             isInitialized = true;
+
+            // Set dimensions from loaded map image
+            mapWidth = width;
+            mapHeight = height;
+            // Normal map is typically half resolution
+            normalMapWidth = width / 2;
+            normalMapHeight = height / 2;
 
             // Create specialized texture sets (all at base resolution)
             coreTextures = new CoreTextureSet(mapWidth, mapHeight, logTextureCreation);
@@ -80,7 +89,7 @@ namespace Map.Rendering
 
             if (logTextureCreation)
             {
-                ArchonLogger.Log($"MapTextureManager initialized: {mapWidth}x{mapHeight}", "map_initialization");
+                ArchonLogger.Log($"MapTextureManager initialized: {mapWidth}x{mapHeight} (normal map: {normalMapWidth}x{normalMapHeight})", "map_initialization");
             }
         }
 
@@ -229,12 +238,9 @@ namespace Map.Rendering
         /// </summary>
         public void ResizeTextures(int newWidth, int newHeight)
         {
-            mapWidth = newWidth;
-            mapHeight = newHeight;
-
             ReleaseTextures();
             isInitialized = false;
-            Initialize();
+            Initialize(newWidth, newHeight);
         }
 
         /// <summary>

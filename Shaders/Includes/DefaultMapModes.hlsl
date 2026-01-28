@@ -19,22 +19,37 @@
 #include "MapModeTerrainSimple.hlsl"
 #include "MapModePolitical.hlsl"
 
-// Render custom GAME map mode from texture array
-// Each GAME map mode pre-computes its visualization into a texture slice
-// This just samples that texture - instant switching between modes
+// Render custom GAME map mode from province palette texture
+// ProvinceID -> palette lookup -> color (no per-pixel texture needed)
+// Memory efficient: 100k provinces * 16 modes = ~6.4MB vs 6.24GB
 float4 RenderCustomMapMode(uint provinceID, float2 uv)
 {
-    // Y-flip UV for RenderTexture sampling
-    // Fragment UVs: (0,0)=bottom-left, RenderTexture storage: (0,0)=top-left
-    // See: unity-compute-shader-coordination.md - "Y-flip ONLY in Fragment Shaders"
-    float2 flippedUV = float2(uv.x, 1.0 - uv.y);
+    // Ocean check
+    if (provinceID == 0)
+    {
+        return _OceanColor;
+    }
 
-    // Sample from the texture array at the current custom map mode index
-    // The texture contains RGBA color per pixel, already computed by GAME
-    float4 color = SAMPLE_TEXTURE2D_ARRAY(_MapModeTextureArray, sampler_MapModeTextureArray, flippedUV, _CustomMapModeIndex);
+    // Province palette layout:
+    // - 256 columns (provinceID % 256)
+    // - Rows = (provinceID / 256) + (modeIndex * rowsPerMode)
+    // - rowsPerMode = ceil(maxProvinces / 256)
+
+    // Calculate palette coordinates
+    // _MaxProvinceID is set by C# to define rowsPerMode
+    int rowsPerMode = (_MaxProvinceID + 255) / 256; // ceil division
+    int col = provinceID % 256;
+    int row = (provinceID / 256) + (_CustomMapModeIndex * rowsPerMode);
+
+    // Convert to UV coordinates (add 0.5 for pixel center sampling)
+    float2 paletteSize;
+    _ProvincePaletteTexture.GetDimensions(paletteSize.x, paletteSize.y);
+    float2 paletteUV = float2((col + 0.5) / paletteSize.x, (row + 0.5) / paletteSize.y);
+
+    // Sample palette with point filtering (no interpolation)
+    float4 color = SAMPLE_TEXTURE2D_LOD(_ProvincePaletteTexture, sampler_ProvincePaletteTexture, paletteUV, 0);
 
     // Alpha of 0 means "use default" (ocean, unowned, etc.)
-    // This allows GAME to skip provinces and let ENGINE handle them
     if (color.a < 0.01)
     {
         return _OceanColor;

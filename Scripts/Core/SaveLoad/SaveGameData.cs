@@ -50,7 +50,7 @@ namespace Core.SaveLoad
         /// <summary>
         /// Current game tick when saved
         /// </summary>
-        public int currentTick;
+        public ulong currentTick;
 
         /// <summary>
         /// Current game speed when saved

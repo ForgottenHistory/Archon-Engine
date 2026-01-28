@@ -340,8 +340,7 @@ namespace Core.SaveLoad
 
             data.SetSaveDate(DateTime.Now);
 
-            // TODO: Get current tick from TimeManager when available
-            data.currentTick = 0;
+            data.currentTick = gameState.Time?.CurrentTick ?? 0;
             data.gameSpeed = 1;
 
             return data;

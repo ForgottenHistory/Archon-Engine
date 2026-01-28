@@ -22,8 +22,9 @@ CBUFFER_START(UnityPerMaterial)
     float4 _MainTex_ST;
 
     int _MapMode;
-    int _CustomMapModeIndex;  // Index into _MapModeTextureArray for GAME-defined map modes
-    int _MapModeTextureCount; // Number of registered map mode textures
+    int _CustomMapModeIndex;  // Index into _ProvincePaletteTexture rows for GAME-defined map modes
+    int _MapModeTextureCount; // Number of registered map mode palettes
+    int _MaxProvinceID;       // Maximum province ID for palette bounds checking
 
     // Tessellation parameters
     float _HeightScale;
@@ -139,10 +140,13 @@ TEXTURE2D(_FogOfWarTexture); SAMPLER(sampler_FogOfWarTexture);
 TEXTURE2D(_OverlayTexture); SAMPLER(sampler_OverlayTexture);
 TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
 
-// Map Mode Texture Array - ENGINE mechanism for GAME-defined map modes
-// Each GAME map mode registers its own texture at an index
-// Switching map modes = changing _CustomMapModeIndex, instant GPU-side
-TEXTURE2D_ARRAY(_MapModeTextureArray); SAMPLER(sampler_MapModeTextureArray);
+// Province Palette Texture - ENGINE mechanism for GAME-defined map modes
+// Layout: 256 columns x (maxProvinces/256 * numModes) rows
+// Each map mode gets (maxProvinces/256) rows, stacked vertically
+// ProvinceID -> x = ID % 256, y = (ID / 256) + (modeIndex * rowsPerMode)
+// Switching map modes = changing _CustomMapModeIndex (row offset), instant GPU-side
+// Memory: 100k provinces * 16 modes * 4 bytes = ~6.4MB (vs 6.24GB for full-res array)
+TEXTURE2D(_ProvincePaletteTexture); SAMPLER(sampler_ProvincePaletteTexture);
 
 // CRITICAL: Include BezierCurves.hlsl to define BezierSegment struct
 #include "../BezierCurves.hlsl"

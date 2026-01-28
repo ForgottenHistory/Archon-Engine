@@ -38,20 +38,24 @@ namespace Map.MapModes
         private Dictionary<MapMode, IMapModeHandler> modeHandlers;
         private IMapModeHandler currentHandler;
 
-        // Custom map mode texture array (for GAME-defined map modes)
-        // Each custom map mode gets a slot in this array for instant switching
+        // Province palette texture for GAME-defined map modes
+        // Layout: 256 columns x (rowsPerMode * numModes) rows
+        // Each province ID maps to: x = ID % 256, y = (ID / 256) + (modeIndex * rowsPerMode)
+        // Memory: 100k provinces * 16 modes * 4 bytes = ~6.4MB (vs 6.24GB for full-res textures)
         private const int MAX_CUSTOM_MAP_MODES = 16;
-        private Texture2DArray mapModeTextureArray;
-        private Dictionary<int, int> customModeToArrayIndex; // Maps custom mode ID to array index
+        private const int PALETTE_WIDTH = 256;
+        private Texture2D provincePaletteTexture;
+        private Dictionary<int, int> customModeToArrayIndex; // Maps custom mode ID to palette row offset
         private int nextArrayIndex = 0;
-        private int mapWidth;
-        private int mapHeight;
+        private int maxProvinceID;
+        private int rowsPerMode;
 
         // Shader property IDs (cached for performance)
         private static readonly int MapModePropertyID = Shader.PropertyToID("_MapMode");
         private static readonly int CustomMapModeIndexPropertyID = Shader.PropertyToID("_CustomMapModeIndex");
-        private static readonly int MapModeTextureArrayPropertyID = Shader.PropertyToID("_MapModeTextureArray");
+        private static readonly int ProvincePaletteTexturePropertyID = Shader.PropertyToID("_ProvincePaletteTexture");
         private static readonly int MapModeTextureCountPropertyID = Shader.PropertyToID("_MapModeTextureCount");
+        private static readonly int MaxProvinceIDPropertyID = Shader.PropertyToID("_MaxProvinceID");
 
         // State tracking
         private bool isInitialized = false;
@@ -182,53 +186,47 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Initialize the texture array for custom GAME map modes.
-        /// Pre-allocates slots for instant switching between modes.
+        /// Initialize the province palette texture for custom GAME map modes.
+        /// Uses province-indexed lookup instead of full-resolution textures.
+        /// Memory: 100k provinces * 16 modes * 4 bytes = ~6.4MB
         /// </summary>
         private void InitializeMapModeTextureArray(MapTextureManager textureManager)
         {
-            // Get map dimensions from province ID texture
-            var provinceIDTexture = textureManager.ProvinceIDTexture;
-            if (provinceIDTexture == null)
-            {
-                ArchonLogger.LogWarning("MapModeManager: ProvinceIDTexture not available, using default dimensions", "map_modes");
-                mapWidth = 5632;
-                mapHeight = 2048;
-            }
-            else
-            {
-                mapWidth = provinceIDTexture.width;
-                mapHeight = provinceIDTexture.height;
-            }
+            // Get max province ID from GameState
+            maxProvinceID = gameState?.Provinces?.ProvinceCount ?? 65536;
+            if (maxProvinceID <= 0) maxProvinceID = 65536;
 
-            // Create texture array for custom map modes
-            // ARGB32 format for full color support
-            mapModeTextureArray = new Texture2DArray(mapWidth, mapHeight, MAX_CUSTOM_MAP_MODES, TextureFormat.ARGB32, false);
-            mapModeTextureArray.filterMode = FilterMode.Point; // No interpolation for map data
-            mapModeTextureArray.wrapMode = TextureWrapMode.Clamp;
-            mapModeTextureArray.name = "MapModeTextureArray";
+            // Calculate palette dimensions
+            // Layout: 256 columns x (rowsPerMode * numModes) rows
+            rowsPerMode = (maxProvinceID + PALETTE_WIDTH - 1) / PALETTE_WIDTH; // ceil division
+            int paletteHeight = rowsPerMode * MAX_CUSTOM_MAP_MODES;
 
-            // Initialize with transparent black (alpha=0 means "use default")
-            var clearPixels = new Color32[mapWidth * mapHeight];
+            // Create palette texture
+            provincePaletteTexture = new Texture2D(PALETTE_WIDTH, paletteHeight, TextureFormat.RGBA32, false);
+            provincePaletteTexture.filterMode = FilterMode.Point; // No interpolation - exact province colors
+            provincePaletteTexture.wrapMode = TextureWrapMode.Clamp;
+            provincePaletteTexture.name = "ProvincePaletteTexture";
+
+            // Initialize with transparent black (alpha=0 means "use default/ocean")
+            var clearPixels = new Color32[PALETTE_WIDTH * paletteHeight];
             for (int i = 0; i < clearPixels.Length; i++)
             {
                 clearPixels[i] = new Color32(0, 0, 0, 0);
             }
-            for (int slice = 0; slice < MAX_CUSTOM_MAP_MODES; slice++)
-            {
-                mapModeTextureArray.SetPixels32(clearPixels, slice);
-            }
-            mapModeTextureArray.Apply();
+            provincePaletteTexture.SetPixels32(clearPixels);
+            provincePaletteTexture.Apply();
 
             // Initialize custom mode tracking
             customModeToArrayIndex = new Dictionary<int, int>();
             nextArrayIndex = 0;
 
             // Bind to material
-            mapMaterial.SetTexture(MapModeTextureArrayPropertyID, mapModeTextureArray);
+            mapMaterial.SetTexture(ProvincePaletteTexturePropertyID, provincePaletteTexture);
             mapMaterial.SetInt(MapModeTextureCountPropertyID, 0);
+            mapMaterial.SetInt(MaxProvinceIDPropertyID, maxProvinceID);
 
-            ArchonLogger.Log($"MapModeManager: Initialized texture array ({mapWidth}x{mapHeight}, {MAX_CUSTOM_MAP_MODES} slots)", "map_initialization");
+            int memoryKB = (PALETTE_WIDTH * paletteHeight * 4) / 1024;
+            ArchonLogger.Log($"MapModeManager: Initialized province palette ({PALETTE_WIDTH}x{paletteHeight}, {MAX_CUSTOM_MAP_MODES} modes, {memoryKB}KB)", "map_initialization");
         }
 
         private void InitializeModeHandlers()
@@ -471,13 +469,14 @@ namespace Map.MapModes
 
             dataTextures.BindToMaterial(mapMaterial);
 
-            // Also rebind the texture array
-            if (mapModeTextureArray != null)
+            // Also rebind the province palette
+            if (provincePaletteTexture != null)
             {
-                mapMaterial.SetTexture(MapModeTextureArrayPropertyID, mapModeTextureArray);
+                mapMaterial.SetTexture(ProvincePaletteTexturePropertyID, provincePaletteTexture);
+                mapMaterial.SetInt(MaxProvinceIDPropertyID, maxProvinceID);
             }
 
-            ArchonLogger.Log($"MapModeManager: Rebound map mode textures to material (CountryColorPalette, etc.)", "map_initialization");
+            ArchonLogger.Log($"MapModeManager: Rebound map mode textures to material", "map_initialization");
         }
 
         #region Custom Map Mode Texture Array API
@@ -487,12 +486,12 @@ namespace Map.MapModes
         /// Called by GAME layer when creating custom map modes.
         /// </summary>
         /// <param name="customModeId">Unique ID for this custom mode (typically ShaderModeID from handler)</param>
-        /// <returns>Array index for this mode's texture slice, or -1 if full</returns>
+        /// <returns>Palette index for this mode, or -1 if full</returns>
         public int RegisterCustomMapMode(int customModeId)
         {
-            if (mapModeTextureArray == null)
+            if (provincePaletteTexture == null)
             {
-                ArchonLogger.LogError("MapModeManager: Texture array not initialized", "map_modes");
+                ArchonLogger.LogError("MapModeManager: Province palette not initialized", "map_modes");
                 return -1;
             }
 
@@ -505,77 +504,91 @@ namespace Map.MapModes
             // Check capacity
             if (nextArrayIndex >= MAX_CUSTOM_MAP_MODES)
             {
-                ArchonLogger.LogError($"MapModeManager: Cannot register custom mode {customModeId} - texture array full ({MAX_CUSTOM_MAP_MODES} max)", "map_modes");
+                ArchonLogger.LogError($"MapModeManager: Cannot register custom mode {customModeId} - palette full ({MAX_CUSTOM_MAP_MODES} max)", "map_modes");
                 return -1;
             }
 
             // Assign next slot
-            int arrayIndex = nextArrayIndex++;
-            customModeToArrayIndex[customModeId] = arrayIndex;
+            int paletteIndex = nextArrayIndex++;
+            customModeToArrayIndex[customModeId] = paletteIndex;
 
             mapMaterial.SetInt(MapModeTextureCountPropertyID, nextArrayIndex);
 
-            ArchonLogger.Log($"MapModeManager: Registered custom map mode {customModeId} at array index {arrayIndex}", "map_initialization");
-            return arrayIndex;
+            ArchonLogger.Log($"MapModeManager: Registered custom map mode {customModeId} at palette index {paletteIndex}", "map_initialization");
+            return paletteIndex;
         }
 
         /// <summary>
-        /// Update a custom map mode's texture data (CPU pixel array version).
-        /// Called by GAME map mode handlers when their data changes (dirty).
-        /// NOTE: This is SLOW due to GPU→CPU→GPU roundtrip. Prefer BindCustomMapModeRenderTexture().
+        /// Update province colors for a custom map mode.
+        /// Called by GAME map mode handlers when their data changes.
         /// </summary>
-        /// <param name="arrayIndex">Index returned from RegisterCustomMapMode</param>
-        /// <param name="pixels">Color data for the entire map</param>
-        public void UpdateCustomMapModeTexture(int arrayIndex, Color32[] pixels)
+        /// <param name="paletteIndex">Index returned from RegisterCustomMapMode</param>
+        /// <param name="provinceColors">Dictionary mapping province ID to color</param>
+        public void UpdateProvinceColors(int paletteIndex, Dictionary<int, Color32> provinceColors)
         {
-            if (mapModeTextureArray == null || arrayIndex < 0 || arrayIndex >= MAX_CUSTOM_MAP_MODES)
+            if (provincePaletteTexture == null || paletteIndex < 0 || paletteIndex >= MAX_CUSTOM_MAP_MODES)
             {
-                ArchonLogger.LogError($"MapModeManager: Invalid array index {arrayIndex}", "map_modes");
+                ArchonLogger.LogError($"MapModeManager: Invalid palette index {paletteIndex}", "map_modes");
                 return;
             }
 
-            if (pixels.Length != mapWidth * mapHeight)
+            // Calculate row offset for this mode
+            int rowOffset = paletteIndex * rowsPerMode;
+
+            // Update each province color in the palette
+            foreach (var kvp in provinceColors)
             {
-                ArchonLogger.LogError($"MapModeManager: Pixel array size mismatch. Expected {mapWidth * mapHeight}, got {pixels.Length}", "map_modes");
+                int provinceID = kvp.Key;
+                if (provinceID <= 0 || provinceID > maxProvinceID) continue;
+
+                int col = provinceID % PALETTE_WIDTH;
+                int row = (provinceID / PALETTE_WIDTH) + rowOffset;
+
+                provincePaletteTexture.SetPixel(col, row, kvp.Value);
+            }
+
+            provincePaletteTexture.Apply();
+
+            if (logTextureUpdates)
+            {
+                ArchonLogger.Log($"MapModeManager: Updated {provinceColors.Count} province colors at palette index {paletteIndex}", "map_modes");
+            }
+        }
+
+        /// <summary>
+        /// Update a single province's color for a custom map mode.
+        /// Use UpdateProvinceColors for batch updates.
+        /// </summary>
+        public void UpdateProvinceColor(int paletteIndex, int provinceID, Color32 color)
+        {
+            if (provincePaletteTexture == null || paletteIndex < 0 || paletteIndex >= MAX_CUSTOM_MAP_MODES)
                 return;
-            }
+            if (provinceID <= 0 || provinceID > maxProvinceID) return;
 
-            mapModeTextureArray.SetPixels32(pixels, arrayIndex);
-            mapModeTextureArray.Apply();
+            int rowOffset = paletteIndex * rowsPerMode;
+            int col = provinceID % PALETTE_WIDTH;
+            int row = (provinceID / PALETTE_WIDTH) + rowOffset;
 
-            if (logTextureUpdates)
-            {
-                ArchonLogger.Log($"MapModeManager: Updated custom map mode texture at index {arrayIndex}", "map_modes");
-            }
+            provincePaletteTexture.SetPixel(col, row, color);
+            // Note: Call ApplyPaletteChanges() after batch of single updates
         }
 
         /// <summary>
-        /// Copy a RenderTexture to the texture array using GPU-to-GPU copy.
-        /// This is the FAST path - no CPU roundtrip, stays entirely on GPU.
-        /// Called by GradientMapMode after compute shader dispatch.
+        /// Apply pending palette changes to GPU.
+        /// Call after a batch of UpdateProvinceColor calls.
         /// </summary>
-        public void CopyRenderTextureToArray(int arrayIndex, RenderTexture sourceTexture)
+        public void ApplyPaletteChanges()
         {
-            if (mapModeTextureArray == null || sourceTexture == null) return;
-            if (arrayIndex < 0 || arrayIndex >= MAX_CUSTOM_MAP_MODES) return;
-
-            // GPU-to-GPU copy - no CPU sync needed
-            // Graphics.CopyTexture copies directly on GPU, no ReadPixels/SetPixels
-            Graphics.CopyTexture(sourceTexture, 0, 0, mapModeTextureArray, arrayIndex, 0);
-
-            if (logTextureUpdates)
-            {
-                ArchonLogger.Log($"MapModeManager: GPU copied RenderTexture to array index {arrayIndex}", "map_modes");
-            }
+            provincePaletteTexture?.Apply();
         }
 
         /// <summary>
-        /// Get the dimensions of the map mode texture array.
-        /// GAME map modes need this to create correctly sized pixel arrays.
+        /// Get palette dimensions and province limit info.
+        /// GAME map modes need this to know capacity.
         /// </summary>
-        public (int width, int height) GetMapDimensions()
+        public (int maxProvinces, int maxModes, int rowsPerMode) GetPaletteInfo()
         {
-            return (mapWidth, mapHeight);
+            return (maxProvinceID, MAX_CUSTOM_MAP_MODES, rowsPerMode);
         }
 
         /// <summary>
@@ -595,11 +608,11 @@ namespace Map.MapModes
             dataTextures?.Dispose();
             updateScheduler?.Dispose();
 
-            // Dispose texture array
-            if (mapModeTextureArray != null)
+            // Dispose province palette texture
+            if (provincePaletteTexture != null)
             {
-                Object.Destroy(mapModeTextureArray);
-                mapModeTextureArray = null;
+                Object.Destroy(provincePaletteTexture);
+                provincePaletteTexture = null;
             }
 
             // Dispose all map mode handlers to prevent ComputeBuffer leaks

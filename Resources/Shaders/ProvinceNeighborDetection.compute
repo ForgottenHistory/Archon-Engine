@@ -1,0 +1,111 @@
+// Province Neighbor Detection Compute Shader
+// Detects adjacency relationships between provinces on GPU
+// Outputs unique neighbor pairs to AppendStructuredBuffer
+
+#pragma kernel DetectNeighbors
+#pragma kernel CalculateBounds
+
+// Input textures
+Texture2D<float4> ProvinceIDTexture;
+
+// Output buffers
+AppendStructuredBuffer<uint2> NeighborPairs;    // Unique (provinceA, provinceB) pairs
+AppendStructuredBuffer<uint> CoastalProvinces;  // Provinces touching ocean (ID 0)
+RWStructuredBuffer<int4> ProvinceBounds;        // min.xy, max.xy per province
+
+// Parameters
+uint2 TextureSize;
+
+// Province ID decoding - matches BorderDetection.compute
+uint DecodeProvinceID(float2 encoded)
+{
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+    return (g << 8) | r;
+}
+
+// Create canonical pair (smaller ID first) to avoid duplicates
+uint2 MakeCanonicalPair(uint a, uint b)
+{
+    return a < b ? uint2(a, b) : uint2(b, a);
+}
+
+[numthreads(8, 8, 1)]
+void DetectNeighbors(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= TextureSize.x || id.y >= TextureSize.y)
+        return;
+
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Skip ocean pixels (ID 0)
+    if (currentProvince == 0)
+        return;
+
+    // Only check right and bottom neighbors to avoid duplicate detection
+    // (Each border is shared by exactly 2 pixels, checking only 2 directions = 1 detection per border)
+
+    // Check right neighbor
+    if (id.x < TextureSize.x - 1)
+    {
+        float2 rightEncoded = ProvinceIDTexture[id.xy + int2(1, 0)].rg;
+        uint rightProvince = DecodeProvinceID(rightEncoded);
+
+        if (rightProvince != currentProvince)
+        {
+            if (rightProvince == 0)
+            {
+                // Current province touches ocean
+                CoastalProvinces.Append(currentProvince);
+            }
+            else
+            {
+                // Adjacent to another province
+                NeighborPairs.Append(MakeCanonicalPair(currentProvince, rightProvince));
+            }
+        }
+    }
+
+    // Check bottom neighbor
+    if (id.y < TextureSize.y - 1)
+    {
+        float2 bottomEncoded = ProvinceIDTexture[id.xy + int2(0, 1)].rg;
+        uint bottomProvince = DecodeProvinceID(bottomEncoded);
+
+        if (bottomProvince != currentProvince)
+        {
+            if (bottomProvince == 0)
+            {
+                // Current province touches ocean
+                CoastalProvinces.Append(currentProvince);
+            }
+            else
+            {
+                // Adjacent to another province
+                NeighborPairs.Append(MakeCanonicalPair(currentProvince, bottomProvince));
+            }
+        }
+    }
+}
+
+[numthreads(8, 8, 1)]
+void CalculateBounds(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= TextureSize.x || id.y >= TextureSize.y)
+        return;
+
+    float2 currentEncoded = ProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    // Skip ocean pixels
+    if (currentProvince == 0)
+        return;
+
+    // Atomic min/max for bounds
+    // ProvinceBounds[provinceId] = (minX, minY, maxX, maxY)
+    InterlockedMin(ProvinceBounds[currentProvince].x, (int)id.x);
+    InterlockedMin(ProvinceBounds[currentProvince].y, (int)id.y);
+    InterlockedMax(ProvinceBounds[currentProvince].z, (int)id.x);
+    InterlockedMax(ProvinceBounds[currentProvince].w, (int)id.y);
+}

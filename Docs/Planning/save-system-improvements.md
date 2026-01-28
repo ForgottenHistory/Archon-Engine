@@ -22,18 +22,11 @@ The save system is functional with good architecture:
 
 ### HIGH PRIORITY
 
-#### 1. Checksum Validation
-**Issue**: `expectedChecksum` is stored but never validated on load.
-
-**Current**:
-```csharp
-public uint expectedChecksum; // Stored but ignored
-```
-
-**Needed**:
-- Calculate checksum during save (CRC32 or xxHash)
-- Validate on load, warn if mismatch
-- Option to reject corrupted saves or load anyway
+#### 1. ~~Checksum Validation~~ ✅ DONE
+**Status**: Implemented 2026-01-28
+- CRC32 checksum calculated during save
+- Validated on load, warns if mismatch
+- Continues loading (user decides if save is usable)
 
 #### 2. Save Metadata Header (Quick Preview)
 **Issue**: Can't show save list with dates/info without loading entire file.
@@ -149,13 +142,8 @@ public interface ISaveable
 }
 ```
 
-#### 12. currentTick Not Populated
-**Issue**: Always 0, TODO in code.
-
-**Fix**:
-```csharp
-data.currentTick = gameState.Time.CurrentTick;
-```
+#### 12. ~~currentTick Not Populated~~ ✅ DONE
+**Status**: Fixed 2026-01-28 - Now reads from `gameState.Time.CurrentTick`
 
 #### 13. Ironman Mode
 **Issue**: Not supported.
@@ -171,7 +159,7 @@ data.currentTick = gameState.Time.CurrentTick;
 
 | Phase | Items | Effort |
 |-------|-------|--------|
-| 1 | Checksum validation, currentTick fix, DiplomacySystem check | Small |
+| 1 | ~~Checksum validation~~, ~~currentTick fix~~, ~~DiplomacySystem check~~ | ✅ DONE |
 | 2 | Save metadata header, compression | Medium |
 | 3 | Async save/load, progress reporting | Medium |
 | 4 | Version migration, autosave | Medium |

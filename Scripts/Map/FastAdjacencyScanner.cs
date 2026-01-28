@@ -22,6 +22,12 @@ namespace Map.Province
         public bool ignoreDiagonals = false; // Only check 4-connectivity vs 8-connectivity
         public float blackThreshold = 10f; // RGB values below this are considered borders/ocean
 
+        /// <summary>
+        /// Known province count from definition.csv - used to size hash maps dynamically.
+        /// Set this before calling ScanForAdjacencies for optimal memory allocation.
+        /// </summary>
+        [HideInInspector] public int knownProvinceCount = 0;
+
         [Header("Debug")]
         public bool showDebugInfo = true;
 
@@ -66,9 +72,28 @@ namespace Map.Province
             int width = provinceMap.width;
             int height = provinceMap.height;
 
-            // For 13,350 provinces, estimate ~100,000 adjacency pairs to be safe
-            // (13350 provinces * avg 6 neighbors / 2 for bidirectional = ~40k, but let's use 100k for safety)
-            int estimatedAdjacencies = 100000;
+            // Estimate adjacency pairs dynamically
+            // NativeParallelHashSet needs extra capacity for internal bucketing with parallel writes
+            // Real adjacency pairs = provinces * ~6 neighbors / 2 = ~3 per province
+            // But parallel writes need 4-8x headroom for hash collisions and bucket distribution
+            int pixelCount = width * height;
+            int provinceCount = knownProvinceCount > 0 ? knownProvinceCount : GameState.Instance?.Provinces?.ProvinceCount ?? 0;
+
+            int estimatedAdjacencies;
+            if (provinceCount > 0)
+            {
+                // Dynamic: provinces * 100 gives massive headroom for parallel hash set
+                // 50k provinces * 100 = 5M capacity (actual pairs ~150k, but parallel needs headroom)
+                estimatedAdjacencies = provinceCount * 100;
+            }
+            else
+            {
+                // Fallback: estimate from pixel count if province count unknown
+                estimatedAdjacencies = Mathf.Max(500000, pixelCount / 100);
+            }
+
+            // Ensure minimum capacity for parallel hash set efficiency
+            estimatedAdjacencies = Mathf.Max(estimatedAdjacencies, 1000000);
 
             ArchonLogger.Log($"Scanning {width}x{height} bitmap for province adjacencies...", "map_rendering");
             ArchonLogger.Log($"Allocating hash set with capacity for {estimatedAdjacencies} adjacency pairs", "map_rendering");

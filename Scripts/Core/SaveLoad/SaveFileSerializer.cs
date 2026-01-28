@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Hashing;
 using UnityEngine;
 
 namespace Core.SaveLoad
@@ -30,6 +31,16 @@ namespace Core.SaveLoad
         private const string MAGIC_BYTES = "HGSV"; // Hegemon Save
 
         /// <summary>
+        /// Calculate CRC32 checksum of save data payload (excludes checksum field itself)
+        /// </summary>
+        private static uint CalculateChecksum(byte[] data)
+        {
+            var crc = new Crc32();
+            crc.Append(data);
+            return BitConverter.ToUInt32(crc.GetCurrentHash(), 0);
+        }
+
+        /// <summary>
         /// Write SaveGameData to disk with atomic write (temp file → rename)
         /// </summary>
         public static void WriteToDisk(SaveGameData saveData, string filePath)
@@ -37,12 +48,25 @@ namespace Core.SaveLoad
             // Atomic write: write to temp file, then rename
             string tempPath = filePath + ".tmp";
 
+            // First pass: write payload to memory to calculate checksum
+            byte[] payloadBytes;
+            using (MemoryStream payloadStream = new MemoryStream())
+            using (BinaryWriter payloadWriter = new BinaryWriter(payloadStream))
+            {
+                WriteHeader(payloadWriter, saveData);
+                WriteSystemData(payloadWriter, saveData);
+                WriteCommandLog(payloadWriter, saveData);
+                payloadBytes = payloadStream.ToArray();
+            }
+
+            // Calculate checksum of payload
+            saveData.expectedChecksum = CalculateChecksum(payloadBytes);
+
+            // Second pass: write to file with checksum
             using (FileStream stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write))
             using (BinaryWriter writer = new BinaryWriter(stream))
             {
-                WriteHeader(writer, saveData);
-                WriteSystemData(writer, saveData);
-                WriteCommandLog(writer, saveData);
+                writer.Write(payloadBytes);
                 WriteChecksum(writer, saveData);
             }
 
@@ -59,7 +83,24 @@ namespace Core.SaveLoad
         /// </summary>
         public static SaveGameData ReadFromDisk(string filePath)
         {
-            using (FileStream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            byte[] fileBytes = File.ReadAllBytes(filePath);
+
+            // Checksum is last 4 bytes, payload is everything before
+            int payloadLength = fileBytes.Length - 4;
+            byte[] payloadBytes = new byte[payloadLength];
+            Array.Copy(fileBytes, 0, payloadBytes, 0, payloadLength);
+
+            uint storedChecksum = BitConverter.ToUInt32(fileBytes, payloadLength);
+            uint calculatedChecksum = CalculateChecksum(payloadBytes);
+
+            if (storedChecksum != calculatedChecksum)
+            {
+                ArchonLogger.LogWarning($"SaveFileSerializer: Checksum mismatch! File may be corrupted. " +
+                    $"(expected: {storedChecksum:X8}, calculated: {calculatedChecksum:X8})", "core_saveload");
+                // Continue loading anyway - user can decide if save is usable
+            }
+
+            using (MemoryStream stream = new MemoryStream(payloadBytes))
             using (BinaryReader reader = new BinaryReader(stream))
             {
                 // Verify magic bytes
@@ -70,7 +111,7 @@ namespace Core.SaveLoad
                 ReadHeader(reader, data);
                 ReadSystemData(reader, data);
                 ReadCommandLog(reader, data);
-                ReadChecksum(reader, data);
+                data.expectedChecksum = storedChecksum;
 
                 return data;
             }
@@ -170,7 +211,7 @@ namespace Core.SaveLoad
             data.saveFormatVersion = reader.ReadInt32();
             data.saveName = SerializationHelper.ReadString(reader);
             data.saveDateTicks = reader.ReadInt64();
-            data.currentTick = reader.ReadInt32();
+            data.currentTick = reader.ReadUInt64();
             data.gameSpeed = reader.ReadInt32();
             data.scenarioName = SerializationHelper.ReadString(reader);
         }

@@ -1,3 +1,4 @@
+using System.IO;
 using System.Runtime.CompilerServices;
 using Unity.Collections;
 using UnityEngine;
@@ -129,6 +130,58 @@ namespace Map.Loading.Images
 
                 default:
                     return new ImageHeader { IsSuccess = false, Format = ImageFormat.Unknown };
+            }
+        }
+
+        /// <summary>
+        /// Get image dimensions from file path without loading full pixel data.
+        /// Reads only the header bytes needed to determine width/height.
+        /// </summary>
+        /// <param name="filePath">Path to BMP or PNG file</param>
+        /// <param name="width">Output width in pixels</param>
+        /// <param name="height">Output height in pixels</param>
+        /// <returns>True if dimensions were successfully read</returns>
+        public static bool TryGetDimensions(string filePath, out int width, out int height)
+        {
+            width = 0;
+            height = 0;
+
+            if (!File.Exists(filePath))
+            {
+                ArchonLogger.LogError($"ImageParser: File not found: {filePath}", "map_initialization");
+                return false;
+            }
+
+            // Read only first 128 bytes - enough for both BMP and PNG headers
+            const int headerSize = 128;
+            byte[] headerBytes;
+
+            try
+            {
+                using (var stream = File.OpenRead(filePath))
+                {
+                    headerBytes = new byte[System.Math.Min(headerSize, stream.Length)];
+                    stream.Read(headerBytes, 0, headerBytes.Length);
+                }
+            }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogError($"ImageParser: Failed to read file header: {e.Message}", "map_initialization");
+                return false;
+            }
+
+            using (var nativeBytes = new NativeArray<byte>(headerBytes, Allocator.Temp))
+            {
+                var header = ParseHeader(nativeBytes);
+                if (!header.IsSuccess)
+                {
+                    ArchonLogger.LogError($"ImageParser: Failed to parse header for: {filePath}", "map_initialization");
+                    return false;
+                }
+
+                width = header.Width;
+                height = header.Height;
+                return true;
             }
         }
 

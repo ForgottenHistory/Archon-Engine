@@ -52,7 +52,7 @@ namespace Core.Systems
     public class ProvinceSystem : MonoBehaviour, System.IDisposable
     {
         [Header("Configuration")]
-        [SerializeField] private int initialCapacity = 10000;
+        [SerializeField] private int initialCapacity = 100000;
 
         // Core components (refactored for better separation)
         private ProvinceDataManager dataManager;

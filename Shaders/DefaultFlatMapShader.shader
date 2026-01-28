@@ -22,14 +22,16 @@ Shader "Archon/DefaultFlat"
         _FogOfWarTexture ("Fog of War Texture (R8)", 2D) = "white" {}
 
         // Map visualization settings
-        // Mode 0: Political, Mode 1: Terrain, Mode 2+: Custom GAME modes via texture array
+        // Mode 0: Political, Mode 1: Terrain, Mode 2+: Custom GAME modes via province palette
         [Enum(Political, 0, Terrain, 1, Custom, 2)] _MapMode ("Map Mode", Int) = 0
         _CustomMapModeIndex ("Custom Map Mode Index", Int) = 0
         _MapModeTextureCount ("Map Mode Texture Count", Int) = 0
+        _MaxProvinceID ("Max Province ID", Int) = 65536
 
-        // Map Mode Texture Array - GAME modes write their visualization here
-        // ENGINE samples from this array when _MapMode >= 2
-        _MapModeTextureArray ("Map Mode Texture Array", 2DArray) = "" {}
+        // Province Palette Texture - GAME modes store per-province colors here
+        // Layout: 256 columns x (maxProvinces/256 * numModes) rows
+        // ~6.4MB for 100k provinces * 16 modes (vs 6.24GB for full-res texture array)
+        _ProvincePaletteTexture ("Province Palette Texture", 2D) = "black" {}
 
         // Border visualization (configurable from VisualStyleConfiguration)
         // 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry

@@ -28,6 +28,9 @@ namespace Core.Systems.Province
         private const ushort OCEAN_TERRAIN = 0;
         private const ushort UNOWNED_COUNTRY = 0;
         private const int INITIAL_DIRTY_CAPACITY = 256;
+        private const int SUPPORTED_PROVINCE_LIMIT = 100000;
+
+        private bool hasShownUnsupportedWarning = false;
 
         public int ProvinceCount => provinceCount;
         public int DirtyCount => dirtyIndices.IsCreated ? dirtyIndices.Count : 0;
@@ -54,8 +57,15 @@ namespace Core.Systems.Province
         {
             if (provinceCount >= snapshot.Capacity)
             {
-                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{snapshot.Capacity}", "core_simulation");
+                ArchonLogger.LogError($"Province capacity exceeded: {provinceCount}/{snapshot.Capacity}. Increase initialCapacity in ProvinceSystem.", "core_simulation");
                 return;
+            }
+
+            // Warn once when exceeding officially supported limit
+            if (provinceCount >= SUPPORTED_PROVINCE_LIMIT && !hasShownUnsupportedWarning)
+            {
+                ArchonLogger.LogWarning($"Province count ({provinceCount}) exceeds officially supported limit ({SUPPORTED_PROVINCE_LIMIT}). Performance may degrade.", "core_simulation");
+                hasShownUnsupportedWarning = true;
             }
 
             // Check for duplicate province ID

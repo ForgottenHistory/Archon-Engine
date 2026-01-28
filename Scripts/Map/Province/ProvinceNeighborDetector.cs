@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.Jobs;
 using Unity.Burst;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 using Map.Loading;
 
 namespace Map.Province
@@ -26,11 +27,18 @@ namespace Map.Province
             public int TotalNeighborPairs;
             public string ErrorMessage;
 
+            /// <summary>
+            /// Managed adjacency dictionary for direct use by AdjacencySystem.
+            /// Populated by GPU detector - more efficient than NativeHashMap for AdjacencySystem.SetAdjacencies().
+            /// </summary>
+            public Dictionary<int, HashSet<int>> AdjacencyDictionary;
+
             public void Dispose()
             {
                 if (ProvinceNeighbors.IsCreated) ProvinceNeighbors.Dispose();
                 if (ProvinceBounds.IsCreated) ProvinceBounds.Dispose();
                 if (CoastalProvinces.IsCreated) CoastalProvinces.Dispose();
+                AdjacencyDictionary = null; // Clear managed reference
             }
         }
 

@@ -11,6 +11,7 @@ using Map.CameraControllers;
 using Core.SaveLoad;
 using Archon.Engine.Map;
 using Map.Province;
+using Map.Loading.Images;
 
 namespace Engine
 {
@@ -452,11 +453,26 @@ namespace Engine
             }
             ownerTextureDispatcher.Initialize();
 
-            // MapTextureManager (required)
+            // MapTextureManager (required) - needs map dimensions from image file
             textureManager = mapGenerator.GetComponent<MapTextureManager>();
             if (textureManager == null)
                 textureManager = mapGenerator.AddComponent<MapTextureManager>();
-            textureManager.Initialize();
+
+            // Read map dimensions from provinces image (PNG preferred, fallback to BMP)
+            string provincesPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.png");
+            if (!System.IO.File.Exists(provincesPath))
+                provincesPath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
+
+            if (!ImageParser.TryGetDimensions(provincesPath, out int mapWidth, out int mapHeight))
+            {
+                ReportError($"Failed to read map dimensions from: {provincesPath}");
+                yield break;
+            }
+
+            if (LogProgress)
+                ArchonLogger.Log($"ArchonEngine: Map dimensions: {mapWidth}x{mapHeight}", "map_initialization");
+
+            textureManager.Initialize(mapWidth, mapHeight);
 
             // Wire up texture manager dependencies
             borderDispatcher.SetTextureManager(textureManager);
@@ -561,50 +577,36 @@ namespace Engine
                 yield break;
             }
 
-            // Get the province color texture
-            var provinceMapTexture = textureManager?.ProvinceColorTexture;
-            if (provinceMapTexture == null)
+            // Get the province ID texture (RenderTexture on GPU)
+            var provinceIDTexture = textureManager?.ProvinceIDTexture;
+            if (provinceIDTexture == null)
             {
-                ArchonLogger.LogWarning("ArchonEngine: ProvinceColorTexture not found - skipping adjacency scan", "map_initialization");
+                ArchonLogger.LogWarning("ArchonEngine: ProvinceIDTexture not found - skipping adjacency scan", "map_initialization");
                 yield break;
             }
 
-            // Create FastAdjacencyScanner
-            GameObject scannerObj = new GameObject("FastAdjacencyScanner_Temp");
-            var scanner = scannerObj.AddComponent<FastAdjacencyScanner>();
-            scanner.provinceMap = provinceMapTexture;
-            scanner.ignoreDiagonals = false;
-            scanner.blackThreshold = 10f;
-            scanner.showDebugInfo = LogProgress;
+            int provinceCount = GameState.Provinces?.ProvinceCount ?? 0;
 
             yield return null;
 
-            // Run scan
-            var scanResult = scanner.ScanForAdjacencies();
+            // Use GPU-accelerated neighbor detection
+            var gpuResult = GPUProvinceNeighborDetector.DetectNeighborsGPU(provinceIDTexture, provinceCount);
 
-            if (scanResult == null)
+            if (!gpuResult.IsSuccess)
             {
-                ArchonLogger.LogWarning("ArchonEngine: Province adjacency scan failed", "map_initialization");
-                Object.Destroy(scannerObj);
+                ArchonLogger.LogWarning($"ArchonEngine: GPU adjacency scan failed: {gpuResult.ErrorMessage}", "map_initialization");
                 yield break;
             }
 
-            // Convert color adjacencies to ID adjacencies
-            var colorToIdMap = new System.Collections.Generic.Dictionary<Color32, int>(new Color32Comparer());
-
-            // Build color → ID map from ProvinceMapping
-            var allProvinces = ProvinceMapping.GetAllProvinces();
-            foreach (var kvp in allProvinces)
+            // GPU detector builds AdjacencyDictionary directly - use it
+            if (gpuResult.AdjacencyDictionary == null || gpuResult.AdjacencyDictionary.Count == 0)
             {
-                ushort provinceId = kvp.Key;
-                Color32 color = kvp.Value.IdentifierColor;
-                colorToIdMap[color] = provinceId;
+                ArchonLogger.LogWarning("ArchonEngine: GPU adjacency scan returned empty adjacency dictionary", "map_initialization");
+                yield break;
             }
 
-            scanner.ConvertToIdAdjacencies(colorToIdMap);
-
-            // Populate GameState.Adjacencies
-            GameState.Adjacencies.SetAdjacencies(scanner.IdAdjacencies);
+            // Populate GameState.Adjacencies directly from GPU result
+            GameState.Adjacencies.SetAdjacencies(gpuResult.AdjacencyDictionary);
 
             if (LogProgress)
                 ArchonLogger.Log(GameState.Adjacencies.GetStatistics(), "map_initialization");
@@ -618,8 +620,8 @@ namespace Engine
                     ArchonLogger.Log("ArchonEngine: PathfindingSystem initialized", "map_initialization");
             }
 
-            // Cleanup
-            Object.Destroy(scannerObj);
+            // Cleanup GPU result native collections
+            gpuResult.Dispose();
 
             yield return null;
         }
