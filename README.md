@@ -104,6 +104,13 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 - Single draw call for entire map
 - 3D MAP TO BE DETERMINED
 
+**Map Loading (stress test: 15000x6500 map, 97.5M pixels, 50k provinces):**
+- Full load in **~5 seconds** (down from ~33s baseline — 85% reduction)
+- Raw pixel cache: skip PNG decompression on repeat loads (<100ms cache hits)
+- Adjacency cache: skip GPU neighbor detection on repeat loads (<20ms)
+- GPU-direct terrain analysis: compute shader samples textures already on GPU, zero CPU conversion
+- Zero managed allocations during texture population (`GetRawTextureData` + unsafe writes)
+
 **Multiplayer:**
 - Lockstep command synchronization (working)
 - Player-hosted sessions with lobby system

@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Map.Loading;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Map.Province
 {
@@ -246,6 +247,135 @@ namespace Map.Province
             result.TotalNeighborPairs = adjacencyDict.Count;
 
             return result;
+        }
+
+        // ========== ADJACENCY CACHE ==========
+
+        private const uint CACHE_MAGIC = 0x434A4441; // "ADJC"
+        private const uint CACHE_VERSION = 1;
+
+        /// <summary>
+        /// Try to load adjacency data from disk cache.
+        /// Returns null if cache is missing, stale, or corrupt.
+        /// Cache invalidates when provinces.png is newer than the cache file.
+        /// </summary>
+        public static Dictionary<int, HashSet<int>> TryLoadAdjacencyCache(string provincesImagePath)
+        {
+            string cachePath = provincesImagePath + ".adjacency";
+
+            if (!File.Exists(cachePath))
+                return null;
+
+            // Invalidate if source image is newer than cache
+            if (File.GetLastWriteTimeUtc(provincesImagePath) > File.GetLastWriteTimeUtc(cachePath))
+            {
+                ArchonLogger.Log("GPUProvinceNeighborDetector: Adjacency cache stale — provinces.png modified", "map_initialization");
+                return null;
+            }
+
+            try
+            {
+                byte[] data = File.ReadAllBytes(cachePath);
+                if (data.Length < 16)
+                    return null;
+
+                int offset = 0;
+
+                // Validate header
+                uint magic = System.BitConverter.ToUInt32(data, offset); offset += 4;
+                uint version = System.BitConverter.ToUInt32(data, offset); offset += 4;
+                int provinceCount = System.BitConverter.ToInt32(data, offset); offset += 4;
+                int pairCount = System.BitConverter.ToInt32(data, offset); offset += 4;
+
+                if (magic != CACHE_MAGIC || version != CACHE_VERSION)
+                    return null;
+
+                // Validate file size: header(16) + pairs(pairCount * 4 bytes)
+                int expectedSize = 16 + pairCount * 4;
+                if (data.Length < expectedSize)
+                    return null;
+
+                // Read pairs and build adjacency dictionary
+                var adjacencyDict = new Dictionary<int, HashSet<int>>(provinceCount);
+
+                for (int i = 0; i < pairCount; i++)
+                {
+                    ushort id1 = System.BitConverter.ToUInt16(data, offset); offset += 2;
+                    ushort id2 = System.BitConverter.ToUInt16(data, offset); offset += 2;
+
+                    if (!adjacencyDict.TryGetValue(id1, out var neighbors1))
+                    {
+                        neighbors1 = new HashSet<int>();
+                        adjacencyDict[id1] = neighbors1;
+                    }
+                    neighbors1.Add(id2);
+
+                    if (!adjacencyDict.TryGetValue(id2, out var neighbors2))
+                    {
+                        neighbors2 = new HashSet<int>();
+                        adjacencyDict[id2] = neighbors2;
+                    }
+                    neighbors2.Add(id1);
+                }
+
+                ArchonLogger.Log($"GPUProvinceNeighborDetector: Cache hit — {provinceCount} provinces, {pairCount} pairs from {cachePath}", "map_initialization");
+                return adjacencyDict;
+            }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogWarning($"GPUProvinceNeighborDetector: Cache read failed: {e.Message}", "map_initialization");
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Save adjacency data to disk cache.
+        /// Format: [ADJC 4B][version 4B][provinceCount 4B][pairCount 4B][id1 ushort, id2 ushort]...
+        /// Pairs are stored once (not bidirectional) — reader rebuilds both directions.
+        /// </summary>
+        public static void SaveAdjacencyCache(string provincesImagePath, Dictionary<int, HashSet<int>> adjacencyDict)
+        {
+            string cachePath = provincesImagePath + ".adjacency";
+
+            try
+            {
+                // Collect unique pairs (store each edge once: lower ID first)
+                var uniquePairs = new List<(ushort, ushort)>();
+                foreach (var kvp in adjacencyDict)
+                {
+                    ushort id1 = (ushort)kvp.Key;
+                    foreach (int neighborId in kvp.Value)
+                    {
+                        ushort id2 = (ushort)neighborId;
+                        if (id1 < id2) // Store each pair once
+                            uniquePairs.Add((id1, id2));
+                    }
+                }
+
+                int pairCount = uniquePairs.Count;
+                byte[] data = new byte[16 + pairCount * 4];
+                int offset = 0;
+
+                // Header
+                System.Buffer.BlockCopy(System.BitConverter.GetBytes(CACHE_MAGIC), 0, data, offset, 4); offset += 4;
+                System.Buffer.BlockCopy(System.BitConverter.GetBytes(CACHE_VERSION), 0, data, offset, 4); offset += 4;
+                System.Buffer.BlockCopy(System.BitConverter.GetBytes(adjacencyDict.Count), 0, data, offset, 4); offset += 4;
+                System.Buffer.BlockCopy(System.BitConverter.GetBytes(pairCount), 0, data, offset, 4); offset += 4;
+
+                // Pairs
+                foreach (var (id1, id2) in uniquePairs)
+                {
+                    System.Buffer.BlockCopy(System.BitConverter.GetBytes(id1), 0, data, offset, 2); offset += 2;
+                    System.Buffer.BlockCopy(System.BitConverter.GetBytes(id2), 0, data, offset, 2); offset += 2;
+                }
+
+                File.WriteAllBytes(cachePath, data);
+                ArchonLogger.Log($"GPUProvinceNeighborDetector: Saved adjacency cache — {adjacencyDict.Count} provinces, {pairCount} pairs ({data.Length / 1024}KB)", "map_initialization");
+            }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogWarning($"GPUProvinceNeighborDetector: Cache save failed: {e.Message}", "map_initialization");
+            }
         }
 
         /// <summary>

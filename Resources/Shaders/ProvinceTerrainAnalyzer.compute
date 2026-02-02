@@ -16,10 +16,7 @@
 
 // Input textures
 Texture2D<float4> ProvinceIDTexture;   // Which province each pixel belongs to (RenderTexture)
-
-// Input: Terrain type data as raw buffer (follows NormalMapGenerator pattern)
-// CRITICAL: Use StructuredBuffer instead of Graphics.Blit (see unity-compute-shader-coordination.md)
-StructuredBuffer<uint> TerrainDataBuffer;  // Terrain type indices (0-255) as bytes
+Texture2D<float> TerrainTypeTexture;   // R8 terrain type indices (0-255), sampled as float [0,1]
 
 // Output: Vote matrix [arrayIndex * 256 + terrainTypeIndex] = voteCount
 // Each province has 256 counters (one per terrain type)
@@ -62,10 +59,9 @@ void CountVotes(uint3 id : SV_DispatchThreadID)
     if (arrayIndex == 0)
         return;
 
-    // Sample terrain type from buffer (0-255 index)
-    // Buffer is linear: index = y * width + x
-    uint bufferIndex = id.y * MapWidth + id.x;
-    uint terrainType = TerrainDataBuffer[bufferIndex];
+    // Sample terrain type directly from R8 texture (already on GPU)
+    // R8 stores [0,255] as float [0.0,1.0] — convert back to uint index
+    uint terrainType = (uint)(TerrainTypeTexture[id.xy] * 255.0 + 0.5);
 
     // Atomic increment vote count for this terrain type in this province
     // VoteMatrix layout: [arrayIndex * 256 + terrainType]

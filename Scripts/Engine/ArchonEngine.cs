@@ -577,36 +577,64 @@ namespace Engine
                 yield break;
             }
 
-            // Get the province ID texture (RenderTexture on GPU)
-            var provinceIDTexture = textureManager?.ProvinceIDTexture;
-            if (provinceIDTexture == null)
-            {
-                ArchonLogger.LogWarning("ArchonEngine: ProvinceIDTexture not found - skipping adjacency scan", "map_initialization");
-                yield break;
-            }
-
             int provinceCount = GameState.Provinces?.ProvinceCount ?? 0;
+
+            // Resolve provinces image path for cache invalidation
+            string provincesImagePath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.png");
+            if (!System.IO.File.Exists(provincesImagePath))
+                provincesImagePath = System.IO.Path.Combine(gameSettings.DataDirectory, "map", "provinces.bmp");
 
             yield return null;
 
-            // Use GPU-accelerated neighbor detection
-            var gpuResult = GPUProvinceNeighborDetector.DetectNeighborsGPU(provinceIDTexture, provinceCount);
+            float startTime = Time.realtimeSinceStartup;
 
-            if (!gpuResult.IsSuccess)
+            // Try loading from disk cache first
+            var cachedAdjacency = GPUProvinceNeighborDetector.TryLoadAdjacencyCache(provincesImagePath);
+
+            if (cachedAdjacency != null && cachedAdjacency.Count > 0)
             {
-                ArchonLogger.LogWarning($"ArchonEngine: GPU adjacency scan failed: {gpuResult.ErrorMessage}", "map_initialization");
-                yield break;
-            }
+                float cacheMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                GameState.Adjacencies.SetAdjacencies(cachedAdjacency);
 
-            // GPU detector builds AdjacencyDictionary directly - use it
-            if (gpuResult.AdjacencyDictionary == null || gpuResult.AdjacencyDictionary.Count == 0)
+                if (LogProgress)
+                    ArchonLogger.Log($"ArchonEngine: Adjacency loaded from cache in {cacheMs:F0}ms", "map_initialization");
+            }
+            else
             {
-                ArchonLogger.LogWarning("ArchonEngine: GPU adjacency scan returned empty adjacency dictionary", "map_initialization");
-                yield break;
-            }
+                // Cache miss — run GPU detection
+                var provinceIDTexture = textureManager?.ProvinceIDTexture;
+                if (provinceIDTexture == null)
+                {
+                    ArchonLogger.LogWarning("ArchonEngine: ProvinceIDTexture not found - skipping adjacency scan", "map_initialization");
+                    yield break;
+                }
 
-            // Populate GameState.Adjacencies directly from GPU result
-            GameState.Adjacencies.SetAdjacencies(gpuResult.AdjacencyDictionary);
+                var gpuResult = GPUProvinceNeighborDetector.DetectNeighborsGPU(provinceIDTexture, provinceCount);
+
+                if (!gpuResult.IsSuccess)
+                {
+                    ArchonLogger.LogWarning($"ArchonEngine: GPU adjacency scan failed: {gpuResult.ErrorMessage}", "map_initialization");
+                    yield break;
+                }
+
+                if (gpuResult.AdjacencyDictionary == null || gpuResult.AdjacencyDictionary.Count == 0)
+                {
+                    ArchonLogger.LogWarning("ArchonEngine: GPU adjacency scan returned empty adjacency dictionary", "map_initialization");
+                    gpuResult.Dispose();
+                    yield break;
+                }
+
+                GameState.Adjacencies.SetAdjacencies(gpuResult.AdjacencyDictionary);
+
+                // Save cache for next load
+                GPUProvinceNeighborDetector.SaveAdjacencyCache(provincesImagePath, gpuResult.AdjacencyDictionary);
+
+                float gpuMs = (Time.realtimeSinceStartup - startTime) * 1000f;
+                if (LogProgress)
+                    ArchonLogger.Log($"ArchonEngine: Adjacency computed via GPU in {gpuMs:F0}ms (cached for next load)", "map_initialization");
+
+                gpuResult.Dispose();
+            }
 
             if (LogProgress)
                 ArchonLogger.Log(GameState.Adjacencies.GetStatistics(), "map_initialization");
@@ -619,9 +647,6 @@ namespace Engine
                 if (LogProgress)
                     ArchonLogger.Log("ArchonEngine: PathfindingSystem initialized", "map_initialization");
             }
-
-            // Cleanup GPU result native collections
-            gpuResult.Dispose();
 
             yield return null;
         }

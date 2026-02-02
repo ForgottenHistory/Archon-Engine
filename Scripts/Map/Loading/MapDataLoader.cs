@@ -210,12 +210,12 @@ namespace Map.Loading
             }
 
             var provinceIDTexture = textureManager.ProvinceIDTexture;
-            var terrainTexture = textureManager.ProvinceTerrainTexture;
+            var terrainTypeTexture = textureManager.TerrainTypeTexture;
             int provinceCount = gameState.Provinces.ProvinceCount;
 
-            if (provinceIDTexture == null || terrainTexture == null)
+            if (provinceIDTexture == null || terrainTypeTexture == null)
             {
-                ArchonLogger.LogError("MapDataLoader: Required textures not available", "map_rendering");
+                ArchonLogger.LogError("MapDataLoader: Required textures not available (ProvinceID or TerrainType)", "map_rendering");
                 return;
             }
 
@@ -225,7 +225,7 @@ namespace Map.Loading
 
                 uint[] terrainTypes = terrainAnalyzer.AnalyzeAndGetTerrainTypes(
                     provinceIDTexture,
-                    terrainTexture,
+                    terrainTypeTexture,
                     provinceIDs
                 );
 

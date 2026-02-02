@@ -1,6 +1,4 @@
 using UnityEngine;
-using UnityEngine.Rendering;
-using Map.Core;
 using Map.Rendering.Terrain;
 using Core.Modding;
 
@@ -25,7 +23,7 @@ namespace Map.Rendering
 
         // Cached shader property IDs
         private static readonly int ProvinceIDTextureID = Shader.PropertyToID("ProvinceIDTexture");
-        private static readonly int TerrainDataBufferID = Shader.PropertyToID("TerrainDataBuffer");
+        private static readonly int TerrainTypeTextureID = Shader.PropertyToID("TerrainTypeTexture");
         private static readonly int VoteMatrixID = Shader.PropertyToID("VoteMatrix");
         private static readonly int ProvinceTerrainTypesID = Shader.PropertyToID("ProvinceTerrainTypes");
         private static readonly int MapWidthID = Shader.PropertyToID("MapWidth");
@@ -35,7 +33,6 @@ namespace Map.Rendering
 
         // Specialized components
         private TerrainRGBLookup rgbLookup;
-        private TerrainBitmapReader bitmapReader;
         private TerrainOverrideApplicator overrideApplicator;
         private bool isInitialized = false;
 
@@ -72,7 +69,6 @@ namespace Map.Rendering
                 Debug.LogError("ProvinceTerrainAnalyzer: Failed to initialize TerrainRGBLookup!");
             }
 
-            bitmapReader = new TerrainBitmapReader(logAnalysis);
             overrideApplicator = new TerrainOverrideApplicator(dataDirectory, logAnalysis);
         }
 
@@ -83,15 +79,16 @@ namespace Map.Rendering
         /// </summary>
         public uint[] AnalyzeAndGetTerrainTypes(
             RenderTexture provinceIDTexture,
-            Texture2D terrainTexture,
+            Texture2D terrainTypeTexture,
             ushort[] provinceIDs)
         {
-            // Get terrain assignments from GPU analysis
-            uint[] terrainTypes = AnalyzeProvinceTerrain(provinceIDTexture, terrainTexture, provinceIDs);
+            // GPU majority voting directly from the R8 terrain type texture (already on GPU)
+            uint[] terrainTypes = AnalyzeProvinceTerrainGPU(
+                provinceIDTexture, terrainTypeTexture, provinceIDs);
+
             if (terrainTypes == null)
                 return null;
 
-            // Debug: Log some sample terrain assignments
             if (logAnalysis)
             {
                 System.Text.StringBuilder sb = new System.Text.StringBuilder();
@@ -101,10 +98,7 @@ namespace Map.Rendering
                     sb.Append($"P{i}=T{terrainTypes[i]} ");
                 }
                 ArchonLogger.Log(sb.ToString(), "map_rendering");
-            }
 
-            if (logAnalysis)
-            {
                 ArchonLogger.Log($"ProvinceTerrainAnalyzer: Returning terrain type array ({provinceIDs.Length} entries)", "map_rendering");
             }
 
@@ -112,51 +106,23 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Analyze terrain from Texture2D
-        /// Converts RGB pixels to terrain type indices, then analyzes via GPU
-        /// </summary>
-        private uint[] AnalyzeProvinceTerrain(
-            RenderTexture provinceIDTexture,
-            Texture2D terrainTexture,
-            ushort[] provinceIDs)
-        {
-            // Step 1: Convert RGB terrain texture to terrain type indices (0-255)
-            uint[] terrainTypeIndices = bitmapReader.ConvertRGBToTerrainTypes(
-                terrainTexture,
-                rgbLookup,
-                terrainTexture.width,
-                terrainTexture.height
-            );
-
-            if (terrainTypeIndices == null)
-            {
-                ArchonLogger.LogError("ProvinceTerrainAnalyzer: Failed to convert terrain RGB to indices", "map_rendering");
-                return null;
-            }
-
-            // Step 2: Analyze using GPU compute shader with terrain indices
-            uint[] results = AnalyzeProvinceTerrainGPU(provinceIDTexture, terrainTypeIndices, terrainTexture.width, terrainTexture.height, provinceIDs);
-
-            return results;
-        }
-
-        /// <summary>
-        /// Core GPU-based terrain analysis using compute shader
-        /// Performs majority voting to determine dominant terrain type per province
+        /// Core GPU-based terrain analysis using compute shader.
+        /// Samples terrain type directly from the R8 texture (already on GPU).
+        /// No CPU conversion needed — eliminates the old 5.8s RGB→index bottleneck.
         /// </summary>
         private uint[] AnalyzeProvinceTerrainGPU(
             RenderTexture provinceIDTexture,
-            uint[] terrainTypeIndices,
-            int mapWidth,
-            int mapHeight,
+            Texture2D terrainTypeTexture,
             ushort[] provinceIDs)
         {
             if (terrainAnalyzerCompute == null)
             {
-                Debug.LogError("ProvinceTerrainAnalyzer: No compute shader - cannot analyze terrain");
+                ArchonLogger.LogError("ProvinceTerrainAnalyzer: No compute shader - cannot analyze terrain", "map_rendering");
                 return null;
             }
 
+            int mapWidth = terrainTypeTexture.width;
+            int mapHeight = terrainTypeTexture.height;
             int provinceCount = provinceIDs.Length;
 
             if (logAnalysis)
@@ -176,7 +142,7 @@ namespace Map.Rendering
 
             if (logAnalysis)
             {
-                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Created ProvinceID→Index lookup (65536 entries, {MAX_PROVINCE_ID * sizeof(uint) / 1024}KB)", "map_rendering");
+                ArchonLogger.Log($"ProvinceTerrainAnalyzer: Created ProvinceID→Index lookup ({MAX_PROVINCE_ID} entries, {MAX_PROVINCE_ID * sizeof(uint) / 1024}KB)", "map_rendering");
             }
 
             // Create vote matrix buffer: [arrayIndex * 256 + terrainType] = voteCount
@@ -190,24 +156,17 @@ namespace Map.Rendering
             // Create output buffer for final terrain assignments
             ComputeBuffer provinceTerrainTypes = new ComputeBuffer(provinceCount, sizeof(uint));
 
-            // Create terrain data buffer (terrain type indices for each pixel)
-            ComputeBuffer terrainDataBuffer = new ComputeBuffer(terrainTypeIndices.Length, sizeof(uint));
-            terrainDataBuffer.SetData(terrainTypeIndices);
-
             try
             {
-                // ====================================================================
-                // PASS 1: Count Votes (Majority Voting per Province)
-                // ====================================================================
+                // PASS 1: Count Votes — sample terrain type directly from R8 texture
                 terrainAnalyzerCompute.SetTexture(countVotesKernel, ProvinceIDTextureID, provinceIDTexture);
-                terrainAnalyzerCompute.SetBuffer(countVotesKernel, TerrainDataBufferID, terrainDataBuffer);
+                terrainAnalyzerCompute.SetTexture(countVotesKernel, TerrainTypeTextureID, terrainTypeTexture);
                 terrainAnalyzerCompute.SetBuffer(countVotesKernel, VoteMatrixID, voteMatrix);
                 terrainAnalyzerCompute.SetBuffer(countVotesKernel, ProvinceIDToIndexBufferID, provinceIDToIndexBuffer);
                 terrainAnalyzerCompute.SetInt(MapWidthID, mapWidth);
                 terrainAnalyzerCompute.SetInt(MapHeightID, mapHeight);
                 terrainAnalyzerCompute.SetInt(ProvinceCountID, provinceCount);
 
-                // Dispatch Pass 1 (8x8 thread groups covering entire map)
                 int threadGroupsX = (mapWidth + 7) / 8;
                 int threadGroupsY = (mapHeight + 7) / 8;
                 terrainAnalyzerCompute.Dispatch(countVotesKernel, threadGroupsX, threadGroupsY, 1);
@@ -217,17 +176,12 @@ namespace Map.Rendering
                     ArchonLogger.Log($"ProvinceTerrainAnalyzer: Pass 1 dispatched ({threadGroupsX}x{threadGroupsY} thread groups, {threadGroupsX * threadGroupsY * 64} threads)", "map_rendering");
                 }
 
-                // ====================================================================
-                // PASS 2: Determine Winner (Majority Vote)
-                // ====================================================================
+                // PASS 2: Determine Winner
                 terrainAnalyzerCompute.SetBuffer(determineWinnerKernel, VoteMatrixID, voteMatrix);
                 terrainAnalyzerCompute.SetBuffer(determineWinnerKernel, ProvinceTerrainTypesID, provinceTerrainTypes);
                 terrainAnalyzerCompute.SetInt(ProvinceCountID, provinceCount);
 
-                // Calculate thread groups (256 threads per province)
                 int threadGroupsForProvinces = (provinceCount + 255) / 256;
-
-                // Dispatch Pass 2
                 terrainAnalyzerCompute.Dispatch(determineWinnerKernel, threadGroupsForProvinces, 1, 1);
 
                 if (logAnalysis)
@@ -251,11 +205,9 @@ namespace Map.Rendering
             }
             finally
             {
-                // Always release GPU buffers
                 voteMatrix?.Release();
                 provinceTerrainTypes?.Release();
                 provinceIDToIndexBuffer?.Release();
-                terrainDataBuffer?.Release();
 
                 if (logAnalysis)
                 {

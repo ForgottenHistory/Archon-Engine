@@ -106,3 +106,9 @@ _site/
 /Template-Data/map/personal
 Template-Data/map/provinces.png.pixels
 Template-Data/map/provinces.png.pixels.meta
+Template-Data/map/terrain.png.pixels
+Template-Data/map/heightmap.png.pixels
+Template-Data/map/provinces.png.adjacency
+Template-Data/map/provinces.png.adjacency.meta
+Template-Data/map/terrain.png.pixels.meta
+Template-Data/map/heightmap.png.pixels.meta
