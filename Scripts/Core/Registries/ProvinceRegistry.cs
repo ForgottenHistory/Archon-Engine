@@ -12,18 +12,23 @@ namespace Core.Registries
     /// </summary>
     public class ProvinceRegistry
     {
-        private readonly Dictionary<int, ushort> definitionToRuntime = new();
-        private readonly List<ProvinceData> provinces = new();
+        private readonly Dictionary<int, ushort> definitionToRuntime;
+        private readonly List<ProvinceData> provinces;
 
         public string TypeName => "Province";
         public int Count => provinces.Count - 1; // Exclude index 0
 
-        public ProvinceRegistry()
+        private const int DEFAULT_CAPACITY = 65536;
+
+        public ProvinceRegistry(int capacity = DEFAULT_CAPACITY)
         {
+            definitionToRuntime = new Dictionary<int, ushort>(capacity);
+            provinces = new List<ProvinceData>(capacity);
+
             // Reserve index 0 for "none/invalid"
             provinces.Add(null);
 
-            ArchonLogger.Log("ProvinceRegistry initialized", "core_data_linking");
+            ArchonLogger.Log($"ProvinceRegistry initialized (capacity: {capacity})", "core_data_linking");
         }
 
         /// <summary>
@@ -49,7 +54,6 @@ namespace Core.Registries
             province.RuntimeId = runtimeId;
             province.DefinitionId = definitionId;
 
-            ArchonLogger.Log($"Registered province {definitionId} with runtime ID {runtimeId}", "core_data_linking");
             return runtimeId;
         }
 

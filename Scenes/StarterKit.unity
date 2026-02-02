@@ -217,6 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultPort: 7777
   defaultAddress: 127.0.0.1
+  countryHighlightColor: {r: 1, g: 0.84, b: 0, a: 0.5}
   logProgress: 1
 --- !u!114 &58760268
 MonoBehaviour:
@@ -347,6 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeSpeedColor: {r: 0.3, g: 0.7, b: 0.3, a: 1}
+  disabledColor: {r: 0.3, g: 0.3, b: 0.3, a: 0.5}
 --- !u!114 &225263831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1358,6 +1360,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 696451654161370442, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
+      propertyPath: logSelectionDebug
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1564546580865607850, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
       propertyPath: borderDetectionCompute
       value: 
@@ -1377,6 +1383,10 @@ PrefabInstance:
     - target: {fileID: 7150758138856736035, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
       propertyPath: m_Name
       value: ArchonEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 9201899488851091248, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
+      propertyPath: logOperations
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

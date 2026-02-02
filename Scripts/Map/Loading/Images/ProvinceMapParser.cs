@@ -74,6 +74,18 @@ namespace Map.Loading.Images
                 return new UnifiedProvinceMapResult { IsSuccess = false };
             }
 
+            return ParseProvinceMapWithPixelData(pixelData, definitionCsvData, allocator);
+        }
+
+        /// <summary>
+        /// Parse province map from pre-parsed pixel data + definition CSV.
+        /// Used by raw pixel cache path to skip PNG decompression.
+        /// </summary>
+        public static UnifiedProvinceMapResult ParseProvinceMapWithPixelData(
+            ImageParser.ImagePixelData pixelData,
+            NativeArray<byte> definitionCsvData,
+            Allocator allocator)
+        {
             // Parse definition CSV
             var csvResult = CSVParser.Parse(new NativeSlice<byte>(definitionCsvData), Allocator.Temp, hasHeader: true);
             if (!csvResult.IsSuccess)

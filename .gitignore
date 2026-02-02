@@ -104,3 +104,5 @@ tmpclaude-*
 _site/
 # api/ - NOT ignored! Pre-generated API metadata must be committed for GitHub Pages
 /Template-Data/map/personal
+Template-Data/map/provinces.png.pixels
+Template-Data/map/provinces.png.pixels.meta

@@ -50,7 +50,6 @@ namespace Core.Registries
             items.Add(item);
             stringToId[key] = id;
 
-            ArchonLogger.Log($"Registered {typeName} '{key}' with ID {id}", "core_data_linking");
             return id;
         }
 

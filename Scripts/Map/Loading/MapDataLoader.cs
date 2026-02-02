@@ -119,7 +119,8 @@ namespace Map.Loading
                 terrainLoader.LoadAndPopulate(mapDirectory);
                 heightmapLoader.LoadAndPopulate(mapDirectory);
 
-                textureManager.GenerateNormalMapFromHeightmap(heightScale: 10.0f, logProgress: logProgress);
+                // TODO: Normal map generation disabled - not working, saves ~0.9s load time
+                // textureManager.GenerateNormalMapFromHeightmap(heightScale: 10.0f, logProgress: logProgress);
 
                 // Generate initial borders
                 if (borderDispatcher != null && logProgress)
@@ -178,7 +179,8 @@ namespace Map.Loading
                 terrainLoader.LoadAndPopulate(mapDirectory);
                 heightmapLoader.LoadAndPopulate(mapDirectory);
 
-                textureManager.GenerateNormalMapFromHeightmap(heightScale: 10.0f, logProgress: logProgress);
+                // TODO: Normal map generation disabled - not working, saves ~0.9s load time
+                // textureManager.GenerateNormalMapFromHeightmap(heightScale: 10.0f, logProgress: logProgress);
 
                 return provinceResult;
             }

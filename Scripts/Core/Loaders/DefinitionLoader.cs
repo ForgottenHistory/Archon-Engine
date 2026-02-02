@@ -41,6 +41,7 @@ namespace Core.Loaders
             try
             {
                 string[] lines = File.ReadAllLines(definitionPath);
+                entries.Capacity = lines.Length;
 
                 foreach (string line in lines)
                 {

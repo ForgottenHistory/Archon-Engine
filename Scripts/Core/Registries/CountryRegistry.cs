@@ -57,7 +57,6 @@ namespace Core.Registries
             country.Id = id;
             country.Tag = tag;
 
-            ArchonLogger.Log($"Registered country '{tag}' with ID {id}", "core_data_linking");
             return id;
         }
 

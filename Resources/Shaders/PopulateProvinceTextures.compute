@@ -1,0 +1,95 @@
+// Province ID Texture Population Compute Shader
+// Replaces CPU pixel loop in MapTexturePopulator with GPU-parallel processing
+// For each pixel: reads raw image RGB, looks up province ID via GPU hash table,
+// writes packed province ID to ProvinceIDTexture (RG channels)
+//
+// Hash table uses open-addressing with linear probing
+// Key: packed RGB (r << 16 | g << 8 | b), Value: province ID (ushort)
+// Empty slot sentinel: key = 0xFFFFFFFF
+
+#pragma kernel PopulateProvinceTextures
+
+// Raw image pixel data (RGB packed as uint: r | g << 8 | b << 16)
+StructuredBuffer<uint> RawPixelData;
+
+// Hash table for color -> province ID lookup
+// Each entry: x = packed RGB key, y = province ID (0xFFFFFFFF = empty)
+StructuredBuffer<uint2> ColorHashTable;
+uint HashTableSize;     // Must be power of 2
+uint HashTableMask;     // HashTableSize - 1
+
+// Output texture
+// ProvinceIDTexture is ARGB32 RenderTexture
+// Province IDs encoded: R = low 8 bits, G = high 8 bits (matching ProvinceIDEncoder.PackProvinceID)
+RWTexture2D<unorm float4> ProvinceIDTexture;
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Hash function - must match C# HashRGB() exactly
+uint HashRGB(uint key)
+{
+    key ^= key >> 16;
+    key *= 0x45d9f3b;
+    key ^= key >> 16;
+    return key;
+}
+
+// Look up province ID from packed RGB color using open-addressing hash table
+// Returns province ID, or 0 if not found
+uint LookupProvinceID(uint packedRGB)
+{
+    uint hash = HashRGB(packedRGB) & HashTableMask;
+
+    // Linear probing - with load factor ~0.5, average probes < 2
+    uint maxProbes = min(64, HashTableSize);
+
+    for (uint i = 0; i < maxProbes; i++)
+    {
+        uint slot = (hash + i) & HashTableMask;
+        uint2 entry = ColorHashTable[slot];
+
+        // Empty slot - key not in table
+        if (entry.x == 0xFFFFFFFF)
+            return 0;
+
+        // Found matching key
+        if (entry.x == packedRGB)
+            return entry.y;
+    }
+
+    return 0;
+}
+
+[numthreads(8, 8, 1)]
+void PopulateProvinceTextures(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Calculate buffer index (row-major, matches CPU array layout)
+    uint bufferIndex = id.y * MapWidth + id.x;
+
+    // Read raw pixel RGB (packed as r | g << 8 | b << 16)
+    uint rawPixel = RawPixelData[bufferIndex];
+    uint r = rawPixel & 0xFF;
+    uint g = (rawPixel >> 8) & 0xFF;
+    uint b = (rawPixel >> 16) & 0xFF;
+
+    // Pack RGB for hash lookup (same format as CPU NativeHashMap: r << 16 | g << 8 | b)
+    uint packedRGB = (r << 16) | (g << 8) | b;
+
+    // Look up province ID
+    uint provinceID = LookupProvinceID(packedRGB);
+
+    // Write province ID texture (packed into RG channels, matching ProvinceIDEncoder.PackProvinceID)
+    // R = low 8 bits, G = high 8 bits, B = 0, A = 1
+    float4 idColor;
+    idColor.r = float(provinceID & 0xFF) / 255.0;
+    idColor.g = float((provinceID >> 8) & 0xFF) / 255.0;
+    idColor.b = 0.0;
+    idColor.a = 1.0;
+    ProvinceIDTexture[id.xy] = idColor;
+}

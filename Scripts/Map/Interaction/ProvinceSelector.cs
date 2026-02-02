@@ -10,6 +10,8 @@ namespace Map.Interaction
     /// Handles province selection and world position to province ID conversion
     /// Extracted from MapGenerator to follow single responsibility principle
     /// Provides fast mouse-to-province lookup for interaction systems
+    ///
+    /// Uses hit.textureCoord from MeshCollider for accurate UV-to-province mapping
     /// </summary>
     public class ProvinceSelector : MonoBehaviour
     {
@@ -75,34 +77,17 @@ namespace Map.Interaction
             }
 
             // Handle left-click detection
-            // Skip if clicking on UI elements
             if (Input.GetMouseButtonDown(0) && !IsPointerOverUI())
             {
-                // Get detailed info for click debugging
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                ushort clickedProvince = RaycastForProvince(mainCamera.ScreenPointToRay(Input.mousePosition));
 
-                if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
+                if (clickedProvince != 0)
                 {
-                    Vector2 uv = hit.textureCoord;
-                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
-                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
-                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
-                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
-                    ushort clickedProvince = textureManager.GetProvinceID(x, y);
-
-                    if (clickedProvince != 0)
-                    {
-                        lastSelectedProvince = clickedProvince;
-                        OnProvinceClicked?.Invoke(clickedProvince);
-
-                        // Test: Read the texture in a small area around the click
-                        ushort testNearby = textureManager.GetProvinceID(x + 10, y);
-                    }
+                    lastSelectedProvince = clickedProvince;
+                    OnProvinceClicked?.Invoke(clickedProvince);
                 }
                 else
                 {
-                    // Clicked on non-province area (e.g., ocean, UI)
                     OnSelectionCleared?.Invoke();
 
                     if (logSelectionDebug)
@@ -115,34 +100,76 @@ namespace Map.Interaction
             // Handle right-click detection (for unit movement)
             if (Input.GetMouseButtonDown(1) && !IsPointerOverUI())
             {
-                Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
+                ushort clickedProvince = RaycastForProvince(mainCamera.ScreenPointToRay(Input.mousePosition));
 
-                if (Physics.Raycast(ray, out hit) && hit.transform == mapQuadTransform)
+                if (clickedProvince != 0)
                 {
-                    Vector2 uv = hit.textureCoord;
-                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
-                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
-                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
-                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
-                    ushort clickedProvince = textureManager.GetProvinceID(x, y);
-
-                    if (clickedProvince != 0)
-                    {
-                        OnProvinceRightClicked?.Invoke(clickedProvince);
-                    }
+                    OnProvinceRightClicked?.Invoke(clickedProvince);
                 }
             }
         }
 
         /// <summary>
+        /// Core raycast method: ray -> hit -> textureCoord -> pixel -> province ID.
+        /// Uses hit.textureCoord from MeshCollider for accurate UV mapping
+        /// regardless of camera projection (orthographic or perspective).
+        /// </summary>
+        private ushort RaycastForProvince(Ray ray)
+        {
+            RaycastHit hit;
+            if (!Physics.Raycast(ray, out hit) || hit.transform != mapQuadTransform)
+                return 0;
+
+            return WorldHitToProvinceID(hit.point);
+        }
+
+        /// <summary>
+        /// Convert a world-space hit point on the map to a province ID.
+        /// Computes UV from hit.point since hit.textureCoord is unreliable
+        /// with runtime-generated meshes.
+        /// MapRenderer vertices go from (0,0,0) to (mapSize.x, 0, mapSize.y)
+        /// with UVs linearly mapped 0-1, so UV = localPos / meshMax.
+        /// </summary>
+        private ushort WorldHitToProvinceID(Vector3 worldPoint)
+        {
+            if (textureManager == null || mapQuadTransform == null)
+                return 0;
+
+            // Convert world point to local space of the map quad
+            Vector3 localPoint = mapQuadTransform.InverseTransformPoint(worldPoint);
+
+            var meshFilter = mapQuadTransform.GetComponent<MeshFilter>();
+            if (meshFilter == null || meshFilter.sharedMesh == null)
+                return 0;
+
+            // Mesh goes from (0,0,0) to (max.x, 0, max.z) — use bounds.max directly
+            Bounds meshBounds = meshFilter.sharedMesh.bounds;
+            Vector3 meshMax = meshBounds.center + meshBounds.extents;
+
+            // UV = local position / mesh size (vertices start at origin)
+            float u = Mathf.Clamp01(localPoint.x / meshMax.x);
+            float v = Mathf.Clamp01(localPoint.z / meshMax.z);
+
+            // Flip both axes to match province texture convention
+            int x = Mathf.FloorToInt((1.0f - u) * textureManager.MapWidth);
+            int y = Mathf.FloorToInt((1.0f - v) * textureManager.MapHeight);
+
+            x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
+            y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
+
+            if (logSelectionDebug)
+            {
+                ArchonLogger.Log($"ProvinceSelector: world={worldPoint}, local={localPoint}, meshMax={meshMax}, u={u:F4}, v={v:F4}, px=({x},{y}), id={textureManager.GetProvinceID(x, y)}", "map_interaction");
+            }
+
+            return textureManager.GetProvinceID(x, y);
+        }
+
+        /// <summary>
         /// Check if the mouse pointer is over any UI element (works for both uGUI and UI Toolkit)
-        /// Uses Unity's Event System which handles both UI systems automatically
         /// </summary>
         private bool IsPointerOverUI()
         {
-            // Unity's EventSystem.IsPointerOverGameObject works for both uGUI and UI Toolkit
-            // Returns true if pointer is over any UI content from either system
             return EventSystem.current != null && EventSystem.current.IsPointerOverGameObject();
         }
 
@@ -157,81 +184,29 @@ namespace Map.Interaction
         public ushort GetHoveredProvince() => currentHoveredProvince;
 
         /// <summary>
-        /// Get province ID at world position using raycast + texture lookup
-        /// Uses texture-based lookup for optimal performance (&lt;1ms)
+        /// Get province ID at world position using local-space UV lookup.
+        /// Converts world position to mesh-local UV without raycasting.
         /// </summary>
-        /// <param name="worldPosition">World position to query</param>
-        /// <returns>Province ID at position, or 0 if invalid</returns>
         public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
         {
-            if (textureManager == null || mapQuadTransform == null)
-            {
-                if (logSelectionDebug)
-                {
-                    ArchonLogger.LogWarning("ProvinceSelector: Cannot get province - missing dependencies", "map_interaction");
-                }
-                return 0;
-            }
-
-            // Raycast from camera to world position to get UV coordinates
-            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                // Check if we hit the map quad
-                if (hit.transform == mapQuadTransform)
-                {
-                    // Get UV coordinates from raycast hit
-                    Vector2 uv = hit.textureCoord;
-
-                    // Convert UV to pixel coordinates
-                    int x = Mathf.FloorToInt((1.0f - uv.x) * textureManager.MapWidth);   // Flip X coordinate
-                    int y = Mathf.FloorToInt((1.0f - uv.y) * textureManager.MapHeight);  // Flip Y coordinate
-
-                    // Clamp to texture bounds
-                    x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
-                    y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
-
-                    // Get province ID from texture
-                    ushort provinceID = textureManager.GetProvinceID(x, y);
-
-                    return provinceID;
-                }
-            }
-
-            // No hit or hit wrong object
-            return 0;
+            return WorldHitToProvinceID(worldPosition);
         }
 
         /// <summary>
-        /// Get province ID at screen position (converts screen to world first)
+        /// Get province ID at screen position using raycast
+        /// Works with both orthographic and perspective cameras
         /// </summary>
-        /// <param name="screenPosition">Screen position (e.g., mouse position)</param>
-        /// <param name="camera">Camera to use for conversion</param>
-        /// <returns>Province ID at position, or 0 if invalid</returns>
         public ushort GetProvinceAtScreenPosition(Vector2 screenPosition, Camera camera)
         {
             if (camera == null)
-            {
-                if (logSelectionDebug)
-                {
-                    ArchonLogger.LogWarning("ProvinceSelector: Cannot convert screen position - no camera provided", "map_interaction");
-                }
                 return 0;
-            }
 
-            // Convert screen to world position
-            Vector3 worldPos = camera.ScreenToWorldPoint(new Vector3(screenPosition.x, screenPosition.y, camera.nearClipPlane + 1f));
-
-            return GetProvinceAtWorldPosition(worldPos);
+            return RaycastForProvince(camera.ScreenPointToRay(new Vector3(screenPosition.x, screenPosition.y, 0f)));
         }
 
         /// <summary>
         /// Get province ID at mouse position (convenience method)
         /// </summary>
-        /// <param name="camera">Camera to use for conversion</param>
-        /// <returns>Province ID at mouse position, or 0 if invalid</returns>
         public ushort GetProvinceAtMousePosition(Camera camera)
         {
             return GetProvinceAtScreenPosition(Input.mousePosition, camera);
