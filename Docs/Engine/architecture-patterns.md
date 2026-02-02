@@ -542,6 +542,56 @@ Client UI → Command → Send to Host → Host validates → Broadcast → All 
 
 ---
 
+## Pattern 23: Raw Asset Cache (Skip Decompression)
+
+**Principle:** Cache decoded/decompressed asset data to skip expensive parsing on subsequent loads
+
+**The Problem:**
+- Image formats (PNG, JPEG) use compression (DEFLATE, etc.)
+- Decompression is CPU-bound and slow for large assets (e.g., 7.8s for 15000×6500 PNG)
+- Re-decompressing every load wastes time when the source file hasn't changed
+
+**The Solution:**
+1. First load: decompress normally, save raw decoded bytes to cache file
+2. Subsequent loads: `File.ReadAllBytes` + single `UnsafeUtility.MemCpy` into NativeArray
+3. Cache invalidation: compare `File.GetLastWriteTimeUtc` of source vs cache
+
+**Cache Format (RPXL):**
+- 16-byte header: magic bytes + dimensions + format metadata
+- Raw bytes: decoded pixel data (or any decoded asset data)
+
+**Implementation Rules:**
+- `File.ReadAllBytes` + single `MemCpy` beats chunked/streamed reads for sequential files
+- `NativeArrayOptions.UninitializedMemory` — skip zeroing for large allocations
+- Save via chunked `FileStream` writes (1MB buffer) to avoid single managed allocation matching full data size
+- Timestamp-based invalidation — modifying source file auto-invalidates cache
+
+**When to Use:**
+- Asset decompression > 500ms
+- Source file changes rarely
+- Disk space available for cache (raw data is larger than compressed)
+
+**When NOT to Use:**
+- Small assets where decompression is fast (<100ms)
+- Assets that change every load
+- Environments with limited disk space
+
+**Measured Results:**
+- Province map (292MB raw): 7.8s → 119ms
+- Terrain map (292MB raw): ~5s → 101ms
+- Heightmap (33MB raw): ~3s → 27ms
+
+**Related Anti-Patterns:**
+- ❌ `SetPixels`/`SetPixels32` for large textures — use `GetRawTextureData<byte>()` for zero-allocation writes
+- ❌ `Color[]` for R8 textures — 16 bytes/pixel instead of 1 byte/pixel (16x memory waste)
+- ❌ `GL.Flush()` between sequential loads — forces unnecessary GPU sync
+
+**Related Patterns:**
+- Pattern 12 (Pre-Allocation) — same philosophy: avoid redundant work
+- Pattern 15 (Phase-Based Init) — cache fits into loading phase pipeline
+
+---
+
 ## Pattern Selection Guide
 
 **Need to change game state?** → Pattern 2 (Command Pattern)

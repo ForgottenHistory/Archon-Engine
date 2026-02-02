@@ -1,4 +1,5 @@
 using UnityEngine;
+using Unity.Collections.LowLevel.Unsafe;
 using Utils;
 
 namespace Map.Rendering
@@ -79,15 +80,21 @@ namespace Map.Rendering
             provinceTerrainTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
             provinceTerrainTexture.name = "ProvinceTerrain_Texture";
 
-            // Initialize with default land color
-            var pixels = new Color32[mapWidth * mapHeight];
-            Color32 landColor = new Color32(139, 125, 107, 255);
-            for (int i = 0; i < pixels.Length; i++)
+            // Initialize with default land color using direct byte write (RGBA32 = 4 bytes/pixel)
+            var texData = provinceTerrainTexture.GetRawTextureData<byte>();
+            unsafe
             {
-                pixels[i] = landColor;
+                byte* dst = (byte*)texData.GetUnsafePtr();
+                int totalPixels = mapWidth * mapHeight;
+                for (int i = 0; i < totalPixels; i++)
+                {
+                    int idx = i * 4;
+                    dst[idx] = 139;     // R
+                    dst[idx + 1] = 125; // G
+                    dst[idx + 2] = 107; // B
+                    dst[idx + 3] = 255; // A
+                }
             }
-
-            provinceTerrainTexture.SetPixels32(pixels);
             provinceTerrainTexture.Apply(false);
 
             if (logCreation)
@@ -108,15 +115,13 @@ namespace Map.Rendering
             heightmapTexture.wrapMode = TextureWrapMode.Clamp;
             heightmapTexture.anisoLevel = 0;
 
-            // Initialize with mid-height (sea level)
-            var pixels = new Color[mapWidth * mapHeight];
-            Color midHeight = new Color(0.5f, 0, 0, 1);
-            for (int i = 0; i < pixels.Length; i++)
+            // Initialize with mid-height (sea level) using direct byte write (R8 = 1 byte/pixel)
+            // Value 128 = 0.5 normalized = sea level
+            var texData = heightmapTexture.GetRawTextureData<byte>();
+            unsafe
             {
-                pixels[i] = midHeight;
+                UnsafeUtility.MemSet(texData.GetUnsafePtr(), 128, texData.Length);
             }
-
-            heightmapTexture.SetPixels(pixels);
             heightmapTexture.Apply(false);
 
             if (logCreation)
