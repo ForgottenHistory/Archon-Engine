@@ -39,6 +39,14 @@ namespace Map.Interaction
         private Transform mapQuadTransform;
         private Camera mainCamera;
 
+        // Displacement compensation
+        private Renderer mapRenderer;
+        private Texture2D heightmapTexture;
+        private float heightScale;
+        private MeshFilter meshFilter;
+        private Vector3 meshMin;
+        private Vector3 meshMax;
+
         // State tracking
         private ushort currentHoveredProvince = 0;
         private ushort lastSelectedProvince = 0;
@@ -49,11 +57,28 @@ namespace Map.Interaction
             textureManager = textures;
             mapQuadTransform = quadTransform;
             mainCamera = Camera.main;
+
+            // Cache displacement data for tessellation compensation
+            mapRenderer = quadTransform.GetComponent<Renderer>();
+            heightmapTexture = textures.HeightmapTexture;
+            if (mapRenderer != null && mapRenderer.sharedMaterial != null && mapRenderer.sharedMaterial.HasProperty("_HeightScale"))
+            {
+                heightScale = mapRenderer.sharedMaterial.GetFloat("_HeightScale");
+            }
+
+            meshFilter = quadTransform.GetComponent<MeshFilter>();
+            if (meshFilter != null && meshFilter.sharedMesh != null)
+            {
+                Bounds meshBounds = meshFilter.sharedMesh.bounds;
+                meshMin = meshBounds.center - meshBounds.extents;
+                meshMax = meshBounds.center + meshBounds.extents;
+            }
+
             isInitialized = true;
 
             if (logSelectionDebug)
             {
-                ArchonLogger.Log("ProvinceSelector: Initialized with texture manager and map quad", "map_interaction");
+                ArchonLogger.Log($"ProvinceSelector: Initialized (heightScale={heightScale})", "map_interaction");
             }
         }
 
@@ -110,9 +135,9 @@ namespace Map.Interaction
         }
 
         /// <summary>
-        /// Core raycast method: ray -> hit -> textureCoord -> pixel -> province ID.
-        /// Uses hit.textureCoord from MeshCollider for accurate UV mapping
-        /// regardless of camera projection (orthographic or perspective).
+        /// Core raycast method using hit.point world position for UV calculation.
+        /// Avoids hit.textureCoord which uses linear interpolation on coarse collider
+        /// triangles — inaccurate at steep camera angles due to perspective distortion.
         /// </summary>
         private ushort RaycastForProvince(Ray ray)
         {
@@ -120,46 +145,55 @@ namespace Map.Interaction
             if (!Physics.Raycast(ray, out hit) || hit.transform != mapQuadTransform)
                 return 0;
 
-            return WorldHitToProvinceID(hit.point);
+            Vector3 worldPoint = hit.point;
+
+            // Compensate for tessellation displacement
+            if (heightmapTexture != null && heightScale > 0.001f)
+            {
+                // Get UV at flat hit point
+                Vector3 localPoint = mapQuadTransform.InverseTransformPoint(hit.point);
+                float u = (localPoint.x - meshMin.x) / (meshMax.x - meshMin.x);
+                float v = (localPoint.z - meshMin.z) / (meshMax.z - meshMin.z);
+
+                // Sample heightmap with same flips as province ID lookup
+                Color heightSample = heightmapTexture.GetPixelBilinear(1.0f - u, 1.0f - v);
+                float displacedY = mapQuadTransform.position.y + (heightSample.r - 0.5f) * heightScale;
+
+                // Re-intersect ray with plane at displaced Y
+                if (Mathf.Abs(ray.direction.y) > 0.0001f)
+                {
+                    float t = (displacedY - ray.origin.y) / ray.direction.y;
+                    if (t > 0)
+                    {
+                        worldPoint = ray.origin + ray.direction * t;
+                    }
+                }
+            }
+
+            return WorldPointToProvinceID(worldPoint);
         }
 
         /// <summary>
-        /// Convert a world-space hit point on the map to a province ID.
-        /// Computes UV from hit.point since hit.textureCoord is unreliable
-        /// with runtime-generated meshes.
-        /// MapRenderer vertices go from (0,0,0) to (mapSize.x, 0, mapSize.y)
-        /// with UVs linearly mapped 0-1, so UV = localPos / meshMax.
+        /// Convert world-space point to province ID via local-space UV.
         /// </summary>
-        private ushort WorldHitToProvinceID(Vector3 worldPoint)
+        private ushort WorldPointToProvinceID(Vector3 worldPoint)
         {
-            if (textureManager == null || mapQuadTransform == null)
+            if (textureManager == null)
                 return 0;
 
-            // Convert world point to local space of the map quad
             Vector3 localPoint = mapQuadTransform.InverseTransformPoint(worldPoint);
+            float u = (localPoint.x - meshMin.x) / (meshMax.x - meshMin.x);
+            float v = (localPoint.z - meshMin.z) / (meshMax.z - meshMin.z);
 
-            var meshFilter = mapQuadTransform.GetComponent<MeshFilter>();
-            if (meshFilter == null || meshFilter.sharedMesh == null)
-                return 0;
-
-            // Mesh goes from (0,0,0) to (max.x, 0, max.z) — use bounds.max directly
-            Bounds meshBounds = meshFilter.sharedMesh.bounds;
-            Vector3 meshMax = meshBounds.center + meshBounds.extents;
-
-            // UV = local position / mesh size (vertices start at origin)
-            float u = Mathf.Clamp01(localPoint.x / meshMax.x);
-            float v = Mathf.Clamp01(localPoint.z / meshMax.z);
-
-            // Flip both axes to match province texture convention
-            int x = Mathf.FloorToInt((1.0f - u) * textureManager.MapWidth);
-            int y = Mathf.FloorToInt((1.0f - v) * textureManager.MapHeight);
+            int x = Mathf.FloorToInt(u * textureManager.MapWidth);
+            int y = Mathf.FloorToInt(v * textureManager.MapHeight);
 
             x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
             y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
 
             if (logSelectionDebug)
             {
-                ArchonLogger.Log($"ProvinceSelector: world={worldPoint}, local={localPoint}, meshMax={meshMax}, u={u:F4}, v={v:F4}, px=({x},{y}), id={textureManager.GetProvinceID(x, y)}", "map_interaction");
+                ArchonLogger.Log($"ProvinceSelector: uv=({u:F4},{v:F4}), px=({x},{y}), id={textureManager.GetProvinceID(x, y)}", "map_interaction");
             }
 
             return textureManager.GetProvinceID(x, y);
@@ -186,10 +220,30 @@ namespace Map.Interaction
         /// <summary>
         /// Get province ID at world position using local-space UV lookup.
         /// Converts world position to mesh-local UV without raycasting.
+        /// For direct world-position queries (e.g. unit placement), not mouse input.
         /// </summary>
         public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
         {
-            return WorldHitToProvinceID(worldPosition);
+            if (textureManager == null || mapQuadTransform == null)
+                return 0;
+
+            Vector3 localPoint = mapQuadTransform.InverseTransformPoint(worldPosition);
+
+            var meshFilter = mapQuadTransform.GetComponent<MeshFilter>();
+            if (meshFilter == null || meshFilter.sharedMesh == null)
+                return 0;
+
+            Bounds meshBounds = meshFilter.sharedMesh.bounds;
+            Vector3 meshMin = meshBounds.center - meshBounds.extents;
+            Vector3 meshMax = meshBounds.center + meshBounds.extents;
+
+            float u = Mathf.Clamp01((localPoint.x - meshMin.x) / (meshMax.x - meshMin.x));
+            float v = Mathf.Clamp01((localPoint.z - meshMin.z) / (meshMax.z - meshMin.z));
+
+            int x = Mathf.Clamp(Mathf.FloorToInt(u * textureManager.MapWidth), 0, textureManager.MapWidth - 1);
+            int y = Mathf.Clamp(Mathf.FloorToInt(v * textureManager.MapHeight), 0, textureManager.MapHeight - 1);
+
+            return textureManager.GetProvinceID(x, y);
         }
 
         /// <summary>
