@@ -1,24 +1,27 @@
 using UnityEngine;
+using UnityEngine.Experimental.Rendering;
 using Map.Loading.Data;
+using Core.Modding;
 using Utils;
 
 namespace Map.Loading
 {
     /// <summary>
     /// Generates terrain type texture (R8) from terrain color texture (RGBA32)
-    /// Maps terrain colors back to terrain type indices using TerrainColorMapper
+    /// Maps terrain colors back to terrain type indices using GPU compute shader
     /// Purpose: Enables terrain splatting for detail texture selection
     ///
     /// Architecture:
     /// - Input: ProvinceTerrainTexture (RGBA32) with terrain colors
     /// - Output: TerrainTypeTexture (R8) with terrain type indices (0-255)
-    /// - Method: Reverse color lookup via TerrainColorMapper
+    /// - Method: GPU compute shader with color lookup buffer
     /// </summary>
     public static class TerrainTypeTextureGenerator
     {
+        private const int THREAD_GROUP_SIZE = 8;
+
         /// <summary>
-        /// Generate terrain type texture from terrain color texture
-        /// Uses reverse lookup to map colors → terrain type indices
+        /// Generate terrain type texture from terrain color texture using GPU compute shader
         /// </summary>
         /// <param name="terrainColorTexture">Source terrain texture (RGBA32)</param>
         /// <param name="logProgress">Enable progress logging</param>
@@ -36,106 +39,181 @@ namespace Map.Loading
 
             if (logProgress)
             {
-                ArchonLogger.Log($"TerrainTypeTextureGenerator: Starting generation {width}x{height}", "map_initialization");
+                ArchonLogger.Log($"TerrainTypeTextureGenerator: Starting GPU generation {width}x{height}", "map_initialization");
             }
 
-            // Create R8 texture for terrain type indices with EXPLICIT GraphicsFormat
-            // CRITICAL: Must use explicit GraphicsFormat.R8_UNorm to avoid Unity auto-conversion
-            // Using TextureFormat.R8 can result in R8G8B8A8_SRGB on some platforms
-            var terrainTypeTexture = new Texture2D(
-                width,
-                height,
-                UnityEngine.Experimental.Rendering.GraphicsFormat.R8_UNorm,
-                UnityEngine.Experimental.Rendering.TextureCreationFlags.None
+            float startTime = Time.realtimeSinceStartup;
+
+            // Load compute shader
+            ComputeShader computeShader = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "TerrainTypeGenerator",
+                "Shaders/TerrainTypeGenerator"
             );
-            terrainTypeTexture.name = "TerrainType_Texture";
-            terrainTypeTexture.filterMode = FilterMode.Point;  // No interpolation for indices
-            terrainTypeTexture.wrapMode = TextureWrapMode.Clamp;
-            terrainTypeTexture.anisoLevel = 0;
 
-            // Get terrain colors from source texture
-            Color32[] terrainColors = terrainColorTexture.GetPixels32();
-
-            // Allocate output array (R8 = 1 byte per pixel)
-            // CRITICAL: For R8_UNorm, use byte array not Color array
-            byte[] terrainTypePixels = new byte[width * height];
-
-            // Build reverse lookup map (color → terrain type index)
-            var colorToIndexMap = BuildColorToIndexMap();
-
-            int matchedPixels = 0;
-            int unmatchedPixels = 0;
-            byte noTerrainMarker = 255;  // 255 = no terrain detail (ocean, unknown colors)
-
-            // Convert terrain colors to terrain type indices
-            for (int i = 0; i < terrainColors.Length; i++)
+            if (computeShader == null)
             {
-                Color32 color = terrainColors[i];
-
-                // Lookup terrain type index for this color
-                if (colorToIndexMap.TryGetValue(ColorToKey(color), out byte terrainType))
-                {
-                    // Store terrain type as raw byte (0-255)
-                    terrainTypePixels[i] = terrainType;
-                    matchedPixels++;
-                }
-                else
-                {
-                    // Unknown color (ocean, etc.) - mark as "no terrain detail"
-                    terrainTypePixels[i] = noTerrainMarker;
-                    unmatchedPixels++;
-                }
+                ArchonLogger.LogError("TerrainTypeTextureGenerator: Compute shader not found, falling back to CPU", "map_initialization");
+                return GenerateTerrainTypeTextureCPU(terrainColorTexture, logProgress);
             }
 
-            // Upload raw byte data to R8 texture
-            terrainTypeTexture.SetPixelData(terrainTypePixels, 0);
-            terrainTypeTexture.Apply(false);
+            int kernel = computeShader.FindKernel("GenerateTerrainTypes");
+
+            // Build lookup buffers from TerrainColorMapper
+            BuildLookupBuffers(out uint[] colorKeys, out uint[] terrainIndices, out int terrainTypeCount);
+
+            if (terrainTypeCount == 0)
+            {
+                ArchonLogger.LogWarning("TerrainTypeTextureGenerator: No terrain types registered, falling back to CPU", "map_initialization");
+                return GenerateTerrainTypeTextureCPU(terrainColorTexture, logProgress);
+            }
+
+            // Create temporary RenderTexture for compute shader output (R8_UNorm)
+            RenderTexture outputRT = new RenderTexture(width, height, 0, GraphicsFormat.R8_UNorm);
+            outputRT.enableRandomWrite = true;
+            outputRT.filterMode = FilterMode.Point;
+            outputRT.wrapMode = TextureWrapMode.Clamp;
+            outputRT.Create();
+
+            // Create compute buffers
+            ComputeBuffer colorKeyBuffer = new ComputeBuffer(terrainTypeCount, sizeof(uint));
+            ComputeBuffer terrainIndexBuffer = new ComputeBuffer(terrainTypeCount, sizeof(uint));
+
+            try
+            {
+                // Upload lookup data to GPU
+                colorKeyBuffer.SetData(colorKeys);
+                terrainIndexBuffer.SetData(terrainIndices);
+
+                // Bind inputs
+                computeShader.SetTexture(kernel, "TerrainColorTexture", terrainColorTexture);
+                computeShader.SetTexture(kernel, "OutputTexture", outputRT);
+                computeShader.SetBuffer(kernel, "ColorKeyBuffer", colorKeyBuffer);
+                computeShader.SetBuffer(kernel, "TerrainIndexBuffer", terrainIndexBuffer);
+
+                // Set parameters
+                computeShader.SetInt("MapWidth", width);
+                computeShader.SetInt("MapHeight", height);
+                computeShader.SetInt("TerrainTypeCount", terrainTypeCount);
+                computeShader.SetFloat("NoTerrainMarker", 255.0f / 255.0f); // 1.0 in R8_UNorm = 255
+
+                // Dispatch
+                int threadGroupsX = (width + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+                int threadGroupsY = (height + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+                computeShader.Dispatch(kernel, threadGroupsX, threadGroupsY, 1);
+
+                // Copy RenderTexture result to Texture2D (consumers expect Texture2D)
+                Texture2D terrainTypeTexture = new Texture2D(
+                    width,
+                    height,
+                    GraphicsFormat.R8_UNorm,
+                    TextureCreationFlags.None
+                );
+                terrainTypeTexture.name = "TerrainType_Texture";
+                terrainTypeTexture.filterMode = FilterMode.Point;
+                terrainTypeTexture.wrapMode = TextureWrapMode.Clamp;
+                terrainTypeTexture.anisoLevel = 0;
+
+                // GPU copy: RenderTexture → Texture2D
+                RenderTexture previousRT = RenderTexture.active;
+                RenderTexture.active = outputRT;
+                terrainTypeTexture.ReadPixels(new Rect(0, 0, width, height), 0, 0, false);
+                terrainTypeTexture.Apply(false);
+                RenderTexture.active = previousRT;
+
+                float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+
+                if (logProgress)
+                {
+                    ArchonLogger.Log($"TerrainTypeTextureGenerator: GPU generation complete in {elapsed:F2}ms ({terrainTypeCount} terrain types)", "map_initialization");
+                }
+
+                return terrainTypeTexture;
+            }
+            finally
+            {
+                // Release GPU resources
+                colorKeyBuffer.Release();
+                terrainIndexBuffer.Release();
+                outputRT.Release();
+            }
+        }
+
+        /// <summary>
+        /// Build parallel arrays for GPU lookup: colorKeys[i] and terrainIndices[i]
+        /// </summary>
+        private static void BuildLookupBuffers(out uint[] colorKeys, out uint[] terrainIndices, out int count)
+        {
+            var registeredIndices = TerrainColorMapper.GetRegisteredIndices();
+            var keyList = new System.Collections.Generic.List<uint>();
+            var indexList = new System.Collections.Generic.List<uint>();
+
+            foreach (byte index in registeredIndices)
+            {
+                Color32 color = TerrainColorMapper.GetTerrainColor(index);
+                uint key = ((uint)color.r << 16) | ((uint)color.g << 8) | color.b;
+
+                keyList.Add(key);
+                indexList.Add(index);
+            }
+
+            colorKeys = keyList.ToArray();
+            terrainIndices = indexList.ToArray();
+            count = keyList.Count;
+        }
+
+        /// <summary>
+        /// CPU fallback for when compute shader is unavailable
+        /// </summary>
+        private static Texture2D GenerateTerrainTypeTextureCPU(Texture2D terrainColorTexture, bool logProgress)
+        {
+            int width = terrainColorTexture.width;
+            int height = terrainColorTexture.height;
 
             if (logProgress)
             {
-                ArchonLogger.Log($"TerrainTypeTextureGenerator: Complete - Matched: {matchedPixels}, Unmatched: {unmatchedPixels} (marked as no-terrain={noTerrainMarker})", "map_initialization");
-
-                // Sample some pixels to verify
-                byte type1 = terrainTypePixels[width * height / 4];
-                byte type2 = terrainTypePixels[width * height / 2];
-                byte type3 = terrainTypePixels[width * height * 3 / 4];
-                ArchonLogger.Log($"TerrainTypeTextureGenerator: Samples - Type [{type1}] [{type2}] [{type3}]", "map_initialization");
+                ArchonLogger.LogWarning($"TerrainTypeTextureGenerator: Using CPU fallback for {width}x{height}", "map_initialization");
             }
 
-            return terrainTypeTexture;
-        }
+            var terrainTypeTexture = new Texture2D(
+                width,
+                height,
+                GraphicsFormat.R8_UNorm,
+                TextureCreationFlags.None
+            );
+            terrainTypeTexture.name = "TerrainType_Texture";
+            terrainTypeTexture.filterMode = FilterMode.Point;
+            terrainTypeTexture.wrapMode = TextureWrapMode.Clamp;
+            terrainTypeTexture.anisoLevel = 0;
 
-        /// <summary>
-        /// Build reverse lookup map: Color → Terrain Type Index
-        /// Uses TerrainColorMapper as source of truth
-        /// </summary>
-        private static System.Collections.Generic.Dictionary<int, byte> BuildColorToIndexMap()
-        {
-            var map = new System.Collections.Generic.Dictionary<int, byte>();
+            Color32[] terrainColors = terrainColorTexture.GetPixels32();
+            byte[] terrainTypePixels = new byte[width * height];
 
-            // Iterate all registered terrain indices
+            var colorToIndexMap = new System.Collections.Generic.Dictionary<int, byte>();
             foreach (byte index in TerrainColorMapper.GetRegisteredIndices())
             {
                 Color32 color = TerrainColorMapper.GetTerrainColor(index);
-                int key = ColorToKey(color);
-
-                // Store mapping (color → index)
-                if (!map.ContainsKey(key))
+                int key = (color.r << 16) | (color.g << 8) | color.b;
+                if (!colorToIndexMap.ContainsKey(key))
                 {
-                    map[key] = index;
+                    colorToIndexMap[key] = index;
                 }
             }
 
-            return map;
-        }
+            byte noTerrainMarker = 255;
+            for (int i = 0; i < terrainColors.Length; i++)
+            {
+                Color32 color = terrainColors[i];
+                int key = (color.r << 16) | (color.g << 8) | color.b;
 
-        /// <summary>
-        /// Convert Color32 to integer key for dictionary lookup
-        /// Packs RGB into single int (ignore alpha)
-        /// </summary>
-        private static int ColorToKey(Color32 color)
-        {
-            return (color.r << 16) | (color.g << 8) | color.b;
+                terrainTypePixels[i] = colorToIndexMap.TryGetValue(key, out byte terrainType)
+                    ? terrainType
+                    : noTerrainMarker;
+            }
+
+            terrainTypeTexture.SetPixelData(terrainTypePixels, 0);
+            terrainTypeTexture.Apply(false);
+
+            return terrainTypeTexture;
         }
     }
 }
