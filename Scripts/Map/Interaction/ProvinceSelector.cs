@@ -191,12 +191,14 @@ namespace Map.Interaction
             x = Mathf.Clamp(x, 0, textureManager.MapWidth - 1);
             y = Mathf.Clamp(y, 0, textureManager.MapHeight - 1);
 
+            ushort id = textureManager.GetProvinceID(x, y);
+
             if (logSelectionDebug)
             {
-                ArchonLogger.Log($"ProvinceSelector: uv=({u:F4},{v:F4}), px=({x},{y}), id={textureManager.GetProvinceID(x, y)}", "map_interaction");
+                ArchonLogger.Log($"ProvinceSelector: uv=({u:F4},{v:F4}), px=({x},{y}), id={id}", "map_interaction");
             }
 
-            return textureManager.GetProvinceID(x, y);
+            return id;
         }
 
         /// <summary>

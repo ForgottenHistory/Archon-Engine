@@ -21,6 +21,10 @@ namespace Core.Systems.Province
 
         private int provinceCount;
 
+        // Reverse index: owner countryId → province IDs (Pattern 16: Bidirectional Mapping)
+        // Maintained incrementally in AddProvince/SetProvinceOwner for O(k) lookup
+        private NativeParallelMultiHashMap<ushort, ushort> provincesByOwner;
+
         // Dirty tracking for efficient buffer swaps
         // Stores array INDICES (not province IDs) for direct buffer access
         private NativeHashSet<int> dirtyIndices;
@@ -48,6 +52,10 @@ namespace Core.Systems.Province
 
             // Initialize dirty tracking set
             dirtyIndices = new NativeHashSet<int>(INITIAL_DIRTY_CAPACITY, Allocator.Persistent);
+
+            // Initialize reverse index with capacity = snapshot capacity (one entry per province)
+            provincesByOwner = new NativeParallelMultiHashMap<ushort, ushort>(
+                snapshot.Capacity, Allocator.Persistent);
         }
 
         /// <summary>
@@ -86,6 +94,10 @@ namespace Core.Systems.Province
             idToIndex[provinceId] = arrayIndex;
             activeProvinceIds.Add(provinceId);
 
+            // Add to reverse index (skip unowned — owner 0 would be a 49k+ bucket)
+            if (provinceState.ownerID != UNOWNED_COUNTRY)
+                provincesByOwner.Add(provinceState.ownerID, provinceId);
+
             provinceCount++;
         }
 
@@ -97,6 +109,8 @@ namespace Core.Systems.Province
             provinceCount = 0;
             idToIndex.Clear();
             activeProvinceIds.Clear();
+            if (provincesByOwner.IsCreated)
+                provincesByOwner.Clear();
         }
 
         /// <summary>
@@ -155,6 +169,12 @@ namespace Core.Systems.Province
             // Update state and write back (structs are value types)
             state.ownerID = newOwner;
             states[arrayIndex] = state;
+
+            // Update reverse index (skip unowned — owner 0 would be a 49k+ bucket)
+            if (oldOwner != UNOWNED_COUNTRY)
+                RemoveFromReverseIndex(oldOwner, provinceId);
+            if (newOwner != UNOWNED_COUNTRY)
+                provincesByOwner.Add(newOwner, provinceId);
 
             // Mark as dirty for buffer swap
             MarkDirty(arrayIndex);
@@ -227,7 +247,17 @@ namespace Core.Systems.Province
                 return;
 
             var states = snapshot.GetProvinceWriteBuffer();
+            ushort oldOwner = states[arrayIndex].ownerID;
             states[arrayIndex] = state;
+
+            // Update reverse index if owner changed (skip unowned — owner 0 would be a 49k+ bucket)
+            if (oldOwner != state.ownerID)
+            {
+                if (oldOwner != UNOWNED_COUNTRY)
+                    RemoveFromReverseIndex(oldOwner, provinceId);
+                if (state.ownerID != UNOWNED_COUNTRY)
+                    provincesByOwner.Add(state.ownerID, provinceId);
+            }
 
             // Mark as dirty for buffer swap
             MarkDirty(arrayIndex);
@@ -240,61 +270,65 @@ namespace Core.Systems.Province
         /// <summary>
         /// Get all provinces owned by a specific country
         /// Returns a native array that must be disposed by caller
+        /// Uses reverse index for O(k) lookup where k = owned provinces
         /// </summary>
         public NativeArray<ushort> GetCountryProvinces(ushort countryId, Allocator allocator = Allocator.TempJob)
         {
-            var result = new NativeList<ushort>(provinceCount / 10, Allocator.Temp);
-            var states = snapshot.GetProvinceWriteBuffer();
+            int count = provincesByOwner.CountValuesForKey(countryId);
+            if (count == 0)
+                return new NativeArray<ushort>(0, allocator);
 
-            for (int i = 0; i < provinceCount; i++)
+            var resultArray = new NativeArray<ushort>(count, allocator);
+            int idx = 0;
+
+            foreach (var provinceId in provincesByOwner.GetValuesForKey(countryId))
             {
-                if (states[i].ownerID == countryId)
-                {
-                    result.Add(activeProvinceIds[i]);
-                }
+                resultArray[idx++] = provinceId;
             }
-
-            var resultArray = new NativeArray<ushort>(result.Length, allocator);
-            result.AsArray().CopyTo(resultArray);
-            result.Dispose();
 
             return resultArray;
         }
 
         /// <summary>
         /// Get all provinces owned by country (fills existing NativeList, zero-allocation)
+        /// Uses reverse index for O(k) lookup where k = owned provinces
         /// </summary>
         public void GetCountryProvinces(ushort countryId, NativeList<ushort> resultBuffer)
         {
             resultBuffer.Clear();
-            var states = snapshot.GetProvinceWriteBuffer();
 
-            for (int i = 0; i < provinceCount; i++)
+            foreach (var provinceId in provincesByOwner.GetValuesForKey(countryId))
             {
-                if (states[i].ownerID == countryId)
-                {
-                    resultBuffer.Add(activeProvinceIds[i]);
-                }
+                resultBuffer.Add(provinceId);
             }
         }
 
         /// <summary>
         /// Get count of provinces owned by a country (no allocation).
+        /// Uses reverse index for O(k) not O(n) where n = total provinces
         /// </summary>
         public int GetProvinceCountForCountry(ushort countryId)
         {
-            int count = 0;
+            return provincesByOwner.CountValuesForKey(countryId);
+        }
+
+        /// <summary>
+        /// Bulk fill owner data into a pre-allocated array indexed by province ID.
+        /// Avoids per-province hash lookups by iterating contiguous buffer directly.
+        /// Used by GPU texture upload for O(n) linear scan instead of O(n) hash lookups.
+        /// </summary>
+        public void FillOwnerBuffer(uint[] ownerBuffer)
+        {
             var states = snapshot.GetProvinceWriteBuffer();
 
             for (int i = 0; i < provinceCount; i++)
             {
-                if (states[i].ownerID == countryId)
+                ushort provinceId = activeProvinceIds[i];
+                if (provinceId < ownerBuffer.Length)
                 {
-                    count++;
+                    ownerBuffer[provinceId] = states[i].ownerID;
                 }
             }
-
-            return count;
         }
 
         /// <summary>
@@ -316,6 +350,28 @@ namespace Core.Systems.Province
         public bool HasProvince(ushort provinceId)
         {
             return idToIndex.ContainsKey(provinceId);
+        }
+
+        #endregion
+
+        #region Reverse Index
+
+        /// <summary>
+        /// Remove a province from a specific owner's reverse index entry
+        /// </summary>
+        private void RemoveFromReverseIndex(ushort ownerID, ushort provinceId)
+        {
+            if (!provincesByOwner.TryGetFirstValue(ownerID, out ushort value, out var it))
+                return;
+
+            do
+            {
+                if (value == provinceId)
+                {
+                    provincesByOwner.Remove(it);
+                    return;
+                }
+            } while (provincesByOwner.TryGetNextValue(out value, ref it));
         }
 
         #endregion
@@ -376,6 +432,10 @@ namespace Core.Systems.Province
             if (dirtyIndices.IsCreated)
             {
                 dirtyIndices.Dispose();
+            }
+            if (provincesByOwner.IsCreated)
+            {
+                provincesByOwner.Dispose();
             }
         }
 

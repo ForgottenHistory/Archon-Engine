@@ -191,16 +191,43 @@ namespace Core.Queries
 
             try
             {
-                // Single pass through all provinces
-                using var allProvinces = provinceSystem.GetAllProvinceIds(Allocator.Temp);
-
-                for (int i = 0; i < allProvinces.Length; i++)
+                // Optimization: use narrowest pre-computed set as iteration source
+                // instead of scanning all provinces
+                if (borderingSet.IsCreated)
                 {
-                    ushort provinceId = allProvinces[i];
-
-                    if (MatchesAllFilters(provinceId, distanceMap, adjacentSet, borderingSet))
+                    // Iterate bordering set directly (typically small)
+                    foreach (var provinceId in borderingSet)
                     {
-                        results.Add(provinceId);
+                        if (MatchesAllFilters(provinceId, distanceMap, adjacentSet, borderingSet))
+                        {
+                            results.Add(provinceId);
+                        }
+                    }
+                }
+                else if (filterOwnerId.HasValue)
+                {
+                    // Use reverse index for owned provinces (O(k) not O(n))
+                    using var ownedProvinces = provinceSystem.GetCountryProvinces(filterOwnerId.Value, Allocator.Temp);
+                    for (int i = 0; i < ownedProvinces.Length; i++)
+                    {
+                        ushort provinceId = ownedProvinces[i];
+                        if (MatchesAllFilters(provinceId, distanceMap, adjacentSet, borderingSet))
+                        {
+                            results.Add(provinceId);
+                        }
+                    }
+                }
+                else
+                {
+                    // Fallback: scan all provinces
+                    using var allProvinces = provinceSystem.GetAllProvinceIds(Allocator.Temp);
+                    for (int i = 0; i < allProvinces.Length; i++)
+                    {
+                        ushort provinceId = allProvinces[i];
+                        if (MatchesAllFilters(provinceId, distanceMap, adjacentSet, borderingSet))
+                        {
+                            results.Add(provinceId);
+                        }
                     }
                 }
             }

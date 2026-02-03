@@ -98,6 +98,9 @@ namespace Map.Rendering
         /// NOTE: Slow (GPU→CPU readback) - use sparingly for mouse picking only
         /// Y coordinate is in OpenGL convention (0 = bottom), RenderTexture uses GPU convention (0 = top)
         /// </summary>
+        // Cached 1x1 texture for GPU→CPU pixel readback (avoids alloc/destroy per call)
+        private Texture2D cachedReadbackTexture;
+
         public ushort GetProvinceID(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return 0;
@@ -106,19 +109,18 @@ namespace Map.Rendering
             // But RenderTexture is GPU convention (0,0 = top-left), so flip Y
             int flippedY = mapHeight - 1 - y;
 
-            // Read single pixel from RenderTexture
+            // Reuse cached 1x1 texture for readback
+            if (cachedReadbackTexture == null)
+                cachedReadbackTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
+
+            RenderTexture prev = RenderTexture.active;
             RenderTexture.active = ProvinceIDTexture;
-            Texture2D temp = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-            temp.ReadPixels(new Rect(x, flippedY, 1, 1), 0, 0);
-            temp.Apply();
-            RenderTexture.active = null;
+            cachedReadbackTexture.ReadPixels(new Rect(x, flippedY, 1, 1), 0, 0);
+            cachedReadbackTexture.Apply();
+            RenderTexture.active = prev;
 
-            Color32 packedColor = temp.GetPixel(0, 0);
-            ushort provinceID = Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
-
-            Object.Destroy(temp);
-
-            return provinceID;
+            Color32 packedColor = cachedReadbackTexture.GetPixel(0, 0);
+            return Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
         }
 
         /// <summary>
@@ -257,6 +259,11 @@ namespace Map.Rendering
         void OnDestroy()
         {
             ReleaseTextures();
+            if (cachedReadbackTexture != null)
+            {
+                Object.Destroy(cachedReadbackTexture);
+                cachedReadbackTexture = null;
+            }
         }
 
 #if UNITY_EDITOR

@@ -1,5 +1,4 @@
 using UnityEngine;
-using Unity.Collections;
 using Core.Queries;
 using Core.Modding;
 
@@ -29,6 +28,9 @@ namespace Map.Rendering
         // GPU buffer for province owner data
         private ComputeBuffer provinceOwnerBuffer;
         private int bufferCapacity;
+
+        // Reusable CPU-side buffer for owner data (avoids allocation per update)
+        private uint[] ownerData;
 
         // References
         private MapTextureManager textureManager;
@@ -89,8 +91,6 @@ namespace Map.Rendering
         [ContextMenu("Populate Owner Texture")]
         public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
         {
-            ArchonLogger.Log("OwnerTextureDispatcher: PopulateOwnerTexture() called", "map_initialization");
-
             if (populateOwnerCompute == null)
             {
                 ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.", "map_rendering");
@@ -116,16 +116,6 @@ namespace Map.Rendering
             // Start performance timing
             float startTime = Time.realtimeSinceStartup;
 
-            // Get all province IDs and their owners from Core simulation
-            using var allProvinces = provinceQueries.GetAllProvinceIds(Allocator.Temp);
-            int provinceCount = allProvinces.Length;
-
-            if (provinceCount == 0)
-            {
-                ArchonLogger.LogWarning("OwnerTextureDispatcher: No provinces available from ProvinceQueries", "map_rendering");
-                return;
-            }
-
             // Create/resize buffer if needed (supports up to 65536 provinces)
             const int MAX_PROVINCES = 65536;
             if (provinceOwnerBuffer == null || bufferCapacity != MAX_PROVINCES)
@@ -143,49 +133,13 @@ namespace Map.Rendering
                 }
             }
 
-            // Populate buffer with owner data from Core simulation
-            uint[] ownerData = new uint[bufferCapacity];
-
-            // Initialize all to 0 (unowned)
-            for (int i = 0; i < bufferCapacity; i++)
+            // Bulk fill owner data — single linear pass over contiguous buffer, no per-province hash lookups
+            if (ownerData == null || ownerData.Length != bufferCapacity)
             {
-                ownerData[i] = 0;
+                ownerData = new uint[bufferCapacity];
             }
-
-            // Fill with actual owner data
-            int populatedCount = 0;
-            int nonZeroOwners = 0;
-            for (int i = 0; i < allProvinces.Length; i++)
-            {
-                ushort provinceId = allProvinces[i];
-
-                // Bounds check
-                if (provinceId >= bufferCapacity)
-                {
-                    if (populatedCount < 5)
-                    {
-                        ArchonLogger.LogWarning($"OwnerTextureDispatcher: Province ID {provinceId} exceeds buffer capacity {bufferCapacity}", "map_rendering");
-                    }
-                    continue;
-                }
-
-                // Get owner from Core simulation
-                ushort ownerId = provinceQueries.GetOwner(provinceId);
-                ownerData[provinceId] = ownerId;
-                populatedCount++;
-
-                if (ownerId != 0)
-                {
-                    nonZeroOwners++;
-                    // Log first few non-zero owners
-                    if (nonZeroOwners <= 10)
-                    {
-                        ArchonLogger.Log($"OwnerTextureDispatcher: Province {provinceId} → Owner {ownerId}", "map_initialization");
-                    }
-                }
-            }
-
-            ArchonLogger.Log($"OwnerTextureDispatcher: Populated {populatedCount} provinces, {nonZeroOwners} have non-zero owners", "map_initialization");
+            System.Array.Clear(ownerData, 0, ownerData.Length);
+            provinceQueries.FillOwnerBuffer(ownerData);
 
             // Upload to GPU
             provinceOwnerBuffer.SetData(ownerData);
@@ -197,10 +151,6 @@ namespace Map.Rendering
             populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceIDTexture", provinceIDTex);
             populateOwnerCompute.SetBuffer(populateOwnersKernel, "ProvinceOwnerBuffer", provinceOwnerBuffer);
             populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-
-            // DEBUG: Verify texture binding
-            ArchonLogger.Log($"OwnerTextureDispatcher: Bound ProvinceIDTexture ({provinceIDTex?.GetInstanceID()}, {provinceIDTex?.format}) directly to compute shader", "map_initialization");
-            ArchonLogger.Log($"OwnerTextureDispatcher: Compute shader will write to ProvinceOwnerTexture instance {textureManager.ProvinceOwnerTexture?.GetInstanceID()}", "map_initialization");
 
             // Set dimensions
             populateOwnerCompute.SetInt("MapWidth", textureManager.MapWidth);
@@ -226,8 +176,8 @@ namespace Map.Rendering
             {
                 float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
                 ArchonLogger.Log($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
-                    $"({populatedCount} provinces, {textureManager.MapWidth}x{textureManager.MapHeight} pixels, " +
-                    $"{threadGroupsX}x{threadGroupsY} thread groups)", "map_initialization");
+                    $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels, " +
+                    $"{threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
             }
         }
 

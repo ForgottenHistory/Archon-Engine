@@ -359,13 +359,8 @@ namespace Map.Rendering
                 return;
             }
 
-            if (ownerTextureDispatcher != null)
-            {
-                ownerTextureDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
-
-                var ownerSyncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(textureManager.ProvinceOwnerTexture);
-                ownerSyncRequest.WaitForCompletion();
-            }
+            // Owner texture population is handled by TextureUpdateBridge.ProcessPendingUpdates
+            // after this call - no need to duplicate here
         }
 
         #region Legacy GPU upload (pre-computed pixel arrays)

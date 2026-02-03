@@ -137,23 +137,11 @@ namespace StarterKit
         {
             if (gameState?.Countries == null) return;
 
-            // Get all countries
-            var countries = gameState.Countries.GetAllCountryIds();
-            try
+            // Sparse iteration: only active countries not all capacity
+            var activeCountries = gameState.Countries.ActiveCountryIds;
+            for (int i = 0; i < activeCountries.Length; i++)
             {
-                foreach (ushort countryId in countries)
-                {
-                    // Skip if country has no provinces
-                    int provinceCount = CountProvinces(countryId);
-                    if (provinceCount > 0)
-                    {
-                        CollectIncomeForCountry(countryId);
-                    }
-                }
-            }
-            finally
-            {
-                countries.Dispose();
+                CollectIncomeForCountry(activeCountries[i]);
             }
         }
 
@@ -173,8 +161,7 @@ namespace StarterKit
 
                 if (logCollection && playerState != null && countryId == playerState.PlayerCountryId)
                 {
-                    int provinceCount = CountProvinces(countryId);
-                    ArchonLogger.Log($"EconomySystem: Collected {income.ToFloat():F1} gold from {provinceCount} provinces (Total: {newGold.ToInt()})", "starter_kit");
+                    ArchonLogger.Log($"EconomySystem: Collected {income.ToFloat():F1} gold (Total: {newGold.ToInt()})", "starter_kit");
                 }
             }
         }
@@ -262,14 +249,6 @@ namespace StarterKit
             }
 
             return totalIncome;
-        }
-
-        private int CountProvinces(ushort countryId)
-        {
-            if (gameState?.ProvinceQueries == null)
-                return 0;
-
-            return gameState.ProvinceQueries.GetCountryProvinceCount(countryId);
         }
 
         /// <summary>

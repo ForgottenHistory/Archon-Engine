@@ -45,6 +45,15 @@ namespace Core.Queries
             return provinceSystem.GetProvinceOwner(provinceId);
         }
 
+        /// <summary>
+        /// Bulk fill owner data into a pre-allocated array indexed by province ID.
+        /// Linear scan of contiguous buffer — no per-province hash lookups.
+        /// </summary>
+        public void FillOwnerBuffer(uint[] ownerBuffer)
+        {
+            provinceSystem.FillOwnerBuffer(ownerBuffer);
+        }
+
         // REMOVED: GetDevelopment() - game-specific, moved to Game layer
 
         /// <summary>
@@ -124,10 +133,7 @@ namespace Core.Queries
         /// </summary>
         public int GetCountryProvinceCount(ushort countryId)
         {
-            var provinces = GetCountryProvinces(countryId, Allocator.Temp);
-            int count = provinces.Length;
-            provinces.Dispose();
-            return count;
+            return provinceSystem.GetProvinceCountForCountry(countryId);
         }
 
         /// <summary>

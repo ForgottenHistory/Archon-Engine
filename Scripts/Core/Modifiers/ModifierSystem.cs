@@ -225,19 +225,24 @@ namespace Core.Modifiers
                 return baseValue;
 
             // Build scope chain: Global → Country → Province
-            var provinceScope = provinceScopes[provinceId];
+            // CRITICAL: Write back after RebuildIfDirty to persist isDirty=false (struct value types!)
+            // Without write-back, every call rebuilds the cache (O(512) per province per query)
 
             // Get country scope (inherits from global)
             ScopedModifierContainer? countryScope = null;
             if (countryId < maxCountries)
             {
                 var country = countryScopes[countryId];
-                country.RebuildIfDirty(globalScope); // Country inherits from global
+                country.RebuildIfDirty(globalScope);
+                countryScopes[countryId] = country; // Write back to persist clean state
                 countryScope = country;
             }
 
             // Apply province modifiers (inherits from country → global chain)
-            return provinceScope.ApplyModifier(modifierTypeId, baseValue, countryScope);
+            var provinceScope = provinceScopes[provinceId];
+            var result = provinceScope.ApplyModifier(modifierTypeId, baseValue, countryScope);
+            provinceScopes[provinceId] = provinceScope; // Write back to persist clean state
+            return result;
         }
 
         /// <summary>
@@ -250,7 +255,9 @@ namespace Core.Modifiers
                 return baseValue;
 
             var countryScope = countryScopes[countryId];
-            return countryScope.ApplyModifier(modifierTypeId, baseValue, globalScope);
+            var result = countryScope.ApplyModifier(modifierTypeId, baseValue, globalScope);
+            countryScopes[countryId] = countryScope; // Write back to persist clean state
+            return result;
         }
 
         /// <summary>
