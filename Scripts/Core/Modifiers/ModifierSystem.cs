@@ -60,11 +60,14 @@ namespace Core.Modifiers
         private NativeArray<bool> provinceDirtyFlags;
         private NativeArray<bool> countryDirtyFlags;
 
-        // Callback to look up provinces owned by a country (set after ProvinceSystem init)
-        // Used by MarkCountryProvincesDirty to avoid marking all 65k provinces dirty
-        // Signature: (countryId, resultBuffer) → fills buffer with owned province IDs
-        private Action<ushort, NativeList<ushort>> getCountryProvincesFunc;
-        private NativeList<ushort> countryProvinceBuffer;
+        // Generation-based dirty tracking for country→province inheritance.
+        // When a country modifier changes, its generation increments.
+        // Provinces store the country generation they were last built against.
+        // On query: if province's stored gen != country's current gen → rebuild needed.
+        // This eliminates MarkCountryProvincesDirty entirely (no per-province writes on country change).
+        private NativeArray<uint> countryGeneration;
+        private NativeArray<uint> provinceLastCountryGeneration;
+        private uint globalGeneration; // incremented on global modifier changes
 
         /// <summary>
         /// Initialize the modifier system
@@ -97,19 +100,24 @@ namespace Core.Modifiers
             for (int i = 0; i < maxProvinces; i++) provinceDirtyFlags[i] = true; // Force initial rebuild
             for (int i = 0; i < maxCountries; i++) countryDirtyFlags[i] = true;
 
+            // Generation counters for lazy province invalidation
+            // Start country gen at 1 so province gen (0) != country gen (1) → forces initial rebuild
+            countryGeneration = new NativeArray<uint>(maxCountries, Allocator.Persistent);
+            provinceLastCountryGeneration = new NativeArray<uint>(maxProvinces, Allocator.Persistent);
+            globalGeneration = 1;
+            for (int i = 0; i < maxCountries; i++) countryGeneration[i] = 1;
+
             Debug.Log($"[ModifierSystem] Initialized with {maxCountries} countries, {maxProvinces} provinces");
         }
 
         /// <summary>
         /// Set the callback for looking up provinces owned by a country.
-        /// Call after ProvinceSystem is initialized and populated.
-        /// The callback receives (countryId, buffer) and fills buffer with owned province IDs.
+        /// No longer used internally (generation counters replaced per-province dirty marking).
+        /// Kept for API compatibility — callers don't need to change.
         /// </summary>
         public void SetCountryProvincesLookup(Action<ushort, NativeList<ushort>> lookupFunc)
         {
-            getCountryProvincesFunc = lookupFunc;
-            if (!countryProvinceBuffer.IsCreated)
-                countryProvinceBuffer = new NativeList<ushort>(512, Allocator.Persistent);
+            // No-op: generation-based tracking makes this unnecessary
         }
 
         #region Global Scope
@@ -163,8 +171,8 @@ namespace Core.Modifiers
             if (added)
             {
                 countryDirtyFlags[countryId] = true;
-                // Mark all provinces owned by this country as dirty
-                MarkCountryProvincesDirty(countryId);
+                // Increment country generation — provinces will detect stale gen on next query
+                countryGeneration[countryId] = countryGeneration[countryId] + 1;
             }
 
             return added;
@@ -185,7 +193,7 @@ namespace Core.Modifiers
             if (removed > 0)
             {
                 countryDirtyFlags[countryId] = true;
-                MarkCountryProvincesDirty(countryId);
+                countryGeneration[countryId] = countryGeneration[countryId] + 1;
             }
 
             return removed;
@@ -313,35 +321,44 @@ namespace Core.Modifiers
         /// Get province modifier using pre-rebuilt country scope.
         /// Call EnsureCountryScopeClean(countryId) once before batch province queries.
         /// Avoids redundant country scope copy per province.
-        /// Uses unsafe pointer access to avoid 8KB struct copies on clean provinces.
+        /// Uses unsafe pointer access to avoid 8KB struct copies.
         /// </summary>
         public unsafe FixedPoint64 GetProvinceModifierFast(ushort provinceId, ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
         {
             if (provinceId >= maxProvinces)
                 return baseValue;
 
-            // Fast path: check dirty flag WITHOUT copying the 8KB struct
-            if (!provinceDirtyFlags[provinceId])
+            // Check if province needs rebuild:
+            // 1. Province's own dirty flag (local modifier changed)
+            // 2. Country generation mismatch (country modifier changed since last province rebuild)
+            bool needsRebuild = provinceDirtyFlags[provinceId];
+            if (!needsRebuild && countryId < maxCountries)
             {
-                // Province is clean — read modifier directly via pointer (zero copy)
-                var ptr = (ScopedModifierContainer*)provinceScopes.GetUnsafeReadOnlyPtr() + provinceId;
-                return ptr->ApplyModifierFromCache(modifierTypeId, baseValue);
+                needsRebuild = provinceLastCountryGeneration[provinceId] != countryGeneration[countryId];
             }
 
-            // Slow path: province is dirty, need full rebuild (copies struct)
-            var provinceScope = provinceScopes[provinceId];
-            provinceScope.MarkDirty(); // Ensure struct's isDirty matches flag array
+            var provincePtr = (ScopedModifierContainer*)provinceScopes.GetUnsafePtr() + provinceId;
 
-            ScopedModifierContainer? countryScope = null;
+            // Fast path: province is clean and country hasn't changed
+            if (!needsRebuild)
+            {
+                return provincePtr->ApplyModifierFromCache(modifierTypeId, baseValue);
+            }
+
+            // Slow path: rebuild via pointer (no 8KB struct copy)
+            provincePtr->MarkDirty(); // Ensure struct's isDirty matches
+
+            ScopedModifierContainer* countryPtr = null;
             if (countryId < maxCountries)
             {
-                countryScope = countryScopes[countryId]; // Country already clean from EnsureCountryScopeClean
+                countryPtr = (ScopedModifierContainer*)countryScopes.GetUnsafeReadOnlyPtr() + countryId;
             }
 
-            var result = provinceScope.ApplyModifier(modifierTypeId, baseValue, countryScope);
-            provinceScopes[provinceId] = provinceScope; // Write back to persist clean state
-            provinceDirtyFlags[provinceId] = false; // Mark clean in separate array
-            return result;
+            provincePtr->RebuildIfDirtyFromParentPtr(countryPtr);
+            provinceDirtyFlags[provinceId] = false;
+            if (countryId < maxCountries)
+                provinceLastCountryGeneration[provinceId] = countryGeneration[countryId];
+            return provincePtr->ApplyModifierFromCache(modifierTypeId, baseValue);
         }
 
         /// <summary>
@@ -535,9 +552,7 @@ namespace Core.Modifiers
             scope.Clear();
             countryScopes[countryId] = scope; // Write back
             countryDirtyFlags[countryId] = true;
-
-            // Mark owned provinces as dirty
-            MarkCountryProvincesDirty(countryId);
+            countryGeneration[countryId] = countryGeneration[countryId] + 1;
 
             return removed;
         }
@@ -580,7 +595,7 @@ namespace Core.Modifiers
                 {
                     countryScopes[i] = scope; // Write back
                     countryDirtyFlags[i] = true;
-                    MarkCountryProvincesDirty((ushort)i);
+                    countryGeneration[i] = countryGeneration[i] + 1;
                 }
             }
 
@@ -606,49 +621,23 @@ namespace Core.Modifiers
         /// </summary>
         private void MarkAllDirty()
         {
-            // Mark all countries dirty
+            // Bump global generation — all provinces will detect stale gen on next query
+            globalGeneration++;
+
+            // Mark all countries dirty and bump their generation
             for (int i = 0; i < maxCountries; i++)
             {
                 var scope = countryScopes[i];
                 scope.MarkDirty();
                 countryScopes[i] = scope;
                 countryDirtyFlags[i] = true;
+                countryGeneration[i] = countryGeneration[i] + 1;
             }
 
-            // Mark all provinces dirty — only set the flag array, skip 8KB struct read-modify-write
-            // The ScopedModifierContainer.isDirty will be set when it's next accessed and rebuilt
+            // Mark all provinces dirty via flag array
             for (int i = 0; i < maxProvinces; i++)
             {
                 provinceDirtyFlags[i] = true;
-            }
-        }
-
-        /// <summary>
-        /// Mark all provinces owned by a country as dirty.
-        /// Uses reverse index lookup if available, falls back to marking all provinces.
-        /// </summary>
-        private void MarkCountryProvincesDirty(ushort countryId)
-        {
-            if (getCountryProvincesFunc != null && countryProvinceBuffer.IsCreated)
-            {
-                // Use reverse index: only mark provinces actually owned by this country
-                getCountryProvincesFunc(countryId, countryProvinceBuffer);
-                for (int i = 0; i < countryProvinceBuffer.Length; i++)
-                {
-                    ushort provinceId = countryProvinceBuffer[i];
-                    if (provinceId < maxProvinces)
-                    {
-                        provinceDirtyFlags[provinceId] = true;
-                    }
-                }
-            }
-            else
-            {
-                // Fallback: mark all provinces dirty (before ProvinceSystem is initialized)
-                for (int i = 0; i < maxProvinces; i++)
-                {
-                    provinceDirtyFlags[i] = true;
-                }
             }
         }
 
@@ -709,12 +698,14 @@ namespace Core.Modifiers
             LoadScopedContainer(reader, ref globalScope);
 
             // Load country scopes
+            globalGeneration++;
             for (int i = 0; i < maxCountries; i++)
             {
                 var scope = countryScopes[i];
                 LoadScopedContainer(reader, ref scope);
                 countryScopes[i] = scope; // Write back (struct value type)
                 countryDirtyFlags[i] = true; // Force rebuild after load
+                countryGeneration[i] = countryGeneration[i] + 1;
             }
 
             // Load province scopes
@@ -826,12 +817,14 @@ namespace Core.Modifiers
             }
             provinceScopes.Dispose();
 
-            if (countryProvinceBuffer.IsCreated)
-                countryProvinceBuffer.Dispose();
             if (provinceDirtyFlags.IsCreated)
                 provinceDirtyFlags.Dispose();
             if (countryDirtyFlags.IsCreated)
                 countryDirtyFlags.Dispose();
+            if (countryGeneration.IsCreated)
+                countryGeneration.Dispose();
+            if (provinceLastCountryGeneration.IsCreated)
+                provinceLastCountryGeneration.Dispose();
 
             Debug.Log("[ModifierSystem] Disposed");
         }

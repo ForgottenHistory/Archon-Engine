@@ -1,5 +1,6 @@
 using System;
 using Unity.Collections;
+using Unity.Collections.LowLevel.Unsafe;
 using Core.Data;
 
 namespace Core.Modifiers
@@ -113,6 +114,30 @@ namespace Core.Modifiers
 
                 // Copy only active parent modifiers using bitmask (typically 2-5 types vs 512)
                 parentSet.CopyActiveToSet(ref cachedModifierSet);
+            }
+
+            // Apply local modifiers on top
+            localModifiers.ApplyTo(ref cachedModifierSet);
+
+            isDirty = false;
+        }
+
+        /// <summary>
+        /// Rebuild modifier set using an unsafe pointer to parent scope (avoids 8KB struct copy).
+        /// Parent must already be clean (call EnsureCountryScopeClean first).
+        /// </summary>
+        public unsafe void RebuildIfDirtyFromParentPtr(ScopedModifierContainer* parentPtr)
+        {
+            if (!isDirty)
+                return;
+
+            // Clear only active types (2-5 longs vs 8KB full clear)
+            cachedModifierSet.ClearActive();
+
+            // Apply parent scope modifiers via pointer (zero copy)
+            if (parentPtr != null)
+            {
+                parentPtr->cachedModifierSet.CopyActiveToSet(ref cachedModifierSet);
             }
 
             // Apply local modifiers on top

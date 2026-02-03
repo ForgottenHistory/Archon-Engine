@@ -1,4 +1,5 @@
 using System.Runtime.InteropServices;
+using Unity.Collections.LowLevel.Unsafe;
 using Core.Data;
 
 namespace Core.Modifiers
@@ -101,23 +102,13 @@ namespace Core.Modifiers
 
         /// <summary>
         /// Clear all modifiers (reset to zero)
-        /// Vectorized for performance
+        /// Uses UnsafeUtility.MemClear for fast bulk zeroing
         /// </summary>
         public void Clear()
         {
-            fixed (long* add = additive, mult = multiplicative, mask = activeTypeMask)
+            fixed (long* add = additive)
             {
-                // Zero out both arrays
-                for (int i = 0; i < MAX_MODIFIER_TYPES; i++)
-                {
-                    add[i] = 0L;
-                    mult[i] = 0L;
-                }
-                // Zero out bitmask
-                for (int i = 0; i < BITMASK_LONGS; i++)
-                {
-                    mask[i] = 0L;
-                }
+                UnsafeUtility.MemClear(add, MAX_MODIFIER_TYPES * sizeof(long) * 2 + BITMASK_LONGS * sizeof(long));
             }
         }
 
@@ -127,8 +118,47 @@ namespace Core.Modifiers
         /// </summary>
         public FixedPoint64 ApplyModifier(ushort modifierTypeId, FixedPoint64 baseValue)
         {
-            var mod = Get(modifierTypeId);
-            return mod.Apply(baseValue);
+            if (modifierTypeId >= MAX_MODIFIER_TYPES)
+                return baseValue;
+
+            long addRaw = additive[modifierTypeId];
+            long multRaw = multiplicative[modifierTypeId];
+
+            // Fast path: no modifiers active for this type
+            if (addRaw == 0L && multRaw == 0L)
+                return baseValue;
+
+            // (base + additive) * (1 + multiplicative)
+            FixedPoint64 result = baseValue + FixedPoint64.FromRaw(addRaw);
+            if (multRaw != 0L)
+                result = result * (FixedPoint64.One + FixedPoint64.FromRaw(multRaw));
+            return result;
+        }
+
+        /// <summary>
+        /// Clear only active modifier types using bitmask, then zero the mask.
+        /// Much faster than full Clear() when only 2-5 types are active out of 512.
+        /// </summary>
+        public void ClearActive()
+        {
+            fixed (long* add = additive, mult = multiplicative, mask = activeTypeMask)
+            {
+                for (int wordIdx = 0; wordIdx < BITMASK_LONGS; wordIdx++)
+                {
+                    long word = mask[wordIdx];
+                    if (word == 0L) continue;
+
+                    while (word != 0)
+                    {
+                        int bitIdx = BitCount.TrailingZeroCount(word);
+                        int typeId = (wordIdx << 6) | bitIdx;
+                        add[typeId] = 0L;
+                        mult[typeId] = 0L;
+                        word &= word - 1;
+                    }
+                    mask[wordIdx] = 0L;
+                }
+            }
         }
 
         /// <summary>
