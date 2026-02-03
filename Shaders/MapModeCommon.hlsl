@@ -39,9 +39,9 @@ float2 GetOwnerUV(uint provinceID, float2 baseUV)
 float2 GetColorUV(uint ownerID)
 {
     // Map owner ID to palette texture coordinate
-    // Palette is 1024x1, so X = (ownerID + 0.5)/1024 to hit pixel center, Y = 0.5
+    // Palette is 4096x1, so X = (ownerID + 0.5)/4096 to hit pixel center, Y = 0.5
     // The +0.5 offset ensures we sample the pixel center, not the boundary
-    return float2((ownerID + 0.5) / 1024.0, 0.5);
+    return float2((ownerID + 0.5) / 4096.0, 0.5);
 }
 
 // Sample province ID with corrected UV coordinates

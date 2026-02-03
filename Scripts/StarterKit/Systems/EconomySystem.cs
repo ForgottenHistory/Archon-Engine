@@ -37,7 +37,7 @@ namespace StarterKit
         private Dictionary<ushort, FixedPoint64> countryGold = new Dictionary<ushort, FixedPoint64>();
 
         // Income caching (Pattern 11: Dirty flag system)
-        private const int MAX_COUNTRIES = 256;
+        private const int MAX_COUNTRIES = 4096;
         private readonly FixedPoint64[] cachedCountryIncome = new FixedPoint64[MAX_COUNTRIES];
         private readonly bool[] incomeNeedsRecalculation = new bool[MAX_COUNTRIES];
 

@@ -135,7 +135,7 @@ namespace Core
             }
 
             #if UNITY_EDITOR
-            if (eventsProcessedThisFrame > 1000)
+            if (eventsProcessedThisFrame > 10000)
             {
                 ArchonLogger.LogWarning($"EventBus processed {eventsProcessedThisFrame} events this frame", "core_events");
             }
