@@ -25,13 +25,13 @@ namespace StarterKit.Commands
 
         public override bool Validate(GameState gameState)
         {
-            // Check province exists
-            var provinceSystem = gameState.GetComponent<ProvinceSystem>();
-            if (provinceSystem == null || ProvinceId.Value == 0 || ProvinceId.Value > provinceSystem.ProvinceCount)
+            // Check province exists (use direct field reference, not GetComponent)
+            var provinces = gameState.Provinces;
+            if (provinces == null || ProvinceId.Value == 0 || ProvinceId.Value > provinces.ProvinceCount)
                 return false;
 
             // Check province is unowned
-            ushort currentOwner = provinceSystem.GetProvinceOwner(ProvinceId.Value);
+            ushort currentOwner = provinces.GetProvinceOwner(ProvinceId.Value);
             if (currentOwner != 0)
                 return false;
 
@@ -50,9 +50,9 @@ namespace StarterKit.Commands
         public override void Execute(GameState gameState)
         {
             var economySystem = Initializer.Instance?.EconomySystem;
-            var provinceSystem = gameState.GetComponent<ProvinceSystem>();
+            var provinces = gameState.Provinces;
 
-            if (economySystem == null || provinceSystem == null)
+            if (economySystem == null || provinces == null)
             {
                 ArchonLogger.LogError("ColonizeCommand: Missing systems", "starter_kit");
                 return;
@@ -62,9 +62,7 @@ namespace StarterKit.Commands
             economySystem.RemoveGoldFromCountry(CountryId, COLONIZE_COST);
 
             // Set province owner
-            provinceSystem.SetProvinceOwner(ProvinceId.Value, CountryId);
-
-            LogExecution($"Country {CountryId} colonized province {ProvinceId} for {COLONIZE_COST} gold");
+            provinces.SetProvinceOwner(ProvinceId.Value, CountryId);
         }
     }
 }

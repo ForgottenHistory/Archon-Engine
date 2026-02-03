@@ -7,7 +7,6 @@ using Core.Commands;
 using Core.Data;
 using Core.Data.Ids;
 using Core.Events;
-using Core.Queries;
 using Core.Systems;
 using Map.Rendering.Terrain;
 using StarterKit.Commands;
@@ -19,7 +18,7 @@ namespace StarterKit
     /// AI countries use the shared EconomySystem for gold (same as player).
     /// Priority: Colonize first (expand), then build farms (develop).
     ///
-    /// Demonstrates: ProvinceQueryBuilder for fluent province filtering.
+    /// Performance: Pre-allocated buffers, zero gameplay allocations.
     /// </summary>
     public class AISystem : IDisposable
     {
@@ -38,6 +37,11 @@ namespace StarterKit
         // Terrain lookup for ownable checks
         private TerrainRGBLookup terrainLookup;
 
+        // Pre-allocated buffers (zero gameplay allocations)
+        private NativeList<ushort> ownedProvincesBuffer;
+        private NativeList<ushort> neighborBuffer;
+        private NativeList<ushort> candidateBuffer;
+
         public AISystem(GameState gameStateRef, PlayerState playerStateRef, BuildingSystem buildingSystemRef, EconomySystem economySystemRef, bool log = true)
         {
             gameState = gameStateRef;
@@ -55,12 +59,17 @@ namespace StarterKit
             terrainLookup = new TerrainRGBLookup();
             terrainLookup.Initialize(dataDirectory, false);
 
+            // Pre-allocate reusable buffers
+            ownedProvincesBuffer = new NativeList<ushort>(512, Allocator.Persistent);
+            neighborBuffer = new NativeList<ushort>(32, Allocator.Persistent);
+            candidateBuffer = new NativeList<ushort>(256, Allocator.Persistent);
+
             // Subscribe to monthly tick (token auto-disposed on Dispose)
             subscriptions.Add(gameState.EventBus.Subscribe<MonthlyTickEvent>(OnMonthlyTick));
 
             if (logProgress)
             {
-                ArchonLogger.Log("AISystem: Initialized", "starter_kit");
+                ArchonLogger.Log("AISystem: Initialized (zero-alloc)", "starter_kit");
             }
         }
 
@@ -138,35 +147,61 @@ namespace StarterKit
 
         private bool TryColonize(ushort countryId, Core.Systems.ProvinceSystem provinceSystem)
         {
-            // Use ProvinceQueryBuilder (ENGINE) to find unowned provinces bordering our country
-            // Then apply GAME-layer filter for ownable terrain
-            using var query = new ProvinceQueryBuilder(provinceSystem, gameState.Adjacencies);
-            using var candidates = query
-                .BorderingCountry(countryId)  // Adjacent to our provinces
-                .IsUnowned()                   // Not owned by anyone
-                .Execute(Allocator.Temp);
+            // Find unowned provinces bordering this country using pre-allocated buffers
+            // Instead of ProvinceQueryBuilder (which allocates NativeList + NativeHashSet per call),
+            // we manually iterate owned provinces and check neighbors.
 
-            if (candidates.Length == 0)
+            // Get owned provinces into reusable buffer
+            provinceSystem.GetCountryProvinces(countryId, ownedProvincesBuffer);
+
+            if (ownedProvincesBuffer.Length == 0)
                 return false;
 
-            // GAME-layer filter: only ownable terrain (ENGINE doesn't know about this concept)
-            var colonizeCandidates = new List<ushort>();
-            for (int i = 0; i < candidates.Length; i++)
-            {
-                ushort provinceId = candidates[i];
-                ushort terrainType = provinceSystem.GetProvinceTerrain(provinceId);
+            // Build candidate list: unowned neighbors with ownable terrain
+            candidateBuffer.Clear();
 
-                if (terrainLookup == null || terrainLookup.IsTerrainOwnable(terrainType))
+            for (int i = 0; i < ownedProvincesBuffer.Length; i++)
+            {
+                ushort ownedProvince = ownedProvincesBuffer[i];
+
+                // Get neighbors into reusable buffer
+                gameState.Adjacencies.GetNeighbors(ownedProvince, neighborBuffer);
+
+                for (int j = 0; j < neighborBuffer.Length; j++)
                 {
-                    colonizeCandidates.Add(provinceId);
+                    ushort neighbor = neighborBuffer[j];
+
+                    // Must be unowned
+                    if (provinceSystem.GetProvinceOwner(neighbor) != 0)
+                        continue;
+
+                    // Must be ownable terrain
+                    ushort terrainType = provinceSystem.GetProvinceTerrain(neighbor);
+                    if (terrainLookup != null && !terrainLookup.IsTerrainOwnable(terrainType))
+                        continue;
+
+                    // Avoid duplicates (multiple owned provinces may border same unowned province)
+                    bool alreadyAdded = false;
+                    for (int k = 0; k < candidateBuffer.Length; k++)
+                    {
+                        if (candidateBuffer[k] == neighbor)
+                        {
+                            alreadyAdded = true;
+                            break;
+                        }
+                    }
+                    if (!alreadyAdded)
+                    {
+                        candidateBuffer.Add(neighbor);
+                    }
                 }
             }
 
-            if (colonizeCandidates.Count == 0)
+            if (candidateBuffer.Length == 0)
                 return false;
 
             // Pick random province to colonize
-            ushort targetProvince = colonizeCandidates[random.NextInt(colonizeCandidates.Count)];
+            ushort targetProvince = candidateBuffer[random.NextInt(candidateBuffer.Length)];
 
             // Colonize via ColonizeCommand (handles gold + ownership, syncs over network)
             var command = new ColonizeCommand
@@ -175,25 +210,7 @@ namespace StarterKit
                 CountryId = countryId
             };
 
-            // DEBUG: Log adjacency validation
-            if (logProgress)
-            {
-                using var owned = provinceSystem.GetCountryProvinces(countryId, Allocator.Temp);
-                bool actuallyAdjacent = false;
-                ushort adjacentTo = 0;
-                for (int i = 0; i < owned.Length; i++)
-                {
-                    if (gameState.Adjacencies.IsAdjacent(owned[i], targetProvince))
-                    {
-                        actuallyAdjacent = true;
-                        adjacentTo = owned[i];
-                        break;
-                    }
-                }
-                ArchonLogger.Log($"AISystem: Country {countryId} colonizing P{targetProvince} (adjacent={actuallyAdjacent}, adjTo=P{adjacentTo}, owned={owned.Length}, candidates={colonizeCandidates.Count})", "starter_kit");
-            }
-
-            bool success = gameState.TryExecuteCommand(command, out string message);
+            bool success = gameState.TryExecuteCommand(command);
 
             if (success && logProgress)
             {
@@ -209,35 +226,32 @@ namespace StarterKit
             if (farmType == null)
                 return false;
 
-            // Use ProvinceQueryBuilder (ENGINE) to get all provinces owned by this country
-            using var query = new ProvinceQueryBuilder(provinceSystem, gameState.Adjacencies);
-            using var ownedProvinces = query
-                .OwnedBy(countryId)
-                .Execute(Allocator.Temp);
+            // Get owned provinces into reusable buffer
+            provinceSystem.GetCountryProvinces(countryId, ownedProvincesBuffer);
 
-            if (ownedProvinces.Length == 0)
+            if (ownedProvincesBuffer.Length == 0)
                 return false;
 
-            // GAME-layer filter: provinces that can have more farms
-            var validProvinces = new List<ushort>();
-            for (int i = 0; i < ownedProvinces.Length; i++)
+            // Build candidate list: provinces that can have more farms
+            candidateBuffer.Clear();
+            for (int i = 0; i < ownedProvincesBuffer.Length; i++)
             {
-                ushort provinceId = ownedProvinces[i];
+                ushort provinceId = ownedProvincesBuffer[i];
                 int farmCount = buildingSystem.GetBuildingCount(provinceId, farmType.ID);
 
                 if (farmCount < farmType.MaxPerProvince)
                 {
-                    validProvinces.Add(provinceId);
+                    candidateBuffer.Add(provinceId);
                 }
             }
 
-            if (validProvinces.Count == 0)
+            if (candidateBuffer.Length == 0)
                 return false;
 
             // Pick random province
-            ushort targetProvince = validProvinces[random.NextInt(validProvinces.Count)];
+            ushort targetProvince = candidateBuffer[random.NextInt(candidateBuffer.Length)];
 
-            // Build farm directly (BuildingSystem is GAME layer, runs deterministically on all clients)
+            // Build farm directly (BuildingSystem runs deterministically on all clients)
             bool success = buildingSystem.ConstructForCountry(targetProvince, "farm", countryId);
 
             if (success && logProgress)
@@ -254,6 +268,10 @@ namespace StarterKit
             isDisposed = true;
 
             subscriptions.Dispose();
+
+            if (ownedProvincesBuffer.IsCreated) ownedProvincesBuffer.Dispose();
+            if (neighborBuffer.IsCreated) neighborBuffer.Dispose();
+            if (candidateBuffer.IsCreated) candidateBuffer.Dispose();
 
             if (logProgress)
             {

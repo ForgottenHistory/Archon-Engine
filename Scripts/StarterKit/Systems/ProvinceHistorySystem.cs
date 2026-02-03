@@ -31,11 +31,15 @@ namespace StarterKit
         // Key: provinceId, Value: history data (lazy-loaded)
         private readonly Dictionary<ushort, ProvinceHistoryData> provinceHistories;
 
+        // Cached reference to avoid FindFirstObjectByType per event
+        private TimeManager cachedTimeManager;
+
         public ProvinceHistorySystem(GameState gameStateRef, bool log = true)
         {
             gameState = gameStateRef;
             logProgress = log;
             provinceHistories = new Dictionary<ushort, ProvinceHistoryData>();
+            cachedTimeManager = gameState.Time;
 
             // Subscribe to ownership changes
             subscriptions.Add(gameState.EventBus.Subscribe<ProvinceOwnershipChangedEvent>(OnOwnershipChanged));
@@ -105,13 +109,7 @@ namespace StarterKit
 
         private int GetCurrentGameDay()
         {
-            // Try to get from TimeManager
-            var timeManager = UnityEngine.Object.FindFirstObjectByType<TimeManager>();
-            if (timeManager != null)
-            {
-                return timeManager.CurrentDay;
-            }
-            return 0;
+            return cachedTimeManager?.CurrentDay ?? 0;
         }
 
         private string GetCountryName(ushort countryId)

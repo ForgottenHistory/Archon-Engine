@@ -210,6 +210,18 @@ namespace Core.Data
             }
         }
 
+        /// <summary>
+        /// Get item at logical index (0 = oldest, Count-1 = newest). Zero-allocation.
+        /// </summary>
+        public T Get(int index)
+        {
+            if (index < 0 || index >= count)
+                throw new System.ArgumentOutOfRangeException(nameof(index));
+            int start = count < capacity ? 0 : head;
+            int bufferIndex = (start + index) % capacity;
+            return buffer[bufferIndex];
+        }
+
         private List<T> GetItems()
         {
             var items = new List<T>(count);

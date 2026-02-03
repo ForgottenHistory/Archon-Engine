@@ -206,6 +206,10 @@ namespace Core
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
             Diplomacy.Initialize(); // Initialize DiplomacySystem NativeCollections
 
+            // 12. Wire ModifierSystem to ProvinceSystem reverse index for efficient dirty tracking
+            // Without this, MarkCountryProvincesDirty marks all 65k provinces dirty
+            Modifiers.SetCountryProvincesLookup((countryId, buffer) => Provinces.GetCountryProvinces(countryId, buffer));
+
             IsInitialized = true;
             ArchonLogger.Log("GameState initialization complete", "core_simulation");
 
@@ -219,7 +223,14 @@ namespace Core
         /// </summary>
         public bool TryExecuteCommand<T>(T command) where T : ICommand
         {
-            return TryExecuteCommand(command, out _);
+            if (!IsInitialized)
+            {
+                ArchonLogger.LogError("Cannot execute command - GameState not initialized", "core_simulation");
+                return false;
+            }
+
+            // Route through CommandProcessor without message allocation
+            return CommandProcessor.SubmitCommand(command);
         }
 
         /// <summary>

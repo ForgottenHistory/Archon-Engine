@@ -51,24 +51,10 @@ namespace StarterKit
         /// </summary>
         public void RecordOwnershipChange(ushort newOwnerId, int gameDay)
         {
-            // Close previous ownership record if exists
-            if (ownershipHistory.Count > 0)
-            {
-                var items = ownershipHistory.Items;
-                for (int i = items.Count - 1; i >= 0; i--)
-                {
-                    if (items[i].IsCurrent)
-                    {
-                        // Can't modify struct in list directly, need to rebuild
-                        // This is fine since it's cold data (rare access)
-                        var closed = items[i];
-                        closed.EndDay = gameDay;
-                        // CircularBuffer doesn't support update, so we just add new record
-                        // Old "current" record stays with EndDay=0, but we track the latest
-                        break;
-                    }
-                }
-            }
+            // Previous ownership record closing is implicit -
+            // CircularBuffer doesn't support in-place update of structs,
+            // and the old code wasn't actually closing records anyway (no write-back).
+            // We just add the new record; GetHistory() ordering shows the timeline.
 
             // Add new ownership record
             ownershipHistory.Add(new OwnershipRecord

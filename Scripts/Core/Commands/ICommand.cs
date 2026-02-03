@@ -104,6 +104,17 @@ namespace Core.Commands
     }
 
     /// <summary>
+    /// Optional interface for commands that provide custom messages.
+    /// Commands without this use generic "executed successfully" / "failed validation".
+    /// Replaces reflection-based message lookup (zero-alloc for commands that don't implement this).
+    /// </summary>
+    public interface ICommandMessages
+    {
+        string GetSuccessMessage(GameState gameState);
+        string GetValidationError(GameState gameState);
+    }
+
+    /// <summary>
     /// Interface for commands that can be networked
     /// Provides serialization support for multiplayer
     /// </summary>

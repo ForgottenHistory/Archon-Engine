@@ -64,8 +64,6 @@ namespace Core.Commands
 
         public override void Execute(GameState gameState)
         {
-            LogExecution($"Changing province {ProvinceId} ownership from {oldOwner} to {NewOwner}");
-
             // Execute the ownership change
             gameState.Provinces.SetProvinceOwner(ProvinceId, NewOwner);
 
@@ -74,8 +72,6 @@ namespace Core.Commands
 
         public override void Undo(GameState gameState)
         {
-            LogExecution($"Undoing province {ProvinceId} ownership change back to {oldOwner}");
-
             // Restore previous ownership
             gameState.Provinces.SetProvinceOwner(ProvinceId, oldOwner);
         }
@@ -159,8 +155,6 @@ namespace Core.Commands
 
         public override void Execute(GameState gameState)
         {
-            LogExecution($"Transferring {ProvinceIds.Length} provinces to country {NewOwner}");
-
             // Execute all transfers
             for (int i = 0; i < ProvinceIds.Length; i++)
             {
@@ -170,8 +164,6 @@ namespace Core.Commands
 
         public override void Undo(GameState gameState)
         {
-            LogExecution($"Undoing transfer of {ProvinceIds.Length} provinces");
-
             // Restore all previous ownerships
             for (int i = 0; i < ProvinceIds.Length; i++)
             {

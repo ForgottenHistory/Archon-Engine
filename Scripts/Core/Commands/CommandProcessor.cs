@@ -90,6 +90,54 @@ namespace Core.Commands
         }
 
         /// <summary>
+        /// Submit a command for execution without allocating a result message string.
+        /// Used by AI and other hot-path callers that don't need feedback.
+        /// </summary>
+        public bool SubmitCommand<T>(T command) where T : ICommand
+        {
+            if (disposed)
+                return false;
+
+            // Get command type ID for networking (use runtime type, not compile-time)
+            Type commandType = command.GetType();
+            if (!commandTypeIds.TryGetValue(commandType, out ushort typeId))
+            {
+                if (IsMultiplayer)
+                {
+                    ArchonLogger.LogWarning($"CommandProcessor: Command type {commandType.Name} not registered for networking - executing locally only!", "core_commands");
+                }
+                // Unregistered command: validate + execute locally
+                if (!command.Validate(gameState))
+                    return false;
+                return ExecuteLocallyPreValidated(command);
+            }
+
+            // Local validation first
+            if (!command.Validate(gameState))
+                return false;
+
+            // Multiplayer routing
+            if (IsMultiplayer && !IsAuthoritative)
+            {
+                byte[] commandData = SerializeCommand(typeId, command);
+                networkBridge.SendCommandToHost(commandData, 0);
+                return true;
+            }
+
+            // Host or single-player: execute locally (already validated)
+            bool success = ExecuteLocallyPreValidated(command);
+
+            // Host: broadcast to clients
+            if (success && IsMultiplayer && IsAuthoritative)
+            {
+                byte[] commandData = SerializeCommand(typeId, command);
+                networkBridge.BroadcastCommand(commandData, 0);
+            }
+
+            return success;
+        }
+
+        /// <summary>
         /// Submit a command for execution.
         /// In multiplayer:
         /// - Clients send to host for validation
@@ -149,6 +197,40 @@ namespace Core.Commands
             }
 
             return success;
+        }
+
+        /// <summary>
+        /// Execute a pre-validated command locally without message allocation.
+        /// Caller must have already validated the command.
+        /// Used by AI and hot-path callers.
+        /// </summary>
+        private bool ExecuteLocallyPreValidated<T>(T command) where T : ICommand
+        {
+            try
+            {
+                command.Execute(gameState);
+
+                gameState.EventBus.Emit(new CommandExecutedEvent
+                {
+                    CommandType = typeof(T),
+                    IsSuccess = true
+                });
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                ArchonLogger.LogError($"CommandProcessor: Command execution failed - {e.Message}", "core_commands");
+
+                gameState.EventBus.Emit(new CommandExecutedEvent
+                {
+                    CommandType = typeof(T),
+                    IsSuccess = false,
+                    Error = e.Message
+                });
+
+                return false;
+            }
         }
 
         /// <summary>
@@ -283,22 +365,16 @@ namespace Core.Commands
 
         private string GetCommandValidationError<T>(T command) where T : ICommand
         {
-            var method = command.GetType().GetMethod("GetValidationError");
-            if (method != null && method.ReturnType == typeof(string))
-            {
-                return (string)method.Invoke(command, new object[] { gameState });
-            }
-            return $"{command.GetType().Name} failed validation";
+            if (command is ICommandMessages messages)
+                return messages.GetValidationError(gameState);
+            return "Command failed validation";
         }
 
         private string GetCommandSuccessMessage<T>(T command) where T : ICommand
         {
-            var method = command.GetType().GetMethod("GetSuccessMessage");
-            if (method != null && method.ReturnType == typeof(string))
-            {
-                return (string)method.Invoke(command, new object[] { gameState });
-            }
-            return $"{command.GetType().Name} executed successfully";
+            if (command is ICommandMessages messages)
+                return messages.GetSuccessMessage(gameState);
+            return "Command executed successfully";
         }
 
         public void Dispose()

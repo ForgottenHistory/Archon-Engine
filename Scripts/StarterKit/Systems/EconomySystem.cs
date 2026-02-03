@@ -41,6 +41,9 @@ namespace StarterKit
         private readonly FixedPoint64[] cachedCountryIncome = new FixedPoint64[MAX_COUNTRIES];
         private readonly bool[] incomeNeedsRecalculation = new bool[MAX_COUNTRIES];
 
+        // Pre-allocated buffer for province queries (zero gameplay allocations)
+        private NativeList<ushort> provinceBuffer;
+
         /// <summary>
         /// Player's gold (convenience property, returns int for simple display)
         /// </summary>
@@ -64,6 +67,9 @@ namespace StarterKit
             playerState = playerStateRef;
             modifierSystem = modifierSystemRef;
             logCollection = log;
+
+            // Pre-allocate reusable buffer for province queries
+            provinceBuffer = new NativeList<ushort>(512, Allocator.Persistent);
 
             // Mark all income as needing recalculation
             InvalidateAllIncome();
@@ -124,6 +130,7 @@ namespace StarterKit
             if (isDisposed) return;
 
             subscriptions.Dispose();
+            if (provinceBuffer.IsCreated) provinceBuffer.Dispose();
             isDisposed = true;
         }
 
@@ -200,52 +207,48 @@ namespace StarterKit
             FixedPoint64 countryModifier = FixedPoint64.Zero;
             if (modifierSystem != null)
             {
+                // Ensure country scope is rebuilt once (not per-province)
+                modifierSystem.EnsureCountryScopeClean(countryId);
+
                 // Get the multiplicative modifier value for country income
-                // ModifierSystem stores multiplicative values that get applied as (1 + modifier)
                 var countryMod = modifierSystem.GetCountryModifier(
                     countryId,
                     (ushort)ModifierType.CountryIncomeModifier,
                     FixedPoint64.One);
-                // GetCountryModifier returns base * (1 + modifier), so subtract 1 to get modifier value
                 countryModifier = countryMod - FixedPoint64.One;
             }
 
-            // Get all provinces owned by the country (must dispose NativeArray)
-            var provinceIds = gameState.ProvinceQueries.GetCountryProvinces(countryId);
-            try
+            // Get all provinces owned by the country (zero-alloc: reuses pre-allocated buffer)
+            gameState.ProvinceQueries.GetCountryProvinces(countryId, provinceBuffer);
+
+            for (int i = 0; i < provinceBuffer.Length; i++)
             {
-                foreach (var provinceId in provinceIds)
+                ushort provinceId = provinceBuffer[i];
+
+                // Start with base income
+                FixedPoint64 provinceIncome = baseIncomePerProvince;
+
+                if (modifierSystem != null)
                 {
-                    // Start with base income
-                    FixedPoint64 provinceIncome = baseIncomePerProvince;
+                    // Use fast path: country scope already clean, skip redundant country rebuild per province
+                    FixedPoint64 additiveBonus = modifierSystem.GetProvinceModifierFast(
+                        provinceId,
+                        countryId,
+                        (ushort)ModifierType.LocalIncomeAdditive,
+                        FixedPoint64.Zero);
+                    provinceIncome = provinceIncome + additiveBonus;
 
-                    if (modifierSystem != null)
-                    {
-                        // Add flat income bonus from buildings (additive modifier)
-                        FixedPoint64 additiveBonus = modifierSystem.GetProvinceModifier(
-                            provinceId,
-                            countryId,
-                            (ushort)ModifierType.LocalIncomeAdditive,
-                            FixedPoint64.Zero);  // Base 0, returns just the additive value
-                        provinceIncome = provinceIncome + additiveBonus;
-
-                        // Apply local income modifier (multiplicative, from buildings in this province)
-                        provinceIncome = modifierSystem.GetProvinceModifier(
-                            provinceId,
-                            countryId,
-                            (ushort)ModifierType.LocalIncomeModifier,
-                            provinceIncome);
-                    }
-
-                    // Apply country-wide modifier
-                    provinceIncome = provinceIncome * (FixedPoint64.One + countryModifier);
-
-                    totalIncome = totalIncome + provinceIncome;
+                    provinceIncome = modifierSystem.GetProvinceModifierFast(
+                        provinceId,
+                        countryId,
+                        (ushort)ModifierType.LocalIncomeModifier,
+                        provinceIncome);
                 }
-            }
-            finally
-            {
-                provinceIds.Dispose();
+
+                // Apply country-wide modifier
+                provinceIncome = provinceIncome * (FixedPoint64.One + countryModifier);
+
+                totalIncome = totalIncome + provinceIncome;
             }
 
             return totalIncome;

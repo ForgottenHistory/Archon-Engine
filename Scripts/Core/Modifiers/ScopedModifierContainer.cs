@@ -111,16 +111,8 @@ namespace Core.Modifiers
                 parentScope.Value.RebuildIfDirty(); // Ensure parent is up to date
                 var parentSet = parentScope.Value.GetModifierSet();
 
-                // Copy parent modifiers to our set
-                for (ushort i = 0; i < ModifierSet.MAX_MODIFIER_TYPES; i++)
-                {
-                    var parentMod = parentSet.Get(i);
-                    if (parentMod.Additive != FixedPoint64.Zero || parentMod.Multiplicative != FixedPoint64.Zero)
-                    {
-                        cachedModifierSet.Add(i, parentMod.Additive, false);
-                        cachedModifierSet.Add(i, parentMod.Multiplicative, true);
-                    }
-                }
+                // Copy only active parent modifiers using bitmask (typically 2-5 types vs 512)
+                parentSet.CopyActiveToSet(ref cachedModifierSet);
             }
 
             // Apply local modifiers on top
@@ -146,6 +138,20 @@ namespace Core.Modifiers
             RebuildIfDirty(parentScope);
             return cachedModifierSet.ApplyModifier(modifierTypeId, baseValue);
         }
+
+        /// <summary>
+        /// Apply modifier from cached set without rebuild check.
+        /// Only call when you know the scope is NOT dirty (check IsDirty first).
+        /// </summary>
+        public FixedPoint64 ApplyModifierFromCache(ushort modifierTypeId, FixedPoint64 baseValue)
+        {
+            return cachedModifierSet.ApplyModifier(modifierTypeId, baseValue);
+        }
+
+        /// <summary>
+        /// Whether this scope needs rebuilding
+        /// </summary>
+        public bool IsDirty => isDirty;
 
         /// <summary>
         /// Check if this container has any local modifiers

@@ -70,9 +70,7 @@ namespace StarterKit.Commands
 
             bool success = buildings.ConstructForCountry(ProvinceId, BuildingTypeId, effectiveCountryId);
 
-            if (success)
-                LogExecution($"Country {effectiveCountryId} constructed {BuildingTypeId} in province {ProvinceId}");
-            else
+            if (!success)
             {
                 buildings.CanConstructForCountry(ProvinceId, BuildingTypeId, effectiveCountryId, out string reason);
                 ArchonLogger.LogWarning($"ConstructBuildingCommand: Failed - {reason}", "starter_kit");
