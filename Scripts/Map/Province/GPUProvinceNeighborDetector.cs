@@ -66,11 +66,13 @@ namespace Map.Province
             float startTime = Time.realtimeSinceStartup;
             ArchonLogger.Log($"[GPU] Detecting neighbors for {provinceCount} provinces on {width}x{height} texture", "map_textures");
 
-            // AppendStructuredBuffer needs capacity, but GPU handles overflow gracefully
-            // Estimate: each pixel can generate max 2 pairs (right + bottom neighbors)
-            // But most pixels are interior, so actual is much less
-            // Use provinceCount * 50 as safe upper bound for unique pairs
-            int maxNeighborPairs = Mathf.Max(provinceCount * 50, 1000000);
+            // AppendStructuredBuffer silently drops appends when full.
+            // Each border pixel generates an Append even for duplicate pairs,
+            // so total appends = total border pixels, not just unique pairs.
+            // On a 15kx6.5k map with 50k provinces, border pixels can reach 10M+.
+            // Budget ~10% of total pixels as border pixel events.
+            int totalPixels = width * height;
+            int maxNeighborPairs = Mathf.Max(totalPixels / 10, 1000000);
             int maxCoastalProvinces = provinceCount;
 
             // Create GPU buffers with ComputeBufferType.Append for dynamic appending
@@ -126,10 +128,17 @@ namespace Map.Province
 
                 var countData = new int[2];
                 countBuffer.GetData(countData);
-                int actualPairCount = Mathf.Min(countData[0], maxNeighborPairs);
+                int rawPairCount = countData[0];
+                int actualPairCount = Mathf.Min(rawPairCount, maxNeighborPairs);
                 int actualCoastalCount = Mathf.Min(countData[1], maxCoastalProvinces);
 
-                ArchonLogger.Log($"[GPU] Found {actualPairCount} neighbor pairs and {actualCoastalCount} coastal provinces", "map_textures");
+                if (rawPairCount >= maxNeighborPairs)
+                {
+                    ArchonLogger.LogError($"[GPU] AppendStructuredBuffer OVERFLOW: {rawPairCount} pairs exceeded capacity {maxNeighborPairs}. " +
+                        "Some adjacencies will be missing! Increase buffer capacity.", "map_textures");
+                }
+
+                ArchonLogger.Log($"[GPU] Found {actualPairCount} neighbor pairs and {actualCoastalCount} coastal provinces (buffer capacity: {maxNeighborPairs})", "map_textures");
 
                 // Read neighbor pairs
                 var neighborPairsData = new uint2[actualPairCount];
