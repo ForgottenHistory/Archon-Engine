@@ -74,6 +74,22 @@ namespace Map.Rendering
 
         private BorderDebugUtility debugUtility;
 
+        // Indexed border update (runtime only — avoids full-map dispatch)
+        private ComputeShader updateBorderByIndexCompute;
+        private int updateBorderByIndexKernel;
+        private ComputeBuffer indexedPixelCoordsBuffer;
+        private ComputeBuffer indexedPixelOffsetsBuffer;
+        private ComputeBuffer indexedPixelCountsBuffer;
+        private ComputeBuffer[] indexedChangedBuffers = new ComputeBuffer[2];
+        private ComputeBuffer[] indexedDispatchOffsetsBuffers = new ComputeBuffer[2];
+        private int indexedActiveBuffer;
+        private uint[] indexedChangedData;
+        private uint[] indexedDispatchOffsetsData;
+        private int indexedChangedCapacity;
+        private uint[] cpuPixelCounts; // for dispatch offset calculation
+        private bool hasIndexedBorderSupport;
+        private const int INDEXED_THREAD_GROUP_SIZE = 64;
+
         // Pluggable renderer support
         private bool renderersRegistered = false;
         private IBorderRenderer activeBorderRenderer;
@@ -520,7 +536,51 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Detect and update borders (called per-frame or on-demand)
+        /// Set pixel index for indexed border updates. Called once at load time.
+        /// Shares the same pixel index data as OwnerTextureDispatcher.
+        /// </summary>
+        public void SetPixelIndex(uint[] pixelCoords, uint[] offsets, uint[] counts)
+        {
+            indexedPixelCoordsBuffer?.Release();
+            indexedPixelOffsetsBuffer?.Release();
+            indexedPixelCountsBuffer?.Release();
+
+            if (pixelCoords.Length == 0)
+            {
+                hasIndexedBorderSupport = false;
+                return;
+            }
+
+            updateBorderByIndexCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "UpdateBorderByIndex", "Shaders/UpdateBorderByIndex");
+
+            if (updateBorderByIndexCompute == null)
+            {
+                ArchonLogger.LogWarning("BorderComputeDispatcher: UpdateBorderByIndex compute shader not found", "map_rendering");
+                hasIndexedBorderSupport = false;
+                return;
+            }
+
+            updateBorderByIndexKernel = updateBorderByIndexCompute.FindKernel("UpdateBorderByIndex");
+
+            indexedPixelCoordsBuffer = new ComputeBuffer(pixelCoords.Length, sizeof(uint));
+            indexedPixelCoordsBuffer.SetData(pixelCoords);
+
+            indexedPixelOffsetsBuffer = new ComputeBuffer(offsets.Length, sizeof(uint));
+            indexedPixelOffsetsBuffer.SetData(offsets);
+
+            indexedPixelCountsBuffer = new ComputeBuffer(counts.Length, sizeof(uint));
+            indexedPixelCountsBuffer.SetData(counts);
+
+            cpuPixelCounts = counts;
+            hasIndexedBorderSupport = true;
+
+            ArchonLogger.Log($"BorderComputeDispatcher: Indexed border support initialized ({pixelCoords.Length:N0} pixel entries)", "map_initialization");
+        }
+
+        /// <summary>
+        /// Detect and update borders (called per-frame or on-demand).
+        /// Full-map dispatch — use DetectBordersIndexed for runtime incremental updates.
         /// </summary>
         public void DetectBorders()
         {
@@ -535,6 +595,81 @@ namespace Map.Rendering
                 GeneratePixelPerfectBorders();
             }
             // MeshGeometry mode doesn't need per-frame updates
+        }
+
+        /// <summary>
+        /// Indexed border update: queues compute shader dispatch into a CommandBuffer
+        /// for only pixels of changed provinces + neighbors. Non-blocking.
+        /// Falls back to full DetectBorders if indexed support not available.
+        /// </summary>
+        public void DetectBordersIndexed(ushort[] changedProvinces, CommandBuffer cmd)
+        {
+            if (!hasIndexedBorderSupport || renderingMode != BorderRenderingMode.ShaderPixelPerfect)
+            {
+                DetectBorders();
+                return;
+            }
+
+            if (changedProvinces == null || changedProvinces.Length == 0) return;
+
+            int numChanged = changedProvinces.Length;
+            EnsureIndexedChangedBuffers(numChanged);
+
+            uint totalPixels = 0;
+            for (int i = 0; i < numChanged; i++)
+            {
+                ushort pid = changedProvinces[i];
+                indexedChangedData[i] = (uint)pid;
+                indexedDispatchOffsetsData[i] = totalPixels;
+                totalPixels += (pid < cpuPixelCounts.Length) ? cpuPixelCounts[pid] : 0;
+            }
+
+            if (totalPixels == 0) return;
+
+            indexedActiveBuffer = 1 - indexedActiveBuffer;
+            var changedBuf = indexedChangedBuffers[indexedActiveBuffer];
+            var offsetsBuf = indexedDispatchOffsetsBuffers[indexedActiveBuffer];
+
+            changedBuf.SetData(indexedChangedData, 0, 0, numChanged);
+            offsetsBuf.SetData(indexedDispatchOffsetsData, 0, 0, numChanged);
+
+            cmd.SetComputeTextureParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+            cmd.SetComputeTextureParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+            cmd.SetComputeTextureParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "DualBorderTexture", textureManager.PixelPerfectBorderTexture);
+            cmd.SetComputeBufferParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "PixelCoords", indexedPixelCoordsBuffer);
+            cmd.SetComputeBufferParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "ProvincePixelOffsets", indexedPixelOffsetsBuffer);
+            cmd.SetComputeBufferParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "ProvincePixelCounts", indexedPixelCountsBuffer);
+            cmd.SetComputeBufferParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "ChangedProvinces", changedBuf);
+            cmd.SetComputeBufferParam(updateBorderByIndexCompute, updateBorderByIndexKernel, "DispatchOffsets", offsetsBuf);
+            cmd.SetComputeIntParam(updateBorderByIndexCompute, "NumChangedProvinces", numChanged);
+            cmd.SetComputeIntParam(updateBorderByIndexCompute, "MapWidth", textureManager.MapWidth);
+            cmd.SetComputeIntParam(updateBorderByIndexCompute, "MapHeight", textureManager.MapHeight);
+            cmd.SetComputeIntParam(updateBorderByIndexCompute, "CountryBorderThickness", pixelPerfectCountryThickness);
+            cmd.SetComputeIntParam(updateBorderByIndexCompute, "ProvinceBorderThickness", pixelPerfectProvinceThickness);
+            cmd.SetComputeFloatParam(updateBorderByIndexCompute, "BorderAntiAliasing", pixelPerfectAntiAliasing);
+
+            int threadGroups = ((int)totalPixels + INDEXED_THREAD_GROUP_SIZE - 1) / INDEXED_THREAD_GROUP_SIZE;
+            cmd.DispatchCompute(updateBorderByIndexCompute, updateBorderByIndexKernel, threadGroups, 1, 1);
+        }
+
+        private void EnsureIndexedChangedBuffers(int needed)
+        {
+            if (indexedChangedCapacity >= needed) return;
+
+            for (int i = 0; i < 2; i++)
+            {
+                indexedChangedBuffers[i]?.Release();
+                indexedDispatchOffsetsBuffers[i]?.Release();
+            }
+
+            indexedChangedCapacity = Mathf.Max(needed, 64);
+            for (int i = 0; i < 2; i++)
+            {
+                indexedChangedBuffers[i] = new ComputeBuffer(indexedChangedCapacity, sizeof(uint));
+                indexedDispatchOffsetsBuffers[i] = new ComputeBuffer(indexedChangedCapacity, sizeof(uint));
+            }
+            indexedChangedData = new uint[indexedChangedCapacity];
+            indexedDispatchOffsetsData = new uint[indexedChangedCapacity];
         }
 
         /// <summary>
@@ -660,6 +795,15 @@ namespace Map.Rendering
             if (curveCache != null)
             {
                 curveCache.Clear();
+            }
+
+            indexedPixelCoordsBuffer?.Release();
+            indexedPixelOffsetsBuffer?.Release();
+            indexedPixelCountsBuffer?.Release();
+            for (int i = 0; i < 2; i++)
+            {
+                indexedChangedBuffers[i]?.Release();
+                indexedDispatchOffsetsBuffers[i]?.Release();
             }
         }
     }

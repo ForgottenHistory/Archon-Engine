@@ -1,7 +1,7 @@
 # Runtime Performance Optimization — Monthly Tick & Map Updates
 **Date**: 2026-02-03
 **Session**: 1
-**Status**: 🔄 In Progress
+**Status**: ✅ Complete
 **Priority**: High
 
 ---
@@ -132,13 +132,10 @@ Fixes AI `TryColonize` (`BorderingCountry().IsUnowned()`) and `TryBuildFarm` (`O
 
 ## Next Session
 
-### Immediate Next Steps
-1. **Investigate `ReadPixels` GPU sync in ProvinceSelector** — `Semaphore.WaitForSignal` shows CPU waiting for GPU pipeline flush. Options: async readback with 1-frame delay, or CPU-side province ID cache
-2. **Profile monthly tick after all fixes** — verify cumulative improvement
-
-### Open Questions
-1. Can `ProvinceSelector.GetProvinceID` use async GPU readback with 1-frame latency? Mouse picking tolerates 1 frame delay.
-2. Should we maintain a CPU-side copy of the province ID texture for instant lookups? Trade memory for zero GPU sync.
+### Resolved in Session 2
+- `ReadPixels` replaced with CPU-side `ushort[]` lookup — zero GPU sync
+- `Semaphore.WaitForSignal` root cause: `Texture2D.Apply()` on unchanged textures
+- See: [Session 2 — Semaphore Fix](2-semaphore-waitforsignal-fix.md)
 
 ---
 

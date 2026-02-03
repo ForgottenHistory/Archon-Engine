@@ -1,5 +1,4 @@
 using UnityEngine;
-using Unity.Collections;
 
 namespace Map.Rendering
 {
@@ -98,29 +97,32 @@ namespace Map.Rendering
         /// NOTE: Slow (GPU→CPU readback) - use sparingly for mouse picking only
         /// Y coordinate is in OpenGL convention (0 = bottom), RenderTexture uses GPU convention (0 = top)
         /// </summary>
-        // Cached 1x1 texture for GPU→CPU pixel readback (avoids alloc/destroy per call)
-        private Texture2D cachedReadbackTexture;
+        // CPU-side province ID lookup array — built at load time, never changes at runtime.
+        // Eliminates GPU→CPU ReadPixels sync stall for mouse picking.
+        private ushort[] provinceIDLookup;
+
+        /// <summary>
+        /// Set the CPU-side province ID lookup table. Called once at load time.
+        /// </summary>
+        public void SetProvinceIDLookup(ushort[] lookup)
+        {
+            provinceIDLookup = lookup;
+        }
 
         public ushort GetProvinceID(int x, int y)
         {
             if (x < 0 || x >= mapWidth || y < 0 || y >= mapHeight) return 0;
 
-            // Y-flip: UV coordinates from hit.textureCoord are OpenGL style (0,0 = bottom-left)
-            // But RenderTexture is GPU convention (0,0 = top-left), so flip Y
-            int flippedY = mapHeight - 1 - y;
+            // CPU-side lookup — zero GPU involvement
+            // Y-flip: callers pass UV-space y (0 = bottom), lookup array is image-space (0 = top)
+            if (provinceIDLookup != null)
+            {
+                int flippedY = mapHeight - 1 - y;
+                int index = flippedY * mapWidth + x;
+                return index < provinceIDLookup.Length ? provinceIDLookup[index] : (ushort)0;
+            }
 
-            // Reuse cached 1x1 texture for readback
-            if (cachedReadbackTexture == null)
-                cachedReadbackTexture = new Texture2D(1, 1, TextureFormat.ARGB32, false);
-
-            RenderTexture prev = RenderTexture.active;
-            RenderTexture.active = ProvinceIDTexture;
-            cachedReadbackTexture.ReadPixels(new Rect(x, flippedY, 1, 1), 0, 0);
-            cachedReadbackTexture.Apply();
-            RenderTexture.active = prev;
-
-            Color32 packedColor = cachedReadbackTexture.GetPixel(0, 0);
-            return Province.ProvinceIDEncoder.UnpackProvinceID(packedColor);
+            return 0;
         }
 
         /// <summary>
@@ -259,11 +261,6 @@ namespace Map.Rendering
         void OnDestroy()
         {
             ReleaseTextures();
-            if (cachedReadbackTexture != null)
-            {
-                Object.Destroy(cachedReadbackTexture);
-                cachedReadbackTexture = null;
-            }
         }
 
 #if UNITY_EDITOR

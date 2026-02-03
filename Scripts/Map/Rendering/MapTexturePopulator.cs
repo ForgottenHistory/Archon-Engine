@@ -86,6 +86,9 @@ namespace Map.Rendering
                 PopulateCPU(provinceResult, textureManager, mapping, provinceRegistry, width, height);
             }
 
+            // Build CPU-side province ID lookup for zero-cost mouse picking
+            BuildProvinceIDLookup(provinceResult, textureManager, mapping, width, height);
+
             // Populate owner texture via GPU (always uses its own compute shader)
             if (ownerTextureDispatcher != null)
             {
@@ -361,6 +364,95 @@ namespace Map.Rendering
 
             // Owner texture population is handled by TextureUpdateBridge.ProcessPendingUpdates
             // after this call - no need to duplicate here
+        }
+
+        /// <summary>
+        /// Build CPU-side province ID lookup AND per-province pixel index from raw pixel data.
+        /// Province IDs are static (baked from province map image), so this is built once at load time.
+        /// The lookup enables zero-cost mouse picking.
+        /// The pixel index enables targeted GPU owner texture updates (only affected pixels).
+        /// </summary>
+        private void BuildProvinceIDLookup(
+            ProvinceMapResult provinceResult,
+            MapTextureManager textureManager,
+            ProvinceMapping mapping,
+            int width, int height)
+        {
+            float startTime = Time.realtimeSinceStartup;
+            const int MAX_PROVINCES = 65536;
+
+            int totalPixels = width * height;
+            ushort[] lookup = new ushort[totalPixels];
+
+            // Pass 1: Build lookup and count pixels per province
+            uint[] counts = new uint[MAX_PROVINCES];
+            var pixelData = provinceResult.BMPData.GetPixelData();
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    if (pixelData.TryGetPixelRGB(x, y, out byte r, out byte g, out byte b))
+                    {
+                        var color = new Color32(r, g, b, 255);
+                        ushort id = mapping.GetProvinceByColor(color);
+                        lookup[y * width + x] = id;
+                        if (id > 0)
+                            counts[id]++;
+                    }
+                }
+            }
+
+            // Build offset table (prefix sum)
+            uint[] offsets = new uint[MAX_PROVINCES];
+            uint runningOffset = 0;
+            for (int i = 0; i < MAX_PROVINCES; i++)
+            {
+                offsets[i] = runningOffset;
+                runningOffset += counts[i];
+            }
+
+            // Pass 2: Fill pixel coordinate buffer using the lookup we already built
+            uint totalIndexedPixels = runningOffset;
+            uint[] pixelCoords = new uint[totalIndexedPixels];
+            uint[] writePos = new uint[MAX_PROVINCES]; // current write position per province
+            System.Array.Copy(offsets, writePos, MAX_PROVINCES);
+
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    ushort id = lookup[y * width + x];
+                    if (id > 0)
+                    {
+                        uint packed = (uint)x | ((uint)y << 16);
+                        pixelCoords[writePos[id]] = packed;
+                        writePos[id]++;
+                    }
+                }
+            }
+
+            textureManager.SetProvinceIDLookup(lookup);
+
+            // Pass pixel index to dispatchers for targeted runtime updates
+            if (ownerTextureDispatcher != null)
+            {
+                ownerTextureDispatcher.SetPixelIndex(pixelCoords, offsets, counts);
+            }
+
+            // Border dispatcher shares the same pixel index
+            var borderDispatcher = Object.FindFirstObjectByType<BorderComputeDispatcher>();
+            if (borderDispatcher != null)
+            {
+                borderDispatcher.SetPixelIndex(pixelCoords, offsets, counts);
+            }
+
+            if (logProgress)
+            {
+                float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+                ArchonLogger.Log($"MapTexturePopulator: Province ID lookup + pixel index built in {elapsed:F0}ms " +
+                    $"({totalPixels:N0} pixels, {totalIndexedPixels:N0} indexed)", "map_initialization");
+            }
         }
 
         #region Legacy GPU upload (pre-computed pixel arrays)

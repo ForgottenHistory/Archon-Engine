@@ -550,13 +550,10 @@ namespace StarterKit
                 farmDensityMapMode = new FarmDensityMapMode(buildingSystem, mapModeManager);
                 mapModeManager.RegisterHandler(MapMode.Economic, farmDensityMapMode);
 
-                // Subscribe to building construction to mark map mode dirty (via EventBus)
                 gameState.EventBus.Subscribe<BuildingConstructedEvent>(evt =>
                 {
                     farmDensityMapMode?.MarkDirty();
                 });
-
-                // Subscribe to province ownership changes to update map mode
                 gameState.EventBus.Subscribe<Core.Systems.ProvinceOwnershipChangedEvent>(evt =>
                 {
                     farmDensityMapMode?.MarkDirty();

@@ -1,44 +1,61 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using Core.Queries;
 using Core.Modding;
 
 namespace Map.Rendering
 {
     /// <summary>
-    /// Manages GPU compute shader for high-performance owner texture population.
-    /// Processes entire map in parallel to populate province owner texture from simulation data.
-    /// Part of the texture-based map rendering system - dual-layer architecture compliance.
-    /// Performance: ~2ms for entire map vs 50+ seconds on CPU
+    /// Manages GPU compute shaders for owner texture population.
+    /// Full-map shader (PopulateOwnerTexture) used at load time.
+    /// Indexed shader (UpdateOwnerByIndex) used at runtime — dispatches only over
+    /// pixels belonging to changed provinces instead of scanning all 97.5M pixels.
     /// </summary>
     public class OwnerTextureDispatcher : MonoBehaviour
     {
-        // Loaded via ModLoader
+        // Full-map compute shader (load time)
         private ComputeShader populateOwnerCompute;
+        private int populateOwnersKernel;
+
+        // Indexed compute shader (runtime)
+        private ComputeShader updateByIndexCompute;
+        private int updateByIndexKernel;
 
         [Header("Debug")]
         [SerializeField] private bool logPerformance = true;
-        [SerializeField] private bool debugWriteProvinceIDs = false; // Debug: Write province IDs instead of owner IDs to verify texture reading
+        [SerializeField] private bool debugWriteProvinceIDs = false;
 
-        // Kernel index
-        private int populateOwnersKernel;
+        private const int THREAD_GROUP_SIZE_FULL = 8;
+        private const int THREAD_GROUP_SIZE_INDEXED = 64;
 
-        // Thread group sizes (must match compute shader)
-        private const int THREAD_GROUP_SIZE = 8;
-
-        // GPU buffer for province owner data
+        // Full-map buffers (load time)
         private ComputeBuffer provinceOwnerBuffer;
         private int bufferCapacity;
-
-        // Reusable CPU-side buffer for owner data (avoids allocation per update)
         private uint[] ownerData;
+
+        // Pixel index buffers (built at load time, used at runtime)
+        private ComputeBuffer pixelCoordsBuffer;
+        private ComputeBuffer pixelOffsetsBuffer;
+        private ComputeBuffer pixelCountsBuffer;
+        private bool hasPixelIndex;
+
+        // Per-dispatch buffers — double-buffered to avoid GPU sync stalls.
+        // Writing SetData to a buffer the GPU is still reading forces a pipeline flush.
+        private ComputeBuffer[] changedProvincesBuffers = new ComputeBuffer[2];
+        private ComputeBuffer[] dispatchOffsetsBuffers = new ComputeBuffer[2];
+        private int activeBufferIndex;
+        private uint[] changedProvincesData;
+        private uint[] dispatchOffsetsData;
+        private int changedBufferCapacity;
 
         // References
         private MapTextureManager textureManager;
         private bool isInitialized = false;
 
-        /// <summary>
-        /// Initialize compute shader kernels. Called by ArchonEngine.
-        /// </summary>
+        // CPU-side copies of offset/count tables for dispatch calculation
+        private uint[] cpuOffsets;
+        private uint[] cpuCounts;
+
         public void Initialize()
         {
             if (isInitialized) return;
@@ -46,55 +63,182 @@ namespace Map.Rendering
             InitializeKernels();
         }
 
-        /// <summary>
-        /// Initialize compute shader kernels
-        /// </summary>
         private void InitializeKernels()
         {
-            if (populateOwnerCompute == null)
-            {
-                // Load compute shader - check mods first, then fall back to Resources
-                populateOwnerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
-                    "PopulateOwnerTexture",
-                    "Shaders/PopulateOwnerTexture"
-                );
+            populateOwnerCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "PopulateOwnerTexture", "Shaders/PopulateOwnerTexture");
 
-                if (populateOwnerCompute == null)
-                {
-                    ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not found!", "map_rendering");
-                    return;
-                }
-            }
+            if (populateOwnerCompute != null)
+                populateOwnersKernel = populateOwnerCompute.FindKernel("PopulateOwners");
+            else
+                ArchonLogger.LogWarning("OwnerTextureDispatcher: PopulateOwnerTexture compute shader not found!", "map_rendering");
 
-            // Get kernel index
-            populateOwnersKernel = populateOwnerCompute.FindKernel("PopulateOwners");
+            updateByIndexCompute = ModLoader.LoadAssetWithFallback<ComputeShader>(
+                "UpdateOwnerByIndex", "Shaders/UpdateOwnerByIndex");
 
-            if (logPerformance)
-            {
-                ArchonLogger.Log($"OwnerTextureDispatcher: Initialized with kernel index {populateOwnersKernel}", "map_initialization");
-            }
+            if (updateByIndexCompute != null)
+                updateByIndexKernel = updateByIndexCompute.FindKernel("UpdateOwnerByIndex");
+            else
+                ArchonLogger.LogWarning("OwnerTextureDispatcher: UpdateOwnerByIndex compute shader not found!", "map_rendering");
         }
 
-        /// <summary>
-        /// Set the texture manager reference
-        /// </summary>
         public void SetTextureManager(MapTextureManager manager)
         {
             textureManager = manager;
         }
 
         /// <summary>
-        /// Populate owner texture from Core simulation data using GPU compute shader
-        /// Architecture: Core ProvinceQueries → GPU buffer → GPU texture
+        /// Set the per-province pixel index built at load time.
+        /// Enables targeted runtime updates via UpdateOwnerByIndex compute shader.
         /// </summary>
-        /// <param name="provinceQueries">Read-only access to Core simulation data</param>
+        public void SetPixelIndex(uint[] pixelCoords, uint[] offsets, uint[] counts)
+        {
+            // Release old buffers
+            pixelCoordsBuffer?.Release();
+            pixelOffsetsBuffer?.Release();
+            pixelCountsBuffer?.Release();
+
+            if (pixelCoords.Length == 0)
+            {
+                hasPixelIndex = false;
+                return;
+            }
+
+            pixelCoordsBuffer = new ComputeBuffer(pixelCoords.Length, sizeof(uint));
+            pixelCoordsBuffer.SetData(pixelCoords);
+
+            pixelOffsetsBuffer = new ComputeBuffer(offsets.Length, sizeof(uint));
+            pixelOffsetsBuffer.SetData(offsets);
+
+            pixelCountsBuffer = new ComputeBuffer(counts.Length, sizeof(uint));
+            pixelCountsBuffer.SetData(counts);
+
+            // Keep CPU copies for dispatch offset calculation
+            cpuOffsets = offsets;
+            cpuCounts = counts;
+            hasPixelIndex = true;
+
+            ArchonLogger.Log($"OwnerTextureDispatcher: Pixel index set ({pixelCoords.Length:N0} pixel entries)", "map_initialization");
+        }
+
+        /// <summary>
+        /// Full populate: builds entire owner buffer from simulation data.
+        /// Used at load time only.
+        /// </summary>
         [ContextMenu("Populate Owner Texture")]
         public void PopulateOwnerTexture(ProvinceQueries provinceQueries)
         {
+            if (!ValidateDependencies(provinceQueries))
+                return;
+
+            EnsureOwnerBufferCreated();
+
+            System.Array.Clear(ownerData, 0, ownerData.Length);
+            provinceQueries.FillOwnerBuffer(ownerData);
+
+            provinceOwnerBuffer.SetData(ownerData);
+
+            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+            populateOwnerCompute.SetBuffer(populateOwnersKernel, "ProvinceOwnerBuffer", provinceOwnerBuffer);
+            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+            populateOwnerCompute.SetInt("MapWidth", textureManager.MapWidth);
+            populateOwnerCompute.SetInt("MapHeight", textureManager.MapHeight);
+            populateOwnerCompute.SetInt("DebugWriteProvinceIDs", debugWriteProvinceIDs ? 1 : 0);
+
+            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE_FULL - 1) / THREAD_GROUP_SIZE_FULL;
+            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE_FULL - 1) / THREAD_GROUP_SIZE_FULL;
+            populateOwnerCompute.Dispatch(populateOwnersKernel, threadGroupsX, threadGroupsY, 1);
+        }
+
+        /// <summary>
+        /// Incremental update: queues compute shader dispatch into a CommandBuffer
+        /// for only pixels of changed provinces. Non-blocking — no GPU sync stall.
+        /// Falls back to full-map dispatch if pixel index not available.
+        /// </summary>
+        public void UpdateOwnerTexture(ProvinceQueries provinceQueries, ushort[] changedProvinces, CommandBuffer cmd)
+        {
+            if (!ValidateDependencies(provinceQueries))
+                return;
+
+            if (!hasPixelIndex || updateByIndexCompute == null)
+            {
+                // Fallback: full map dispatch via command buffer
+                EnsureOwnerBufferCreated();
+                for (int i = 0; i < changedProvinces.Length; i++)
+                {
+                    ushort pid = changedProvinces[i];
+                    if (pid < ownerData.Length)
+                    {
+                        ownerData[pid] = provinceQueries.GetOwner(pid);
+                        provinceOwnerBuffer.SetData(ownerData, pid, pid, 1);
+                    }
+                }
+                cmd.SetComputeTextureParam(populateOwnerCompute, populateOwnersKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
+                cmd.SetComputeBufferParam(populateOwnerCompute, populateOwnersKernel, "ProvinceOwnerBuffer", provinceOwnerBuffer);
+                cmd.SetComputeTextureParam(populateOwnerCompute, populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+                cmd.SetComputeIntParam(populateOwnerCompute, "MapWidth", textureManager.MapWidth);
+                cmd.SetComputeIntParam(populateOwnerCompute, "MapHeight", textureManager.MapHeight);
+                cmd.SetComputeIntParam(populateOwnerCompute, "DebugWriteProvinceIDs", 0);
+                int tgx = (textureManager.MapWidth + THREAD_GROUP_SIZE_FULL - 1) / THREAD_GROUP_SIZE_FULL;
+                int tgy = (textureManager.MapHeight + THREAD_GROUP_SIZE_FULL - 1) / THREAD_GROUP_SIZE_FULL;
+                cmd.DispatchCompute(populateOwnerCompute, populateOwnersKernel, tgx, tgy, 1);
+                return;
+            }
+
+            int numChanged = changedProvinces.Length;
+            if (numChanged == 0) return;
+
+            // Build per-dispatch data: packed province+owner, and cumulative pixel offsets
+            EnsureChangedBuffers(numChanged);
+
+            uint totalPixels = 0;
+            for (int i = 0; i < numChanged; i++)
+            {
+                ushort pid = changedProvinces[i];
+                uint newOwner = provinceQueries.GetOwner(pid);
+                changedProvincesData[i] = (uint)pid | (newOwner << 16);
+                dispatchOffsetsData[i] = totalPixels;
+                totalPixels += (pid < cpuCounts.Length) ? cpuCounts[pid] : 0;
+            }
+
+            if (totalPixels == 0) return;
+
+            // Swap to the other buffer set so we don't write to buffers the GPU is still reading
+            activeBufferIndex = 1 - activeBufferIndex;
+            var changedBuf = changedProvincesBuffers[activeBufferIndex];
+            var offsetsBuf = dispatchOffsetsBuffers[activeBufferIndex];
+
+            changedBuf.SetData(changedProvincesData, 0, 0, numChanged);
+            offsetsBuf.SetData(dispatchOffsetsData, 0, 0, numChanged);
+
+            // Queue dispatch into command buffer — non-blocking
+            cmd.SetComputeTextureParam(updateByIndexCompute, updateByIndexKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
+            cmd.SetComputeBufferParam(updateByIndexCompute, updateByIndexKernel, "PixelCoords", pixelCoordsBuffer);
+            cmd.SetComputeBufferParam(updateByIndexCompute, updateByIndexKernel, "ProvincePixelOffsets", pixelOffsetsBuffer);
+            cmd.SetComputeBufferParam(updateByIndexCompute, updateByIndexKernel, "ProvincePixelCounts", pixelCountsBuffer);
+            cmd.SetComputeBufferParam(updateByIndexCompute, updateByIndexKernel, "ChangedProvinces", changedBuf);
+            cmd.SetComputeBufferParam(updateByIndexCompute, updateByIndexKernel, "DispatchOffsets", offsetsBuf);
+            cmd.SetComputeIntParam(updateByIndexCompute, "NumChangedProvinces", numChanged);
+
+            int threadGroups = ((int)totalPixels + THREAD_GROUP_SIZE_INDEXED - 1) / THREAD_GROUP_SIZE_INDEXED;
+            cmd.DispatchCompute(updateByIndexCompute, updateByIndexKernel, threadGroups, 1, 1);
+
+            // Also update CPU-side owner data for consistency (used by full populate if called later)
+            EnsureOwnerBufferCreated();
+            for (int i = 0; i < numChanged; i++)
+            {
+                ushort pid = changedProvinces[i];
+                if (pid < ownerData.Length)
+                    ownerData[pid] = provinceQueries.GetOwner(pid);
+            }
+        }
+
+        private bool ValidateDependencies(ProvinceQueries provinceQueries)
+        {
             if (populateOwnerCompute == null)
             {
-                ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded. Skipping owner texture population.", "map_rendering");
-                return;
+                ArchonLogger.LogWarning("OwnerTextureDispatcher: Compute shader not loaded.", "map_rendering");
+                return false;
             }
 
             if (textureManager == null)
@@ -103,91 +247,66 @@ namespace Map.Rendering
                 if (textureManager == null)
                 {
                     ArchonLogger.LogError("OwnerTextureDispatcher: MapTextureManager not found!", "map_rendering");
-                    return;
+                    return false;
                 }
             }
 
             if (provinceQueries == null)
             {
                 ArchonLogger.LogError("OwnerTextureDispatcher: ProvinceQueries is null!", "map_rendering");
-                return;
+                return false;
             }
 
-            // Start performance timing
-            float startTime = Time.realtimeSinceStartup;
+            return true;
+        }
 
-            // Create/resize buffer if needed (supports up to 65536 provinces)
+        private void EnsureOwnerBufferCreated()
+        {
             const int MAX_PROVINCES = 65536;
             if (provinceOwnerBuffer == null || bufferCapacity != MAX_PROVINCES)
             {
-                // Release old buffer
                 provinceOwnerBuffer?.Release();
-
-                // Create new buffer with uint data (4 bytes per province)
                 bufferCapacity = MAX_PROVINCES;
                 provinceOwnerBuffer = new ComputeBuffer(bufferCapacity, sizeof(uint));
-
-                if (logPerformance)
-                {
-                    ArchonLogger.Log($"OwnerTextureDispatcher: Created GPU buffer for {bufferCapacity} provinces", "map_initialization");
-                }
             }
 
-            // Bulk fill owner data — single linear pass over contiguous buffer, no per-province hash lookups
             if (ownerData == null || ownerData.Length != bufferCapacity)
             {
                 ownerData = new uint[bufferCapacity];
             }
-            System.Array.Clear(ownerData, 0, ownerData.Length);
-            provinceQueries.FillOwnerBuffer(ownerData);
+        }
 
-            // Upload to GPU
-            provinceOwnerBuffer.SetData(ownerData);
+        private void EnsureChangedBuffers(int needed)
+        {
+            if (changedBufferCapacity >= needed) return;
 
-            // ProvinceIDTexture is now a RenderTexture, so compute shader can read it directly
-            var provinceIDTex = textureManager.ProvinceIDTexture;
-
-            // Set compute shader parameters - direct binding, no temporary copy needed
-            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceIDTexture", provinceIDTex);
-            populateOwnerCompute.SetBuffer(populateOwnersKernel, "ProvinceOwnerBuffer", provinceOwnerBuffer);
-            populateOwnerCompute.SetTexture(populateOwnersKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
-
-            // Set dimensions
-            populateOwnerCompute.SetInt("MapWidth", textureManager.MapWidth);
-            populateOwnerCompute.SetInt("MapHeight", textureManager.MapHeight);
-
-            // Set debug mode - write province IDs instead of owner IDs to verify coordinate system
-            populateOwnerCompute.SetInt("DebugWriteProvinceIDs", debugWriteProvinceIDs ? 1 : 0);
-
-            if (debugWriteProvinceIDs)
+            for (int i = 0; i < 2; i++)
             {
-                ArchonLogger.Log("OwnerTextureDispatcher: DEBUG MODE - Writing province IDs instead of owner IDs to ProvinceOwnerTexture", "map_initialization");
+                changedProvincesBuffers[i]?.Release();
+                dispatchOffsetsBuffers[i]?.Release();
             }
 
-            // Calculate thread groups (round up division)
-            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-            // Dispatch compute shader - GPU processes all pixels in parallel
-            populateOwnerCompute.Dispatch(populateOwnersKernel, threadGroupsX, threadGroupsY, 1);
-
-            // Log performance
-            if (logPerformance)
+            // Round up to avoid frequent resizing
+            changedBufferCapacity = Mathf.Max(needed, 64);
+            for (int i = 0; i < 2; i++)
             {
-                float elapsedMs = (Time.realtimeSinceStartup - startTime) * 1000f;
-                ArchonLogger.Log($"OwnerTextureDispatcher: Owner texture populated in {elapsedMs:F2}ms " +
-                    $"({textureManager.MapWidth}x{textureManager.MapHeight} pixels, " +
-                    $"{threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
+                changedProvincesBuffers[i] = new ComputeBuffer(changedBufferCapacity, sizeof(uint));
+                dispatchOffsetsBuffers[i] = new ComputeBuffer(changedBufferCapacity, sizeof(uint));
             }
+            changedProvincesData = new uint[changedBufferCapacity];
+            dispatchOffsetsData = new uint[changedBufferCapacity];
         }
 
         void OnDestroy()
         {
-            // Release GPU buffer
-            if (provinceOwnerBuffer != null)
+            provinceOwnerBuffer?.Release();
+            pixelCoordsBuffer?.Release();
+            pixelOffsetsBuffer?.Release();
+            pixelCountsBuffer?.Release();
+            for (int i = 0; i < 2; i++)
             {
-                provinceOwnerBuffer.Release();
-                provinceOwnerBuffer = null;
+                changedProvincesBuffers[i]?.Release();
+                dispatchOffsetsBuffers[i]?.Release();
             }
         }
 
@@ -212,11 +331,8 @@ namespace Map.Rendering
             ArchonLogger.Log($"Map Size: {textureManager.MapWidth}x{textureManager.MapHeight}", "map_rendering");
 
             var provinceQueries = gameState.ProvinceQueries;
-
-            // Warm up
             PopulateOwnerTexture(provinceQueries);
 
-            // Measure
             float totalTime = 0;
             int iterations = 10;
 

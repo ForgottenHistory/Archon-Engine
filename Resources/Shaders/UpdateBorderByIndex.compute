@@ -1,0 +1,191 @@
+// Indexed Border Update Compute Shader
+// Recalculates DualBorderTexture only at pixels belonging to changed provinces + neighbors.
+// Uses the same pixel index as UpdateOwnerByIndex.
+// Each thread processes one pixel of a changed province AND recalculates its 4 cardinal neighbors.
+//
+// This avoids scanning all 97.5M pixels when only a few provinces changed ownership.
+
+#pragma kernel UpdateBorderByIndex
+
+// Input textures
+Texture2D<float4> ProvinceIDTexture;
+Texture2D<float> ProvinceOwnerTexture;
+
+// Output texture
+RWTexture2D<float2> DualBorderTexture;
+
+// Pixel index (same as UpdateOwnerByIndex)
+StructuredBuffer<uint> PixelCoords;
+StructuredBuffer<uint> ProvincePixelOffsets;
+StructuredBuffer<uint> ProvincePixelCounts;
+
+// Per-dispatch data
+StructuredBuffer<uint> ChangedProvinces;  // provinceId (low 16 bits only, owner not needed)
+StructuredBuffer<uint> DispatchOffsets;
+
+uint NumChangedProvinces;
+uint MapWidth;
+uint MapHeight;
+
+// Border parameters
+uint CountryBorderThickness;
+uint ProvinceBorderThickness;
+float BorderAntiAliasing;
+
+uint DecodeProvinceID(float2 encoded)
+{
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+    return (g << 8) | r;
+}
+
+// Recalculate border at a single pixel position
+void RecalcBorderAt(uint2 pos)
+{
+    if (pos.x >= MapWidth || pos.y >= MapHeight)
+        return;
+
+    float2 currentEncoded = ProvinceIDTexture[pos].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+    float currentOwnerData = ProvinceOwnerTexture[pos].r;
+    uint currentOwner = (uint)(currentOwnerData + 0.5);
+
+    float provinceStrength = 0.0;
+    float countryStrength = 0.0;
+
+    int provinceRadius = (int)ProvinceBorderThickness;
+    int countryRadius = (int)CountryBorderThickness;
+    int maxRadius = max(provinceRadius, countryRadius);
+    if (BorderAntiAliasing > 0.0)
+        maxRadius = max(maxRadius, (int)ceil(BorderAntiAliasing));
+
+    if (maxRadius == 0)
+    {
+        // Fast path: thin borders, no AA
+        int2 offsets[4] = { int2(1,0), int2(-1,0), int2(0,1), int2(0,-1) };
+        for (int i = 0; i < 4; i++)
+        {
+            int2 np = int2(pos) + offsets[i];
+            if (np.x < 0 || np.x >= (int)MapWidth || np.y < 0 || np.y >= (int)MapHeight)
+                continue;
+
+            uint neighborProvince = DecodeProvinceID(ProvinceIDTexture[np].rg);
+            if (currentProvince != neighborProvince)
+            {
+                provinceStrength = 1.0;
+                float neighborOwnerData = ProvinceOwnerTexture[np].r;
+                uint neighborOwner = (uint)(neighborOwnerData + 0.5);
+                if (currentOwner != neighborOwner)
+                    countryStrength = 1.0;
+            }
+        }
+    }
+    else
+    {
+        // Thick borders with AA
+        float minProvinceDistance = 999999.0;
+        float minCountryDistance = 999999.0;
+        bool hasProvinceBorder = false;
+        bool hasCountryBorder = false;
+
+        for (int dy = -maxRadius; dy <= maxRadius; dy++)
+        {
+            for (int dx = -maxRadius; dx <= maxRadius; dx++)
+            {
+                if (dx == 0 && dy == 0) continue;
+                int2 np = int2(pos) + int2(dx, dy);
+                if (np.x < 0 || np.x >= (int)MapWidth || np.y < 0 || np.y >= (int)MapHeight)
+                    continue;
+
+                uint neighborProvince = DecodeProvinceID(ProvinceIDTexture[np].rg);
+                float distance = length(float2(dx, dy));
+
+                if (currentProvince != neighborProvince)
+                {
+                    hasProvinceBorder = true;
+                    minProvinceDistance = min(minProvinceDistance, distance);
+
+                    float neighborOwnerData = ProvinceOwnerTexture[np].r;
+                    uint neighborOwner = (uint)(neighborOwnerData + 0.5);
+                    if (currentOwner != neighborOwner)
+                    {
+                        hasCountryBorder = true;
+                        minCountryDistance = min(minCountryDistance, distance);
+                    }
+                }
+            }
+        }
+
+        if (hasProvinceBorder)
+        {
+            float provinceThreshold = (float)provinceRadius + BorderAntiAliasing;
+            if (minProvinceDistance <= provinceThreshold)
+            {
+                if (BorderAntiAliasing > 0.0)
+                    provinceStrength = 1.0 - smoothstep((float)provinceRadius, provinceThreshold, minProvinceDistance);
+                else
+                    provinceStrength = minProvinceDistance <= (float)provinceRadius ? 1.0 : 0.0;
+            }
+        }
+
+        if (hasCountryBorder)
+        {
+            float countryThreshold = (float)countryRadius + BorderAntiAliasing;
+            if (minCountryDistance <= countryThreshold)
+            {
+                if (BorderAntiAliasing > 0.0)
+                    countryStrength = 1.0 - smoothstep((float)countryRadius, countryThreshold, minCountryDistance);
+                else
+                    countryStrength = minCountryDistance <= (float)countryRadius ? 1.0 : 0.0;
+            }
+        }
+    }
+
+    DualBorderTexture[pos] = float2(countryStrength, provinceStrength);
+}
+
+[numthreads(64, 1, 1)]
+void UpdateBorderByIndex(uint3 id : SV_DispatchThreadID)
+{
+    uint threadIdx = id.x;
+
+    // Binary search for which changed province entry this thread belongs to
+    uint lo = 0;
+    uint hi = NumChangedProvinces;
+    while (lo < hi - 1)
+    {
+        uint mid = (lo + hi) / 2;
+        if (threadIdx < DispatchOffsets[mid])
+            hi = mid;
+        else
+            lo = mid;
+    }
+
+    uint changedIdx = lo;
+    if (changedIdx >= NumChangedProvinces)
+        return;
+
+    uint packed = ChangedProvinces[changedIdx];
+    uint provinceId = packed & 0xFFFF;
+
+    uint pixelStart = ProvincePixelOffsets[provinceId];
+    uint pixelCount = ProvincePixelCounts[provinceId];
+
+    uint localIdx = threadIdx - DispatchOffsets[changedIdx];
+    if (localIdx >= pixelCount)
+        return;
+
+    uint coordPacked = PixelCoords[pixelStart + localIdx];
+    uint px = coordPacked & 0xFFFF;
+    uint py = coordPacked >> 16;
+
+    // Recalculate border at this pixel AND its cardinal neighbors
+    // Neighbors need recalculation because their border status depends on this pixel's owner
+    uint2 pos = uint2(px, py);
+    RecalcBorderAt(pos);
+
+    if (px > 0)            RecalcBorderAt(uint2(px - 1, py));
+    if (px < MapWidth - 1) RecalcBorderAt(uint2(px + 1, py));
+    if (py > 0)            RecalcBorderAt(uint2(px, py - 1));
+    if (py < MapHeight - 1) RecalcBorderAt(uint2(px, py + 1));
+}

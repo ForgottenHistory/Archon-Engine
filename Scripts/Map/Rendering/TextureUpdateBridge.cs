@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering;
 using System.Collections.Generic;
 using Core;
 using Core.Systems;
@@ -96,7 +97,9 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Process all pending province updates in a batch
+        /// Process all pending province updates in a batch.
+        /// Uses CommandBuffer + ExecuteCommandBufferAsync to avoid blocking the main thread
+        /// on GPU compute shader dispatches (eliminates Semaphore.WaitForSignal stalls).
         /// </summary>
         private void ProcessPendingUpdates()
         {
@@ -108,22 +111,30 @@ namespace Map.Rendering
             var changedProvinces = new ushort[pendingProvinceUpdates.Count];
             pendingProvinceUpdates.CopyTo(changedProvinces);
 
-            // Call the existing update method
-            texturePopulator.UpdateSimulationData(textureManager, provinceMapping, gameState, changedProvinces);
+            // Note: UpdateSimulationData is a no-op (owner texture handled by compute shader below).
+            // ApplyTextureChanges is NOT called here — no CPU-side textures change during runtime
+            // province updates. The owner texture is a RenderTexture updated by GPU compute shader.
+            // Calling Texture2D.Apply() on unchanged textures forces a GPU pipeline sync (Semaphore stall).
 
-            // Apply texture changes
-            textureManager.ApplyTextureChanges();
+            // Build a command buffer for all GPU compute work — non-blocking
+            var cmd = new CommandBuffer { name = "ProvinceTextureUpdate" };
+            cmd.SetExecutionFlags(CommandBufferExecutionFlags.AsyncCompute);
 
-            // Update owner texture and regenerate borders
+            // Update owner texture incrementally (only changed provinces)
             if (ownerTextureDispatcher != null && gameState?.ProvinceQueries != null)
             {
-                ownerTextureDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
+                ownerTextureDispatcher.UpdateOwnerTexture(gameState.ProvinceQueries, changedProvinces, cmd);
             }
 
+            // Update borders incrementally (only pixels of changed provinces + neighbors)
             if (borderDispatcher != null)
             {
-                borderDispatcher.DetectBorders();
+                borderDispatcher.DetectBordersIndexed(changedProvinces, cmd);
             }
+
+            // Submit to GPU async compute queue — main thread does NOT wait for completion
+            Graphics.ExecuteCommandBufferAsync(cmd, ComputeQueueType.Default);
+            cmd.Release();
 
             // Clear the batch
             pendingProvinceUpdates.Clear();

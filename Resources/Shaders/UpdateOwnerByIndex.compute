@@ -1,0 +1,63 @@
+// Indexed Owner Texture Update Compute Shader
+// Updates ProvinceOwnerTexture using a pre-built pixel index.
+// Dispatches only over pixels belonging to changed provinces.
+//
+// Data layout:
+//   PixelCoords[]: flat array of packed (x | y << 16) for all province pixels, grouped by province ID
+//   ProvincePixelOffsets[provinceId]: start index into PixelCoords for this province
+//   ProvincePixelCounts[provinceId]: number of pixels for this province
+//   ChangedProvinces[i]: provinceId | (newOwnerId << 16)
+//   DispatchOffsets[i]: cumulative pixel offset — thread IDs [DispatchOffsets[i], DispatchOffsets[i+1]) belong to entry i
+
+#pragma kernel UpdateOwnerByIndex
+
+RWTexture2D<float> ProvinceOwnerTexture;
+
+StructuredBuffer<uint> PixelCoords;
+StructuredBuffer<uint> ProvincePixelOffsets;
+StructuredBuffer<uint> ProvincePixelCounts;
+
+StructuredBuffer<uint> ChangedProvinces;
+StructuredBuffer<uint> DispatchOffsets;
+
+uint NumChangedProvinces;
+
+[numthreads(64, 1, 1)]
+void UpdateOwnerByIndex(uint3 id : SV_DispatchThreadID)
+{
+    uint threadIdx = id.x;
+
+    // Binary search: find which changed-province entry this thread belongs to.
+    // DispatchOffsets[i] is the first thread index for entry i (monotonically increasing).
+    uint lo = 0;
+    uint hi = NumChangedProvinces;
+    while (lo < hi - 1)
+    {
+        uint mid = (lo + hi) / 2;
+        if (threadIdx < DispatchOffsets[mid])
+            hi = mid;
+        else
+            lo = mid;
+    }
+
+    uint changedIdx = lo;
+    if (changedIdx >= NumChangedProvinces)
+        return;
+
+    uint packed = ChangedProvinces[changedIdx];
+    uint provinceId = packed & 0xFFFF;
+    uint newOwnerId = packed >> 16;
+
+    uint pixelStart = ProvincePixelOffsets[provinceId];
+    uint pixelCount = ProvincePixelCounts[provinceId];
+
+    uint localIdx = threadIdx - DispatchOffsets[changedIdx];
+    if (localIdx >= pixelCount)
+        return;
+
+    uint coordPacked = PixelCoords[pixelStart + localIdx];
+    uint px = coordPacked & 0xFFFF;
+    uint py = coordPacked >> 16;
+
+    ProvinceOwnerTexture[uint2(px, py)] = float(newOwnerId);
+}
