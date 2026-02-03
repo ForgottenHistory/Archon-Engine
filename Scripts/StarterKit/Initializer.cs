@@ -58,7 +58,7 @@ namespace StarterKit
 
         [Header("Configuration")]
         [SerializeField] private bool initializeOnStart = true;
-        [SerializeField] private bool logProgress = true;
+        [SerializeField] private bool logProgress = false;
 
         #endregion
 

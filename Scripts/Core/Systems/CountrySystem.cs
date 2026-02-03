@@ -18,7 +18,7 @@ namespace Core.Systems
     public class CountrySystem : MonoBehaviour, System.IDisposable
     {
         [Header("Configuration")]
-        [SerializeField] private int initialCapacity = 1000;  // Max countries supported
+        [SerializeField] private int initialCapacity = 4096;  // Max countries supported (ushort ownerID allows 65535, palette is 4096)
         [SerializeField] private bool enableColdDataCaching = true;
         [SerializeField] private int coldDataCacheSize = 64;
 

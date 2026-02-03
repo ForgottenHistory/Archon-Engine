@@ -175,7 +175,7 @@ namespace Core
 
             // 3. Modifier system (Engine infrastructure for Game layer modifiers)
             // TODO: Get province/country counts from ProvinceSystem/CountrySystem after they're initialized
-            Modifiers = new ModifierSystem(maxCountries: 256, maxProvinces: 8192);
+            Modifiers = new ModifierSystem(maxCountries: 4096, maxProvinces: 65536);
 
             // 4. Resource system (Engine infrastructure for Game layer resources)
             // Note: Resource registration happens in Game layer initialization (GameSystemInitializer)

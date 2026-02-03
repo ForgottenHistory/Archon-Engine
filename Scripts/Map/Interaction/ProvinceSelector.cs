@@ -193,11 +193,6 @@ namespace Map.Interaction
 
             ushort id = textureManager.GetProvinceID(x, y);
 
-            if (logSelectionDebug)
-            {
-                ArchonLogger.Log($"ProvinceSelector: uv=({u:F4},{v:F4}), px=({x},{y}), id={id}", "map_interaction");
-            }
-
             return id;
         }
 

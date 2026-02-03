@@ -175,6 +175,24 @@ namespace StarterKit
                 CountryId = countryId
             };
 
+            // DEBUG: Log adjacency validation
+            if (logProgress)
+            {
+                using var owned = provinceSystem.GetCountryProvinces(countryId, Allocator.Temp);
+                bool actuallyAdjacent = false;
+                ushort adjacentTo = 0;
+                for (int i = 0; i < owned.Length; i++)
+                {
+                    if (gameState.Adjacencies.IsAdjacent(owned[i], targetProvince))
+                    {
+                        actuallyAdjacent = true;
+                        adjacentTo = owned[i];
+                        break;
+                    }
+                }
+                ArchonLogger.Log($"AISystem: Country {countryId} colonizing P{targetProvince} (adjacent={actuallyAdjacent}, adjTo=P{adjacentTo}, owned={owned.Length}, candidates={colonizeCandidates.Count})", "starter_kit");
+            }
+
             bool success = gameState.TryExecuteCommand(command, out string message);
 
             if (success && logProgress)

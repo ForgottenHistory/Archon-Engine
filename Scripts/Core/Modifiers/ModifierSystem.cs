@@ -39,8 +39,8 @@ namespace Core.Modifiers
     /// </summary>
     public class ModifierSystem : IDisposable
     {
-        private const int MAX_COUNTRIES = 256;
-        private const int MAX_PROVINCES = 8192;
+        private const int MAX_COUNTRIES = 4096;
+        private const int MAX_PROVINCES = 65536;
 
         // Global scope (inherited by everyone)
         private ScopedModifierContainer globalScope;
@@ -170,7 +170,7 @@ namespace Core.Modifiers
         {
             if (provinceId >= maxProvinces)
             {
-                Debug.LogWarning($"[ModifierSystem] Province ID {provinceId} exceeds max {maxProvinces}");
+                ArchonLogger.LogWarning($"[ModifierSystem] Province ID {provinceId} exceeds max {maxProvinces}", "core_simulation");
                 return false;
             }
 

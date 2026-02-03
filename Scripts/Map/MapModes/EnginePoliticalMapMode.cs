@@ -44,8 +44,8 @@ namespace Map.MapModes
 
             using var allCountries = countryQueries.GetAllCountryIds(Allocator.Temp);
 
-            // Palette is fixed at 1024 pixels (matches shader's GetColorUV divisor)
-            int paletteSize = 1024;
+            // Palette size matches CountryColorPalette texture width (and shader's GetColorUV divisor)
+            int paletteSize = 4096;
             var palettePixels = new Color32[paletteSize];
 
             // Initialize palette (ID 0 = unowned = ocean color)

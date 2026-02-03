@@ -77,7 +77,7 @@ namespace Map.Rendering
         /// </summary>
         private void CreateProvinceTerrainTexture()
         {
-            provinceTerrainTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false);
+            provinceTerrainTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.RGBA32, false, true);
             provinceTerrainTexture.name = "ProvinceTerrain_Texture";
 
             // Initialize with default land color using direct byte write (RGBA32 = 4 bytes/pixel)

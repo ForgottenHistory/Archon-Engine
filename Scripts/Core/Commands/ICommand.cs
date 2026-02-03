@@ -98,9 +98,8 @@ namespace Core.Commands
         /// </summary>
         protected void LogExecution(string action)
         {
-            #if UNITY_EDITOR
-            ArchonLogger.Log($"Command {CommandId}: {action}", "core_commands");
-            #endif
+            if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                ArchonLogger.Log($"Command {CommandId}: {action}", "core_commands");
         }
     }
 

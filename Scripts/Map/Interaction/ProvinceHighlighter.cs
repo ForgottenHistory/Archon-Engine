@@ -206,11 +206,6 @@ namespace Map.Interaction
 
             // Dispatch compute shader
             highlightCompute.Dispatch(kernelToUse, threadGroupsX, threadGroupsY, 1);
-
-            if (logOperations)
-            {
-                ArchonLogger.Log($"ProvinceHighlighter: Highlighted province {provinceID} in {mode} mode with color {color}", "map_interaction");
-            }
         }
 
         /// <summary>

@@ -116,7 +116,8 @@ namespace Core.Commands
                 return ExecuteLocally(command, out resultMessage);
             }
 
-            ArchonLogger.Log($"CommandProcessor: Submitting {commandType.Name} (typeId={typeId}, multiplayer={IsMultiplayer}, authoritative={IsAuthoritative})", "core_commands");
+            if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                ArchonLogger.Log($"CommandProcessor: Submitting {commandType.Name} (typeId={typeId}, multiplayer={IsMultiplayer}, authoritative={IsAuthoritative})", "core_commands");
 
             // Local validation first
             if (!command.Validate(gameState))
@@ -142,7 +143,8 @@ namespace Core.Commands
             if (success && IsMultiplayer && IsAuthoritative)
             {
                 byte[] commandData = SerializeCommand(typeId, command);
-                ArchonLogger.Log($"CommandProcessor: Broadcasting {commandType.Name} ({commandData.Length} bytes) to clients", "core_commands");
+                if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                    ArchonLogger.Log($"CommandProcessor: Broadcasting {commandType.Name} ({commandData.Length} bytes) to clients", "core_commands");
                 networkBridge.BroadcastCommand(commandData, 0);
             }
 
@@ -198,7 +200,8 @@ namespace Core.Commands
         /// </summary>
         private void HandleRemoteCommand(int peerId, byte[] commandData, uint tick)
         {
-            ArchonLogger.Log($"CommandProcessor: HandleRemoteCommand from peer {peerId} ({commandData?.Length ?? 0} bytes)", "core_commands");
+            if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                ArchonLogger.Log($"CommandProcessor: HandleRemoteCommand from peer {peerId} ({commandData?.Length ?? 0} bytes)", "core_commands");
 
             if (commandData == null || commandData.Length < 2)
             {
@@ -237,7 +240,8 @@ namespace Core.Commands
                         // Broadcast to all clients (including sender)
                         networkBridge.BroadcastCommand(commandData, tick);
 
-                        ArchonLogger.Log($"CommandProcessor: Executed and broadcast command from peer {peerId}", "core_commands");
+                        if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                            ArchonLogger.Log($"CommandProcessor: Executed and broadcast command from peer {peerId}", "core_commands");
                     }
                     else
                     {
@@ -248,7 +252,8 @@ namespace Core.Commands
                 {
                     // Client received from host - execute directly (already validated)
                     command.Execute(gameState);
-                    ArchonLogger.Log($"CommandProcessor: Executed command from host", "core_commands");
+                    if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
+                        ArchonLogger.Log($"CommandProcessor: Executed command from host", "core_commands");
                 }
             }
             catch (Exception e)

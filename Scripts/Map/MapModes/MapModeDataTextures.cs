@@ -110,7 +110,7 @@ namespace Map.MapModes
         /// </summary>
         private void CreateColorPalettes()
         {
-            CountryColorPalette = CreatePaletteTexture("CountryColors", 1024);
+            CountryColorPalette = CreatePaletteTexture("CountryColors", 4096);
             CultureColorPalette = CreatePaletteTexture("CultureColors", 256);
             ReligionColorPalette = CreatePaletteTexture("ReligionColors", 256);
             TerrainColorPalette = CreatePaletteTexture("TerrainColors", 32);
@@ -162,9 +162,9 @@ namespace Map.MapModes
         private void InitializeCountryPalette()
         {
             // Initialize with ocean color - PoliticalMapMode will populate with real country colors
-            var colors = new Color32[1024];
+            var colors = new Color32[4096];
             Color32 oceanColor = new Color32(25, 25, 112, 255); // Dark blue ocean
-            for (int i = 0; i < 1024; i++)
+            for (int i = 0; i < 4096; i++)
             {
                 colors[i] = oceanColor;
             }
