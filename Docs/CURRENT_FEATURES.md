@@ -1,6 +1,6 @@
 # Archon Engine - Current Features
 
-**Last Updated:** 2026-01-24
+**Last Updated:** 2026-02-04
 
 ---
 
@@ -357,8 +357,13 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Data Loading System
 
 - **JSON5 Support** - JSON5 file parsing for game data
+- **Parallel JSON5 Loading** - `Parallel.ForEach` with `ConcurrentBag` for province/country files (~9.3s → ~113ms)
+- **O(1) Country Tag Lookup** - Reverse dictionary replacing O(n) LINQ scan per file
 - **Burst Province Loading** - Parallel province history loading with Burst compilation
 - **Burst Country Loading** - Optimized country data loading
+- **GPU Texture Population** - `PopulateProvinceTextures.compute` for single-pass province texture writes
+- **Raw Pixel Cache** - Zero-allocation texture writes for terrain/heightmap loading
+- **Adjacency Cache** - Cached province adjacency data to avoid recomputation
 - **Bitmap Map Loading** - Load provinces.bmp, terrain.bmp, heightmap.bmp, normal maps
 - **Definition.csv Support** - Complete province definitions (handles 4941 provinces)
 - **Reference Resolution** - String→ID resolution (e.g., "ENG" → CountryId)
@@ -377,6 +382,11 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Frame-Coherent Caching** - Per-frame cache invalidation for expensive queries
 - **Ring Buffers** - Bounded history storage preventing memory growth
 - **Dirty Flag Systems** - Update-only-what-changed architecture
+- **Generation-Based Lazy Invalidation** - Eliminates MarkCountryProvincesDirty with generation counters
+- **Bitmask Modifiers** - Bitfield-based modifier tracking with unsafe fast path for monthly ticks
+- **Index-Based GPU Updates** - `UpdateOwnerByIndex.compute` and `UpdateBorderByIndex.compute` for targeted GPU writes (no full-texture re-upload)
+- **GPU Sync Stall Elimination** - Removed Semaphore.WaitForSignal blocking on province texture updates
+- **Reverse Index (ProvinceDataManager)** - O(1) owner→provinces lookup for province queries
 - **Memory Stability** - Stable memory over 400+ simulated years
 - **GPU Border Generation** - 2ms for 10k provinces via compute shader
 - **Structure of Arrays** - Cache-friendly memory layout for country colors
@@ -414,7 +424,8 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ## Interaction Systems
 
-- **ProvinceSelector** - Texture-based selection with <1ms performance
+- **ProvinceSelector** - Texture-based selection with <1ms performance, world-space hit point with displacement compensation
+- **GPUProvinceNeighborDetector** - GPU compute-based province adjacency detection with cached results
 - **MapInitializer** - Automated setup of map subsystems
 - **MapSystemCoordinator** - Coordinate map subsystems
 - **FastAdjacencyScanner** - Fast province adjacency scanning
@@ -513,6 +524,11 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Shader Infrastructure
 
 - **BorderDetection.compute** - Dual border generation (country + province)
+- **UpdateBorderByIndex.compute** - Index-based border updates (no full-texture re-dispatch)
+- **UpdateOwnerByIndex.compute** - Index-based owner texture updates (eliminates GPU sync stalls)
+- **PopulateProvinceTextures.compute** - Single-pass province texture population at load time
+- **TerrainTypeGenerator.compute** - GPU terrain type texture generation (replaced CPU pixel loop, 860ms → 114ms)
+- **ProvinceTerrainAnalyzer.compute** - GPU-direct terrain analysis for province terrain assignment
 - **TerrainBlendMapGenerator.compute** - 4-channel terrain blend map generation with configurable sampling
 - **Compositing.hlsl** - Modular layer compositing with 6 blend modes (Normal, Multiply, Screen, Overlay, Additive, SoftLight)
 - **MapModeTerrain.hlsl** - Imperator Rome manual bilinear filtering + detail texture blending
@@ -583,4 +599,4 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ---
 
-*Updated: 2026-01-24*
+*Updated: 2026-02-04*
