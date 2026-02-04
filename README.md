@@ -99,13 +99,6 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 - Single draw call for entire map
 - 3D MAP TO BE DETERMINED
 
-**Map Loading (stress test: 15000x6500 map, 97.5M pixels, 50k provinces):**
-- Full load in **~5 seconds**
-- Raw pixel cache: skip PNG decompression on repeat loads (<100ms cache hits)
-- Adjacency cache: skip GPU neighbor detection on repeat loads (<20ms)
-- GPU-direct terrain analysis: compute shader samples textures already on GPU, zero CPU conversion
-- Zero managed allocations during texture population (`GetRawTextureData` + unsafe writes)
-
 **Multiplayer:**
 - Lockstep command synchronization (working)
 - Player-hosted sessions with lobby system
@@ -113,9 +106,17 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 - Automatic desync detection and recovery
 - Deterministic fixed-point math (no floats in simulation)
 
-**Stress test (50,000 provinces, 1,000 countries, 100M pixel map):**
-Ran in editor with i9-14900K & RTX 4070 S
+**Stress test (2026-02-04):**
 
+15000x6500 map, 97.5M pixels, 50k provinces, 665 countries. Ran in editor with i9-14900K & RTX 4070 S
+
+Mapload
+- Full load in **~10 seconds**
+- Raw pixel cache: skip PNG decompression on repeat loads (<100ms cache hits)
+- Adjacency cache: skip GPU neighbor detection on repeat loads (<20ms)
+- GPU-direct: compute shader samples textures already on GPU, zero CPU conversion
+  
+Stability
 - 100 game-years at 100x speed: avg 570-621 FPS, no late-game degradation
 - Monthly tick: avg 1.8-2.8ms
 - Memory stable: ~1430MB managed, ~3530MB total — flat over 100 years
