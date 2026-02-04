@@ -5,7 +5,9 @@ Generate template localization files for Archon Engine.
 Creates Paradox-style YAML localization files:
 - localisation/english/provinces_l_english.yml - Province names
 - localisation/english/countries_l_english.yml - Country names
+- localisation/english/terrain_l_english.yml - Terrain type names
 
+UI localisation (ui_l_english.yml) is manually maintained - not generated.
 This is ENGINE layer template data - uses Paradox YAML format.
 """
 
@@ -124,91 +126,6 @@ def generate_terrain_localisation(output_dir: Path, language: str) -> None:
     print(f"Generated: {filepath} ({len(terrain_types)} terrain types)")
 
 
-def generate_ui_localisation(output_dir: Path, language: str) -> None:
-    """Generate UI string localization file with common terms."""
-    loc_dir = output_dir / "localisation" / language
-    loc_dir.mkdir(parents=True, exist_ok=True)
-
-    filepath = loc_dir / f"ui_l_{language}.yml"
-
-    # Common UI strings for grand strategy games
-    ui_strings = [
-        # Province info
-        ("UI_PROVINCE", "Province"),
-        ("UI_PROVINCE_ID", "ID"),
-        ("UI_OWNER", "Owner"),
-        ("UI_CONTROLLER", "Controller"),
-        ("UI_DEVELOPMENT", "Development"),
-        ("UI_TERRAIN", "Terrain"),
-        ("UI_POPULATION", "Population"),
-        ("UI_UNOWNED", "Unowned"),
-
-        # Country info
-        ("UI_COUNTRY", "Country"),
-        ("UI_CAPITAL", "Capital"),
-        ("UI_PROVINCES", "Provinces"),
-        ("UI_TREASURY", "Treasury"),
-
-        # General UI
-        ("UI_OK", "OK"),
-        ("UI_CANCEL", "Cancel"),
-        ("UI_CONFIRM", "Confirm"),
-        ("UI_CLOSE", "Close"),
-        ("UI_YES", "Yes"),
-        ("UI_NO", "No"),
-        ("UI_NONE", "None"),
-        ("UI_UNKNOWN", "Unknown"),
-
-        # Time controls
-        ("UI_PAUSE", "Pause"),
-        ("UI_RESUME", "Resume"),
-        ("UI_SPEED", "Speed"),
-
-        # Buildings
-        ("UI_BUILDINGS", "Buildings"),
-        ("UI_NO_BUILDINGS", "No buildings"),
-        ("UI_GOLD_BONUS", "Gold Bonus"),
-        ("UI_BUILD", "Build"),
-
-        # Units
-        ("UI_UNITS", "Units"),
-        ("UI_NO_UNITS", "No units"),
-        ("UI_CREATE_UNIT", "Create Unit"),
-        ("UI_DISBAND", "Disband"),
-        ("UI_STRENGTH", "Str"),
-        ("UI_MORALE", "Mor"),
-
-        # Unit types (StarterKit defaults)
-        ("UNIT_INFANTRY", "Infantry"),
-        ("UNIT_CAVALRY", "Cavalry"),
-        ("UNIT_ARTILLERY", "Artillery"),
-
-        # Building types (StarterKit defaults)
-        ("BUILDING_FARM", "Farm"),
-        ("BUILDING_MARKET", "Market"),
-        ("BUILDING_FORTRESS", "Fortress"),
-        ("BUILDING_WORKSHOP", "Workshop"),
-
-        # Time
-        ("UI_DAY", "Day"),
-        ("UI_MONTH", "Month"),
-        ("UI_YEAR", "Year"),
-        ("UI_PAUSED", "Paused"),
-
-        # Actions
-        ("UI_RECRUIT", "Recruit"),
-        ("UI_DECLARE_WAR", "Declare War"),
-        ("UI_MAKE_PEACE", "Make Peace"),
-    ]
-
-    with open(filepath, "w", encoding="utf-8-sig") as f:
-        f.write(f"l_{language}:\n")
-
-        for key, value in ui_strings:
-            f.write(f' {key}:0 "{value}"\n')
-
-    print(f"Generated: {filepath} ({len(ui_strings)} UI strings)")
-
 
 def main():
     parser = argparse.ArgumentParser(
@@ -261,9 +178,6 @@ def main():
 
         # Generate terrain names
         generate_terrain_localisation(output_dir, lang)
-
-        # Generate UI strings
-        generate_ui_localisation(output_dir, lang)
 
         # Generate province names if definition.csv provided
         if args.definition:
