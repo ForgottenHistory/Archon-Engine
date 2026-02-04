@@ -112,15 +112,13 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 
 Mapload
 - Full load in **~10 seconds**
-- Raw pixel cache: skip PNG decompression on repeat loads (<100ms cache hits)
-- Adjacency cache: skip GPU neighbor detection on repeat loads (<20ms)
+- Aggressive raw caching: skip decompression on repeat loads (<100ms cache hits)
 - GPU-direct: compute shader samples textures already on GPU, zero CPU conversion
   
 Stability
 - 100 game-years at 100x speed: avg 570-621 FPS, no late-game degradation
 - Monthly tick: avg 1.8-2.8ms
-- Memory stable: ~1430MB managed, ~3530MB total — flat over 100 years
-- Map load: under 10 seconds (15000x6500 bitmap, 97.5M pixels)
+- Memory stable: ~1430MB managed, ~3530MB total - flat over 100 years
 
 *Using StarterKit systems (economy, AI, buildings, diplomacy) on a large dataset — not a full game complexity scale. Real games with more systems and mechanics will have higher overhead.*
 
@@ -184,8 +182,6 @@ See [Scripts/StarterKit/README.md](Scripts/StarterKit/README.md) for implementat
 - Desync detection and automatic recovery infrastructure
 
 **Map Layer (In Progress):**
-
-As in, practical implementation of core systems.
 
 - Vector like borders, razor thin
 - 3D terrain tessellation and smart texturing for realistic terrain
