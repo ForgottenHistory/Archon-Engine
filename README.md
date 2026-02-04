@@ -95,11 +95,6 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 
 ## What Makes This Different
 
-**Memory Efficiency:**
-- 8-byte province structs: 10,000 provinces = 80KB hot data
-- Hot/cold data separation for cache-friendly access
-- Zero-allocation EventBus (99.99% allocation reduction)
-
 **Rendering Performance:**
 - Single draw call for entire map
 - 3D MAP TO BE DETERMINED
@@ -118,11 +113,15 @@ git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engin
 - Automatic desync detection and recovery
 - Deterministic fixed-point math (no floats in simulation)
 
-**Tested with ~4,000 provinces:**
-- Province updates: 0.24ms (target: <5ms)
-- EventBus: 0.85ms, zero allocations
-- Fixed-point math: 0.13ms for 10k calculations
-- Memory stability: Stable over 400+ simulated years
+**Stress test (50,000 provinces, 1,000 countries, 100M pixel map):**
+Ran in editor with i9-14900K & RTX 4070 S
+
+- 100 game-years at 100x speed: avg 570-621 FPS, no late-game degradation
+- Monthly tick: avg 1.8-2.8ms
+- Memory stable: ~1430MB managed, ~3530MB total — flat over 100 years
+- Map load: under 10 seconds (15000x6500 bitmap, 97.5M pixels)
+
+*Using StarterKit systems (economy, AI, buildings, diplomacy) on a large dataset — not a full game complexity scale. Real games with more systems and mechanics will have higher overhead.*
 
 ## Structure
 
