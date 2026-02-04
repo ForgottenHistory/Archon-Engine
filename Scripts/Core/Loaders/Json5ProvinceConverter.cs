@@ -1,6 +1,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
 using Unity.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -37,29 +40,31 @@ namespace Core.Loaders
 
             ArchonLogger.Log($"Loading {files.Length} province JSON5 files...", "core_data_loading");
 
-            var rawDataList = new List<RawProvinceData>();
+            var rawDataBag = new ConcurrentBag<RawProvinceData>();
             int failedCount = 0;
 
-            foreach (string filePath in files)
+            Parallel.ForEach(files, filePath =>
             {
                 try
                 {
                     var provinceData = LoadSingleProvinceFile(filePath);
                     if (provinceData.provinceID > 0)
                     {
-                        rawDataList.Add(provinceData);
+                        rawDataBag.Add(provinceData);
                     }
                     else
                     {
-                        failedCount++;
+                        Interlocked.Increment(ref failedCount);
                     }
                 }
                 catch (Exception e)
                 {
                     ArchonLogger.LogError($"Failed to load province file {filePath}: {e.Message}", "core_data_loading");
-                    failedCount++;
+                    Interlocked.Increment(ref failedCount);
                 }
-            }
+            });
+
+            var rawDataList = new List<RawProvinceData>(rawDataBag);
 
             if (rawDataList.Count == 0)
             {

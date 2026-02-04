@@ -1,7 +1,9 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
 using Unity.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
@@ -38,29 +40,43 @@ namespace Core.Loaders
 
             ArchonLogger.Log($"Loading {files.Length} country JSON5 files...", "core_data_loading");
 
-            var rawDataList = new List<RawCountryData>();
+            // Build reverse lookup: filename (no ext, lowercase) -> tag for O(1) access
+            Dictionary<string, string> reverseTagMap = null;
+            if (tagMapping != null)
+            {
+                reverseTagMap = new Dictionary<string, string>(tagMapping.Count, StringComparer.OrdinalIgnoreCase);
+                foreach (var kvp in tagMapping)
+                {
+                    string mappedFileName = Path.GetFileNameWithoutExtension(kvp.Value);
+                    reverseTagMap[mappedFileName] = kvp.Key;
+                }
+            }
+
+            var rawDataBag = new ConcurrentBag<RawCountryData>();
             int failedCount = 0;
 
-            foreach (string filePath in files)
+            Parallel.ForEach(files, filePath =>
             {
                 try
                 {
-                    var countryData = LoadSingleCountryFile(filePath, tagMapping);
+                    var countryData = LoadSingleCountryFile(filePath, reverseTagMap);
                     if (!string.IsNullOrEmpty(countryData.tag.ToString()) && countryData.tag.ToString() != "---")
                     {
-                        rawDataList.Add(countryData);
+                        rawDataBag.Add(countryData);
                     }
                     else
                     {
-                        failedCount++;
+                        Interlocked.Increment(ref failedCount);
                     }
                 }
                 catch (Exception e)
                 {
                     ArchonLogger.LogError($"Failed to load country file {filePath}: {e.Message}", "core_data_loading");
-                    failedCount++;
+                    Interlocked.Increment(ref failedCount);
                 }
-            }
+            });
+
+            var rawDataList = new List<RawCountryData>(rawDataBag);
 
             if (rawDataList.Count == 0)
             {
@@ -79,30 +95,16 @@ namespace Core.Loaders
         /// <summary>
         /// Load and parse a single country JSON5 file
         /// </summary>
-        private static RawCountryData LoadSingleCountryFile(string filePath, Dictionary<string, string> tagMapping = null)
+        private static RawCountryData LoadSingleCountryFile(string filePath, Dictionary<string, string> reverseTagMap = null)
         {
             // Get filename without extension
             string fileName = Path.GetFileNameWithoutExtension(filePath);
 
-            // Try to get tag from mapping first, fallback to filename extraction
+            // Try to get tag from reverse map (O(1) lookup), fallback to filename extraction
             string countryTag = null;
-            bool foundInMapping = false;
-            if (tagMapping != null)
+            if (reverseTagMap != null)
             {
-                // Look for matching filename in tag mapping (e.g., "Shimazu.txt" -> "SMZ")
-                // Extract the actual filename from the path to avoid false matches
-                // (e.g., "Bar" shouldn't match "Malabar.txt")
-                var matchingEntry = tagMapping.FirstOrDefault(kvp =>
-                {
-                    string pathFileName = Path.GetFileNameWithoutExtension(kvp.Value);
-                    return pathFileName.Equals(fileName, StringComparison.OrdinalIgnoreCase);
-                });
-
-                if (matchingEntry.Key != null)
-                {
-                    countryTag = matchingEntry.Key;
-                    foundInMapping = true;
-                }
+                reverseTagMap.TryGetValue(fileName, out countryTag);
             }
 
             // Fallback to extracting from filename if no mapping found
