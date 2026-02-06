@@ -162,8 +162,8 @@ namespace Map.Core
         }
 
         /// <summary>
-        /// Initialize border system (distance field generator)
-        /// Mirrors what HegemonMapPhaseHandler.ScanProvinceAdjacencies does in GAME layer
+        /// Initialize border system - now handled by ApplyBorderConfiguration
+        /// This method just validates dependencies are ready
         /// </summary>
         private IEnumerator InitializeBorderSystem()
         {
@@ -182,20 +182,11 @@ namespace Map.Core
                 yield break;
             }
 
-            // Border rendering mode is set via inspector on BorderComputeDispatcher component
-            // Available modes: ShaderDistanceField, ShaderPixelPerfect, MeshGeometry, None
-
-            // Initialize smooth borders with distance field generator
-            borderDispatcher.InitializeSmoothBorders(
-                gameState.Adjacencies,
-                gameState.Provinces,
-                gameState.Countries,
-                mapSystemCoordinator.ProvinceMapping,
-                null // mapPlaneTransform not needed for shader mode
-            );
+            // Border initialization now happens in ApplyBorderConfiguration
+            // which uses the mode from VisualStyleConfiguration
 
             if (logProgress)
-                ArchonLogger.Log("EngineMapInitializer: Initialized border distance field system", "map_initialization");
+                ArchonLogger.Log("EngineMapInitializer: Border system ready for configuration", "map_initialization");
 
             yield return null;
         }

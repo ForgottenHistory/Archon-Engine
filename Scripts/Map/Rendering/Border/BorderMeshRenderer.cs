@@ -113,7 +113,7 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Create unlit vertex color material for borders
+        /// Create material for borders with texture
         /// </summary>
         private Material CreateBorderMaterial()
         {
@@ -130,8 +130,80 @@ namespace Map.Rendering
                 name = "BorderMeshMaterial"
             };
 
+            // Load border texture from Resources or Template-Data
+            Texture2D borderTexture = Resources.Load<Texture2D>("Textures/border_texture");
+            if (borderTexture == null)
+            {
+                // Try loading from Archon-Engine Template-Data path
+                borderTexture = Resources.Load<Texture2D>("border_texture");
+            }
+
+            if (borderTexture != null)
+            {
+                mat.SetTexture("_BorderTex", borderTexture);
+                ArchonLogger.Log($"BorderMeshRenderer: Loaded border texture ({borderTexture.width}x{borderTexture.height})", "map_initialization");
+            }
+            else
+            {
+                // Create a fallback texture: white horizontal line in center
+                borderTexture = CreateFallbackBorderTexture();
+                mat.SetTexture("_BorderTex", borderTexture);
+                ArchonLogger.LogWarning("BorderMeshRenderer: Using fallback border texture. Place border_texture.png in Resources folder for custom texture.", "map_initialization");
+            }
+
             ArchonLogger.Log("BorderMeshRenderer: Created material with Archon/BorderMesh shader", "map_initialization");
             return mat;
+        }
+
+        /// <summary>
+        /// Set a custom border texture on the material
+        /// </summary>
+        public void SetBorderTexture(Texture2D texture)
+        {
+            if (borderMaterial != null && texture != null)
+            {
+                borderMaterial.SetTexture("_BorderTex", texture);
+                ArchonLogger.Log($"BorderMeshRenderer: Set custom border texture ({texture.width}x{texture.height})", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Create a simple fallback border texture: white line in center, black edges
+        /// </summary>
+        private Texture2D CreateFallbackBorderTexture()
+        {
+            int width = 64;
+            int height = 64;
+            Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
+
+            Color black = new Color(0, 0, 0, 0); // Transparent black
+            Color white = Color.white;
+
+            // Create horizontal line in center with soft edges
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    // V coordinate (0 to 1) - determines if we're in the line
+                    float v = y / (float)(height - 1);
+
+                    // Line is in center (V = 0.3 to 0.7) with soft falloff
+                    float centerDist = Mathf.Abs(v - 0.5f);
+                    float lineWidth = 0.2f; // Half-width of line
+                    float softness = 0.1f;
+
+                    float alpha = 1f - Mathf.Clamp01((centerDist - lineWidth) / softness);
+
+                    tex.SetPixel(x, y, new Color(1, 1, 1, alpha));
+                }
+            }
+
+            tex.Apply();
+            tex.wrapModeU = TextureWrapMode.Repeat; // Tile along border length
+            tex.wrapModeV = TextureWrapMode.Clamp;  // Clamp across border width
+            tex.filterMode = FilterMode.Bilinear;
+
+            return tex;
         }
 
         /// <summary>

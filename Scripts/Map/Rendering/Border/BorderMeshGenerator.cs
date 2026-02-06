@@ -18,6 +18,7 @@ namespace Map.Rendering
         private List<Vector3> vertices = new List<Vector3>();
         private List<int> triangles = new List<int>();
         private List<Color> colors = new List<Color>();
+        private List<Vector2> uvs = new List<Vector2>();
 
         // Separate meshes for different border types (may be split into multiple meshes due to 65k vertex limit)
         private List<Mesh> provinceBorderMeshes = new List<Mesh>();
@@ -44,10 +45,12 @@ namespace Map.Rendering
             var currentProvinceVerts = new List<Vector3>();
             var currentProvinceTris = new List<int>();
             var currentProvinceColors = new List<Color>();
+            var currentProvinceUVs = new List<Vector2>();
 
             var currentCountryVerts = new List<Vector3>();
             var currentCountryTris = new List<int>();
             var currentCountryColors = new List<Color>();
+            var currentCountryUVs = new List<Vector2>();
 
             int totalSegments = 0;
             int provinceVertCount = 0;
@@ -98,6 +101,7 @@ namespace Map.Rendering
                 var targetVertices = isCountryBorder ? currentCountryVerts : currentProvinceVerts;
                 var targetTriangles = isCountryBorder ? currentCountryTris : currentProvinceTris;
                 var targetColors = isCountryBorder ? currentCountryColors : currentProvinceColors;
+                var targetUVs = isCountryBorder ? currentCountryUVs : currentProvinceUVs;
 
                 // Check if adding this border would exceed vertex limit
                 if (targetVertices.Count + estimatedVerts > MAX_VERTICES_PER_MESH)
@@ -105,39 +109,41 @@ namespace Map.Rendering
                     // Finalize current mesh before starting new one
                     if (isCountryBorder && currentCountryVerts.Count > 0)
                     {
-                        var mesh = CreateSingleMesh(currentCountryVerts, currentCountryTris, currentCountryColors, $"Country Borders {countryBorderMeshes.Count}");
+                        var mesh = CreateSingleMesh(currentCountryVerts, currentCountryTris, currentCountryColors, currentCountryUVs, $"Country Borders {countryBorderMeshes.Count}");
                         countryBorderMeshes.Add(mesh);
                         countryVertCount += currentCountryVerts.Count;
                         currentCountryVerts.Clear();
                         currentCountryTris.Clear();
                         currentCountryColors.Clear();
+                        currentCountryUVs.Clear();
                     }
                     else if (!isCountryBorder && currentProvinceVerts.Count > 0)
                     {
-                        var mesh = CreateSingleMesh(currentProvinceVerts, currentProvinceTris, currentProvinceColors, $"Province Borders {provinceBorderMeshes.Count}");
+                        var mesh = CreateSingleMesh(currentProvinceVerts, currentProvinceTris, currentProvinceColors, currentProvinceUVs, $"Province Borders {provinceBorderMeshes.Count}");
                         provinceBorderMeshes.Add(mesh);
                         provinceVertCount += currentProvinceVerts.Count;
                         currentProvinceVerts.Clear();
                         currentProvinceTris.Clear();
                         currentProvinceColors.Clear();
+                        currentProvinceUVs.Clear();
                     }
                 }
 
                 // Generate triangle strip for this border
-                GenerateQuadsForPolyline(polyline, targetVertices, targetTriangles, targetColors, style);
+                GenerateQuadsForPolyline(polyline, targetVertices, targetTriangles, targetColors, targetUVs, style);
                 totalSegments += polyline.Count - 1;
             }
 
             // Finalize any remaining meshes
             if (currentProvinceVerts.Count > 0)
             {
-                var mesh = CreateSingleMesh(currentProvinceVerts, currentProvinceTris, currentProvinceColors, $"Province Borders {provinceBorderMeshes.Count}");
+                var mesh = CreateSingleMesh(currentProvinceVerts, currentProvinceTris, currentProvinceColors, currentProvinceUVs, $"Province Borders {provinceBorderMeshes.Count}");
                 provinceBorderMeshes.Add(mesh);
                 provinceVertCount += currentProvinceVerts.Count;
             }
             if (currentCountryVerts.Count > 0)
             {
-                var mesh = CreateSingleMesh(currentCountryVerts, currentCountryTris, currentCountryColors, $"Country Borders {countryBorderMeshes.Count}");
+                var mesh = CreateSingleMesh(currentCountryVerts, currentCountryTris, currentCountryColors, currentCountryUVs, $"Country Borders {countryBorderMeshes.Count}");
                 countryBorderMeshes.Add(mesh);
                 countryVertCount += currentCountryVerts.Count;
             }
@@ -153,12 +159,13 @@ namespace Map.Rendering
         /// <summary>
         /// Create a single mesh from vertex data (helper for GenerateBorderMeshes)
         /// </summary>
-        private Mesh CreateSingleMesh(List<Vector3> verts, List<int> tris, List<Color> cols, string name)
+        private Mesh CreateSingleMesh(List<Vector3> verts, List<int> tris, List<Color> cols, List<Vector2> uvs, string name)
         {
             var mesh = new Mesh { name = name };
             mesh.SetVertices(verts);
             mesh.SetTriangles(tris, 0);
             mesh.SetColors(cols);
+            mesh.SetUVs(0, uvs);
             mesh.RecalculateBounds();
             return mesh;
         }
@@ -167,8 +174,9 @@ namespace Map.Rendering
         /// Generate triangle strip geometry for a polyline (SEAMLESS - Paradox approach)
         /// Creates alternating left/right vertices that form connected triangles
         /// Border width: 0.0002 world units (Paradox value = sub-pixel thin)
+        /// UVs: U = along border length, V = 0 (left edge) to 1 (right edge)
         /// </summary>
-        private void GenerateQuadsForPolyline(List<Vector2> polyline, List<Vector3> verts, List<int> tris, List<Color> cols, BorderStyle style)
+        private void GenerateQuadsForPolyline(List<Vector2> polyline, List<Vector3> verts, List<int> tris, List<Color> cols, List<Vector2> uvs, BorderStyle style)
         {
             if (polyline.Count < 2)
                 return;
@@ -188,8 +196,11 @@ namespace Map.Rendering
             // Vertices: [A_left, A_right, B_left, B_right, C_left, C_right, D_left, D_right]
             // Triangles: (0,1,2), (1,2,3), (2,3,4), (3,4,5), ... (automatic via index pattern)
 
-            // First pass: convert all polyline points to world space
+            // First pass: convert all polyline points to world space and calculate total length
             List<Vector3> worldPoints = new List<Vector3>();
+            List<float> accumulatedDistances = new List<float>();
+            float totalLength = 0f;
+
             for (int i = 0; i < polyline.Count; i++)
             {
                 Vector2 p = polyline[i];
@@ -199,6 +210,12 @@ namespace Map.Rendering
                 float x = 5f - (p.x / mapWidth) * 10f;  // Flipped
                 float z = (p.y / mapHeight) * 10f - 5f;
                 worldPoints.Add(new Vector3(x, 0, z));
+
+                if (i > 0)
+                {
+                    totalLength += Vector3.Distance(worldPoints[i], worldPoints[i - 1]);
+                }
+                accumulatedDistances.Add(totalLength);
             }
 
             // Second pass: generate vertices with perpendiculars calculated in world space
@@ -221,6 +238,14 @@ namespace Map.Rendering
 
                 cols.Add(borderColor);
                 cols.Add(borderColor);
+
+                // UV coordinates: U = along length (tiled based on world distance), V = across width (0 = left, 1 = right)
+                // Use accumulated distance for U - this allows texture patterns to tile consistently
+                // Multiply by a scale factor to control texture repeat rate (higher = more tiles)
+                float textureRepeatScale = 10f; // Adjust for desired tiling density
+                float u = accumulatedDistances[i] * textureRepeatScale;
+                uvs.Add(new Vector2(u, 0f)); // Left edge: V = 0
+                uvs.Add(new Vector2(u, 1f)); // Right edge: V = 1
             }
 
             // Generate triangle indices for strip

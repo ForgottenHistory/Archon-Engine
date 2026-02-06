@@ -680,7 +680,8 @@ namespace Engine
                 MapModeManager.SetMapMode(MapMode.Political, forceUpdate: true);
             }
 
-            // Initialize border system
+            // Initialize border system via ApplyBorderConfiguration
+            // This handles both initialization and border generation using the mode from VisualStyleConfiguration
             if (borderDispatcher == null)
             {
                 ArchonLogger.LogWarning("ArchonEngine: borderDispatcher is null, cannot initialize borders", "map_initialization");
@@ -689,22 +690,10 @@ namespace Engine
             {
                 ArchonLogger.LogWarning("ArchonEngine: Adjacencies not initialized yet, cannot initialize borders", "map_initialization");
             }
-            else
+            else if (visualStyle != null && VisualStyleManager != null)
             {
-                ArchonLogger.Log("ArchonEngine: Initializing smooth borders...", "map_initialization");
-                borderDispatcher.InitializeSmoothBorders(
-                    GameState.Adjacencies,
-                    GameState.Provinces,
-                    GameState.Countries,
-                    mapSystemCoordinator?.ProvinceMapping,
-                    null
-                );
-
-                // Apply border style
-                if (visualStyle != null && VisualStyleManager != null)
-                {
-                    VisualStyleManager.ApplyBorderConfiguration(visualStyle);
-                }
+                ArchonLogger.Log("ArchonEngine: Initializing borders via VisualStyleManager...", "map_initialization");
+                VisualStyleManager.ApplyBorderConfiguration(visualStyle);
             }
 
             // Initialize camera controller if present

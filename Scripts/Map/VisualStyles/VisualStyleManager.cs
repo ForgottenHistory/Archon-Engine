@@ -2,6 +2,7 @@ using UnityEngine;
 using Map.Rendering;
 using Map.Rendering.Border;
 using Map.MapModes;
+using Map.Core;
 using Core;
 
 namespace Archon.Engine.Map
@@ -171,9 +172,8 @@ namespace Archon.Engine.Map
         }
 
         /// <summary>
-        /// Apply border configuration from style (called after map initialization when BorderDispatcher exists)
-        /// Sets rendering mode, border mode, and triggers border generation.
-        /// Supports custom renderer IDs from MapRendererRegistry.
+        /// Apply border configuration from style.
+        /// Initializes the border system with the correct mode and generates borders.
         /// </summary>
         public void ApplyBorderConfiguration(VisualStyleConfiguration style)
         {
@@ -182,111 +182,71 @@ namespace Archon.Engine.Map
                 borderDispatcher = FindFirstObjectByType<BorderComputeDispatcher>();
             }
 
-            if (borderDispatcher != null)
+            if (borderDispatcher == null)
             {
-                // Get the effective renderer ID (custom or from enum)
-                string effectiveRendererId = style.borders.GetEffectiveRendererId();
+                ArchonLogger.LogWarning("VisualStyleManager: BorderDispatcher not found", "map_rendering");
+                return;
+            }
 
-                // Check if using a custom renderer via registry
-                var registry = MapRendererRegistry.Instance;
-                bool usingCustomRenderer = registry != null &&
-                                          !string.IsNullOrEmpty(style.borders.customRendererId) &&
-                                          registry.HasBorderRenderer(style.borders.customRendererId);
+            // Get required systems for border initialization
+            var gameState = FindFirstObjectByType<GameState>();
+            if (gameState == null)
+            {
+                ArchonLogger.LogWarning("VisualStyleManager: GameState not found", "map_rendering");
+                return;
+            }
 
-                if (usingCustomRenderer)
+            var mapSystemCoordinator = FindFirstObjectByType<MapSystemCoordinator>();
+            if (mapSystemCoordinator == null)
+            {
+                ArchonLogger.LogWarning("VisualStyleManager: MapSystemCoordinator not found", "map_rendering");
+                return;
+            }
+
+            // Initialize border system with the selected mode
+            borderDispatcher.InitializeBorders(
+                style.borders.renderingMode,
+                gameState.Adjacencies,
+                gameState.Provinces,
+                gameState.Countries,
+                mapSystemCoordinator.ProvinceMapping
+            );
+
+            // Set border mode (which borders to show)
+            borderDispatcher.SetBorderMode(ConvertBorderMode(style.borders.borderMode));
+
+            // Set pixel-perfect parameters
+            borderDispatcher.SetPixelPerfectParameters(
+                style.borders.pixelPerfectCountryThickness,
+                style.borders.pixelPerfectProvinceThickness,
+                style.borders.pixelPerfectAntiAliasing
+            );
+
+            if (style.borders.enableBordersOnStartup)
+            {
+                // Populate owner texture BEFORE detecting borders
+                var ownerDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
+                if (ownerDispatcher != null && gameState.ProvinceQueries != null)
                 {
-                    // Use registry-based renderer selection
-                    var gameState = FindFirstObjectByType<GameState>();
-                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
+                    ownerDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
 
-                    // Apply style params to the renderer
-                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
-                    if (renderer != null && runtimeMaterial != null)
+                    // Force GPU sync before border detection
+                    var texManager = textureManager ?? FindFirstObjectByType<MapTextureManager>();
+                    if (texManager?.ProvinceOwnerTexture != null)
                     {
-                        var styleParams = BuildBorderStyleParams(style.borders);
-                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
-                    }
-
-                    if (LogStyle)
-                    {
-                        ArchonLogger.Log($"VisualStyleManager: Using custom renderer '{effectiveRendererId}' from registry", "map_rendering");
+                        var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(texManager.ProvinceOwnerTexture);
+                        syncRequest.WaitForCompletion();
                     }
                 }
-                else
+
+                borderDispatcher.DetectBorders();
+
+                if (LogStyle)
                 {
-                    // Use legacy enum-based rendering mode
-                    borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
-                }
-
-                // Set border mode (which borders to show)
-                var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
-                borderDispatcher.SetBorderMode(engineBorderMode);
-
-                // Set pixel-perfect parameters from VisualStyleConfiguration
-                borderDispatcher.SetPixelPerfectParameters(
-                    style.borders.pixelPerfectCountryThickness,
-                    style.borders.pixelPerfectProvinceThickness,
-                    style.borders.pixelPerfectAntiAliasing
-                );
-
-                if (style.borders.enableBordersOnStartup)
-                {
-                    // CRITICAL: Populate owner texture BEFORE detecting borders
-                    // Border detection needs owner data to distinguish country vs province borders
-                    var ownerDispatcher = FindFirstObjectByType<OwnerTextureDispatcher>();
-                    var gameState = FindFirstObjectByType<GameState>();
-                    if (ownerDispatcher != null && gameState != null && gameState.ProvinceQueries != null)
-                    {
-                        ownerDispatcher.PopulateOwnerTexture(gameState.ProvinceQueries);
-
-                        // CRITICAL: Force GPU synchronization to ensure owner texture is fully written
-                        // before border detection reads it (async compute shader race condition)
-                        var texManager = textureManager ?? FindFirstObjectByType<MapTextureManager>();
-                        if (texManager != null && texManager.ProvinceOwnerTexture != null)
-                        {
-                            var syncRequest = UnityEngine.Rendering.AsyncGPUReadback.Request(texManager.ProvinceOwnerTexture);
-                            syncRequest.WaitForCompletion();
-                        }
-
-                        if (LogStyle)
-                        {
-                            ArchonLogger.Log("VisualStyleManager: Populated owner texture for border detection (GPU synced)", "map_rendering");
-                        }
-                    }
-
-                    borderDispatcher.DetectBorders();
-                    if (LogStyle)
-                    {
-                        ArchonLogger.Log($"VisualStyleManager: Applied borders - Renderer: {effectiveRendererId}, Mode: {style.borders.borderMode}", "map_rendering");
-                    }
+                    ArchonLogger.Log($"VisualStyleManager: Applied borders - Mode: {style.borders.renderingMode}, BorderMode: {style.borders.borderMode}", "map_rendering");
                 }
             }
-            else
-            {
-                ArchonLogger.LogWarning("VisualStyleManager: BorderDispatcher not found - cannot apply border configuration", "map_rendering");
-            }
         }
-
-        /// <summary>
-        /// Build BorderStyleParams from VisualStyleConfiguration.BorderStyle
-        /// </summary>
-        private BorderStyleParams BuildBorderStyleParams(VisualStyleConfiguration.BorderStyle borders)
-        {
-            return new BorderStyleParams
-            {
-                CountryBorderColor = borders.countryBorderColor,
-                ProvinceBorderColor = borders.provinceBorderColor,
-                CountryBorderStrength = borders.countryBorderStrength,
-                ProvinceBorderStrength = borders.provinceBorderStrength,
-                PixelPerfectCountryThickness = borders.pixelPerfectCountryThickness,
-                PixelPerfectProvinceThickness = borders.pixelPerfectProvinceThickness,
-                PixelPerfectAntiAliasing = borders.pixelPerfectAntiAliasing,
-                EdgeWidth = borders.edgeWidth,
-                GradientWidth = borders.gradientWidth,
-                EdgeSmoothness = borders.edgeSmoothness
-            };
-        }
-
 
         /// <summary>
         /// Apply map mode color parameters to the material
@@ -429,7 +389,6 @@ namespace Archon.Engine.Map
 
         /// <summary>
         /// Runtime style switching (for settings menu, etc.)
-        /// Supports custom renderer IDs from MapRendererRegistry.
         /// </summary>
         public void SwitchStyle(VisualStyleConfiguration newStyle)
         {
@@ -441,34 +400,11 @@ namespace Archon.Engine.Map
 
             ApplyStyle(newStyle);
 
-            // Apply border configuration from VisualStyles
+            // Apply border configuration
             if (borderDispatcher != null)
             {
-                string effectiveRendererId = newStyle.borders.GetEffectiveRendererId();
-                var registry = MapRendererRegistry.Instance;
-                bool usingCustomRenderer = registry != null &&
-                                          !string.IsNullOrEmpty(newStyle.borders.customRendererId) &&
-                                          registry.HasBorderRenderer(newStyle.borders.customRendererId);
-
-                if (usingCustomRenderer)
-                {
-                    var gameState = FindFirstObjectByType<GameState>();
-                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
-
-                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
-                    if (renderer != null && runtimeMaterial != null)
-                    {
-                        var styleParams = BuildBorderStyleParams(newStyle.borders);
-                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
-                    }
-                }
-                else
-                {
-                    borderDispatcher.SetBorderRenderingMode(newStyle.borders.renderingMode);
-                }
-
-                var engineBorderMode = ConvertBorderMode(newStyle.borders.borderMode);
-                borderDispatcher.SetBorderMode(engineBorderMode);
+                borderDispatcher.SetBorderRenderingMode(newStyle.borders.renderingMode);
+                borderDispatcher.SetBorderMode(ConvertBorderMode(newStyle.borders.borderMode));
                 borderDispatcher.SetPixelPerfectParameters(
                     newStyle.borders.pixelPerfectCountryThickness,
                     newStyle.borders.pixelPerfectProvinceThickness,
@@ -523,41 +459,18 @@ namespace Archon.Engine.Map
                 mapModeManager.UpdateMaterial(runtimeMaterial);
             }
 
-            // Apply border rendering mode and regenerate borders from ScriptableObject
+            // Apply border rendering mode
             if (borderDispatcher != null)
             {
-                string effectiveRendererId = style.borders.GetEffectiveRendererId();
-                var registry = MapRendererRegistry.Instance;
-                bool usingCustomRenderer = registry != null &&
-                                          !string.IsNullOrEmpty(style.borders.customRendererId) &&
-                                          registry.HasBorderRenderer(style.borders.customRendererId);
-
-                if (usingCustomRenderer)
-                {
-                    var gameState = FindFirstObjectByType<GameState>();
-                    borderDispatcher.SetActiveBorderRenderer(effectiveRendererId, gameState?.ProvinceQueries);
-
-                    var renderer = registry.GetBorderRenderer(effectiveRendererId);
-                    if (renderer != null && runtimeMaterial != null)
-                    {
-                        var styleParams = BuildBorderStyleParams(style.borders);
-                        renderer.ApplyToMaterial(runtimeMaterial, styleParams);
-                    }
-                }
-                else
-                {
-                    borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
-                }
-
-                var engineBorderMode = ConvertBorderMode(style.borders.borderMode);
-                borderDispatcher.SetBorderMode(engineBorderMode);
+                borderDispatcher.SetBorderRenderingMode(style.borders.renderingMode);
+                borderDispatcher.SetBorderMode(ConvertBorderMode(style.borders.borderMode));
                 borderDispatcher.SetPixelPerfectParameters(
                     style.borders.pixelPerfectCountryThickness,
                     style.borders.pixelPerfectProvinceThickness,
                     style.borders.pixelPerfectAntiAliasing
                 );
 
-                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Applied borders - Renderer: {effectiveRendererId}, Mode: {style.borders.borderMode}", "map_rendering");
+                ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Applied borders - Mode: {style.borders.renderingMode}", "map_rendering");
             }
 
             ArchonLogger.Log("VisualStyleManager.ReloadMaterialFromAsset: Complete - style reloaded from ScriptableObject", "map_rendering");
