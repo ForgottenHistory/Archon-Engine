@@ -61,6 +61,15 @@ namespace Map.Rendering
             {
                 ArchonLogger.Log($"BorderMeshRenderer: First render - Province: {provinceBorderMeshes.Count} meshes, Country: {countryBorderMeshes.Count} meshes", "map_rendering");
                 ArchonLogger.Log($"BorderMeshRenderer: Material: {borderMaterial.name}, Shader: {borderMaterial.shader.name}", "map_rendering");
+                if (mapPlaneTransform != null)
+                {
+                    ArchonLogger.Log($"BorderMeshRenderer: MapPlane pos={mapPlaneTransform.position}, scale={mapPlaneTransform.localScale}, rot={mapPlaneTransform.rotation.eulerAngles}", "map_rendering");
+                }
+                if (provinceBorderMeshes.Count > 0)
+                {
+                    var bounds = provinceBorderMeshes[0].bounds;
+                    ArchonLogger.Log($"BorderMeshRenderer: First mesh bounds - min={bounds.min}, max={bounds.max}, size={bounds.size}", "map_rendering");
+                }
                 hasLoggedFirstRender = true;
             }
 
@@ -74,9 +83,10 @@ namespace Map.Rendering
             }
             else
             {
-                // Fallback: identity transform (will be huge and probably not visible)
+                // Fallback: identity transform (vertices in local space without scale)
                 transform = Matrix4x4.identity;
-                ArchonLogger.LogWarning("BorderMeshRenderer: No map plane transform set, borders may not be visible!", "map_rendering");
+                if (!hasLoggedFirstRender)
+                    ArchonLogger.LogWarning("BorderMeshRenderer: No map plane transform set, borders may not be visible!", "map_rendering");
             }
 
             // Draw all province border meshes
@@ -153,6 +163,21 @@ namespace Map.Rendering
 
             ArchonLogger.Log("BorderMeshRenderer: Created material with Archon/BorderMesh shader", "map_initialization");
             return mat;
+        }
+
+        /// <summary>
+        /// Set heightmap for terrain-following displacement.
+        /// Must match the same heightmap and scale used by the terrain shader.
+        /// </summary>
+        public void SetHeightmapParams(Texture heightmap, float heightScale, float heightOffset = 0.15f)
+        {
+            if (borderMaterial != null && heightmap != null)
+            {
+                borderMaterial.SetTexture("_HeightmapTexture", heightmap);
+                borderMaterial.SetFloat("_HeightScale", heightScale);
+                borderMaterial.SetFloat("_HeightOffset", heightOffset);
+                ArchonLogger.Log($"BorderMeshRenderer: Set heightmap (scale={heightScale}, offset={heightOffset})", "map_rendering");
+            }
         }
 
         /// <summary>

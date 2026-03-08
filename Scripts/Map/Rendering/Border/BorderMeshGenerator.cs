@@ -196,45 +196,51 @@ namespace Map.Rendering
             // Vertices: [A_left, A_right, B_left, B_right, C_left, C_right, D_left, D_right]
             // Triangles: (0,1,2), (1,2,3), (2,3,4), (3,4,5), ... (automatic via index pattern)
 
-            // First pass: convert all polyline points to world space and calculate total length
-            List<Vector3> worldPoints = new List<Vector3>();
+            // First pass: convert all polyline points to local mesh space and calculate total length
+            // Uses same coordinate mapping as ProvinceCenterLookup:
+            //   UV: pixel / textureSize
+            //   Flip Y for texture-to-mesh mapping
+            //   Local: meshBounds.min + UV * meshBounds.size
+            // Unity default plane bounds: (-5,0,-5) to (5,0,5)
+            List<Vector3> localPoints = new List<Vector3>();
             List<float> accumulatedDistances = new List<float>();
             float totalLength = 0f;
 
             for (int i = 0; i < polyline.Count; i++)
             {
                 Vector2 p = polyline[i];
-                // Unity's default plane is 10x10 units, centered at origin (-5 to +5)
-                // Convert pixel coordinates to world space
-                // NOTE: Flip X axis to match map texture orientation
-                float x = 5f - (p.x / mapWidth) * 10f;  // Flipped
-                float z = (p.y / mapHeight) * 10f - 5f;
-                worldPoints.Add(new Vector3(x, 0, z));
+                // Pixel to UV (0-1)
+                float uvX = p.x / mapWidth;
+                float uvY = 1f - (p.y / mapHeight); // Flip Y for texture-to-mesh mapping
+                // UV to local mesh space (default plane: -5 to +5)
+                float x = -5f + uvX * 10f;
+                float z = -5f + uvY * 10f;
+                localPoints.Add(new Vector3(x, 0, z));
 
                 if (i > 0)
                 {
-                    totalLength += Vector3.Distance(worldPoints[i], worldPoints[i - 1]);
+                    totalLength += Vector3.Distance(localPoints[i], localPoints[i - 1]);
                 }
                 accumulatedDistances.Add(totalLength);
             }
 
-            // Second pass: generate vertices with perpendiculars calculated in world space
-            for (int i = 0; i < worldPoints.Count; i++)
+            // Second pass: generate vertices with perpendiculars calculated in local space
+            for (int i = 0; i < localPoints.Count; i++)
             {
-                Vector3 worldPos = worldPoints[i];
+                Vector3 localPos = localPoints[i];
 
-                // Calculate perpendicular in world space
-                Vector3 perpendicular = CalculatePerpendicularWorldSpace(worldPoints, i);
+                // Calculate perpendicular in local space
+                Vector3 perpendicular = CalculatePerpendicularWorldSpace(localPoints, i);
 
                 // Apply width offset
                 Vector3 offset = perpendicular * halfWidth;
 
-                // NOTE: Map plane is at Y=0, borders rendered at Y=0.01 to be slightly above
-                float borderHeight = 0.01f;
+                // Height set to 0 - actual terrain following done in BorderMesh shader
+                float borderHeight = 0f;
 
-                // Add left and right vertices
-                verts.Add(new Vector3(worldPos.x - offset.x, borderHeight, worldPos.z - offset.z)); // Left edge
-                verts.Add(new Vector3(worldPos.x + offset.x, borderHeight, worldPos.z + offset.z)); // Right edge
+                // Add left and right vertices (in local mesh space - transform applied at render time)
+                verts.Add(new Vector3(localPos.x - offset.x, borderHeight, localPos.z - offset.z)); // Left edge
+                verts.Add(new Vector3(localPos.x + offset.x, borderHeight, localPos.z + offset.z)); // Right edge
 
                 cols.Add(borderColor);
                 cols.Add(borderColor);

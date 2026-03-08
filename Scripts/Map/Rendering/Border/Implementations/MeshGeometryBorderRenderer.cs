@@ -1,10 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Map.Rendering.Border
 {
     /// <summary>
     /// ENGINE: Mesh-based border renderer implementation.
-    /// Generates actual geometry for borders using CPU curve extraction.
+    /// Generates actual geometry for borders using GPU-accelerated curve extraction.
+    /// Falls back to CPU extraction if GPU compute is unavailable.
     ///
     /// Best for 3D map effects where borders need depth/thickness.
     /// Requires per-frame rendering via OnRenderFrame().
@@ -22,9 +24,9 @@ namespace Map.Rendering.Border
         private BorderStyleUpdater styleUpdater;
 
         private ProvinceMapping provinceMapping;
-        private float borderWidth = 1.0f;
+        private float borderWidth = 0.05f;
 
-        public MeshGeometryBorderRenderer(float width = 1.0f)
+        public MeshGeometryBorderRenderer(float width = 0.05f)
         {
             this.borderWidth = width;
         }
@@ -40,7 +42,7 @@ namespace Map.Rendering.Border
                 return;
             }
 
-            // Initialize curve extractor with province pixel lists
+            // Initialize curve extractor (needed for both GPU and CPU paths, and for force-regenerate)
             curveExtractor = new BorderCurveExtractor(
                 textureManager,
                 context.AdjacencySystem,
@@ -48,9 +50,9 @@ namespace Map.Rendering.Border
                 provinceMapping
             );
 
-            // Extract all border curves (CPU intensive, done once)
+            // Extract border curves: GPU path with disk cache, CPU fallback
             ArchonLogger.Log("MeshGeometryBorderRenderer: Extracting border curves...", "map_rendering");
-            var borderCurves = curveExtractor.ExtractAllBorders();
+            var borderCurves = ExtractBorderCurvesWithGPU();
 
             // Initialize curve cache
             curveCache = new BorderCurveCache();
@@ -64,7 +66,94 @@ namespace Map.Rendering.Border
             meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight);
             meshRenderer = new BorderMeshRenderer(context.MapPlaneTransform);
 
+            // Pass heightmap so borders follow tessellated terrain
+            if (textureManager.HeightmapTexture != null)
+            {
+                // Read _HeightScale from the map material to match terrain displacement exactly
+                float heightScale = 10f;
+                if (context.MapPlaneTransform != null)
+                {
+                    var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
+                    if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
+                    {
+                        heightScale = mr.sharedMaterial.GetFloat("_HeightScale");
+                    }
+                }
+                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0.01f);
+            }
+
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {borderCurves?.Count ?? 0} border curves", "map_rendering");
+        }
+
+        /// <summary>
+        /// Extract border curves using GPU-accelerated pipeline with disk caching.
+        /// Falls back to CPU extraction if GPU is unavailable.
+        /// </summary>
+        private Dictionary<(ushort, ushort), List<Vector2>> ExtractBorderCurvesWithGPU()
+        {
+            // Build cache path from map dimensions (unique per map)
+            string cachePath = GetBorderCachePath();
+
+            // 1. Try disk cache first (fastest: ~50ms)
+            if (cachePath != null)
+            {
+                var cacheResult = GPUBorderExtractor.TryLoadCache(cachePath);
+                if (cacheResult.IsSuccess)
+                {
+                    ArchonLogger.Log("MeshGeometryBorderRenderer: Using cached border data (disk cache hit)", "map_rendering");
+                    return curveExtractor.ExtractAllBordersFromGPUResult(
+                        cacheResult.BorderPixelsByPair, cacheResult.JunctionPixels);
+                }
+            }
+
+            // 2. Try GPU extraction (fast: ~300ms for 11.5M pixels)
+            if (GPUBorderExtractor.IsAvailable && textureManager.ProvinceIDTexture != null)
+            {
+                ArchonLogger.Log("MeshGeometryBorderRenderer: Using GPU-accelerated border extraction", "map_rendering");
+                var gpuResult = GPUBorderExtractor.ExtractBorderPixelsGPU(textureManager.ProvinceIDTexture);
+
+                if (gpuResult.IsSuccess)
+                {
+                    // Save to disk cache for next time
+                    if (cachePath != null)
+                    {
+                        GPUBorderExtractor.SaveCache(cachePath, gpuResult.BorderPixelsByPair, gpuResult.JunctionPixels);
+                    }
+
+                    return curveExtractor.ExtractAllBordersFromGPUResult(
+                        gpuResult.BorderPixelsByPair, gpuResult.JunctionPixels);
+                }
+
+                ArchonLogger.LogWarning($"MeshGeometryBorderRenderer: GPU extraction failed ({gpuResult.ErrorMessage}), falling back to CPU", "map_rendering");
+            }
+
+            // 3. CPU fallback (slow: ~7s for 11.5M pixels)
+            ArchonLogger.Log("MeshGeometryBorderRenderer: Using CPU border extraction (fallback)", "map_rendering");
+            return curveExtractor.ExtractAllBorders();
+        }
+
+        /// <summary>
+        /// Get disk cache path for border data.
+        /// Stored alongside provinces.png in Template-Data/map/ as provinces.png.borders
+        /// </summary>
+        private string GetBorderCachePath()
+        {
+            try
+            {
+                // Follow same pattern as provinces.png.adjacency
+                string mapDir = System.IO.Path.Combine(Application.dataPath, "Archon-Engine", "Template-Data", "map");
+                string provincesPath = System.IO.Path.Combine(mapDir, "provinces.png");
+                if (System.IO.File.Exists(provincesPath))
+                    return provincesPath;
+
+                ArchonLogger.LogWarning("MeshGeometryBorderRenderer: provinces.png not found for cache path", "map_rendering");
+                return null;
+            }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogWarning($"MeshGeometryBorderRenderer: Could not resolve cache path: {e.Message}", "map_rendering");
+                return null;
+            }
         }
 
         public override void GenerateBorders(BorderGenerationParams parameters)

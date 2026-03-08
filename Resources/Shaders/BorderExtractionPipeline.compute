@@ -1,0 +1,280 @@
+// GPU Border Extraction Pipeline
+// Replaces CPU-heavy median filter + junction detection + border pixel extraction
+// Output: border pixel positions with province pair IDs via AppendStructuredBuffer
+//
+// Pipeline:
+//   1. MedianFilter - Smooth province ID noise (3x3 mode filter)
+//   2. DetectBorderPixels - Find all border pixels and emit (x, y, provinceA, provinceB) pairs
+//   3. DetectJunctions - Find pixels where 3+ provinces meet
+
+#pragma kernel MedianFilter
+#pragma kernel DetectBorderPixels
+#pragma kernel DetectJunctions
+
+// ============================================================================
+// Shared types and utilities
+// ============================================================================
+
+// Province ID decoding - matches BorderDetection.compute exactly
+uint DecodeProvinceID(float2 encoded)
+{
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+    return (g << 8) | r;
+}
+
+// Encode province ID back to RG channels (for median filter output)
+float2 EncodeProvinceID(uint id)
+{
+    float r = (id & 0xFF) / 255.0;
+    float g = ((id >> 8) & 0xFF) / 255.0;
+    return float2(r, g);
+}
+
+// Border pixel output: packed as uint2
+// x = pixel position (y << 16 | x) - always the pixel belonging to provinceA (smaller ID)
+// y = province pair (provinceB << 16 | provinceA), canonical order (A < B)
+struct BorderPixelOutput
+{
+    uint positionPacked;  // (y << 16) | x - position of pixel belonging to smaller province ID
+    uint pairPacked;      // (provinceB << 16) | provinceA, where A < B
+};
+
+// Junction pixel output
+struct JunctionOutput
+{
+    uint positionPacked;  // (y << 16) | x
+    uint provinceCount;   // Number of unique provinces at this pixel (3+)
+};
+
+// Map dimensions
+uint2 TextureSize;
+
+// ============================================================================
+// Kernel 1: MedianFilter
+// 3x3 mode filter on province IDs - removes single-pixel noise
+// ============================================================================
+
+Texture2D<float4> InputProvinceIDTexture;
+RWTexture2D<float4> FilteredProvinceIDTexture;
+
+[numthreads(8, 8, 1)]
+void MedianFilter(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= TextureSize.x || id.y >= TextureSize.y)
+        return;
+
+    // Collect province IDs in 3x3 window (max 9 unique IDs)
+    uint ids[9];
+    uint counts[9];
+    uint uniqueCount = 0;
+
+    for (int dy = -1; dy <= 1; dy++)
+    {
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            int nx = (int)id.x + dx;
+            int ny = (int)id.y + dy;
+
+            if (nx < 0 || nx >= (int)TextureSize.x || ny < 0 || ny >= (int)TextureSize.y)
+                continue;
+
+            float2 encoded = InputProvinceIDTexture[int2(nx, ny)].rg;
+            uint provinceID = DecodeProvinceID(encoded);
+
+            if (provinceID == 0)
+                continue;
+
+            // Find existing or add new
+            bool found = false;
+            for (uint i = 0; i < uniqueCount; i++)
+            {
+                if (ids[i] == provinceID)
+                {
+                    counts[i]++;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found && uniqueCount < 9)
+            {
+                ids[uniqueCount] = provinceID;
+                counts[uniqueCount] = 1;
+                uniqueCount++;
+            }
+        }
+    }
+
+    // Find most common province ID (mode)
+    uint bestID = 0;
+    uint bestCount = 0;
+    for (uint i = 0; i < uniqueCount; i++)
+    {
+        if (counts[i] > bestCount)
+        {
+            bestCount = counts[i];
+            bestID = ids[i];
+        }
+    }
+
+    // Write filtered result
+    if (bestID > 0)
+    {
+        float2 encoded = EncodeProvinceID(bestID);
+        FilteredProvinceIDTexture[id.xy] = float4(encoded.x, encoded.y, 0, 1);
+    }
+    else
+    {
+        FilteredProvinceIDTexture[id.xy] = InputProvinceIDTexture[id.xy];
+    }
+}
+
+// ============================================================================
+// Kernel 2: DetectBorderPixels
+// Finds border pixels and outputs (position, provinceA-provinceB pair)
+// Checks all 8 neighbors to find ALL border pixels for each pair.
+// Only emits if current pixel has the SMALLER province ID in the pair,
+// ensuring one-sided extraction (matching CPU behavior for clean chaining).
+// ============================================================================
+
+Texture2D<float4> BorderProvinceIDTexture;  // Filtered province ID texture
+AppendStructuredBuffer<BorderPixelOutput> BorderPixels;
+
+[numthreads(8, 8, 1)]
+void DetectBorderPixels(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= TextureSize.x || id.y >= TextureSize.y)
+        return;
+
+    float2 currentEncoded = BorderProvinceIDTexture[id.xy].rg;
+    uint currentProvince = DecodeProvinceID(currentEncoded);
+
+    if (currentProvince == 0)
+        return;
+
+    uint positionPacked = (id.y << 16) | id.x;
+
+    // Track which neighbor provinces we've already emitted for this pixel
+    // (avoid duplicate entries for same pixel-pair when multiple neighbors match)
+    uint emittedNeighbors[8];
+    uint emittedCount = 0;
+
+    // Check all 8 neighbors (matching CPU's 8-connectivity)
+    int2 offsets[8] = {
+        int2(1, 0), int2(-1, 0), int2(0, 1), int2(0, -1),
+        int2(1, 1), int2(-1, 1), int2(1, -1), int2(-1, -1)
+    };
+
+    for (int i = 0; i < 8; i++)
+    {
+        int2 neighborPos = int2(id.xy) + offsets[i];
+
+        // Bounds check
+        if (neighborPos.x < 0 || neighborPos.x >= (int)TextureSize.x ||
+            neighborPos.y < 0 || neighborPos.y >= (int)TextureSize.y)
+            continue;
+
+        float2 neighborEncoded = BorderProvinceIDTexture[neighborPos].rg;
+        uint neighborProvince = DecodeProvinceID(neighborEncoded);
+
+        if (neighborProvince == 0 || neighborProvince == currentProvince)
+            continue;
+
+        // ONE-SIDED EMISSION: Only emit if current pixel has the SMALLER province ID.
+        // This matches CPU behavior where only province A's pixels are scanned
+        // (where A < B), producing border pixels from one consistent side.
+        if (currentProvince > neighborProvince)
+            continue;
+
+        // Check if we already emitted for this neighbor province
+        bool alreadyEmitted = false;
+        for (uint j = 0; j < emittedCount; j++)
+        {
+            if (emittedNeighbors[j] == neighborProvince)
+            {
+                alreadyEmitted = true;
+                break;
+            }
+        }
+
+        if (alreadyEmitted)
+            continue;
+
+        // Record this neighbor as emitted
+        if (emittedCount < 8)
+        {
+            emittedNeighbors[emittedCount] = neighborProvince;
+            emittedCount++;
+        }
+
+        // Emit: position is current pixel (smaller ID side), pair is canonical
+        BorderPixelOutput output;
+        output.positionPacked = positionPacked;
+        output.pairPacked = (neighborProvince << 16) | currentProvince;
+        BorderPixels.Append(output);
+    }
+}
+
+// ============================================================================
+// Kernel 3: DetectJunctions
+// Finds pixels where 3+ unique provinces meet (including self + 8 neighbors)
+// These are critical connection points for border polylines
+// ============================================================================
+
+AppendStructuredBuffer<JunctionOutput> Junctions;
+
+[numthreads(8, 8, 1)]
+void DetectJunctions(uint3 id : SV_DispatchThreadID)
+{
+    if (id.x >= TextureSize.x || id.y >= TextureSize.y)
+        return;
+
+    // Collect unique province IDs in 3x3 window (self + 8 neighbors)
+    uint neighborIDs[9];
+    uint uniqueCount = 0;
+
+    for (int dy = -1; dy <= 1; dy++)
+    {
+        for (int dx = -1; dx <= 1; dx++)
+        {
+            int nx = (int)id.x + dx;
+            int ny = (int)id.y + dy;
+
+            if (nx < 0 || nx >= (int)TextureSize.x || ny < 0 || ny >= (int)TextureSize.y)
+                continue;
+
+            float2 encoded = BorderProvinceIDTexture[int2(nx, ny)].rg;
+            uint provinceID = DecodeProvinceID(encoded);
+
+            if (provinceID == 0)
+                continue;
+
+            // Check if already in list
+            bool exists = false;
+            for (uint i = 0; i < uniqueCount; i++)
+            {
+                if (neighborIDs[i] == provinceID)
+                {
+                    exists = true;
+                    break;
+                }
+            }
+
+            if (!exists && uniqueCount < 9)
+            {
+                neighborIDs[uniqueCount] = provinceID;
+                uniqueCount++;
+            }
+        }
+    }
+
+    // Junction = 3+ unique provinces meeting at this pixel
+    if (uniqueCount >= 3)
+    {
+        JunctionOutput output;
+        output.positionPacked = (id.y << 16) | id.x;
+        output.provinceCount = uniqueCount;
+        Junctions.Append(output);
+    }
+}

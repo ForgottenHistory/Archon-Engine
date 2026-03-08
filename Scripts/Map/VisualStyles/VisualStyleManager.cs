@@ -209,7 +209,8 @@ namespace Archon.Engine.Map
                 gameState.Adjacencies,
                 gameState.Provinces,
                 gameState.Countries,
-                mapSystemCoordinator.ProvinceMapping
+                mapSystemCoordinator.ProvinceMapping,
+                mapSystemCoordinator.GetMapPlaneTransform()
             );
 
             // Set border mode (which borders to show)

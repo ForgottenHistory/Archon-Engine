@@ -112,3 +112,5 @@ Template-Data/map/provinces.png.adjacency
 Template-Data/map/provinces.png.adjacency.meta
 Template-Data/map/terrain.png.pixels.meta
 Template-Data/map/heightmap.png.pixels.meta
+Template-Data/map/provinces.png.borders
+Template-Data/map/provinces.png.borders.meta

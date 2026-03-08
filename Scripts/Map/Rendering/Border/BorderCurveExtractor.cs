@@ -365,6 +365,131 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Fast path: Build smoothed border polylines from pre-extracted GPU data.
+        /// Skips median filter, junction detection, and border pixel extraction (all done on GPU).
+        /// Only performs CPU-side chaining, simplification, smoothing, and tessellation.
+        /// </summary>
+        public Dictionary<(ushort, ushort), List<Vector2>> ExtractAllBordersFromGPUResult(
+            Dictionary<(ushort, ushort), List<Vector2>> borderPixelsByPair,
+            Dictionary<Vector2, int> gpuJunctions)
+        {
+            var borderPolylines = new Dictionary<(ushort, ushort), List<Vector2>>();
+
+            float startTime = Time.realtimeSinceStartup;
+            ArchonLogger.Log($"BorderCurveExtractor: GPU fast path - processing {borderPixelsByPair.Count} border pairs", "map_initialization");
+
+            // Convert GPU junction format to the HashSet<ushort> format expected by helpers
+            // GPU junctions only have province count, not province IDs - but helpers only need position keys
+            var junctionPositions = new Dictionary<Vector2, HashSet<ushort>>();
+            foreach (var kvp in gpuJunctions)
+            {
+                // Create placeholder set with count matching province count
+                var set = new HashSet<ushort>();
+                for (int i = 0; i < kvp.Value; i++)
+                    set.Add((ushort)i); // Placeholder IDs - only count matters for chaining
+                junctionPositions[kvp.Key] = set;
+            }
+
+            // Initialize helper classes (no pixel data needed - GPU already extracted border pixels)
+            mapWidth = textureManager.MapWidth;
+            mapHeight = textureManager.MapHeight;
+            var localMedianFilter = new MedianFilterProcessor(mapWidth, mapHeight, junctionPositions);
+
+            int processedBorders = 0;
+            int skippedDegenerate = 0;
+
+            foreach (var kvp in borderPixelsByPair)
+            {
+                ushort provinceA = kvp.Key.Item1;
+                ushort provinceB = kvp.Key.Item2;
+                List<Vector2> borderPixels = kvp.Value;
+
+                // Skip degenerate borders
+                const int MIN_BORDER_PIXELS = 3;
+                if (borderPixels.Count < MIN_BORDER_PIXELS)
+                {
+                    skippedDegenerate++;
+                    continue;
+                }
+
+                // Chain border pixels into polylines
+                List<List<Vector2>> allChains = localMedianFilter.ChainBorderPixelsMultiple(borderPixels);
+
+                if (allChains.Count == 0)
+                    continue;
+
+                // Filter tiny chains (noise)
+                List<List<Vector2>> significantChains = new List<List<Vector2>>();
+                foreach (var chain in allChains)
+                {
+                    if (chain.Count > 3)
+                        significantChains.Add(chain);
+                }
+
+                // Merge chains
+                List<Vector2> mergedPath;
+                if (significantChains.Count == 0)
+                {
+                    // All chains tiny - use longest original
+                    mergedPath = allChains[0];
+                    foreach (var chain in allChains)
+                    {
+                        if (chain.Count > mergedPath.Count)
+                            mergedPath = chain;
+                    }
+                }
+                else if (significantChains.Count == 1)
+                {
+                    mergedPath = significantChains[0];
+                }
+                else
+                {
+                    // Multiple significant chains - simple concatenation (no pixel data for chain merger)
+                    mergedPath = new List<Vector2>();
+                    foreach (var chain in significantChains)
+                        mergedPath.AddRange(chain);
+                }
+
+                // Simplify + smooth + tessellate
+                List<Vector2> simplifiedPath = BorderPolylineSimplifier.SimplifyPolyline(mergedPath, epsilon: 1.5f);
+                List<Vector2> smoothedPath = BorderPolylineSimplifier.SmoothCurve(simplifiedPath, smoothingIterations, false);
+                smoothedPath = BorderPolylineSimplifier.TessellatePolyline(smoothedPath, maxSegmentLength: 0.5f);
+
+                if (smoothedPath.Count < 2)
+                    continue;
+
+                // Skip degenerate single-segment borders
+                if (smoothedPath.Count == 2)
+                {
+                    float length = Vector2.Distance(smoothedPath[0], smoothedPath[1]);
+                    if (length < 0.5f)
+                        continue;
+                }
+
+                borderPolylines[(provinceA, provinceB)] = smoothedPath;
+                processedBorders++;
+
+                // Progress logging every 2000 borders
+                if (logProgress && processedBorders % 2000 == 0)
+                {
+                    ArchonLogger.Log($"BorderCurveExtractor: GPU fast path - processed {processedBorders}/{borderPixelsByPair.Count} borders", "map_initialization");
+                }
+            }
+
+            float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: GPU fast path complete - {processedBorders} borders in {elapsed:F0}ms (skipped {skippedDegenerate} degenerate)", "map_initialization");
+
+            // Post-processing: snap endpoints at junctions
+            var junctionDetectorLight = new JunctionDetector(mapWidth, mapHeight, null);
+            junctionDetectorLight.SnapPolylineEndpointsAtJunctions(borderPolylines, junctionPositions);
+
+            float totalElapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
+            ArchonLogger.Log($"BorderCurveExtractor: GPU fast path total time: {totalElapsed:F0}ms", "map_initialization");
+
+            return borderPolylines;
+        }
+
+        /// <summary>
         /// Extract pixels where two provinces share a border
         /// Uses province pixel lists (EFFICIENT - no texture scanning per border!)
         /// </summary>
