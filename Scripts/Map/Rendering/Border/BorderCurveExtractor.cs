@@ -450,10 +450,9 @@ namespace Map.Rendering
                         mergedPath.AddRange(chain);
                 }
 
-                // Simplify + smooth + tessellate
+                // Simplify staircased pixel chains into clean line segments, then smooth
                 List<Vector2> simplifiedPath = BorderPolylineSimplifier.SimplifyPolyline(mergedPath, epsilon: 1.5f);
                 List<Vector2> smoothedPath = BorderPolylineSimplifier.SmoothCurve(simplifiedPath, smoothingIterations, false);
-                smoothedPath = BorderPolylineSimplifier.TessellatePolyline(smoothedPath, maxSegmentLength: 0.5f);
 
                 if (smoothedPath.Count < 2)
                     continue;

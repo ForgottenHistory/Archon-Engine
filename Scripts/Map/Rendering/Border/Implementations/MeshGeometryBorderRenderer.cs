@@ -26,7 +26,7 @@ namespace Map.Rendering.Border
         private ProvinceMapping provinceMapping;
         private float borderWidth = 0.05f;
 
-        public MeshGeometryBorderRenderer(float width = 0.05f)
+        public MeshGeometryBorderRenderer(float width = 0.015f)
         {
             this.borderWidth = width;
         }
@@ -63,8 +63,18 @@ namespace Map.Rendering.Border
             styleUpdater.UpdateAllBorderStyles();
 
             // Initialize mesh generator and renderer
-            meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight);
+            meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
             meshRenderer = new BorderMeshRenderer(context.MapPlaneTransform);
+
+            // Pass world-space map bounds to the shader for heightmap UV derivation
+            if (context.MapPlaneTransform != null)
+            {
+                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
+                if (mr != null)
+                {
+                    meshRenderer.SetMapWorldBounds(mr.bounds.min, mr.bounds.size);
+                }
+            }
 
             // Pass heightmap so borders follow tessellated terrain
             if (textureManager.HeightmapTexture != null)
@@ -79,7 +89,7 @@ namespace Map.Rendering.Border
                         heightScale = mr.sharedMaterial.GetFloat("_HeightScale");
                     }
                 }
-                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0.01f);
+                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0f);
             }
 
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {borderCurves?.Count ?? 0} border curves", "map_rendering");
@@ -223,7 +233,7 @@ namespace Map.Rendering.Border
             borderWidth = Mathf.Max(0.1f, width);
             if (meshGenerator != null)
             {
-                meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight);
+                meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
             }
         }
 

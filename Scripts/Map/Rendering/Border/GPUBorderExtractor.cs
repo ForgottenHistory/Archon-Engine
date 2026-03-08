@@ -26,7 +26,7 @@ namespace Map.Rendering.Border
 
         // Cache format
         private const uint CACHE_MAGIC = 0x42524452; // "BRDR"
-        private const uint CACHE_VERSION = 2;
+        private const uint CACHE_VERSION = 3;
 
         /// <summary>
         /// Initialize the compute shader.

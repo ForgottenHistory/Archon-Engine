@@ -5,7 +5,6 @@ Shader "Archon/BorderMesh"
         _BorderTex ("Border Texture", 2D) = "white" {}
         _HeightmapTexture ("Heightmap", 2D) = "gray" {}
         _HeightScale ("Height Scale", Range(0, 100)) = 10.0
-        _HeightOffset ("Height Offset (above terrain)", Float) = 0.01
     }
 
     SubShader
@@ -21,9 +20,9 @@ Shader "Archon/BorderMesh"
         {
             Name "BorderMesh"
 
-            Blend SrcAlpha OneMinusSrcAlpha
+            Blend Off
             ZWrite Off
-            ZTest LEqual
+            ZTest Always
             Cull Off
 
             HLSLPROGRAM
@@ -38,7 +37,7 @@ Shader "Archon/BorderMesh"
             SAMPLER(sampler_HeightmapTexture);
 
             float _HeightScale;
-            float _HeightOffset;
+            float4 _MapWorldBounds; // (minX, minZ, sizeX, sizeZ)
 
             struct Attributes
             {
@@ -58,20 +57,15 @@ Shader "Archon/BorderMesh"
             {
                 Varyings output;
 
-                float3 posOS = input.positionOS.xyz;
+                float3 posWS = input.positionOS.xyz;
 
-                // Derive heightmap UV from local mesh position
-                // Local space: -5 to +5 (Unity default plane)
-                // Flip Y to match terrain shader's heightmap sampling
-                float2 heightUV = (posOS.xz + 5.0) / 10.0;
+                // Sample heightmap to position border on terrain surface
+                float2 heightUV = (posWS.xz - _MapWorldBounds.xy) / _MapWorldBounds.zw;
                 heightUV.y = 1.0 - heightUV.y;
-
-                // Sample heightmap and apply same displacement as terrain shader
-                // Terrain shader: positionOS.y += (height - 0.5) * _HeightScale
                 float height = SAMPLE_TEXTURE2D_LOD(_HeightmapTexture, sampler_HeightmapTexture, heightUV, 0).r;
-                posOS.y = (height - 0.5) * _HeightScale + _HeightOffset;
+                posWS.y = (height - 0.5) * _HeightScale;
 
-                output.positionCS = TransformObjectToHClip(posOS);
+                output.positionCS = TransformWorldToHClip(posWS);
                 output.color = input.color;
                 output.uv = input.uv;
                 return output;
@@ -79,17 +73,7 @@ Shader "Archon/BorderMesh"
 
             half4 frag(Varyings input) : SV_Target
             {
-                // Sample the border texture
-                half4 texColor = SAMPLE_TEXTURE2D(_BorderTex, sampler_BorderTex, input.uv);
-
-                // Use luminance of texture as alpha (line shape from texture)
-                half luminance = dot(texColor.rgb, half3(0.299, 0.587, 0.114));
-                half alpha = luminance * input.color.a;
-
-                // Final color: tint with vertex color
-                half3 finalColor = input.color.rgb;
-
-                return half4(finalColor, alpha);
+                return half4(0, 0, 0, 1);
             }
             ENDHLSL
         }

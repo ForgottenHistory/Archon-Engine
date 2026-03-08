@@ -73,21 +73,8 @@ namespace Map.Rendering
                 hasLoggedFirstRender = true;
             }
 
-            // Calculate transform to match map plane
-            // Map mesh is in pixel coordinates, but map plane is scaled to Unity world space
-            Matrix4x4 transform;
-            if (mapPlaneTransform != null)
-            {
-                // Use map plane's transform (position, rotation, scale)
-                transform = mapPlaneTransform.localToWorldMatrix;
-            }
-            else
-            {
-                // Fallback: identity transform (vertices in local space without scale)
-                transform = Matrix4x4.identity;
-                if (!hasLoggedFirstRender)
-                    ArchonLogger.LogWarning("BorderMeshRenderer: No map plane transform set, borders may not be visible!", "map_rendering");
-            }
+            // Vertices are already in world space — use identity transform
+            Matrix4x4 transform = Matrix4x4.identity;
 
             // Draw all province border meshes
             foreach (var mesh in provinceBorderMeshes)
@@ -163,6 +150,18 @@ namespace Map.Rendering
 
             ArchonLogger.Log("BorderMeshRenderer: Created material with Archon/BorderMesh shader", "map_initialization");
             return mat;
+        }
+
+        /// <summary>
+        /// Set the world-space map bounds so the shader can derive heightmap UVs.
+        /// </summary>
+        public void SetMapWorldBounds(Vector3 worldMin, Vector3 worldSize)
+        {
+            if (borderMaterial != null)
+            {
+                borderMaterial.SetVector("_MapWorldBounds", new Vector4(worldMin.x, worldMin.z, worldSize.x, worldSize.z));
+                ArchonLogger.Log($"BorderMeshRenderer: Set map world bounds min=({worldMin.x},{worldMin.z}), size=({worldSize.x},{worldSize.z})", "map_rendering");
+            }
         }
 
         /// <summary>

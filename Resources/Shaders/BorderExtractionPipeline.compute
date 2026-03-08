@@ -32,11 +32,11 @@ float2 EncodeProvinceID(uint id)
 }
 
 // Border pixel output: packed as uint2
-// x = pixel position (y << 16 | x) - always the pixel belonging to provinceA (smaller ID)
+// x = pixel position (y << 16 | x)
 // y = province pair (provinceB << 16 | provinceA), canonical order (A < B)
 struct BorderPixelOutput
 {
-    uint positionPacked;  // (y << 16) | x - position of pixel belonging to smaller province ID
+    uint positionPacked;  // (y << 16) | x
     uint pairPacked;      // (provinceB << 16) | provinceA, where A < B
 };
 
@@ -182,8 +182,6 @@ void DetectBorderPixels(uint3 id : SV_DispatchThreadID)
             continue;
 
         // ONE-SIDED EMISSION: Only emit if current pixel has the SMALLER province ID.
-        // This matches CPU behavior where only province A's pixels are scanned
-        // (where A < B), producing border pixels from one consistent side.
         if (currentProvince > neighborProvince)
             continue;
 
@@ -208,7 +206,7 @@ void DetectBorderPixels(uint3 id : SV_DispatchThreadID)
             emittedCount++;
         }
 
-        // Emit: position is current pixel (smaller ID side), pair is canonical
+        // Emit: position is current pixel, pair is canonical
         BorderPixelOutput output;
         output.positionPacked = positionPacked;
         output.pairPacked = (neighborProvince << 16) | currentProvince;

@@ -11,8 +11,12 @@ namespace Map.Rendering
     public class BorderMeshGenerator
     {
         private readonly float borderWidth;
-        private readonly float mapWidth;
-        private readonly float mapHeight;
+        private readonly float mapWidthPixels;
+        private readonly float mapHeightPixels;
+
+        // World-space bounds from MapPlane transform
+        private readonly Vector3 worldMin;   // Bottom-left corner in world space
+        private readonly Vector3 worldSize;  // Width/height in world space
 
         // Mesh data for all borders
         private List<Vector3> vertices = new List<Vector3>();
@@ -26,11 +30,37 @@ namespace Map.Rendering
 
         private const int MAX_VERTICES_PER_MESH = 65000; // Unity's 65535 limit with safety margin
 
-        public BorderMeshGenerator(float width, float mapWidthPixels, float mapHeightPixels)
+        public BorderMeshGenerator(float width, float mapWidthPx, float mapHeightPx, Transform mapPlaneTransform)
         {
             borderWidth = width;
-            mapWidth = mapWidthPixels;
-            mapHeight = mapHeightPixels;
+            mapWidthPixels = mapWidthPx;
+            mapHeightPixels = mapHeightPx;
+
+            // Get actual world-space bounds from the map plane
+            // Unity default plane is -5 to +5 in local space, scaled by transform
+            if (mapPlaneTransform != null)
+            {
+                var mr = mapPlaneTransform.GetComponent<MeshRenderer>();
+                if (mr != null)
+                {
+                    worldMin = mr.bounds.min;
+                    worldSize = mr.bounds.size;
+                }
+                else
+                {
+                    // Fallback: use transform scale * default plane size
+                    Vector3 scale = mapPlaneTransform.localScale;
+                    worldSize = new Vector3(scale.x * 10f, 0f, scale.z * 10f);
+                    worldMin = mapPlaneTransform.position - worldSize * 0.5f;
+                }
+            }
+            else
+            {
+                worldMin = new Vector3(-5f, 0f, -5f);
+                worldSize = new Vector3(10f, 0f, 10f);
+            }
+
+            ArchonLogger.Log($"BorderMeshGenerator: World bounds min={worldMin}, size={worldSize}", "map_initialization");
         }
 
         /// <summary>
@@ -40,6 +70,14 @@ namespace Map.Rendering
         public void GenerateBorderMeshes(BorderCurveCache cache)
         {
             float startTime = Time.realtimeSinceStartup;
+
+            // Clear previous meshes before regenerating
+            foreach (var mesh in provinceBorderMeshes)
+                Object.Destroy(mesh);
+            foreach (var mesh in countryBorderMeshes)
+                Object.Destroy(mesh);
+            provinceBorderMeshes.Clear();
+            countryBorderMeshes.Clear();
 
             // Current mesh data (will create new mesh when approaching 65k vertices)
             var currentProvinceVerts = new List<Vector3>();
@@ -181,96 +219,102 @@ namespace Map.Rendering
             if (polyline.Count < 2)
                 return;
 
-            // Use the configured border width (set in BorderComputeDispatcher)
-            float halfWidth = borderWidth / 2f;
+            // Border width in PIXELS — all geometry computed in pixel space for uniformity.
+            // borderWidth is in local mesh units (10 units = mapWidth pixels),
+            // so convert to pixel-space half-width.
+            float halfWidthPixels = (borderWidth / 10f) * mapWidthPixels * 0.5f;
 
             Color borderColor = style.color;
             int baseIndex = verts.Count;
 
-            // TRIANGLE STRIP APPROACH (Paradox method):
-            // Generate vertices alternating left/right along polyline
-            // GPU automatically connects them into seamless triangles
-            //
-            // Example for 4 points:
-            // Polyline: A -> B -> C -> D
-            // Vertices: [A_left, A_right, B_left, B_right, C_left, C_right, D_left, D_right]
-            // Triangles: (0,1,2), (1,2,3), (2,3,4), (3,4,5), ... (automatic via index pattern)
-
-            // First pass: convert all polyline points to local mesh space and calculate total length
-            // Uses same coordinate mapping as ProvinceCenterLookup:
-            //   UV: pixel / textureSize
-            //   Flip Y for texture-to-mesh mapping
-            //   Local: meshBounds.min + UV * meshBounds.size
-            // Unity default plane bounds: (-5,0,-5) to (5,0,5)
-            List<Vector3> localPoints = new List<Vector3>();
-            List<float> accumulatedDistances = new List<float>();
+            // Compute perpendiculars in pixel space (uniform, no aspect distortion)
+            // Then convert final vertex positions to local mesh space.
             float totalLength = 0f;
-
-            for (int i = 0; i < polyline.Count; i++)
+            List<float> accumulatedDistances = new List<float>(polyline.Count);
+            accumulatedDistances.Add(0f);
+            for (int i = 1; i < polyline.Count; i++)
             {
-                Vector2 p = polyline[i];
-                // Pixel to UV (0-1)
-                float uvX = p.x / mapWidth;
-                float uvY = 1f - (p.y / mapHeight); // Flip Y for texture-to-mesh mapping
-                // UV to local mesh space (default plane: -5 to +5)
-                float x = -5f + uvX * 10f;
-                float z = -5f + uvY * 10f;
-                localPoints.Add(new Vector3(x, 0, z));
-
-                if (i > 0)
-                {
-                    totalLength += Vector3.Distance(localPoints[i], localPoints[i - 1]);
-                }
+                totalLength += Vector2.Distance(polyline[i], polyline[i - 1]);
                 accumulatedDistances.Add(totalLength);
             }
 
-            // Second pass: generate vertices with perpendiculars calculated in local space
-            for (int i = 0; i < localPoints.Count; i++)
+            for (int i = 0; i < polyline.Count; i++)
             {
-                Vector3 localPos = localPoints[i];
+                Vector2 pixelPos = polyline[i];
 
-                // Calculate perpendicular in local space
-                Vector3 perpendicular = CalculatePerpendicularWorldSpace(localPoints, i);
+                // Calculate perpendicular in pixel space (uniform coordinates)
+                Vector2 perp = CalculatePerpendicularPixelSpace(polyline, i);
 
-                // Apply width offset
-                Vector3 offset = perpendicular * halfWidth;
+                // Offset in pixel space
+                Vector2 leftPixel = pixelPos - perp * halfWidthPixels;
+                Vector2 rightPixel = pixelPos + perp * halfWidthPixels;
 
-                // Height set to 0 - actual terrain following done in BorderMesh shader
-                float borderHeight = 0f;
+                // Convert pixel positions to world space
+                Vector3 leftWorld = PixelToWorld(leftPixel);
+                Vector3 rightWorld = PixelToWorld(rightPixel);
 
-                // Add left and right vertices (in local mesh space - transform applied at render time)
-                verts.Add(new Vector3(localPos.x - offset.x, borderHeight, localPos.z - offset.z)); // Left edge
-                verts.Add(new Vector3(localPos.x + offset.x, borderHeight, localPos.z + offset.z)); // Right edge
+                verts.Add(leftWorld);
+                verts.Add(rightWorld);
 
                 cols.Add(borderColor);
                 cols.Add(borderColor);
 
-                // UV coordinates: U = along length (tiled based on world distance), V = across width (0 = left, 1 = right)
-                // Use accumulated distance for U - this allows texture patterns to tile consistently
-                // Multiply by a scale factor to control texture repeat rate (higher = more tiles)
-                float textureRepeatScale = 10f; // Adjust for desired tiling density
+                float textureRepeatScale = 10f;
                 float u = accumulatedDistances[i] * textureRepeatScale;
-                uvs.Add(new Vector2(u, 0f)); // Left edge: V = 0
-                uvs.Add(new Vector2(u, 1f)); // Right edge: V = 1
+                uvs.Add(new Vector2(u, 0f));
+                uvs.Add(new Vector2(u, 1f));
             }
 
             // Generate triangle indices for strip
-            // Pattern: (0,1,2), (1,3,2), (2,3,4), (3,5,4), ...
-            // This creates zigzag triangles connecting left/right edges
             for (int i = 0; i < polyline.Count - 1; i++)
             {
                 int idx = baseIndex + i * 2;
-
-                // Triangle 1: left[i], right[i], left[i+1]
                 tris.Add(idx + 0);
                 tris.Add(idx + 1);
                 tris.Add(idx + 2);
-
-                // Triangle 2: right[i], right[i+1], left[i+1]
                 tris.Add(idx + 1);
                 tris.Add(idx + 3);
                 tris.Add(idx + 2);
             }
+        }
+
+        /// <summary>
+        /// Convert pixel coordinates to world space using MapPlane bounds.
+        /// </summary>
+        private Vector3 PixelToWorld(Vector2 pixel)
+        {
+            float uvX = pixel.x / mapWidthPixels;
+            float uvY = 1f - (pixel.y / mapHeightPixels);
+            return new Vector3(
+                worldMin.x + uvX * worldSize.x,
+                0f,
+                worldMin.z + uvY * worldSize.z
+            );
+        }
+
+        /// <summary>
+        /// Calculate perpendicular direction in pixel space (uniform coordinates).
+        /// </summary>
+        private Vector2 CalculatePerpendicularPixelSpace(List<Vector2> points, int index)
+        {
+            Vector2 dir;
+
+            if (index > 0 && index < points.Count - 1)
+            {
+                Vector2 dirToPrev = (points[index] - points[index - 1]).normalized;
+                Vector2 dirToNext = (points[index + 1] - points[index]).normalized;
+                dir = (dirToPrev + dirToNext).normalized;
+            }
+            else if (index == 0)
+            {
+                dir = (points[1] - points[0]).normalized;
+            }
+            else
+            {
+                dir = (points[index] - points[index - 1]).normalized;
+            }
+
+            return new Vector2(-dir.y, dir.x);
         }
 
 
