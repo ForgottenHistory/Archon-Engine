@@ -11,8 +11,8 @@ Shader "Archon/BorderMesh"
     {
         Tags
         {
-            "RenderType" = "Transparent"
-            "Queue" = "Transparent"
+            "RenderType" = "Opaque"
+            "Queue" = "Geometry+10"
             "RenderPipeline" = "UniversalPipeline"
         }
 
@@ -21,9 +21,10 @@ Shader "Archon/BorderMesh"
             Name "BorderMesh"
 
             Blend Off
-            ZWrite Off
-            ZTest Always
+            ZWrite On
+            ZTest LEqual
             Cull Off
+            Offset 0, 0
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -66,6 +67,14 @@ Shader "Archon/BorderMesh"
                 posWS.y = (height - 0.5) * _HeightScale;
 
                 output.positionCS = TransformWorldToHClip(posWS);
+
+                // Depth bias proportional to distance — scales with W to stay consistent at all zoom levels
+                float depthBias = 0.005 * output.positionCS.w;
+                #if UNITY_REVERSED_Z
+                    output.positionCS.z += depthBias;
+                #else
+                    output.positionCS.z -= depthBias;
+                #endif
                 output.color = input.color;
                 output.uv = input.uv;
                 return output;

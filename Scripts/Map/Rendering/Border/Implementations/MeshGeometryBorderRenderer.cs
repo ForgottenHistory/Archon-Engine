@@ -26,7 +26,7 @@ namespace Map.Rendering.Border
         private ProvinceMapping provinceMapping;
         private float borderWidth = 0.05f;
 
-        public MeshGeometryBorderRenderer(float width = 0.015f)
+        public MeshGeometryBorderRenderer(float width = 0.0075f)
         {
             this.borderWidth = width;
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Map.Rendering
@@ -7,6 +8,7 @@ namespace Map.Rendering
     /// Generates quad meshes from smoothed polyline borders
     /// Converts Chaikin-smoothed curves into renderable triangle geometry
     /// Each line segment becomes a thin quad (2 triangles) with flat square caps
+    /// Junction caps fill holes where 3+ borders meet
     /// </summary>
     public class BorderMeshGenerator
     {
@@ -99,6 +101,10 @@ namespace Map.Rendering
             int skippedInvisibleCount = 0;
             int smallBordersRendered = 0;
 
+            // Track polyline endpoint vertex positions for junction cap generation
+            // Key: snapped pixel position (rounded to int for grouping), Value: list of (leftPos, rightPos)
+            var junctionEndpoints = new Dictionary<Vector2Int, List<(Vector3 left, Vector3 right)>>();
+
             foreach (var (borderKey, style) in cache.GetAllBorderStyles())
             {
                 if (!style.visible)
@@ -168,8 +174,54 @@ namespace Map.Rendering
                 }
 
                 // Generate triangle strip for this border
+                int vertsBefore = targetVertices.Count;
                 GenerateQuadsForPolyline(polyline, targetVertices, targetTriangles, targetColors, targetUVs, style);
+                int vertsAfter = targetVertices.Count;
                 totalSegments += polyline.Count - 1;
+
+                // Record endpoint vertex positions for junction caps
+                if (vertsAfter > vertsBefore && polyline.Count >= 2)
+                {
+                    // Start endpoint: first two vertices (left, right)
+                    Vector2 startPixel = polyline[0];
+                    var startKey = new Vector2Int(Mathf.RoundToInt(startPixel.x), Mathf.RoundToInt(startPixel.y));
+                    if (!junctionEndpoints.ContainsKey(startKey))
+                        junctionEndpoints[startKey] = new List<(Vector3, Vector3)>();
+                    junctionEndpoints[startKey].Add((targetVertices[vertsBefore], targetVertices[vertsBefore + 1]));
+
+                    // End endpoint: last two vertices (left, right)
+                    Vector2 endPixel = polyline[polyline.Count - 1];
+                    var endKey = new Vector2Int(Mathf.RoundToInt(endPixel.x), Mathf.RoundToInt(endPixel.y));
+                    if (!junctionEndpoints.ContainsKey(endKey))
+                        junctionEndpoints[endKey] = new List<(Vector3, Vector3)>();
+                    junctionEndpoints[endKey].Add((targetVertices[vertsAfter - 2], targetVertices[vertsAfter - 1]));
+                }
+            }
+
+            // Generate junction caps to fill holes where 3+ borders meet
+            int junctionCapCount = 0;
+            foreach (var kvp in junctionEndpoints)
+            {
+                var endpoints = kvp.Value;
+                if (endpoints.Count < 3)
+                    continue;
+
+                // All province borders go to province mesh lists for now
+                // (junction caps use same color as borders)
+                GenerateJunctionCap(endpoints, currentProvinceVerts, currentProvinceTris, currentProvinceColors, currentProvinceUVs);
+                junctionCapCount++;
+
+                // Check vertex limit
+                if (currentProvinceVerts.Count > MAX_VERTICES_PER_MESH)
+                {
+                    var mesh = CreateSingleMesh(currentProvinceVerts, currentProvinceTris, currentProvinceColors, currentProvinceUVs, $"Province Borders {provinceBorderMeshes.Count}");
+                    provinceBorderMeshes.Add(mesh);
+                    provinceVertCount += currentProvinceVerts.Count;
+                    currentProvinceVerts.Clear();
+                    currentProvinceTris.Clear();
+                    currentProvinceColors.Clear();
+                    currentProvinceUVs.Clear();
+                }
             }
 
             // Finalize any remaining meshes
@@ -191,6 +243,7 @@ namespace Map.Rendering
             ArchonLogger.Log($"  Province borders: {provinceVertCount} vertices in {provinceBorderMeshes.Count} meshes", "map_initialization");
             ArchonLogger.Log($"  Country borders: {countryVertCount} vertices in {countryBorderMeshes.Count} meshes", "map_initialization");
             ArchonLogger.Log($"  Total segments: {totalSegments}", "map_initialization");
+            ArchonLogger.Log($"  Junction caps: {junctionCapCount}", "map_initialization");
             ArchonLogger.Log($"  Skipped: {skippedInvisibleCount} invisible, {skippedNullCount} null, {skippedTooShortCount} too short", "map_initialization");
         }
 
@@ -219,6 +272,11 @@ namespace Map.Rendering
             if (polyline.Count < 2)
                 return;
 
+            // Subdivide long segments so border mesh follows terrain heightmap closely.
+            // Max segment length in pixels — shorter = more vertices = better terrain tracking.
+            const float MAX_SEGMENT_PIXELS = 3f;
+            var subdividedPolyline = SubdividePolyline(polyline, MAX_SEGMENT_PIXELS);
+
             // Border width in PIXELS — all geometry computed in pixel space for uniformity.
             // borderWidth is in local mesh units (10 units = mapWidth pixels),
             // so convert to pixel-space half-width.
@@ -230,20 +288,20 @@ namespace Map.Rendering
             // Compute perpendiculars in pixel space (uniform, no aspect distortion)
             // Then convert final vertex positions to local mesh space.
             float totalLength = 0f;
-            List<float> accumulatedDistances = new List<float>(polyline.Count);
+            List<float> accumulatedDistances = new List<float>(subdividedPolyline.Count);
             accumulatedDistances.Add(0f);
-            for (int i = 1; i < polyline.Count; i++)
+            for (int i = 1; i < subdividedPolyline.Count; i++)
             {
-                totalLength += Vector2.Distance(polyline[i], polyline[i - 1]);
+                totalLength += Vector2.Distance(subdividedPolyline[i], subdividedPolyline[i - 1]);
                 accumulatedDistances.Add(totalLength);
             }
 
-            for (int i = 0; i < polyline.Count; i++)
+            for (int i = 0; i < subdividedPolyline.Count; i++)
             {
-                Vector2 pixelPos = polyline[i];
+                Vector2 pixelPos = subdividedPolyline[i];
 
                 // Calculate perpendicular in pixel space (uniform coordinates)
-                Vector2 perp = CalculatePerpendicularPixelSpace(polyline, i);
+                Vector2 perp = CalculatePerpendicularPixelSpace(subdividedPolyline, i);
 
                 // Offset in pixel space
                 Vector2 leftPixel = pixelPos - perp * halfWidthPixels;
@@ -266,7 +324,7 @@ namespace Map.Rendering
             }
 
             // Generate triangle indices for strip
-            for (int i = 0; i < polyline.Count - 1; i++)
+            for (int i = 0; i < subdividedPolyline.Count - 1; i++)
             {
                 int idx = baseIndex + i * 2;
                 tris.Add(idx + 0);
@@ -276,6 +334,37 @@ namespace Map.Rendering
                 tris.Add(idx + 3);
                 tris.Add(idx + 2);
             }
+        }
+
+        /// <summary>
+        /// Subdivide a polyline so no segment exceeds maxSegmentLength pixels.
+        /// Ensures enough vertices for the vertex shader heightmap to track terrain.
+        /// </summary>
+        private List<Vector2> SubdividePolyline(List<Vector2> polyline, float maxSegmentLength)
+        {
+            var result = new List<Vector2>(polyline.Count * 2);
+            result.Add(polyline[0]);
+
+            for (int i = 1; i < polyline.Count; i++)
+            {
+                Vector2 from = polyline[i - 1];
+                Vector2 to = polyline[i];
+                float dist = Vector2.Distance(from, to);
+
+                if (dist > maxSegmentLength)
+                {
+                    int subdivisions = Mathf.CeilToInt(dist / maxSegmentLength);
+                    for (int s = 1; s < subdivisions; s++)
+                    {
+                        float t = s / (float)subdivisions;
+                        result.Add(Vector2.Lerp(from, to, t));
+                    }
+                }
+
+                result.Add(to);
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -317,6 +406,62 @@ namespace Map.Rendering
             return new Vector2(-dir.y, dir.x);
         }
 
+
+        /// <summary>
+        /// Generate a triangle fan to fill the hole at a junction where 3+ borders meet.
+        /// Collects the left/right endpoint vertices from each border strip, sorts by angle
+        /// around the center, and creates triangles connecting them.
+        /// </summary>
+        private void GenerateJunctionCap(List<(Vector3 left, Vector3 right)> endpoints,
+            List<Vector3> verts, List<int> tris, List<Color> cols, List<Vector2> uvs)
+        {
+            // Collect all outer vertices from the endpoint pairs
+            var outerVertices = new List<Vector3>();
+            foreach (var (left, right) in endpoints)
+            {
+                outerVertices.Add(left);
+                outerVertices.Add(right);
+            }
+
+            if (outerVertices.Count < 3)
+                return;
+
+            // Compute center point (average of all outer vertices)
+            Vector3 center = Vector3.zero;
+            foreach (var v in outerVertices)
+                center += v;
+            center /= outerVertices.Count;
+
+            // Sort outer vertices by angle around center in XZ plane
+            outerVertices.Sort((a, b) =>
+            {
+                float angleA = Mathf.Atan2(a.z - center.z, a.x - center.x);
+                float angleB = Mathf.Atan2(b.z - center.z, b.x - center.x);
+                return angleA.CompareTo(angleB);
+            });
+
+            // Generate triangle fan from center to sorted outer vertices
+            int centerIdx = verts.Count;
+            verts.Add(center);
+            cols.Add(Color.black);
+            uvs.Add(new Vector2(0.5f, 0.5f));
+
+            for (int i = 0; i < outerVertices.Count; i++)
+            {
+                verts.Add(outerVertices[i]);
+                cols.Add(Color.black);
+                uvs.Add(new Vector2(0.5f, 0.5f));
+            }
+
+            // Create triangles: center → vertex[i] → vertex[i+1] (wrapping around)
+            for (int i = 0; i < outerVertices.Count; i++)
+            {
+                int next = (i + 1) % outerVertices.Count;
+                tris.Add(centerIdx);
+                tris.Add(centerIdx + 1 + i);
+                tris.Add(centerIdx + 1 + next);
+            }
+        }
 
         /// <summary>
         /// Calculate perpendicular direction in world space
