@@ -11,8 +11,8 @@ Shader "Archon/BorderMesh"
     {
         Tags
         {
-            "RenderType" = "Opaque"
-            "Queue" = "Geometry+10"
+            "RenderType" = "Transparent"
+            "Queue" = "Transparent-100"
             "RenderPipeline" = "UniversalPipeline"
         }
 
@@ -21,10 +21,9 @@ Shader "Archon/BorderMesh"
             Name "BorderMesh"
 
             Blend Off
-            ZWrite On
-            ZTest LEqual
+            ZWrite Off
+            ZTest Always
             Cull Off
-            Offset 0, 0
 
             HLSLPROGRAM
             #pragma vertex vert
@@ -36,9 +35,10 @@ Shader "Archon/BorderMesh"
             SAMPLER(sampler_BorderTex);
             TEXTURE2D(_HeightmapTexture);
             SAMPLER(sampler_HeightmapTexture);
+            float4 _HeightmapTexture_ST;
 
             float _HeightScale;
-            float4 _MapWorldBounds; // (minX, minZ, sizeX, sizeZ)
+            float4 _MapWorldBounds;
 
             struct Attributes
             {
@@ -60,21 +60,16 @@ Shader "Archon/BorderMesh"
 
                 float3 posWS = input.positionOS.xyz;
 
-                // Sample heightmap to position border on terrain surface
-                float2 heightUV = (posWS.xz - _MapWorldBounds.xy) / _MapWorldBounds.zw;
-                heightUV.y = 1.0 - heightUV.y;
+                // Sample heightmap to position border approximately at terrain height
+                float2 terrainUV;
+                terrainUV.x = (posWS.x - _MapWorldBounds.x) / _MapWorldBounds.z;
+                terrainUV.y = (posWS.z - _MapWorldBounds.y) / _MapWorldBounds.w;
+                float2 heightUV = float2(terrainUV.x, 1.0 - terrainUV.y);
+                heightUV = TRANSFORM_TEX(heightUV, _HeightmapTexture);
                 float height = SAMPLE_TEXTURE2D_LOD(_HeightmapTexture, sampler_HeightmapTexture, heightUV, 0).r;
                 posWS.y = (height - 0.5) * _HeightScale;
 
                 output.positionCS = TransformWorldToHClip(posWS);
-
-                // Depth bias proportional to distance — scales with W to stay consistent at all zoom levels
-                float depthBias = 0.005 * output.positionCS.w;
-                #if UNITY_REVERSED_Z
-                    output.positionCS.z += depthBias;
-                #else
-                    output.positionCS.z -= depthBias;
-                #endif
                 output.color = input.color;
                 output.uv = input.uv;
                 return output;

@@ -20,6 +20,12 @@ namespace Map.Rendering
         private readonly Vector3 worldMin;   // Bottom-left corner in world space
         private readonly Vector3 worldSize;  // Width/height in world space
 
+        // Heightmap data for CPU-side terrain height sampling
+        private readonly Color[] heightmapPixels;
+        private readonly int heightmapWidth;
+        private readonly int heightmapHeight;
+        private readonly float heightScale;
+
         // Mesh data for all borders
         private List<Vector3> vertices = new List<Vector3>();
         private List<int> triangles = new List<int>();
@@ -32,14 +38,26 @@ namespace Map.Rendering
 
         private const int MAX_VERTICES_PER_MESH = 65000; // Unity's 65535 limit with safety margin
 
-        public BorderMeshGenerator(float width, float mapWidthPx, float mapHeightPx, Transform mapPlaneTransform)
+        public BorderMeshGenerator(float width, float mapWidthPx, float mapHeightPx, Transform mapPlaneTransform, Texture2D heightmap, float heightScale)
         {
             borderWidth = width;
             mapWidthPixels = mapWidthPx;
             mapHeightPixels = mapHeightPx;
+            this.heightScale = heightScale;
+
+            // Cache heightmap pixels for CPU-side height sampling
+            if (heightmap != null)
+            {
+                heightmapPixels = heightmap.GetPixels();
+                heightmapWidth = heightmap.width;
+                heightmapHeight = heightmap.height;
+                // Debug: sample center pixel to verify data
+                int cx = heightmapWidth / 2, cy = heightmapHeight / 2;
+                float centerH = heightmapPixels[cy * heightmapWidth + cx].r;
+                ArchonLogger.Log($"BorderMeshGenerator: Cached heightmap {heightmapWidth}x{heightmapHeight}, heightScale={heightScale}, center pixel r={centerH}, computed Y={(centerH - 0.5f) * heightScale}", "map_initialization");
+            }
 
             // Get actual world-space bounds from the map plane
-            // Unity default plane is -5 to +5 in local space, scaled by transform
             if (mapPlaneTransform != null)
             {
                 var mr = mapPlaneTransform.GetComponent<MeshRenderer>();
@@ -50,7 +68,6 @@ namespace Map.Rendering
                 }
                 else
                 {
-                    // Fallback: use transform scale * default plane size
                     Vector3 scale = mapPlaneTransform.localScale;
                     worldSize = new Vector3(scale.x * 10f, 0f, scale.z * 10f);
                     worldMin = mapPlaneTransform.position - worldSize * 0.5f;
@@ -62,7 +79,7 @@ namespace Map.Rendering
                 worldSize = new Vector3(10f, 0f, 10f);
             }
 
-            ArchonLogger.Log($"BorderMeshGenerator: World bounds min={worldMin}, size={worldSize}", "map_initialization");
+            ArchonLogger.Log($"BorderMeshGenerator: World bounds min={worldMin}, size={worldSize}, heightScale={heightScale}", "map_initialization");
         }
 
         /// <summary>
@@ -369,14 +386,38 @@ namespace Map.Rendering
 
         /// <summary>
         /// Convert pixel coordinates to world space using MapPlane bounds.
+        /// Samples heightmap on CPU to bake terrain height directly into vertices.
         /// </summary>
         private Vector3 PixelToWorld(Vector2 pixel)
         {
             float uvX = pixel.x / mapWidthPixels;
             float uvY = 1f - (pixel.y / mapHeightPixels);
+
+            float y = 0f;
+            if (heightmapPixels != null)
+            {
+                // Sample heightmap with bilinear interpolation (matching terrain shader)
+                float hx = uvX * (heightmapWidth - 1);
+                float hy = (1f - uvY) * (heightmapHeight - 1);
+                int x0 = Mathf.Clamp(Mathf.FloorToInt(hx), 0, heightmapWidth - 1);
+                int y0 = Mathf.Clamp(Mathf.FloorToInt(hy), 0, heightmapHeight - 1);
+                int x1 = Mathf.Min(x0 + 1, heightmapWidth - 1);
+                int y1 = Mathf.Min(y0 + 1, heightmapHeight - 1);
+                float fx = hx - x0;
+                float fy = hy - y0;
+
+                float h00 = heightmapPixels[y0 * heightmapWidth + x0].r;
+                float h10 = heightmapPixels[y0 * heightmapWidth + x1].r;
+                float h01 = heightmapPixels[y1 * heightmapWidth + x0].r;
+                float h11 = heightmapPixels[y1 * heightmapWidth + x1].r;
+
+                float height = Mathf.Lerp(Mathf.Lerp(h00, h10, fx), Mathf.Lerp(h01, h11, fx), fy);
+                y = (height - 0.5f) * heightScale;
+            }
+
             return new Vector3(
                 worldMin.x + uvX * worldSize.x,
-                0f,
+                y,
                 worldMin.z + uvY * worldSize.z
             );
         }

@@ -127,6 +127,8 @@ namespace Map.Rendering
                 name = "BorderMeshMaterial"
             };
 
+            mat.SetFloat("_HeightOffset", 1.0f);
+
             // Load border texture from Resources or Template-Data
             Texture2D borderTexture = Resources.Load<Texture2D>("Textures/border_texture");
             if (borderTexture == null)
@@ -177,6 +179,23 @@ namespace Map.Rendering
                 borderMaterial.SetFloat("_HeightOffset", heightOffset);
                 ArchonLogger.Log($"BorderMeshRenderer: Set heightmap (scale={heightScale}, offset={heightOffset})", "map_rendering");
             }
+        }
+
+        /// <summary>
+        /// Copy tessellation parameters from the terrain material so borders match terrain curvature.
+        /// </summary>
+        public void SetTessellationParams(Material terrainMaterial)
+        {
+            if (borderMaterial == null || terrainMaterial == null) return;
+
+            if (terrainMaterial.HasProperty("_TessellationFactor"))
+                borderMaterial.SetFloat("_TessellationFactor", terrainMaterial.GetFloat("_TessellationFactor"));
+            if (terrainMaterial.HasProperty("_TessellationMaxDistance"))
+                borderMaterial.SetFloat("_TessellationMaxDistance", terrainMaterial.GetFloat("_TessellationMaxDistance"));
+            if (terrainMaterial.HasProperty("_TessellationMinDistance"))
+                borderMaterial.SetFloat("_TessellationMinDistance", terrainMaterial.GetFloat("_TessellationMinDistance"));
+
+            ArchonLogger.Log($"BorderMeshRenderer: Copied tessellation params from terrain material", "map_rendering");
         }
 
         /// <summary>

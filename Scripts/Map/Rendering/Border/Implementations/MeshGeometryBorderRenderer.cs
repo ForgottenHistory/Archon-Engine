@@ -62,11 +62,23 @@ namespace Map.Rendering.Border
             styleUpdater = new BorderStyleUpdater(curveCache, context.ProvinceSystem, context.CountrySystem);
             styleUpdater.UpdateAllBorderStyles();
 
-            // Initialize mesh generator and renderer
-            meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
+            // Read _HeightScale from the map material to match terrain displacement exactly
+            float heightScale = 10f;
+            if (context.MapPlaneTransform != null)
+            {
+                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
+                if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
+                {
+                    heightScale = mr.sharedMaterial.GetFloat("_HeightScale");
+                }
+            }
+
+            // Initialize mesh generator with heightmap for CPU-side terrain height baking
+            meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
+                context.MapPlaneTransform, textureManager.HeightmapTexture, heightScale);
             meshRenderer = new BorderMeshRenderer(context.MapPlaneTransform);
 
-            // Pass world-space map bounds to the shader for heightmap UV derivation
+            // Pass world bounds and heightmap to shader for GPU-side terrain matching
             if (context.MapPlaneTransform != null)
             {
                 var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
@@ -75,21 +87,19 @@ namespace Map.Rendering.Border
                     meshRenderer.SetMapWorldBounds(mr.bounds.min, mr.bounds.size);
                 }
             }
-
-            // Pass heightmap so borders follow tessellated terrain
             if (textureManager.HeightmapTexture != null)
             {
-                // Read _HeightScale from the map material to match terrain displacement exactly
-                float heightScale = 10f;
-                if (context.MapPlaneTransform != null)
+                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0.05f);
+            }
+
+            // Copy tessellation params from terrain material so borders curve with terrain
+            if (context.MapPlaneTransform != null)
+            {
+                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
+                if (mr != null && mr.sharedMaterial != null)
                 {
-                    var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                    if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
-                    {
-                        heightScale = mr.sharedMaterial.GetFloat("_HeightScale");
-                    }
+                    meshRenderer.SetTessellationParams(mr.sharedMaterial);
                 }
-                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0f);
             }
 
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {borderCurves?.Count ?? 0} border curves", "map_rendering");
@@ -233,7 +243,15 @@ namespace Map.Rendering.Border
             borderWidth = Mathf.Max(0.1f, width);
             if (meshGenerator != null)
             {
-                meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
+                float hs = 10f;
+                if (context.MapPlaneTransform != null)
+                {
+                    var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
+                    if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
+                        hs = mr.sharedMaterial.GetFloat("_HeightScale");
+                }
+                meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
+                    context.MapPlaneTransform, textureManager.HeightmapTexture, hs);
             }
         }
 
