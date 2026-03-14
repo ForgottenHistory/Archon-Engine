@@ -28,16 +28,13 @@ The save system is functional with good architecture:
 - Validated on load, warns if mismatch
 - Continues loading (user decides if save is usable)
 
-#### 2. Save Metadata Header (Quick Preview)
-**Issue**: Can't show save list with dates/info without loading entire file.
-
-**Current**: Must deserialize entire save to get name/date.
-
-**Needed**:
-- Fixed-size header at file start (256 bytes)
-- Contains: name, date, game time, player country, screenshot offset
-- `ReadSaveMetadata(path)` reads only header
-- Enables fast save browser UI
+#### 2. ~~Save Metadata Header (Quick Preview)~~ ✅ DONE
+**Status**: Implemented 2026-03-14
+- 256-byte fixed `SaveMetadata` struct after magic bytes + format version marker
+- Contains: saveName, scenarioName, gameVersion, date, tick, speed, provinceCount, countryCount, compressedPayloadSize, flags
+- `SaveFileSerializer.ReadSaveMetadata(path)` reads only ~264 bytes
+- `SaveManager.GetSaveFileMetadata()` returns metadata for all saves
+- Format version marker (1001+) distinguishes from v1 legacy format
 
 #### 3. ~~DiplomacySystem Not Saved~~ ✅ OK
 **Status**: Verified - DiplomacySystem implements OnSave/OnLoad via DiplomacySaveLoadHandler.
@@ -47,19 +44,12 @@ Saved through GameSystem reflection loop, not explicit list. Working correctly.
 
 ### MEDIUM PRIORITY
 
-#### 4. Compression
-**Issue**: Large saves uncompressed.
-
-**Recommendation**:
-- GZipStream wrapper around file stream
-- ~60-80% size reduction typical for game data
-- Minimal CPU overhead
-
-**Implementation**:
-```csharp
-using (var gzip = new GZipStream(fileStream, CompressionMode.Compress))
-using (var writer = new BinaryWriter(gzip))
-```
+#### 4. ~~Compression~~ ✅ DONE
+**Status**: Implemented 2026-03-14
+- GZip compression on payload (system data + command log)
+- Metadata header remains uncompressed for fast reading
+- `CompressionLevel.Fastest` for minimal CPU overhead
+- Backward compatible: v1 legacy saves still readable
 
 #### 5. Async Save/Load
 **Issue**: Synchronous operations block main thread, cause frame stutter.
@@ -160,7 +150,7 @@ public interface ISaveable
 | Phase | Items | Effort |
 |-------|-------|--------|
 | 1 | ~~Checksum validation~~, ~~currentTick fix~~, ~~DiplomacySystem check~~ | ✅ DONE |
-| 2 | Save metadata header, compression | Medium |
+| 2 | ~~Save metadata header~~, ~~compression~~ | ✅ DONE |
 | 3 | Async save/load, progress reporting | Medium |
 | 4 | Version migration, autosave | Medium |
 | 5 | Screenshot, ISaveable, ironman | Low priority |

@@ -398,6 +398,13 @@ namespace Map.Core
                 borderDispatcher.DetectBorders();
             }
 
+            // Invalidate all map modes and refresh current one
+            if (mapModeManager != null)
+            {
+                mapModeManager.InvalidateAllMapModes();
+                mapModeManager.SetMapMode(mapModeManager.CurrentMode, forceUpdate: true);
+            }
+
             // Force texture update bridge to process pending updates
             if (textureUpdateBridge != null)
             {

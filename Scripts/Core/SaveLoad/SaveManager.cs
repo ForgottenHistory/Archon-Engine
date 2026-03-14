@@ -299,6 +299,28 @@ namespace Core.SaveLoad
         }
 
         /// <summary>
+        /// Get metadata for all save files (fast — reads only headers, not full files).
+        /// Returns array of (saveName, metadata) tuples. Metadata is null for legacy v1 saves.
+        /// </summary>
+        public (string name, SaveMetadata? metadata)[] GetSaveFileMetadata()
+        {
+            if (!Directory.Exists(saveDirectory))
+                return Array.Empty<(string, SaveMetadata?)>();
+
+            string searchPattern = $"*.{saveFileExtension}";
+            string[] files = Directory.GetFiles(saveDirectory, searchPattern);
+
+            var results = new (string name, SaveMetadata? metadata)[files.Length];
+            for (int i = 0; i < files.Length; i++)
+            {
+                results[i].name = Path.GetFileNameWithoutExtension(files[i]);
+                results[i].metadata = SaveFileSerializer.ReadSaveMetadata(files[i]);
+            }
+
+            return results;
+        }
+
+        /// <summary>
         /// Delete save file
         /// </summary>
         public bool DeleteSave(string saveName)
@@ -333,9 +355,9 @@ namespace Core.SaveLoad
             SaveGameData data = new SaveGameData
             {
                 gameVersion = Application.version,
-                saveFormatVersion = 1,
+                saveFormatVersion = 1001,
                 saveName = saveName,
-                scenarioName = "Default" // TODO: Get from scenario system
+                scenarioName = "Default"
             };
 
             data.SetSaveDate(DateTime.Now);

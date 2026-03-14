@@ -554,6 +554,11 @@ namespace Core.Systems
             // Sync both buffers so UI doesn't read stale data on first tick
             snapshot.SyncBuffersAfterLoad();
 
+            // CRITICAL: Rebuild reverse owner index (provincesByOwner)
+            // LoadState writes province data directly to the NativeArray buffer,
+            // bypassing SetProvinceState which normally updates the reverse index.
+            dataManager.RebuildOwnerIndex();
+
             ArchonLogger.Log($"ProvinceSystem: Loaded {savedProvinceCount} provinces (capacity: {savedCapacity})", "core_simulation");
         }
 

@@ -222,6 +222,8 @@ namespace Map.MapModes
             float totalValue = 0f;
             int validCount = 0;
 
+            provinceColors.Clear();
+
             // First pass: collect raw values and find min/max
             for (int i = 0; i < provinces.Length; i++)
             {
@@ -230,7 +232,12 @@ namespace Map.MapModes
 
                 float value = GetValueForProvince(provinceId, provinceQueries, gameProvinceSystem);
 
-                if (value < 0f) continue; // Skip invalid
+                if (value < 0f)
+                {
+                    // Explicitly set unowned/invalid provinces so stale colors are cleared
+                    provinceColors[(int)provinceId] = UnownedColor;
+                    continue;
+                }
 
                 rawValues[provinceId] = value;
 
@@ -255,8 +262,6 @@ namespace Map.MapModes
             float valueRange = stats.MaxValue - stats.MinValue;
             bool uniformValues = valueRange < 0.001f;
             var gradient = GetGradient();
-
-            provinceColors.Clear();
 
             foreach (var kvp in rawValues)
             {

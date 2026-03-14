@@ -450,13 +450,20 @@ namespace StarterKit
 
             saveManager.OnDeserializePlayerState = (data) =>
             {
-                if (data == null || data.Length == 0) return;
+                if (data == null || data.Length == 0)
+                {
+                    ArchonLogger.LogWarning("Initializer: OnDeserializePlayerState called with null/empty data", "starter_kit");
+                    return;
+                }
+
+                ArchonLogger.Log($"Initializer: Deserializing PlayerState blob ({data.Length} bytes)", "starter_kit");
 
                 using (var ms = new MemoryStream(data))
                 using (var reader = new BinaryReader(ms))
                 {
                     // PlayerState
                     int playerLen = reader.ReadInt32();
+                    ArchonLogger.Log($"Initializer: PlayerState segment: {playerLen} bytes", "starter_kit");
                     if (playerLen > 0)
                     {
                         byte[] playerData = reader.ReadBytes(playerLen);
@@ -465,14 +472,24 @@ namespace StarterKit
 
                     // EconomySystem
                     int economyLen = reader.ReadInt32();
+                    ArchonLogger.Log($"Initializer: EconomySystem segment: {economyLen} bytes, economySystem={economySystem != null}", "starter_kit");
                     if (economyLen > 0)
                     {
                         byte[] economyData = reader.ReadBytes(economyLen);
-                        economySystem?.Deserialize(economyData);
+                        if (economySystem != null)
+                        {
+                            economySystem.Deserialize(economyData);
+                            ArchonLogger.Log("Initializer: EconomySystem.Deserialize() completed", "starter_kit");
+                        }
+                        else
+                        {
+                            ArchonLogger.LogError("Initializer: economySystem is NULL, cannot deserialize!", "starter_kit");
+                        }
                     }
 
                     // BuildingSystem
                     int buildingLen = reader.ReadInt32();
+                    ArchonLogger.Log($"Initializer: BuildingSystem segment: {buildingLen} bytes", "starter_kit");
                     if (buildingLen > 0)
                     {
                         byte[] buildingData = reader.ReadBytes(buildingLen);
@@ -486,6 +503,13 @@ namespace StarterKit
             {
                 if (logProgress)
                     ArchonLogger.Log("Initializer: Post-load finalization...", "starter_kit");
+
+                // Pause game on load
+                var timeManager = gameState.GetComponent<TimeManager>();
+                timeManager?.PauseTime();
+
+                // Clear stale history from previous session
+                provinceHistorySystem?.ClearHistory();
 
                 // CRITICAL: Refresh all map visuals from loaded state
                 ArchonEngine.Instance?.RefreshAllVisuals();

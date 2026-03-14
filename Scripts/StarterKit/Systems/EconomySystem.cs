@@ -430,9 +430,12 @@ namespace StarterKit
                     countryGold[countryId] = FixedPoint64.FromRaw(rawGold);
                 }
 
+                // Invalidate all income caches after load — province ownership may have changed
+                InvalidateAllIncome();
+
                 if (logCollection)
                 {
-                    ArchonLogger.Log($"EconomySystem: Loaded gold for {count} countries", "starter_kit");
+                    ArchonLogger.Log($"EconomySystem: Loaded gold for {count} countries, income caches invalidated", "starter_kit");
                 }
             }
         }

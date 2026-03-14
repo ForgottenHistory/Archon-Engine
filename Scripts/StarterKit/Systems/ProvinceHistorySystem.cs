@@ -87,6 +87,16 @@ namespace StarterKit
         }
 
         /// <summary>
+        /// Clear all recorded history. Call after loading a save.
+        /// </summary>
+        public void ClearHistory()
+        {
+            provinceHistories.Clear();
+            if (logProgress)
+                ArchonLogger.Log("ProvinceHistorySystem: History cleared (post-load)", "starter_kit");
+        }
+
+        /// <summary>
         /// Check if a province has any recorded history.
         /// </summary>
         public bool HasHistory(ushort provinceId)

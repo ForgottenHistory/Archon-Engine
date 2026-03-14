@@ -355,6 +355,19 @@ namespace Map.MapModes
         }
 
         /// <summary>
+        /// Mark all map mode handlers as dirty so they recalculate on next activation.
+        /// Call after loading a save to ensure all modes reflect the loaded state.
+        /// </summary>
+        public void InvalidateAllMapModes()
+        {
+            foreach (var handler in modeHandlers.Values)
+            {
+                if (handler is GradientMapMode gradientMode)
+                    gradientMode.MarkDirty();
+            }
+        }
+
+        /// <summary>
         /// Force texture update only if the given handler is currently active.
         /// Called by GradientMapMode.MarkDirty() to trigger event-driven updates.
         /// </summary>

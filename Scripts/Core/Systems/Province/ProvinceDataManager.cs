@@ -122,6 +122,28 @@ namespace Core.Systems.Province
             provinceCount = count;
         }
 
+        /// <summary>
+        /// Rebuild the provincesByOwner reverse index from current province state data.
+        /// MUST be called after loading province states from a save file,
+        /// since LoadState writes directly to the NativeArray without updating the reverse index.
+        /// </summary>
+        public void RebuildOwnerIndex()
+        {
+            provincesByOwner.Clear();
+
+            var readBuffer = snapshot.GetProvinceReadBuffer();
+            for (int i = 0; i < activeProvinceIds.Length; i++)
+            {
+                ushort provinceId = activeProvinceIds[i];
+                if (idToIndex.TryGetValue(provinceId, out int arrayIndex))
+                {
+                    ushort owner = readBuffer[arrayIndex].ownerID;
+                    if (owner != UNOWNED_COUNTRY)
+                        provincesByOwner.Add(owner, provinceId);
+                }
+            }
+        }
+
         #region Hot Data Access
 
         /// <summary>
