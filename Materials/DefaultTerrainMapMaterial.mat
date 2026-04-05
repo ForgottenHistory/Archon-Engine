@@ -77,6 +77,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _DistanceFieldBorderTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -117,6 +121,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _PixelPerfectBorderTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _ProvinceColorPalette:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -134,6 +142,14 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _ProvinceOwnerTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ProvincePaletteTexture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _ProvinceTerrainLookup:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -173,12 +189,14 @@ Material:
     - _BezierSegmentCount: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
+    - _BorderRenderingMode: 1
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _CountryBorderStrength: 1
     - _CountryColorSaturation: 0.5
     - _Cull: 2
+    - _CustomMapModeIndex: 0
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
@@ -215,7 +233,9 @@ Material:
     - _HighlightStrength: 1
     - _MapHeight: 2048
     - _MapMode: 0
+    - _MapModeTextureCount: 0
     - _MapWidth: 5632
+    - _MaxProvinceID: 65536
     - _Metallic: 0
     - _NormalMapAmbient: 0.4
     - _NormalMapHighlight: 1.4

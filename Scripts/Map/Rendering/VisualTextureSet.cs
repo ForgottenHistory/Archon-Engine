@@ -16,6 +16,7 @@ namespace Map.Rendering
         private readonly int normalMapWidth;
         private readonly int normalMapHeight;
         private readonly bool logCreation;
+        private Material boundMaterial;
 
         // Visual enhancement textures
         private Texture2D provinceTerrainTexture;
@@ -237,6 +238,15 @@ namespace Map.Rendering
             detailIndexTexture = indexTexture;
             detailMaskTexture = maskTexture;
 
+            // Bind immediately if material is already bound (blend maps are generated after initial bind)
+            if (boundMaterial != null)
+            {
+                if (detailIndexTexture != null)
+                    boundMaterial.SetTexture(DetailIndexTextureID, detailIndexTexture);
+                if (detailMaskTexture != null)
+                    boundMaterial.SetTexture(DetailMaskTextureID, detailMaskTexture);
+            }
+
             if (logCreation)
             {
                 ArchonLogger.Log($"VisualTextureSet: Terrain blend maps set ({indexTexture.width}x{indexTexture.height})", "map_rendering");
@@ -249,6 +259,7 @@ namespace Map.Rendering
         public void BindToMaterial(Material material)
         {
             if (material == null) return;
+            boundMaterial = material;
 
             material.SetTexture(ProvinceTerrainTexID, provinceTerrainTexture);
             material.SetTexture(TerrainTypeTexID, terrainTypeTexture);

@@ -12,10 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9998121bd9740eb4b81a90f8b560f294, type: 3}
   m_Name: TemplateSettings
   m_EditorClassIdentifier: 
-  DataDirectory: Assets/Archon-Engine/Template-Data
-  TemplateDataDirectory: Assets/Archon-Engine/Template-Data
-  MapDirectory: Assets/Archon-Engine/Template-Data/Map
-  DebugOutputDirectory: Assets/Game/Debug/Screenshots
+  editorDataDirectory: Assets/Archon-Engine/Template-Data
   EnableParallelLoading: 1
   EnableDataValidation: 1
   UseGracefulDegradation: 1
@@ -23,7 +20,7 @@ MonoBehaviour:
   RetryAttempts: 1
   EnableMemoryLeakDetection: 0
   SkipCacheWarming: 0
-  LogLevel: 2
+  LogLevel: 4
   AutoUpdateBorders: 1
   AutoUpdateMapModeTextures: 1
   TextureUpdateBatchDelay: 0.1

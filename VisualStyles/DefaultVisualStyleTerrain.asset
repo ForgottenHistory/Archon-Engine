@@ -23,7 +23,7 @@ MonoBehaviour:
     provinceBorderStrength: 1
     enableBordersOnStartup: 1
     borderMode: 3
-    pixelPerfectCountryThickness: 3
+    pixelPerfectCountryThickness: 1
     pixelPerfectProvinceThickness: 1
     pixelPerfectAntiAliasing: 1
     edgeWidth: 0.5
@@ -77,3 +77,15 @@ MonoBehaviour:
     customRendererId: 
     sampleRadius: 2
     blendSharpness: 1
+  mapModeColorizer:
+    customColorizerId: 
+    discreteBands: 0
+    showValueLabels: 0
+    noDataColor: {r: 0.25, g: 0.25, b: 0.25, a: 1}
+  compositor:
+    customCompositorId: 
+    enableLighting: 1
+    enableBorders: 1
+    enableHighlights: 1
+    enableFogOfWar: 1
+    enableOverlay: 1
