@@ -19,7 +19,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HeightmapBitmapLoader
     path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
-    startLine: 176
+    startLine: 339
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

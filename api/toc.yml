@@ -169,6 +169,9 @@ items:
   - uid: Core.Commands.ICommandFactory
     name: ICommandFactory
     type: Interface
+  - uid: Core.Commands.ICommandMessages
+    name: ICommandMessages
+    type: Interface
   - uid: Core.Commands.INetworkCommand
     name: INetworkCommand
     type: Interface
@@ -915,6 +918,9 @@ items:
   - uid: Core.SaveLoad.SaveManager
     name: SaveManager
     type: Class
+  - uid: Core.SaveLoad.SaveMetadata
+    name: SaveMetadata
+    type: Struct
   - uid: Core.SaveLoad.SerializationHelper
     name: SerializationHelper
     type: Class
@@ -1639,6 +1645,12 @@ items:
   - uid: Map.Rendering.Border.DistanceFieldBorderRenderer
     name: DistanceFieldBorderRenderer
     type: Class
+  - uid: Map.Rendering.Border.GPUBorderExtractor
+    name: GPUBorderExtractor
+    type: Class
+  - uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    name: GPUBorderExtractor.ExtractionResult
+    type: Struct
   - uid: Map.Rendering.Border.IBorderRenderer
     name: IBorderRenderer
     type: Interface
@@ -1936,6 +1948,13 @@ items:
     type: Class
   - uid: StarterKit.MapModes.TerrainCostMapMode
     name: TerrainCostMapMode
+    type: Class
+- uid: StarterKit.Systems
+  name: StarterKit.Systems
+  type: Namespace
+  items:
+  - uid: StarterKit.Systems.LongRunDiagnostic
+    name: LongRunDiagnostic
     type: Class
 - uid: StarterKit.Validation
   name: StarterKit.Validation

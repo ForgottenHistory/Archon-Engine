@@ -23,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProcessingProgress
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -50,7 +50,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProcessedProvinces
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 21
+    startLine: 22
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -77,7 +77,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalProvinces
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 22
+    startLine: 23
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProgressPercentage
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -131,7 +131,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CurrentOperation
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - MapAssembly
   namespace: Map.Loading

@@ -30,14 +30,16 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MeshGeometryBorderRenderer
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 11
+    startLine: 13
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
   summary: >-
     ENGINE: Mesh-based border renderer implementation.
 
-    Generates actual geometry for borders using CPU curve extraction.
+    Generates actual geometry for borders using GPU-accelerated curve extraction.
+
+    Falls back to CPU extraction if GPU compute is unavailable.
 
 
     Best for 3D map effects where borders need depth/thickness.
@@ -79,7 +81,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RendererId
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -111,7 +113,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DisplayName
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 14
+    startLine: 16
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -143,7 +145,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RequiresPerFrameUpdate
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 15
+    startLine: 17
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -175,16 +177,16 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 26
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
   syntax:
-    content: public MeshGeometryBorderRenderer(float width = 1)
+    content: public MeshGeometryBorderRenderer(float width = 0.0075)
     parameters:
     - id: width
       type: System.Single
-    content.vb: Public Sub New(width As Single = 1)
+    content.vb: Public Sub New(width As Single = 0.0075)
   overload: Map.Rendering.Border.MeshGeometryBorderRenderer.#ctor*
   nameWithType.vb: MeshGeometryBorderRenderer.New(Single)
   fullName.vb: Map.Rendering.Border.MeshGeometryBorderRenderer.New(Single)
@@ -207,7 +209,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnInitialize
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 31
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -239,7 +241,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateBorders
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 69
+    startLine: 178
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -271,7 +273,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnRenderFrame
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 100
+    startLine: 209
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -303,7 +305,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyToMaterial
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 106
+    startLine: 215
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -340,7 +342,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateBorderStyles
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 123
+    startLine: 232
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -368,7 +370,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderWidth
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 131
+    startLine: 240
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border
@@ -402,7 +404,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Rendering/Border/Implementations/MeshGeometryBorderRenderer.cs
-    startLine: 140
+    startLine: 257
   assemblies:
   - MapAssembly
   namespace: Map.Rendering.Border

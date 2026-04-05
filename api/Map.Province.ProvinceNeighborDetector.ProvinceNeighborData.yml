@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceNeighborData
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 39
+    startLine: 47
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -51,7 +51,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceID
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 41
+    startLine: 49
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -78,7 +78,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Neighbors
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 42
+    startLine: 50
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -105,7 +105,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsCoastal
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 43
+    startLine: 51
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -132,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NeighborCount
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 44
+    startLine: 52
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -161,7 +161,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 46
+    startLine: 54
   assemblies:
   - MapAssembly
   namespace: Map.Province

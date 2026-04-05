@@ -6,6 +6,7 @@ items:
   parent: Core.SaveLoad
   children:
   - Core.SaveLoad.SaveManager.DeleteSave(System.String)
+  - Core.SaveLoad.SaveManager.GetSaveFileMetadata
   - Core.SaveLoad.SaveManager.GetSaveFileNames
   - Core.SaveLoad.SaveManager.LoadGame(System.String)
   - Core.SaveLoad.SaveManager.OnDeserializePlayerState
@@ -538,6 +539,39 @@ items:
       type: System.String[]
     content.vb: Public Function GetSaveFileNames() As String()
   overload: Core.SaveLoad.SaveManager.GetSaveFileNames*
+- uid: Core.SaveLoad.SaveManager.GetSaveFileMetadata
+  commentId: M:Core.SaveLoad.SaveManager.GetSaveFileMetadata
+  id: GetSaveFileMetadata
+  parent: Core.SaveLoad.SaveManager
+  langs:
+  - csharp
+  - vb
+  name: GetSaveFileMetadata()
+  nameWithType: SaveManager.GetSaveFileMetadata()
+  fullName: Core.SaveLoad.SaveManager.GetSaveFileMetadata()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSaveFileMetadata
+    path: Scripts/Core/SaveLoad/SaveManager.cs
+    startLine: 304
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Get metadata for all save files (fast — reads only headers, not full files).
+
+    Returns array of (saveName, metadata) tuples. Metadata is null for legacy v1 saves.
+  example: []
+  syntax:
+    content: public (string name, SaveMetadata? metadata)[] GetSaveFileMetadata()
+    return:
+      type: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}[]
+    content.vb: Public Function GetSaveFileMetadata() As (name As String, metadata As SaveMetadata?)()
+  overload: Core.SaveLoad.SaveManager.GetSaveFileMetadata*
 - uid: Core.SaveLoad.SaveManager.DeleteSave(System.String)
   commentId: M:Core.SaveLoad.SaveManager.DeleteSave(System.String)
   id: DeleteSave(System.String)
@@ -556,7 +590,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DeleteSave
     path: Scripts/Core/SaveLoad/SaveManager.cs
-    startLine: 303
+    startLine: 325
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -847,6 +881,65 @@ references:
   - uid: System.String
     name: String
     isExternal: true
+  - name: (
+  - name: )
+- uid: Core.SaveLoad.SaveManager.GetSaveFileMetadata*
+  commentId: Overload:Core.SaveLoad.SaveManager.GetSaveFileMetadata
+  href: Core.SaveLoad.SaveManager.html#Core_SaveLoad_SaveManager_GetSaveFileMetadata
+  name: GetSaveFileMetadata
+  nameWithType: SaveManager.GetSaveFileMetadata
+  fullName: Core.SaveLoad.SaveManager.GetSaveFileMetadata
+- uid: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}[]
+  isExternal: true
+  href: Core.SaveLoad.SaveMetadata.html
+  name: (string name, SaveMetadata? metadata)[]
+  nameWithType: (string name, SaveMetadata? metadata)[]
+  fullName: (string name, Core.SaveLoad.SaveMetadata? metadata)[]
+  nameWithType.vb: (name As String, metadata As SaveMetadata?)()
+  fullName.vb: (name As String, metadata As Core.SaveLoad.SaveMetadata?)()
+  name.vb: (name As String, metadata As SaveMetadata?)()
+  spec.csharp:
+  - name: (
+  - uid: System.String
+    name: string
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}.name
+    name: name
+  - name: ','
+  - name: " "
+  - uid: Core.SaveLoad.SaveMetadata
+    name: SaveMetadata
+    href: Core.SaveLoad.SaveMetadata.html
+  - name: '?'
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}.metadata
+    name: metadata
+  - name: )
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - name: (
+  - uid: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}.name
+    name: name
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.String,System.Nullable{Core.SaveLoad.SaveMetadata}}.metadata
+    name: metadata
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: Core.SaveLoad.SaveMetadata
+    name: SaveMetadata
+    href: Core.SaveLoad.SaveMetadata.html
+  - name: '?'
+  - name: )
   - name: (
   - name: )
 - uid: Core.SaveLoad.SaveManager.DeleteSave*

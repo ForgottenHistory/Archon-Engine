@@ -25,7 +25,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CommandResult
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 135
+    startLine: 145
   assemblies:
   - Core
   namespace: Core.Commands
@@ -55,7 +55,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsSuccess
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 137
+    startLine: 147
   assemblies:
   - Core
   namespace: Core.Commands
@@ -82,7 +82,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ErrorMessage
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 138
+    startLine: 148
   assemblies:
   - Core
   namespace: Core.Commands
@@ -109,7 +109,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExecutionTimeMs
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 139
+    startLine: 149
   assemblies:
   - Core
   namespace: Core.Commands
@@ -136,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EventsEmitted
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 140
+    startLine: 150
   assemblies:
   - Core
   namespace: Core.Commands
@@ -163,7 +163,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Success
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 142
+    startLine: 152
   assemblies:
   - Core
   namespace: Core.Commands
@@ -199,7 +199,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Failure
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 152
+    startLine: 162
   assemblies:
   - Core
   namespace: Core.Commands

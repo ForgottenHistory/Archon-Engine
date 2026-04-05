@@ -558,7 +558,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtWorldPosition
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 413
+    startLine: 420
   assemblies:
   - MapAssembly
   namespace: Map.Core
@@ -591,7 +591,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetMapPlaneTransform
     path: Scripts/Map/Core/MapSystemCoordinator.cs
-    startLine: 421
+    startLine: 428
   assemblies:
   - MapAssembly
   namespace: Map.Core

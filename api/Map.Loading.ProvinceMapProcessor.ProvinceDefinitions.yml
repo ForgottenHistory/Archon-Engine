@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceDefinitions
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 157
+    startLine: 178
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -48,7 +48,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AllDefinitions
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 159
+    startLine: 180
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -75,7 +75,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 161
+    startLine: 182
   assemblies:
   - MapAssembly
   namespace: Map.Loading

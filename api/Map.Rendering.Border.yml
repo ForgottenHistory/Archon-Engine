@@ -16,6 +16,8 @@ items:
   - Map.Rendering.Border.BorderStyleParams
   - Map.Rendering.Border.BorderStyleUpdater
   - Map.Rendering.Border.DistanceFieldBorderRenderer
+  - Map.Rendering.Border.GPUBorderExtractor
+  - Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
   - Map.Rendering.Border.IBorderRenderer
   - Map.Rendering.Border.JunctionDetector
   - Map.Rendering.Border.MedianFilterProcessor
@@ -127,6 +129,35 @@ references:
   name: DistanceFieldBorderRenderer
   nameWithType: DistanceFieldBorderRenderer
   fullName: Map.Rendering.Border.DistanceFieldBorderRenderer
+- uid: Map.Rendering.Border.GPUBorderExtractor
+  commentId: T:Map.Rendering.Border.GPUBorderExtractor
+  href: Map.Rendering.Border.GPUBorderExtractor.html
+  name: GPUBorderExtractor
+  nameWithType: GPUBorderExtractor
+  fullName: Map.Rendering.Border.GPUBorderExtractor
+- uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  commentId: T:Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.GPUBorderExtractor.html
+  name: GPUBorderExtractor.ExtractionResult
+  nameWithType: GPUBorderExtractor.ExtractionResult
+  fullName: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  spec.csharp:
+  - uid: Map.Rendering.Border.GPUBorderExtractor
+    name: GPUBorderExtractor
+    href: Map.Rendering.Border.GPUBorderExtractor.html
+  - name: .
+  - uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    name: ExtractionResult
+    href: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult.html
+  spec.vb:
+  - uid: Map.Rendering.Border.GPUBorderExtractor
+    name: GPUBorderExtractor
+    href: Map.Rendering.Border.GPUBorderExtractor.html
+  - name: .
+  - uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    name: ExtractionResult
+    href: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult.html
 - uid: Map.Rendering.Border.BorderParameterBinder
   commentId: T:Map.Rendering.Border.BorderParameterBinder
   href: Map.Rendering.Border.BorderParameterBinder.html

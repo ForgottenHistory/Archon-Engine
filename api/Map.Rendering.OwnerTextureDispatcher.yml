@@ -7,7 +7,9 @@ items:
   children:
   - Map.Rendering.OwnerTextureDispatcher.Initialize
   - Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
+  - Map.Rendering.OwnerTextureDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
   - Map.Rendering.OwnerTextureDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
+  - Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture(Core.Queries.ProvinceQueries,System.UInt16[],UnityEngine.Rendering.CommandBuffer)
   langs:
   - csharp
   - vb
@@ -27,13 +29,13 @@ items:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
-    Manages GPU compute shader for high-performance owner texture population.
+    Manages GPU compute shaders for owner texture population.
 
-    Processes entire map in parallel to populate province owner texture from simulation data.
+    Full-map shader (PopulateOwnerTexture) used at load time.
 
-    Part of the texture-based map rendering system - dual-layer architecture compliance.
+    Indexed shader (UpdateOwnerByIndex) used at runtime — dispatches only over
 
-    Performance: ~2ms for entire map vs 50+ seconds on CPU
+    pixels belonging to changed provinces instead of scanning all 97.5M pixels.
   example: []
   syntax:
     content: 'public class OwnerTextureDispatcher : MonoBehaviour'
@@ -62,12 +64,10 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 39
+    startLine: 58
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Initialize compute shader kernels. Called by ArchonEngine.
-  example: []
   syntax:
     content: public void Initialize()
     content.vb: Public Sub Initialize()
@@ -90,12 +90,10 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 78
+    startLine: 84
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Set the texture manager reference
-  example: []
   syntax:
     content: public void SetTextureManager(MapTextureManager manager)
     parameters:
@@ -103,6 +101,47 @@ items:
       type: Map.Rendering.MapTextureManager
     content.vb: Public Sub SetTextureManager(manager As MapTextureManager)
   overload: Map.Rendering.OwnerTextureDispatcher.SetTextureManager*
+- uid: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  commentId: M:Map.Rendering.OwnerTextureDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  id: SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  parent: Map.Rendering.OwnerTextureDispatcher
+  langs:
+  - csharp
+  - vb
+  name: SetPixelIndex(uint[], uint[], uint[])
+  nameWithType: OwnerTextureDispatcher.SetPixelIndex(uint[], uint[], uint[])
+  fullName: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex(uint[], uint[], uint[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPixelIndex
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 93
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Set the per-province pixel index built at load time.
+
+    Enables targeted runtime updates via UpdateOwnerByIndex compute shader.
+  example: []
+  syntax:
+    content: public void SetPixelIndex(uint[] pixelCoords, uint[] offsets, uint[] counts)
+    parameters:
+    - id: pixelCoords
+      type: System.UInt32[]
+    - id: offsets
+      type: System.UInt32[]
+    - id: counts
+      type: System.UInt32[]
+    content.vb: Public Sub SetPixelIndex(pixelCoords As UInteger(), offsets As UInteger(), counts As UInteger())
+  overload: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex*
+  nameWithType.vb: OwnerTextureDispatcher.SetPixelIndex(UInteger(), UInteger(), UInteger())
+  fullName.vb: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex(UInteger(), UInteger(), UInteger())
+  name.vb: SetPixelIndex(UInteger(), UInteger(), UInteger())
 - uid: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
   commentId: M:Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture(Core.Queries.ProvinceQueries)
   id: PopulateOwnerTexture(Core.Queries.ProvinceQueries)
@@ -121,14 +160,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateOwnerTexture
     path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
-    startLine: 88
+    startLine: 127
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
-    Populate owner texture from Core simulation data using GPU compute shader
+    Full populate: builds entire owner buffer from simulation data.
 
-    Architecture: Core ProvinceQueries → GPU buffer → GPU texture
+    Used at load time only.
   example: []
   syntax:
     content: >-
@@ -138,7 +177,6 @@ items:
     parameters:
     - id: provinceQueries
       type: Core.Queries.ProvinceQueries
-      description: Read-only access to Core simulation data
     content.vb: >-
       <ContextMenu("Populate Owner Texture")>
 
@@ -150,6 +188,49 @@ items:
     arguments:
     - type: System.String
       value: Populate Owner Texture
+- uid: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture(Core.Queries.ProvinceQueries,System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  commentId: M:Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture(Core.Queries.ProvinceQueries,System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  id: UpdateOwnerTexture(Core.Queries.ProvinceQueries,System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  parent: Map.Rendering.OwnerTextureDispatcher
+  langs:
+  - csharp
+  - vb
+  name: UpdateOwnerTexture(ProvinceQueries, ushort[], CommandBuffer)
+  nameWithType: OwnerTextureDispatcher.UpdateOwnerTexture(ProvinceQueries, ushort[], CommandBuffer)
+  fullName: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture(Core.Queries.ProvinceQueries, ushort[], UnityEngine.Rendering.CommandBuffer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: UpdateOwnerTexture
+    path: Scripts/Map/Rendering/OwnerTextureDispatcher.cs
+    startLine: 157
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Incremental update: queues compute shader dispatch into a CommandBuffer
+
+    for only pixels of changed provinces. Non-blocking — no GPU sync stall.
+
+    Falls back to full-map dispatch if pixel index not available.
+  example: []
+  syntax:
+    content: public void UpdateOwnerTexture(ProvinceQueries provinceQueries, ushort[] changedProvinces, CommandBuffer cmd)
+    parameters:
+    - id: provinceQueries
+      type: Core.Queries.ProvinceQueries
+    - id: changedProvinces
+      type: System.UInt16[]
+    - id: cmd
+      type: UnityEngine.Rendering.CommandBuffer
+    content.vb: Public Sub UpdateOwnerTexture(provinceQueries As ProvinceQueries, changedProvinces As UShort(), cmd As CommandBuffer)
+  overload: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture*
+  nameWithType.vb: OwnerTextureDispatcher.UpdateOwnerTexture(ProvinceQueries, UShort(), CommandBuffer)
+  fullName.vb: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture(Core.Queries.ProvinceQueries, UShort(), UnityEngine.Rendering.CommandBuffer)
+  name.vb: UpdateOwnerTexture(ProvinceQueries, UShort(), CommandBuffer)
 references:
 - uid: Map.Rendering
   commentId: N:Map.Rendering
@@ -242,6 +323,32 @@ references:
   name: MapTextureManager
   nameWithType: MapTextureManager
   fullName: Map.Rendering.MapTextureManager
+- uid: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex*
+  commentId: Overload:Map.Rendering.OwnerTextureDispatcher.SetPixelIndex
+  href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_SetPixelIndex_System_UInt32___System_UInt32___System_UInt32___
+  name: SetPixelIndex
+  nameWithType: OwnerTextureDispatcher.SetPixelIndex
+  fullName: Map.Rendering.OwnerTextureDispatcher.SetPixelIndex
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
 - uid: Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture*
   commentId: Overload:Map.Rendering.OwnerTextureDispatcher.PopulateOwnerTexture
   href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_PopulateOwnerTexture_Core_Queries_ProvinceQueries_
@@ -277,3 +384,58 @@ references:
   - uid: Core.Queries
     name: Queries
     href: Core.Queries.html
+- uid: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture*
+  commentId: Overload:Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture
+  href: Map.Rendering.OwnerTextureDispatcher.html#Map_Rendering_OwnerTextureDispatcher_UpdateOwnerTexture_Core_Queries_ProvinceQueries_System_UInt16___UnityEngine_Rendering_CommandBuffer_
+  name: UpdateOwnerTexture
+  nameWithType: OwnerTextureDispatcher.UpdateOwnerTexture
+  fullName: Map.Rendering.OwnerTextureDispatcher.UpdateOwnerTexture
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: UnityEngine.Rendering.CommandBuffer
+  commentId: T:UnityEngine.Rendering.CommandBuffer
+  parent: UnityEngine.Rendering
+  isExternal: true
+  name: CommandBuffer
+  nameWithType: CommandBuffer
+  fullName: UnityEngine.Rendering.CommandBuffer
+- uid: UnityEngine.Rendering
+  commentId: N:UnityEngine.Rendering
+  isExternal: true
+  name: UnityEngine.Rendering
+  nameWithType: UnityEngine.Rendering
+  fullName: UnityEngine.Rendering
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.Rendering
+    name: Rendering
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.Rendering
+    name: Rendering
+    isExternal: true

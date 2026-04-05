@@ -20,7 +20,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BMPPixelDataWrapper
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 118
+    startLine: 139
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -47,7 +47,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetPixelRGB
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 127
+    startLine: 148
   assemblies:
   - MapAssembly
   namespace: Map.Loading

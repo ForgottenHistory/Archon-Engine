@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Systems
+  commentId: N:StarterKit.Systems
+  id: StarterKit.Systems
+  children:
+  - StarterKit.Systems.LongRunDiagnostic
+  langs:
+  - csharp
+  - vb
+  name: StarterKit.Systems
+  nameWithType: StarterKit.Systems
+  fullName: StarterKit.Systems
+  type: Namespace
+  assemblies:
+  - StarterKit
+references:
+- uid: StarterKit.Systems.LongRunDiagnostic
+  commentId: T:StarterKit.Systems.LongRunDiagnostic
+  href: StarterKit.Systems.LongRunDiagnostic.html
+  name: LongRunDiagnostic
+  nameWithType: LongRunDiagnostic
+  fullName: StarterKit.Systems.LongRunDiagnostic

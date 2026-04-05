@@ -20,7 +20,7 @@ items:
   - Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
   - Map.Rendering.MapTextureManager.HeightmapTexture
   - Map.Rendering.MapTextureManager.HighlightTexture
-  - Map.Rendering.MapTextureManager.Initialize
+  - Map.Rendering.MapTextureManager.Initialize(System.Int32,System.Int32)
   - Map.Rendering.MapTextureManager.MapHeight
   - Map.Rendering.MapTextureManager.MapWidth
   - Map.Rendering.MapTextureManager.NormalMapTexture
@@ -36,6 +36,7 @@ items:
   - Map.Rendering.MapTextureManager.SetPaletteColor(System.Byte,UnityEngine.Color32)
   - Map.Rendering.MapTextureManager.SetPaletteColors(UnityEngine.Color32[])
   - Map.Rendering.MapTextureManager.SetProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  - Map.Rendering.MapTextureManager.SetProvinceIDLookup(System.UInt16[])
   - Map.Rendering.MapTextureManager.SetProvinceTerrainLookup(UnityEngine.RenderTexture)
   - Map.Rendering.MapTextureManager.SetTerrainBlendMaps(UnityEngine.RenderTexture,UnityEngine.RenderTexture)
   - Map.Rendering.MapTextureManager.TerrainTypeTexture
@@ -53,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapTextureManager
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 10
+    startLine: 9
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -91,7 +92,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapWidth
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 28
+    startLine: 27
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -120,7 +121,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapHeight
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 29
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -149,7 +150,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceIDTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 31
+    startLine: 30
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -178,7 +179,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceOwnerTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 32
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -207,7 +208,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceColorTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 33
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -236,7 +237,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceDevelopmentTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 34
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -265,7 +266,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceTerrainTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 35
+    startLine: 34
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -294,7 +295,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainTypeTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 36
+    startLine: 35
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -323,7 +324,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HeightmapTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 37
+    startLine: 36
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -352,7 +353,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NormalMapTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 38
+    startLine: 37
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -381,7 +382,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetailIndexTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 39
+    startLine: 38
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -410,7 +411,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetailMaskTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 40
+    startLine: 39
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -439,7 +440,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceColorPalette
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 41
+    startLine: 40
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -468,7 +469,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DistanceFieldBorderTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 43
+    startLine: 42
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -497,7 +498,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PixelPerfectBorderTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 44
+    startLine: 43
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -526,7 +527,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DistanceFieldTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 47
+    startLine: 46
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -567,7 +568,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DualBorderTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 49
+    startLine: 48
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -608,7 +609,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HighlightTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 52
+    startLine: 51
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -637,7 +638,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: FogOfWarTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 53
+    startLine: 52
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -666,7 +667,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DynamicTextures
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 56
+    startLine: 55
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -677,16 +678,16 @@ items:
       type: Map.Rendering.DynamicTextureSet
     content.vb: Public ReadOnly Property DynamicTextures As DynamicTextureSet
   overload: Map.Rendering.MapTextureManager.DynamicTextures*
-- uid: Map.Rendering.MapTextureManager.Initialize
-  commentId: M:Map.Rendering.MapTextureManager.Initialize
-  id: Initialize
+- uid: Map.Rendering.MapTextureManager.Initialize(System.Int32,System.Int32)
+  commentId: M:Map.Rendering.MapTextureManager.Initialize(System.Int32,System.Int32)
+  id: Initialize(System.Int32,System.Int32)
   parent: Map.Rendering.MapTextureManager
   langs:
   - csharp
   - vb
-  name: Initialize()
-  nameWithType: MapTextureManager.Initialize()
-  fullName: Map.Rendering.MapTextureManager.Initialize()
+  name: Initialize(int, int)
+  nameWithType: MapTextureManager.Initialize(int, int)
+  fullName: Map.Rendering.MapTextureManager.Initialize(int, int)
   type: Method
   source:
     remote:
@@ -695,16 +696,60 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 63
+    startLine: 64
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Initialize texture manager. Called by ArchonEngine after GameSettings is registered.
+  summary: Initialize texture manager with map dimensions from loaded image.
   example: []
   syntax:
-    content: public void Initialize()
-    content.vb: Public Sub Initialize()
+    content: public void Initialize(int width, int height)
+    parameters:
+    - id: width
+      type: System.Int32
+      description: Map width in pixels (from provinces.png/bmp)
+    - id: height
+      type: System.Int32
+      description: Map height in pixels (from provinces.png/bmp)
+    content.vb: Public Sub Initialize(width As Integer, height As Integer)
   overload: Map.Rendering.MapTextureManager.Initialize*
+  nameWithType.vb: MapTextureManager.Initialize(Integer, Integer)
+  fullName.vb: Map.Rendering.MapTextureManager.Initialize(Integer, Integer)
+  name.vb: Initialize(Integer, Integer)
+- uid: Map.Rendering.MapTextureManager.SetProvinceIDLookup(System.UInt16[])
+  commentId: M:Map.Rendering.MapTextureManager.SetProvinceIDLookup(System.UInt16[])
+  id: SetProvinceIDLookup(System.UInt16[])
+  parent: Map.Rendering.MapTextureManager
+  langs:
+  - csharp
+  - vb
+  name: SetProvinceIDLookup(ushort[])
+  nameWithType: MapTextureManager.SetProvinceIDLookup(ushort[])
+  fullName: Map.Rendering.MapTextureManager.SetProvinceIDLookup(ushort[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapTextureManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetProvinceIDLookup
+    path: Scripts/Map/MapTextureManager.cs
+    startLine: 106
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set the CPU-side province ID lookup table. Called once at load time.
+  example: []
+  syntax:
+    content: public void SetProvinceIDLookup(ushort[] lookup)
+    parameters:
+    - id: lookup
+      type: System.UInt16[]
+    content.vb: Public Sub SetProvinceIDLookup(lookup As UShort())
+  overload: Map.Rendering.MapTextureManager.SetProvinceIDLookup*
+  nameWithType.vb: MapTextureManager.SetProvinceIDLookup(UShort())
+  fullName.vb: Map.Rendering.MapTextureManager.SetProvinceIDLookup(UShort())
+  name.vb: SetProvinceIDLookup(UShort())
 - uid: Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
   commentId: M:Map.Rendering.MapTextureManager.GetProvinceID(System.Int32,System.Int32)
   id: GetProvinceID(System.Int32,System.Int32)
@@ -723,17 +768,10 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceID
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 91
+    startLine: 111
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: >-
-    Get province ID at specific coordinates using GPU readback
-
-    NOTE: Slow (GPU→CPU readback) - use sparingly for mouse picking only
-
-    Y coordinate is in OpenGL convention (0 = bottom), RenderTexture uses GPU convention (0 = top)
-  example: []
   syntax:
     content: public ushort GetProvinceID(int x, int y)
     parameters:
@@ -766,7 +804,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetProvinceColor
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 117
+    startLine: 130
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -804,7 +842,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetPaletteColor
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 130
+    startLine: 143
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -843,7 +881,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetPaletteColors
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 138
+    startLine: 151
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -877,7 +915,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyTextureChanges
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 146
+    startLine: 159
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -905,7 +943,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyPaletteChanges
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 156
+    startLine: 169
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -933,7 +971,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateTerrainTypeTexture
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 165
+    startLine: 178
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -964,7 +1002,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateNormalMapFromHeightmap
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 174
+    startLine: 187
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1003,7 +1041,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BindTexturesToMaterial
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 182
+    startLine: 195
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1034,7 +1072,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderStyle
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 203
+    startLine: 216
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1076,7 +1114,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetProvinceTerrainLookup
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 213
+    startLine: 226
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1107,7 +1145,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTerrainBlendMaps
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 221
+    startLine: 234
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1140,7 +1178,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ResizeTextures
     path: Scripts/Map/MapTextureManager.cs
-    startLine: 229
+    startLine: 242
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -1384,10 +1422,36 @@ references:
   fullName: Map.Rendering.DynamicTextureSet
 - uid: Map.Rendering.MapTextureManager.Initialize*
   commentId: Overload:Map.Rendering.MapTextureManager.Initialize
-  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_Initialize
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_Initialize_System_Int32_System_Int32_
   name: Initialize
   nameWithType: MapTextureManager.Initialize
   fullName: Map.Rendering.MapTextureManager.Initialize
+- uid: Map.Rendering.MapTextureManager.SetProvinceIDLookup*
+  commentId: Overload:Map.Rendering.MapTextureManager.SetProvinceIDLookup
+  href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_SetProvinceIDLookup_System_UInt16___
+  name: SetProvinceIDLookup
+  nameWithType: MapTextureManager.SetProvinceIDLookup
+  fullName: Map.Rendering.MapTextureManager.SetProvinceIDLookup
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
 - uid: Map.Rendering.MapTextureManager.GetProvinceID*
   commentId: Overload:Map.Rendering.MapTextureManager.GetProvinceID
   href: Map.Rendering.MapTextureManager.html#Map_Rendering_MapTextureManager_GetProvinceID_System_Int32_System_Int32_

@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AISystem
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 23
+    startLine: 22
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -33,7 +33,7 @@ items:
     Priority: Colonize first (expand), then build farms (develop).
 
 
-    Demonstrates: ProvinceQueryBuilder for fluent province filtering.
+    Performance: Pre-allocated buffers, zero gameplay allocations.
   example: []
   syntax:
     content: public class AISystem
@@ -58,7 +58,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 40
+    startLine: 44
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/AISystem.cs
-    startLine: 232
+    startLine: 264
   assemblies:
   - StarterKit
   namespace: StarterKit

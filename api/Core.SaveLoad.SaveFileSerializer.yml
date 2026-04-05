@@ -6,6 +6,7 @@ items:
   parent: Core.SaveLoad
   children:
   - Core.SaveLoad.SaveFileSerializer.ReadFromDisk(System.String)
+  - Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata(System.String)
   - Core.SaveLoad.SaveFileSerializer.VerifyVersionCompatibility(Core.SaveLoad.SaveGameData,System.String)
   - Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
   langs:
@@ -22,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SaveFileSerializer
     path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
-    startLine: 27
+    startLine: 26
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -30,43 +31,74 @@ items:
     ENGINE LAYER - Binary save file format serializer
 
 
-    Responsibilities:
-
-    - Write SaveGameData to binary file format
-
-    - Read SaveGameData from binary file format
-
-    - Handle file format: magic bytes, headers, metadata
-
-    - Atomic writes (temp file → rename) to prevent corruption
-
-    - Version validation
-
-
-    File Format:
+    File Format v2:
 
     - Magic bytes: "HGSV" (4 bytes)
 
-    - Metadata: version, save name, date, tick, speed, scenario
+    - Format version: int32 (4 bytes) — 1 = legacy, 2 = metadata+compression
 
-    - System data: count + (name, bytes) pairs
+    - Metadata header: 256 bytes (fixed-size, readable without full deserialization)
 
-    - Command log: count + bytes[]
+    - Compressed payload (GZip):
+      - System data: count + (name, length, bytes) pairs
+      - Command log: count + bytes[]
+    - Checksum: uint32 (CRC32 of compressed payload)
+
+
+    File Format v1 (legacy):
+
+    - Magic bytes: "HGSV" (4 bytes)
+
+    - Header: variable-length metadata
+
+    - System data + Command log (uncompressed)
 
     - Checksum: uint32
-
-
-    Usage:
-
-    SaveFileSerializer.WriteToDisk(saveData, filePath);
-
-    SaveGameData data = SaveFileSerializer.ReadFromDisk(filePath);
   example: []
   syntax:
     content: public static class SaveFileSerializer
     content.vb: Public Module SaveFileSerializer
   inheritance:
   - System.Object
+- uid: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata(System.String)
+  commentId: M:Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata(System.String)
+  id: ReadSaveMetadata(System.String)
+  parent: Core.SaveLoad.SaveFileSerializer
+  langs:
+  - csharp
+  - vb
+  name: ReadSaveMetadata(string)
+  nameWithType: SaveFileSerializer.ReadSaveMetadata(string)
+  fullName: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadSaveMetadata
+    path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
+    startLine: 44
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Read only the metadata header from a save file (fast — reads ~264 bytes).
+
+    Returns null if the file is invalid or uses legacy format.
+  example: []
+  syntax:
+    content: public static SaveMetadata? ReadSaveMetadata(string filePath)
+    parameters:
+    - id: filePath
+      type: System.String
+    return:
+      type: System.Nullable{Core.SaveLoad.SaveMetadata}
+    content.vb: Public Shared Function ReadSaveMetadata(filePath As String) As SaveMetadata?
+  overload: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata*
+  nameWithType.vb: SaveFileSerializer.ReadSaveMetadata(String)
+  fullName.vb: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata(String)
+  name.vb: ReadSaveMetadata(String)
 - uid: Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
   commentId: M:Core.SaveLoad.SaveFileSerializer.WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
   id: WriteToDisk(Core.SaveLoad.SaveGameData,System.String)
@@ -85,11 +117,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: WriteToDisk
     path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
-    startLine: 34
+    startLine: 77
   assemblies:
   - Core
   namespace: Core.SaveLoad
-  summary: Write SaveGameData to disk with atomic write (temp file → rename)
+  summary: >-
+    Write SaveGameData to disk with atomic write (temp file → rename).
+
+    Uses format v2: fixed metadata header + GZip compressed payload.
   example: []
   syntax:
     content: public static void WriteToDisk(SaveGameData saveData, string filePath)
@@ -121,11 +156,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ReadFromDisk
     path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
-    startLine: 59
+    startLine: 151
   assemblies:
   - Core
   namespace: Core.SaveLoad
-  summary: Read SaveGameData from disk
+  summary: Read SaveGameData from disk. Supports both v1 (legacy) and v2 (metadata+compression) formats.
   example: []
   syntax:
     content: public static SaveGameData ReadFromDisk(string filePath)
@@ -157,7 +192,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: VerifyVersionCompatibility
     path: Scripts/Core/SaveLoad/SaveFileSerializer.cs
-    startLine: 81
+    startLine: 266
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -216,6 +251,65 @@ references:
   name: System
   nameWithType: System
   fullName: System
+- uid: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata*
+  commentId: Overload:Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata
+  href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_ReadSaveMetadata_System_String_
+  name: ReadSaveMetadata
+  nameWithType: SaveFileSerializer.ReadSaveMetadata
+  fullName: Core.SaveLoad.SaveFileSerializer.ReadSaveMetadata
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Nullable{Core.SaveLoad.SaveMetadata}
+  commentId: T:System.Nullable{Core.SaveLoad.SaveMetadata}
+  parent: System
+  definition: System.Nullable`1
+  href: Core.SaveLoad.SaveMetadata.html
+  name: SaveMetadata?
+  nameWithType: SaveMetadata?
+  fullName: Core.SaveLoad.SaveMetadata?
+  spec.csharp:
+  - uid: Core.SaveLoad.SaveMetadata
+    name: SaveMetadata
+    href: Core.SaveLoad.SaveMetadata.html
+  - name: '?'
+  spec.vb:
+  - uid: Core.SaveLoad.SaveMetadata
+    name: SaveMetadata
+    href: Core.SaveLoad.SaveMetadata.html
+  - name: '?'
+- uid: System.Nullable`1
+  commentId: T:System.Nullable`1
+  isExternal: true
+  name: Nullable<T>
+  nameWithType: Nullable<T>
+  fullName: System.Nullable<T>
+  nameWithType.vb: Nullable(Of T)
+  fullName.vb: System.Nullable(Of T)
+  name.vb: Nullable(Of T)
+  spec.csharp:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Nullable`1
+    name: Nullable
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
 - uid: Core.SaveLoad.SaveFileSerializer.WriteToDisk*
   commentId: Overload:Core.SaveLoad.SaveFileSerializer.WriteToDisk
   href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_WriteToDisk_Core_SaveLoad_SaveGameData_System_String_
@@ -229,16 +323,6 @@ references:
   name: SaveGameData
   nameWithType: SaveGameData
   fullName: Core.SaveLoad.SaveGameData
-- uid: System.String
-  commentId: T:System.String
-  parent: System
-  isExternal: true
-  name: string
-  nameWithType: string
-  fullName: string
-  nameWithType.vb: String
-  fullName.vb: String
-  name.vb: String
 - uid: Core.SaveLoad.SaveFileSerializer.ReadFromDisk*
   commentId: Overload:Core.SaveLoad.SaveFileSerializer.ReadFromDisk
   href: Core.SaveLoad.SaveFileSerializer.html#Core_SaveLoad_SaveFileSerializer_ReadFromDisk_System_String_

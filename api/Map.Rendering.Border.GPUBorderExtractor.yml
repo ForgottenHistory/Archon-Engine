@@ -1,0 +1,532 @@
+### YamlMime:ManagedReference
+items:
+- uid: Map.Rendering.Border.GPUBorderExtractor
+  commentId: T:Map.Rendering.Border.GPUBorderExtractor
+  id: GPUBorderExtractor
+  parent: Map.Rendering.Border
+  children:
+  - Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU(UnityEngine.Texture)
+  - Map.Rendering.Border.GPUBorderExtractor.Initialize
+  - Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+  - Map.Rendering.Border.GPUBorderExtractor.SaveCache(System.String,System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  - Map.Rendering.Border.GPUBorderExtractor.TryLoadCache(System.String)
+  langs:
+  - csharp
+  - vb
+  name: GPUBorderExtractor
+  nameWithType: GPUBorderExtractor
+  fullName: Map.Rendering.Border.GPUBorderExtractor
+  type: Class
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GPUBorderExtractor
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 21
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    GPU-accelerated border pixel extraction using compute shaders.
+
+    Replaces CPU-heavy median filter + junction detection + border pixel extraction.
+
+
+    Pipeline:
+      1. MedianFilter kernel - Smooth province ID noise (3x3 mode filter) on GPU
+      2. DetectBorderPixels kernel - Find all border pixels with province pair IDs
+      3. DetectJunctions kernel - Find pixels where 3+ provinces meet
+      4. CPU readback - Group border pixels by province pair for chaining
+
+    Follows GPUProvinceNeighborDetector patterns:
+      - Static class, AppendStructuredBuffer, CopyCount readback
+      - Binary disk cache with magic + version header
+  example: []
+  syntax:
+    content: public static class GPUBorderExtractor
+    content.vb: Public Module GPUBorderExtractor
+  inheritance:
+  - System.Object
+- uid: Map.Rendering.Border.GPUBorderExtractor.Initialize
+  commentId: M:Map.Rendering.Border.GPUBorderExtractor.Initialize
+  id: Initialize
+  parent: Map.Rendering.Border.GPUBorderExtractor
+  langs:
+  - csharp
+  - vb
+  name: Initialize()
+  nameWithType: GPUBorderExtractor.Initialize()
+  fullName: Map.Rendering.Border.GPUBorderExtractor.Initialize()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Initialize
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: Initialize the compute shader.
+  example: []
+  syntax:
+    content: public static bool Initialize()
+    return:
+      type: System.Boolean
+    content.vb: Public Shared Function Initialize() As Boolean
+  overload: Map.Rendering.Border.GPUBorderExtractor.Initialize*
+- uid: Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+  commentId: P:Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+  id: IsAvailable
+  parent: Map.Rendering.Border.GPUBorderExtractor
+  langs:
+  - csharp
+  - vb
+  name: IsAvailable
+  nameWithType: GPUBorderExtractor.IsAvailable
+  fullName: Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+  type: Property
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsAvailable
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 49
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  syntax:
+    content: public static bool IsAvailable { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Shared ReadOnly Property IsAvailable As Boolean
+  overload: Map.Rendering.Border.GPUBorderExtractor.IsAvailable*
+- uid: Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU(UnityEngine.Texture)
+  commentId: M:Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU(UnityEngine.Texture)
+  id: ExtractBorderPixelsGPU(UnityEngine.Texture)
+  parent: Map.Rendering.Border.GPUBorderExtractor
+  langs:
+  - csharp
+  - vb
+  name: ExtractBorderPixelsGPU(Texture)
+  nameWithType: GPUBorderExtractor.ExtractBorderPixelsGPU(Texture)
+  fullName: Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU(UnityEngine.Texture)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExtractBorderPixelsGPU
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 71
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Extract border pixels using GPU compute shaders.
+
+    Returns border pixels grouped by province pair, ready for chaining/smoothing.
+  example: []
+  syntax:
+    content: public static GPUBorderExtractor.ExtractionResult ExtractBorderPixelsGPU(Texture provinceIDTexture)
+    parameters:
+    - id: provinceIDTexture
+      type: UnityEngine.Texture
+    return:
+      type: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    content.vb: Public Shared Function ExtractBorderPixelsGPU(provinceIDTexture As Texture) As GPUBorderExtractor.ExtractionResult
+  overload: Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU*
+- uid: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache(System.String)
+  commentId: M:Map.Rendering.Border.GPUBorderExtractor.TryLoadCache(System.String)
+  id: TryLoadCache(System.String)
+  parent: Map.Rendering.Border.GPUBorderExtractor
+  langs:
+  - csharp
+  - vb
+  name: TryLoadCache(string)
+  nameWithType: GPUBorderExtractor.TryLoadCache(string)
+  fullName: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache(string)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryLoadCache
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 256
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Try to load border extraction data from disk cache.
+
+    Cache invalidates when provinces.png is newer than the cache file.
+
+    Format: [BRDR 4B][version 4B][pairCount 4B][junctionCount 4B]
+            [pairs: provinceA(2B) provinceB(2B) pixelCount(4B) pixels(x:2B,y:2B)...]
+            [junctions: x(2B) y(2B) count(4B)...]
+  example: []
+  syntax:
+    content: public static GPUBorderExtractor.ExtractionResult TryLoadCache(string provincesImagePath)
+    parameters:
+    - id: provincesImagePath
+      type: System.String
+      description: Path to provinces.png - cache stored as provinces.png.borders
+    return:
+      type: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    content.vb: Public Shared Function TryLoadCache(provincesImagePath As String) As GPUBorderExtractor.ExtractionResult
+  overload: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache*
+  nameWithType.vb: GPUBorderExtractor.TryLoadCache(String)
+  fullName.vb: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache(String)
+  name.vb: TryLoadCache(String)
+- uid: Map.Rendering.Border.GPUBorderExtractor.SaveCache(System.String,System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  commentId: M:Map.Rendering.Border.GPUBorderExtractor.SaveCache(System.String,System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  id: SaveCache(System.String,System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  parent: Map.Rendering.Border.GPUBorderExtractor
+  langs:
+  - csharp
+  - vb
+  name: SaveCache(string, Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, int>)
+  nameWithType: GPUBorderExtractor.SaveCache(string, Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, int>)
+  fullName: Map.Rendering.Border.GPUBorderExtractor.SaveCache(string, System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>, System.Collections.Generic.Dictionary<UnityEngine.Vector2, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveCache
+    path: Scripts/Map/Rendering/Border/GPUBorderExtractor.cs
+    startLine: 340
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering.Border
+  summary: >-
+    Save border extraction data to disk cache.
+
+    Stored as provinces.png.borders alongside the source image.
+  example: []
+  syntax:
+    content: public static void SaveCache(string provincesImagePath, Dictionary<(ushort, ushort), List<Vector2>> bordersByPair, Dictionary<Vector2, int> junctions)
+    parameters:
+    - id: provincesImagePath
+      type: System.String
+      description: Path to provinces.png - cache stored as provinces.png.borders
+    - id: bordersByPair
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+    - id: junctions
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+    content.vb: Public Shared Sub SaveCache(provincesImagePath As String, bordersByPair As Dictionary(Of (UShort, UShort), List(Of Vector2)), junctions As Dictionary(Of Vector2, Integer))
+  overload: Map.Rendering.Border.GPUBorderExtractor.SaveCache*
+  nameWithType.vb: GPUBorderExtractor.SaveCache(String, Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, Integer))
+  fullName.vb: Map.Rendering.Border.GPUBorderExtractor.SaveCache(String, System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2)), System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, Integer))
+  name.vb: SaveCache(String, Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, Integer))
+references:
+- uid: Map.Rendering.Border
+  commentId: N:Map.Rendering.Border
+  href: Map.html
+  name: Map.Rendering.Border
+  nameWithType: Map.Rendering.Border
+  fullName: Map.Rendering.Border
+  spec.csharp:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+  spec.vb:
+  - uid: Map
+    name: Map
+    href: Map.html
+  - name: .
+  - uid: Map.Rendering
+    name: Rendering
+    href: Map.Rendering.html
+  - name: .
+  - uid: Map.Rendering.Border
+    name: Border
+    href: Map.Rendering.Border.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Map.Rendering.Border.GPUBorderExtractor.Initialize*
+  commentId: Overload:Map.Rendering.Border.GPUBorderExtractor.Initialize
+  href: Map.Rendering.Border.GPUBorderExtractor.html#Map_Rendering_Border_GPUBorderExtractor_Initialize
+  name: Initialize
+  nameWithType: GPUBorderExtractor.Initialize
+  fullName: Map.Rendering.Border.GPUBorderExtractor.Initialize
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Map.Rendering.Border.GPUBorderExtractor.IsAvailable*
+  commentId: Overload:Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+  href: Map.Rendering.Border.GPUBorderExtractor.html#Map_Rendering_Border_GPUBorderExtractor_IsAvailable
+  name: IsAvailable
+  nameWithType: GPUBorderExtractor.IsAvailable
+  fullName: Map.Rendering.Border.GPUBorderExtractor.IsAvailable
+- uid: Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU*
+  commentId: Overload:Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU
+  href: Map.Rendering.Border.GPUBorderExtractor.html#Map_Rendering_Border_GPUBorderExtractor_ExtractBorderPixelsGPU_UnityEngine_Texture_
+  name: ExtractBorderPixelsGPU
+  nameWithType: GPUBorderExtractor.ExtractBorderPixelsGPU
+  fullName: Map.Rendering.Border.GPUBorderExtractor.ExtractBorderPixelsGPU
+- uid: UnityEngine.Texture
+  commentId: T:UnityEngine.Texture
+  parent: UnityEngine
+  isExternal: true
+  name: Texture
+  nameWithType: Texture
+  fullName: UnityEngine.Texture
+- uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  commentId: T:Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  parent: Map.Rendering.Border
+  href: Map.Rendering.Border.GPUBorderExtractor.html
+  name: GPUBorderExtractor.ExtractionResult
+  nameWithType: GPUBorderExtractor.ExtractionResult
+  fullName: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+  spec.csharp:
+  - uid: Map.Rendering.Border.GPUBorderExtractor
+    name: GPUBorderExtractor
+    href: Map.Rendering.Border.GPUBorderExtractor.html
+  - name: .
+  - uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    name: ExtractionResult
+    href: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult.html
+  spec.vb:
+  - uid: Map.Rendering.Border.GPUBorderExtractor
+    name: GPUBorderExtractor
+    href: Map.Rendering.Border.GPUBorderExtractor.html
+  - name: .
+  - uid: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult
+    name: ExtractionResult
+    href: Map.Rendering.Border.GPUBorderExtractor.ExtractionResult.html
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
+- uid: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache*
+  commentId: Overload:Map.Rendering.Border.GPUBorderExtractor.TryLoadCache
+  href: Map.Rendering.Border.GPUBorderExtractor.html#Map_Rendering_Border_GPUBorderExtractor_TryLoadCache_System_String_
+  name: TryLoadCache
+  nameWithType: GPUBorderExtractor.TryLoadCache
+  fullName: Map.Rendering.Border.GPUBorderExtractor.TryLoadCache
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Map.Rendering.Border.GPUBorderExtractor.SaveCache*
+  commentId: Overload:Map.Rendering.Border.GPUBorderExtractor.SaveCache
+  href: Map.Rendering.Border.GPUBorderExtractor.html#Map_Rendering_Border_GPUBorderExtractor_SaveCache_System_String_System_Collections_Generic_Dictionary_System_ValueTuple_System_UInt16_System_UInt16__System_Collections_Generic_List_UnityEngine_Vector2___System_Collections_Generic_Dictionary_UnityEngine_Vector2_System_Int32__
+  name: SaveCache
+  nameWithType: GPUBorderExtractor.SaveCache
+  fullName: Map.Rendering.Border.GPUBorderExtractor.SaveCache
+- uid: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  commentId: T:System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<(ushort, ushort), List<Vector2>>
+  nameWithType: Dictionary<(ushort, ushort), List<Vector2>>
+  fullName: System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>
+  nameWithType.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  fullName.vb: System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2))
+  name.vb: Dictionary(Of (UShort, UShort), List(Of Vector2))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: (
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: (
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: )
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Vector2, int>
+  nameWithType: Dictionary<Vector2, int>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Vector2, int>
+  nameWithType.vb: Dictionary(Of Vector2, Integer)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, Integer)
+  name.vb: Dictionary(Of Vector2, Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true

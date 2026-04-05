@@ -20,14 +20,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainTypeTextureGenerator
     path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
-    startLine: 16
+    startLine: 18
   assemblies:
   - MapAssembly
   namespace: Map.Loading
   summary: >-
     Generates terrain type texture (R8) from terrain color texture (RGBA32)
 
-    Maps terrain colors back to terrain type indices using TerrainColorMapper
+    Maps terrain colors back to terrain type indices using GPU compute shader
 
     Purpose: Enables terrain splatting for detail texture selection
 
@@ -38,7 +38,7 @@ items:
 
     - Output: TerrainTypeTexture (R8) with terrain type indices (0-255)
 
-    - Method: Reverse color lookup via TerrainColorMapper
+    - Method: GPU compute shader with color lookup buffer
   example: []
   syntax:
     content: public static class TerrainTypeTextureGenerator
@@ -63,14 +63,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateTerrainTypeTexture
     path: Scripts/Map/Loading/TerrainTypeTextureGenerator.cs
-    startLine: 25
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.Loading
-  summary: >-
-    Generate terrain type texture from terrain color texture
-
-    Uses reverse lookup to map colors → terrain type indices
+  summary: Generate terrain type texture from terrain color texture using GPU compute shader
   example: []
   syntax:
     content: public static Texture2D GenerateTerrainTypeTexture(Texture2D terrainColorTexture, bool logProgress = true)

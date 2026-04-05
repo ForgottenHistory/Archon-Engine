@@ -16,6 +16,7 @@ items:
   - Core.Commands.CommandResult
   - Core.Commands.ICommand
   - Core.Commands.ICommandFactory
+  - Core.Commands.ICommandMessages
   - Core.Commands.INetworkCommand
   - Core.Commands.ProvinceCommandFactory
   - Core.Commands.SimpleCommand
@@ -52,6 +53,12 @@ references:
   name: BaseCommand
   nameWithType: BaseCommand
   fullName: Core.Commands.BaseCommand
+- uid: Core.Commands.ICommandMessages
+  commentId: T:Core.Commands.ICommandMessages
+  href: Core.Commands.ICommandMessages.html
+  name: ICommandMessages
+  nameWithType: ICommandMessages
+  fullName: Core.Commands.ICommandMessages
 - uid: Core.Commands.INetworkCommand
   commentId: T:Core.Commands.INetworkCommand
   href: Core.Commands.INetworkCommand.html

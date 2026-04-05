@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: INetworkCommand
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 110
+    startLine: 120
   assemblies:
   - Core
   namespace: Core.Commands
@@ -60,7 +60,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 116
+    startLine: 126
   assemblies:
   - Core
   namespace: Core.Commands
@@ -93,7 +93,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 122
+    startLine: 132
   assemblies:
   - Core
   namespace: Core.Commands
@@ -130,7 +130,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: EstimatedNetworkSize
     path: Scripts/Core/Commands/ICommand.cs
-    startLine: 128
+    startLine: 138
   assemblies:
   - Core
   namespace: Core.Commands

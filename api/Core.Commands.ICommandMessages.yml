@@ -1,0 +1,163 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.Commands.ICommandMessages
+  commentId: T:Core.Commands.ICommandMessages
+  id: ICommandMessages
+  parent: Core.Commands
+  children:
+  - Core.Commands.ICommandMessages.GetSuccessMessage(Core.GameState)
+  - Core.Commands.ICommandMessages.GetValidationError(Core.GameState)
+  langs:
+  - csharp
+  - vb
+  name: ICommandMessages
+  nameWithType: ICommandMessages
+  fullName: Core.Commands.ICommandMessages
+  type: Interface
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ICommandMessages
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 110
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Optional interface for commands that provide custom messages.
+
+    Commands without this use generic "executed successfully" / "failed validation".
+
+    Replaces reflection-based message lookup (zero-alloc for commands that don't implement this).
+  example: []
+  syntax:
+    content: public interface ICommandMessages
+    content.vb: Public Interface ICommandMessages
+- uid: Core.Commands.ICommandMessages.GetSuccessMessage(Core.GameState)
+  commentId: M:Core.Commands.ICommandMessages.GetSuccessMessage(Core.GameState)
+  id: GetSuccessMessage(Core.GameState)
+  parent: Core.Commands.ICommandMessages
+  langs:
+  - csharp
+  - vb
+  name: GetSuccessMessage(GameState)
+  nameWithType: ICommandMessages.GetSuccessMessage(GameState)
+  fullName: Core.Commands.ICommandMessages.GetSuccessMessage(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetSuccessMessage
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 112
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: string GetSuccessMessage(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Function GetSuccessMessage(gameState As GameState) As String
+  overload: Core.Commands.ICommandMessages.GetSuccessMessage*
+- uid: Core.Commands.ICommandMessages.GetValidationError(Core.GameState)
+  commentId: M:Core.Commands.ICommandMessages.GetValidationError(Core.GameState)
+  id: GetValidationError(Core.GameState)
+  parent: Core.Commands.ICommandMessages
+  langs:
+  - csharp
+  - vb
+  name: GetValidationError(GameState)
+  nameWithType: ICommandMessages.GetValidationError(GameState)
+  fullName: Core.Commands.ICommandMessages.GetValidationError(Core.GameState)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/ICommand.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetValidationError
+    path: Scripts/Core/Commands/ICommand.cs
+    startLine: 113
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  syntax:
+    content: string GetValidationError(GameState gameState)
+    parameters:
+    - id: gameState
+      type: Core.GameState
+    return:
+      type: System.String
+    content.vb: Function GetValidationError(gameState As GameState) As String
+  overload: Core.Commands.ICommandMessages.GetValidationError*
+references:
+- uid: Core.Commands
+  commentId: N:Core.Commands
+  href: Core.html
+  name: Core.Commands
+  nameWithType: Core.Commands
+  fullName: Core.Commands
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.Commands
+    name: Commands
+    href: Core.Commands.html
+- uid: Core.Commands.ICommandMessages.GetSuccessMessage*
+  commentId: Overload:Core.Commands.ICommandMessages.GetSuccessMessage
+  href: Core.Commands.ICommandMessages.html#Core_Commands_ICommandMessages_GetSuccessMessage_Core_GameState_
+  name: GetSuccessMessage
+  nameWithType: ICommandMessages.GetSuccessMessage
+  fullName: Core.Commands.ICommandMessages.GetSuccessMessage
+- uid: Core.GameState
+  commentId: T:Core.GameState
+  parent: Core
+  href: Core.GameState.html
+  name: GameState
+  nameWithType: GameState
+  fullName: Core.GameState
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Core
+  commentId: N:Core
+  href: Core.html
+  name: Core
+  nameWithType: Core
+  fullName: Core
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Core.Commands.ICommandMessages.GetValidationError*
+  commentId: Overload:Core.Commands.ICommandMessages.GetValidationError
+  href: Core.Commands.ICommandMessages.html#Core_Commands_ICommandMessages_GetValidationError_Core_GameState_
+  name: GetValidationError
+  nameWithType: ICommandMessages.GetValidationError
+  fullName: Core.Commands.ICommandMessages.GetValidationError

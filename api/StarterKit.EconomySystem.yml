@@ -86,7 +86,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Gold
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 46
+    startLine: 49
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -117,7 +117,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GoldFixed
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 51
+    startLine: 54
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -148,7 +148,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 60
+    startLine: 63
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -192,7 +192,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InvalidateCountryIncome
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 105
+    startLine: 111
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -229,7 +229,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: InvalidateAllIncome
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 115
+    startLine: 121
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -260,7 +260,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 121
+    startLine: 127
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -287,7 +287,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryGold
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 277
+    startLine: 259
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -323,7 +323,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryGoldInt
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 286
+    startLine: 268
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -359,7 +359,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetMonthlyIncome
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 294
+    startLine: 276
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -395,7 +395,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetMonthlyIncomeInt
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 302
+    startLine: 284
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -431,7 +431,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetMonthlyIncomeInt
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 310
+    startLine: 292
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -461,7 +461,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddGold
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 321
+    startLine: 303
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -495,7 +495,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddGoldToCountry
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 332
+    startLine: 314
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -531,7 +531,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddGoldToCountry
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 344
+    startLine: 326
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -567,7 +567,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RemoveGold
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 352
+    startLine: 334
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -603,7 +603,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RemoveGoldFromCountry
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 363
+    startLine: 345
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -641,7 +641,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RemoveGoldFromCountry
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 379
+    startLine: 361
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -679,7 +679,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountriesWithGold
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 400
+    startLine: 382
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -709,7 +709,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 413
+    startLine: 395
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -742,7 +742,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/StarterKit/Systems/EconomySystem.cs
-    startLine: 433
+    startLine: 415
   assemblies:
   - StarterKit
   namespace: StarterKit

@@ -15,6 +15,7 @@ items:
   - Map.Province.FastAdjacencyScanner.ScanForAdjacencies
   - Map.Province.FastAdjacencyScanner.blackThreshold
   - Map.Province.FastAdjacencyScanner.ignoreDiagonals
+  - Map.Province.FastAdjacencyScanner.knownProvinceCount
   - Map.Province.FastAdjacencyScanner.provinceMap
   - Map.Province.FastAdjacencyScanner.scanOnStart
   - Map.Province.FastAdjacencyScanner.showDebugInfo
@@ -182,6 +183,48 @@ items:
     return:
       type: System.Single
     content.vb: Public blackThreshold As Single
+- uid: Map.Province.FastAdjacencyScanner.knownProvinceCount
+  commentId: F:Map.Province.FastAdjacencyScanner.knownProvinceCount
+  id: knownProvinceCount
+  parent: Map.Province.FastAdjacencyScanner
+  langs:
+  - csharp
+  - vb
+  name: knownProvinceCount
+  nameWithType: FastAdjacencyScanner.knownProvinceCount
+  fullName: Map.Province.FastAdjacencyScanner.knownProvinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/FastAdjacencyScanner.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: knownProvinceCount
+    path: Scripts/Map/FastAdjacencyScanner.cs
+    startLine: 28
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Known province count from definition.csv - used to size hash maps dynamically.
+
+    Set this before calling ScanForAdjacencies for optimal memory allocation.
+  example: []
+  syntax:
+    content: >-
+      [HideInInspector]
+
+      public int knownProvinceCount
+    return:
+      type: System.Int32
+    content.vb: >-
+      <HideInInspector>
+
+      Public knownProvinceCount As Integer
+  attributes:
+  - type: UnityEngine.HideInInspector
+    ctor: UnityEngine.HideInInspector.#ctor
+    arguments: []
 - uid: Map.Province.FastAdjacencyScanner.showDebugInfo
   commentId: F:Map.Province.FastAdjacencyScanner.showDebugInfo
   id: showDebugInfo
@@ -200,7 +243,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: showDebugInfo
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 25
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -239,7 +282,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ScanForAdjacencies
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 53
+    startLine: 59
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -284,7 +327,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ConvertToIdAdjacencies
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 166
+    startLine: 191
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -318,7 +361,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetNeighborsForColor
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 193
+    startLine: 218
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -351,7 +394,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetNeighborsForId
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 205
+    startLine: 230
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -387,7 +430,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExportAdjacencies
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 217
+    startLine: 242
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -427,7 +470,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ColorAdjacencies
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 259
+    startLine: 284
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -456,7 +499,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IdAdjacencies
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 260
+    startLine: 285
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -485,7 +528,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LastScanTime
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 261
+    startLine: 286
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -596,6 +639,16 @@ references:
   nameWithType.vb: Single
   fullName.vb: Single
   name.vb: Single
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
 - uid: Map.Province.FastAdjacencyScanner.ScanForAdjacencies*
   commentId: Overload:Map.Province.FastAdjacencyScanner.ScanForAdjacencies
   href: Map.Province.FastAdjacencyScanner.html#Map_Province_FastAdjacencyScanner_ScanForAdjacencies
@@ -806,16 +859,6 @@ references:
   name: GetNeighborsForId
   nameWithType: FastAdjacencyScanner.GetNeighborsForId
   fullName: Map.Province.FastAdjacencyScanner.GetNeighborsForId
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: System.Collections.Generic.HashSet{System.Int32}
   commentId: T:System.Collections.Generic.HashSet{System.Int32}
   parent: System.Collections.Generic

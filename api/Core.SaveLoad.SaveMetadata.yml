@@ -1,0 +1,660 @@
+### YamlMime:ManagedReference
+items:
+- uid: Core.SaveLoad.SaveMetadata
+  commentId: T:Core.SaveLoad.SaveMetadata
+  id: SaveMetadata
+  parent: Core.SaveLoad
+  children:
+  - Core.SaveLoad.SaveMetadata.IsCompressed
+  - Core.SaveLoad.SaveMetadata.ReadFrom(System.IO.BinaryReader)
+  - Core.SaveLoad.SaveMetadata.SIZE
+  - Core.SaveLoad.SaveMetadata.SaveDate
+  - Core.SaveLoad.SaveMetadata.WriteTo(System.IO.BinaryWriter)
+  - Core.SaveLoad.SaveMetadata.compressedPayloadSize
+  - Core.SaveLoad.SaveMetadata.countryCount
+  - Core.SaveLoad.SaveMetadata.currentTick
+  - Core.SaveLoad.SaveMetadata.flags
+  - Core.SaveLoad.SaveMetadata.gameSpeed
+  - Core.SaveLoad.SaveMetadata.gameVersion
+  - Core.SaveLoad.SaveMetadata.provinceCount
+  - Core.SaveLoad.SaveMetadata.saveDateTicks
+  - Core.SaveLoad.SaveMetadata.saveFormatVersion
+  - Core.SaveLoad.SaveMetadata.saveName
+  - Core.SaveLoad.SaveMetadata.scenarioName
+  langs:
+  - csharp
+  - vb
+  name: SaveMetadata
+  nameWithType: SaveMetadata
+  fullName: Core.SaveLoad.SaveMetadata
+  type: Struct
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveMetadata
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 12
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Fixed-size metadata header for fast save browser preview.
+
+    Written at a fixed position in the save file so it can be read
+
+    without deserializing the entire file.
+
+    Total size: 256 bytes.
+  example: []
+  syntax:
+    content: public struct SaveMetadata
+    content.vb: Public Structure SaveMetadata
+- uid: Core.SaveLoad.SaveMetadata.SIZE
+  commentId: F:Core.SaveLoad.SaveMetadata.SIZE
+  id: SIZE
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: SIZE
+  nameWithType: SaveMetadata.SIZE
+  fullName: Core.SaveLoad.SaveMetadata.SIZE
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SIZE
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 15
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Fixed size of the metadata block in bytes
+  example: []
+  syntax:
+    content: public const int SIZE = 256
+    return:
+      type: System.Int32
+    content.vb: Public Const SIZE As Integer = 256
+- uid: Core.SaveLoad.SaveMetadata.saveName
+  commentId: F:Core.SaveLoad.SaveMetadata.saveName
+  id: saveName
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: saveName
+  nameWithType: SaveMetadata.saveName
+  fullName: Core.SaveLoad.SaveMetadata.saveName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveName
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 26
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public string saveName
+    return:
+      type: System.String
+    content.vb: Public saveName As String
+- uid: Core.SaveLoad.SaveMetadata.scenarioName
+  commentId: F:Core.SaveLoad.SaveMetadata.scenarioName
+  id: scenarioName
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: scenarioName
+  nameWithType: SaveMetadata.scenarioName
+  fullName: Core.SaveLoad.SaveMetadata.scenarioName
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: scenarioName
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 27
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public string scenarioName
+    return:
+      type: System.String
+    content.vb: Public scenarioName As String
+- uid: Core.SaveLoad.SaveMetadata.gameVersion
+  commentId: F:Core.SaveLoad.SaveMetadata.gameVersion
+  id: gameVersion
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: gameVersion
+  nameWithType: SaveMetadata.gameVersion
+  fullName: Core.SaveLoad.SaveMetadata.gameVersion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameVersion
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 28
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public string gameVersion
+    return:
+      type: System.String
+    content.vb: Public gameVersion As String
+- uid: Core.SaveLoad.SaveMetadata.saveDateTicks
+  commentId: F:Core.SaveLoad.SaveMetadata.saveDateTicks
+  id: saveDateTicks
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: saveDateTicks
+  nameWithType: SaveMetadata.saveDateTicks
+  fullName: Core.SaveLoad.SaveMetadata.saveDateTicks
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveDateTicks
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 29
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public long saveDateTicks
+    return:
+      type: System.Int64
+    content.vb: Public saveDateTicks As Long
+- uid: Core.SaveLoad.SaveMetadata.currentTick
+  commentId: F:Core.SaveLoad.SaveMetadata.currentTick
+  id: currentTick
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: currentTick
+  nameWithType: SaveMetadata.currentTick
+  fullName: Core.SaveLoad.SaveMetadata.currentTick
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: currentTick
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 30
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public ulong currentTick
+    return:
+      type: System.UInt64
+    content.vb: Public currentTick As ULong
+- uid: Core.SaveLoad.SaveMetadata.gameSpeed
+  commentId: F:Core.SaveLoad.SaveMetadata.gameSpeed
+  id: gameSpeed
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: gameSpeed
+  nameWithType: SaveMetadata.gameSpeed
+  fullName: Core.SaveLoad.SaveMetadata.gameSpeed
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: gameSpeed
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 31
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int gameSpeed
+    return:
+      type: System.Int32
+    content.vb: Public gameSpeed As Integer
+- uid: Core.SaveLoad.SaveMetadata.saveFormatVersion
+  commentId: F:Core.SaveLoad.SaveMetadata.saveFormatVersion
+  id: saveFormatVersion
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: saveFormatVersion
+  nameWithType: SaveMetadata.saveFormatVersion
+  fullName: Core.SaveLoad.SaveMetadata.saveFormatVersion
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: saveFormatVersion
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 32
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int saveFormatVersion
+    return:
+      type: System.Int32
+    content.vb: Public saveFormatVersion As Integer
+- uid: Core.SaveLoad.SaveMetadata.provinceCount
+  commentId: F:Core.SaveLoad.SaveMetadata.provinceCount
+  id: provinceCount
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: provinceCount
+  nameWithType: SaveMetadata.provinceCount
+  fullName: Core.SaveLoad.SaveMetadata.provinceCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: provinceCount
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 33
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int provinceCount
+    return:
+      type: System.Int32
+    content.vb: Public provinceCount As Integer
+- uid: Core.SaveLoad.SaveMetadata.countryCount
+  commentId: F:Core.SaveLoad.SaveMetadata.countryCount
+  id: countryCount
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: countryCount
+  nameWithType: SaveMetadata.countryCount
+  fullName: Core.SaveLoad.SaveMetadata.countryCount
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: countryCount
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 34
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int countryCount
+    return:
+      type: System.Int32
+    content.vb: Public countryCount As Integer
+- uid: Core.SaveLoad.SaveMetadata.compressedPayloadSize
+  commentId: F:Core.SaveLoad.SaveMetadata.compressedPayloadSize
+  id: compressedPayloadSize
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: compressedPayloadSize
+  nameWithType: SaveMetadata.compressedPayloadSize
+  fullName: Core.SaveLoad.SaveMetadata.compressedPayloadSize
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: compressedPayloadSize
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 35
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int compressedPayloadSize
+    return:
+      type: System.Int32
+    content.vb: Public compressedPayloadSize As Integer
+- uid: Core.SaveLoad.SaveMetadata.flags
+  commentId: F:Core.SaveLoad.SaveMetadata.flags
+  id: flags
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: flags
+  nameWithType: SaveMetadata.flags
+  fullName: Core.SaveLoad.SaveMetadata.flags
+  type: Field
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: flags
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 36
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public int flags
+    return:
+      type: System.Int32
+    content.vb: Public flags As Integer
+- uid: Core.SaveLoad.SaveMetadata.SaveDate
+  commentId: P:Core.SaveLoad.SaveMetadata.SaveDate
+  id: SaveDate
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: SaveDate
+  nameWithType: SaveMetadata.SaveDate
+  fullName: Core.SaveLoad.SaveMetadata.SaveDate
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SaveDate
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 38
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public DateTime SaveDate { get; }
+    parameters: []
+    return:
+      type: System.DateTime
+    content.vb: Public ReadOnly Property SaveDate As Date
+  overload: Core.SaveLoad.SaveMetadata.SaveDate*
+- uid: Core.SaveLoad.SaveMetadata.IsCompressed
+  commentId: P:Core.SaveLoad.SaveMetadata.IsCompressed
+  id: IsCompressed
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: IsCompressed
+  nameWithType: SaveMetadata.IsCompressed
+  fullName: Core.SaveLoad.SaveMetadata.IsCompressed
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsCompressed
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 39
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  syntax:
+    content: public bool IsCompressed { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsCompressed As Boolean
+  overload: Core.SaveLoad.SaveMetadata.IsCompressed*
+- uid: Core.SaveLoad.SaveMetadata.WriteTo(System.IO.BinaryWriter)
+  commentId: M:Core.SaveLoad.SaveMetadata.WriteTo(System.IO.BinaryWriter)
+  id: WriteTo(System.IO.BinaryWriter)
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: WriteTo(BinaryWriter)
+  nameWithType: SaveMetadata.WriteTo(BinaryWriter)
+  fullName: Core.SaveLoad.SaveMetadata.WriteTo(System.IO.BinaryWriter)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: WriteTo
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 45
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: >-
+    Write metadata as exactly SIZE bytes.
+
+    Strings are truncated/padded to their fixed allocation.
+  example: []
+  syntax:
+    content: public void WriteTo(BinaryWriter writer)
+    parameters:
+    - id: writer
+      type: System.IO.BinaryWriter
+    content.vb: Public Sub WriteTo(writer As BinaryWriter)
+  overload: Core.SaveLoad.SaveMetadata.WriteTo*
+- uid: Core.SaveLoad.SaveMetadata.ReadFrom(System.IO.BinaryReader)
+  commentId: M:Core.SaveLoad.SaveMetadata.ReadFrom(System.IO.BinaryReader)
+  id: ReadFrom(System.IO.BinaryReader)
+  parent: Core.SaveLoad.SaveMetadata
+  langs:
+  - csharp
+  - vb
+  name: ReadFrom(BinaryReader)
+  nameWithType: SaveMetadata.ReadFrom(BinaryReader)
+  fullName: Core.SaveLoad.SaveMetadata.ReadFrom(System.IO.BinaryReader)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/SaveLoad/SaveGameData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ReadFrom
+    path: Scripts/Core/SaveLoad/SaveGameData.cs
+    startLine: 71
+  assemblies:
+  - Core
+  namespace: Core.SaveLoad
+  summary: Read metadata from exactly SIZE bytes.
+  example: []
+  syntax:
+    content: public static SaveMetadata ReadFrom(BinaryReader reader)
+    parameters:
+    - id: reader
+      type: System.IO.BinaryReader
+    return:
+      type: Core.SaveLoad.SaveMetadata
+    content.vb: Public Shared Function ReadFrom(reader As BinaryReader) As SaveMetadata
+  overload: Core.SaveLoad.SaveMetadata.ReadFrom*
+references:
+- uid: Core.SaveLoad
+  commentId: N:Core.SaveLoad
+  href: Core.html
+  name: Core.SaveLoad
+  nameWithType: Core.SaveLoad
+  fullName: Core.SaveLoad
+  spec.csharp:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+  spec.vb:
+  - uid: Core
+    name: Core
+    href: Core.html
+  - name: .
+  - uid: Core.SaveLoad
+    name: SaveLoad
+    href: Core.SaveLoad.html
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int64
+  commentId: T:System.Int64
+  parent: System
+  isExternal: true
+  name: long
+  nameWithType: long
+  fullName: long
+  nameWithType.vb: Long
+  fullName.vb: Long
+  name.vb: Long
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
+- uid: Core.SaveLoad.SaveMetadata.SaveDate*
+  commentId: Overload:Core.SaveLoad.SaveMetadata.SaveDate
+  href: Core.SaveLoad.SaveMetadata.html#Core_SaveLoad_SaveMetadata_SaveDate
+  name: SaveDate
+  nameWithType: SaveMetadata.SaveDate
+  fullName: Core.SaveLoad.SaveMetadata.SaveDate
+- uid: System.DateTime
+  commentId: T:System.DateTime
+  parent: System
+  isExternal: true
+  name: DateTime
+  nameWithType: DateTime
+  fullName: System.DateTime
+  nameWithType.vb: Date
+  fullName.vb: Date
+  name.vb: Date
+- uid: Core.SaveLoad.SaveMetadata.IsCompressed*
+  commentId: Overload:Core.SaveLoad.SaveMetadata.IsCompressed
+  href: Core.SaveLoad.SaveMetadata.html#Core_SaveLoad_SaveMetadata_IsCompressed
+  name: IsCompressed
+  nameWithType: SaveMetadata.IsCompressed
+  fullName: Core.SaveLoad.SaveMetadata.IsCompressed
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Core.SaveLoad.SaveMetadata.WriteTo*
+  commentId: Overload:Core.SaveLoad.SaveMetadata.WriteTo
+  href: Core.SaveLoad.SaveMetadata.html#Core_SaveLoad_SaveMetadata_WriteTo_System_IO_BinaryWriter_
+  name: WriteTo
+  nameWithType: SaveMetadata.WriteTo
+  fullName: Core.SaveLoad.SaveMetadata.WriteTo
+- uid: System.IO.BinaryWriter
+  commentId: T:System.IO.BinaryWriter
+  parent: System.IO
+  isExternal: true
+  name: BinaryWriter
+  nameWithType: BinaryWriter
+  fullName: System.IO.BinaryWriter
+- uid: System.IO
+  commentId: N:System.IO
+  isExternal: true
+  name: System.IO
+  nameWithType: System.IO
+  fullName: System.IO
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.IO
+    name: IO
+    isExternal: true
+- uid: Core.SaveLoad.SaveMetadata.ReadFrom*
+  commentId: Overload:Core.SaveLoad.SaveMetadata.ReadFrom
+  href: Core.SaveLoad.SaveMetadata.html#Core_SaveLoad_SaveMetadata_ReadFrom_System_IO_BinaryReader_
+  name: ReadFrom
+  nameWithType: SaveMetadata.ReadFrom
+  fullName: Core.SaveLoad.SaveMetadata.ReadFrom
+- uid: System.IO.BinaryReader
+  commentId: T:System.IO.BinaryReader
+  parent: System.IO
+  isExternal: true
+  name: BinaryReader
+  nameWithType: BinaryReader
+  fullName: System.IO.BinaryReader
+- uid: Core.SaveLoad.SaveMetadata
+  commentId: T:Core.SaveLoad.SaveMetadata
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveMetadata.html
+  name: SaveMetadata
+  nameWithType: SaveMetadata
+  fullName: Core.SaveLoad.SaveMetadata

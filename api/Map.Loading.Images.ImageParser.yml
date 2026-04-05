@@ -11,6 +11,7 @@ items:
   - Map.Loading.Images.ImageParser.GetPalette(Unity.Collections.NativeArray{System.Byte},Map.Loading.Images.ImageParser.ImageHeader)
   - Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   - Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray{System.Byte})
+  - Map.Loading.Images.ImageParser.TryGetDimensions(System.String,System.Int32@,System.Int32@)
   - Map.Loading.Images.ImageParser.TryGetPixelRGB(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Byte@,System.Byte@,System.Byte@)
   - Map.Loading.Images.ImageParser.TryGetPixelRGBPacked(Map.Loading.Images.ImageParser.ImagePixelData,System.Int32,System.Int32,System.Int32@)
   langs:
@@ -27,7 +28,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ImageParser
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -59,7 +60,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetectFormat
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 73
+    startLine: 74
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -95,7 +96,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ParseHeader
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 97
+    startLine: 98
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -113,6 +114,53 @@ items:
   nameWithType.vb: ImageParser.ParseHeader(NativeArray(Of Byte))
   fullName.vb: Map.Loading.Images.ImageParser.ParseHeader(Unity.Collections.NativeArray(Of Byte))
   name.vb: ParseHeader(NativeArray(Of Byte))
+- uid: Map.Loading.Images.ImageParser.TryGetDimensions(System.String,System.Int32@,System.Int32@)
+  commentId: M:Map.Loading.Images.ImageParser.TryGetDimensions(System.String,System.Int32@,System.Int32@)
+  id: TryGetDimensions(System.String,System.Int32@,System.Int32@)
+  parent: Map.Loading.Images.ImageParser
+  langs:
+  - csharp
+  - vb
+  name: TryGetDimensions(string, out int, out int)
+  nameWithType: ImageParser.TryGetDimensions(string, out int, out int)
+  fullName: Map.Loading.Images.ImageParser.TryGetDimensions(string, out int, out int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ImageParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: TryGetDimensions
+    path: Scripts/Map/Loading/Images/ImageParser.cs
+    startLine: 143
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Get image dimensions from file path without loading full pixel data.
+
+    Reads only the header bytes needed to determine width/height.
+  example: []
+  syntax:
+    content: public static bool TryGetDimensions(string filePath, out int width, out int height)
+    parameters:
+    - id: filePath
+      type: System.String
+      description: Path to BMP or PNG file
+    - id: width
+      type: System.Int32
+      description: Output width in pixels
+    - id: height
+      type: System.Int32
+      description: Output height in pixels
+    return:
+      type: System.Boolean
+      description: True if dimensions were successfully read
+    content.vb: Public Shared Function TryGetDimensions(filePath As String, width As Integer, height As Integer) As Boolean
+  overload: Map.Loading.Images.ImageParser.TryGetDimensions*
+  nameWithType.vb: ImageParser.TryGetDimensions(String, Integer, Integer)
+  fullName.vb: Map.Loading.Images.ImageParser.TryGetDimensions(String, Integer, Integer)
+  name.vb: TryGetDimensions(String, Integer, Integer)
 - uid: Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   commentId: M:Map.Loading.Images.ImageParser.Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   id: Parse(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
@@ -131,7 +179,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Parse
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 137
+    startLine: 190
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -169,7 +217,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetPixelRGB
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 195
+    startLine: 248
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -215,7 +263,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetPixelRGBPacked
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 215
+    startLine: 268
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -257,7 +305,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CollectUniqueColors
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 231
+    startLine: 284
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -292,7 +340,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: FindPixelsWithColor
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 249
+    startLine: 302
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -332,7 +380,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetPalette
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 268
+    startLine: 321
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -537,6 +585,42 @@ references:
   - uid: Map.Loading.Images.ImageParser.ImageHeader
     name: ImageHeader
     href: Map.Loading.Images.ImageParser.ImageHeader.html
+- uid: Map.Loading.Images.ImageParser.TryGetDimensions*
+  commentId: Overload:Map.Loading.Images.ImageParser.TryGetDimensions
+  href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_TryGetDimensions_System_String_System_Int32__System_Int32__
+  name: TryGetDimensions
+  nameWithType: ImageParser.TryGetDimensions
+  fullName: Map.Loading.Images.ImageParser.TryGetDimensions
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
 - uid: Map.Loading.Images.ImageParser.Parse*
   commentId: Overload:Map.Loading.Images.ImageParser.Parse
   href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_Parse_Unity_Collections_NativeArray_System_Byte__Unity_Collections_Allocator_
@@ -579,16 +663,6 @@ references:
   name: TryGetPixelRGB
   nameWithType: ImageParser.TryGetPixelRGB
   fullName: Map.Loading.Images.ImageParser.TryGetPixelRGB
-- uid: System.Int32
-  commentId: T:System.Int32
-  parent: System
-  isExternal: true
-  name: int
-  nameWithType: int
-  fullName: int
-  nameWithType.vb: Integer
-  fullName.vb: Integer
-  name.vb: Integer
 - uid: System.Byte
   commentId: T:System.Byte
   parent: System
@@ -599,16 +673,6 @@ references:
   nameWithType.vb: Byte
   fullName.vb: Byte
   name.vb: Byte
-- uid: System.Boolean
-  commentId: T:System.Boolean
-  parent: System
-  isExternal: true
-  name: bool
-  nameWithType: bool
-  fullName: bool
-  nameWithType.vb: Boolean
-  fullName.vb: Boolean
-  name.vb: Boolean
 - uid: Map.Loading.Images.ImageParser.TryGetPixelRGBPacked*
   commentId: Overload:Map.Loading.Images.ImageParser.TryGetPixelRGBPacked
   href: Map.Loading.Images.ImageParser.html#Map_Loading_Images_ImageParser_TryGetPixelRGBPacked_Map_Loading_Images_ImageParser_ImagePixelData_System_Int32_System_Int32_System_Int32__

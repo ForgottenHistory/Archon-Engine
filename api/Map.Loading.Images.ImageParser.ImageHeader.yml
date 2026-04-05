@@ -28,7 +28,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ImageHeader
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 25
+    startLine: 26
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -55,7 +55,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Width
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 27
+    startLine: 28
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -82,7 +82,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Height
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 28
+    startLine: 29
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -109,7 +109,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BitsPerPixel
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 29
+    startLine: 30
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -136,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Format
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 30
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -163,7 +163,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsSuccess
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 31
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -190,7 +190,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasPalette
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 32
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -217,7 +217,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BMPHeader
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -244,7 +244,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PNGHeader
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 36
+    startLine: 37
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -271,7 +271,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

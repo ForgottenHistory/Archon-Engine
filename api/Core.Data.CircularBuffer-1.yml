@@ -10,6 +10,7 @@ items:
   - Core.Data.CircularBuffer`1.Capacity
   - Core.Data.CircularBuffer`1.Clear
   - Core.Data.CircularBuffer`1.Count
+  - Core.Data.CircularBuffer`1.Get(System.Int32)
   - Core.Data.CircularBuffer`1.Items
   langs:
   - csharp
@@ -225,6 +226,42 @@ items:
   overload: Core.Data.CircularBuffer`1.Clear*
   nameWithType.vb: CircularBuffer(Of T).Clear()
   fullName.vb: Core.Data.CircularBuffer(Of T).Clear()
+- uid: Core.Data.CircularBuffer`1.Get(System.Int32)
+  commentId: M:Core.Data.CircularBuffer`1.Get(System.Int32)
+  id: Get(System.Int32)
+  parent: Core.Data.CircularBuffer`1
+  langs:
+  - csharp
+  - vb
+  name: Get(int)
+  nameWithType: CircularBuffer<T>.Get(int)
+  fullName: Core.Data.CircularBuffer<T>.Get(int)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Data/ProvinceColdData.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: Get
+    path: Scripts/Core/Data/ProvinceColdData.cs
+    startLine: 215
+  assemblies:
+  - Core
+  namespace: Core.Data
+  summary: Get item at logical index (0 = oldest, Count-1 = newest). Zero-allocation.
+  example: []
+  syntax:
+    content: public T Get(int index)
+    parameters:
+    - id: index
+      type: System.Int32
+    return:
+      type: '{T}'
+    content.vb: Public Function [Get](index As Integer) As T
+  overload: Core.Data.CircularBuffer`1.Get*
+  nameWithType.vb: CircularBuffer(Of T).Get(Integer)
+  fullName.vb: Core.Data.CircularBuffer(Of T).Get(Integer)
+  name.vb: Get(Integer)
 references:
 - uid: Core.Data
   commentId: N:Core.Data
@@ -414,3 +451,11 @@ references:
   fullName: Core.Data.CircularBuffer<T>.Clear
   nameWithType.vb: CircularBuffer(Of T).Clear
   fullName.vb: Core.Data.CircularBuffer(Of T).Clear
+- uid: Core.Data.CircularBuffer`1.Get*
+  commentId: Overload:Core.Data.CircularBuffer`1.Get
+  href: Core.Data.CircularBuffer-1.html#Core_Data_CircularBuffer_1_Get_System_Int32_
+  name: Get
+  nameWithType: CircularBuffer<T>.Get
+  fullName: Core.Data.CircularBuffer<T>.Get
+  nameWithType.vb: CircularBuffer(Of T).Get
+  fullName.vb: Core.Data.CircularBuffer(Of T).Get

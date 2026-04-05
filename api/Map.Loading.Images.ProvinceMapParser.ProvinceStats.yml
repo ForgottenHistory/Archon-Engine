@@ -30,7 +30,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceStats
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 271
+    startLine: 283
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -57,7 +57,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceID
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 273
+    startLine: 285
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -84,7 +84,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PixelCount
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 274
+    startLine: 286
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -111,7 +111,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MinX
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 275
+    startLine: 287
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -138,7 +138,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MinY
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 275
+    startLine: 287
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -165,7 +165,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MaxX
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 275
+    startLine: 287
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -192,7 +192,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MaxY
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 275
+    startLine: 287
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -219,7 +219,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Centroid
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 276
+    startLine: 288
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -246,7 +246,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 277
+    startLine: 289
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -273,7 +273,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Width
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 279
+    startLine: 291
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -302,7 +302,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Height
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 280
+    startLine: 292
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -331,7 +331,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Area
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 281
+    startLine: 293
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

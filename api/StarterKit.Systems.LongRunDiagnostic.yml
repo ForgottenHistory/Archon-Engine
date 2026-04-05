@@ -1,0 +1,114 @@
+### YamlMime:ManagedReference
+items:
+- uid: StarterKit.Systems.LongRunDiagnostic
+  commentId: T:StarterKit.Systems.LongRunDiagnostic
+  id: LongRunDiagnostic
+  parent: StarterKit.Systems
+  children: []
+  langs:
+  - csharp
+  - vb
+  name: LongRunDiagnostic
+  nameWithType: LongRunDiagnostic
+  fullName: StarterKit.Systems.LongRunDiagnostic
+  type: Class
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/LongRunDiagnostic.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: LongRunDiagnostic
+    path: Scripts/StarterKit/Systems/LongRunDiagnostic.cs
+    startLine: 12
+  assemblies:
+  - StarterKit
+  namespace: StarterKit.Systems
+  summary: >-
+    Diagnostic for long-run performance testing.
+
+    Logs FPS, memory, and tick timing at year milestones.
+
+    Attach to any GameObject in scene. Finds GameState automatically.
+  example: []
+  syntax:
+    content: 'public class LongRunDiagnostic : MonoBehaviour'
+    content.vb: Public Class LongRunDiagnostic Inherits MonoBehaviour
+  inheritance:
+  - System.Object
+  - UnityEngine.Object
+  - UnityEngine.Component
+  - UnityEngine.Behaviour
+  - UnityEngine.MonoBehaviour
+references:
+- uid: StarterKit.Systems
+  commentId: N:StarterKit.Systems
+  href: StarterKit.html
+  name: StarterKit.Systems
+  nameWithType: StarterKit.Systems
+  fullName: StarterKit.Systems
+  spec.csharp:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Systems
+    name: Systems
+    href: StarterKit.Systems.html
+  spec.vb:
+  - uid: StarterKit
+    name: StarterKit
+    href: StarterKit.html
+  - name: .
+  - uid: StarterKit.Systems
+    name: Systems
+    href: StarterKit.Systems.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: UnityEngine.Object
+  commentId: T:UnityEngine.Object
+  parent: UnityEngine
+  isExternal: true
+  name: Object
+  nameWithType: Object
+  fullName: UnityEngine.Object
+- uid: UnityEngine.Component
+  commentId: T:UnityEngine.Component
+  parent: UnityEngine
+  isExternal: true
+  name: Component
+  nameWithType: Component
+  fullName: UnityEngine.Component
+- uid: UnityEngine.Behaviour
+  commentId: T:UnityEngine.Behaviour
+  parent: UnityEngine
+  isExternal: true
+  name: Behaviour
+  nameWithType: Behaviour
+  fullName: UnityEngine.Behaviour
+- uid: UnityEngine.MonoBehaviour
+  commentId: T:UnityEngine.MonoBehaviour
+  parent: UnityEngine
+  isExternal: true
+  name: MonoBehaviour
+  nameWithType: MonoBehaviour
+  fullName: UnityEngine.MonoBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine

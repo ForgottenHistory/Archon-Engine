@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainImageLoader
     path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
-    startLine: 13
+    startLine: 14
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -31,6 +31,8 @@ items:
     Uses ImageParser for unified BMP/PNG support.
 
     Terrain colors from the image are used directly - TerrainRGBLookup converts to indices later.
+
+    Supports raw pixel cache to skip PNG decompression on subsequent loads.
   example: []
   syntax:
     content: public class TerrainImageLoader
@@ -55,7 +57,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
-    startLine: 18
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -89,7 +91,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadAndPopulate
     path: Scripts/Map/Loading/Images/TerrainBitmapLoader.cs
-    startLine: 28
+    startLine: 42
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -97,6 +99,8 @@ items:
     Load terrain image and populate terrain texture.
 
     Tries terrain.png first, falls back to terrain.bmp.
+
+    Uses raw pixel cache to skip PNG decompression on subsequent loads.
   example: []
   syntax:
     content: public void LoadAndPopulate(string mapDirectory)

@@ -8,7 +8,10 @@ items:
   - Core.Modifiers.ModifierSet.Add(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
   - Core.Modifiers.ModifierSet.ApplyModifier(System.UInt16,Core.Data.FixedPoint64)
   - Core.Modifiers.ModifierSet.Clear
+  - Core.Modifiers.ModifierSet.ClearActive
+  - Core.Modifiers.ModifierSet.CopyActiveToSet(Core.Modifiers.ModifierSet@)
   - Core.Modifiers.ModifierSet.Get(System.UInt16)
+  - Core.Modifiers.ModifierSet.HasActiveTypes
   - Core.Modifiers.ModifierSet.MAX_MODIFIER_TYPES
   - Core.Modifiers.ModifierSet.Remove(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
   - Core.Modifiers.ModifierSet.Set(System.UInt16,Core.Data.FixedPoint64,System.Boolean)
@@ -26,7 +29,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ModifierSet
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 15
+    startLine: 16
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -66,7 +69,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MAX_MODIFIER_TYPES
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -93,7 +96,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Get
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 29
+    startLine: 35
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -129,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Add
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 44
+    startLine: 50
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -167,7 +170,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Remove
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 58
+    startLine: 69
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -205,7 +208,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Set
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 72
+    startLine: 86
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -243,14 +246,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Clear
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 87
+    startLine: 106
   assemblies:
   - Core
   namespace: Core.Modifiers
   summary: >-
     Clear all modifiers (reset to zero)
 
-    Vectorized for performance
+    Uses UnsafeUtility.MemClear for fast bulk zeroing
   example: []
   syntax:
     content: public void Clear()
@@ -274,7 +277,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyModifier
     path: Scripts/Core/Modifiers/ModifierSet.cs
-    startLine: 104
+    startLine: 118
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -297,6 +300,105 @@ items:
   nameWithType.vb: ModifierSet.ApplyModifier(UShort, FixedPoint64)
   fullName.vb: Core.Modifiers.ModifierSet.ApplyModifier(UShort, Core.Data.FixedPoint64)
   name.vb: ApplyModifier(UShort, FixedPoint64)
+- uid: Core.Modifiers.ModifierSet.ClearActive
+  commentId: M:Core.Modifiers.ModifierSet.ClearActive
+  id: ClearActive
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: ClearActive()
+  nameWithType: ModifierSet.ClearActive()
+  fullName: Core.Modifiers.ModifierSet.ClearActive()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearActive
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 141
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Clear only active modifier types using bitmask, then zero the mask.
+
+    Much faster than full Clear() when only 2-5 types are active out of 512.
+  example: []
+  syntax:
+    content: public void ClearActive()
+    content.vb: Public Sub ClearActive()
+  overload: Core.Modifiers.ModifierSet.ClearActive*
+- uid: Core.Modifiers.ModifierSet.HasActiveTypes
+  commentId: P:Core.Modifiers.ModifierSet.HasActiveTypes
+  id: HasActiveTypes
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: HasActiveTypes
+  nameWithType: ModifierSet.HasActiveTypes
+  fullName: Core.Modifiers.ModifierSet.HasActiveTypes
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: HasActiveTypes
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 166
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Check if any modifier type is active (has non-zero values)
+  example: []
+  syntax:
+    content: public bool HasActiveTypes { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property HasActiveTypes As Boolean
+  overload: Core.Modifiers.ModifierSet.HasActiveTypes*
+- uid: Core.Modifiers.ModifierSet.CopyActiveToSet(Core.Modifiers.ModifierSet@)
+  commentId: M:Core.Modifiers.ModifierSet.CopyActiveToSet(Core.Modifiers.ModifierSet@)
+  id: CopyActiveToSet(Core.Modifiers.ModifierSet@)
+  parent: Core.Modifiers.ModifierSet
+  langs:
+  - csharp
+  - vb
+  name: CopyActiveToSet(ref ModifierSet)
+  nameWithType: ModifierSet.CopyActiveToSet(ref ModifierSet)
+  fullName: Core.Modifiers.ModifierSet.CopyActiveToSet(ref Core.Modifiers.ModifierSet)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ModifierSet.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: CopyActiveToSet
+    path: Scripts/Core/Modifiers/ModifierSet.cs
+    startLine: 185
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Copy only active (non-zero) modifier values from this set to target set.
+
+    Uses bitmask to skip empty modifier types — typically iterates 2-5 types vs 512.
+  example: []
+  syntax:
+    content: public void CopyActiveToSet(ref ModifierSet target)
+    parameters:
+    - id: target
+      type: Core.Modifiers.ModifierSet
+    content.vb: Public Sub CopyActiveToSet(target As ModifierSet)
+  overload: Core.Modifiers.ModifierSet.CopyActiveToSet*
+  nameWithType.vb: ModifierSet.CopyActiveToSet(ModifierSet)
+  fullName.vb: Core.Modifiers.ModifierSet.CopyActiveToSet(Core.Modifiers.ModifierSet)
+  name.vb: CopyActiveToSet(ModifierSet)
 references:
 - uid: Core.Modifiers
   commentId: N:Core.Modifiers
@@ -428,3 +530,28 @@ references:
   name: ApplyModifier
   nameWithType: ModifierSet.ApplyModifier
   fullName: Core.Modifiers.ModifierSet.ApplyModifier
+- uid: Core.Modifiers.ModifierSet.ClearActive*
+  commentId: Overload:Core.Modifiers.ModifierSet.ClearActive
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_ClearActive
+  name: ClearActive
+  nameWithType: ModifierSet.ClearActive
+  fullName: Core.Modifiers.ModifierSet.ClearActive
+- uid: Core.Modifiers.ModifierSet.HasActiveTypes*
+  commentId: Overload:Core.Modifiers.ModifierSet.HasActiveTypes
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_HasActiveTypes
+  name: HasActiveTypes
+  nameWithType: ModifierSet.HasActiveTypes
+  fullName: Core.Modifiers.ModifierSet.HasActiveTypes
+- uid: Core.Modifiers.ModifierSet.CopyActiveToSet*
+  commentId: Overload:Core.Modifiers.ModifierSet.CopyActiveToSet
+  href: Core.Modifiers.ModifierSet.html#Core_Modifiers_ModifierSet_CopyActiveToSet_Core_Modifiers_ModifierSet__
+  name: CopyActiveToSet
+  nameWithType: ModifierSet.CopyActiveToSet
+  fullName: Core.Modifiers.ModifierSet.CopyActiveToSet
+- uid: Core.Modifiers.ModifierSet
+  commentId: T:Core.Modifiers.ModifierSet
+  parent: Core.Modifiers
+  href: Core.Modifiers.ModifierSet.html
+  name: ModifierSet
+  nameWithType: ModifierSet
+  fullName: Core.Modifiers.ModifierSet

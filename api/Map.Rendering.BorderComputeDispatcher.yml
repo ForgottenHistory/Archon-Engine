@@ -9,15 +9,17 @@ items:
   - Map.Rendering.BorderComputeDispatcher.CurrentBorderMode
   - Map.Rendering.BorderComputeDispatcher.DebugFillBordersWhite
   - Map.Rendering.BorderComputeDispatcher.DetectBorders
+  - Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed(System.UInt16[],UnityEngine.Rendering.CommandBuffer)
   - Map.Rendering.BorderComputeDispatcher.ForceProvinceMode
   - Map.Rendering.BorderComputeDispatcher.GenerateCurveDebugTexture
   - Map.Rendering.BorderComputeDispatcher.GeneratePixelPerfectBorders
   - Map.Rendering.BorderComputeDispatcher.GetActiveBorderRenderer
   - Map.Rendering.BorderComputeDispatcher.Initialize
-  - Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders(Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
+  - Map.Rendering.BorderComputeDispatcher.InitializeBorders(Map.Rendering.BorderRenderingMode,Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
   - Map.Rendering.BorderComputeDispatcher.SetActiveBorderRenderer(System.String,Core.Queries.ProvinceQueries)
   - Map.Rendering.BorderComputeDispatcher.SetBorderMode(Map.Rendering.BorderMode)
   - Map.Rendering.BorderComputeDispatcher.SetBorderRenderingMode(Map.Rendering.BorderRenderingMode)
+  - Map.Rendering.BorderComputeDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
   - Map.Rendering.BorderComputeDispatcher.SetPixelPerfectParameters(System.Int32,System.Int32,System.Single)
   - Map.Rendering.BorderComputeDispatcher.SetTextureManager(Map.Rendering.MapTextureManager)
   - Map.Rendering.BorderComputeDispatcher.ToggleBorderMode
@@ -36,28 +38,19 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderComputeDispatcher
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 22
+    startLine: 18
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
-    Coordinator for border rendering systems
+    Coordinator for border rendering systems.
 
-    Orchestrates multiple rendering modes: distance field, mesh geometry, and pixel-perfect
-
-
-    REFACTORED: Now uses specialized helper classes for single responsibility
-
-    - BorderShaderManager: Compute shader loading and kernel management
-
-    - BorderParameterBinder: Rendering parameters and shader binding
-
-    - BorderStyleUpdater: Border style classification and updates
-
-    - BorderDebugUtility: Debug utilities and benchmarking
+    Delegates to registry-based renderers (IBorderRenderer implementations).
 
 
-    Architecture: Facade pattern - provides unified interface to border rendering subsystems
+    Available renderers: None, DistanceField, PixelPerfect, MeshGeometry
+
+    Rendering mode is set via VisualStyleConfiguration.
   example: []
   syntax:
     content: 'public class BorderComputeDispatcher : MonoBehaviour'
@@ -86,7 +79,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CurrentBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 43
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -115,7 +108,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 88
+    startLine: 84
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -143,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTextureManager
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 159
+    startLine: 157
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -156,36 +149,40 @@ items:
       type: Map.Rendering.MapTextureManager
     content.vb: Public Sub SetTextureManager(manager As MapTextureManager)
   overload: Map.Rendering.BorderComputeDispatcher.SetTextureManager*
-- uid: Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders(Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
-  commentId: M:Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders(Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
-  id: InitializeSmoothBorders(Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
+- uid: Map.Rendering.BorderComputeDispatcher.InitializeBorders(Map.Rendering.BorderRenderingMode,Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
+  commentId: M:Map.Rendering.BorderComputeDispatcher.InitializeBorders(Map.Rendering.BorderRenderingMode,Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
+  id: InitializeBorders(Map.Rendering.BorderRenderingMode,Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Core.Systems.CountrySystem,Map.Rendering.ProvinceMapping,UnityEngine.Transform)
   parent: Map.Rendering.BorderComputeDispatcher
   langs:
   - csharp
   - vb
-  name: InitializeSmoothBorders(AdjacencySystem, ProvinceSystem, CountrySystem, ProvinceMapping, Transform)
-  nameWithType: BorderComputeDispatcher.InitializeSmoothBorders(AdjacencySystem, ProvinceSystem, CountrySystem, ProvinceMapping, Transform)
-  fullName: Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders(Core.Systems.AdjacencySystem, Core.Systems.ProvinceSystem, Core.Systems.CountrySystem, Map.Rendering.ProvinceMapping, UnityEngine.Transform)
+  name: InitializeBorders(BorderRenderingMode, AdjacencySystem, ProvinceSystem, CountrySystem, ProvinceMapping, Transform)
+  nameWithType: BorderComputeDispatcher.InitializeBorders(BorderRenderingMode, AdjacencySystem, ProvinceSystem, CountrySystem, ProvinceMapping, Transform)
+  fullName: Map.Rendering.BorderComputeDispatcher.InitializeBorders(Map.Rendering.BorderRenderingMode, Core.Systems.AdjacencySystem, Core.Systems.ProvinceSystem, Core.Systems.CountrySystem, Map.Rendering.ProvinceMapping, UnityEngine.Transform)
   type: Method
   source:
     remote:
       path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: InitializeSmoothBorders
+    id: InitializeBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 171
+    startLine: 170
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
-    Initialize smooth curve-based border rendering system
+    Initialize border rendering system with specific mode.
 
-    MUST be called after AdjacencySystem, ProvinceSystem, and CountrySystem are ready
+    Only creates the renderer needed for the selected mode.
+
+    MUST be called after AdjacencySystem, ProvinceSystem, and CountrySystem are ready.
   example: []
   syntax:
-    content: public void InitializeSmoothBorders(AdjacencySystem adjacencySystem, ProvinceSystem provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping, Transform mapPlaneTransform = null)
+    content: public void InitializeBorders(BorderRenderingMode mode, AdjacencySystem adjacencySystem, ProvinceSystem provinceSystem, CountrySystem countrySystem, ProvinceMapping provinceMapping, Transform mapPlaneTransform = null)
     parameters:
+    - id: mode
+      type: Map.Rendering.BorderRenderingMode
     - id: adjacencySystem
       type: Core.Systems.AdjacencySystem
     - id: provinceSystem
@@ -196,8 +193,8 @@ items:
       type: Map.Rendering.ProvinceMapping
     - id: mapPlaneTransform
       type: UnityEngine.Transform
-    content.vb: Public Sub InitializeSmoothBorders(adjacencySystem As AdjacencySystem, provinceSystem As ProvinceSystem, countrySystem As CountrySystem, provinceMapping As ProvinceMapping, mapPlaneTransform As Transform = Nothing)
-  overload: Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders*
+    content.vb: Public Sub InitializeBorders(mode As BorderRenderingMode, adjacencySystem As AdjacencySystem, provinceSystem As ProvinceSystem, countrySystem As CountrySystem, provinceMapping As ProvinceMapping, mapPlaneTransform As Transform = Nothing)
+  overload: Map.Rendering.BorderComputeDispatcher.InitializeBorders*
 - uid: Map.Rendering.BorderComputeDispatcher.GetActiveBorderRenderer
   commentId: M:Map.Rendering.BorderComputeDispatcher.GetActiveBorderRenderer
   id: GetActiveBorderRenderer
@@ -216,11 +213,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetActiveBorderRenderer
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 358
+    startLine: 263
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Get the currently active border renderer from registry.
+  summary: Get the currently active border renderer.
   example: []
   syntax:
     content: public IBorderRenderer GetActiveBorderRenderer()
@@ -246,14 +243,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetActiveBorderRenderer
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 375
+    startLine: 291
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: >-
-    Set the active border renderer by ID.
-
-    Used by VisualStyleManager to switch renderers.
+  summary: Set the active border renderer by ID.
   example: []
   syntax:
     content: public void SetActiveBorderRenderer(string rendererId, ProvinceQueries provinceQueries = null)
@@ -285,11 +279,11 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderRenderingMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 424
+    startLine: 324
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Set border rendering mode and regenerate borders
+  summary: Set border rendering mode and regenerate borders.
   example: []
   syntax:
     content: public void SetBorderRenderingMode(BorderRenderingMode mode)
@@ -316,7 +310,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GeneratePixelPerfectBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 482
+    startLine: 365
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -329,6 +323,47 @@ items:
     content: public void GeneratePixelPerfectBorders()
     content.vb: Public Sub GeneratePixelPerfectBorders()
   overload: Map.Rendering.BorderComputeDispatcher.GeneratePixelPerfectBorders*
+- uid: Map.Rendering.BorderComputeDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  commentId: M:Map.Rendering.BorderComputeDispatcher.SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  id: SetPixelIndex(System.UInt32[],System.UInt32[],System.UInt32[])
+  parent: Map.Rendering.BorderComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: SetPixelIndex(uint[], uint[], uint[])
+  nameWithType: BorderComputeDispatcher.SetPixelIndex(uint[], uint[], uint[])
+  fullName: Map.Rendering.BorderComputeDispatcher.SetPixelIndex(uint[], uint[], uint[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetPixelIndex
+    path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
+    startLine: 408
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Set pixel index for indexed border updates. Called once at load time.
+
+    Shares the same pixel index data as OwnerTextureDispatcher.
+  example: []
+  syntax:
+    content: public void SetPixelIndex(uint[] pixelCoords, uint[] offsets, uint[] counts)
+    parameters:
+    - id: pixelCoords
+      type: System.UInt32[]
+    - id: offsets
+      type: System.UInt32[]
+    - id: counts
+      type: System.UInt32[]
+    content.vb: Public Sub SetPixelIndex(pixelCoords As UInteger(), offsets As UInteger(), counts As UInteger())
+  overload: Map.Rendering.BorderComputeDispatcher.SetPixelIndex*
+  nameWithType.vb: BorderComputeDispatcher.SetPixelIndex(UInteger(), UInteger(), UInteger())
+  fullName.vb: Map.Rendering.BorderComputeDispatcher.SetPixelIndex(UInteger(), UInteger(), UInteger())
+  name.vb: SetPixelIndex(UInteger(), UInteger(), UInteger())
 - uid: Map.Rendering.BorderComputeDispatcher.DetectBorders
   commentId: M:Map.Rendering.BorderComputeDispatcher.DetectBorders
   id: DetectBorders
@@ -347,16 +382,57 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetectBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 524
+    startLine: 450
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Detect and update borders (called per-frame or on-demand)
+  summary: Regenerate borders using the active renderer.
   example: []
   syntax:
     content: public void DetectBorders()
     content.vb: Public Sub DetectBorders()
   overload: Map.Rendering.BorderComputeDispatcher.DetectBorders*
+- uid: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed(System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  commentId: M:Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed(System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  id: DetectBordersIndexed(System.UInt16[],UnityEngine.Rendering.CommandBuffer)
+  parent: Map.Rendering.BorderComputeDispatcher
+  langs:
+  - csharp
+  - vb
+  name: DetectBordersIndexed(ushort[], CommandBuffer)
+  nameWithType: BorderComputeDispatcher.DetectBordersIndexed(ushort[], CommandBuffer)
+  fullName: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed(ushort[], UnityEngine.Rendering.CommandBuffer)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: DetectBordersIndexed
+    path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
+    startLine: 464
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Indexed border update: queues compute shader dispatch into a CommandBuffer
+
+    for only pixels of changed provinces + neighbors. Non-blocking.
+
+    Falls back to full DetectBorders if indexed support not available.
+  example: []
+  syntax:
+    content: public void DetectBordersIndexed(ushort[] changedProvinces, CommandBuffer cmd)
+    parameters:
+    - id: changedProvinces
+      type: System.UInt16[]
+    - id: cmd
+      type: UnityEngine.Rendering.CommandBuffer
+    content.vb: Public Sub DetectBordersIndexed(changedProvinces As UShort(), cmd As CommandBuffer)
+  overload: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed*
+  nameWithType.vb: BorderComputeDispatcher.DetectBordersIndexed(UShort(), CommandBuffer)
+  fullName.vb: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed(UShort(), UnityEngine.Rendering.CommandBuffer)
+  name.vb: DetectBordersIndexed(UShort(), CommandBuffer)
 - uid: Map.Rendering.BorderComputeDispatcher.UpdateBorders
   commentId: M:Map.Rendering.BorderComputeDispatcher.UpdateBorders
   id: UpdateBorders
@@ -375,7 +451,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 542
+    startLine: 537
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -403,7 +479,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 553
+    startLine: 548
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -434,7 +510,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetPixelPerfectParameters
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 570
+    startLine: 565
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -475,7 +551,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ClearBorders
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 586
+    startLine: 587
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -503,7 +579,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DebugFillBordersWhite
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 594
+    startLine: 595
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -531,7 +607,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ToggleBorderMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 602
+    startLine: 603
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -571,7 +647,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceProvinceMode
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 614
+    startLine: 615
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -611,7 +687,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateCurveDebugTexture
     path: Scripts/Map/Rendering/Border/BorderComputeDispatcher.cs
-    startLine: 624
+    startLine: 625
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -728,12 +804,19 @@ references:
   name: MapTextureManager
   nameWithType: MapTextureManager
   fullName: Map.Rendering.MapTextureManager
-- uid: Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders*
-  commentId: Overload:Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders
-  href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_InitializeSmoothBorders_Core_Systems_AdjacencySystem_Core_Systems_ProvinceSystem_Core_Systems_CountrySystem_Map_Rendering_ProvinceMapping_UnityEngine_Transform_
-  name: InitializeSmoothBorders
-  nameWithType: BorderComputeDispatcher.InitializeSmoothBorders
-  fullName: Map.Rendering.BorderComputeDispatcher.InitializeSmoothBorders
+- uid: Map.Rendering.BorderComputeDispatcher.InitializeBorders*
+  commentId: Overload:Map.Rendering.BorderComputeDispatcher.InitializeBorders
+  href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_InitializeBorders_Map_Rendering_BorderRenderingMode_Core_Systems_AdjacencySystem_Core_Systems_ProvinceSystem_Core_Systems_CountrySystem_Map_Rendering_ProvinceMapping_UnityEngine_Transform_
+  name: InitializeBorders
+  nameWithType: BorderComputeDispatcher.InitializeBorders
+  fullName: Map.Rendering.BorderComputeDispatcher.InitializeBorders
+- uid: Map.Rendering.BorderRenderingMode
+  commentId: T:Map.Rendering.BorderRenderingMode
+  parent: Map.Rendering
+  href: Map.Rendering.BorderRenderingMode.html
+  name: BorderRenderingMode
+  nameWithType: BorderRenderingMode
+  fullName: Map.Rendering.BorderRenderingMode
 - uid: Core.Systems.AdjacencySystem
   commentId: T:Core.Systems.AdjacencySystem
   parent: Core.Systems
@@ -885,25 +968,99 @@ references:
   name: SetBorderRenderingMode
   nameWithType: BorderComputeDispatcher.SetBorderRenderingMode
   fullName: Map.Rendering.BorderComputeDispatcher.SetBorderRenderingMode
-- uid: Map.Rendering.BorderRenderingMode
-  commentId: T:Map.Rendering.BorderRenderingMode
-  parent: Map.Rendering
-  href: Map.Rendering.BorderRenderingMode.html
-  name: BorderRenderingMode
-  nameWithType: BorderRenderingMode
-  fullName: Map.Rendering.BorderRenderingMode
 - uid: Map.Rendering.BorderComputeDispatcher.GeneratePixelPerfectBorders*
   commentId: Overload:Map.Rendering.BorderComputeDispatcher.GeneratePixelPerfectBorders
   href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_GeneratePixelPerfectBorders
   name: GeneratePixelPerfectBorders
   nameWithType: BorderComputeDispatcher.GeneratePixelPerfectBorders
   fullName: Map.Rendering.BorderComputeDispatcher.GeneratePixelPerfectBorders
+- uid: Map.Rendering.BorderComputeDispatcher.SetPixelIndex*
+  commentId: Overload:Map.Rendering.BorderComputeDispatcher.SetPixelIndex
+  href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_SetPixelIndex_System_UInt32___System_UInt32___System_UInt32___
+  name: SetPixelIndex
+  nameWithType: BorderComputeDispatcher.SetPixelIndex
+  fullName: Map.Rendering.BorderComputeDispatcher.SetPixelIndex
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
 - uid: Map.Rendering.BorderComputeDispatcher.DetectBorders*
   commentId: Overload:Map.Rendering.BorderComputeDispatcher.DetectBorders
   href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_DetectBorders
   name: DetectBorders
   nameWithType: BorderComputeDispatcher.DetectBorders
   fullName: Map.Rendering.BorderComputeDispatcher.DetectBorders
+- uid: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed*
+  commentId: Overload:Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed
+  href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_DetectBordersIndexed_System_UInt16___UnityEngine_Rendering_CommandBuffer_
+  name: DetectBordersIndexed
+  nameWithType: BorderComputeDispatcher.DetectBordersIndexed
+  fullName: Map.Rendering.BorderComputeDispatcher.DetectBordersIndexed
+- uid: System.UInt16[]
+  isExternal: true
+  name: ushort[]
+  nameWithType: ushort[]
+  fullName: ushort[]
+  nameWithType.vb: UShort()
+  fullName.vb: UShort()
+  name.vb: UShort()
+  spec.csharp:
+  - uid: System.UInt16
+    name: ushort
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt16
+    name: UShort
+    isExternal: true
+  - name: (
+  - name: )
+- uid: UnityEngine.Rendering.CommandBuffer
+  commentId: T:UnityEngine.Rendering.CommandBuffer
+  parent: UnityEngine.Rendering
+  isExternal: true
+  name: CommandBuffer
+  nameWithType: CommandBuffer
+  fullName: UnityEngine.Rendering.CommandBuffer
+- uid: UnityEngine.Rendering
+  commentId: N:UnityEngine.Rendering
+  isExternal: true
+  name: UnityEngine.Rendering
+  nameWithType: UnityEngine.Rendering
+  fullName: UnityEngine.Rendering
+  spec.csharp:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.Rendering
+    name: Rendering
+    isExternal: true
+  spec.vb:
+  - uid: UnityEngine
+    name: UnityEngine
+    isExternal: true
+  - name: .
+  - uid: UnityEngine.Rendering
+    name: Rendering
+    isExternal: true
 - uid: Map.Rendering.BorderComputeDispatcher.UpdateBorders*
   commentId: Overload:Map.Rendering.BorderComputeDispatcher.UpdateBorders
   href: Map.Rendering.BorderComputeDispatcher.html#Map_Rendering_BorderComputeDispatcher_UpdateBorders

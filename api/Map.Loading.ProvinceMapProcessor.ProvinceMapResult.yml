@@ -26,7 +26,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceMapResult
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 31
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -53,7 +53,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BMPData
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -80,7 +80,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceMappings
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 34
+    startLine: 35
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -107,7 +107,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Definitions
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 35
+    startLine: 36
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -134,7 +134,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasDefinitions
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 36
+    startLine: 37
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -161,7 +161,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsSuccess
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 37
+    startLine: 38
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -188,7 +188,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ErrorMessage
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 38
+    startLine: 39
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -215,7 +215,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 44
+    startLine: 45
   assemblies:
   - MapAssembly
   namespace: Map.Loading

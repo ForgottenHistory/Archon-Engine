@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: QueryPerformanceStats
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 762
+    startLine: 768
   assemblies:
   - Core
   namespace: Core.Queries
@@ -49,7 +49,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: QueryCount
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 764
+    startLine: 770
   assemblies:
   - Core
   namespace: Core.Queries
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalQueryTime
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 765
+    startLine: 771
   assemblies:
   - Core
   namespace: Core.Queries
@@ -103,7 +103,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AverageQueryTime
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 766
+    startLine: 772
   assemblies:
   - Core
   namespace: Core.Queries

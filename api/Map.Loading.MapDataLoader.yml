@@ -174,7 +174,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadFromFilesAsync
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 139
+    startLine: 140
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -214,7 +214,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AnalyzeProvinceTerrainAfterMapInit
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 195
+    startLine: 197
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -248,7 +248,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceTerrainBuffer
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 290
+    startLine: 292
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -278,7 +278,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/MapDataLoader.cs
-    startLine: 292
+    startLine: 294
   assemblies:
   - MapAssembly
   namespace: Map.Loading

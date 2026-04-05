@@ -20,7 +20,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Json5CountryConverter
     path: Scripts/Core/Loaders/Json5CountryConverter.cs
-    startLine: 16
+    startLine: 18
   assemblies:
   - Core
   namespace: Core.Loaders
@@ -52,7 +52,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadCountryJson5Files
     path: Scripts/Core/Loaders/Json5CountryConverter.cs
-    startLine: 23
+    startLine: 25
   assemblies:
   - Core
   namespace: Core.Loaders

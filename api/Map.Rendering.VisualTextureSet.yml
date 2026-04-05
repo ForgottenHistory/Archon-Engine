@@ -35,7 +35,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: VisualTextureSet
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -69,7 +69,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceTerrainTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 42
+    startLine: 43
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainTypeTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 43
+    startLine: 44
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -127,7 +127,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TerrainDetailArray
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 44
+    startLine: 45
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -156,7 +156,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HeightmapTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 45
+    startLine: 46
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -185,7 +185,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NormalMapTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 46
+    startLine: 47
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -214,7 +214,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetailIndexTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 47
+    startLine: 48
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -243,7 +243,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetailMaskTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -272,7 +272,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 50
+    startLine: 51
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -312,7 +312,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CreateTextures
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 62
+    startLine: 63
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -340,7 +340,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateTerrainTypeTexture
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 193
+    startLine: 198
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -371,7 +371,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetProvinceTerrainLookup
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 215
+    startLine: 220
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -402,7 +402,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetTerrainBlendMaps
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 229
+    startLine: 234
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -438,7 +438,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BindToMaterial
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 243
+    startLine: 248
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -469,7 +469,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateNormalMapFromHeightmap
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 289
+    startLine: 294
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -508,7 +508,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyChanges
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 323
+    startLine: 328
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -536,7 +536,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Release
     path: Scripts/Map/Rendering/VisualTextureSet.cs
-    startLine: 332
+    startLine: 337
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

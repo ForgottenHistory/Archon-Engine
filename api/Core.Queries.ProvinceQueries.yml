@@ -9,6 +9,7 @@ items:
   - Core.Queries.ProvinceQueries.CalculateDistancesFromCountry(System.UInt16)
   - Core.Queries.ProvinceQueries.Dispose
   - Core.Queries.ProvinceQueries.Exists(System.UInt16)
+  - Core.Queries.ProvinceQueries.FillOwnerBuffer(System.UInt32[])
   - Core.Queries.ProvinceQueries.GetAllProvinceIds(Unity.Collections.Allocator)
   - Core.Queries.ProvinceQueries.GetCachedProvinceDistance(System.UInt16)
   - Core.Queries.ProvinceQueries.GetConnectedLandmasses(System.UInt16,Unity.Collections.Allocator)
@@ -144,6 +145,43 @@ items:
   nameWithType.vb: ProvinceQueries.GetOwner(UShort)
   fullName.vb: Core.Queries.ProvinceQueries.GetOwner(UShort)
   name.vb: GetOwner(UShort)
+- uid: Core.Queries.ProvinceQueries.FillOwnerBuffer(System.UInt32[])
+  commentId: M:Core.Queries.ProvinceQueries.FillOwnerBuffer(System.UInt32[])
+  id: FillOwnerBuffer(System.UInt32[])
+  parent: Core.Queries.ProvinceQueries
+  langs:
+  - csharp
+  - vb
+  name: FillOwnerBuffer(uint[])
+  nameWithType: ProvinceQueries.FillOwnerBuffer(uint[])
+  fullName: Core.Queries.ProvinceQueries.FillOwnerBuffer(uint[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Queries/ProvinceQueries.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FillOwnerBuffer
+    path: Scripts/Core/Queries/ProvinceQueries.cs
+    startLine: 51
+  assemblies:
+  - Core
+  namespace: Core.Queries
+  summary: >-
+    Bulk fill owner data into a pre-allocated array indexed by province ID.
+
+    Linear scan of contiguous buffer — no per-province hash lookups.
+  example: []
+  syntax:
+    content: public void FillOwnerBuffer(uint[] ownerBuffer)
+    parameters:
+    - id: ownerBuffer
+      type: System.UInt32[]
+    content.vb: Public Sub FillOwnerBuffer(ownerBuffer As UInteger())
+  overload: Core.Queries.ProvinceQueries.FillOwnerBuffer*
+  nameWithType.vb: ProvinceQueries.FillOwnerBuffer(UInteger())
+  fullName.vb: Core.Queries.ProvinceQueries.FillOwnerBuffer(UInteger())
+  name.vb: FillOwnerBuffer(UInteger())
 - uid: Core.Queries.ProvinceQueries.GetTerrain(System.UInt16)
   commentId: M:Core.Queries.ProvinceQueries.GetTerrain(System.UInt16)
   id: GetTerrain(System.UInt16)
@@ -162,7 +200,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetTerrain
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 53
+    startLine: 62
   assemblies:
   - Core
   namespace: Core.Queries
@@ -201,7 +239,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceState
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 62
+    startLine: 71
   assemblies:
   - Core
   namespace: Core.Queries
@@ -240,7 +278,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Exists
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 71
+    startLine: 80
   assemblies:
   - Core
   namespace: Core.Queries
@@ -279,7 +317,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsOwned
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 80
+    startLine: 89
   assemblies:
   - Core
   namespace: Core.Queries
@@ -318,7 +356,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsOcean
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 89
+    startLine: 98
   assemblies:
   - Core
   namespace: Core.Queries
@@ -357,7 +395,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 103
+    startLine: 112
   assemblies:
   - Core
   namespace: Core.Queries
@@ -400,7 +438,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 113
+    startLine: 122
   assemblies:
   - Core
   namespace: Core.Queries
@@ -441,7 +479,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryProvinceCount
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 124
+    startLine: 133
   assemblies:
   - Core
   namespace: Core.Queries
@@ -480,7 +518,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvincesByTerrain
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 137
+    startLine: 143
   assemblies:
   - Core
   namespace: Core.Queries
@@ -523,7 +561,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUnownedProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 164
+    startLine: 170
   assemblies:
   - Core
   namespace: Core.Queries
@@ -561,7 +599,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetOceanProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 174
+    startLine: 180
   assemblies:
   - Core
   namespace: Core.Queries
@@ -599,7 +637,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetLandProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 184
+    startLine: 190
   assemblies:
   - Core
   namespace: Core.Queries
@@ -637,7 +675,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceOwnerColor
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 214
+    startLine: 220
   assemblies:
   - Core
   namespace: Core.Queries
@@ -676,7 +714,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceOwnerTag
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 224
+    startLine: 230
   assemblies:
   - Core
   namespace: Core.Queries
@@ -715,7 +753,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ShareSameOwner
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 234
+    startLine: 240
   assemblies:
   - Core
   namespace: Core.Queries
@@ -756,7 +794,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvincesBorderingCountry
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 245
+    startLine: 251
   assemblies:
   - Core
   namespace: Core.Queries
@@ -801,7 +839,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvincesBorderingCountry
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 295
+    startLine: 301
   assemblies:
   - Core
   namespace: Core.Queries
@@ -848,7 +886,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvincesByOwnerTag
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 342
+    startLine: 348
   assemblies:
   - Core
   namespace: Core.Queries
@@ -893,7 +931,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllProvinceIds
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 390
+    startLine: 396
   assemblies:
   - Core
   namespace: Core.Queries
@@ -931,7 +969,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetTotalProvinceCount
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 399
+    startLine: 405
   assemblies:
   - Core
   namespace: Core.Queries
@@ -964,7 +1002,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceStatistics
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 409
+    startLine: 415
   assemblies:
   - Core
   namespace: Core.Queries
@@ -999,7 +1037,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetPerformanceStats
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 442
+    startLine: 448
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1029,7 +1067,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ResetPerformanceStats
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 455
+    startLine: 461
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1057,7 +1095,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvincesWithinDistance
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 471
+    startLine: 477
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1104,7 +1142,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetDistanceBetween
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 505
+    startLine: 511
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1147,7 +1185,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CalculateDistancesFromCountry
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 527
+    startLine: 533
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1188,7 +1226,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCachedProvinceDistance
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 544
+    startLine: 550
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1227,7 +1265,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetConnectedProvincesOfSameOwner
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 578
+    startLine: 584
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1272,7 +1310,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetConnectedProvincesWithOwner
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 592
+    startLine: 598
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1319,7 +1357,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetConnectedLandmasses
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 658
+    startLine: 664
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1364,7 +1402,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetLandmassCount
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 714
+    startLine: 720
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1405,7 +1443,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 732
+    startLine: 738
   assemblies:
   - Core
   namespace: Core.Queries
@@ -1521,6 +1559,32 @@ references:
   nameWithType.vb: UShort
   fullName.vb: UShort
   name.vb: UShort
+- uid: Core.Queries.ProvinceQueries.FillOwnerBuffer*
+  commentId: Overload:Core.Queries.ProvinceQueries.FillOwnerBuffer
+  href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_FillOwnerBuffer_System_UInt32___
+  name: FillOwnerBuffer
+  nameWithType: ProvinceQueries.FillOwnerBuffer
+  fullName: Core.Queries.ProvinceQueries.FillOwnerBuffer
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
 - uid: Core.Queries.ProvinceQueries.GetTerrain*
   commentId: Overload:Core.Queries.ProvinceQueries.GetTerrain
   href: Core.Queries.ProvinceQueries.html#Core_Queries_ProvinceQueries_GetTerrain_System_UInt16_

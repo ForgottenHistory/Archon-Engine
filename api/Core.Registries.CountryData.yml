@@ -30,7 +30,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CountryData
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 189
+    startLine: 188
   assemblies:
   - Core
   namespace: Core.Registries
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Id
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 191
+    startLine: 190
   assemblies:
   - Core
   namespace: Core.Registries
@@ -91,7 +91,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Tag
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 192
+    startLine: 191
   assemblies:
   - Core
   namespace: Core.Registries
@@ -120,7 +120,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Name
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 193
+    startLine: 192
   assemblies:
   - Core
   namespace: Core.Registries
@@ -149,7 +149,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Color
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 196
+    startLine: 195
   assemblies:
   - Core
   namespace: Core.Registries
@@ -178,7 +178,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OwnedProvinces
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 199
+    startLine: 198
   assemblies:
   - Core
   namespace: Core.Registries
@@ -207,7 +207,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ControlledProvinces
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 200
+    startLine: 199
   assemblies:
   - Core
   namespace: Core.Registries
@@ -236,7 +236,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PrimaryCultureId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 203
+    startLine: 202
   assemblies:
   - Core
   namespace: Core.Registries
@@ -265,7 +265,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ReligionId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 204
+    startLine: 203
   assemblies:
   - Core
   namespace: Core.Registries
@@ -294,7 +294,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GovernmentId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 205
+    startLine: 204
   assemblies:
   - Core
   namespace: Core.Registries
@@ -323,7 +323,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TechnologyGroupId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 206
+    startLine: 205
   assemblies:
   - Core
   namespace: Core.Registries
@@ -352,7 +352,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CapitalProvinceId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 209
+    startLine: 208
   assemblies:
   - Core
   namespace: Core.Registries

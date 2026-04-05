@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceMappings
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 140
+    startLine: 161
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -49,7 +49,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ColorToProvinceID
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 142
+    startLine: 163
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -76,7 +76,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceIDToColor
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 143
+    startLine: 164
   assemblies:
   - MapAssembly
   namespace: Map.Loading
@@ -103,7 +103,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/ProvinceMapProcessor.cs
-    startLine: 145
+    startLine: 166
   assemblies:
   - MapAssembly
   namespace: Map.Loading

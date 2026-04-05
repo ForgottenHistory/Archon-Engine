@@ -8,6 +8,7 @@ items:
   - Core.SaveLoad.SaveFileSerializer
   - Core.SaveLoad.SaveGameData
   - Core.SaveLoad.SaveManager
+  - Core.SaveLoad.SaveMetadata
   - Core.SaveLoad.SerializationHelper
   - Core.SaveLoad.SystemSerializer
   langs:
@@ -39,6 +40,13 @@ references:
   name: SystemSerializer
   nameWithType: SystemSerializer
   fullName: Core.SaveLoad.SystemSerializer
+- uid: Core.SaveLoad.SaveMetadata
+  commentId: T:Core.SaveLoad.SaveMetadata
+  parent: Core.SaveLoad
+  href: Core.SaveLoad.SaveMetadata.html
+  name: SaveMetadata
+  nameWithType: SaveMetadata
+  fullName: Core.SaveLoad.SaveMetadata
 - uid: Core.SaveLoad.SaveGameData
   commentId: T:Core.SaveLoad.SaveGameData
   parent: Core.SaveLoad

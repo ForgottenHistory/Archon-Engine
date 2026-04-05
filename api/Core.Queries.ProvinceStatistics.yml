@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceStatistics
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 750
+    startLine: 756
   assemblies:
   - Core
   namespace: Core.Queries
@@ -54,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 752
+    startLine: 758
   assemblies:
   - Core
   namespace: Core.Queries
@@ -81,7 +81,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LandProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 753
+    startLine: 759
   assemblies:
   - Core
   namespace: Core.Queries
@@ -108,7 +108,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OceanProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 754
+    startLine: 760
   assemblies:
   - Core
   namespace: Core.Queries
@@ -135,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OwnedProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 755
+    startLine: 761
   assemblies:
   - Core
   namespace: Core.Queries
@@ -162,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnownedProvinces
     path: Scripts/Core/Queries/ProvinceQueries.cs
-    startLine: 756
+    startLine: 762
   assemblies:
   - Core
   namespace: Core.Queries

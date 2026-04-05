@@ -29,7 +29,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TransferProvincesCommand
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 103
+    startLine: 99
   assemblies:
   - Core
   namespace: Core.Commands
@@ -69,7 +69,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceIds
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 105
+    startLine: 101
   assemblies:
   - Core
   namespace: Core.Commands
@@ -98,7 +98,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NewOwner
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 106
+    startLine: 102
   assemblies:
   - Core
   namespace: Core.Commands
@@ -127,7 +127,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Priority
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 112
+    startLine: 108
   assemblies:
   - Core
   namespace: Core.Commands
@@ -162,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Validate
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 114
+    startLine: 110
   assemblies:
   - Core
   namespace: Core.Commands
@@ -201,7 +201,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetValidationError
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 149
+    startLine: 145
   assemblies:
   - Core
   namespace: Core.Commands
@@ -232,7 +232,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSuccessMessage
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 154
+    startLine: 150
   assemblies:
   - Core
   namespace: Core.Commands
@@ -263,7 +263,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 159
+    startLine: 155
   assemblies:
   - Core
   namespace: Core.Commands
@@ -301,7 +301,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Undo
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 170
+    startLine: 164
   assemblies:
   - Core
   namespace: Core.Commands
@@ -337,7 +337,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 181
+    startLine: 173
   assemblies:
   - Core
   namespace: Core.Commands
@@ -375,7 +375,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 193
+    startLine: 185
   assemblies:
   - Core
   namespace: Core.Commands

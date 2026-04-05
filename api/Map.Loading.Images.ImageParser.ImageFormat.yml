@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ImageFormat
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 15
+    startLine: 16
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -49,7 +49,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Unknown
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 17
+    startLine: 18
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -75,7 +75,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BMP
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 18
+    startLine: 19
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -101,7 +101,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PNG
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

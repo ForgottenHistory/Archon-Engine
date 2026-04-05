@@ -11,6 +11,7 @@ items:
   - Core.Systems.ProvinceSystem.ApplyResolvedInitialStates(Unity.Collections.NativeArray{Core.Data.ProvinceInitialState})
   - Core.Systems.ProvinceSystem.Capacity
   - Core.Systems.ProvinceSystem.Dispose
+  - Core.Systems.ProvinceSystem.FillOwnerBuffer(System.UInt32[])
   - Core.Systems.ProvinceSystem.GetAllProvinceIds(Unity.Collections.Allocator)
   - Core.Systems.ProvinceSystem.GetCountryProvinces(System.UInt16,Unity.Collections.Allocator)
   - Core.Systems.ProvinceSystem.GetCountryProvinces(System.UInt16,Unity.Collections.NativeList{System.UInt16})
@@ -737,6 +738,38 @@ items:
       type: Unity.Collections.NativeArray{System.UInt16}
     content.vb: Public Function GetAllProvinceIds(allocator As Allocator = Allocator.TempJob) As NativeArray(Of UShort)
   overload: Core.Systems.ProvinceSystem.GetAllProvinceIds*
+- uid: Core.Systems.ProvinceSystem.FillOwnerBuffer(System.UInt32[])
+  commentId: M:Core.Systems.ProvinceSystem.FillOwnerBuffer(System.UInt32[])
+  id: FillOwnerBuffer(System.UInt32[])
+  parent: Core.Systems.ProvinceSystem
+  langs:
+  - csharp
+  - vb
+  name: FillOwnerBuffer(uint[])
+  nameWithType: ProvinceSystem.FillOwnerBuffer(uint[])
+  fullName: Core.Systems.ProvinceSystem.FillOwnerBuffer(uint[])
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Systems/ProvinceSystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: FillOwnerBuffer
+    path: Scripts/Core/Systems/ProvinceSystem.cs
+    startLine: 290
+  assemblies:
+  - Core
+  namespace: Core.Systems
+  syntax:
+    content: public void FillOwnerBuffer(uint[] ownerBuffer)
+    parameters:
+    - id: ownerBuffer
+      type: System.UInt32[]
+    content.vb: Public Sub FillOwnerBuffer(ownerBuffer As UInteger())
+  overload: Core.Systems.ProvinceSystem.FillOwnerBuffer*
+  nameWithType.vb: ProvinceSystem.FillOwnerBuffer(UInteger())
+  fullName.vb: Core.Systems.ProvinceSystem.FillOwnerBuffer(UInteger())
+  name.vb: FillOwnerBuffer(UInteger())
 - uid: Core.Systems.ProvinceSystem.HasProvince(System.UInt16)
   commentId: M:Core.Systems.ProvinceSystem.HasProvince(System.UInt16)
   id: HasProvince(System.UInt16)
@@ -755,7 +788,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasProvince
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 290
+    startLine: 291
   assemblies:
   - Core
   namespace: Core.Systems
@@ -789,7 +822,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetStateChecksum
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 296
+    startLine: 297
   assemblies:
   - Core
   namespace: Core.Systems
@@ -822,7 +855,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadProvinceInitialStates
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 319
+    startLine: 320
   assemblies:
   - Core
   namespace: Core.Systems
@@ -854,7 +887,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadProvinceInitialStatesForLinking
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 329
+    startLine: 330
   assemblies:
   - Core
   namespace: Core.Systems
@@ -888,7 +921,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyResolvedInitialStates
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 339
+    startLine: 340
   assemblies:
   - Core
   namespace: Core.Systems
@@ -920,7 +953,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetRecentHistory
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 346
+    startLine: 347
   assemblies:
   - Core
   namespace: Core.Systems
@@ -956,7 +989,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHistorySummary
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 347
+    startLine: 348
   assemblies:
   - Core
   namespace: Core.Systems
@@ -990,7 +1023,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AddHistoricalEvent
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 348
+    startLine: 349
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1024,7 +1057,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHistoryStats
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 349
+    startLine: 350
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1052,7 +1085,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetUIReadBuffer
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 371
+    startLine: 372
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1085,7 +1118,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetNativeData
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 384
+    startLine: 385
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1118,7 +1151,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SwapBuffers
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 408
+    startLine: 409
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1158,7 +1191,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SyncBuffersAfterLoad
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 443
+    startLine: 444
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1189,7 +1222,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SaveState
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 461
+    startLine: 462
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1223,7 +1256,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadState
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 502
+    startLine: 503
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1259,7 +1292,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Systems/ProvinceSystem.cs
-    startLine: 558
+    startLine: 564
   assemblies:
   - Core
   namespace: Core.Systems
@@ -1767,6 +1800,32 @@ references:
   name: GetAllProvinceIds
   nameWithType: ProvinceSystem.GetAllProvinceIds
   fullName: Core.Systems.ProvinceSystem.GetAllProvinceIds
+- uid: Core.Systems.ProvinceSystem.FillOwnerBuffer*
+  commentId: Overload:Core.Systems.ProvinceSystem.FillOwnerBuffer
+  href: Core.Systems.ProvinceSystem.html#Core_Systems_ProvinceSystem_FillOwnerBuffer_System_UInt32___
+  name: FillOwnerBuffer
+  nameWithType: ProvinceSystem.FillOwnerBuffer
+  fullName: Core.Systems.ProvinceSystem.FillOwnerBuffer
+- uid: System.UInt32[]
+  isExternal: true
+  name: uint[]
+  nameWithType: uint[]
+  fullName: uint[]
+  nameWithType.vb: UInteger()
+  fullName.vb: UInteger()
+  name.vb: UInteger()
+  spec.csharp:
+  - uid: System.UInt32
+    name: uint
+    isExternal: true
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.UInt32
+    name: UInteger
+    isExternal: true
+  - name: (
+  - name: )
 - uid: Core.Systems.ProvinceSystem.HasProvince*
   commentId: Overload:Core.Systems.ProvinceSystem.HasProvince
   href: Core.Systems.ProvinceSystem.html#Core_Systems_ProvinceSystem_HasProvince_System_UInt16_

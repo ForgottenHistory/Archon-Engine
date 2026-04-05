@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceNeighborDetector
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 14
+    startLine: 15
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -56,7 +56,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DetectNeighbors
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 71
+    startLine: 79
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -97,7 +97,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetNeighborCount
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 470
+    startLine: 478
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -135,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AreNeighbors
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 478
+    startLine: 486
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -175,7 +175,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetNeighbors
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 495
+    startLine: 503
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -215,7 +215,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LogNeighborStatistics
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 509
+    startLine: 517
   assemblies:
   - MapAssembly
   namespace: Map.Province

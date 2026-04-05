@@ -30,7 +30,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceSelector
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 13
+    startLine: 15
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -40,6 +40,9 @@ items:
     Extracted from MapGenerator to follow single responsibility principle
 
     Provides fast mouse-to-province lookup for interaction systems
+
+
+    Uses hit.textureCoord from MeshCollider for accurate UV-to-province mapping
   example: []
   syntax:
     content: 'public class ProvinceSelector : MonoBehaviour'
@@ -68,7 +71,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SelectionEnabled
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 22
+    startLine: 24
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -99,7 +102,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceClicked
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 29
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -126,7 +129,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceRightClicked
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 30
+    startLine: 32
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -153,7 +156,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnProvinceHovered
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 31
+    startLine: 33
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -180,7 +183,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OnSelectionCleared
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 32
+    startLine: 34
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -207,7 +210,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 44
+    startLine: 54
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -238,7 +241,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSelectedProvince
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 151
+    startLine: 209
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -268,7 +271,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHoveredProvince
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 156
+    startLine: 214
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -298,24 +301,24 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtWorldPosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 164
+    startLine: 221
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
   summary: >-
-    Get province ID at world position using raycast + texture lookup
+    Get province ID at world position using local-space UV lookup.
 
-    Uses texture-based lookup for optimal performance (&lt;1ms)
+    Converts world position to mesh-local UV without raycasting.
+
+    For direct world-position queries (e.g. unit placement), not mouse input.
   example: []
   syntax:
     content: public ushort GetProvinceAtWorldPosition(Vector3 worldPosition)
     parameters:
     - id: worldPosition
       type: UnityEngine.Vector3
-      description: World position to query
     return:
       type: System.UInt16
-      description: Province ID at position, or 0 if invalid
     content.vb: Public Function GetProvinceAtWorldPosition(worldPosition As Vector3) As UShort
   overload: Map.Interaction.ProvinceSelector.GetProvinceAtWorldPosition*
 - uid: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition(UnityEngine.Vector2,UnityEngine.Camera)
@@ -336,24 +339,24 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtScreenPosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 212
+    startLine: 249
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
-  summary: Get province ID at screen position (converts screen to world first)
+  summary: >-
+    Get province ID at screen position using raycast
+
+    Works with both orthographic and perspective cameras
   example: []
   syntax:
     content: public ushort GetProvinceAtScreenPosition(Vector2 screenPosition, Camera camera)
     parameters:
     - id: screenPosition
       type: UnityEngine.Vector2
-      description: Screen position (e.g., mouse position)
     - id: camera
       type: UnityEngine.Camera
-      description: Camera to use for conversion
     return:
       type: System.UInt16
-      description: Province ID at position, or 0 if invalid
     content.vb: Public Function GetProvinceAtScreenPosition(screenPosition As Vector2, camera As Camera) As UShort
   overload: Map.Interaction.ProvinceSelector.GetProvinceAtScreenPosition*
 - uid: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition(UnityEngine.Camera)
@@ -374,7 +377,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceAtMousePosition
     path: Scripts/Map/Interaction/ProvinceSelector.cs
-    startLine: 234
+    startLine: 260
   assemblies:
   - MapAssembly
   namespace: Map.Interaction
@@ -385,10 +388,8 @@ items:
     parameters:
     - id: camera
       type: UnityEngine.Camera
-      description: Camera to use for conversion
     return:
       type: System.UInt16
-      description: Province ID at mouse position, or 0 if invalid
     content.vb: Public Function GetProvinceAtMousePosition(camera As Camera) As UShort
   overload: Map.Interaction.ProvinceSelector.GetProvinceAtMousePosition*
 references:

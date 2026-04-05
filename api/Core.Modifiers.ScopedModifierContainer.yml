@@ -7,6 +7,7 @@ items:
   children:
   - Core.Modifiers.ScopedModifierContainer.Add(Core.Modifiers.ModifierSource)
   - Core.Modifiers.ScopedModifierContainer.ApplyModifier(System.UInt16,Core.Data.FixedPoint64,System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  - Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache(System.UInt16,Core.Data.FixedPoint64)
   - Core.Modifiers.ScopedModifierContainer.Clear
   - Core.Modifiers.ScopedModifierContainer.CountLocalModifiersBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
   - Core.Modifiers.ScopedModifierContainer.Create(System.Int32,Unity.Collections.Allocator)
@@ -17,9 +18,11 @@ items:
   - Core.Modifiers.ScopedModifierContainer.ForEachLocalModifierByType(System.UInt16,System.Action{Core.Modifiers.ModifierSource})
   - Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
   - Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
+  - Core.Modifiers.ScopedModifierContainer.IsDirty
   - Core.Modifiers.ScopedModifierContainer.LocalModifierCount
   - Core.Modifiers.ScopedModifierContainer.MarkDirty
   - Core.Modifiers.ScopedModifierContainer.RebuildIfDirty(System.Nullable{Core.Modifiers.ScopedModifierContainer})
+  - Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr(Core.Modifiers.ScopedModifierContainer*)
   - Core.Modifiers.ScopedModifierContainer.RemoveBySource(Core.Modifiers.ModifierSource.SourceType,System.UInt32)
   - Core.Modifiers.ScopedModifierContainer.RemoveBySourceAndType(Core.Modifiers.ModifierSource.SourceType,System.UInt32,System.UInt16)
   langs:
@@ -36,7 +39,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ScopedModifierContainer
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -91,7 +94,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Create
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 33
+    startLine: 34
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -129,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Add
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 46
+    startLine: 47
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -162,7 +165,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RemoveBySource
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 57
+    startLine: 58
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -200,7 +203,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RemoveBySourceAndType
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 68
+    startLine: 69
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -240,7 +243,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExpireModifiers
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 79
+    startLine: 80
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -276,7 +279,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Clear
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 90
+    startLine: 91
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -304,7 +307,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RebuildIfDirty
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 99
+    startLine: 100
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -317,6 +320,40 @@ items:
       type: System.Nullable{Core.Modifiers.ScopedModifierContainer}
     content.vb: Public Sub RebuildIfDirty(parentScope As ScopedModifierContainer? = Nothing)
   overload: Core.Modifiers.ScopedModifierContainer.RebuildIfDirty*
+- uid: Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr(Core.Modifiers.ScopedModifierContainer*)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr(Core.Modifiers.ScopedModifierContainer*)
+  id: RebuildIfDirtyFromParentPtr(Core.Modifiers.ScopedModifierContainer*)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: RebuildIfDirtyFromParentPtr(ScopedModifierContainer*)
+  nameWithType: ScopedModifierContainer.RebuildIfDirtyFromParentPtr(ScopedModifierContainer*)
+  fullName: Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr(Core.Modifiers.ScopedModifierContainer*)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: RebuildIfDirtyFromParentPtr
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 128
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Rebuild modifier set using an unsafe pointer to parent scope (avoids 8KB struct copy).
+
+    Parent must already be clean (call EnsureCountryScopeClean first).
+  example: []
+  syntax:
+    content: public void RebuildIfDirtyFromParentPtr(ScopedModifierContainer* parentPtr)
+    parameters:
+    - id: parentPtr
+      type: Core.Modifiers.ScopedModifierContainer*
+    content.vb: Public Sub RebuildIfDirtyFromParentPtr(parentPtr As ScopedModifierContainer*)
+  overload: Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr*
 - uid: Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
   commentId: M:Core.Modifiers.ScopedModifierContainer.GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
   id: GetModifierSet(System.Nullable{Core.Modifiers.ScopedModifierContainer})
@@ -335,7 +372,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetModifierSet
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 134
+    startLine: 151
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -368,7 +405,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ApplyModifier
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 143
+    startLine: 160
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -390,6 +427,78 @@ items:
   nameWithType.vb: ScopedModifierContainer.ApplyModifier(UShort, FixedPoint64, ScopedModifierContainer?)
   fullName.vb: Core.Modifiers.ScopedModifierContainer.ApplyModifier(UShort, Core.Data.FixedPoint64, Core.Modifiers.ScopedModifierContainer?)
   name.vb: ApplyModifier(UShort, FixedPoint64, ScopedModifierContainer?)
+- uid: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache(System.UInt16,Core.Data.FixedPoint64)
+  commentId: M:Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache(System.UInt16,Core.Data.FixedPoint64)
+  id: ApplyModifierFromCache(System.UInt16,Core.Data.FixedPoint64)
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: ApplyModifierFromCache(ushort, FixedPoint64)
+  nameWithType: ScopedModifierContainer.ApplyModifierFromCache(ushort, FixedPoint64)
+  fullName: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache(ushort, Core.Data.FixedPoint64)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ApplyModifierFromCache
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 170
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: >-
+    Apply modifier from cached set without rebuild check.
+
+    Only call when you know the scope is NOT dirty (check IsDirty first).
+  example: []
+  syntax:
+    content: public FixedPoint64 ApplyModifierFromCache(ushort modifierTypeId, FixedPoint64 baseValue)
+    parameters:
+    - id: modifierTypeId
+      type: System.UInt16
+    - id: baseValue
+      type: Core.Data.FixedPoint64
+    return:
+      type: Core.Data.FixedPoint64
+    content.vb: Public Function ApplyModifierFromCache(modifierTypeId As UShort, baseValue As FixedPoint64) As FixedPoint64
+  overload: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache*
+  nameWithType.vb: ScopedModifierContainer.ApplyModifierFromCache(UShort, FixedPoint64)
+  fullName.vb: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache(UShort, Core.Data.FixedPoint64)
+  name.vb: ApplyModifierFromCache(UShort, FixedPoint64)
+- uid: Core.Modifiers.ScopedModifierContainer.IsDirty
+  commentId: P:Core.Modifiers.ScopedModifierContainer.IsDirty
+  id: IsDirty
+  parent: Core.Modifiers.ScopedModifierContainer
+  langs:
+  - csharp
+  - vb
+  name: IsDirty
+  nameWithType: ScopedModifierContainer.IsDirty
+  fullName: Core.Modifiers.ScopedModifierContainer.IsDirty
+  type: Property
+  source:
+    remote:
+      path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: IsDirty
+    path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
+    startLine: 178
+  assemblies:
+  - Core
+  namespace: Core.Modifiers
+  summary: Whether this scope needs rebuilding
+  example: []
+  syntax:
+    content: public bool IsDirty { get; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public ReadOnly Property IsDirty As Boolean
+  overload: Core.Modifiers.ScopedModifierContainer.IsDirty*
 - uid: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
   commentId: P:Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
   id: HasLocalModifiers
@@ -408,7 +517,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasLocalModifiers
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 152
+    startLine: 183
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -439,7 +548,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LocalModifierCount
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 157
+    startLine: 188
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -470,7 +579,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MarkDirty
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 163
+    startLine: 194
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -501,7 +610,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForEachLocalModifier
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 171
+    startLine: 202
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -535,7 +644,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForEachLocalModifierBySource
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 179
+    startLine: 210
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -573,7 +682,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForEachLocalModifierByType
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 187
+    startLine: 218
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -609,7 +718,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CountLocalModifiersBySource
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 195
+    startLine: 226
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -647,7 +756,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Modifiers/ScopedModifierContainer.cs
-    startLine: 203
+    startLine: 234
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -877,6 +986,28 @@ references:
   - name: " "
   - name: T
   - name: )
+- uid: Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_RebuildIfDirtyFromParentPtr_Core_Modifiers_ScopedModifierContainer__
+  name: RebuildIfDirtyFromParentPtr
+  nameWithType: ScopedModifierContainer.RebuildIfDirtyFromParentPtr
+  fullName: Core.Modifiers.ScopedModifierContainer.RebuildIfDirtyFromParentPtr
+- uid: Core.Modifiers.ScopedModifierContainer*
+  isExternal: true
+  href: Core.Modifiers.ScopedModifierContainer.html
+  name: ScopedModifierContainer*
+  nameWithType: ScopedModifierContainer*
+  fullName: Core.Modifiers.ScopedModifierContainer*
+  spec.csharp:
+  - uid: Core.Modifiers.ScopedModifierContainer
+    name: ScopedModifierContainer
+    href: Core.Modifiers.ScopedModifierContainer.html
+  - name: '*'
+  spec.vb:
+  - uid: Core.Modifiers.ScopedModifierContainer
+    name: ScopedModifierContainer
+    href: Core.Modifiers.ScopedModifierContainer.html
+  - name: '*'
 - uid: Core.Modifiers.ScopedModifierContainer.GetModifierSet*
   commentId: Overload:Core.Modifiers.ScopedModifierContainer.GetModifierSet
   href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_GetModifierSet_System_Nullable_Core_Modifiers_ScopedModifierContainer__
@@ -925,6 +1056,18 @@ references:
   - uid: Core.Data
     name: Data
     href: Core.Data.html
+- uid: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_ApplyModifierFromCache_System_UInt16_Core_Data_FixedPoint64_
+  name: ApplyModifierFromCache
+  nameWithType: ScopedModifierContainer.ApplyModifierFromCache
+  fullName: Core.Modifiers.ScopedModifierContainer.ApplyModifierFromCache
+- uid: Core.Modifiers.ScopedModifierContainer.IsDirty*
+  commentId: Overload:Core.Modifiers.ScopedModifierContainer.IsDirty
+  href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_IsDirty
+  name: IsDirty
+  nameWithType: ScopedModifierContainer.IsDirty
+  fullName: Core.Modifiers.ScopedModifierContainer.IsDirty
 - uid: Core.Modifiers.ScopedModifierContainer.HasLocalModifiers*
   commentId: Overload:Core.Modifiers.ScopedModifierContainer.HasLocalModifiers
   href: Core.Modifiers.ScopedModifierContainer.html#Core_Modifiers_ScopedModifierContainer_HasLocalModifiers

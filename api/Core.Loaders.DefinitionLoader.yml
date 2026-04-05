@@ -92,7 +92,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterDefinitions
     path: Scripts/Core/Loaders/DefinitionLoader.cs
-    startLine: 142
+    startLine: 143
   assemblies:
   - Core
   namespace: Core.Loaders

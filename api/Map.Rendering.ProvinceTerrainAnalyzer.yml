@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceTerrainAnalyzer
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 13
+    startLine: 11
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -59,7 +59,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 44
+    startLine: 41
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -93,7 +93,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AnalyzeAndGetTerrainTypes
     path: Scripts/Map/Rendering/ProvinceTerrainAnalyzer.cs
-    startLine: 83
+    startLine: 79
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -105,17 +105,17 @@ items:
     Main entry point used by MapDataLoader
   example: []
   syntax:
-    content: public uint[] AnalyzeAndGetTerrainTypes(RenderTexture provinceIDTexture, Texture2D terrainTexture, ushort[] provinceIDs)
+    content: public uint[] AnalyzeAndGetTerrainTypes(RenderTexture provinceIDTexture, Texture2D terrainTypeTexture, ushort[] provinceIDs)
     parameters:
     - id: provinceIDTexture
       type: UnityEngine.RenderTexture
-    - id: terrainTexture
+    - id: terrainTypeTexture
       type: UnityEngine.Texture2D
     - id: provinceIDs
       type: System.UInt16[]
     return:
       type: System.UInt32[]
-    content.vb: Public Function AnalyzeAndGetTerrainTypes(provinceIDTexture As RenderTexture, terrainTexture As Texture2D, provinceIDs As UShort()) As UInteger()
+    content.vb: Public Function AnalyzeAndGetTerrainTypes(provinceIDTexture As RenderTexture, terrainTypeTexture As Texture2D, provinceIDs As UShort()) As UInteger()
   overload: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes*
   nameWithType.vb: ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(RenderTexture, Texture2D, UShort())
   fullName.vb: Map.Rendering.ProvinceTerrainAnalyzer.AnalyzeAndGetTerrainTypes(UnityEngine.RenderTexture, UnityEngine.Texture2D, UShort())

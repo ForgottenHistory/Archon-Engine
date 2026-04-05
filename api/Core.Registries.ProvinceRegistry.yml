@@ -5,7 +5,7 @@ items:
   id: ProvinceRegistry
   parent: Core.Registries
   children:
-  - Core.Registries.ProvinceRegistry.#ctor
+  - Core.Registries.ProvinceRegistry.#ctor(System.Int32)
   - Core.Registries.ProvinceRegistry.Count
   - Core.Registries.ProvinceRegistry.ExistsByDefinition(System.Int32)
   - Core.Registries.ProvinceRegistry.ExistsByRuntime(System.UInt16)
@@ -109,16 +109,16 @@ items:
       type: System.Int32
     content.vb: Public ReadOnly Property Count As Integer
   overload: Core.Registries.ProvinceRegistry.Count*
-- uid: Core.Registries.ProvinceRegistry.#ctor
-  commentId: M:Core.Registries.ProvinceRegistry.#ctor
-  id: '#ctor'
+- uid: Core.Registries.ProvinceRegistry.#ctor(System.Int32)
+  commentId: M:Core.Registries.ProvinceRegistry.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
   parent: Core.Registries.ProvinceRegistry
   langs:
   - csharp
   - vb
-  name: ProvinceRegistry()
-  nameWithType: ProvinceRegistry.ProvinceRegistry()
-  fullName: Core.Registries.ProvinceRegistry.ProvinceRegistry()
+  name: ProvinceRegistry(int)
+  nameWithType: ProvinceRegistry.ProvinceRegistry(int)
+  fullName: Core.Registries.ProvinceRegistry.ProvinceRegistry(int)
   type: Constructor
   source:
     remote:
@@ -127,17 +127,20 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 20
+    startLine: 22
   assemblies:
   - Core
   namespace: Core.Registries
   syntax:
-    content: public ProvinceRegistry()
-    content.vb: Public Sub New()
+    content: public ProvinceRegistry(int capacity = 65536)
+    parameters:
+    - id: capacity
+      type: System.Int32
+    content.vb: Public Sub New(capacity As Integer = 65536)
   overload: Core.Registries.ProvinceRegistry.#ctor*
-  nameWithType.vb: ProvinceRegistry.New()
-  fullName.vb: Core.Registries.ProvinceRegistry.New()
-  name.vb: New()
+  nameWithType.vb: ProvinceRegistry.New(Integer)
+  fullName.vb: Core.Registries.ProvinceRegistry.New(Integer)
+  name.vb: New(Integer)
 - uid: Core.Registries.ProvinceRegistry.Register(System.Int32,Core.Registries.ProvinceData)
   commentId: M:Core.Registries.ProvinceRegistry.Register(System.Int32,Core.Registries.ProvinceData)
   id: Register(System.Int32,Core.Registries.ProvinceData)
@@ -156,7 +159,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Register
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 32
+    startLine: 37
   assemblies:
   - Core
   namespace: Core.Registries
@@ -197,7 +200,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetByRuntime
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 59
+    startLine: 63
   assemblies:
   - Core
   namespace: Core.Registries
@@ -236,7 +239,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetByDefinition
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 71
+    startLine: 75
   assemblies:
   - Core
   namespace: Core.Registries
@@ -275,7 +278,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetRuntimeId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 82
+    startLine: 86
   assemblies:
   - Core
   namespace: Core.Registries
@@ -311,7 +314,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetDefinitionId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 90
+    startLine: 94
   assemblies:
   - Core
   namespace: Core.Registries
@@ -347,7 +350,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetByDefinition
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 102
+    startLine: 106
   assemblies:
   - Core
   namespace: Core.Registries
@@ -385,7 +388,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetRuntimeId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 118
+    startLine: 122
   assemblies:
   - Core
   namespace: Core.Registries
@@ -423,7 +426,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExistsByDefinition
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 126
+    startLine: 130
   assemblies:
   - Core
   namespace: Core.Registries
@@ -459,7 +462,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ExistsByRuntime
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 134
+    startLine: 138
   assemblies:
   - Core
   namespace: Core.Registries
@@ -495,7 +498,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAll
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 142
+    startLine: 146
   assemblies:
   - Core
   namespace: Core.Registries
@@ -525,7 +528,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllRuntimeIds
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 150
+    startLine: 154
   assemblies:
   - Core
   namespace: Core.Registries
@@ -555,7 +558,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllDefinitionIds
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 162
+    startLine: 166
   assemblies:
   - Core
   namespace: Core.Registries
@@ -585,7 +588,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetDiagnostics
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 170
+    startLine: 174
   assemblies:
   - Core
   namespace: Core.Registries
@@ -670,7 +673,7 @@ references:
   name.vb: Integer
 - uid: Core.Registries.ProvinceRegistry.#ctor*
   commentId: Overload:Core.Registries.ProvinceRegistry.#ctor
-  href: Core.Registries.ProvinceRegistry.html#Core_Registries_ProvinceRegistry__ctor
+  href: Core.Registries.ProvinceRegistry.html#Core_Registries_ProvinceRegistry__ctor_System_Int32_
   name: ProvinceRegistry
   nameWithType: ProvinceRegistry.ProvinceRegistry
   fullName: Core.Registries.ProvinceRegistry.ProvinceRegistry

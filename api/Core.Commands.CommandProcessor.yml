@@ -11,6 +11,7 @@ items:
   - Core.Commands.CommandProcessor.IsMultiplayer
   - Core.Commands.CommandProcessor.RegisterCommandType``1
   - Core.Commands.CommandProcessor.SetNetworkBridge(Core.Network.INetworkBridge)
+  - Core.Commands.CommandProcessor.SubmitCommand``1(``0)
   - Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
   langs:
   - csharp
@@ -213,6 +214,47 @@ items:
       type: Core.Network.INetworkBridge
     content.vb: Public Sub SetNetworkBridge(bridge As INetworkBridge)
   overload: Core.Commands.CommandProcessor.SetNetworkBridge*
+- uid: Core.Commands.CommandProcessor.SubmitCommand``1(``0)
+  commentId: M:Core.Commands.CommandProcessor.SubmitCommand``1(``0)
+  id: SubmitCommand``1(``0)
+  parent: Core.Commands.CommandProcessor
+  langs:
+  - csharp
+  - vb
+  name: SubmitCommand<T>(T)
+  nameWithType: CommandProcessor.SubmitCommand<T>(T)
+  fullName: Core.Commands.CommandProcessor.SubmitCommand<T>(T)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Core/Commands/CommandProcessor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SubmitCommand
+    path: Scripts/Core/Commands/CommandProcessor.cs
+    startLine: 95
+  assemblies:
+  - Core
+  namespace: Core.Commands
+  summary: >-
+    Submit a command for execution without allocating a result message string.
+
+    Used by AI and other hot-path callers that don't need feedback.
+  example: []
+  syntax:
+    content: 'public bool SubmitCommand<T>(T command) where T : ICommand'
+    parameters:
+    - id: command
+      type: '{T}'
+    typeParameters:
+    - id: T
+    return:
+      type: System.Boolean
+    content.vb: Public Function SubmitCommand(Of T As ICommand)(command As T) As Boolean
+  overload: Core.Commands.CommandProcessor.SubmitCommand*
+  nameWithType.vb: CommandProcessor.SubmitCommand(Of T)(T)
+  fullName.vb: Core.Commands.CommandProcessor.SubmitCommand(Of T)(T)
+  name.vb: SubmitCommand(Of T)(T)
 - uid: Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
   commentId: M:Core.Commands.CommandProcessor.SubmitCommand``1(``0,System.String@)
   id: SubmitCommand``1(``0,System.String@)
@@ -231,7 +273,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SubmitCommand
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 97
+    startLine: 145
   assemblies:
   - Core
   namespace: Core.Commands
@@ -278,7 +320,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Commands/CommandProcessor.cs
-    startLine: 298
+    startLine: 379
   assemblies:
   - Core
   namespace: Core.Commands
@@ -413,13 +455,17 @@ references:
     href: Core.Network.html
 - uid: Core.Commands.CommandProcessor.SubmitCommand*
   commentId: Overload:Core.Commands.CommandProcessor.SubmitCommand
-  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_SubmitCommand__1___0_System_String__
+  href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_SubmitCommand__1___0_
   name: SubmitCommand
   nameWithType: CommandProcessor.SubmitCommand
   fullName: Core.Commands.CommandProcessor.SubmitCommand
 - uid: '{T}'
   commentId: '!:T'
   definition: T
+  name: T
+  nameWithType: T
+  fullName: T
+- uid: T
   name: T
   nameWithType: T
   fullName: T
@@ -433,10 +479,6 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
-- uid: T
-  name: T
-  nameWithType: T
-  fullName: T
 - uid: Core.Commands.CommandProcessor.Dispose*
   commentId: Overload:Core.Commands.CommandProcessor.Dispose
   href: Core.Commands.CommandProcessor.html#Core_Commands_CommandProcessor_Dispose

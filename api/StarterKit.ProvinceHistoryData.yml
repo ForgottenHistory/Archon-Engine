@@ -164,7 +164,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHistory
     path: Scripts/StarterKit/Data/ProvinceHistory.cs
-    startLine: 85
+    startLine: 71
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -197,7 +197,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCurrentOwnerFromHistory
     path: Scripts/StarterKit/Data/ProvinceHistory.cs
-    startLine: 95
+    startLine: 81
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -232,7 +232,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetPreviousOwner
     path: Scripts/StarterKit/Data/ProvinceHistory.cs
-    startLine: 110
+    startLine: 96
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -265,7 +265,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: WasOwnedBy
     path: Scripts/StarterKit/Data/ProvinceHistory.cs
-    startLine: 123
+    startLine: 109
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -301,7 +301,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetOwnershipChangeCount
     path: Scripts/StarterKit/Data/ProvinceHistory.cs
-    startLine: 136
+    startLine: 122
   assemblies:
   - StarterKit
   namespace: StarterKit

@@ -7,6 +7,7 @@ items:
   children:
   - Map.Rendering.BorderCurveExtractor.#ctor(Map.Rendering.MapTextureManager,Core.Systems.AdjacencySystem,Core.Systems.ProvinceSystem,Map.Rendering.ProvinceMapping)
   - Map.Rendering.BorderCurveExtractor.ExtractAllBorders
+  - Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
   langs:
   - csharp
   - vb
@@ -128,6 +129,49 @@ items:
       type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
     content.vb: Public Function ExtractAllBorders() As Dictionary(Of (UShort, UShort), List(Of Vector2))
   overload: Map.Rendering.BorderCurveExtractor.ExtractAllBorders*
+- uid: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  commentId: M:Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  id: ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}},System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32})
+  parent: Map.Rendering.BorderCurveExtractor
+  langs:
+  - csharp
+  - vb
+  name: ExtractAllBordersFromGPUResult(Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, int>)
+  nameWithType: BorderCurveExtractor.ExtractAllBordersFromGPUResult(Dictionary<(ushort, ushort), List<Vector2>>, Dictionary<Vector2, int>)
+  fullName: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary<(ushort, ushort), System.Collections.Generic.List<UnityEngine.Vector2>>, System.Collections.Generic.Dictionary<UnityEngine.Vector2, int>)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderCurveExtractor.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ExtractAllBordersFromGPUResult
+    path: Scripts/Map/Rendering/Border/BorderCurveExtractor.cs
+    startLine: 371
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Fast path: Build smoothed border polylines from pre-extracted GPU data.
+
+    Skips median filter, junction detection, and border pixel extraction (all done on GPU).
+
+    Only performs CPU-side chaining, simplification, smoothing, and tessellation.
+  example: []
+  syntax:
+    content: public Dictionary<(ushort, ushort), List<Vector2>> ExtractAllBordersFromGPUResult(Dictionary<(ushort, ushort), List<Vector2>> borderPixelsByPair, Dictionary<Vector2, int> gpuJunctions)
+    parameters:
+    - id: borderPixelsByPair
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+    - id: gpuJunctions
+      type: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+    return:
+      type: System.Collections.Generic.Dictionary{System.ValueTuple{System.UInt16,System.UInt16},System.Collections.Generic.List{UnityEngine.Vector2}}
+    content.vb: Public Function ExtractAllBordersFromGPUResult(borderPixelsByPair As Dictionary(Of (UShort, UShort), List(Of Vector2)), gpuJunctions As Dictionary(Of Vector2, Integer)) As Dictionary(Of (UShort, UShort), List(Of Vector2))
+  overload: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult*
+  nameWithType.vb: BorderCurveExtractor.ExtractAllBordersFromGPUResult(Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, Integer))
+  fullName.vb: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult(System.Collections.Generic.Dictionary(Of (UShort, UShort), System.Collections.Generic.List(Of UnityEngine.Vector2)), System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, Integer))
+  name.vb: ExtractAllBordersFromGPUResult(Dictionary(Of (UShort, UShort), List(Of Vector2)), Dictionary(Of Vector2, Integer))
 references:
 - uid: Map.Rendering
   commentId: N:Map.Rendering
@@ -359,3 +403,49 @@ references:
   - uid: System.Collections.Generic
     name: Generic
     isExternal: true
+- uid: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult*
+  commentId: Overload:Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult
+  href: Map.Rendering.BorderCurveExtractor.html#Map_Rendering_BorderCurveExtractor_ExtractAllBordersFromGPUResult_System_Collections_Generic_Dictionary_System_ValueTuple_System_UInt16_System_UInt16__System_Collections_Generic_List_UnityEngine_Vector2___System_Collections_Generic_Dictionary_UnityEngine_Vector2_System_Int32__
+  name: ExtractAllBordersFromGPUResult
+  nameWithType: BorderCurveExtractor.ExtractAllBordersFromGPUResult
+  fullName: Map.Rendering.BorderCurveExtractor.ExtractAllBordersFromGPUResult
+- uid: System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+  commentId: T:System.Collections.Generic.Dictionary{UnityEngine.Vector2,System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<Vector2, int>
+  nameWithType: Dictionary<Vector2, int>
+  fullName: System.Collections.Generic.Dictionary<UnityEngine.Vector2, int>
+  nameWithType.vb: Dictionary(Of Vector2, Integer)
+  fullName.vb: System.Collections.Generic.Dictionary(Of UnityEngine.Vector2, Integer)
+  name.vb: Dictionary(Of Vector2, Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: UnityEngine.Vector2
+    name: Vector2
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )

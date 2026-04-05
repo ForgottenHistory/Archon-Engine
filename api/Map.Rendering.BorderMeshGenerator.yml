@@ -5,7 +5,7 @@ items:
   id: BorderMeshGenerator
   parent: Map.Rendering
   children:
-  - Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
+  - Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single,UnityEngine.Transform,UnityEngine.Texture2D,System.Single)
   - Map.Rendering.BorderMeshGenerator.Dispose
   - Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
   - Map.Rendering.BorderMeshGenerator.GetCountryBorderMeshes
@@ -24,7 +24,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BorderMeshGenerator
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 10
+    startLine: 12
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -34,22 +34,24 @@ items:
     Converts Chaikin-smoothed curves into renderable triangle geometry
 
     Each line segment becomes a thin quad (2 triangles) with flat square caps
+
+    Junction caps fill holes where 3+ borders meet
   example: []
   syntax:
     content: public class BorderMeshGenerator
     content.vb: Public Class BorderMeshGenerator
   inheritance:
   - System.Object
-- uid: Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
-  commentId: M:Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single)
-  id: '#ctor(System.Single,System.Single,System.Single)'
+- uid: Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single,UnityEngine.Transform,UnityEngine.Texture2D,System.Single)
+  commentId: M:Map.Rendering.BorderMeshGenerator.#ctor(System.Single,System.Single,System.Single,UnityEngine.Transform,UnityEngine.Texture2D,System.Single)
+  id: '#ctor(System.Single,System.Single,System.Single,UnityEngine.Transform,UnityEngine.Texture2D,System.Single)'
   parent: Map.Rendering.BorderMeshGenerator
   langs:
   - csharp
   - vb
-  name: BorderMeshGenerator(float, float, float)
-  nameWithType: BorderMeshGenerator.BorderMeshGenerator(float, float, float)
-  fullName: Map.Rendering.BorderMeshGenerator.BorderMeshGenerator(float, float, float)
+  name: BorderMeshGenerator(float, float, float, Transform, Texture2D, float)
+  nameWithType: BorderMeshGenerator.BorderMeshGenerator(float, float, float, Transform, Texture2D, float)
+  fullName: Map.Rendering.BorderMeshGenerator.BorderMeshGenerator(float, float, float, UnityEngine.Transform, UnityEngine.Texture2D, float)
   type: Constructor
   source:
     remote:
@@ -58,24 +60,30 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 27
+    startLine: 40
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   syntax:
-    content: public BorderMeshGenerator(float width, float mapWidthPixels, float mapHeightPixels)
+    content: public BorderMeshGenerator(float width, float mapWidthPx, float mapHeightPx, Transform mapPlaneTransform, Texture2D heightmap, float heightScale)
     parameters:
     - id: width
       type: System.Single
-    - id: mapWidthPixels
+    - id: mapWidthPx
       type: System.Single
-    - id: mapHeightPixels
+    - id: mapHeightPx
       type: System.Single
-    content.vb: Public Sub New(width As Single, mapWidthPixels As Single, mapHeightPixels As Single)
+    - id: mapPlaneTransform
+      type: UnityEngine.Transform
+    - id: heightmap
+      type: UnityEngine.Texture2D
+    - id: heightScale
+      type: System.Single
+    content.vb: Public Sub New(width As Single, mapWidthPx As Single, mapHeightPx As Single, mapPlaneTransform As Transform, heightmap As Texture2D, heightScale As Single)
   overload: Map.Rendering.BorderMeshGenerator.#ctor*
-  nameWithType.vb: BorderMeshGenerator.New(Single, Single, Single)
-  fullName.vb: Map.Rendering.BorderMeshGenerator.New(Single, Single, Single)
-  name.vb: New(Single, Single, Single)
+  nameWithType.vb: BorderMeshGenerator.New(Single, Single, Single, Transform, Texture2D, Single)
+  fullName.vb: Map.Rendering.BorderMeshGenerator.New(Single, Single, Single, UnityEngine.Transform, UnityEngine.Texture2D, Single)
+  name.vb: New(Single, Single, Single, Transform, Texture2D, Single)
 - uid: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
   commentId: M:Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
   id: GenerateBorderMeshes(Map.Rendering.BorderCurveCache)
@@ -94,7 +102,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GenerateBorderMeshes
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 38
+    startLine: 88
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -128,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceBorderMeshes
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 357
+    startLine: 618
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -158,7 +166,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCountryBorderMeshes
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 362
+    startLine: 623
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -188,7 +196,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Rendering/Border/BorderMeshGenerator.cs
-    startLine: 367
+    startLine: 628
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -239,7 +247,7 @@ references:
   fullName: System
 - uid: Map.Rendering.BorderMeshGenerator.#ctor*
   commentId: Overload:Map.Rendering.BorderMeshGenerator.#ctor
-  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator__ctor_System_Single_System_Single_System_Single_
+  href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator__ctor_System_Single_System_Single_System_Single_UnityEngine_Transform_UnityEngine_Texture2D_System_Single_
   name: BorderMeshGenerator
   nameWithType: BorderMeshGenerator.BorderMeshGenerator
   fullName: Map.Rendering.BorderMeshGenerator.BorderMeshGenerator
@@ -256,6 +264,26 @@ references:
   nameWithType.vb: Single
   fullName.vb: Single
   name.vb: Single
+- uid: UnityEngine.Transform
+  commentId: T:UnityEngine.Transform
+  parent: UnityEngine
+  isExternal: true
+  name: Transform
+  nameWithType: Transform
+  fullName: UnityEngine.Transform
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
+- uid: UnityEngine
+  commentId: N:UnityEngine
+  isExternal: true
+  name: UnityEngine
+  nameWithType: UnityEngine
+  fullName: UnityEngine
 - uid: Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes*
   commentId: Overload:Map.Rendering.BorderMeshGenerator.GenerateBorderMeshes
   href: Map.Rendering.BorderMeshGenerator.html#Map_Rendering_BorderMeshGenerator_GenerateBorderMeshes_Map_Rendering_BorderCurveCache_

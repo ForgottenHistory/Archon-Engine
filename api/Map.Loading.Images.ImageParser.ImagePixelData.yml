@@ -27,7 +27,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ImagePixelData
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 44
+    startLine: 45
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -54,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Format
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 46
+    startLine: 47
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -81,7 +81,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Header
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 47
+    startLine: 48
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -108,7 +108,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsSuccess
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 48
+    startLine: 49
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -135,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BMPData
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 51
+    startLine: 52
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -162,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PNGData
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 52
+    startLine: 53
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -189,7 +189,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Width
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 54
+    startLine: 55
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -218,7 +218,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Height
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 55
+    startLine: 56
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -247,7 +247,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/Images/ImageParser.cs
-    startLine: 57
+    startLine: 58
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

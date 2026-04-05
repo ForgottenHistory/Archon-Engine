@@ -348,7 +348,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 585
+    startLine: 606
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -379,7 +379,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCurrentMapMode
     path: Scripts/StarterKit/Initializer.cs
-    startLine: 593
+    startLine: 614
   assemblies:
   - StarterKit
   namespace: StarterKit

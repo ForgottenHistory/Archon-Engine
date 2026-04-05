@@ -8,7 +8,11 @@ items:
   - Map.Rendering.BorderMeshRenderer.#ctor(UnityEngine.Transform)
   - Map.Rendering.BorderMeshRenderer.Dispose
   - Map.Rendering.BorderMeshRenderer.RenderBorders
+  - Map.Rendering.BorderMeshRenderer.SetBorderTexture(UnityEngine.Texture2D)
+  - Map.Rendering.BorderMeshRenderer.SetHeightmapParams(UnityEngine.Texture,System.Single,System.Single)
+  - Map.Rendering.BorderMeshRenderer.SetMapWorldBounds(UnityEngine.Vector3,UnityEngine.Vector3)
   - Map.Rendering.BorderMeshRenderer.SetMeshes(System.Collections.Generic.List{UnityEngine.Mesh},System.Collections.Generic.List{UnityEngine.Mesh})
+  - Map.Rendering.BorderMeshRenderer.SetTessellationParams(UnityEngine.Material)
   langs:
   - csharp
   - vb
@@ -138,6 +142,142 @@ items:
     content: public void RenderBorders()
     content.vb: Public Sub RenderBorders()
   overload: Map.Rendering.BorderMeshRenderer.RenderBorders*
+- uid: Map.Rendering.BorderMeshRenderer.SetMapWorldBounds(UnityEngine.Vector3,UnityEngine.Vector3)
+  commentId: M:Map.Rendering.BorderMeshRenderer.SetMapWorldBounds(UnityEngine.Vector3,UnityEngine.Vector3)
+  id: SetMapWorldBounds(UnityEngine.Vector3,UnityEngine.Vector3)
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetMapWorldBounds(Vector3, Vector3)
+  nameWithType: BorderMeshRenderer.SetMapWorldBounds(Vector3, Vector3)
+  fullName: Map.Rendering.BorderMeshRenderer.SetMapWorldBounds(UnityEngine.Vector3, UnityEngine.Vector3)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetMapWorldBounds
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 159
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set the world-space map bounds so the shader can derive heightmap UVs.
+  example: []
+  syntax:
+    content: public void SetMapWorldBounds(Vector3 worldMin, Vector3 worldSize)
+    parameters:
+    - id: worldMin
+      type: UnityEngine.Vector3
+    - id: worldSize
+      type: UnityEngine.Vector3
+    content.vb: Public Sub SetMapWorldBounds(worldMin As Vector3, worldSize As Vector3)
+  overload: Map.Rendering.BorderMeshRenderer.SetMapWorldBounds*
+- uid: Map.Rendering.BorderMeshRenderer.SetHeightmapParams(UnityEngine.Texture,System.Single,System.Single)
+  commentId: M:Map.Rendering.BorderMeshRenderer.SetHeightmapParams(UnityEngine.Texture,System.Single,System.Single)
+  id: SetHeightmapParams(UnityEngine.Texture,System.Single,System.Single)
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetHeightmapParams(Texture, float, float)
+  nameWithType: BorderMeshRenderer.SetHeightmapParams(Texture, float, float)
+  fullName: Map.Rendering.BorderMeshRenderer.SetHeightmapParams(UnityEngine.Texture, float, float)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetHeightmapParams
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 172
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: >-
+    Set heightmap for terrain-following displacement.
+
+    Must match the same heightmap and scale used by the terrain shader.
+  example: []
+  syntax:
+    content: public void SetHeightmapParams(Texture heightmap, float heightScale, float heightOffset = 0.15)
+    parameters:
+    - id: heightmap
+      type: UnityEngine.Texture
+    - id: heightScale
+      type: System.Single
+    - id: heightOffset
+      type: System.Single
+    content.vb: Public Sub SetHeightmapParams(heightmap As Texture, heightScale As Single, heightOffset As Single = 0.15)
+  overload: Map.Rendering.BorderMeshRenderer.SetHeightmapParams*
+  nameWithType.vb: BorderMeshRenderer.SetHeightmapParams(Texture, Single, Single)
+  fullName.vb: Map.Rendering.BorderMeshRenderer.SetHeightmapParams(UnityEngine.Texture, Single, Single)
+  name.vb: SetHeightmapParams(Texture, Single, Single)
+- uid: Map.Rendering.BorderMeshRenderer.SetTessellationParams(UnityEngine.Material)
+  commentId: M:Map.Rendering.BorderMeshRenderer.SetTessellationParams(UnityEngine.Material)
+  id: SetTessellationParams(UnityEngine.Material)
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetTessellationParams(Material)
+  nameWithType: BorderMeshRenderer.SetTessellationParams(Material)
+  fullName: Map.Rendering.BorderMeshRenderer.SetTessellationParams(UnityEngine.Material)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetTessellationParams
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 186
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Copy tessellation parameters from the terrain material so borders match terrain curvature.
+  example: []
+  syntax:
+    content: public void SetTessellationParams(Material terrainMaterial)
+    parameters:
+    - id: terrainMaterial
+      type: UnityEngine.Material
+    content.vb: Public Sub SetTessellationParams(terrainMaterial As Material)
+  overload: Map.Rendering.BorderMeshRenderer.SetTessellationParams*
+- uid: Map.Rendering.BorderMeshRenderer.SetBorderTexture(UnityEngine.Texture2D)
+  commentId: M:Map.Rendering.BorderMeshRenderer.SetBorderTexture(UnityEngine.Texture2D)
+  id: SetBorderTexture(UnityEngine.Texture2D)
+  parent: Map.Rendering.BorderMeshRenderer
+  langs:
+  - csharp
+  - vb
+  name: SetBorderTexture(Texture2D)
+  nameWithType: BorderMeshRenderer.SetBorderTexture(Texture2D)
+  fullName: Map.Rendering.BorderMeshRenderer.SetBorderTexture(UnityEngine.Texture2D)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: SetBorderTexture
+    path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
+    startLine: 203
+  assemblies:
+  - MapAssembly
+  namespace: Map.Rendering
+  summary: Set a custom border texture on the material
+  example: []
+  syntax:
+    content: public void SetBorderTexture(Texture2D texture)
+    parameters:
+    - id: texture
+      type: UnityEngine.Texture2D
+    content.vb: Public Sub SetBorderTexture(texture As Texture2D)
+  overload: Map.Rendering.BorderMeshRenderer.SetBorderTexture*
 - uid: Map.Rendering.BorderMeshRenderer.Dispose
   commentId: M:Map.Rendering.BorderMeshRenderer.Dispose
   id: Dispose
@@ -156,7 +296,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Rendering/Border/BorderMeshRenderer.cs
-    startLine: 139
+    startLine: 254
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -324,6 +464,68 @@ references:
   name: RenderBorders
   nameWithType: BorderMeshRenderer.RenderBorders
   fullName: Map.Rendering.BorderMeshRenderer.RenderBorders
+- uid: Map.Rendering.BorderMeshRenderer.SetMapWorldBounds*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.SetMapWorldBounds
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_SetMapWorldBounds_UnityEngine_Vector3_UnityEngine_Vector3_
+  name: SetMapWorldBounds
+  nameWithType: BorderMeshRenderer.SetMapWorldBounds
+  fullName: Map.Rendering.BorderMeshRenderer.SetMapWorldBounds
+- uid: UnityEngine.Vector3
+  commentId: T:UnityEngine.Vector3
+  parent: UnityEngine
+  isExternal: true
+  name: Vector3
+  nameWithType: Vector3
+  fullName: UnityEngine.Vector3
+- uid: Map.Rendering.BorderMeshRenderer.SetHeightmapParams*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.SetHeightmapParams
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_SetHeightmapParams_UnityEngine_Texture_System_Single_System_Single_
+  name: SetHeightmapParams
+  nameWithType: BorderMeshRenderer.SetHeightmapParams
+  fullName: Map.Rendering.BorderMeshRenderer.SetHeightmapParams
+- uid: UnityEngine.Texture
+  commentId: T:UnityEngine.Texture
+  parent: UnityEngine
+  isExternal: true
+  name: Texture
+  nameWithType: Texture
+  fullName: UnityEngine.Texture
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Map.Rendering.BorderMeshRenderer.SetTessellationParams*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.SetTessellationParams
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_SetTessellationParams_UnityEngine_Material_
+  name: SetTessellationParams
+  nameWithType: BorderMeshRenderer.SetTessellationParams
+  fullName: Map.Rendering.BorderMeshRenderer.SetTessellationParams
+- uid: UnityEngine.Material
+  commentId: T:UnityEngine.Material
+  parent: UnityEngine
+  isExternal: true
+  name: Material
+  nameWithType: Material
+  fullName: UnityEngine.Material
+- uid: Map.Rendering.BorderMeshRenderer.SetBorderTexture*
+  commentId: Overload:Map.Rendering.BorderMeshRenderer.SetBorderTexture
+  href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_SetBorderTexture_UnityEngine_Texture2D_
+  name: SetBorderTexture
+  nameWithType: BorderMeshRenderer.SetBorderTexture
+  fullName: Map.Rendering.BorderMeshRenderer.SetBorderTexture
+- uid: UnityEngine.Texture2D
+  commentId: T:UnityEngine.Texture2D
+  parent: UnityEngine
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: UnityEngine.Texture2D
 - uid: Map.Rendering.BorderMeshRenderer.Dispose*
   commentId: Overload:Map.Rendering.BorderMeshRenderer.Dispose
   href: Map.Rendering.BorderMeshRenderer.html#Map_Rendering_BorderMeshRenderer_Dispose

@@ -20,7 +20,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Json5ProvinceConverter
     path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
-    startLine: 15
+    startLine: 18
   assemblies:
   - Core
   namespace: Core.Loaders
@@ -52,7 +52,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadProvinceJson5Files
     path: Scripts/Core/Loaders/Json5ProvinceConverter.cs
-    startLine: 20
+    startLine: 23
   assemblies:
   - Core
   namespace: Core.Loaders

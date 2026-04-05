@@ -301,7 +301,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Undo
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 74
+    startLine: 72
   assemblies:
   - Core
   namespace: Core.Commands
@@ -337,7 +337,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Serialize
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 82
+    startLine: 78
   assemblies:
   - Core
   namespace: Core.Commands
@@ -375,7 +375,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Deserialize
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 88
+    startLine: 84
   assemblies:
   - Core
   namespace: Core.Commands

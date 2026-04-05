@@ -34,7 +34,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SaveGameData
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 19
+    startLine: 136
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -94,7 +94,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: gameVersion
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 30
+    startLine: 147
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -126,7 +126,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: saveFormatVersion
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 36
+    startLine: 153
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -158,7 +158,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: saveName
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 41
+    startLine: 158
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -187,7 +187,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: saveDateTicks
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 47
+    startLine: 164
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -219,17 +219,17 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: currentTick
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 52
+    startLine: 169
   assemblies:
   - Core
   namespace: Core.SaveLoad
   summary: Current game tick when saved
   example: []
   syntax:
-    content: public int currentTick
+    content: public ulong currentTick
     return:
-      type: System.Int32
-    content.vb: Public currentTick As Integer
+      type: System.UInt64
+    content.vb: Public currentTick As ULong
 - uid: Core.SaveLoad.SaveGameData.gameSpeed
   commentId: F:Core.SaveLoad.SaveGameData.gameSpeed
   id: gameSpeed
@@ -248,7 +248,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: gameSpeed
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 57
+    startLine: 174
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -277,7 +277,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: scenarioName
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 62
+    startLine: 179
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -306,7 +306,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: systemData
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 73
+    startLine: 190
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -340,7 +340,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: commandLog
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 83
+    startLine: 200
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -372,7 +372,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: expectedChecksum
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 89
+    startLine: 206
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -404,7 +404,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSaveDate
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 98
+    startLine: 215
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -434,7 +434,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetSaveDate
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 106
+    startLine: 223
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -468,7 +468,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsCompatibleVersion
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 114
+    startLine: 231
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -504,7 +504,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetSystemData
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 124
+    startLine: 241
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -542,7 +542,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetSystemData
     path: Scripts/Core/SaveLoad/SaveGameData.cs
-    startLine: 136
+    startLine: 253
   assemblies:
   - Core
   namespace: Core.SaveLoad
@@ -629,6 +629,16 @@ references:
   nameWithType.vb: Long
   fullName.vb: Long
   name.vb: Long
+- uid: System.UInt64
+  commentId: T:System.UInt64
+  parent: System
+  isExternal: true
+  name: ulong
+  nameWithType: ulong
+  fullName: ulong
+  nameWithType.vb: ULong
+  fullName.vb: ULong
+  name.vb: ULong
 - uid: System.Collections.Generic.Dictionary{System.String,System.Object}
   commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
   parent: System.Collections.Generic

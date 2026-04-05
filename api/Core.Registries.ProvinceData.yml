@@ -38,7 +38,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceData
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 181
+    startLine: 185
   assemblies:
   - Core
   namespace: Core.Registries
@@ -70,7 +70,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RuntimeId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 184
+    startLine: 188
   assemblies:
   - Core
   namespace: Core.Registries
@@ -99,7 +99,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: DefinitionId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 185
+    startLine: 189
   assemblies:
   - Core
   namespace: Core.Registries
@@ -128,7 +128,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Name
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 188
+    startLine: 192
   assemblies:
   - Core
   namespace: Core.Registries
@@ -157,7 +157,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: OwnerId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 191
+    startLine: 195
   assemblies:
   - Core
   namespace: Core.Registries
@@ -186,7 +186,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ControllerId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 192
+    startLine: 196
   assemblies:
   - Core
   namespace: Core.Registries
@@ -215,7 +215,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Development
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 193
+    startLine: 197
   assemblies:
   - Core
   namespace: Core.Registries
@@ -244,7 +244,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Terrain
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 194
+    startLine: 198
   assemblies:
   - Core
   namespace: Core.Registries
@@ -273,7 +273,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Flags
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 195
+    startLine: 199
   assemblies:
   - Core
   namespace: Core.Registries
@@ -302,7 +302,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CultureId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 198
+    startLine: 202
   assemblies:
   - Core
   namespace: Core.Registries
@@ -331,7 +331,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ReligionId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 199
+    startLine: 203
   assemblies:
   - Core
   namespace: Core.Registries
@@ -360,7 +360,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TradeGoodId
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 200
+    startLine: 204
   assemblies:
   - Core
   namespace: Core.Registries
@@ -389,7 +389,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BaseTax
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 203
+    startLine: 207
   assemblies:
   - Core
   namespace: Core.Registries
@@ -418,7 +418,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BaseProduction
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 204
+    startLine: 208
   assemblies:
   - Core
   namespace: Core.Registries
@@ -447,7 +447,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: BaseManpower
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 205
+    startLine: 209
   assemblies:
   - Core
   namespace: Core.Registries
@@ -476,7 +476,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CenterOfTrade
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 206
+    startLine: 210
   assemblies:
   - Core
   namespace: Core.Registries
@@ -505,7 +505,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Buildings
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 209
+    startLine: 213
   assemblies:
   - Core
   namespace: Core.Registries
@@ -534,7 +534,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsCoastal
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 212
+    startLine: 216
   assemblies:
   - Core
   namespace: Core.Registries
@@ -563,7 +563,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NeighborProvinces
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 213
+    startLine: 217
   assemblies:
   - Core
   namespace: Core.Registries
@@ -592,7 +592,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapColor
     path: Scripts/Core/Registries/ProvinceRegistry.cs
-    startLine: 216
+    startLine: 220
   assemblies:
   - Core
   namespace: Core.Registries

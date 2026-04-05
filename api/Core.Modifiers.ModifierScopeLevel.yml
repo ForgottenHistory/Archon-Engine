@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ModifierScopeLevel
     path: Scripts/Core/Modifiers/ModifierSystem.cs
-    startLine: 10
+    startLine: 11
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -49,7 +49,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Province
     path: Scripts/Core/Modifiers/ModifierSystem.cs
-    startLine: 12
+    startLine: 13
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -75,7 +75,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Country
     path: Scripts/Core/Modifiers/ModifierSystem.cs
-    startLine: 13
+    startLine: 14
   assemblies:
   - Core
   namespace: Core.Modifiers
@@ -101,7 +101,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Global
     path: Scripts/Core/Modifiers/ModifierSystem.cs
-    startLine: 14
+    startLine: 15
   assemblies:
   - Core
   namespace: Core.Modifiers

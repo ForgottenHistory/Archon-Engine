@@ -22,12 +22,16 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MapTexturePopulator
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 13
+    startLine: 17
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
   summary: >-
     Handles population of map textures from province data.
+
+    Uses GPU compute shader for the pixel loop (color→provinceID mapping).
+
+    Falls back to CPU path if compute shader unavailable or BMP format.
 
     Plain C# class - dependencies passed via constructor.
   example: []
@@ -54,7 +58,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 19
+    startLine: 26
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -88,11 +92,14 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: PopulateWithSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 34
+    startLine: 48
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
-  summary: Populate textures using simulation data.
+  summary: >-
+    Populate textures using simulation data.
+
+    Attempts GPU compute path first, falls back to CPU if needed.
   example: []
   syntax:
     content: public void PopulateWithSimulationData(ProvinceMapProcessor.ProvinceMapResult provinceResult, MapTextureManager textureManager, ProvinceMapping mapping, GameState gameState)
@@ -125,7 +132,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateSimulationData
     path: Scripts/Map/Rendering/MapTexturePopulator.cs
-    startLine: 123
+    startLine: 352
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

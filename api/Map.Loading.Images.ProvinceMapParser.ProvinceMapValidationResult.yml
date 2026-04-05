@@ -28,7 +28,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceMapValidationResult
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 456
+    startLine: 468
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -55,7 +55,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsValid
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 458
+    startLine: 470
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -82,7 +82,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalPixels
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 459
+    startLine: 471
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -109,7 +109,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MappedPixels
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 460
+    startLine: 472
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -136,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnmappedPixels
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 461
+    startLine: 473
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -163,7 +163,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnmappedColors
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 462
+    startLine: 474
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -190,7 +190,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MappedColorCount
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 463
+    startLine: 475
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -217,7 +217,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UnmappedColorCount
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 464
+    startLine: 476
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -244,7 +244,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: MappingCoverage
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 466
+    startLine: 478
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -273,7 +273,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 468
+    startLine: 480
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images

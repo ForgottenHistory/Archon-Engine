@@ -5,6 +5,7 @@ items:
   id: ProvinceNeighborDetector.NeighborResult
   parent: Map.Province
   children:
+  - Map.Province.ProvinceNeighborDetector.NeighborResult.AdjacencyDictionary
   - Map.Province.ProvinceNeighborDetector.NeighborResult.CoastalProvinces
   - Map.Province.ProvinceNeighborDetector.NeighborResult.Dispose
   - Map.Province.ProvinceNeighborDetector.NeighborResult.ErrorMessage
@@ -26,7 +27,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NeighborResult
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 19
+    startLine: 20
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -53,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsSuccess
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 21
+    startLine: 22
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -80,7 +81,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceNeighbors
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 22
+    startLine: 23
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -107,7 +108,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceBounds
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 23
+    startLine: 24
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -134,7 +135,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CoastalProvinces
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 24
+    startLine: 25
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -161,7 +162,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TotalNeighborPairs
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 25
+    startLine: 26
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -188,7 +189,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ErrorMessage
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 26
+    startLine: 27
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -197,6 +198,38 @@ items:
     return:
       type: System.String
     content.vb: Public ErrorMessage As String
+- uid: Map.Province.ProvinceNeighborDetector.NeighborResult.AdjacencyDictionary
+  commentId: F:Map.Province.ProvinceNeighborDetector.NeighborResult.AdjacencyDictionary
+  id: AdjacencyDictionary
+  parent: Map.Province.ProvinceNeighborDetector.NeighborResult
+  langs:
+  - csharp
+  - vb
+  name: AdjacencyDictionary
+  nameWithType: ProvinceNeighborDetector.NeighborResult.AdjacencyDictionary
+  fullName: Map.Province.ProvinceNeighborDetector.NeighborResult.AdjacencyDictionary
+  type: Field
+  source:
+    remote:
+      path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: AdjacencyDictionary
+    path: Scripts/Map/Province/ProvinceNeighborDetector.cs
+    startLine: 33
+  assemblies:
+  - MapAssembly
+  namespace: Map.Province
+  summary: >-
+    Managed adjacency dictionary for direct use by AdjacencySystem.
+
+    Populated by GPU detector - more efficient than NativeHashMap for AdjacencySystem.SetAdjacencies().
+  example: []
+  syntax:
+    content: public Dictionary<int, HashSet<int>> AdjacencyDictionary
+    return:
+      type: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+    content.vb: Public AdjacencyDictionary As Dictionary(Of Integer, HashSet(Of Integer))
 - uid: Map.Province.ProvinceNeighborDetector.NeighborResult.Dispose
   commentId: M:Map.Province.ProvinceNeighborDetector.NeighborResult.Dispose
   id: Dispose
@@ -215,7 +248,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 28
+    startLine: 35
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -488,6 +521,119 @@ references:
   nameWithType.vb: String
   fullName.vb: String
   name.vb: String
+- uid: System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  commentId: T:System.Collections.Generic.Dictionary{System.Int32,System.Collections.Generic.HashSet{System.Int32}}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<int, HashSet<int>>
+  nameWithType: Dictionary<int, HashSet<int>>
+  fullName: System.Collections.Generic.Dictionary<int, System.Collections.Generic.HashSet<int>>
+  nameWithType.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  fullName.vb: System.Collections.Generic.Dictionary(Of Integer, System.Collections.Generic.HashSet(Of Integer))
+  name.vb: Dictionary(Of Integer, HashSet(Of Integer))
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: '>'
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.HashSet`1
+    name: HashSet
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: )
+  - name: )
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
 - uid: Map.Province.ProvinceNeighborDetector.NeighborResult.Dispose*
   commentId: Overload:Map.Province.ProvinceNeighborDetector.NeighborResult.Dispose
   href: Map.Province.ProvinceNeighborDetector.NeighborResult.html#Map_Province_ProvinceNeighborDetector_NeighborResult_Dispose

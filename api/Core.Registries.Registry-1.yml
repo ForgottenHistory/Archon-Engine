@@ -217,7 +217,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Get
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 59
+    startLine: 58
   assemblies:
   - Core
   namespace: Core.Registries
@@ -255,7 +255,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Get
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 70
+    startLine: 69
   assemblies:
   - Core
   namespace: Core.Registries
@@ -293,7 +293,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetId
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 84
+    startLine: 83
   assemblies:
   - Core
   namespace: Core.Registries
@@ -331,7 +331,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGet
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 95
+    startLine: 94
   assemblies:
   - Core
   namespace: Core.Registries
@@ -371,7 +371,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetId
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 114
+    startLine: 113
   assemblies:
   - Core
   namespace: Core.Registries
@@ -411,7 +411,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAll
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 127
+    startLine: 126
   assemblies:
   - Core
   namespace: Core.Registries
@@ -445,7 +445,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllIds
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 135
+    startLine: 134
   assemblies:
   - Core
   namespace: Core.Registries
@@ -479,7 +479,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Exists
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 147
+    startLine: 146
   assemblies:
   - Core
   namespace: Core.Registries
@@ -517,7 +517,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Exists
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 155
+    startLine: 154
   assemblies:
   - Core
   namespace: Core.Registries
@@ -555,7 +555,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Replace
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 163
+    startLine: 162
   assemblies:
   - Core
   namespace: Core.Registries
@@ -591,7 +591,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetDiagnostics
     path: Scripts/Core/Registries/Registry.cs
-    startLine: 175
+    startLine: 174
   assemblies:
   - Core
   namespace: Core.Registries

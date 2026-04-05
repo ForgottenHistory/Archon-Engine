@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TextureUpdateBridge
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 15
+    startLine: 16
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -62,7 +62,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 37
+    startLine: 38
   assemblies:
   - MapAssembly
   namespace: Map.Rendering
@@ -103,7 +103,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceUpdate
     path: Scripts/Map/Rendering/TextureUpdateBridge.cs
-    startLine: 141
+    startLine: 152
   assemblies:
   - MapAssembly
   namespace: Map.Rendering

@@ -6,6 +6,7 @@ items:
   parent: StarterKit
   children:
   - StarterKit.ProvinceHistorySystem.#ctor(Core.GameState,System.Boolean)
+  - StarterKit.ProvinceHistorySystem.ClearHistory
   - StarterKit.ProvinceHistorySystem.Dispose
   - StarterKit.ProvinceHistorySystem.GetProvinceHistory(System.UInt16)
   - StarterKit.ProvinceHistorySystem.GetStorageStats
@@ -73,7 +74,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: .ctor
     path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
-    startLine: 33
+    startLine: 36
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -107,7 +108,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceHistory
     path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
-    startLine: 79
+    startLine: 83
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -135,6 +136,34 @@ items:
   nameWithType.vb: ProvinceHistorySystem.GetProvinceHistory(UShort)
   fullName.vb: StarterKit.ProvinceHistorySystem.GetProvinceHistory(UShort)
   name.vb: GetProvinceHistory(UShort)
+- uid: StarterKit.ProvinceHistorySystem.ClearHistory
+  commentId: M:StarterKit.ProvinceHistorySystem.ClearHistory
+  id: ClearHistory
+  parent: StarterKit.ProvinceHistorySystem
+  langs:
+  - csharp
+  - vb
+  name: ClearHistory()
+  nameWithType: ProvinceHistorySystem.ClearHistory()
+  fullName: StarterKit.ProvinceHistorySystem.ClearHistory()
+  type: Method
+  source:
+    remote:
+      path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ClearHistory
+    path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
+    startLine: 91
+  assemblies:
+  - StarterKit
+  namespace: StarterKit
+  summary: Clear all recorded history. Call after loading a save.
+  example: []
+  syntax:
+    content: public void ClearHistory()
+    content.vb: Public Sub ClearHistory()
+  overload: StarterKit.ProvinceHistorySystem.ClearHistory*
 - uid: StarterKit.ProvinceHistorySystem.HasHistory(System.UInt16)
   commentId: M:StarterKit.ProvinceHistorySystem.HasHistory(System.UInt16)
   id: HasHistory(System.UInt16)
@@ -153,7 +182,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HasHistory
     path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
-    startLine: 87
+    startLine: 101
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -189,7 +218,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetStorageStats
     path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
-    startLine: 95
+    startLine: 109
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -219,7 +248,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/StarterKit/Systems/ProvinceHistorySystem.cs
-    startLine: 130
+    startLine: 138
   assemblies:
   - StarterKit
   namespace: StarterKit
@@ -306,6 +335,12 @@ references:
   name: ProvinceHistoryData
   nameWithType: ProvinceHistoryData
   fullName: StarterKit.ProvinceHistoryData
+- uid: StarterKit.ProvinceHistorySystem.ClearHistory*
+  commentId: Overload:StarterKit.ProvinceHistorySystem.ClearHistory
+  href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_ClearHistory
+  name: ClearHistory
+  nameWithType: ProvinceHistorySystem.ClearHistory
+  fullName: StarterKit.ProvinceHistorySystem.ClearHistory
 - uid: StarterKit.ProvinceHistorySystem.HasHistory*
   commentId: Overload:StarterKit.ProvinceHistorySystem.HasHistory
   href: StarterKit.ProvinceHistorySystem.html#StarterKit_ProvinceHistorySystem_HasHistory_System_UInt16_

@@ -5,23 +5,25 @@ items:
   id: MapModeManager
   parent: Map.MapModes
   children:
-  - Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+  - Map.MapModes.MapModeManager.ApplyPaletteChanges
   - Map.MapModes.MapModeManager.CurrentMode
   - Map.MapModes.MapModeManager.ForceTextureUpdate
   - Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
   - Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
   - Map.MapModes.MapModeManager.GetHandler(Map.MapModes.MapMode)
-  - Map.MapModes.MapModeManager.GetMapDimensions
+  - Map.MapModes.MapModeManager.GetPaletteInfo
   - Map.MapModes.MapModeManager.GetProvinceTooltip(System.UInt16)
   - Map.MapModes.MapModeManager.Initialize(Core.GameState,UnityEngine.Material,Map.Rendering.ProvinceMapping,System.Object)
+  - Map.MapModes.MapModeManager.InvalidateAllMapModes
   - Map.MapModes.MapModeManager.IsInitialized
   - Map.MapModes.MapModeManager.RebindTextures
   - Map.MapModes.MapModeManager.RegisterCustomMapMode(System.Int32)
   - Map.MapModes.MapModeManager.RegisterHandler(Map.MapModes.MapMode,Map.MapModes.IMapModeHandler)
   - Map.MapModes.MapModeManager.RequestDeferredUpdate(Map.MapModes.IMapModeHandler)
   - Map.MapModes.MapModeManager.SetMapMode(Map.MapModes.MapMode,System.Boolean)
-  - Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
   - Map.MapModes.MapModeManager.UpdateMaterial(UnityEngine.Material)
+  - Map.MapModes.MapModeManager.UpdateProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  - Map.MapModes.MapModeManager.UpdateProvinceColors(System.Int32,System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32})
   langs:
   - csharp
   - vb
@@ -74,7 +76,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CurrentMode
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 60
+    startLine: 64
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -103,7 +105,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: IsInitialized
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 61
+    startLine: 65
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -132,7 +134,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 86
+    startLine: 90
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -178,7 +180,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterHandler
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 243
+    startLine: 241
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -214,7 +216,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: SetMapMode
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 283
+    startLine: 281
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -248,7 +250,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetProvinceTooltip
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 332
+    startLine: 330
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -282,7 +284,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceTextureUpdate
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 347
+    startLine: 345
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -292,6 +294,37 @@ items:
     content: public void ForceTextureUpdate()
     content.vb: Public Sub ForceTextureUpdate()
   overload: Map.MapModes.MapModeManager.ForceTextureUpdate*
+- uid: Map.MapModes.MapModeManager.InvalidateAllMapModes
+  commentId: M:Map.MapModes.MapModeManager.InvalidateAllMapModes
+  id: InvalidateAllMapModes
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: InvalidateAllMapModes()
+  nameWithType: MapModeManager.InvalidateAllMapModes()
+  fullName: Map.MapModes.MapModeManager.InvalidateAllMapModes()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: InvalidateAllMapModes
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 360
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Mark all map mode handlers as dirty so they recalculate on next activation.
+
+    Call after loading a save to ensure all modes reflect the loaded state.
+  example: []
+  syntax:
+    content: public void InvalidateAllMapModes()
+    content.vb: Public Sub InvalidateAllMapModes()
+  overload: Map.MapModes.MapModeManager.InvalidateAllMapModes*
 - uid: Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
   commentId: M:Map.MapModes.MapModeManager.ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
   id: ForceUpdateIfActive(Map.MapModes.IMapModeHandler)
@@ -310,7 +343,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ForceUpdateIfActive
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 362
+    startLine: 373
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -344,7 +377,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RequestDeferredUpdate
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 385
+    startLine: 396
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -380,7 +413,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHandler
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 419
+    startLine: 430
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -416,7 +449,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: UpdateMaterial
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 429
+    startLine: 440
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -450,7 +483,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RebindTextures
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 467
+    startLine: 478
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -481,7 +514,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: RegisterCustomMapMode
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 490
+    startLine: 502
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -498,129 +531,158 @@ items:
       description: Unique ID for this custom mode (typically ShaderModeID from handler)
     return:
       type: System.Int32
-      description: Array index for this mode's texture slice, or -1 if full
+      description: Palette index for this mode, or -1 if full
     content.vb: Public Function RegisterCustomMapMode(customModeId As Integer) As Integer
   overload: Map.MapModes.MapModeManager.RegisterCustomMapMode*
   nameWithType.vb: MapModeManager.RegisterCustomMapMode(Integer)
   fullName.vb: Map.MapModes.MapModeManager.RegisterCustomMapMode(Integer)
   name.vb: RegisterCustomMapMode(Integer)
-- uid: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
-  commentId: M:Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
-  id: UpdateCustomMapModeTexture(System.Int32,UnityEngine.Color32[])
+- uid: Map.MapModes.MapModeManager.UpdateProvinceColors(System.Int32,System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32})
+  commentId: M:Map.MapModes.MapModeManager.UpdateProvinceColors(System.Int32,System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32})
+  id: UpdateProvinceColors(System.Int32,System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32})
   parent: Map.MapModes.MapModeManager
   langs:
   - csharp
   - vb
-  name: UpdateCustomMapModeTexture(int, Color32[])
-  nameWithType: MapModeManager.UpdateCustomMapModeTexture(int, Color32[])
-  fullName: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(int, UnityEngine.Color32[])
+  name: UpdateProvinceColors(int, Dictionary<int, Color32>)
+  nameWithType: MapModeManager.UpdateProvinceColors(int, Dictionary<int, Color32>)
+  fullName: Map.MapModes.MapModeManager.UpdateProvinceColors(int, System.Collections.Generic.Dictionary<int, UnityEngine.Color32>)
   type: Method
   source:
     remote:
       path: Scripts/Map/MapModes/MapModeManager.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: UpdateCustomMapModeTexture
+    id: UpdateProvinceColors
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 528
+    startLine: 539
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
   summary: >-
-    Update a custom map mode's texture data (CPU pixel array version).
+    Update province colors for a custom map mode.
 
-    Called by GAME map mode handlers when their data changes (dirty).
-
-    NOTE: This is SLOW due to GPU→CPU→GPU roundtrip. Prefer BindCustomMapModeRenderTexture().
+    Called by GAME map mode handlers when their data changes.
   example: []
   syntax:
-    content: public void UpdateCustomMapModeTexture(int arrayIndex, Color32[] pixels)
+    content: public void UpdateProvinceColors(int paletteIndex, Dictionary<int, Color32> provinceColors)
     parameters:
-    - id: arrayIndex
+    - id: paletteIndex
       type: System.Int32
       description: Index returned from RegisterCustomMapMode
-    - id: pixels
-      type: UnityEngine.Color32[]
-      description: Color data for the entire map
-    content.vb: Public Sub UpdateCustomMapModeTexture(arrayIndex As Integer, pixels As Color32())
-  overload: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture*
-  nameWithType.vb: MapModeManager.UpdateCustomMapModeTexture(Integer, Color32())
-  fullName.vb: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture(Integer, UnityEngine.Color32())
-  name.vb: UpdateCustomMapModeTexture(Integer, Color32())
-- uid: Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
-  commentId: M:Map.MapModes.MapModeManager.CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
-  id: CopyRenderTextureToArray(System.Int32,UnityEngine.RenderTexture)
+    - id: provinceColors
+      type: System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32}
+      description: Dictionary mapping province ID to color
+    content.vb: Public Sub UpdateProvinceColors(paletteIndex As Integer, provinceColors As Dictionary(Of Integer, Color32))
+  overload: Map.MapModes.MapModeManager.UpdateProvinceColors*
+  nameWithType.vb: MapModeManager.UpdateProvinceColors(Integer, Dictionary(Of Integer, Color32))
+  fullName.vb: Map.MapModes.MapModeManager.UpdateProvinceColors(Integer, System.Collections.Generic.Dictionary(Of Integer, UnityEngine.Color32))
+  name.vb: UpdateProvinceColors(Integer, Dictionary(Of Integer, Color32))
+- uid: Map.MapModes.MapModeManager.UpdateProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  commentId: M:Map.MapModes.MapModeManager.UpdateProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
+  id: UpdateProvinceColor(System.Int32,System.Int32,UnityEngine.Color32)
   parent: Map.MapModes.MapModeManager
   langs:
   - csharp
   - vb
-  name: CopyRenderTextureToArray(int, RenderTexture)
-  nameWithType: MapModeManager.CopyRenderTextureToArray(int, RenderTexture)
-  fullName: Map.MapModes.MapModeManager.CopyRenderTextureToArray(int, UnityEngine.RenderTexture)
+  name: UpdateProvinceColor(int, int, Color32)
+  nameWithType: MapModeManager.UpdateProvinceColor(int, int, Color32)
+  fullName: Map.MapModes.MapModeManager.UpdateProvinceColor(int, int, UnityEngine.Color32)
   type: Method
   source:
     remote:
       path: Scripts/Map/MapModes/MapModeManager.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: CopyRenderTextureToArray
+    id: UpdateProvinceColor
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 556
+    startLine: 574
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
   summary: >-
-    Copy a RenderTexture to the texture array using GPU-to-GPU copy.
+    Update a single province's color for a custom map mode.
 
-    This is the FAST path - no CPU roundtrip, stays entirely on GPU.
-
-    Called by GradientMapMode after compute shader dispatch.
+    Use UpdateProvinceColors for batch updates.
   example: []
   syntax:
-    content: public void CopyRenderTextureToArray(int arrayIndex, RenderTexture sourceTexture)
+    content: public void UpdateProvinceColor(int paletteIndex, int provinceID, Color32 color)
     parameters:
-    - id: arrayIndex
+    - id: paletteIndex
       type: System.Int32
-    - id: sourceTexture
-      type: UnityEngine.RenderTexture
-    content.vb: Public Sub CopyRenderTextureToArray(arrayIndex As Integer, sourceTexture As RenderTexture)
-  overload: Map.MapModes.MapModeManager.CopyRenderTextureToArray*
-  nameWithType.vb: MapModeManager.CopyRenderTextureToArray(Integer, RenderTexture)
-  fullName.vb: Map.MapModes.MapModeManager.CopyRenderTextureToArray(Integer, UnityEngine.RenderTexture)
-  name.vb: CopyRenderTextureToArray(Integer, RenderTexture)
-- uid: Map.MapModes.MapModeManager.GetMapDimensions
-  commentId: M:Map.MapModes.MapModeManager.GetMapDimensions
-  id: GetMapDimensions
+    - id: provinceID
+      type: System.Int32
+    - id: color
+      type: UnityEngine.Color32
+    content.vb: Public Sub UpdateProvinceColor(paletteIndex As Integer, provinceID As Integer, color As Color32)
+  overload: Map.MapModes.MapModeManager.UpdateProvinceColor*
+  nameWithType.vb: MapModeManager.UpdateProvinceColor(Integer, Integer, Color32)
+  fullName.vb: Map.MapModes.MapModeManager.UpdateProvinceColor(Integer, Integer, UnityEngine.Color32)
+  name.vb: UpdateProvinceColor(Integer, Integer, Color32)
+- uid: Map.MapModes.MapModeManager.ApplyPaletteChanges
+  commentId: M:Map.MapModes.MapModeManager.ApplyPaletteChanges
+  id: ApplyPaletteChanges
   parent: Map.MapModes.MapModeManager
   langs:
   - csharp
   - vb
-  name: GetMapDimensions()
-  nameWithType: MapModeManager.GetMapDimensions()
-  fullName: Map.MapModes.MapModeManager.GetMapDimensions()
+  name: ApplyPaletteChanges()
+  nameWithType: MapModeManager.ApplyPaletteChanges()
+  fullName: Map.MapModes.MapModeManager.ApplyPaletteChanges()
   type: Method
   source:
     remote:
       path: Scripts/Map/MapModes/MapModeManager.cs
       branch: main
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
-    id: GetMapDimensions
+    id: ApplyPaletteChanges
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 575
+    startLine: 592
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
   summary: >-
-    Get the dimensions of the map mode texture array.
+    Apply pending palette changes to GPU.
 
-    GAME map modes need this to create correctly sized pixel arrays.
+    Call after a batch of UpdateProvinceColor calls.
   example: []
   syntax:
-    content: public (int width, int height) GetMapDimensions()
+    content: public void ApplyPaletteChanges()
+    content.vb: Public Sub ApplyPaletteChanges()
+  overload: Map.MapModes.MapModeManager.ApplyPaletteChanges*
+- uid: Map.MapModes.MapModeManager.GetPaletteInfo
+  commentId: M:Map.MapModes.MapModeManager.GetPaletteInfo
+  id: GetPaletteInfo
+  parent: Map.MapModes.MapModeManager
+  langs:
+  - csharp
+  - vb
+  name: GetPaletteInfo()
+  nameWithType: MapModeManager.GetPaletteInfo()
+  fullName: Map.MapModes.MapModeManager.GetPaletteInfo()
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/MapModes/MapModeManager.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: GetPaletteInfo
+    path: Scripts/Map/MapModes/MapModeManager.cs
+    startLine: 601
+  assemblies:
+  - MapAssembly
+  namespace: Map.MapModes
+  summary: >-
+    Get palette dimensions and province limit info.
+
+    GAME map modes need this to know capacity.
+  example: []
+  syntax:
+    content: public (int maxProvinces, int maxModes, int rowsPerMode) GetPaletteInfo()
     return:
-      type: System.ValueTuple{System.Int32,System.Int32}
-    content.vb: Public Function GetMapDimensions() As (width As Integer, height As Integer)
-  overload: Map.MapModes.MapModeManager.GetMapDimensions*
+      type: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+    content.vb: Public Function GetPaletteInfo() As (maxProvinces As Integer, maxModes As Integer, rowsPerMode As Integer)
+  overload: Map.MapModes.MapModeManager.GetPaletteInfo*
 - uid: Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
   commentId: M:Map.MapModes.MapModeManager.GetCustomModeArrayIndex(System.Int32)
   id: GetCustomModeArrayIndex(System.Int32)
@@ -639,7 +701,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetCustomModeArrayIndex
     path: Scripts/Map/MapModes/MapModeManager.cs
-    startLine: 584
+    startLine: 610
   assemblies:
   - MapAssembly
   namespace: Map.MapModes
@@ -868,6 +930,12 @@ references:
   name: ForceTextureUpdate
   nameWithType: MapModeManager.ForceTextureUpdate
   fullName: Map.MapModes.MapModeManager.ForceTextureUpdate
+- uid: Map.MapModes.MapModeManager.InvalidateAllMapModes*
+  commentId: Overload:Map.MapModes.MapModeManager.InvalidateAllMapModes
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_InvalidateAllMapModes
+  name: InvalidateAllMapModes
+  nameWithType: MapModeManager.InvalidateAllMapModes
+  fullName: Map.MapModes.MapModeManager.InvalidateAllMapModes
 - uid: Map.MapModes.MapModeManager.ForceUpdateIfActive*
   commentId: Overload:Map.MapModes.MapModeManager.ForceUpdateIfActive
   href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_ForceUpdateIfActive_Map_MapModes_IMapModeHandler_
@@ -914,82 +982,177 @@ references:
   nameWithType.vb: Integer
   fullName.vb: Integer
   name.vb: Integer
-- uid: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture*
-  commentId: Overload:Map.MapModes.MapModeManager.UpdateCustomMapModeTexture
-  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_UpdateCustomMapModeTexture_System_Int32_UnityEngine_Color32___
-  name: UpdateCustomMapModeTexture
-  nameWithType: MapModeManager.UpdateCustomMapModeTexture
-  fullName: Map.MapModes.MapModeManager.UpdateCustomMapModeTexture
-- uid: UnityEngine.Color32[]
-  isExternal: true
-  name: Color32[]
-  nameWithType: Color32[]
-  fullName: UnityEngine.Color32[]
-  nameWithType.vb: Color32()
-  fullName.vb: UnityEngine.Color32()
-  name.vb: Color32()
+- uid: Map.MapModes.MapModeManager.UpdateProvinceColors*
+  commentId: Overload:Map.MapModes.MapModeManager.UpdateProvinceColors
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_UpdateProvinceColors_System_Int32_System_Collections_Generic_Dictionary_System_Int32_UnityEngine_Color32__
+  name: UpdateProvinceColors
+  nameWithType: MapModeManager.UpdateProvinceColors
+  fullName: Map.MapModes.MapModeManager.UpdateProvinceColors
+- uid: System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32}
+  commentId: T:System.Collections.Generic.Dictionary{System.Int32,UnityEngine.Color32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  name: Dictionary<int, Color32>
+  nameWithType: Dictionary<int, Color32>
+  fullName: System.Collections.Generic.Dictionary<int, UnityEngine.Color32>
+  nameWithType.vb: Dictionary(Of Integer, Color32)
+  fullName.vb: System.Collections.Generic.Dictionary(Of Integer, UnityEngine.Color32)
+  name.vb: Dictionary(Of Integer, Color32)
   spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: ','
+  - name: " "
   - uid: UnityEngine.Color32
     name: Color32
     isExternal: true
-  - name: '['
-  - name: ']'
+  - name: '>'
   spec.vb:
-  - uid: UnityEngine.Color32
-    name: Color32
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
     isExternal: true
   - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: UnityEngine.Color32
+    name: Color32
+    isExternal: true
   - name: )
-- uid: Map.MapModes.MapModeManager.CopyRenderTextureToArray*
-  commentId: Overload:Map.MapModes.MapModeManager.CopyRenderTextureToArray
-  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_CopyRenderTextureToArray_System_Int32_UnityEngine_RenderTexture_
-  name: CopyRenderTextureToArray
-  nameWithType: MapModeManager.CopyRenderTextureToArray
-  fullName: Map.MapModes.MapModeManager.CopyRenderTextureToArray
-- uid: UnityEngine.RenderTexture
-  commentId: T:UnityEngine.RenderTexture
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+- uid: Map.MapModes.MapModeManager.UpdateProvinceColor*
+  commentId: Overload:Map.MapModes.MapModeManager.UpdateProvinceColor
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_UpdateProvinceColor_System_Int32_System_Int32_UnityEngine_Color32_
+  name: UpdateProvinceColor
+  nameWithType: MapModeManager.UpdateProvinceColor
+  fullName: Map.MapModes.MapModeManager.UpdateProvinceColor
+- uid: UnityEngine.Color32
+  commentId: T:UnityEngine.Color32
   parent: UnityEngine
   isExternal: true
-  name: RenderTexture
-  nameWithType: RenderTexture
-  fullName: UnityEngine.RenderTexture
-- uid: Map.MapModes.MapModeManager.GetMapDimensions*
-  commentId: Overload:Map.MapModes.MapModeManager.GetMapDimensions
-  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetMapDimensions
-  name: GetMapDimensions
-  nameWithType: MapModeManager.GetMapDimensions
-  fullName: Map.MapModes.MapModeManager.GetMapDimensions
-- uid: System.ValueTuple{System.Int32,System.Int32}
-  commentId: T:System.ValueTuple{System.Int32,System.Int32}
+  name: Color32
+  nameWithType: Color32
+  fullName: UnityEngine.Color32
+- uid: Map.MapModes.MapModeManager.ApplyPaletteChanges*
+  commentId: Overload:Map.MapModes.MapModeManager.ApplyPaletteChanges
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_ApplyPaletteChanges
+  name: ApplyPaletteChanges
+  nameWithType: MapModeManager.ApplyPaletteChanges
+  fullName: Map.MapModes.MapModeManager.ApplyPaletteChanges
+- uid: Map.MapModes.MapModeManager.GetPaletteInfo*
+  commentId: Overload:Map.MapModes.MapModeManager.GetPaletteInfo
+  href: Map.MapModes.MapModeManager.html#Map_MapModes_MapModeManager_GetPaletteInfo
+  name: GetPaletteInfo
+  nameWithType: MapModeManager.GetPaletteInfo
+  fullName: Map.MapModes.MapModeManager.GetPaletteInfo
+- uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}
+  commentId: T:System.ValueTuple{System.Int32,System.Int32,System.Int32}
   parent: System
-  definition: System.ValueTuple`2
-  name: (int x, int y)
-  nameWithType: (int x, int y)
-  fullName: (int x, int y)
-  nameWithType.vb: (x As Integer, y As Integer)
-  fullName.vb: (x As Integer, y As Integer)
-  name.vb: (x As Integer, y As Integer)
+  definition: System.ValueTuple`3
+  name: (int totalBytes, int provinceBytes, int lookupBytes)
+  nameWithType: (int totalBytes, int provinceBytes, int lookupBytes)
+  fullName: (int totalBytes, int provinceBytes, int lookupBytes)
+  nameWithType.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
+  fullName.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
+  name.vb: (totalBytes As Integer, provinceBytes As Integer, lookupBytes As Integer)
   spec.csharp:
   - name: (
   - uid: System.Int32
     name: int
     isExternal: true
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32}.x
-    name: x
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
   - name: ','
   - name: " "
   - uid: System.Int32
     name: int
     isExternal: true
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32}.y
-    name: y
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.provinceBytes
+    name: provinceBytes
+  - name: ','
+  - name: " "
+  - uid: System.Int32
+    name: int
+    isExternal: true
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.lookupBytes
+    name: lookupBytes
   - name: )
   spec.vb:
   - name: (
-  - uid: System.ValueTuple{System.Int32,System.Int32}.x
-    name: x
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.totalBytes
+    name: totalBytes
   - name: " "
   - name: As
   - name: " "
@@ -998,8 +1161,18 @@ references:
     isExternal: true
   - name: ','
   - name: " "
-  - uid: System.ValueTuple{System.Int32,System.Int32}.y
-    name: y
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.provinceBytes
+    name: provinceBytes
+  - name: " "
+  - name: As
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: System.ValueTuple{System.Int32,System.Int32,System.Int32}.lookupBytes
+    name: lookupBytes
   - name: " "
   - name: As
   - name: " "
@@ -1007,17 +1180,20 @@ references:
     name: Integer
     isExternal: true
   - name: )
-- uid: System.ValueTuple`2
-  commentId: T:System.ValueTuple`2
-  name: (T1, T2)
-  nameWithType: (T1, T2)
-  fullName: (T1, T2)
+- uid: System.ValueTuple`3
+  commentId: T:System.ValueTuple`3
+  name: (T1, T2, T3)
+  nameWithType: (T1, T2, T3)
+  fullName: (T1, T2, T3)
   spec.csharp:
   - name: (
   - name: T1
   - name: ','
   - name: " "
   - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
   - name: )
   spec.vb:
   - name: (
@@ -1025,6 +1201,9 @@ references:
   - name: ','
   - name: " "
   - name: T2
+  - name: ','
+  - name: " "
+  - name: T3
   - name: )
 - uid: Map.MapModes.MapModeManager.GetCustomModeArrayIndex*
   commentId: Overload:Map.MapModes.MapModeManager.GetCustomModeArrayIndex

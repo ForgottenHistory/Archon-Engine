@@ -491,7 +491,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Count
     path: Scripts/Core/Queries/ProvinceQueryBuilder.cs
-    startLine: 218
+    startLine: 245
   assemblies:
   - Core
   namespace: Core.Queries
@@ -521,7 +521,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Any
     path: Scripts/Core/Queries/ProvinceQueryBuilder.cs
-    startLine: 227
+    startLine: 254
   assemblies:
   - Core
   namespace: Core.Queries
@@ -551,7 +551,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: FirstOrDefault
     path: Scripts/Core/Queries/ProvinceQueryBuilder.cs
-    startLine: 277
+    startLine: 304
   assemblies:
   - Core
   namespace: Core.Queries
@@ -581,7 +581,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Dispose
     path: Scripts/Core/Queries/ProvinceQueryBuilder.cs
-    startLine: 457
+    startLine: 484
   assemblies:
   - Core
   namespace: Core.Queries

@@ -26,7 +26,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: AdjacencyScanJob
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 267
+    startLine: 292
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -63,7 +63,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: pixels
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 270
+    startLine: 295
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -100,7 +100,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: width
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 271
+    startLine: 296
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -137,7 +137,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: height
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 272
+    startLine: 297
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -174,7 +174,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: blackThreshold
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 273
+    startLine: 298
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -211,7 +211,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ignoreDiagonals
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 274
+    startLine: 299
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -248,7 +248,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: adjacencyPairs
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 277
+    startLine: 302
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -285,7 +285,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Execute
     path: Scripts/Map/FastAdjacencyScanner.cs
-    startLine: 279
+    startLine: 304
   assemblies:
   - MapAssembly
   namespace: Map.Province

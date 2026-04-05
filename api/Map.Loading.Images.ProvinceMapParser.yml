@@ -11,6 +11,7 @@ items:
   - Map.Loading.Images.ProvinceMapParser.ParseProvinceMap(Unity.Collections.NativeSlice{System.Byte},Unity.Collections.NativeSlice{System.Byte},Unity.Collections.Allocator)
   - Map.Loading.Images.ProvinceMapParser.ParseProvinceMapImageOnly(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   - Map.Loading.Images.ProvinceMapParser.ParseProvinceMapUnified(Unity.Collections.NativeArray{System.Byte},Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  - Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   - Map.Loading.Images.ProvinceMapParser.TryGetProvinceAt(Map.Loading.Images.ProvinceMapParser.ProvinceMapResult,System.Int32,System.Int32,System.Int32@)
   - Map.Loading.Images.ProvinceMapParser.TryGetProvinceAtUnified(Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult,System.Int32,System.Int32,System.Int32@)
   - Map.Loading.Images.ProvinceMapParser.ValidateProvinceMap(Map.Loading.Images.ProvinceMapParser.ProvinceMapResult,Unity.Collections.Allocator)
@@ -87,6 +88,49 @@ items:
   nameWithType.vb: ProvinceMapParser.ParseProvinceMapUnified(NativeArray(Of Byte), NativeArray(Of Byte), Allocator)
   fullName.vb: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapUnified(Unity.Collections.NativeArray(Of Byte), Unity.Collections.NativeArray(Of Byte), Unity.Collections.Allocator)
   name.vb: ParseProvinceMapUnified(NativeArray(Of Byte), NativeArray(Of Byte), Allocator)
+- uid: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  commentId: M:Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  id: ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData,Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
+  parent: Map.Loading.Images.ProvinceMapParser
+  langs:
+  - csharp
+  - vb
+  name: ParseProvinceMapWithPixelData(ImagePixelData, NativeArray<byte>, Allocator)
+  nameWithType: ProvinceMapParser.ParseProvinceMapWithPixelData(ImageParser.ImagePixelData, NativeArray<byte>, Allocator)
+  fullName: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData, Unity.Collections.NativeArray<byte>, Unity.Collections.Allocator)
+  type: Method
+  source:
+    remote:
+      path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+      branch: main
+      repo: https://github.com/ForgottenHistory/Archon-Engine.git
+    id: ParseProvinceMapWithPixelData
+    path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
+    startLine: 83
+  assemblies:
+  - MapAssembly
+  namespace: Map.Loading.Images
+  summary: >-
+    Parse province map from pre-parsed pixel data + definition CSV.
+
+    Used by raw pixel cache path to skip PNG decompression.
+  example: []
+  syntax:
+    content: public static ProvinceMapParser.UnifiedProvinceMapResult ParseProvinceMapWithPixelData(ImageParser.ImagePixelData pixelData, NativeArray<byte> definitionCsvData, Allocator allocator)
+    parameters:
+    - id: pixelData
+      type: Map.Loading.Images.ImageParser.ImagePixelData
+    - id: definitionCsvData
+      type: Unity.Collections.NativeArray{System.Byte}
+    - id: allocator
+      type: Unity.Collections.Allocator
+    return:
+      type: Map.Loading.Images.ProvinceMapParser.UnifiedProvinceMapResult
+    content.vb: Public Shared Function ParseProvinceMapWithPixelData(pixelData As ImageParser.ImagePixelData, definitionCsvData As NativeArray(Of Byte), allocator As Allocator) As ProvinceMapParser.UnifiedProvinceMapResult
+  overload: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData*
+  nameWithType.vb: ProvinceMapParser.ParseProvinceMapWithPixelData(ImageParser.ImagePixelData, NativeArray(Of Byte), Allocator)
+  fullName.vb: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData(Map.Loading.Images.ImageParser.ImagePixelData, Unity.Collections.NativeArray(Of Byte), Unity.Collections.Allocator)
+  name.vb: ParseProvinceMapWithPixelData(ImagePixelData, NativeArray(Of Byte), Allocator)
 - uid: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapImageOnly(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   commentId: M:Map.Loading.Images.ProvinceMapParser.ParseProvinceMapImageOnly(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
   id: ParseProvinceMapImageOnly(Unity.Collections.NativeArray{System.Byte},Unity.Collections.Allocator)
@@ -105,7 +149,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ParseProvinceMapImageOnly
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 110
+    startLine: 122
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -146,7 +190,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetProvinceAtUnified
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 153
+    startLine: 165
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -188,7 +232,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ParseProvinceMap
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 172
+    startLine: 184
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -228,7 +272,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ParseProvinceMap
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 183
+    startLine: 195
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -268,7 +312,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetProvinceAt
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 234
+    startLine: 246
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -310,7 +354,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: FindProvincePixels
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 253
+    startLine: 265
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -350,7 +394,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: CalculateProvinceStats
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 287
+    startLine: 299
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -388,7 +432,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ValidateProvinceMap
     path: Scripts/Map/Loading/Images/ProvinceMapParser.cs
-    startLine: 405
+    startLine: 417
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -568,6 +612,35 @@ references:
   - uid: Unity.Collections
     name: Collections
     isExternal: true
+- uid: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData*
+  commentId: Overload:Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData
+  href: Map.Loading.Images.ProvinceMapParser.html#Map_Loading_Images_ProvinceMapParser_ParseProvinceMapWithPixelData_Map_Loading_Images_ImageParser_ImagePixelData_Unity_Collections_NativeArray_System_Byte__Unity_Collections_Allocator_
+  name: ParseProvinceMapWithPixelData
+  nameWithType: ProvinceMapParser.ParseProvinceMapWithPixelData
+  fullName: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapWithPixelData
+- uid: Map.Loading.Images.ImageParser.ImagePixelData
+  commentId: T:Map.Loading.Images.ImageParser.ImagePixelData
+  parent: Map.Loading.Images
+  href: Map.Loading.Images.ImageParser.html
+  name: ImageParser.ImagePixelData
+  nameWithType: ImageParser.ImagePixelData
+  fullName: Map.Loading.Images.ImageParser.ImagePixelData
+  spec.csharp:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
+  spec.vb:
+  - uid: Map.Loading.Images.ImageParser
+    name: ImageParser
+    href: Map.Loading.Images.ImageParser.html
+  - name: .
+  - uid: Map.Loading.Images.ImageParser.ImagePixelData
+    name: ImagePixelData
+    href: Map.Loading.Images.ImageParser.ImagePixelData.html
 - uid: Map.Loading.Images.ProvinceMapParser.ParseProvinceMapImageOnly*
   commentId: Overload:Map.Loading.Images.ProvinceMapParser.ParseProvinceMapImageOnly
   href: Map.Loading.Images.ProvinceMapParser.html#Map_Loading_Images_ProvinceMapParser_ParseProvinceMapImageOnly_Unity_Collections_NativeArray_System_Byte__Unity_Collections_Allocator_

@@ -22,7 +22,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ProvinceCommandFactory
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 215
+    startLine: 207
   assemblies:
   - Core
   namespace: Core.Commands
@@ -54,7 +54,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ConquerProvince
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 220
+    startLine: 212
   assemblies:
   - Core
   namespace: Core.Commands
@@ -92,7 +92,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TransferProvince
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 232
+    startLine: 224
   assemblies:
   - Core
   namespace: Core.Commands
@@ -130,7 +130,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TransferProvinces
     path: Scripts/Core/Commands/ProvinceCommands.cs
-    startLine: 247
+    startLine: 239
   assemblies:
   - Core
   namespace: Core.Commands

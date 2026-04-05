@@ -21,7 +21,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: HeightmapImageLoader
     path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
-    startLine: 12
+    startLine: 14
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -30,7 +30,9 @@ items:
 
     Uses ImageParser for unified BMP/PNG support with PNG preferred.
 
-    Height values: 0-255 (8-bit) → 0.0-1.0 (normalized float)
+    Height values: 0-255 (8-bit) → written directly to R8 texture.
+
+    Supports raw pixel cache to skip PNG decompression on subsequent loads.
   example: []
   syntax:
     content: public class HeightmapImageLoader
@@ -57,7 +59,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Initialize
     path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
-    startLine: 17
+    startLine: 31
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -91,7 +93,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: LoadAndPopulate
     path: Scripts/Map/Loading/Images/HeightmapBitmapLoader.cs
-    startLine: 27
+    startLine: 42
   assemblies:
   - MapAssembly
   namespace: Map.Loading.Images
@@ -99,6 +101,8 @@ items:
     Load heightmap image and populate heightmap texture.
 
     Tries heightmap.png first, falls back to heightmap.bmp.
+
+    Uses raw pixel cache to skip PNG decompression on subsequent loads.
   example: []
   syntax:
     content: public void LoadAndPopulate(string mapDirectory)

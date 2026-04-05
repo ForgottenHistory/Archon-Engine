@@ -196,7 +196,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Get
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 66
+    startLine: 65
   assemblies:
   - Core
   namespace: Core.Registries
@@ -232,7 +232,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Get
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 77
+    startLine: 76
   assemblies:
   - Core
   namespace: Core.Registries
@@ -268,7 +268,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 91
+    startLine: 90
   assemblies:
   - Core
   namespace: Core.Registries
@@ -304,7 +304,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGet
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 102
+    startLine: 101
   assemblies:
   - Core
   namespace: Core.Registries
@@ -342,7 +342,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: TryGetId
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 121
+    startLine: 120
   assemblies:
   - Core
   namespace: Core.Registries
@@ -380,7 +380,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Exists
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 134
+    startLine: 133
   assemblies:
   - Core
   namespace: Core.Registries
@@ -416,7 +416,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Exists
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 142
+    startLine: 141
   assemblies:
   - Core
   namespace: Core.Registries
@@ -452,7 +452,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAll
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 150
+    startLine: 149
   assemblies:
   - Core
   namespace: Core.Registries
@@ -482,7 +482,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllIds
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 158
+    startLine: 157
   assemblies:
   - Core
   namespace: Core.Registries
@@ -512,7 +512,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetAllTags
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 170
+    startLine: 169
   assemblies:
   - Core
   namespace: Core.Registries
@@ -542,7 +542,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetDiagnostics
     path: Scripts/Core/Registries/CountryRegistry.cs
-    startLine: 178
+    startLine: 177
   assemblies:
   - Core
   namespace: Core.Registries

@@ -23,7 +23,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: NeighborPair
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 442
+    startLine: 450
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -50,7 +50,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ID1
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 444
+    startLine: 452
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -77,7 +77,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: ID2
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 445
+    startLine: 453
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -104,7 +104,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: Equals
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 447
+    startLine: 455
   assemblies:
   - MapAssembly
   namespace: Map.Province
@@ -136,7 +136,7 @@ items:
       repo: https://github.com/ForgottenHistory/Archon-Engine.git
     id: GetHashCode
     path: Scripts/Map/Province/ProvinceNeighborDetector.cs
-    startLine: 452
+    startLine: 460
   assemblies:
   - MapAssembly
   namespace: Map.Province
