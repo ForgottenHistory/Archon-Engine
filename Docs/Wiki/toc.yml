@@ -36,6 +36,8 @@
       href: Pathfinding.md
     - name: Map Rendering
       href: Map-Rendering.md
+    - name: Shaders
+      href: Shaders.md
     - name: UI Patterns
       href: UI-Patterns.md
     - name: Localization

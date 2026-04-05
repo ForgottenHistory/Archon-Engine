@@ -266,11 +266,18 @@ Assets/Game/
 ├── Data/
 │   ├── BuildingType.cs      # Your data definitions
 │   └── ...
+├── Shaders/
+│   ├── YourFlatMap.shader   # Copied from ENGINE, customized
+│   ├── YourTerrainMap.shader
+│   └── MapModes/
+│       ├── YourMapModes.hlsl       # Dispatcher (includes ENGINE + your modes)
+│       ├── MapModePolitical.hlsl   # Your political mode visuals
+│       └── MapModeTerrain.hlsl     # Your terrain mode visuals
 ├── UI/
 │   ├── ProvinceInfoUI.cs    # Your UI panels
 │   └── ...
 ├── MapModes/
-│   └── EconomyMapMode.cs    # Your custom map modes
+│   └── EconomyMapMode.cs    # Your custom map modes (C# GradientMapMode)
 └── AI/
     └── BuildEconomyGoal.cs  # Your AI goals
 ```

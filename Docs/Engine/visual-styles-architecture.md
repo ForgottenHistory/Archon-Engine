@@ -31,7 +31,40 @@ Customize individual rendering systems while using ENGINE's shader infrastructur
 - Pro: Runtime switching without shader recompilation
 - Con: Constrained to ENGINE's layer model
 
-### Level 2: Complete Override
+### Level 2: Shader Copy-and-Customize (Recommended for Visual Identity)
+Copy ENGINE's Default shaders to GAME, replace map mode includes with GAME-specific visual policy.
+
+**How It Works:**
+- Copy `DefaultFlatMapShader.shader` / `DefaultTerrainMapShader.shader` to GAME
+- Rename shader (e.g., `"Archon/DefaultFlat"` → `"YourGame/FlatMap"`)
+- Replace `DefaultMapModes.hlsl` include with GAME's own map modes dispatcher
+- Copy ENGINE's map mode hlsl files as starting point, customize freely
+- Keep all other ENGINE includes (`DefaultCommon.hlsl`, `DefaultLighting.hlsl`, etc.)
+
+**What GAME Controls:**
+- Map mode rendering (political, terrain, development colors and blending)
+- Custom map mode dispatcher
+- Visual identity per map mode
+
+**What ENGINE Still Provides:**
+- All texture/buffer declarations (`DefaultCommon.hlsl`)
+- Border rendering, fog of war, highlights (`MapModeCommon.hlsl`)
+- Normal map lighting (`DefaultLighting.hlsl`)
+- Overlay effects (`DefaultEffects.hlsl`)
+- Debug modes (`DefaultDebugModes.hlsl`)
+
+**Critical Constraint:** GAME includes ENGINE, never reverse. ENGINE is a separate repository and cannot reference GAME paths.
+
+**Trade-offs:**
+- Pro: Full control over visual identity
+- Pro: Still leverages ENGINE infrastructure (borders, fog, lighting)
+- Pro: ENGINE updates to infrastructure automatically apply
+- Con: Must update map mode copies when ENGINE adds new features
+- Con: Properties block must stay in sync with `DefaultCommon.hlsl` CBUFFER
+
+See [Shaders Wiki](../Wiki/Shaders.md) for step-by-step setup guide.
+
+### Level 3: Complete Override
 Provide entirely custom shader and material for complete visual control.
 
 **What GAME Controls:**
@@ -106,19 +139,26 @@ Layers can be enabled/disabled independently for performance or visual style.
 ## When to Use Each Level
 
 **Use Level 1 (Pluggable Interfaces) When:**
-- Customizing one or few systems
+- Customizing one or few systems (e.g., just borders or fog)
 - Want ENGINE's compositor handling layer blending
 - Need runtime switching between presets
-- Don't need exotic rendering effects
+- Don't need custom map mode visuals
 
-**Use Level 2 (Custom Material) When:**
+**Use Level 2 (Shader Copy-and-Customize) When:**
+- Want your own visual identity for map modes
+- Need custom political/terrain/development rendering
+- Still want ENGINE infrastructure (borders, fog, lighting, effects)
+- Most games should use this level
+
+**Use Level 3 (Complete Override) When:**
 - Need fundamentally different rendering approach
 - Custom post-processing required
 - Layer model doesn't fit your visual style
 - Building completely unique visual identity
 
-**Combine Both When:**
-- Custom material for unique look
+**Combine Levels When:**
+- Level 2 shader for custom map mode visuals
+- Level 1 pluggable interfaces for border/fog customization
 - Still register custom renderers for texture generation
 
 ---
@@ -152,8 +192,8 @@ Layers can be enabled/disabled independently for performance or visual style.
 
 ## Anti-Patterns
 
-**Don't:** Fork ENGINE shaders to customize visuals
-**Do:** Implement pluggable interface or provide custom material
+**Don't:** Edit ENGINE shader files in place to customize visuals
+**Do:** Copy ENGINE Default shaders to GAME (Level 2) or provide custom material (Level 3)
 
 **Don't:** Hardcode GAME-specific blend modes in ENGINE
 **Do:** Make blend modes configurable via compositor
