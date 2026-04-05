@@ -4,7 +4,13 @@ A Unity-based game engine for grand strategy games, built around a dual-layer ar
 
 ![Archon-Engine](Promotion-Assets/Images/hero2.png)
 
-APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged.
+ ~~APIs should be stable by 2026 Q1. Until a release pops up, production use is discouraged.~~
+ 
+I was being too optimistic about release. CORE is basically done. You can use that fine.
+
+MAP namespace I'm not satisfied with yet. All the rendering stuff is giving me a serious headache. Remain cautious with future updates.
+
+Personally wouldn't use this state for production, though you can certainly build something cool right now. 
 
 **Quick Links:**
 - [Getting Started](Docs/Wiki/Getting-Started.md) - Setup and first steps
