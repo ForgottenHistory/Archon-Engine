@@ -175,6 +175,19 @@ namespace Map.Core
             ReportProgress(95f, "Analyzing terrain...");
             AnalyzeTerrain();
 
+            // Bind terrain buffer to material (must happen after AnalyzeTerrain creates the buffer)
+            if (meshRenderer != null && dataLoader != null)
+            {
+                var material = meshRenderer.sharedMaterial;
+                var terrainBuffer = dataLoader.GetProvinceTerrainBuffer();
+                if (material != null && terrainBuffer != null)
+                {
+                    material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+                    if (LogProgress)
+                        ArchonLogger.Log("MapSystemCoordinator: Province terrain buffer bound to material", "map_initialization");
+                }
+            }
+
             // Complete
             IsInitialized = true;
             ReportProgress(100f, "Map ready");
