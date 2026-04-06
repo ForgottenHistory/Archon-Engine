@@ -3,6 +3,7 @@ using UnityEngine;
 using Map.Rendering;
 using Map.Loading.Images;
 using Core;
+using Core.Loaders;
 using Utils;
 using static Map.Loading.ProvinceMapProcessor;
 
@@ -213,9 +214,9 @@ namespace Map.Loading
             var terrainTypeTexture = textureManager.TerrainTypeTexture;
             int provinceCount = gameState.Provinces.ProvinceCount;
 
-            if (provinceIDTexture == null || terrainTypeTexture == null)
+            if (provinceIDTexture == null)
             {
-                ArchonLogger.LogError("MapDataLoader: Required textures not available (ProvinceID or TerrainType)", "map_rendering");
+                ArchonLogger.LogError("MapDataLoader: ProvinceID texture not available", "map_rendering");
                 return;
             }
 
@@ -223,16 +224,61 @@ namespace Map.Loading
             {
                 ushort[] provinceIDs = provinceIDsNative.ToArray();
 
-                uint[] terrainTypes = terrainAnalyzer.AnalyzeAndGetTerrainTypes(
-                    provinceIDTexture,
-                    terrainTypeTexture,
-                    provinceIDs
-                );
+                uint[] terrainTypes;
 
-                if (terrainTypes == null)
+                if (terrainTypeTexture != null)
                 {
-                    ArchonLogger.LogError("MapDataLoader: Terrain analysis failed!", "map_rendering");
-                    return;
+                    // GPU auto-assign from terrain.png
+                    terrainTypes = terrainAnalyzer.AnalyzeAndGetTerrainTypes(
+                        provinceIDTexture,
+                        terrainTypeTexture,
+                        provinceIDs
+                    );
+
+                    if (terrainTypes == null)
+                    {
+                        ArchonLogger.LogWarning("MapDataLoader: GPU terrain analysis failed, using defaults", "map_rendering");
+                        terrainTypes = new uint[provinceIDs.Length];
+                    }
+                }
+                else
+                {
+                    // No terrain.png — assign from default.json5 water lists + default land terrain
+                    terrainTypes = new uint[provinceIDs.Length];
+
+                    // Find terrain indices for ocean and default land type
+                    var terrainRegistry = gameState.Registries.Terrains;
+                    uint oceanIndex = 0;
+                    uint landIndex = 0;
+                    if (terrainRegistry.TryGet("ocean", out var oceanData))
+                        oceanIndex = oceanData.TerrainId;
+                    if (terrainRegistry.TryGet("grasslands", out var grassData))
+                        landIndex = grassData.TerrainId;
+
+                    // Load water province lists from default.json5
+                    var mapConfig = MapConfigLoader.Load(dataDirectory);
+
+                    // Build provinceID lookup
+                    var pidSet = new System.Collections.Generic.HashSet<ushort>();
+                    for (int i = 0; i < provinceIDs.Length; i++)
+                        pidSet.Add(provinceIDs[i]);
+
+                    for (int i = 0; i < provinceIDs.Length; i++)
+                    {
+                        ushort pid = provinceIDs[i];
+                        if (mapConfig.HasValue && mapConfig.Value.IsWater(pid))
+                            terrainTypes[i] = oceanIndex;
+                        else
+                            terrainTypes[i] = landIndex;
+                    }
+
+                    if (logProgress)
+                    {
+                        int waterCount = 0;
+                        for (int i = 0; i < terrainTypes.Length; i++)
+                            if (terrainTypes[i] == oceanIndex) waterCount++;
+                        ArchonLogger.Log($"MapDataLoader: No terrain texture — assigned from default.json5 ({waterCount} water, {terrainTypes.Length - waterCount} land)", "map_rendering");
+                    }
                 }
 
                 // Apply province-level terrain overrides (highest priority)
