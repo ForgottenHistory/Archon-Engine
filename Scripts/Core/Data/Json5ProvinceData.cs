@@ -21,17 +21,23 @@ namespace Core.Data
         public FixedString64Bytes owner;
         public FixedString64Bytes controller;
 
+        // Terrain override (optional - overrides auto-assignment and terrain.json5)
+        public FixedString64Bytes terrain;
+
         // Flags for optional data
         public bool hasOwner;
         public bool hasController;
+        public bool hasTerrain;
 
         public static RawProvinceData Invalid => new RawProvinceData
         {
             provinceID = 0,
             owner = new FixedString64Bytes("---"),
             controller = new FixedString64Bytes("---"),
+            terrain = default,
             hasOwner = false,
-            hasController = false
+            hasController = false,
+            hasTerrain = false
         };
     }
 

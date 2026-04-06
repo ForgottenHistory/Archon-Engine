@@ -22,6 +22,10 @@ namespace Core.Data
         public byte Terrain;
         public byte Flags;          // IsCity, IsHRE, etc packed as bits
 
+        // Terrain override from province history file (highest priority)
+        // Empty = no override (use auto-assign or terrain.json5)
+        public FixedString64Bytes TerrainOverride;
+
         // Additional cold data for initialization only
         public FixedString64Bytes OwnerTag;
         public FixedString64Bytes ControllerTag;

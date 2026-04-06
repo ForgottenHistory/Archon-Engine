@@ -375,7 +375,11 @@ namespace Map.Core
             var gameState = GameState.Instance;
             if (gameState != null && dataLoader != null)
             {
-                dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
+                // Pass province-level terrain overrides (from history files) for highest priority
+                var overrides = gameState.ProvinceTerrainOverrides.Count > 0
+                    ? gameState.ProvinceTerrainOverrides
+                    : null;
+                dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState, overrides);
             }
         }
 

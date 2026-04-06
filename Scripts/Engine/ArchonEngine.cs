@@ -675,6 +675,9 @@ namespace Engine
                 var material = mapMeshRenderer.sharedMaterial;
                 MapModeManager.Initialize(GameState, material, mapSystemCoordinator.ProvinceMapping, null);
 
+                // Refresh terrain palette from registry (terrain.json5 colors now available)
+                MapModeManager.RefreshTerrainPalette();
+
                 // Register default political map mode
                 MapModeManager.RegisterHandler(MapMode.Political, new EnginePoliticalMapMode());
                 MapModeManager.SetMapMode(MapMode.Political, forceUpdate: true);

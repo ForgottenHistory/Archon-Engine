@@ -142,6 +142,14 @@ namespace Core.Loaders
                 rawData.hasController = rawData.hasOwner;
             }
 
+            // Handle terrain override (optional - overrides auto-assignment and terrain.json5)
+            string terrain = Json5Loader.GetString(effectiveState, "terrain", "");
+            if (!string.IsNullOrEmpty(terrain))
+            {
+                rawData.terrain = new FixedString64Bytes(terrain);
+                rawData.hasTerrain = true;
+            }
+
             return rawData;
         }
 

@@ -195,7 +195,7 @@ namespace Map.Loading
         /// Analyze terrain after map init (GPU compute shader).
         /// Must be called AFTER ProvinceIDTexture is populated.
         /// </summary>
-        public void AnalyzeProvinceTerrainAfterMapInit(GameState gameState)
+        public void AnalyzeProvinceTerrainAfterMapInit(GameState gameState, System.Collections.Generic.Dictionary<ushort, string> provinceTerrainOverrides = null)
         {
             if (terrainAnalyzer == null)
             {
@@ -233,6 +233,40 @@ namespace Map.Loading
                 {
                     ArchonLogger.LogError("MapDataLoader: Terrain analysis failed!", "map_rendering");
                     return;
+                }
+
+                // Apply province-level terrain overrides (highest priority)
+                // Province file > terrain.json5 > auto-assign
+                if (provinceTerrainOverrides != null && provinceTerrainOverrides.Count > 0)
+                {
+                    // Build category name → terrain index mapping
+                    var terrainRegistry = gameState.Registries.Terrains;
+                    var provinceIDToIndex = new System.Collections.Generic.Dictionary<ushort, int>();
+                    for (int i = 0; i < provinceIDs.Length; i++)
+                        provinceIDToIndex[provinceIDs[i]] = i;
+
+                    int provinceOverridesApplied = 0;
+                    foreach (var kvp in provinceTerrainOverrides)
+                    {
+                        ushort pid = kvp.Key;
+                        string terrainName = kvp.Value;
+
+                        if (provinceIDToIndex.TryGetValue(pid, out int arrayIndex))
+                        {
+                            if (terrainRegistry.TryGet(terrainName, out var terrainData))
+                            {
+                                terrainTypes[arrayIndex] = terrainData.TerrainId;
+                                provinceOverridesApplied++;
+                            }
+                            else if (logProgress)
+                            {
+                                ArchonLogger.LogWarning($"MapDataLoader: Province {pid} terrain override '{terrainName}' not found in registry", "map_rendering");
+                            }
+                        }
+                    }
+
+                    if (logProgress && provinceOverridesApplied > 0)
+                        ArchonLogger.Log($"MapDataLoader: Applied {provinceOverridesApplied} province-level terrain overrides", "map_rendering");
                 }
 
                 // Store terrain types into ProvinceState

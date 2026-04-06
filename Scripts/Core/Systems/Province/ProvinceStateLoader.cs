@@ -112,6 +112,17 @@ namespace Core.Systems.Province
                 }
 
                 ApplyInitialStateToProvince(provinceId, initialState);
+
+                // Store terrain override for Map layer (applied during terrain analysis)
+                if (initialState.TerrainOverride.Length > 0)
+                {
+                    var gameState = GameState.Instance;
+                    if (gameState != null)
+                    {
+                        gameState.ProvinceTerrainOverrides[provinceId] = initialState.TerrainOverride.ToString();
+                    }
+                }
+
                 appliedCount++;
             }
 

@@ -51,6 +51,11 @@ namespace Core
         public EventBus EventBus { get; private set; }
         public CommandProcessor CommandProcessor { get; private set; }
 
+        // Province terrain overrides from history files (populated during scenario loading)
+        // Key: provinceID, Value: terrain category name (e.g., "desert", "forest")
+        // Highest priority in terrain assignment: Province File > terrain.json5 > Auto-assign
+        public Dictionary<ushort, string> ProvinceTerrainOverrides { get; } = new Dictionary<ushort, string>();
+
         // Game Layer System Registration (Engine mechanism, Game policy)
         // Engine doesn't know about specific Game layer types (EconomySystem, BuildingSystem, etc.)
         // Game layer systems register themselves so commands can access them

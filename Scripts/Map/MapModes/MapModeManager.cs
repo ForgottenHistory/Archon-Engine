@@ -279,6 +279,15 @@ namespace Map.MapModes
             updateScheduler = new TextureUpdateScheduler();
         }
 
+        /// <summary>
+        /// Refresh terrain color palette from terrain registry.
+        /// Call after terrain registry is populated to get correct terrain.json5 colors.
+        /// </summary>
+        public void RefreshTerrainPalette()
+        {
+            dataTextures?.RefreshTerrainPalette();
+        }
+
         public void SetMapMode(MapMode mode, bool forceUpdate = false)
         {
             if (!isInitialized || (currentMode == mode && !forceUpdate)) return;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Collections;
+using Core;
 using Map.Rendering;
 
 namespace Map.MapModes
@@ -197,17 +198,36 @@ namespace Map.MapModes
         private void InitializeTerrainPalette()
         {
             var colors = new Color32[32];
-            colors[0] = new Color32(25, 25, 112, 255);   // Ocean - Dark blue
-            colors[1] = new Color32(34, 139, 34, 255);   // Grassland - Forest green
-            colors[2] = new Color32(139, 69, 19, 255);   // Hills - Saddle brown
-            colors[3] = new Color32(105, 105, 105, 255); // Mountains - Dim gray
-            colors[4] = new Color32(238, 203, 173, 255); // Desert - Peach puff
-            colors[5] = new Color32(220, 220, 220, 255); // Coastal - Light gray
 
-            // Fill remaining with variations
-            for (int i = 6; i < 32; i++)
+            // Try to populate from terrain registry (terrain.json5 colors)
+            var registries = GameState.Instance?.Registries;
+            bool loadedFromRegistry = false;
+
+            if (registries?.Terrains != null && registries.Terrains.Count > 0)
             {
-                colors[i] = GenerateTerrainColor(i);
+                foreach (var terrain in registries.Terrains.GetAll())
+                {
+                    if (terrain.TerrainId < 32)
+                    {
+                        colors[terrain.TerrainId] = new Color32(terrain.ColorR, terrain.ColorG, terrain.ColorB, 255);
+                    }
+                }
+                loadedFromRegistry = true;
+                ArchonLogger.Log($"MapModeDataTextures: Terrain palette loaded from registry ({registries.Terrains.Count} terrains)", "map_initialization");
+            }
+
+            if (!loadedFromRegistry)
+            {
+                // Fallback defaults
+                colors[0] = new Color32(25, 25, 112, 255);   // Ocean
+                colors[1] = new Color32(34, 139, 34, 255);   // Grassland
+                colors[2] = new Color32(139, 69, 19, 255);   // Hills
+                colors[3] = new Color32(105, 105, 105, 255); // Mountains
+                colors[4] = new Color32(238, 203, 173, 255); // Desert
+                colors[5] = new Color32(220, 220, 220, 255); // Coastal
+
+                for (int i = 6; i < 32; i++)
+                    colors[i] = GenerateTerrainColor(i);
             }
 
             TerrainColorPalette.SetPixels32(colors);
@@ -288,6 +308,15 @@ namespace Map.MapModes
             byte b = (byte)Mathf.Clamp(baseColor.b + variation * 30 - 15, 0, 255);
 
             return new Color32(r, g, b, 255);
+        }
+
+        /// <summary>
+        /// Refresh terrain color palette from the terrain registry.
+        /// Call after terrain registry is loaded to get correct colors from terrain.json5.
+        /// </summary>
+        public void RefreshTerrainPalette()
+        {
+            InitializeTerrainPalette();
         }
 
         /// <summary>

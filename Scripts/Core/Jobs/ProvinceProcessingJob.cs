@@ -49,6 +49,12 @@ namespace Core.Jobs
             // Use terrain ID 1 (grasslands) instead of 0 (ocean)
             state.Terrain = 1;
 
+            // Pass through terrain override name for deferred resolution
+            if (raw.hasTerrain)
+            {
+                state.TerrainOverride = raw.terrain;
+            }
+
             // Apply validation if enabled
             if (validateData)
             {
