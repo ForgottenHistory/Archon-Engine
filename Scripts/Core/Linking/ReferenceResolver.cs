@@ -105,7 +105,9 @@ namespace Core.Linking
             if (registries.Countries.TryGetId(tag, out ushort id))
                 return new CountryId(id);
 
-            AddError($"{context}: Unknown country '{tag}'");
+            // Graceful fallback: unknown country tag → province becomes unowned.
+            // Warning (not error) so loading continues without aborting on bad scenario data.
+            AddWarning($"{context}: Unknown country '{tag}' - province will be unowned");
             return CountryId.None;
         }
 

@@ -66,7 +66,9 @@ namespace Map.Rendering
             rgbLookup = new TerrainRGBLookup();
             if (!rgbLookup.Initialize(dataDirectory, logAnalysis))
             {
-                Debug.LogError("ProvinceTerrainAnalyzer: Failed to initialize TerrainRGBLookup!");
+                // Non-fatal: GPU R8 terrain path below does not require rgbLookup.
+                // Only terrain overrides (TerrainOverrideApplicator) need it, and they skip gracefully.
+                ArchonLogger.LogWarning("ProvinceTerrainAnalyzer: TerrainRGBLookup unavailable - terrain overrides disabled", "map_rendering");
             }
 
             overrideApplicator = new TerrainOverrideApplicator(dataDirectory, logAnalysis);

@@ -36,7 +36,8 @@ namespace Map.Rendering.Terrain
         {
             if (!rgbLookup.IsInitialized)
             {
-                ArchonLogger.LogError("TerrainOverrideApplicator: TerrainRGBLookup not initialized!", "map_rendering");
+                // Graceful skip: no terrain.json5 means no override data to apply.
+                ArchonLogger.LogWarning("TerrainOverrideApplicator: TerrainRGBLookup not initialized - skipping overrides", "map_rendering");
                 return;
             }
 

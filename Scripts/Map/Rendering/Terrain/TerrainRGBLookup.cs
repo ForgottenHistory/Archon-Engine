@@ -47,7 +47,9 @@ namespace Map.Rendering.Terrain
                 string terrainPath = System.IO.Path.Combine(dataDirectory, "map", "terrain.json5");
                 if (!System.IO.File.Exists(terrainPath))
                 {
-                    ArchonLogger.LogError($"TerrainRGBLookup: terrain.json5 not found at {terrainPath}", "map_rendering");
+                    // Graceful fallback: without terrain.json5, terrain overrides are unavailable
+                    // but the GPU R8 terrain path still works with raw indices from terrain.bmp.
+                    ArchonLogger.LogWarning($"TerrainRGBLookup: terrain.json5 not found at {terrainPath} - terrain overrides disabled", "map_rendering");
                     return false;
                 }
 
