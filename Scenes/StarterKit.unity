@@ -1537,6 +1537,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a9be1e4d27436f245ad4f5b3e5cb7f2e, type: 2}
     - target: {fileID: 5350819791196625206, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
+      propertyPath: gameSettings
+      value: 
+      objectReference: {fileID: 11400000, guid: e3093190015160b46a01e6682885d9d5, type: 2}
+    - target: {fileID: 5350819791196625206, guid: 8f3730b1e40ba1c4bb10dd20e5899648, type: 3}
       propertyPath: mapGenerator
       value: 
       objectReference: {fileID: 2064478518}
