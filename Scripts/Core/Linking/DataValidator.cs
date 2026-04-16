@@ -179,26 +179,10 @@ namespace Core.Linking
                     {
                         AddWarning("Ocean province has owner", context);
                     }
-                    if (province.Development > 0)
-                    {
-                        AddWarning("Ocean province has development", context);
-                    }
                 }
 
-                // Validate development
-                if (province.Development == 0 && province.Terrain != 0)
-                {
-                    AddWarning("Land province has no development", context);
-                }
-
-                // Validate buildings
-                foreach (var buildingId in province.Buildings)
-                {
-                    if (buildingId != 0 && !registries.Buildings.Exists(buildingId))
-                    {
-                        AddError($"Invalid building ID {buildingId}", context);
-                    }
-                }
+                // Game-specific validations (development, buildings, etc.)
+                // are handled by the game layer, not the engine.
             }
 
             ArchonLogger.Log($"DataValidator: Province validation complete - {registries.Provinces.Count} provinces validated", "core_data_linking");

@@ -94,7 +94,7 @@ namespace Core.Loaders
 
         /// <summary>
         /// Load and parse a single province JSON5 file
-        /// Applies dated historical events up to start date (1444.11.11)
+        /// Applies dated historical events up to configured start date
         /// </summary>
         private static RawProvinceData LoadSingleProvinceFile(string filePath)
         {
@@ -111,13 +111,17 @@ namespace Core.Loaders
             // Load and parse JSON5
             JObject json = Json5Loader.LoadJson5File(filePath);
 
-            // CRITICAL: Apply dated historical events UP TO start date (1444.11.11)
-            // EU4 province files format:
-            //   owner: "TIM"     <- Initial value
-            //   "1442.1.1": { owner: "QOM" }  <- Event before 1444
-            //   "1451.1.1": { owner: "QAR" }  <- Event after 1444 (ignore)
-            // At 1444.11.11, owner should be QOM (not TIM!)
-            JObject effectiveState = ApplyHistoricalEventsToStartDate(json, 1444, 11, 11);
+            // Apply dated historical events up to configured start date
+            // Province files can have dated entries: "1442.1.1": { owner: "QOM" }
+            // Only events before the start date are applied.
+            // StartYear == 0 means no date filtering (use all data as-is).
+            var settings = GameSettings.Instance;
+            int sy = settings?.StartYear ?? 0;
+            int sm = settings?.StartMonth ?? 1;
+            int sd = settings?.StartDay ?? 1;
+            JObject effectiveState = sy > 0
+                ? ApplyHistoricalEventsToStartDate(json, sy, sm, sd)
+                : json; // No date filtering — use raw json as-is
 
             // Extract province data from EFFECTIVE state (after applying historical events)
             // ENGINE layer only parses generic fields (provinceID, owner, controller)
@@ -160,6 +164,19 @@ namespace Core.Loaders
             {
                 rawData.terrain = new FixedString64Bytes(terrain);
                 rawData.hasTerrain = true;
+            }
+
+            // Handle passable (default true; province files can set passable: false)
+            var passableToken = effectiveState["passable"];
+            if (passableToken != null)
+            {
+                rawData.passable = (bool)passableToken;
+                rawData.hasPassable = true;
+            }
+            else
+            {
+                rawData.passable = true;
+                rawData.hasPassable = false;
             }
 
             return rawData;

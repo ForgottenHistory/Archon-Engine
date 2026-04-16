@@ -199,7 +199,7 @@ namespace Core
             Diplomacy = GetComponent<DiplomacySystem>() ?? gameObject.AddComponent<DiplomacySystem>();
 
             // 9. Query interfaces
-            ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies);
+            ProvinceQueries = new ProvinceQueries(Provinces, Countries, Adjacencies, Registries?.Provinces);
             CountryQueries = new CountryQueries(Countries, Provinces, Adjacencies);
 
             // 10. Command processor (for multiplayer command execution)

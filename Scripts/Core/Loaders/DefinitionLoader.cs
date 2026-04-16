@@ -158,13 +158,8 @@ namespace Core.Loaders
                 {
                     DefinitionId = def.ProvinceID,
                     Name = def.Name,
-                    Development = 0, // Uncolonized
                     Terrain = (byte)(def.IsWater ? 0 : 1), // 0 = water, 1 = land
-                    Flags = (byte)(def.IsWater ? 1 : 0), // Flag for water
-                    BaseTax = 0,
-                    BaseProduction = 0,
-                    BaseManpower = 0,
-                    CenterOfTrade = 0
+                    IsPassable = !def.IsWater // Water provinces not passable by default for land units
                 };
 
                 try

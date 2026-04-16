@@ -59,6 +59,19 @@ namespace Core
             }
         }
 
+        [Header("Scenario Start Date")]
+        [Tooltip("Start year for historical date filtering in province files (0 = no filtering, use all data as-is)")]
+        [SerializeField] private int startYear = 0;
+        [SerializeField] private int startMonth = 1;
+        [SerializeField] private int startDay = 1;
+
+        /// <summary>Start year for province history date filtering. 0 = no date filtering.</summary>
+        public int StartYear => startYear;
+        /// <summary>Start month (1-12).</summary>
+        public int StartMonth => startMonth;
+        /// <summary>Start day (1-30).</summary>
+        public int StartDay => startDay;
+
         [Header("Loading Configuration")]
         [Tooltip("Enable parallel loading where possible")]
         public bool EnableParallelLoading = true;

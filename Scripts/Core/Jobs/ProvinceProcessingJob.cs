@@ -55,6 +55,9 @@ namespace Core.Jobs
                 state.TerrainOverride = raw.terrain;
             }
 
+            // Passability (default true unless province explicitly sets passable: false)
+            state.IsPassable = raw.hasPassable ? raw.passable : true;
+
             // Apply validation if enabled
             if (validateData)
             {

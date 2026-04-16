@@ -3,6 +3,7 @@ using Unity.Mathematics;
 using Core.Systems;
 using Core.Data;
 using Core.Graph;
+using Core.Registries;
 
 namespace Core.Queries
 {
@@ -16,6 +17,7 @@ namespace Core.Queries
         private readonly Systems.ProvinceSystem provinceSystem;
         private readonly Systems.CountrySystem countrySystem;
         private readonly Systems.AdjacencySystem adjacencySystem;
+        private readonly ProvinceRegistry provinceRegistry;
 
         // Lazy-initialized distance calculator for graph queries
         private GraphDistanceCalculator distanceCalculator;
@@ -27,11 +29,12 @@ namespace Core.Queries
         private static int queryCount;
         private static float totalQueryTime;
 
-        public ProvinceQueries(Systems.ProvinceSystem provinceSystem, Systems.CountrySystem countrySystem, Systems.AdjacencySystem adjacencySystem = null)
+        public ProvinceQueries(Systems.ProvinceSystem provinceSystem, Systems.CountrySystem countrySystem, Systems.AdjacencySystem adjacencySystem = null, ProvinceRegistry provinceRegistry = null)
         {
             this.provinceSystem = provinceSystem;
             this.countrySystem = countrySystem;
             this.adjacencySystem = adjacencySystem;
+            this.provinceRegistry = provinceRegistry;
         }
 
         #region Basic Queries (Ultra-fast, direct access)
@@ -99,6 +102,17 @@ namespace Core.Queries
         public bool IsOcean(ushort provinceId)
         {
             return GetTerrain(provinceId) == 0; // Terrain 0 = Ocean
+        }
+
+        /// <summary>
+        /// Check if province is passable (cold data query).
+        /// Default true; provinces can set passable: false in history files.
+        /// </summary>
+        public bool IsPassable(ushort provinceId)
+        {
+            if (provinceRegistry == null) return true;
+            var data = provinceRegistry.GetByDefinition(provinceId);
+            return data?.IsPassable ?? true;
         }
 
         #endregion

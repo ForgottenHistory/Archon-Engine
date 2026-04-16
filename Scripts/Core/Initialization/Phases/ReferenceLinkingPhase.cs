@@ -102,20 +102,15 @@ namespace Core.Initialization.Phases
                     if (initialState.ProvinceID <= 0)
                         continue;
 
-                    // Create ProvinceData with real loaded data
+                    // Create ProvinceData with engine-level data only
+                    // Game-specific fields (development, culture, etc.) are handled by game layer
                     var provinceRegistryData = new ProvinceData
                     {
                         RuntimeId = (ushort)initialState.ProvinceID,
                         DefinitionId = initialState.ProvinceID,
                         Name = $"Province {initialState.ProvinceID}",
-                        Development = initialState.Development,
-                        // Fix terrain: if province has development, it's land (terrain = 1), otherwise ocean (terrain = 0)
-                        Terrain = (byte)(initialState.Development > 0 ? 1 : 0),
-                        Flags = initialState.Flags,
-                        BaseTax = initialState.BaseTax,
-                        BaseProduction = initialState.BaseProduction,
-                        BaseManpower = initialState.BaseManpower,
-                        CenterOfTrade = initialState.CenterOfTrade
+                        Terrain = 1, // Default grasslands, overwritten by ProvinceTerrainAnalyzer
+                        IsPassable = initialState.IsPassable
                     };
 
                     try

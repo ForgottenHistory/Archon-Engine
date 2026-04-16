@@ -1,5 +1,4 @@
 using Unity.Collections;
-using Unity.Mathematics;
 using System;
 
 namespace Core.Data
@@ -18,26 +17,22 @@ namespace Core.Data
         // Core state that goes into ProvinceState (hot data)
         public ushort OwnerID;
         public ushort ControllerID;
-        public byte Development;    // Combined from BaseTax + BaseProduction + BaseManpower
         public byte Terrain;
-        public byte Flags;          // IsCity, IsHRE, etc packed as bits
+
+        // Engine-level province properties
+        public bool IsPassable;     // Default true; province json5 can set passable: false
 
         // Terrain override from province history file (highest priority)
         // Empty = no override (use auto-assign or terrain.json5)
         public FixedString64Bytes TerrainOverride;
 
-        // Additional cold data for initialization only
+        // Ownership tags for reference resolution
         public FixedString64Bytes OwnerTag;
         public FixedString64Bytes ControllerTag;
-        public FixedString64Bytes Culture;
-        public FixedString64Bytes Religion;
-        public FixedString64Bytes TradeGood;
 
-        // Development components
-        public byte BaseTax;
-        public byte BaseProduction;
-        public byte BaseManpower;
-        public byte CenterOfTrade;
+        // Game-specific fields (Culture, Religion, TradeGood, Development, etc.)
+        // are NOT stored here — they belong in the game layer.
+        // Game layer should parse province json5 files for its own fields.
 
         public static ProvinceInitialState Invalid => new ProvinceInitialState { IsValid = false };
 
@@ -46,14 +41,13 @@ namespace Core.Data
             return new ProvinceInitialState
             {
                 ProvinceID = provinceID,
-                IsValid = true
+                IsValid = true,
+                IsPassable = true
             };
         }
 
         /// <summary>
         /// Convert to hot ProvinceState for simulation (engine layer only)
-        /// NOTE: Development, FortLevel, Flags removed from ProvinceState (now game-specific)
-        /// Game layer must initialize HegemonProvinceData separately with Development value
         /// </summary>
         public ProvinceState ToProvinceState()
         {
@@ -64,27 +58,6 @@ namespace Core.Data
                 terrainType = Terrain,
                 gameDataSlot = (ushort)ProvinceID  // Default 1:1 mapping (provinceID == gameDataSlot)
             };
-        }
-
-        /// <summary>
-        /// Calculate development from base values
-        /// Default formula: sum of components, capped at 255
-        /// NOTE: This is a convenience default for Burst compatibility
-        /// GAME can override Development value after loading if different formula is needed
-        /// </summary>
-        public void CalculateDevelopment()
-        {
-            Development = (byte)math.min(255, BaseTax + BaseProduction + BaseManpower);
-        }
-
-        /// <summary>
-        /// Pack boolean flags into single byte
-        /// </summary>
-        public void PackFlags(bool isCity, bool isHRE)
-        {
-            Flags = 0;
-            if (isCity) Flags |= 1;
-            if (isHRE) Flags |= 2;
         }
     }
 

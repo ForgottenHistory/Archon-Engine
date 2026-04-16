@@ -24,6 +24,10 @@ namespace Core.Data
         // Terrain override (optional - overrides auto-assignment and terrain.json5)
         public FixedString64Bytes terrain;
 
+        // Passability (default true; province json5 can set passable: false)
+        public bool passable;
+        public bool hasPassable;
+
         // Flags for optional data
         public bool hasOwner;
         public bool hasController;
@@ -35,6 +39,8 @@ namespace Core.Data
             owner = new FixedString64Bytes("---"),
             controller = new FixedString64Bytes("---"),
             terrain = default,
+            passable = true,
+            hasPassable = false,
             hasOwner = false,
             hasController = false,
             hasTerrain = false

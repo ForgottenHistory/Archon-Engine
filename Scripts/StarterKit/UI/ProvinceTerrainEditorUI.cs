@@ -67,6 +67,9 @@ namespace StarterKit
         // Pending color changes: terrainKey -> (oldColor, newColor)
         private Dictionary<string, (Color32 oldColor, Color32 newColor)> pendingColorChanges = new();
 
+        // Pending passable changes: provinceId -> isPassable
+        private Dictionary<ushort, bool> pendingPassableChanges = new();
+
         /// <summary>Fired when user clicks Back to return to main menu.</summary>
         public event System.Action OnBackClicked;
 
@@ -417,6 +420,19 @@ namespace StarterKit
             var ownerLabel = CreateSecondaryText($"Owner: {ownerText}");
             provinceInfoContainer.Add(ownerLabel);
 
+            // Passable toggle
+            bool isPassable = gameState.ProvinceQueries?.IsPassable(provinceId) ?? true;
+            var passableRow = CreateRow(Justify.SpaceBetween);
+            var passableLabel = CreateSecondaryText($"Passable: {(isPassable ? "Yes" : "No")}");
+            passableRow.Add(passableLabel);
+            var toggleButton = CreateStyledButton(isPassable ? "Make Impassable" : "Make Passable", () =>
+            {
+                TogglePassable(provinceId, !isPassable);
+            });
+            UIHelper.SetPadding(toggleButton, SpacingXs, SpacingSm);
+            passableRow.Add(toggleButton);
+            provinceInfoContainer.Add(passableRow);
+
             // Pending change
             if (pendingChanges.TryGetValue(provinceId, out string pending))
             {
@@ -427,7 +443,7 @@ namespace StarterKit
 
         private void UpdatePendingLabel()
         {
-            int total = pendingChanges.Count + pendingColorChanges.Count;
+            int total = pendingChanges.Count + pendingColorChanges.Count + pendingPassableChanges.Count;
             if (total == 0)
             {
                 pendingCountLabel.text = "No changes";
@@ -454,6 +470,7 @@ namespace StarterKit
             // Clear pending changes
             pendingChanges.Clear();
             pendingColorChanges.Clear();
+            pendingPassableChanges.Clear();
 
             // Reload terrain colors from base terrain.json5 into registry + GPU palette
             ReloadBaseTerrainColors();
@@ -539,6 +556,24 @@ namespace StarterKit
             }
         }
 
+        private void TogglePassable(ushort provinceId, bool passable)
+        {
+            // Update cold data live
+            if (provinceRegistry != null)
+            {
+                var data = provinceRegistry.GetByDefinition(provinceId);
+                if (data != null)
+                    data.IsPassable = passable;
+            }
+
+            // Track for save
+            pendingPassableChanges[provinceId] = passable;
+            UpdatePendingLabel();
+
+            // Refresh province info display
+            UpdateProvinceInfo(provinceId);
+        }
+
         private void HandleMapModeToggle()
         {
             var initializer = Initializer.Instance;
@@ -589,6 +624,34 @@ namespace StarterKit
             if (colorsSaved > 0)
                 ArchonLogger.Log($"ProvinceTerrainEditorUI: Saved {colorsSaved} terrain color changes to disk", "starter_kit");
             pendingColorChanges.Clear();
+
+            // Save passable changes to province files
+            if (pendingPassableChanges.Count > 0)
+            {
+                int passableSaved = 0;
+                foreach (var kvp in pendingPassableChanges)
+                {
+                    string filePath = ProvinceTerrainFilePatcher.FindProvinceFile(kvp.Key, overrideDir);
+                    if (filePath != null)
+                    {
+                        if (ProvinceTerrainFilePatcher.PatchPassableField(filePath, kvp.Value))
+                            passableSaved++;
+                    }
+                    else
+                    {
+                        // Create province file with passable field
+                        filePath = ProvinceTerrainFilePatcher.CreateProvinceFile(kvp.Key, "", overrideDir);
+                        if (filePath != null)
+                        {
+                            ProvinceTerrainFilePatcher.PatchPassableField(filePath, kvp.Value);
+                            passableSaved++;
+                        }
+                    }
+                }
+                if (passableSaved > 0)
+                    ArchonLogger.Log($"ProvinceTerrainEditorUI: Saved {passableSaved} passable changes to disk", "starter_kit");
+                pendingPassableChanges.Clear();
+            }
 
             UpdatePendingLabel();
         }

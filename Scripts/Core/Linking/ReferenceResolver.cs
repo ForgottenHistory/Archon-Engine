@@ -39,21 +39,12 @@ namespace Core.Linking
             provinceData.OwnerId = ResolveCountryRef(rawData.OwnerTag.ToString(), $"{context} owner");
             provinceData.ControllerId = ResolveCountryRef(rawData.ControllerTag.ToString() ?? rawData.OwnerTag.ToString(), $"{context} controller");
 
-            // Copy other data
+            // Engine-level properties
             provinceData.Name = $"Province {rawData.ProvinceID}"; // TODO: Load actual names
-            provinceData.Development = rawData.Development;
+            provinceData.Terrain = 1; // Default grasslands, overwritten by ProvinceTerrainAnalyzer
+            provinceData.IsPassable = rawData.IsPassable;
 
-            // Terrain is set later by ProvinceTerrainAnalyzer (Map layer) based on terrain.bmp analysis
-            // Default to 1 (grasslands) - will be overwritten during map loading
-            provinceData.Terrain = 1;
-
-            provinceData.Flags = rawData.Flags;
-            provinceData.BaseTax = rawData.BaseTax;
-            provinceData.BaseProduction = rawData.BaseProduction;
-            provinceData.BaseManpower = rawData.BaseManpower;
-            provinceData.CenterOfTrade = rawData.CenterOfTrade;
-
-            // CRITICAL FIX: Copy linked IDs back to ProvinceInitialState for simulation layer
+            // Copy linked IDs back to ProvinceInitialState for simulation layer
             rawData.OwnerID = (ushort)provinceData.OwnerId;
             rawData.ControllerID = (ushort)provinceData.ControllerId;
             rawData.Terrain = provinceData.Terrain;

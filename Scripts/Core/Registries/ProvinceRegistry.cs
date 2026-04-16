@@ -192,29 +192,20 @@ namespace Core.Registries
         // Basic info
         public string Name { get; set; }
 
-        // Hot simulation data (matches ProvinceState)
+        // Core simulation data (matches ProvinceState)
         public ushort OwnerId { get; set; }
         public ushort ControllerId { get; set; }
-        public byte Development { get; set; }
         public byte Terrain { get; set; }
-        public byte Flags { get; set; }
 
-        // Cold reference data (resolved from strings)
-        public ushort CultureId { get; set; }
-        public ushort ReligionId { get; set; }
-        public ushort TradeGoodId { get; set; }
-
-        // Development components
-        public byte BaseTax { get; set; }
-        public byte BaseProduction { get; set; }
-        public byte BaseManpower { get; set; }
-        public byte CenterOfTrade { get; set; }
-
-        // Buildings (resolved from string list)
-        public ushort[] Buildings { get; set; } = new ushort[0];
+        // Engine-level province properties
+        public bool IsPassable { get; set; } = true;
 
         // Geography
         public bool IsCoastal { get; set; }
+
+        // Game-specific fields (Culture, Religion, Development, Buildings, etc.)
+        // are NOT stored here — they belong in the game layer.
+        // Use gameDataSlot in ProvinceState to index into game-specific data arrays.
         public List<ushort> NeighborProvinces { get; set; } = new();
 
         // Visual data (for map rendering)

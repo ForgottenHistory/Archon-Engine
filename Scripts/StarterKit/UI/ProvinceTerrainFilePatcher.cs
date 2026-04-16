@@ -64,6 +64,37 @@ namespace StarterKit
         }
 
         /// <summary>
+        /// Patch the passable field in a json5 file. Adds or updates the field.
+        /// </summary>
+        public static bool PatchPassableField(string filePath, bool passable)
+        {
+            if (!File.Exists(filePath))
+                return false;
+
+            string content = File.ReadAllText(filePath);
+
+            var passableRegex = new Regex(@"passable\s*:\s*(true|false)");
+
+            if (passableRegex.IsMatch(content))
+            {
+                content = passableRegex.Replace(content, $"passable: {(passable ? "true" : "false")}");
+            }
+            else
+            {
+                // Insert after opening brace
+                int braceIndex = content.IndexOf('{');
+                if (braceIndex < 0)
+                    return false;
+
+                content = content.Insert(braceIndex + 1,
+                    $"\n  passable: {(passable ? "true" : "false")},");
+            }
+
+            File.WriteAllText(filePath, content);
+            return true;
+        }
+
+        /// <summary>
         /// Create a new province history json5 file with the given terrain.
         /// </summary>
         public static string CreateProvinceFile(int provinceId, string terrainKey, string dataDirectory)
