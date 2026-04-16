@@ -368,6 +368,44 @@ namespace Map.Loading
         }
 
         /// <summary>
+        /// Update terrain type for a single province at runtime and regenerate blend maps.
+        /// Used by editor tools to get visual feedback when painting terrain.
+        /// </summary>
+        public void UpdateProvinceTerrain(ushort provinceId, uint terrainType)
+        {
+            if (provinceTerrainBuffer == null) return;
+
+            // Update the single entry in the compute buffer
+            uint[] data = new uint[] { terrainType };
+            provinceTerrainBuffer.SetData(data, 0, provinceId, 1);
+        }
+
+        /// <summary>
+        /// Regenerate terrain blend maps from the current province terrain buffer.
+        /// Call after one or more UpdateProvinceTerrain calls to refresh visuals.
+        /// </summary>
+        public void RegenerateBlendMaps()
+        {
+            if (provinceTerrainBuffer == null || blendMapGenerator == null || textureManager == null)
+                return;
+
+            var provinceIDTexture = textureManager.ProvinceIDTexture;
+            if (provinceIDTexture == null) return;
+
+            var (detailIndex, detailMask) = blendMapGenerator.Generate(
+                provinceIDTexture,
+                provinceTerrainBuffer,
+                textureManager.MapWidth,
+                textureManager.MapHeight
+            );
+
+            if (detailIndex != null && detailMask != null)
+            {
+                textureManager.SetTerrainBlendMaps(detailIndex, detailMask);
+            }
+        }
+
+        /// <summary>
         /// Get the province terrain buffer for material binding.
         /// </summary>
         public ComputeBuffer GetProvinceTerrainBuffer() => provinceTerrainBuffer;

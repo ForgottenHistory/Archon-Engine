@@ -29,6 +29,11 @@ namespace Map.MapModes
 
         // Core systems
         private MapModeDataTextures dataTextures;
+
+        /// <summary>
+        /// Access data textures for palette updates (terrain colors, country colors, etc.)
+        /// </summary>
+        public MapModeDataTextures DataTextures => dataTextures;
         private TextureUpdateScheduler updateScheduler;
         private GameState gameState;
         private ProvinceMapping provinceMapping;

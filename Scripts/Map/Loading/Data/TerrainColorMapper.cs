@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.IO;
 using Core.Loaders;
+using Core.Modding;
 using Newtonsoft.Json.Linq;
 using Utils;
 
@@ -33,7 +34,10 @@ namespace Map.Loading.Data
             nameToIndex = new Dictionary<string, byte>();
             indexToName = new Dictionary<byte, string>();
 
-            string terrainPath = Path.Combine(dataDirectory, "map", "terrain.json5");
+            // Override-first resolution
+            string terrainPath = DataFileResolver.IsInitialized
+                ? DataFileResolver.Resolve("map/terrain.json5")
+                : Path.Combine(dataDirectory, "map", "terrain.json5");
 
             if (!File.Exists(terrainPath))
             {

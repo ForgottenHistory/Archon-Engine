@@ -8,6 +8,7 @@ using Unity.Collections;
 using UnityEngine;
 using Newtonsoft.Json.Linq;
 using Core.Data;
+using Core.Modding;
 using Utils;
 
 namespace Core.Loaders
@@ -25,13 +26,24 @@ namespace Core.Loaders
         {
             string provincesDir = Path.Combine(dataDirectory, "history", "provinces");
 
-            if (!Directory.Exists(provincesDir))
+            // Use override-first file listing if available (merges base + override directories)
+            string[] files;
+            if (DataFileResolver.IsInitialized)
             {
-                return Json5ProvinceLoadResult.Failure($"Province history directory not found: {provincesDir}");
+                files = DataFileResolver.ListFiles("history/provinces", "*.json5");
+                if (files.Length == 0 && !Directory.Exists(provincesDir))
+                {
+                    return Json5ProvinceLoadResult.Failure($"Province history directory not found: {provincesDir}");
+                }
             }
-
-            // Get all JSON5 files
-            string[] files = Directory.GetFiles(provincesDir, "*.json5");
+            else
+            {
+                if (!Directory.Exists(provincesDir))
+                {
+                    return Json5ProvinceLoadResult.Failure($"Province history directory not found: {provincesDir}");
+                }
+                files = Directory.GetFiles(provincesDir, "*.json5");
+            }
 
             if (files.Length == 0)
             {

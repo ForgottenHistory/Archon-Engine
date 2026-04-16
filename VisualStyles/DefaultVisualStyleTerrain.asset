@@ -19,13 +19,13 @@ MonoBehaviour:
     customRendererId: 
     countryBorderColor: {r: 0, g: 0, b: 0, a: 1}
     countryBorderStrength: 1
-    provinceBorderColor: {r: 1, g: 1, b: 1, a: 1}
+    provinceBorderColor: {r: 0.33962262, g: 0.33962262, b: 0.33962262, a: 1}
     provinceBorderStrength: 1
     enableBordersOnStartup: 1
     borderMode: 3
     pixelPerfectCountryThickness: 3
     pixelPerfectProvinceThickness: 1
-    pixelPerfectAntiAliasing: 1
+    pixelPerfectAntiAliasing: 1.516
     edgeWidth: 0.5
     gradientWidth: 2
     edgeSmoothness: 0.2

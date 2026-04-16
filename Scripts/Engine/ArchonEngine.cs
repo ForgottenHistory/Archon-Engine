@@ -136,6 +136,11 @@ namespace Engine
         public GameSettings GameSettings => gameSettings;
 
         /// <summary>
+        /// Map system coordinator for runtime map operations (terrain updates, blend maps).
+        /// </summary>
+        public MapSystemCoordinator MapSystemCoordinator => mapSystemCoordinator;
+
+        /// <summary>
         /// Province color-to-ID mapping. Used for adjacency scanning and map mode initialization.
         /// </summary>
         public ProvinceMapping ProvinceMapping => mapSystemCoordinator?.ProvinceMapping;
@@ -312,6 +317,9 @@ namespace Engine
                     yield break;
                 }
             }
+
+            // Initialize data file resolver (override-first file layering)
+            Core.Modding.DataFileResolver.Initialize(gameSettings.DataDirectory);
 
             // Phase 1: Create core components (0-5%)
             ReportProgress(0f, "Creating core systems...");

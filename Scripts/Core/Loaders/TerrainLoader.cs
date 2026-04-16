@@ -1,4 +1,5 @@
 using System.IO;
+using Core.Modding;
 using Core.Registries;
 using Newtonsoft.Json.Linq;
 
@@ -25,7 +26,10 @@ namespace Core.Loaders
         /// </summary>
         public static void LoadTerrains(Registry<TerrainData> terrainRegistry, string dataPath)
         {
-            string terrainFilePath = Path.Combine(dataPath, "map", "terrain.json5");
+            // Use override-first resolution if available
+            string terrainFilePath = DataFileResolver.IsInitialized
+                ? DataFileResolver.Resolve("map/terrain.json5")
+                : Path.Combine(dataPath, "map", "terrain.json5");
 
             if (!File.Exists(terrainFilePath))
             {
@@ -77,6 +81,7 @@ namespace Core.Loaders
                 var terrain = new TerrainData
                 {
                     TerrainId = terrainId,
+                    Key = key,
                     Name = FormatTerrainName(key),
                     MovementCost = GetFloat(terrainObj, "movement_cost", 1.0f),
                     IsWater = GetBool(terrainObj, "is_water", false)
@@ -152,6 +157,7 @@ namespace Core.Loaders
                 var terrain = new TerrainData
                 {
                     TerrainId = id,
+                    Key = key,
                     Name = name,
                     MovementCost = moveCost,
                     IsWater = isWater

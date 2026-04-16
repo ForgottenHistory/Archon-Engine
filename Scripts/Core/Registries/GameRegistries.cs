@@ -70,7 +70,8 @@ namespace Core.Registries
     /// </summary>
     public class TerrainData
     {
-        public string Name { get; set; }
+        public string Key { get; set; }  // Raw registry key (e.g., "mountain", "inland_ocean")
+        public string Name { get; set; } // Display name (e.g., "Mountain", "Inland Ocean")
         public byte TerrainId { get; set; }
 
         // ENGINE properties (loaded from terrain.json5)

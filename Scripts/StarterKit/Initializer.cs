@@ -51,6 +51,9 @@ namespace StarterKit
         [Header("Visualization")]
         [SerializeField] private UnitVisualization unitVisualization;
 
+        [Header("Editor Tools")]
+        [SerializeField] private ProvinceTerrainEditorUI terrainEditorUI;
+
         [Header("Network")]
         [SerializeField] private LobbyUI lobbyUI;
         [SerializeField] private NetworkInitializer networkInitializer;
@@ -167,6 +170,8 @@ namespace StarterKit
                 toolbarUI = FindFirstObjectByType<ToolbarUI>();
             if (unitVisualization == null)
                 unitVisualization = FindFirstObjectByType<UnitVisualization>();
+            if (terrainEditorUI == null)
+                terrainEditorUI = FindFirstObjectByType<ProvinceTerrainEditorUI>();
             if (lobbyUI == null)
                 lobbyUI = FindFirstObjectByType<LobbyUI>();
             if (networkInitializer == null)
@@ -378,6 +383,17 @@ namespace StarterKit
 
             yield return null;
 
+            // Initialize terrain editor UI (available from main menu)
+            if (terrainEditorUI != null)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Initializing terrain editor UI...", "starter_kit");
+
+                terrainEditorUI.Initialize(gameState);
+            }
+
+            yield return null;
+
             // Initialize network components and lobby UI
             if (enableMultiplayer)
             {
@@ -385,7 +401,10 @@ namespace StarterKit
                     ArchonLogger.Log("Initializing network components...", "starter_kit");
 
                 if (lobbyUI != null)
+                {
                     lobbyUI.Initialize(gameState);
+                    lobbyUI.SetTerrainEditor(terrainEditorUI);
+                }
 
                 if (networkInitializer != null)
                     networkInitializer.Initialize(gameState, lobbyUI, countrySelectionUI);
@@ -587,15 +606,25 @@ namespace StarterKit
                     ArchonLogger.Log("Initializer: FarmDensityMapMode registered", "starter_kit");
             }
 
-            // Create and register Terrain Movement Cost map mode
+            // Register terrain visual map mode (shows actual terrain colors from blend maps)
+            if (mapModeManager != null)
+            {
+                var terrainVisualMapMode = new TerrainVisualMapMode();
+                mapModeManager.RegisterHandler(MapMode.Terrain, terrainVisualMapMode);
+
+                if (logProgress)
+                    ArchonLogger.Log("Initializer: TerrainVisualMapMode registered", "starter_kit");
+            }
+
+            // Create and register Terrain Movement Cost map mode on a separate slot
             // Demonstrates: ENGINE terrain costs visualized by GAME layer
             if (gameState.Registries?.Terrains != null && mapModeManager != null)
             {
                 terrainCostMapMode = new TerrainCostMapMode(gameState, mapModeManager);
-                mapModeManager.RegisterHandler(MapMode.Terrain, terrainCostMapMode);
+                mapModeManager.RegisterHandler(MapMode.StrategicView, terrainCostMapMode);
 
                 if (logProgress)
-                    ArchonLogger.Log("Initializer: TerrainCostMapMode registered", "starter_kit");
+                    ArchonLogger.Log("Initializer: TerrainCostMapMode registered (StrategicView slot)", "starter_kit");
             }
 
             yield return null;

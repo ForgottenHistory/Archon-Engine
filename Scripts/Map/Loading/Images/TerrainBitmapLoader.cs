@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Collections;
 using Unity.Collections.LowLevel.Unsafe;
+using Core.Modding;
 using Map.Rendering;
 using Utils;
 
@@ -48,9 +49,18 @@ namespace Map.Loading.Images
                 return;
             }
 
-            // Try PNG first, then BMP
-            string pngPath = System.IO.Path.Combine(mapDirectory, "terrain.png");
-            string bmpPath = System.IO.Path.Combine(mapDirectory, "terrain.bmp");
+            // Try PNG first, then BMP — with override-first resolution
+            string pngPath, bmpPath;
+            if (DataFileResolver.IsInitialized)
+            {
+                pngPath = DataFileResolver.Resolve("map/terrain.png");
+                bmpPath = DataFileResolver.Resolve("map/terrain.bmp");
+            }
+            else
+            {
+                pngPath = System.IO.Path.Combine(mapDirectory, "terrain.png");
+                bmpPath = System.IO.Path.Combine(mapDirectory, "terrain.bmp");
+            }
 
             string imagePath = null;
             if (System.IO.File.Exists(pngPath))

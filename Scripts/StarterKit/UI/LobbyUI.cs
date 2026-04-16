@@ -48,6 +48,17 @@ namespace StarterKit
         private NetworkManager networkManager;
         private ushort selectedCountryId;
 
+        // Map editor reference (set by Initializer)
+        private ProvinceTerrainEditorUI terrainEditor;
+
+        /// <summary>
+        /// Set the terrain editor reference. Called by Initializer after both are initialized.
+        /// </summary>
+        public void SetTerrainEditor(ProvinceTerrainEditorUI editor)
+        {
+            terrainEditor = editor;
+        }
+
         // State
         private LobbyState currentState = LobbyState.ModeSelection;
         private bool isHost;
@@ -162,7 +173,12 @@ namespace StarterKit
 
             // Join button
             joinButton = CreateStyledButton("Join Game", OnJoinClicked);
+            joinButton.style.marginBottom = SpacingLg;
             modeSelectionPanel.Add(joinButton);
+
+            // Map Editor button
+            var editorButton = CreateStyledButton("Map Editor", OnMapEditorClicked);
+            modeSelectionPanel.Add(editorButton);
 
             contentBox.Add(modeSelectionPanel);
         }
@@ -385,6 +401,32 @@ namespace StarterKit
 
             OnSinglePlayerSelected?.Invoke();
             Hide();
+        }
+
+        private void OnMapEditorClicked()
+        {
+            if (logProgress)
+                ArchonLogger.Log("LobbyUI: Map Editor selected", "starter_kit");
+
+            if (terrainEditor == null)
+            {
+                ArchonLogger.LogWarning("LobbyUI: ProvinceTerrainEditorUI not found - add it to the scene", "starter_kit");
+                return;
+            }
+
+            terrainEditor.OnBackClicked += OnTerrainEditorBack;
+
+            Hide();
+            terrainEditor.Show();
+        }
+
+        private void OnTerrainEditorBack()
+        {
+            if (terrainEditor != null)
+                terrainEditor.OnBackClicked -= OnTerrainEditorBack;
+
+            Show();
+            SetState(LobbyState.ModeSelection);
         }
 
         private void OnHostClicked()

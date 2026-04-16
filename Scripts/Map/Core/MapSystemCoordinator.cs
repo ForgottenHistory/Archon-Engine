@@ -465,6 +465,28 @@ namespace Map.Core
 
         #endregion
 
+        #region Runtime Terrain Updates
+
+        /// <summary>
+        /// Update terrain type for a single province and refresh GPU visuals.
+        /// Used by editor tools for live terrain painting.
+        /// </summary>
+        public void UpdateProvinceTerrain(ushort provinceId, uint terrainType)
+        {
+            dataLoader?.UpdateProvinceTerrain(provinceId, terrainType);
+        }
+
+        /// <summary>
+        /// Regenerate terrain blend maps from the current terrain buffer.
+        /// Call after one or more UpdateProvinceTerrain calls to refresh visuals.
+        /// </summary>
+        public void RegenerateTerrainBlendMaps()
+        {
+            dataLoader?.RegenerateBlendMaps();
+        }
+
+        #endregion
+
         #region Lifecycle
 
         private void OnDestroy()
