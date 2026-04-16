@@ -157,10 +157,10 @@ namespace StarterKit
             mapModeToggleButton.style.marginBottom = SpacingSm;
             contentBox.Add(mapModeToggleButton);
 
-            // Rebuild GPU button
-            var rebuildButton = CreateStyledButton("Rebuild Terrain GPU", HandleRebuildGPU);
-            rebuildButton.style.marginBottom = SpacingMd;
-            contentBox.Add(rebuildButton);
+            // Reset overrides button
+            var resetButton = CreateStyledButton("Reset to Original", HandleResetOverrides);
+            resetButton.style.marginBottom = SpacingMd;
+            contentBox.Add(resetButton);
 
             // Divider
             contentBox.Add(CreateDivider());
@@ -440,33 +440,103 @@ namespace StarterKit
             }
         }
 
-        private void HandleRebuildGPU()
+        private void HandleResetOverrides()
         {
-            // Flush any deferred terrain.png patches first
-            if (TerrainColorPatcher.HasDeferredPatches)
+            if (!Core.Modding.DataFileResolver.IsInitialized) return;
+
+            string overrideDir = Core.Modding.DataFileResolver.OverrideDirectory;
+            if (System.IO.Directory.Exists(overrideDir))
             {
-                TerrainColorPatcher.FlushDeferredImagePatches();
+                System.IO.Directory.Delete(overrideDir, true);
+                ArchonLogger.Log($"ProvinceTerrainEditorUI: Deleted override directory: {overrideDir}", "starter_kit");
             }
 
-            // Rebuild terrain color palette from in-memory TerrainData
-            if (dataTextures?.TerrainColorPalette != null && terrainRegistry != null)
+            // Clear pending changes
+            pendingChanges.Clear();
+            pendingColorChanges.Clear();
+
+            // Reload terrain colors from base terrain.json5 into registry + GPU palette
+            ReloadBaseTerrainColors();
+
+            // Rebuild the UI palette to reflect original colors
+            RebuildTerrainEntries();
+            RebuildPalette();
+            UpdatePendingLabel();
+
+            ArchonLogger.Log("ProvinceTerrainEditorUI: Reset to original data (terrain colors reloaded live, province terrains need restart)", "starter_kit");
+        }
+
+        private void ReloadBaseTerrainColors()
+        {
+            // Read base terrain.json5 directly
+            string basePath = System.IO.Path.Combine(
+                Core.Modding.DataFileResolver.BaseDirectory, "map", "terrain.json5");
+
+            if (!System.IO.File.Exists(basePath) || terrainRegistry == null) return;
+
+            try
             {
-                foreach (var terrain in terrainRegistry.GetAll())
+                var json = Core.Loaders.Json5Loader.LoadJson5File(basePath);
+                var categories = json?["categories"] as Newtonsoft.Json.Linq.JObject;
+                if (categories == null) return;
+
+                foreach (var property in categories.Properties())
                 {
-                    if (terrain.TerrainId < 32)
+                    string key = property.Name;
+                    var terrainObj = property.Value as Newtonsoft.Json.Linq.JObject;
+                    if (terrainObj == null) continue;
+
+                    var colorArray = terrainObj["color"] as Newtonsoft.Json.Linq.JArray;
+                    if (colorArray == null || colorArray.Count < 3) continue;
+
+                    byte r = (byte)(int)colorArray[0];
+                    byte g = (byte)(int)colorArray[1];
+                    byte b = (byte)(int)colorArray[2];
+
+                    // Find and update the TerrainData in registry
+                    foreach (var terrain in terrainRegistry.GetAll())
                     {
-                        dataTextures.TerrainColorPalette.SetPixel(
-                            terrain.TerrainId, 0,
-                            new Color32(terrain.ColorR, terrain.ColorG, terrain.ColorB, 255));
+                        if (terrain.Key == key)
+                        {
+                            terrain.ColorR = r;
+                            terrain.ColorG = g;
+                            terrain.ColorB = b;
+
+                            // Update GPU palette
+                            if (dataTextures?.TerrainColorPalette != null && terrain.TerrainId < 32)
+                            {
+                                dataTextures.TerrainColorPalette.SetPixel(
+                                    terrain.TerrainId, 0, new Color32(r, g, b, 255));
+                            }
+                            break;
+                        }
                     }
                 }
-                dataTextures.TerrainColorPalette.Apply(false);
+
+                dataTextures?.TerrainColorPalette?.Apply(false);
             }
+            catch (System.Exception e)
+            {
+                ArchonLogger.LogError($"ProvinceTerrainEditorUI: Failed to reload base terrain colors: {e.Message}", "starter_kit");
+            }
+        }
 
-            // Regenerate terrain blend maps
-            mapCoordinator?.RegenerateTerrainBlendMaps();
+        private void RebuildTerrainEntries()
+        {
+            terrainEntries.Clear();
+            if (terrainRegistry == null) return;
 
-            ArchonLogger.Log("ProvinceTerrainEditorUI: Rebuilt terrain GPU textures", "starter_kit");
+            foreach (var terrain in terrainRegistry.GetAll())
+            {
+                terrainEntries.Add(new TerrainEntry
+                {
+                    Key = terrain.Key,
+                    Name = terrain.Name,
+                    TerrainId = terrain.TerrainId,
+                    Color = new Color(terrain.ColorR / 255f, terrain.ColorG / 255f, terrain.ColorB / 255f, 1f),
+                    IsWater = terrain.IsWater
+                });
+            }
         }
 
         private void HandleMapModeToggle()

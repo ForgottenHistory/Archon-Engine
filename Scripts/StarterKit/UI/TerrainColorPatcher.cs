@@ -95,9 +95,13 @@ namespace StarterKit
                 return false;
             }
 
-            // Defer terrain.png patch — Texture2D operations during play mode allocate GPU
-            // memory that corrupts active render textures. Flushed after play mode exits.
-            deferredImagePatches.Add((oldColor, newColor, dataDirectory));
+            // Patch the .pixels cache directly (pure CPU, no Texture2D GPU allocation).
+            // The engine loads from cache when it's newer than the source image.
+            // We ensure a terrain.png exists in the override directory so the engine
+            // resolves there and finds our patched cache alongside it.
+            string overrideMapDir = Path.Combine(dataDirectory, "map");
+            EnsureTerrainImageInOverride(overrideMapDir);
+            PatchPixelsCache(oldColor, newColor, overrideMapDir);
 
             ArchonLogger.Log(
                 $"TerrainColorPatcher: Saved '{terrain.Key}' color ({newColor.r},{newColor.g},{newColor.b}) to disk",
@@ -171,8 +175,105 @@ namespace StarterKit
         }
 
         /// <summary>
+        /// Ensure terrain.png and its .pixels cache exist in the override directory.
+        /// Copies from base if not present.
+        /// </summary>
+        private static void EnsureTerrainImageInOverride(string overrideMapDir)
+        {
+            if (!Core.Modding.DataFileResolver.IsInitialized) return;
+
+            string overridePng = Path.Combine(overrideMapDir, "terrain.png");
+            if (File.Exists(overridePng)) return;
+
+            string basePng = Path.Combine(Core.Modding.DataFileResolver.BaseDirectory, "map", "terrain.png");
+            if (!File.Exists(basePng)) return;
+
+            Directory.CreateDirectory(overrideMapDir);
+            File.Copy(basePng, overridePng);
+
+            // Also copy the .pixels cache if it exists
+            string baseCache = basePng + ".pixels";
+            string overrideCache = overridePng + ".pixels";
+            if (File.Exists(baseCache) && !File.Exists(overrideCache))
+            {
+                File.Copy(baseCache, overrideCache);
+            }
+
+            ArchonLogger.Log("TerrainColorPatcher: Copied terrain.png + cache to override directory", "starter_kit");
+        }
+
+        /// <summary>
+        /// Patch the .pixels cache file directly with color swaps. Pure CPU, no GPU allocation.
+        /// The engine loads from cache when cache timestamp > source image timestamp.
+        /// Cache format: 16-byte header (magic "RPXL" + width + height + bpp + colorType + bitDepth + reserved)
+        ///               then raw pixel bytes (RGB, 3 bytes per pixel for terrain).
+        /// </summary>
+        private static void PatchPixelsCache(Color32 oldColor, Color32 newColor, string mapDirectory)
+        {
+            // Look for terrain image in the specified directory
+            string pngPath = Path.Combine(mapDirectory, "terrain.png");
+            string bmpPath = Path.Combine(mapDirectory, "terrain.bmp");
+            string imagePath = File.Exists(pngPath) ? pngPath : (File.Exists(bmpPath) ? bmpPath : null);
+            if (imagePath == null)
+            {
+                ArchonLogger.LogWarning("TerrainColorPatcher: No terrain image found, skipping cache patch", "starter_kit");
+                return;
+            }
+
+            string cachePath = imagePath + ".pixels";
+            if (!File.Exists(cachePath))
+            {
+                ArchonLogger.LogWarning("TerrainColorPatcher: No .pixels cache found, skipping cache patch", "starter_kit");
+                return;
+            }
+
+            // Read entire cache file
+            byte[] cacheBytes = File.ReadAllBytes(cachePath);
+
+            // Validate header
+            const int HEADER_SIZE = 16;
+            if (cacheBytes.Length < HEADER_SIZE ||
+                cacheBytes[0] != 0x52 || cacheBytes[1] != 0x50 ||
+                cacheBytes[2] != 0x58 || cacheBytes[3] != 0x4C) // "RPXL"
+            {
+                ArchonLogger.LogWarning("TerrainColorPatcher: Invalid .pixels cache header", "starter_kit");
+                return;
+            }
+
+            int bytesPerPixel = cacheBytes[12];
+            if (bytesPerPixel < 3)
+            {
+                ArchonLogger.LogWarning($"TerrainColorPatcher: Unexpected bytesPerPixel={bytesPerPixel}", "starter_kit");
+                return;
+            }
+
+            // Swap matching RGB triplets in the raw pixel data
+            int replaced = 0;
+            for (int i = HEADER_SIZE; i + bytesPerPixel <= cacheBytes.Length; i += bytesPerPixel)
+            {
+                if (cacheBytes[i] == oldColor.r && cacheBytes[i + 1] == oldColor.g && cacheBytes[i + 2] == oldColor.b)
+                {
+                    cacheBytes[i] = newColor.r;
+                    cacheBytes[i + 1] = newColor.g;
+                    cacheBytes[i + 2] = newColor.b;
+                    replaced++;
+                }
+            }
+
+            if (replaced > 0)
+            {
+                File.WriteAllBytes(cachePath, cacheBytes);
+                ArchonLogger.Log($"TerrainColorPatcher: Patched {replaced} pixels in .pixels cache", "starter_kit");
+            }
+            else
+            {
+                ArchonLogger.LogWarning($"TerrainColorPatcher: No pixels matched ({oldColor.r},{oldColor.g},{oldColor.b}) in cache", "starter_kit");
+            }
+        }
+
+        /// <summary>
         /// Replace all pixels matching oldColor with newColor in terrain.png.
-        /// Also invalidates the .pixels cache.
+        /// WARNING: Uses Texture2D which allocates GPU memory — do NOT call during play mode.
         /// </summary>
         private static void PatchTerrainImage(Color32 oldColor, Color32 newColor, string mapDirectory)
         {
