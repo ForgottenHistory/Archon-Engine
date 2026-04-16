@@ -141,6 +141,16 @@ namespace Engine
         public MapSystemCoordinator MapSystemCoordinator => mapSystemCoordinator;
 
         /// <summary>
+        /// Hot reload all game data from disk. Clears registries, re-runs loading pipeline,
+        /// rebuilds GPU textures. Use after modifying data files at runtime.
+        /// </summary>
+        public Coroutine ReloadData(System.Action<float, string> onProgress = null)
+        {
+            return StartCoroutine(DataReloadManager.ReloadAllData(
+                GameState, mapSystemCoordinator, onProgress));
+        }
+
+        /// <summary>
         /// Province color-to-ID mapping. Used for adjacency scanning and map mode initialization.
         /// </summary>
         public ProvinceMapping ProvinceMapping => mapSystemCoordinator?.ProvinceMapping;

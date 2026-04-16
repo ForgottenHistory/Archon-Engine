@@ -159,7 +159,7 @@ namespace Core.Loaders
                     DefinitionId = def.ProvinceID,
                     Name = def.Name,
                     Terrain = (byte)(def.IsWater ? 0 : 1), // 0 = water, 1 = land
-                    IsPassable = !def.IsWater // Water provinces not passable by default for land units
+                    IsPassable = true
                 };
 
                 try

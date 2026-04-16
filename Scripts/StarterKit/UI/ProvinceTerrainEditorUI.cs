@@ -471,16 +471,31 @@ namespace StarterKit
             pendingChanges.Clear();
             pendingColorChanges.Clear();
             pendingPassableChanges.Clear();
-
-            // Reload terrain colors from base terrain.json5 into registry + GPU palette
-            ReloadBaseTerrainColors();
-
-            // Rebuild the UI palette to reflect original colors
-            RebuildTerrainEntries();
-            RebuildPalette();
             UpdatePendingLabel();
 
-            ArchonLogger.Log("ProvinceTerrainEditorUI: Reset to original data (terrain colors reloaded live, province terrains need restart)", "starter_kit");
+            // Hot reload from base data, then rebuild UI
+            var engine = ArchonEngine.Instance;
+            if (engine != null)
+            {
+                StartCoroutine(ReloadAndRebuild(engine));
+            }
+        }
+
+        private System.Collections.IEnumerator ReloadAndRebuild(ArchonEngine engine)
+        {
+            // Wait for the full reload pipeline to complete
+            yield return engine.ReloadData((progress, status) =>
+            {
+                ArchonLogger.Log($"DataReload: {progress:F0}% - {status}", "starter_kit");
+            });
+
+            // Now registries and province data are fully repopulated
+            RebuildTerrainEntries();
+            RebuildPalette();
+            lastClickedProvince = 0;
+            UpdatePendingLabel();
+
+            ArchonLogger.Log("ProvinceTerrainEditorUI: UI rebuilt after hot reload", "starter_kit");
         }
 
         private void ReloadBaseTerrainColors()

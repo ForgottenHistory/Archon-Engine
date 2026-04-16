@@ -110,8 +110,10 @@ namespace Core.Queries
         /// </summary>
         public bool IsPassable(ushort provinceId)
         {
-            if (provinceRegistry == null) return true;
-            var data = provinceRegistry.GetByDefinition(provinceId);
+            // Use lazy lookup — registry may not exist at ProvinceQueries construction time
+            var registry = provinceRegistry ?? GameState.Instance?.Registries?.Provinces;
+            if (registry == null) return true;
+            var data = registry.GetByDefinition(provinceId);
             return data?.IsPassable ?? true;
         }
 

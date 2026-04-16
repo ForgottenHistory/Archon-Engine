@@ -158,6 +158,18 @@ namespace Core.Registries
         }
 
         /// <summary>
+        /// Clear all entries, resetting to initial state (index 0 = null sentinel).
+        /// Used for hot reload — allows re-running the loading pipeline.
+        /// </summary>
+        public void Clear()
+        {
+            stringToId.Clear();
+            items.Clear();
+            items.Add(null); // Re-reserve index 0
+            ArchonLogger.Log($"Registry<{typeName}> cleared", "core_data_linking");
+        }
+
+        /// <summary>
         /// Replace an existing entity (for mod support)
         /// </summary>
         public void Replace(string key, T newItem)

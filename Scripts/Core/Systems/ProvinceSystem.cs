@@ -76,6 +76,17 @@ namespace Core.Systems
         public bool IsInitialized => isInitialized;
 
         /// <summary>
+        /// Clear all province data for hot reload.
+        /// After calling this, re-run province loading phases to repopulate.
+        /// </summary>
+        public void ClearForReload()
+        {
+            if (!isInitialized) return;
+            dataManager.Clear();
+            ArchonLogger.Log("ProvinceSystem: Cleared for reload", "core_simulation");
+        }
+
+        /// <summary>
         /// Initialize the province system with event bus
         /// </summary>
         public void Initialize(EventBus eventBus)

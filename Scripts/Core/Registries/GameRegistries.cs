@@ -44,6 +44,21 @@ namespace Core.Registries
         }
 
         /// <summary>
+        /// Clear all registries for hot reload.
+        /// After calling this, re-run the data loading pipeline to repopulate.
+        /// </summary>
+        public void Clear()
+        {
+            Terrains.Clear();
+            Buildings.Clear();
+            Technologies.Clear();
+            Governments.Clear();
+            Countries.Clear();
+            Provinces.Clear();
+            ArchonLogger.Log("GameRegistries: All registries cleared for reload", "core_data_linking");
+        }
+
+        /// <summary>
         /// Validate all registries have required data
         /// </summary>
         public bool ValidateRegistries()

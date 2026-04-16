@@ -177,6 +177,18 @@ namespace Core.Registries
             var validProvinces = GetAll().Count();
             return $"ProvinceRegistry: {validProvinces} provinces, {definitionToRuntime.Count} definition mappings, capacity {provinces.Count - 1}";
         }
+
+        /// <summary>
+        /// Clear all entries, resetting to initial state.
+        /// Used for hot reload — allows re-running the loading pipeline.
+        /// </summary>
+        public void Clear()
+        {
+            definitionToRuntime.Clear();
+            provinces.Clear();
+            provinces.Add(null); // Re-reserve index 0
+            ArchonLogger.Log("ProvinceRegistry cleared", "core_data_linking");
+        }
     }
 
     /// <summary>

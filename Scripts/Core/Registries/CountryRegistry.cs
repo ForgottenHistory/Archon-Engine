@@ -180,6 +180,18 @@ namespace Core.Registries
             var validCountries = GetAll().Count();
             return $"CountryRegistry: {validCountries} countries, {tagToId.Count} tags, capacity {countries.Count - 1}";
         }
+
+        /// <summary>
+        /// Clear all entries, resetting to initial state.
+        /// Used for hot reload — allows re-running the loading pipeline.
+        /// </summary>
+        public void Clear()
+        {
+            tagToId.Clear();
+            countries.Clear();
+            countries.Add(null); // Re-reserve index 0
+            ArchonLogger.Log("CountryRegistry cleared", "core_data_linking");
+        }
     }
 
     /// <summary>

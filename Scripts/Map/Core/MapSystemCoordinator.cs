@@ -485,6 +485,32 @@ namespace Map.Core
             dataLoader?.RegenerateBlendMaps();
         }
 
+        /// <summary>
+        /// Reload terrain data from disk and rebuild GPU textures.
+        /// Called by DataReloadManager during hot reload.
+        /// Re-runs terrain analysis and regenerates blend maps.
+        /// </summary>
+        public void ReloadTerrainData(GameState gameState)
+        {
+            if (dataLoader == null || gameState == null) return;
+
+            // Re-analyze terrain and rebuild blend maps
+            dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
+
+            // Rebind the new terrain buffer to material (AnalyzeProvince creates a new ComputeBuffer)
+            var material = meshRenderer?.sharedMaterial;
+            var terrainBuffer = dataLoader.GetProvinceTerrainBuffer();
+            if (material != null && terrainBuffer != null)
+            {
+                material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+            }
+
+            // Refresh owner texture (full repopulate from province data)
+            ownerTextureDispatcher?.PopulateOwnerTexture(gameState.ProvinceQueries);
+
+            ArchonLogger.Log("MapSystemCoordinator: Terrain data reloaded", "map_initialization");
+        }
+
         #endregion
 
         #region Lifecycle
