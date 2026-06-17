@@ -40,17 +40,6 @@ CBUFFER_START(UnityPerMaterial)
     float _ProvinceBorderStrength;
     float4 _ProvinceBorderColor;
 
-    // Vector curve border parameters
-    float _UseVectorCurves;
-    uint _BezierSegmentCount;
-    int _MapWidth;
-    int _MapHeight;
-
-    // Spatial grid parameters
-    int _GridWidth;
-    int _GridHeight;
-    int _GridCellSize;
-
     // Map mode colors (configurable from VisualStyleConfiguration)
     float4 _OceanColor;
     float4 _UnownedLandColor;
@@ -147,13 +136,5 @@ TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex); // For SRP Batcher
 // Switching map modes = changing _CustomMapModeIndex (row offset), instant GPU-side
 // Memory: 100k provinces * 16 modes * 4 bytes = ~6.4MB (vs 6.24GB for full-res array)
 TEXTURE2D(_ProvincePaletteTexture); SAMPLER(sampler_ProvincePaletteTexture);
-
-// CRITICAL: Include BezierCurves.hlsl to define BezierSegment struct
-#include "../BezierCurves.hlsl"
-
-// Vector curve border buffers (set from C#)
-StructuredBuffer<BezierSegment> _BezierSegments;
-StructuredBuffer<uint2> _GridCellRanges;         // Per-cell (startIndex, count)
-StructuredBuffer<uint> _GridSegmentIndices;       // Flat segment indices
 
 #endif // DEFAULT_COMMON_INCLUDED

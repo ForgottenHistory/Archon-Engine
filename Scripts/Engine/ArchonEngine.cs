@@ -453,6 +453,17 @@ namespace Engine
             // ArchonEngine is the SINGLE OWNER of component initialization
             // ============================================================
 
+            // MapRendererRegistry (required) - must exist BEFORE any map subsystem
+            // initializes, since subsystems register their default renderers against
+            // MapRendererRegistry.Instance during their own Initialize(). Auto-create
+            // so a bare scene works with no manual wiring (GAME can register customs).
+            if (MapRendererRegistry.Instance == null)
+            {
+                var existing = mapGenerator.GetComponent<MapRendererRegistry>();
+                if (existing == null)
+                    mapGenerator.AddComponent<MapRendererRegistry>();
+            }
+
             // BorderComputeDispatcher (required, has compute shader)
             borderDispatcher = mapGenerator.GetComponent<BorderComputeDispatcher>();
             if (borderDispatcher == null)
@@ -716,6 +727,10 @@ namespace Engine
                 ArchonLogger.Log("ArchonEngine: Initializing borders via VisualStyleManager...", "map_initialization");
                 VisualStyleManager.ApplyBorderConfiguration(visualStyle);
             }
+
+            // Finalize the renderer registry now that all subsystems have registered
+            // their default renderers (fog/highlight/colorizer/terrain).
+            MapRendererRegistry.Instance?.Initialize();
 
             // Initialize camera controller if present
             InitializeCameraController();

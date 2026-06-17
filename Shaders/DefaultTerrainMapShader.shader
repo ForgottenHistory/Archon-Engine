@@ -61,17 +61,6 @@ Shader "Archon/DefaultTerrain"
         _GradientAlphaInside ("Border Gradient Alpha Inside", Range(0, 1)) = 1.0
         _GradientAlphaOutside ("Border Gradient Alpha Outside", Range(0, 1)) = 0.0
 
-        // Vector curve rendering (set from C#)
-        [Toggle] _UseVectorCurves ("Use Vector Curve Borders", Float) = 0
-        _BezierSegmentCount ("Bezier Segment Count", Int) = 0
-        _MapWidth ("Map Width", Int) = 5632
-        _MapHeight ("Map Height", Int) = 2048
-
-        // Spatial grid parameters (set from C#)
-        _GridWidth ("Grid Width", Int) = 88
-        _GridHeight ("Grid Height", Int) = 32
-        _GridCellSize ("Grid Cell Size", Int) = 64
-
         // Map mode colors (configurable from GAME layer)
         _OceanColor ("Ocean Color", Color) = (0.098, 0.157, 0.439, 1)
         _UnownedLandColor ("Unowned Land Color", Color) = (0.8, 0.7, 0.5, 1)

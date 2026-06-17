@@ -5,7 +5,7 @@
 #ifndef DEFAULT_DEBUG_MODES_INCLUDED
 #define DEFAULT_DEBUG_MODES_INCLUDED
 
-// Debug mode: Border visualization with vector curves
+// Debug mode: Border visualization
 float4 RenderBorderDebugMode(float2 uv)
 {
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
@@ -14,42 +14,6 @@ float4 RenderBorderDebugMode(float2 uv)
     if (borderMask < 0.01)
     {
         return float4(0, 0, 0, 1);
-    }
-
-    if (_UseVectorCurves > 0.5)
-    {
-        float2 mapSize = float2(_MapWidth, _MapHeight);
-        float2 mapPos = correctedUV * mapSize;
-
-        int cellX = (int)(mapPos.x / (float)_GridCellSize);
-        int cellY = (int)(mapPos.y / (float)_GridCellSize);
-        int cellIdx = cellY * _GridWidth + cellX;
-
-        uint2 cellRange = _GridCellRanges[cellIdx];
-        uint startIdx = cellRange.x;
-        uint count = cellRange.y;
-
-        float minDistance = 999999.0;
-        int closestType = 0;
-
-        for (uint i = 0; i < count; i++)
-        {
-            uint segIdx = _GridSegmentIndices[startIdx + i];
-            BezierSegment seg = _BezierSegments[segIdx];
-            float dist = DistanceToBezier(mapPos, seg);
-
-            if (dist < minDistance)
-            {
-                minDistance = dist;
-                closestType = seg.borderType;
-            }
-        }
-
-        if (minDistance <= 1.5)
-        {
-            if (closestType == 2) return float4(1, 0, 0, 1); // Country border = red
-            else if (closestType == 1) return float4(0, 1, 0, 1); // Province border = green
-        }
     }
 
     return float4(borderMask, borderMask, 0.0, 1.0);

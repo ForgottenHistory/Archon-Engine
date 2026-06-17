@@ -6,9 +6,6 @@
 // Shared functions for all map mode rendering
 // ============================================================================
 
-// Include Bézier curve utilities for vector border rendering
-#include "../BezierCurves.hlsl"
-
 // Province ID encoding/decoding functions
 uint DecodeProvinceID(float2 encoded)
 {
@@ -195,110 +192,6 @@ float4 ApplyBorders(float4 baseColor, float2 uv)
     else if (_BorderRenderingMode == 2) // ShaderPixelPerfect
     {
         return ApplyPixelPerfectBorders(baseColor, correctedUV);
-    }
-
-    return baseColor;
-}
-
-// ============================================================================
-// Vector Curve Border Rendering (Resolution-Independent)
-// ============================================================================
-
-/// <summary>
-/// Apply borders using vector Bézier curves with spatial acceleration
-/// Uses spatial hash grid to test only nearby segments
-/// </summary>
-float4 ApplyBordersVectorCurvesSpatial(
-    float4 baseColor,
-    float2 uv,
-    StructuredBuffer<BezierSegment> bezierSegments,
-    StructuredBuffer<uint2> gridCellRanges,
-    StructuredBuffer<uint> gridSegmentIndices,
-    int gridWidth,
-    int gridHeight,
-    int cellSize,
-    float2 mapSize)
-{
-    float2 correctedUV = float2(uv.x, 1.0 - uv.y);
-
-    // Check border mode - use pixel perfect if mode is 2
-    if (_BorderRenderingMode == 2)
-    {
-        // Use pixel-perfect texture directly
-        float2 borderMask = SAMPLE_TEXTURE2D(_PixelPerfectBorderTexture, sampler_PixelPerfectBorderTexture, correctedUV).rg;
-
-        if (borderMask.r > 0.5)
-        {
-            baseColor.rgb = _CountryBorderColor.rgb;
-        }
-        else if (borderMask.g > 0.5 && _ProvinceBorderStrength > 0.01)
-        {
-            baseColor.rgb = _ProvinceBorderColor.rgb;
-        }
-        return baseColor;
-    }
-
-    // Distance field mode with vector curves
-    // Convert UV to pixel coordinates
-    float2 pixelPos = correctedUV * mapSize;
-
-    // Calculate grid cell for spatial lookup
-    int gridX = clamp((int)(pixelPos.x / cellSize), 0, gridWidth - 1);
-    int gridY = clamp((int)(pixelPos.y / cellSize), 0, gridHeight - 1);
-
-    // Get cell index and segment range
-    int cellIndex = gridY * gridWidth + gridX;
-    uint2 cellRange = gridCellRanges[cellIndex];
-    uint startIdx = cellRange.x;
-    uint count = cellRange.y;
-
-    // Early out if no segments in this cell
-    if (count == 0)
-    {
-        return baseColor;
-    }
-
-    // Find minimum distance to any curve
-    float borderWidth = 0.6;
-    float minDistance = 999999.0;
-
-    for (uint i = 0; i < count; i++)
-    {
-        uint segmentIdx = gridSegmentIndices[startIdx + i];
-        BezierSegment seg = bezierSegments[segmentIdx];
-
-        float dist = DistanceToBezier(pixelPos, seg);
-
-        // Directional culling for disconnected endpoints
-        bool p0Connected = (seg.connectivityFlags & 0x1) != 0;
-        bool p3Connected = (seg.connectivityFlags & 0x2) != 0;
-
-        float distToP0 = length(pixelPos - seg.P0);
-        float distToP3 = length(pixelPos - seg.P3);
-
-        if (!p0Connected && distToP0 < 1.5)
-        {
-            float2 tangentP0 = normalize(seg.P1 - seg.P0);
-            float2 toPixel = normalize(pixelPos - seg.P0);
-            if (dot(toPixel, tangentP0) < 0.0)
-                dist = 999999.0;
-        }
-
-        if (!p3Connected && distToP3 < 1.5)
-        {
-            float2 tangentP3 = normalize(seg.P3 - seg.P2);
-            float2 toPixel = normalize(pixelPos - seg.P3);
-            if (dot(toPixel, tangentP3) < 0.0)
-                dist = 999999.0;
-        }
-
-        minDistance = min(minDistance, dist);
-    }
-
-    // Render border if close enough
-    if (minDistance < borderWidth)
-    {
-        baseColor.rgb = _CountryBorderColor.rgb;
     }
 
     return baseColor;
