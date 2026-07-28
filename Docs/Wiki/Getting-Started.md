@@ -19,7 +19,7 @@ If your project uses Git, add Archon as a submodule:
 
 ```bash
 cd YourUnityProject/Assets
-git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engine
+git submodule add https://github.com/ForgottenHistory/Archon-Engine.git Archon-Engine
 ```
 
 This keeps Archon versioned separately and makes updates easy with `git submodule update`.
