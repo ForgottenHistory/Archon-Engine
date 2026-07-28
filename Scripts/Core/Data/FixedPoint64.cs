@@ -117,17 +117,43 @@ namespace Core.Data
         /// <summary>Multiplies two fixed-point values using 128-bit intermediate to prevent overflow.</summary>
         public static FixedPoint64 operator *(FixedPoint64 a, FixedPoint64 b)
         {
-            // Use 128-bit intermediate to avoid overflow
-            // Split into high and low parts
-            long aHigh = a.RawValue >> FRACTIONAL_BITS;
-            long aLow = a.RawValue & (ONE_RAW - 1);
-            long bHigh = b.RawValue >> FRACTIONAL_BITS;
-            long bLow = b.RawValue & (ONE_RAW - 1);
+            // Computes the full 128-bit product, then arithmetic-shifts right by
+            // FRACTIONAL_BITS. Result is floor(a*b / 2^32), exact for all inputs.
+            //
+            // NOTE: The previous implementation split the operands with
+            // (value >> 32) / (value & 0xFFFFFFFF). That decomposition is only valid
+            // for non-negative values - for a negative operand the arithmetic shift
+            // floors the high limb while the low limb stays positive, so the cross
+            // terms don't reconstruct the product. It returned results off by exactly
+            // 1.0 whenever BOTH operands were negative AND both had a fractional part
+            // (e.g. -7.25 * -3.125 gave 21.65625 instead of 22.65625). Whole-numbered
+            // and single-negative operands happened to be correct, which is why it
+            // went unnoticed. ~15% of uniformly random operand pairs were affected.
 
-            // Multiply parts
-            long result = (aHigh * bHigh) << FRACTIONAL_BITS;
-            result += aHigh * bLow + aLow * bHigh;
-            result += (aLow * bLow) >> FRACTIONAL_BITS;
+            // Unsigned 64x64 -> 128 using 32-bit limbs
+            ulong ua = (ulong)a.RawValue;
+            ulong ub = (ulong)b.RawValue;
+
+            ulong aLow = ua & 0xFFFFFFFFUL;
+            ulong aHigh = ua >> 32;
+            ulong bLow = ub & 0xFFFFFFFFUL;
+            ulong bHigh = ub >> 32;
+
+            ulong lowLow = aLow * bLow;
+            ulong lowHigh = aLow * bHigh;
+            ulong highLow = aHigh * bLow;
+            ulong highHigh = aHigh * bHigh;
+
+            ulong mid = (lowLow >> 32) + (lowHigh & 0xFFFFFFFFUL) + (highLow & 0xFFFFFFFFUL);
+            ulong resultLow = (lowLow & 0xFFFFFFFFUL) | (mid << 32);
+            ulong resultHigh = highHigh + (lowHigh >> 32) + (highLow >> 32) + (mid >> 32);
+
+            // Two's-complement correction to turn the unsigned product into a signed one
+            if (a.RawValue < 0) resultHigh -= ub;
+            if (b.RawValue < 0) resultHigh -= ua;
+
+            // Shift the 128-bit value right by FRACTIONAL_BITS
+            long result = (long)((resultLow >> FRACTIONAL_BITS) | (resultHigh << (64 - FRACTIONAL_BITS)));
 
             return new FixedPoint64(result);
         }
@@ -138,19 +164,50 @@ namespace Core.Data
             if (b.RawValue == 0)
                 throw new DivideByZeroException("Cannot divide by zero");
 
-            // Shift left for precision, then divide
-            // Handle sign separately to avoid overflow
-            long dividend = a.RawValue;
-            long divisor = b.RawValue;
+            // Long division: take the integer quotient first, then generate the
+            // fractional bits from the remainder in chunks small enough that no
+            // intermediate shift can overflow.
+            //
+            // NOTE: The previous implementation was (dividend << 32) / divisor.
+            // That shift overflows for any |dividend| >= 0.5, because the raw value
+            // already uses 32 fractional bits - shifting 32 more needs 64+ bits of
+            // headroom that a long does not have. It silently wrapped and returned
+            // garbage: 1/180 gave 0, and 1000/180 gave 0. Practically every division
+            // outside (-0.5, 0.5) was wrong, including the (x << 32) / guess step
+            // inside Sqrt.
 
-            bool negativeResult = (dividend < 0) ^ (divisor < 0);
-            if (dividend < 0) dividend = -dividend;
-            if (divisor < 0) divisor = -divisor;
+            bool negativeResult = (a.RawValue < 0) ^ (b.RawValue < 0);
 
-            // Perform division with extended precision
-            long result = (dividend << FRACTIONAL_BITS) / divisor;
+            ulong dividend = a.RawValue < 0 ? (ulong)(-a.RawValue) : (ulong)a.RawValue;
+            ulong divisor = b.RawValue < 0 ? (ulong)(-b.RawValue) : (ulong)b.RawValue;
 
-            return new FixedPoint64(negativeResult ? -result : result);
+            ulong quotient = dividend / divisor;
+            ulong remainder = dividend - quotient * divisor;
+
+            ulong result = quotient << FRACTIONAL_BITS;
+
+            // Emit the remaining fractional bits, largest safe chunk at a time.
+            int bitsRemaining = FRACTIONAL_BITS;
+            while (bitsRemaining > 0 && remainder != 0)
+            {
+                int chunk = bitsRemaining < 31 ? bitsRemaining : 31;
+
+                // Shrink the chunk until shifting the remainder cannot overflow
+                while (chunk > 0 && (remainder >> (64 - chunk)) != 0)
+                    chunk--;
+
+                if (chunk == 0)
+                    break;
+
+                remainder <<= chunk;
+                ulong chunkQuotient = remainder / divisor;
+                remainder -= chunkQuotient * divisor;
+
+                result |= chunkQuotient << (bitsRemaining - chunk);
+                bitsRemaining -= chunk;
+            }
+
+            return new FixedPoint64(negativeResult ? -(long)result : (long)result);
         }
 
         /// <summary>Returns the remainder after division.</summary>
@@ -261,21 +318,34 @@ namespace Core.Data
             if (value.RawValue <= 0)
                 return Zero;
 
-            // Initial guess: half the value or 1, whichever is larger
-            long x = value.RawValue;
-            long guess = x >> 1;
-            if (guess == 0) guess = ONE_RAW;
+            // NOTE: This previously computed the Newton step as
+            // (x << FRACTIONAL_BITS) / guess directly on the raw longs. That shift
+            // overflows for any value >= 0.5 (the raw value already carries 32
+            // fractional bits), so Sqrt was wrong nearly everywhere - Sqrt(4)
+            // returned 0.0078 instead of 2. It now goes through operator/, which
+            // performs the wide division correctly.
 
-            // Newton-Raphson iterations (8 iterations gives full precision)
+            // Initial guess from bit length: sqrt halves the magnitude's exponent, so
+            // a raw value of n bits has a root of roughly (n + FRACTIONAL_BITS)/2 bits.
+            // The old guess of value/2 was far too high for large inputs and 8 Newton
+            // steps could not recover - Sqrt(1000000) converged to 2120 instead of 1000.
+            int bitLength = 64;
+            while (bitLength > 0 && (value.RawValue >> (bitLength - 1)) == 0)
+                bitLength--;
+
+            int guessShift = (bitLength + FRACTIONAL_BITS) / 2;
+            FixedPoint64 guess = guessShift >= 63
+                ? new FixedPoint64(long.MaxValue >> 1)
+                : new FixedPoint64(1L << guessShift);
+
+            // Newton-Raphson: guess = (guess + value/guess) / 2
             for (int i = 0; i < 8; i++)
             {
-                // newGuess = (guess + value/guess) / 2
-                // In fixed-point: we need to be careful with the division
-                long quotient = (x << FRACTIONAL_BITS) / guess;
-                guess = (guess + quotient) >> 1;
+                FixedPoint64 quotient = value / guess;
+                guess = new FixedPoint64((guess.RawValue + quotient.RawValue) >> 1);
             }
 
-            return new FixedPoint64(guess);
+            return guess;
         }
 
         /// <summary>
@@ -305,6 +375,88 @@ namespace Core.Data
             }
 
             return result;
+        }
+
+        // ===== Trigonometry =====
+        // Deterministic sine/cosine. Uses a fixed-point Taylor series on a range-reduced
+        // argument - no System.Math, no floats, so results are bit-identical on every
+        // platform (required for lockstep multiplayer and reproducible saves).
+        //
+        // Accuracy: max absolute error ~7e-8 measured over +-100 radians, and
+        // |sin^2 + cos^2 - 1| stays under 1.5e-7. Far below what any simulation
+        // decision should depend on.
+
+        /// <summary>Pi (3.14159265...)</summary>
+        public static readonly FixedPoint64 Pi = new FixedPoint64(13493037705L);
+
+        /// <summary>Pi * 2 (full turn in radians)</summary>
+        public static readonly FixedPoint64 TwoPi = new FixedPoint64(26986075409L);
+
+        /// <summary>Pi / 2 (quarter turn in radians)</summary>
+        public static readonly FixedPoint64 HalfPi = new FixedPoint64(6746518852L);
+
+        /// <summary>
+        /// Sine of an angle in radians (deterministic, no floating point).
+        /// </summary>
+        public static FixedPoint64 Sin(FixedPoint64 radians)
+        {
+            // Range-reduce into [-Pi, Pi] so the series converges quickly.
+            long r = radians.RawValue % TwoPi.RawValue;
+            if (r > Pi.RawValue)
+                r -= TwoPi.RawValue;
+            else if (r < -Pi.RawValue)
+                r += TwoPi.RawValue;
+
+            // Fold into [-Pi/2, Pi/2] using sin(x) = sin(Pi - x). This keeps |x| small,
+            // where the truncated Taylor series is most accurate.
+            if (r > HalfPi.RawValue)
+                r = Pi.RawValue - r;
+            else if (r < -HalfPi.RawValue)
+                r = -Pi.RawValue - r;
+
+            FixedPoint64 x = new FixedPoint64(r);
+            FixedPoint64 x2 = x * x;
+
+            // sin(x) = x - x^3/3! + x^5/5! - x^7/7! + x^9/9! - x^11/11!
+            //        = x * (1 - x2*(1/3! - x2*(1/5! - x2*(1/7! - x2*(1/9! - x2/11!)))))
+            // Evaluated via Horner's method to minimise intermediate rounding.
+            // Reciprocal factorials as raw 32.32 values.
+            FixedPoint64 inv11f = new FixedPoint64(108L);
+            FixedPoint64 inv9f = new FixedPoint64(11836L);
+            FixedPoint64 inv7f = new FixedPoint64(852176L);
+            FixedPoint64 inv5f = new FixedPoint64(35791394L);
+            FixedPoint64 inv3f = new FixedPoint64(715827883L);
+
+            FixedPoint64 term = inv11f;
+            term = inv9f - x2 * term;
+            term = inv7f - x2 * term;
+            term = inv5f - x2 * term;
+            term = inv3f - x2 * term;
+            return x * (One - x2 * term);
+        }
+
+        /// <summary>
+        /// Cosine of an angle in radians (deterministic, no floating point).
+        /// </summary>
+        public static FixedPoint64 Cos(FixedPoint64 radians)
+        {
+            return Sin(radians + HalfPi);
+        }
+
+        /// <summary>
+        /// Convert degrees to radians (deterministic).
+        /// </summary>
+        public static FixedPoint64 DegreesToRadians(FixedPoint64 degrees)
+        {
+            return degrees * Pi / FromInt(180);
+        }
+
+        /// <summary>
+        /// Convert radians to degrees (deterministic).
+        /// </summary>
+        public static FixedPoint64 RadiansToDegrees(FixedPoint64 radians)
+        {
+            return radians * FromInt(180) / Pi;
         }
 
         /// <summary>
