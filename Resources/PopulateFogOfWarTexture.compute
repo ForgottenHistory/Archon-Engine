@@ -1,0 +1,55 @@
+// Fog of War Texture Population Compute Shader for Archon Map System
+// Populates FogOfWarTexture from province visibility data
+// Runs entirely on GPU for maximum performance
+// Architecture: CPU visibility state → GPU texture (dual-layer architecture)
+
+#pragma kernel PopulateFogOfWar
+
+// Input textures
+// ProvinceIDTexture contains province IDs encoded in RG channels
+RWTexture2D<float4> ProvinceIDTexture;  // ARGB32 format - province ID encoded in RG channels
+
+// Input buffer
+StructuredBuffer<float> ProvinceVisibilityBuffer;  // Visibility per province (0.0=unexplored, 0.5=explored, 1.0=visible)
+
+// Output texture
+RWTexture2D<float> FogOfWarTexture;  // R8_UNorm format - visibility as normalized float (0.0-1.0)
+
+// Map dimensions
+uint MapWidth;
+uint MapHeight;
+
+// Province ID decoding - extracts from ARGB32 format (RG channels)
+uint DecodeProvinceID(float4 encoded)
+{
+    // Convert from float [0,1] back to uint8 values (RG channels contain province ID)
+    uint r = (uint)(encoded.r * 255.0 + 0.5);
+    uint g = (uint)(encoded.g * 255.0 + 0.5);
+
+    // Reconstruct 16-bit province ID from RG channels
+    // R = low 8 bits, G = high 8 bits
+    return (g << 8) | r;
+}
+
+// Thread group size - 8x8 = 64 threads per group
+// Optimal for most modern GPUs
+[numthreads(8, 8, 1)]
+void PopulateFogOfWar(uint3 id : SV_DispatchThreadID)
+{
+    // Bounds check
+    if (id.x >= MapWidth || id.y >= MapHeight)
+        return;
+
+    // Read province ID from ProvinceIDTexture
+    // CRITICAL: Use raw GPU coordinates (no Y-flip) as per unity-compute-shader-coordination.md
+    float4 provinceIDEncoded = ProvinceIDTexture[id.xy];
+    uint provinceID = DecodeProvinceID(provinceIDEncoded);
+
+    // Look up visibility for this province
+    // Buffer is indexed by province ID
+    float visibility = ProvinceVisibilityBuffer[provinceID];
+
+    // Write visibility to fog of war texture
+    // R8_UNorm format - single channel, no encoding needed
+    FogOfWarTexture[id.xy] = visibility;
+}
