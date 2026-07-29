@@ -426,5 +426,55 @@ namespace Tests.EditMode
                 Assert.AreEqual(expected, result.ToDouble(), tolerance, $"{x} % {y} was wrong");
             }
         }
+
+        // ===== Frac / Floor =====
+
+        /// <summary>
+        /// REGRESSION: a "correction" branch for negatives (ONE_RAW - fractional)
+        /// inverted a value the two's-complement mask already got right, breaking
+        /// Floor(x) + Frac(x) == x for every negative non-integer.
+        /// </summary>
+        [Test]
+        public void Frac_PlusFloor_ReconstructsOriginal_AcrossRange()
+        {
+            // Stride is coprime to 2^32 so the sweep lands on many distinct fractions.
+            for (long raw = -20L * OneRaw; raw <= 20L * OneRaw; raw += 7919 * 1013)
+            {
+                var value = FixedPoint64.FromRaw(raw);
+
+                long reconstructed = FixedPoint64.Floor(value).RawValue
+                                   + FixedPoint64.Frac(value).RawValue;
+
+                Assert.AreEqual(raw, reconstructed,
+                    $"Floor(x) + Frac(x) must equal x exactly; failed at raw {raw}");
+            }
+        }
+
+        [Test]
+        public void Frac_NegativeNonIntegers_AreConsistentWithFloor()
+        {
+            var quarter = OneRaw / 4;
+
+            // -0.25 -> frac 0.75, because Floor(-0.25) is -1.0
+            Assert.AreEqual(3 * quarter, FixedPoint64.Frac(FixedPoint64.FromRaw(-quarter)).RawValue,
+                "Frac(-0.25) must be 0.75 to stay consistent with Floor(-0.25) == -1");
+
+            // -1.25 -> frac 0.75, because Floor(-1.25) is -2.0
+            Assert.AreEqual(3 * quarter,
+                FixedPoint64.Frac(FixedPoint64.FromRaw(-OneRaw - quarter)).RawValue,
+                "Frac(-1.25) must be 0.75");
+        }
+
+        [Test]
+        public void Frac_IsAlwaysInUnitInterval()
+        {
+            for (long raw = -20L * OneRaw; raw <= 20L * OneRaw; raw += 7919 * 1013)
+            {
+                long frac = FixedPoint64.Frac(FixedPoint64.FromRaw(raw)).RawValue;
+
+                Assert.IsTrue(frac >= 0 && frac < OneRaw,
+                    $"Frac must lie in [0, 1); got raw {frac} for input raw {raw}");
+            }
+        }
     }
 }

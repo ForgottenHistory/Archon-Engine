@@ -67,6 +67,15 @@ namespace Archon.Network
         public uint ProtocolVersion;      // 4 bytes
         public uint GameVersion;          // 4 bytes
 
+        /// <summary>
+        /// Checksum over the peer's registered command types and their assigned IDs.
+        /// Command type IDs travel on the wire as bare integers, so peers with different
+        /// registries decode each other's commands as the wrong type and execute them
+        /// silently. Comparing this at handshake turns that into a clean rejection.
+        /// See CommandProcessor.GetRegistrationChecksum.
+        /// </summary>
+        public uint CommandRegistryChecksum;   // 4 bytes
+
         public const uint CurrentProtocolVersion = 1;
     }
 
@@ -91,7 +100,13 @@ namespace Archon.Network
         VersionMismatch = 1,
         GameFull = 2,
         GameInProgress = 3,
-        Banned = 4
+        Banned = 4,
+
+        /// <summary>
+        /// Peers have different command registries. Joining would desync as soon as any
+        /// command is sent, so the connection is refused up front.
+        /// </summary>
+        CommandRegistryMismatch = 5
     }
 
     /// <summary>

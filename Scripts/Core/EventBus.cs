@@ -203,6 +203,12 @@ namespace Core
             private readonly Queue<T> processingQueue;
             private Action<T> listeners;
 
+            // Cached invocation list. Handlers must be invoked individually so that one
+            // throwing handler cannot abort the rest of the chain, but GetInvocationList
+            // allocates a new array on every call - so it is cached here and rebuilt only
+            // when the listener set actually changes.
+            private Delegate[] invocationCache;
+
             public int Count => eventQueue.Count;
 
             public EventQueue()
@@ -219,16 +225,13 @@ namespace Core
             public void AddListener(Action<T> handler)
             {
                 listeners = (Action<T>)Delegate.Combine(listeners, handler);
+                invocationCache = null;
             }
 
             public void RemoveListener(Action<T> handler)
             {
                 listeners = (Action<T>)Delegate.Remove(listeners, handler);
-
-                if (listeners == null && eventQueue.Count == 0)
-                {
-                    // Queue is now unused, could be cleaned up
-                }
+                invocationCache = null;
             }
 
             public int ProcessEvents()
@@ -244,21 +247,41 @@ namespace Core
                     processingQueue.Enqueue(eventQueue.Dequeue());  // NO BOXING - T to T
                 }
 
+                // Rebuild the invocation list only when listeners changed, then snapshot
+                // it into a local. A handler may subscribe or unsubscribe while it runs,
+                // which nulls invocationCache - reading the field inside the loop would
+                // then throw. The snapshot also gives the pass a stable listener set;
+                // subscription changes take effect on the next pass.
+                if (listeners != null && invocationCache == null)
+                    invocationCache = listeners.GetInvocationList();
+
+                var handlers = invocationCache;
+
                 // Process all events
                 while (processingQueue.Count > 0)
                 {
                     var gameEvent = processingQueue.Dequeue();  // NO BOXING - T stays T
 
-                    try
+                    // Each handler is invoked inside its own try so that a failure in one
+                    // subscriber cannot starve the subscribers registered after it.
+                    // The event counts as processed regardless - it was consumed.
+                    if (handlers != null)
                     {
-                        // Invoke listeners - NO BOXING - direct Action<T> call
-                        listeners?.Invoke(gameEvent);
-                        processed++;
+                        for (int i = 0; i < handlers.Length; i++)
+                        {
+                            try
+                            {
+                                // NO BOXING - direct Action<T> call
+                                ((Action<T>)handlers[i]).Invoke(gameEvent);
+                            }
+                            catch (Exception e)
+                            {
+                                ArchonLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}", "core_events");
+                            }
+                        }
                     }
-                    catch (Exception e)
-                    {
-                        ArchonLogger.LogError($"Error processing event {typeof(T).Name}: {e.Message}\n{e.StackTrace}", "core_events");
-                    }
+
+                    processed++;
                 }
 
                 return processed;

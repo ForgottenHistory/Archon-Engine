@@ -527,10 +527,9 @@ namespace Core.Data
         /// </summary>
         public static FixedPoint64 Frac(FixedPoint64 value)
         {
-            long fractional = value.RawValue & (ONE_RAW - 1);
-            if (value.RawValue < 0 && fractional != 0)
-                fractional = ONE_RAW - fractional;
-            return new FixedPoint64(fractional);
+            // Correct for negatives as-is: Frac(-0.25) is 0.75 because Floor(-0.25) is
+            // -1. Do NOT "correct" this with ONE_RAW - fractional.
+            return new FixedPoint64(value.RawValue & (ONE_RAW - 1));
         }
 
         /// <summary>

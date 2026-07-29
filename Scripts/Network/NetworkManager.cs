@@ -456,12 +456,26 @@ namespace Archon.Network
         /// <summary>
         /// Send handshake message to host. Called when client connects.
         /// </summary>
+        /// <summary>
+        /// Supplies the local command-registry checksum for the handshake.
+        /// Set by whoever wires up networking (it owns the CommandProcessor); Network
+        /// deliberately does not reference GameState.
+        ///
+        /// While unset both sides send 0, which still matches, so the check is inert
+        /// rather than blocking - wire it up to get mismatch protection.
+        /// </summary>
+        public Func<uint> CommandRegistryChecksumProvider { get; set; }
+
+        private uint GetLocalCommandRegistryChecksum()
+            => CommandRegistryChecksumProvider?.Invoke() ?? 0u;
+
         private void SendHandshake()
         {
             var handshake = new HandshakeMessage
             {
                 ProtocolVersion = HandshakeMessage.CurrentProtocolVersion,
-                GameVersion = 1  // TODO: Get from build info
+                GameVersion = 1,  // TODO: Get from build info
+                CommandRegistryChecksum = GetLocalCommandRegistryChecksum()
             };
 
             var data = StructToBytes(handshake);
@@ -572,6 +586,31 @@ namespace Archon.Network
         {
             if (!IsHost) return;
 
+            // BytesToStruct reads sizeof(T) bytes with no bounds check, so a short
+            // payload from an older or hostile client would read past the buffer.
+            // A peer that cannot even send a full handshake is a version mismatch.
+            int required = Marshal.SizeOf<HandshakeMessage>();
+            if (payload == null || payload.Length < required)
+            {
+                ArchonLogger.LogWarning(
+                    $"Rejecting peer {peerId}: handshake payload is {payload?.Length ?? 0} bytes, " +
+                    $"expected at least {required}.",
+                    ArchonLogger.Systems.Network);
+
+                var rejection = new HandshakeResponseMessage
+                {
+                    Accepted = 0,
+                    RejectReason = (byte)HandshakeRejectReason.VersionMismatch,
+                    AssignedPeerId = peerId,
+                    CurrentTick = 0
+                };
+
+                transport.Send(peerId,
+                    CreateMessage(NetworkMessageType.HandshakeResponse, 0, StructToBytes(rejection)),
+                    DeliveryMethod.ReliableOrdered);
+                return;
+            }
+
             var handshake = BytesToStruct<HandshakeMessage>(payload, 0);
 
             // Validate version
@@ -579,6 +618,22 @@ namespace Archon.Network
             if (handshake.ProtocolVersion != HandshakeMessage.CurrentProtocolVersion)
             {
                 rejectReason = (byte)HandshakeRejectReason.VersionMismatch;
+            }
+            else
+            {
+                // Reject a mismatched command registry now rather than desyncing on the
+                // first command. Type IDs are positional, so different registries mean
+                // each peer decodes the other's commands as the wrong type.
+                uint localChecksum = GetLocalCommandRegistryChecksum();
+                if (handshake.CommandRegistryChecksum != localChecksum)
+                {
+                    rejectReason = (byte)HandshakeRejectReason.CommandRegistryMismatch;
+                    ArchonLogger.LogWarning(
+                        $"Rejecting peer {peerId}: command registry mismatch " +
+                        $"(peer {handshake.CommandRegistryChecksum:X8}, host {localChecksum:X8}). " +
+                        "Peers are running different builds or mod sets.",
+                        ArchonLogger.Systems.Network);
+                }
             }
 
             var response = new HandshakeResponseMessage

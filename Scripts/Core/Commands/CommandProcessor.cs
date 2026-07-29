@@ -66,6 +66,69 @@ namespace Core.Commands
         }
 
         /// <summary>
+        /// Checksum over the registered command types and the IDs assigned to them.
+        ///
+        /// Type IDs are assigned by registration order and sent over the wire as bare
+        /// integers, so two peers that register different types - or the same types in a
+        /// different order - will decode each other's commands as the WRONG TYPE and
+        /// execute them without any error. Comparing this value during the connection
+        /// handshake turns that silent desync into a clean rejection.
+        ///
+        /// Deterministic across platforms: iterates IDs in ascending numeric order and
+        /// hashes the type's full name byte by byte, avoiding string.GetHashCode (which
+        /// is randomised per process) and dictionary enumeration order.
+        /// </summary>
+        public uint GetRegistrationChecksum()
+        {
+            // FNV-1a over "typeId:FullName" for each registered type, ordered by ID.
+            const uint fnvOffsetBasis = 2166136261;
+            const uint fnvPrime = 16777619;
+
+            uint hash = fnvOffsetBasis;
+
+            for (ushort id = 1; id < nextCommandTypeId; id++)
+            {
+                if (!commandFactories.ContainsKey(id))
+                    continue;
+
+                hash = HashUInt(hash, id);
+
+                // Find the type mapped to this ID. The map is small (tens of entries)
+                // and this runs once per handshake, not per frame.
+                foreach (var pair in commandTypeIds)
+                {
+                    if (pair.Value != id)
+                        continue;
+
+                    string name = pair.Key.FullName ?? string.Empty;
+                    for (int i = 0; i < name.Length; i++)
+                    {
+                        hash ^= name[i];
+                        hash *= fnvPrime;
+                    }
+                    break;
+                }
+            }
+
+            return hash;
+
+            static uint HashUInt(uint hash, ushort value)
+            {
+                hash ^= (byte)(value & 0xFF);
+                hash *= fnvPrime;
+                hash ^= (byte)(value >> 8);
+                hash *= fnvPrime;
+                return hash;
+            }
+        }
+
+        /// <summary>
+        /// Number of registered command types. Exposed for diagnostics when a
+        /// registration checksum mismatch is reported.
+        /// </summary>
+        public int RegisteredCommandCount => commandTypeIds.Count;
+
+        /// <summary>
         /// Set the network bridge for multiplayer.
         /// Pass null for single-player mode.
         /// </summary>

@@ -140,14 +140,15 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Generate random float in range [0, 1)
+        /// Generate random fixed-point value in range [0, 1)
         /// Uses fixed-point arithmetic for deterministic results
         /// </summary>
         public FixedPoint32 NextFixed()
         {
-            // Use upper 32 bits for better quality
+            // FixedPoint32 is 16.16, so the shift must be 16 to land in raw [0, 65536).
+            // Shifting less overshoots One and silently breaks every consumer.
             uint value = NextUInt();
-            return FixedPoint32.FromRaw((int)(value >> 1)); // Shift to avoid sign bit issues
+            return FixedPoint32.FromRaw((int)(value >> 16));
         }
 
         /// <summary>
@@ -288,29 +289,12 @@ namespace Core.Data
         /// </summary>
         public FixedPoint32 NextGaussian()
         {
-            // Box-Muller transform: generate two uniform randoms, get two gaussians
-            // We use one and discard the other for simplicity
-
-            // Get two uniform values in (0, 1] - avoid 0 to prevent log(0)
-            uint u1Raw = NextUInt();
-            uint u2Raw = NextUInt();
-
-            // Ensure non-zero (extremely rare but possible)
-            if (u1Raw == 0) u1Raw = 1;
-
-            // Convert to fixed point in range (0, 1]
-            FixedPoint32 u1 = FixedPoint32.FromRaw((int)(u1Raw >> 1) | 1);
-            FixedPoint32 u2 = FixedPoint32.FromRaw((int)(u2Raw >> 1));
-
-            // Box-Muller: z = sqrt(-2 * ln(u1)) * cos(2 * pi * u2)
-            // We approximate using fixed-point math
-
-            // Approximate -2 * ln(u1) using lookup or polynomial
-            // For simplicity, use rejection sampling with uniform approximation
-            // This gives a reasonable bell curve without complex math
-
-            // Simpler approach: sum of 12 uniform randoms - 6 (Central Limit Theorem)
-            // Gives approximate normal with mean=0, stddev=1
+            // Irwin-Hall: the sum of 12 uniforms on [0, 1) has mean 6 and variance 1,
+            // so subtracting 6 yields mean 0, stddev 1. Avoids the ln/cos that Box-Muller
+            // needs, neither of which has an exact fixed-point form.
+            //
+            // Consumes exactly 12 RNG draws - changing that count shifts the stream for
+            // every subsequent call.
             FixedPoint32 sum = FixedPoint32.Zero;
             for (int i = 0; i < 12; i++)
             {

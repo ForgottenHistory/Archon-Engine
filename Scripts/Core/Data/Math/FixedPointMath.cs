@@ -210,15 +210,23 @@ namespace Core.Data
             if (value.RawValue <= 0)
                 return Zero;
 
-            // Initial guess
-            int x = value.RawValue;
-            int guess = x >> 1;
-            if (guess == 0) guess = ONE_RAW;
+            // Initial guess from bit length: sqrt halves the magnitude's exponent, so a
+            // raw value of n bits has a root of roughly (n + FRACTIONAL_BITS)/2 bits.
+            // A guess of value/2 is far too high for large inputs and the iterations
+            // cannot recover - that returned 116.75 for Sqrt(10000).
+            int bitLength = 32;
+            while (bitLength > 0 && (value.RawValue >> (bitLength - 1)) == 0)
+                bitLength--;
 
-            // Newton-Raphson iterations (6 iterations sufficient for 32-bit)
-            for (int i = 0; i < 6; i++)
+            int guessShift = (bitLength + FRACTIONAL_BITS) / 2;
+            int guess = guessShift >= 31
+                ? (int.MaxValue >> 1)
+                : (1 << guessShift);
+
+            // Newton-Raphson: guess = (guess + value/guess) / 2
+            for (int i = 0; i < 8; i++)
             {
-                int quotient = (int)(((long)x << FRACTIONAL_BITS) / guess);
+                int quotient = (int)(((long)value.RawValue << FRACTIONAL_BITS) / guess);
                 guess = (guess + quotient) >> 1;
             }
 
@@ -303,14 +311,15 @@ namespace Core.Data
         }
 
         /// <summary>
-        /// Returns the fractional part of the value
+        /// Returns the fractional part of the value: always in [0, 1), matching Floor.
+        /// Floor uses an arithmetic shift (floors toward negative infinity), so the
+        /// invariant Floor(x) + Frac(x) == x holds for negative values too.
         /// </summary>
         public static FixedPoint32 Frac(FixedPoint32 value)
         {
-            int fractional = value.RawValue & (ONE_RAW - 1);
-            if (value.RawValue < 0 && fractional != 0)
-                fractional = ONE_RAW - fractional;
-            return new FixedPoint32(fractional);
+            // Correct for negatives as-is: Frac(-0.25) is 0.75 because Floor(-0.25) is
+            // -1. Do NOT "correct" this with ONE_RAW - fractional.
+            return new FixedPoint32(value.RawValue & (ONE_RAW - 1));
         }
 
         /// <summary>
