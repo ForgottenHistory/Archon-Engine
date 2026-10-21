@@ -69,17 +69,6 @@
 - **Map.Rendering.FogOfWar.FogOfWarRendererContext** - Initialization context struct
 - **Map.Rendering.FogOfWar.Implementations.DefaultFogOfWarRenderer** - Default GPU compute implementation
 
-### Rendering/Compositing/ (Pluggable via IShaderCompositor)
-- **Map.Rendering.Compositing.IShaderCompositor** - Interface for pluggable layer compositing
-- **Map.Rendering.Compositing.ShaderCompositorBase** - Abstract base with material property utilities
-- **Map.Rendering.Compositing.CompositorContext** - Initialization context struct
-- **Map.Rendering.Compositing.CompositorConfig** - Layer visibility and blend mode configuration
-- **Map.Rendering.Compositing.BlendMode** - Enum: Normal, Multiply, Screen, Overlay, Additive, SoftLight
-- **Map.Rendering.Compositing.Implementations.DefaultShaderCompositor** - All layers, normal blend
-- **Map.Rendering.Compositing.Implementations.MinimalShaderCompositor** - No fog/overlay (performance)
-- **Map.Rendering.Compositing.Implementations.StylizedShaderCompositor** - Multiply borders, additive highlights (EU4-like)
-- **Map.Rendering.Compositing.Implementations.CinematicShaderCompositor** - Overlay blends, high contrast
-
 ### Rendering/Terrain/ (Pluggable via ITerrainRenderer)
 - **Map.Rendering.Terrain.ITerrainRenderer** - Interface for pluggable terrain blend map generation
 - **Map.Rendering.Terrain.TerrainRendererBase** - Abstract base with common utilities
@@ -131,7 +120,6 @@
   - FogOfWarStyle - customRendererId references IFogOfWarRenderer
   - TerrainStyle - customRendererId references ITerrainRenderer
   - MapModeColorizerStyle - customColorizerId references IMapModeColorizer
-  - CompositorStyle - customCompositorId references IShaderCompositor
 - **Map.VisualStyles.VisualStyleManager** - Applies styles to renderer, binds textures, F5 reload support
 
 ---
@@ -211,7 +199,7 @@
 **Load map from file?** → MapDataLoader.LoadFromBitmap()
 **Province neighbors?** → GPUProvinceNeighborDetector for large maps
 **Custom renderer?** → Implement I*Renderer interface → Register in MapRendererRegistry → Reference by ID in VisualStyleConfiguration
-**Available pluggable systems?** → IBorderRenderer, IHighlightRenderer, IFogOfWarRenderer, ITerrainRenderer, IMapModeColorizer, IShaderCompositor
+**Available pluggable systems?** → IBorderRenderer, IHighlightRenderer, IFogOfWarRenderer, ITerrainRenderer, IMapModeColorizer
 
 ---
 

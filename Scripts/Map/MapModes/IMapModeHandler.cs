@@ -123,32 +123,6 @@ namespace Map.MapModes
         public abstract UpdateFrequency GetUpdateFrequency();
 
         /// <summary>
-        /// Utility: Disable all map mode keywords in the shader
-        /// </summary>
-        protected void DisableAllMapModeKeywords(Material material)
-        {
-            material.DisableKeyword("MAP_MODE_POLITICAL");
-            material.DisableKeyword("MAP_MODE_TERRAIN");
-            material.DisableKeyword("MAP_MODE_DEVELOPMENT");
-            material.DisableKeyword("MAP_MODE_CULTURE");
-            material.DisableKeyword("MAP_MODE_RELIGION");
-            material.DisableKeyword("MAP_MODE_DIPLOMATIC");
-            material.DisableKeyword("MAP_MODE_TRADE");
-            material.DisableKeyword("MAP_MODE_MILITARY");
-            material.DisableKeyword("MAP_MODE_ECONOMIC");
-            material.DisableKeyword("MAP_MODE_SELECTED");
-            material.DisableKeyword("MAP_MODE_STRATEGIC");
-        }
-
-        /// <summary>
-        /// Utility: Enable a specific map mode keyword
-        /// </summary>
-        protected void EnableMapModeKeyword(Material material, string keyword)
-        {
-            material.EnableKeyword(keyword);
-        }
-
-        /// <summary>
         /// Utility: Set common shader properties
         /// </summary>
         protected void SetShaderMode(Material material, int modeId)

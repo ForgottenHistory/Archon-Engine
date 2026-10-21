@@ -129,7 +129,7 @@ Shader "Archon/DefaultTerrain"
 
         Pass
         {
-            Name "MapCoreTessellated"
+            Name "ArchonTerrain"
             Tags { "LightMode"="UniversalForward" }
 
             // Proper depth testing for map rendering
@@ -334,9 +334,9 @@ Shader "Archon/DefaultTerrain"
         }
     }
 
-    // Fallback to non-tessellated EU3 shader
-    FallBack "Hegemon/EU3Classic"
+    // Fallback to non-tessellated ENGINE shader (no hull/domain support)
+    FallBack "Archon/DefaultFlat"
 
-    // Custom inspector GUI
-    CustomEditor "Game.Shaders.EU3MapShaderGUI"
+    // Games can create custom ShaderGUI editors if needed
+    // CustomEditor "YourGame.Shaders.CustomMapShaderGUI"
 }

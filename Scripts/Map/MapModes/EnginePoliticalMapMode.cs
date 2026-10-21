@@ -20,8 +20,6 @@ namespace Map.MapModes
 
         public override void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
         {
-            DisableAllMapModeKeywords(mapMaterial);
-            EnableMapModeKeyword(mapMaterial, "MAP_MODE_POLITICAL");
             SetShaderMode(mapMaterial, ShaderModeID);
             LogActivation("Political map mode - showing country ownership");
         }

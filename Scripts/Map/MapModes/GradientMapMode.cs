@@ -288,24 +288,6 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Helper method for subclasses to disable all map mode keywords (legacy compatibility)
-        /// </summary>
-        protected void DisableAllMapModeKeywords(Material mapMaterial)
-        {
-            // No longer needed - mode switching is int-based now
-            // Kept for GAME layer backward compatibility
-        }
-
-        /// <summary>
-        /// Helper method for subclasses to enable a specific keyword (legacy compatibility)
-        /// </summary>
-        protected void EnableMapModeKeyword(Material mapMaterial, string keyword)
-        {
-            // No longer needed - mode switching is int-based now
-            // Kept for GAME layer backward compatibility
-        }
-
-        /// <summary>
         /// Helper method for subclasses to set shader mode (legacy compatibility)
         /// </summary>
         protected void SetShaderMode(Material mapMaterial, int modeID)

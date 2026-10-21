@@ -22,7 +22,6 @@ namespace StarterKit.MapModes
 
         public override void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
         {
-            DisableAllMapModeKeywords(mapMaterial);
             SetShaderMode(mapMaterial, ShaderModeID);
             LogActivation("Terrain visual mode - showing terrain blend maps");
         }

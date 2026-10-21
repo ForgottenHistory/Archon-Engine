@@ -265,7 +265,6 @@ This document lists all implemented features in the Archon Engine organized by c
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 - **TerrainBlendMapGenerator** - Imperator Rome-style 4-channel blend map generation (DetailIndexTexture + DetailMaskTexture)
 - **DetailTextureArrayLoader** - Loads 512x512 detail textures from Assets/Data/textures/terrain_detail/
-- **ShaderCompositorBase** - Abstract base for layer compositing implementations
 
 ---
 
@@ -338,19 +337,6 @@ This document lists all implemented features in the Archon Engine organized by c
 - **IFogOfWarRenderer** - Fog of war visualization (Default GPU compute)
 - **ITerrainRenderer** - Terrain blend map generation (Default 4-channel)
 - **IMapModeColorizer** - Map mode colorization (Gradient 3-color implementation)
-- **IShaderCompositor** - Layer compositing with configurable blend modes
-
-### Shader Compositor System
-
-- **Compositing.hlsl** - Shader-side layer compositing utilities
-- **6 Blend Modes** - Normal, Multiply, Screen, Overlay, Additive, SoftLight
-- **Per-Layer Configuration** - Enable/disable and blend mode per layer
-- **4 Preset Compositors:**
-  - **DefaultShaderCompositor** - All layers, normal blend
-  - **MinimalShaderCompositor** - No fog/overlay (performance mode)
-  - **StylizedShaderCompositor** - Multiply borders, additive highlights (EU4-like)
-  - **CinematicShaderCompositor** - Overlay blends, high contrast (screenshots)
-- **C# + Shader Hybrid** - C# configures material properties, shader reads blend modes
 
 ---
 
@@ -530,11 +516,9 @@ This document lists all implemented features in the Archon Engine organized by c
 - **TerrainTypeGenerator.compute** - GPU terrain type texture generation (replaced CPU pixel loop, 860ms → 114ms)
 - **ProvinceTerrainAnalyzer.compute** - GPU-direct terrain analysis for province terrain assignment
 - **TerrainBlendMapGenerator.compute** - 4-channel terrain blend map generation with configurable sampling
-- **Compositing.hlsl** - Modular layer compositing with 6 blend modes (Normal, Multiply, Screen, Overlay, Additive, SoftLight)
 - **MapModeTerrain.hlsl** - Imperator Rome manual bilinear filtering + detail texture blending
-- **MapFallback.shader** - Pink fallback for missing visual styles
-- **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling)
-- **DefaultCommon.hlsl** - Shared compositor parameters and layer enable flags
+- **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling, borders, fog, highlights)
+- **DefaultCommon.hlsl** - Shared texture declarations and material parameters
 
 ---
 

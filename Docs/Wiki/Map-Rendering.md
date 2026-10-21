@@ -141,8 +141,6 @@ public class DevelopmentMapModeHandler : BaseMapModeHandler
 
     public override void OnActivate(Material material, MapModeDataTextures textures)
     {
-        DisableAllMapModeKeywords(material);
-        EnableMapModeKeyword(material, "MAP_MODE_DEVELOPMENT");
         SetShaderMode(material, ShaderModeID);
         LogActivation();
     }
@@ -241,16 +239,9 @@ mapRenderer.SetMapSize(new Vector2(5632, 2048));
 mapRenderer.SetMaterial(mapMaterial);
 ```
 
-## Shader Keywords
+## Shader Mode Selection
 
-Map modes use shader keywords for branching:
-
-```csharp
-material.EnableKeyword("MAP_MODE_POLITICAL");
-material.EnableKeyword("MAP_MODE_TERRAIN");
-material.EnableKeyword("MAP_MODE_DEVELOPMENT");
-// etc.
-```
+Map modes are selected by the `_MapMode` integer (set via `SetShaderMode`), not shader keywords. The branch is uniform across the whole draw, so it costs little and avoids compiling one variant per mode. Modes 2+ read per-province colors from the province palette texture using `_CustomMapModeIndex`.
 
 ## GPU Compute Shaders
 

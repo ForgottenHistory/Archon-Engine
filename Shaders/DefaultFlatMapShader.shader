@@ -119,7 +119,7 @@ Shader "Archon/DefaultFlat"
 
         Pass
         {
-            Name "MapCore"
+            Name "ArchonFlat"
             Tags { "LightMode"="UniversalForward" }
 
             // Proper depth testing for map rendering

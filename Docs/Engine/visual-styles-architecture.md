@@ -23,10 +23,9 @@ Customize individual rendering systems while using ENGINE's shader infrastructur
 - Fog of war rendering
 - Terrain blending
 - Map mode colorization (separate from map mode DATA)
-- Layer compositing (blend modes, visibility, order)
 
 **Trade-offs:**
-- Pro: Leverage ENGINE's tested compositing shader
+- Pro: Leverage ENGINE's tested map shader
 - Pro: Mix and match different implementations
 - Pro: Runtime switching without shader recompilation
 - Con: Constrained to ENGINE's layer model
@@ -124,15 +123,7 @@ Render layers combine in a defined order:
 4. Fog of war
 5. Overlay effects
 
-Each layer supports configurable blend modes:
-- Normal (alpha lerp)
-- Multiply (darkening)
-- Screen (lightening)
-- Overlay (contrast)
-- Additive
-- Soft light
-
-Layers can be enabled/disabled independently for performance or visual style.
+Order and blending are fixed in the ENGINE shader. Individual layers are tuned through style parameters (strengths, colors, enable flags), not configurable blend modes. Replacing a single layer's logic without copying the shader is planned via per-stage override hooks.
 
 ---
 
@@ -140,7 +131,7 @@ Layers can be enabled/disabled independently for performance or visual style.
 
 **Use Level 1 (Pluggable Interfaces) When:**
 - Customizing one or few systems (e.g., just borders or fog)
-- Want ENGINE's compositor handling layer blending
+- Want ENGINE's fixed layer order and blending
 - Need runtime switching between presets
 - Don't need custom map mode visuals
 
@@ -196,7 +187,7 @@ Layers can be enabled/disabled independently for performance or visual style.
 **Do:** Copy ENGINE Default shaders to GAME (Level 2) or provide custom material (Level 3)
 
 **Don't:** Hardcode GAME-specific blend modes in ENGINE
-**Do:** Make blend modes configurable via compositor
+**Do:** Keep GAME-specific blending in GAME shader code
 
 **Don't:** Create ENGINE→GAME dependencies
 **Do:** Use interface + registry pattern

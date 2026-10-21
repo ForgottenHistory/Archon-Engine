@@ -272,8 +272,6 @@ public class MyMapMode : BaseMapModeHandler
 
     public override void OnActivate(Material mapMaterial, MapModeDataTextures dataTextures)
     {
-        DisableAllMapModeKeywords(mapMaterial);
-        EnableMapModeKeyword(mapMaterial, "MAP_MODE_ECONOMIC");
         SetShaderMode(mapMaterial, ShaderModeID);
     }
 
