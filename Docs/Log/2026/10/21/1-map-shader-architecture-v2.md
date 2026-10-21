@@ -26,7 +26,7 @@
 
 **Previous Work:**
 - Learnings: [hoi4-shader-system-notes.md](../../../learnings/hoi4-shader-system-notes.md)
-- Superseded: [shader-copy-and-customize-architecture.md](../../../decisions/shader-copy-and-customize-architecture.md)
+- Superseded: shader copy-and-customize decision (removed after this session; summarized in the new decision doc)
 
 **Current State (before):**
 - GAME copied the Default `.shader` (~300 lines); only one include differed from ENGINE
@@ -150,7 +150,7 @@ Full record: [map-shader-architecture-v2.md](../../../decisions/map-shader-archi
 - [x] `Docs/Wiki/Shaders.md` — setup (thin shell), globals contract, stage overrides, validation, style data files
 - [x] `Docs/Engine/visual-styles-architecture.md` — Level 2 rewritten; compositor claims removed
 - [x] `Docs/CURRENT_FEATURES.md`, `Docs/Engine/architecture-patterns.md`, `Scripts/Map/FILE_REGISTRY.md`
-- [x] Decision doc added; copy-and-customize marked superseded; HOI4 notes link the outcome
+- [x] Decision doc added; old copy-and-customize decision removed; HOI4 notes link the outcome
 
 ### New Pattern: Engine globals + thin shader shell
 - When: engine-produced data consumed by GAME shaders

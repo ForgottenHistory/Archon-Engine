@@ -94,15 +94,15 @@ Province positions are NOT stored in hot simulation state.
 
 **Challenge:** Different visualizations without performance loss.
 
-**Solution:** Data textures + shader switching.
+**Solution:** Shared data textures + per-province palettes, selected by a uniform mode index.
 
 Each map mode:
-- Uses same province ID texture
-- Binds different data texture (owner, terrain, development, etc.)
-- Uses appropriate color palette
+- Uses the same province ID texture
+- Reads data textures and palettes published as shader globals (owner, terrain, country colors, etc.)
+- Custom modes store one color per province in a province palette (row block per mode), looked up by province ID
 - Same shader, different inputs
 
-**Mode switching:** Change material property + bind texture. Instant.
+**Mode switching:** Change the global mode index (and palette row block). No rebinding, no shader variants, instant.
 
 ---
 
@@ -151,10 +151,9 @@ GPU → CPU: Avoid (forces sync stall)
 ### Correct Patterns
 
 **Map Mode Updates:**
-1. CPU calculates per-province values (fast, ~3000 items)
-2. GPU compute shader colorizes pixels (parallel, ~1ms)
-3. `Graphics.CopyTexture` copies to texture array (GPU-to-GPU, <1ms)
-4. Fragment shader samples from array (instant)
+1. CPU calculates per-province colors (one value per province, not per pixel)
+2. Colors are written to the province palette texture (small: provinces, not pixels)
+3. Fragment shader looks up the color by province ID (no per-pixel work outside the shader)
 
 **Never do this:**
 ```csharp
@@ -229,8 +228,8 @@ Graphics.CopyTexture(sourceRenderTexture, 0, 0, targetTextureArray, sliceIndex, 
 ## URP Integration
 
 ### Shader Approach
-- Start with Shader Graph for prototyping
-- Migrate to HLSL for production (full control)
+- HLSL map pass owned by ENGINE; GAME shaders are thin shells supplying map mode visuals (see [visual-styles-architecture.md](visual-styles-architecture.md))
+- Engine data reaches shaders as globals; the ENGINE/shader contract is a validated parameter registry
 - Custom render features for precise ordering
 
 ### Modern Features

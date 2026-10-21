@@ -6,16 +6,16 @@
 
 ## Core Problem
 
-Map visualization involves both mechanism (how to render) and policy (what to render). Without clear separation, ENGINE becomes polluted with GAME-specific decisions about colors, blending, and visual effects.
+Map visualization involves both mechanism (how to render) and policy (what to render). Without clear separation, ENGINE becomes polluted with GAME-specific decisions about colors, blending, and visual effects, or GAME ends up owning copies of ENGINE rendering code.
 
 ---
 
-## Core Principle: Two-Level Customization
+## Core Principle: Engine Owns the Pass, Game Owns the Look
 
-ENGINE provides rendering infrastructure with pluggable extension points. GAME customizes at two levels:
+ENGINE owns the render pass, the data it consumes, and the contract between them. GAME supplies visual policy through narrow extension points. GAME customizes at three levels.
 
-### Level 1: Fine-Grained Control
-Customize individual rendering systems while using ENGINE's shader infrastructure.
+### Level 1: Pluggable Renderers
+Replace individual rendering systems that produce map data, while keeping ENGINE's shader.
 
 **Pluggable Systems:**
 - Border generation (algorithm, texture format)
@@ -26,74 +26,110 @@ Customize individual rendering systems while using ENGINE's shader infrastructur
 
 **Trade-offs:**
 - Pro: Leverage ENGINE's tested map shader
-- Pro: Mix and match different implementations
-- Pro: Runtime switching without shader recompilation
-- Con: Constrained to ENGINE's layer model
+- Pro: Mix and match implementations, switch at runtime
+- Con: Constrained to ENGINE's stage model
 
-### Level 2: Shader Copy-and-Customize (Recommended for Visual Identity)
-GAME owns a thin shader shell; ENGINE owns the render pass. The shell supplies the map mode dispatcher, ENGINE supplies everything around it.
+### Level 2: Thin Shader Shell (Recommended)
+GAME owns a thin shader shell; ENGINE owns the render pass.
 
 **How It Works:**
-- GAME shader = Properties (per-material values only) + render state + three includes: ENGINE setup, GAME map mode dispatcher, ENGINE pass
-- The ENGINE pass owns entry points, tessellation, and fragment composition; it calls the GAME dispatcher's `RenderMapMode`
-- Engine-owned values (textures, map mode state, style values) are shader globals, so the shell never declares them
+- GAME shader = per-material properties + render state + three includes: ENGINE setup, GAME map mode dispatcher, ENGINE pass
+- The ENGINE pass owns entry points, tessellation, and pixel composition; it calls the GAME dispatcher for the base color
+- Single stages (ocean, lighting, borders, highlights, fog, overlay) can be replaced, and one extra stage added, through compile-time override hooks; unused hooks cost nothing
 - ENGINE map mode files are a starting point; GAME copies and customizes them freely
 
 **What GAME Controls:**
 - Map mode rendering (political, terrain, development colors and blending)
-- Custom map mode dispatcher
-- Visual identity per map mode
+- Map mode dispatcher
+- Replacement or additional stages
 
-**What ENGINE Still Provides:**
-- Render pass: vertex, tessellation, fragment composition and stage order
-- All texture/buffer declarations and engine globals
-- Border rendering, fog of war, highlights, lighting, overlay, debug modes
-
-**Critical Constraint:** GAME includes ENGINE, never reverse. ENGINE is a separate repository and cannot reference GAME paths.
+**What ENGINE Provides:**
+- Render pass: vertex, tessellation, stage order and composition
+- All engine data as shader globals
+- Default stages: borders, fog of war, highlights, lighting, overlay, debug modes
 
 **Trade-offs:**
-- Pro: Full control over visual identity
-- Pro: Still leverages ENGINE infrastructure (borders, fog, lighting)
-- Pro: ENGINE updates to infrastructure and the render pass automatically apply
-- Con: Must update map mode copies when ENGINE changes the map mode API
-- Pro: Single stages (lighting, borders, highlights, fog, overlay, ocean) can be replaced via compile-time override hooks, without copying the pass
-- Con: Stage order is fixed by ENGINE; a different order means writing your own pass (Level 3)
+- Pro: Full control over map mode visuals and individual stages
+- Pro: ENGINE fixes to the pass and stages reach every game automatically
+- Con: Map mode copies must follow ENGINE map mode API changes
+- Con: Stage order is fixed; a different order means Level 3
 
-See [Shaders Wiki](../Wiki/Shaders.md) for step-by-step setup guide.
+See [Shaders Wiki](../Wiki/Shaders.md) for the step-by-step setup.
 
-### Level 3: Complete Override
-Provide entirely custom shader and material for complete visual control.
+### Level 3: Own Pass
+GAME writes its own pass (still consuming ENGINE globals and the contract).
 
 **What GAME Controls:**
-- Complete shader code
-- All rendering effects
-- Custom layer ordering
-- Custom blend algorithms
-- Post-processing effects
+- Complete shader code, stage order, blending, post-processing
 
 **Trade-offs:**
 - Pro: Total visual control
-- Pro: Can ignore ENGINE's layer model entirely
-- Con: Must handle all compositing logic
-- Con: More maintenance burden
+- Con: GAME owns all compositing logic and its maintenance
+
+---
+
+## Engine Data as Shader Globals
+
+**Principle:** Everything ENGINE produces (simulation and generated textures, map mode state, style values) is published as shader globals, not material properties.
+
+- Shaders declare the globals; they never list them as material properties (a material property shadows the global, freezing it at the material default)
+- Material swaps need no rebinding; any shader (map, border mesh, units) can read the same data
+- Per-material values are limited to what describes the material itself (e.g. tessellation geometry) and GAME tweakables
+
+**Trade-off:** One set of globals per process. A second simultaneous map with different data needs per-material overrides.
+
+---
+
+## The Contract
+
+**Principle:** The ENGINE/shader contract is defined once, in a parameter registry: name, type, scope (global or material), default, required, and whether styles may set it.
+
+- Defaults for globals come from the registry, replacing per-shader property defaults
+- Every style application validates the map material: engine globals listed as material properties, and missing required material properties, are reported as errors naming the shader and property
+- GAME registers its own parameters (e.g. values read by its override hooks) without ENGINE changes
+
+**Engine-managed vs style-settable:** Simulation data and runtime state (textures, map mode, border mode, fog toggle) are engine-managed and refused from styles, so shader state cannot drift from C# state. Look values (colors, strengths, overlay) are style-settable.
+
+---
+
+## Style Layering
+
+A visual style is applied in layers, later layers winning:
+1. Style asset (editor-authored defaults, structural settings)
+2. Custom shader parameters carried by the asset (GAME parameters, generic loop)
+3. Style data file (data-driven, override-first resolution, moddable in shipped builds)
+
+Structural settings that drive C# systems (border rendering mode, tessellation on/off) stay asset-only. Data files carry shader values only.
+
+**Hot reload:** In the editor (optionally in development builds) the data file is watched and the style re-applied on change.
+
+---
+
+## Layer Compositing Model
+
+Stages combine in a fixed order:
+1. Base color (GAME map mode dispatcher)
+2. Lighting
+3. Borders (province, country)
+4. Highlights (selection, hover)
+5. Fog of war
+6. Overlay effects
+7. Optional GAME post-composite stage
+
+Order and blending are fixed in ENGINE. Stages are tuned through style values and replaced through compile-time hooks, not runtime blend-mode configuration.
 
 ---
 
 ## Architecture Constraints
 
 **ENGINE Never Imports GAME:**
-- ENGINE provides interfaces + default implementations
-- GAME registers custom implementations via registry
-- Configuration references implementations by string ID
-
-**Textures Are Universal:**
-- ENGINE binds simulation textures (province IDs, owners, borders, etc.)
-- Any shader can use these textures
-- Texture format is ENGINE contract, visual interpretation is GAME policy
+- ENGINE provides interfaces, default implementations and default stages
+- GAME registers implementations and parameters; configuration references implementations by string ID
+- GAME includes ENGINE shader code, never the reverse
 
 **Initialization Order:**
-- GAME registers custom implementations during startup
-- ENGINE uses whatever is registered (or defaults)
+- ENGINE registers its parameters and uploads global defaults before any binding
+- GAME registers implementations and parameters before the style is applied
 - Visual style can switch at runtime
 
 ---
@@ -112,90 +148,65 @@ This enables GAME to replace any single system without touching others.
 
 ---
 
-## Layer Compositing Model
-
-Render layers combine in a defined order:
-1. Base terrain/colors
-2. Borders (province, country)
-3. Highlights (selection, hover)
-4. Fog of war
-5. Overlay effects
-
-Order and blending are fixed in the ENGINE shader. Individual layers are tuned through style parameters (strengths, colors, enable flags), not configurable blend modes. A single layer's logic can be replaced without copying the shader through compile-time per-stage override hooks; unused hooks cost nothing.
-
----
-
 ## When to Use Each Level
 
-**Use Level 1 (Pluggable Interfaces) When:**
-- Customizing one or few systems (e.g., just borders or fog)
-- Want ENGINE's fixed layer order and blending
-- Need runtime switching between presets
-- Don't need custom map mode visuals
+**Level 1 (Pluggable Renderers):** Replacing how one kind of map data is produced (borders, fog, terrain blending), runtime switching between presets.
 
-**Use Level 2 (Shader Copy-and-Customize) When:**
-- Want your own visual identity for map modes
-- Need custom political/terrain/development rendering
-- Still want ENGINE infrastructure (borders, fog, lighting, effects)
-- Most games should use this level
+**Level 2 (Thin Shell):** Own visual identity for map modes, or replacing individual stages. Most games should use this level.
 
-**Use Level 3 (Complete Override) When:**
-- Need fundamentally different rendering approach
-- Custom post-processing required
-- Layer model doesn't fit your visual style
-- Building completely unique visual identity
+**Level 3 (Own Pass):** Fundamentally different rendering, different stage order, custom post-processing.
 
-**Combine Levels When:**
-- Level 2 shader for custom map mode visuals
-- Level 1 pluggable interfaces for border/fog customization
-- Still register custom renderers for texture generation
+**Combine:** Level 2 shell for visuals plus Level 1 renderers for data generation.
 
 ---
 
 ## Key Trade-offs
 
-| Aspect | Level 1 (Pluggable) | Level 2 (Custom Material) |
-|--------|---------------------|--------------------------|
-| Control | Per-system | Complete |
-| Maintenance | Lower | Higher |
-| Flexibility | Constrained to layer model | Unlimited |
-| Runtime switching | Easy (registry swap) | Material swap only |
-| Testing burden | Shared with ENGINE | All on GAME |
+| Aspect | Level 1 (Pluggable) | Level 2 (Thin Shell) | Level 3 (Own Pass) |
+|--------|---------------------|----------------------|--------------------|
+| Control | Per-system data | Map modes + stages | Complete |
+| Maintenance | Lowest | Low (ENGINE owns pass) | High |
+| ENGINE updates | Automatic | Automatic (pass + stages) | Manual |
+| Stage order | ENGINE | ENGINE | GAME |
 
 ---
 
 ## Guarantees
 
 **ENGINE Guarantees:**
-- Simulation textures bound to material
-- Registered renderers called appropriately
-- Default implementations always available
-- Runtime renderer switching supported
+- Engine data published as shader globals, with defaults before first use
+- Contract validated on every style application
+- Registered renderers called appropriately; defaults always available
+- Engine-managed state never overwritten by styles
 
 **GAME Must Provide:**
-- Configuration asset with style settings
-- Custom implementations registered before use
-- Material that accepts ENGINE texture names (if using Level 2)
+- Style asset with settings
+- Implementations and parameters registered before use
+- Map shaders that declare no engine global as a material property (Level 2/3)
 
 ---
 
 ## Anti-Patterns
 
-**Don't:** Edit ENGINE shader files in place to customize visuals
-**Do:** Copy ENGINE Default shaders to GAME (Level 2) or provide custom material (Level 3)
+**Don't:** Copy ENGINE pass code into GAME shaders
+**Do:** Include the ENGINE pass and replace single stages through hooks
 
-**Don't:** Hardcode GAME-specific blend modes in ENGINE
-**Do:** Keep GAME-specific blending in GAME shader code
+**Don't:** Declare engine data as material properties
+**Do:** Read it as shader globals; keep material properties for per-material values
+
+**Don't:** Hardcode GAME-specific colors or blending in ENGINE
+**Do:** Keep them in GAME shader code, style assets, or style data files
 
 **Don't:** Create ENGINE→GAME dependencies
-**Do:** Use interface + registry pattern
+**Do:** Use interface + registry patterns
 
 ---
 
 ## Related Patterns
 
 - **Pattern 1 (Engine-Game Separation):** Philosophy this implements
-- **Pattern 7 (Registry):** Data lookup; this extends to implementation lookup
+- **Pattern 7 (Registry):** Data lookup; extended to implementations and shader parameters
+- **Pattern 17 (Single Source of Truth):** One contract definition
 - **Pattern 20 (Pluggable Implementation):** Full pattern documentation
 
 ---

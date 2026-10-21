@@ -178,7 +178,7 @@ Core gameplay textures:
 ```csharp
 var coreTextures = new CoreTextureSet(mapWidth, mapHeight);
 coreTextures.CreateTextures();
-coreTextures.BindToMaterial(mapMaterial);
+coreTextures.BindGlobals(); // publishes as shader globals (see Shaders.md)
 
 // Update colors
 coreTextures.SetProvinceColor(x, y, color);
@@ -301,7 +301,7 @@ public class MapModeManager
 - GPU texture updates (no CPU pixel processing)
 - Dirty flag optimization (only changed provinces)
 - Point filtering (no interpolation overhead)
-- Shader keyword branching (compiled variants)
+- Uniform `_MapMode` branch (no per-mode shader variants)
 
 ## Best Practices
 

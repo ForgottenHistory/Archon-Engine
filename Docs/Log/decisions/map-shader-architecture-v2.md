@@ -2,7 +2,7 @@
 **Date:** 2026-10-21
 **Status:** ✅ Implemented
 **Impact:** Breaking change (game shader layout, renderer interfaces)
-**Supersedes:** `shader-copy-and-customize-architecture.md`
+**Supersedes:** shader copy-and-customize (GAME copied the Default shaders and swapped the map mode include; removed, see git history)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 
 ---
