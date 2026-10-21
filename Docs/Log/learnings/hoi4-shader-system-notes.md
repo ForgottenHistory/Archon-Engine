@@ -14,6 +14,22 @@ Sources: the game's shipped files (`gfx/FX/`), the user shader cache, and decomp
 
 ---
 
+## Outcome in Archon
+
+These notes drove Archon's map shader architecture. See **`Docs/Log/decisions/map-shader-architecture-v2.md`** for the decision, and `Docs/Wiki/Shaders.md` for usage.
+
+| HOI4 idea | What Archon adopted |
+|---|---|
+| Name-based engine/shader contract | `MapShaderParameterRegistry`: one C# list (name, type, global/material scope, default), validated on every style apply |
+| Engine uploads constants each frame | Engine textures and style values are shader globals (`MapShaderGlobals`), never material properties |
+| Effect = shared code + defines | Engine-owned render pass (`MapPassFlat/Terrain.hlsl`); game shaders are thin shells |
+| Override a single `.fxh` | Compile-time `ARCHON_OVERRIDE_*` stage hooks + `ARCHON_POST_COMPOSITE` |
+| `constants.fxh` / data-driven tuning (Option A) | JSON5 style data files keyed by parameter names, override-first, hot reload in editor |
+| Content-hashed cache with full-source check | Deferred; recorded as the approach for large-map caching |
+| Runtime compilation (Option C), AssetBundle shaders (Option B) | Not adopted |
+
+---
+
 ## 1. Mods override files by path
 
 All shaders live in `gfx/FX/` (58 files):

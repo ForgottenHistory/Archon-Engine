@@ -3,7 +3,7 @@
 **Status:** ✅ Implemented
 **Impact:** Breaking change (game shader layout, renderer interfaces)
 **Supersedes:** `shader-copy-and-customize-architecture.md`
-**Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`, plan `Docs/Planning/map-shader-architecture-v2.md`
+**Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 
 ---
 
@@ -57,6 +57,38 @@ HOI4 (Clausewitz) comparison: name-based engine/shader contract, engine-uploaded
 - Engine textures have no `_ST` tiling; don't use `TRANSFORM_TEX` on them
 - One set of globals per process: a second simultaneous map with different data needs per-material overrides
 - Different stage order requires a GAME-owned pass (Level 3)
+
+---
+
+## Implementation Map
+
+- Globals: `MapShaderGlobals` (IDs, engine parameter registration, style setters); fallbacks replace Properties defaults
+- Shader includes: `MapShaderSetup.hlsl`, `MapContext.hlsl`, `MapFragment.hlsl` (stages + hooks), `MapPassFlat.hlsl`, `MapPassTerrain.hlsl`; `DefaultCommon.hlsl` (globals + small material CBUFFER)
+- Contract: `MapShaderParameterRegistry`, `MapShaderParameter`/`ShaderValue`, `ShaderParameterOverride`
+- Styles: `VisualStyleManager` (apply, custom params, data file, validation, hot reload, export), `VisualStyleDataFile`, `VisualStyleConfiguration.styleDataFile`
+- Settings: `GameSettings.WatchStyleDataFile`, `WatchStyleDataFileInDevelopmentBuilds`
+- Removed: legacy MapCore shaders, unwired compositor stack, `MAP_MODE_*` keywords, renderer `ApplyToMaterial` + `*StyleParams`
+
+---
+
+## Notes and Known Gaps
+
+- Materials keep stale serialized values for removed properties. Unity ignores them (not in Properties); reset the material if a value looks stuck.
+- `MapModeDataTextures` binds culture/religion textures that no ENGINE shader reads; kept for GAME shaders.
+- Development gradient (`_Dev*`) still lives in the ENGINE material CBUFFER; it is GAME policy and should move to GAME shaders via `ARCHON_GAME_MATERIAL_PROPERTIES`.
+- Structural style settings (border rendering mode, pixel-perfect thickness, tessellation on/off) are asset-only: they drive C# systems, not just shader values.
+
+---
+
+## Future: Large Maps (EU5 scale, deferred)
+
+Generated-data caching was deferred. At 5632x2048 (11.5M px) generation is cheap: terrain blend maps ~46 ms, terrain type ~68 ms, neighbor detection ~105 ms; image decodes and adjacency are already cached (4-28 ms).
+
+Estimates at 16384x8192 (~134M px, ~11.6x):
+- CPU hotspot: province ID lookup + pixel index (`MapTexturePopulator`), 542 ms → ~6 s. Uncached and CPU-bound: first cache candidate (key = hash of inputs + generator version; store a full input fingerprint to guard collisions, as HOI4's shader cache does; cache under `persistentDataPath`).
+- GPU-generated textures are usually cheaper to regenerate than cache: one full-res RGBA texture is ~512 MB to read back, store and re-upload.
+- VRAM is the real limit: ~a dozen full-res map textures → several GB.
+- Conclusion: EU5 scale needs an opt-in large-map system (streaming / tiled or virtual textures, lower-res derived textures), not a cache on the current pipeline. The default path stays for games that don't need it.
 
 ---
 

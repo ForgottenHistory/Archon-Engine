@@ -78,7 +78,7 @@ namespace Map.Rendering
         /// <summary>Material scope only: every map shader must declare it (validated at style apply).</summary>
         public bool Required { get; }
 
-        /// <summary>Who registered it (e.g. "Archon", "Hegemon"), for error messages.</summary>
+        /// <summary>Who registered it (e.g. "Archon", "YourGame"), for error messages.</summary>
         public string Owner { get; }
 
         /// <summary>
