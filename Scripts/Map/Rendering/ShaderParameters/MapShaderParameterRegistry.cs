@@ -20,14 +20,14 @@ namespace Map.Rendering
 
         public static IReadOnlyList<MapShaderParameter> All => ordered;
 
-        public static void RegisterGlobal(string name, ShaderValue defaultValue, string owner)
+        public static void RegisterGlobal(string name, ShaderValue defaultValue, string owner, bool styleSettable = true)
         {
-            Register(new MapShaderParameter(name, defaultValue.Type, ShaderParameterScope.Global, defaultValue, false, owner));
+            Register(new MapShaderParameter(name, defaultValue.Type, ShaderParameterScope.Global, defaultValue, false, owner, styleSettable));
         }
 
-        public static void RegisterMaterial(string name, ShaderParameterType type, bool required, string owner)
+        public static void RegisterMaterial(string name, ShaderParameterType type, bool required, string owner, bool styleSettable = true)
         {
-            Register(new MapShaderParameter(name, type, ShaderParameterScope.Material, default, required, owner));
+            Register(new MapShaderParameter(name, type, ShaderParameterScope.Material, default, required, owner, styleSettable));
         }
 
         /// <summary>
@@ -68,19 +68,25 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Apply a value by name. Registered parameters use their registered scope (type must match);
-        /// unregistered names use the given scope as-is.
+        /// Apply a style value by name. Registered parameters use their registered scope (type must match)
+        /// and must be StyleSettable; unregistered names use the given scope as-is.
+        /// Returns false if skipped. 'source' names the style/file for error messages.
         /// </summary>
-        public static void Apply(string name, ShaderValue value, ShaderParameterScope scope, Material material)
+        public static bool Apply(string name, ShaderValue value, ShaderParameterScope scope, Material material, string source = "style")
         {
-            if (string.IsNullOrEmpty(name)) return;
+            if (string.IsNullOrEmpty(name)) return false;
 
             if (TryGet(name, out var p))
             {
+                if (!p.StyleSettable)
+                {
+                    ArchonLogger.LogWarning($"{source}: '{name}' is engine-managed ({p.Owner}) and cannot be set by a style. Skipped.", "map_rendering");
+                    return false;
+                }
                 if (p.Type != value.Type)
                 {
-                    ArchonLogger.LogError($"MapShaderParameterRegistry: '{name}' is {p.Type} ({p.Owner}), got {value.Type}. Skipped.", "map_rendering");
-                    return;
+                    ArchonLogger.LogError($"{source}: '{name}' is {p.Type} ({p.Owner}), got {value.Type}. Skipped.", "map_rendering");
+                    return false;
                 }
                 scope = p.Scope;
             }
@@ -93,10 +99,11 @@ namespace Map.Rendering
             {
                 if (material.shader.FindPropertyIndex(name) < 0)
                 {
-                    ArchonLogger.LogWarning($"MapShaderParameterRegistry: material parameter '{name}' is not declared by shader '{material.shader.name}'", "map_rendering");
+                    ArchonLogger.LogWarning($"{source}: material parameter '{name}' is not declared by shader '{material.shader.name}'", "map_rendering");
                 }
                 value.ApplyMaterial(material, Shader.PropertyToID(name));
             }
+            return true;
         }
 
         /// <summary>

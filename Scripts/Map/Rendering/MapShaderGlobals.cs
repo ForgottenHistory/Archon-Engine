@@ -106,41 +106,41 @@ namespace Map.Rendering
         public static void RegisterEngineParameters()
         {
             // Textures: same fallbacks the Properties blocks used
-            G("_ProvinceIDTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_ProvinceOwnerTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_ProvinceColorTexture", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_ProvinceDevelopmentTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_ProvinceTerrainTexture", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_ProvinceCultureTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_ProvinceReligionTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_TerrainTypeTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_ProvinceTerrainLookup", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_TerrainDetailArray", ShaderValue.Tex(null)); // no built-in 2D array fallback; unbound reads return zero
-            G("_DetailNoiseTexture", ShaderValue.Tex(Texture2D.grayTexture));
-            G("_DetailIndexTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_DetailMaskTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_HeightmapTexture", ShaderValue.Tex(Texture2D.grayTexture));
-            G("_NormalMapTexture", ShaderValue.Tex(Texture2D.normalTexture));
-            G("_DistanceFieldBorderTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_PixelPerfectBorderTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_HighlightTexture", ShaderValue.Tex(Texture2D.blackTexture));
-            G("_FogOfWarTexture", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_ProvinceColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_CountryColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_CultureColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_ReligionColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_TerrainColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
-            G("_ProvincePaletteTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceIDTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceOwnerTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceColorTexture", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_ProvinceDevelopmentTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceTerrainTexture", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_ProvinceCultureTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceReligionTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_TerrainTypeTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_ProvinceTerrainLookup", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_TerrainDetailArray", ShaderValue.Tex(null)); // no built-in 2D array fallback; unbound reads return zero
+            E("_DetailNoiseTexture", ShaderValue.Tex(Texture2D.grayTexture));
+            E("_DetailIndexTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_DetailMaskTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_HeightmapTexture", ShaderValue.Tex(Texture2D.grayTexture));
+            E("_NormalMapTexture", ShaderValue.Tex(Texture2D.normalTexture));
+            E("_DistanceFieldBorderTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_PixelPerfectBorderTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_HighlightTexture", ShaderValue.Tex(Texture2D.blackTexture));
+            E("_FogOfWarTexture", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_ProvinceColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_CountryColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_CultureColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_ReligionColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_TerrainColorPalette", ShaderValue.Tex(Texture2D.whiteTexture));
+            E("_ProvincePaletteTexture", ShaderValue.Tex(Texture2D.blackTexture));
 
             // Map mode state
-            G("_MapMode", ShaderValue.Int(0));
-            G("_CustomMapModeIndex", ShaderValue.Int(0));
-            G("_MapModeTextureCount", ShaderValue.Int(0));
-            G("_MaxProvinceID", ShaderValue.Int(65536));
+            E("_MapMode", ShaderValue.Int(0));
+            E("_CustomMapModeIndex", ShaderValue.Int(0));
+            E("_MapModeTextureCount", ShaderValue.Int(0));
+            E("_MaxProvinceID", ShaderValue.Int(65536));
 
             // Borders
             var borders = new VisualStyleConfiguration.BorderStyle();
-            G("_BorderRenderingMode", ShaderValue.Int(GetBorderShaderMode(borders.renderingMode)));
+            E("_BorderRenderingMode", ShaderValue.Int(GetBorderShaderMode(borders.renderingMode)));
             G("_CountryBorderColor", ShaderValue.Color(borders.countryBorderColor));
             G("_CountryBorderStrength", ShaderValue.Float(borders.countryBorderStrength));
             G("_ProvinceBorderColor", ShaderValue.Color(borders.provinceBorderColor));
@@ -174,8 +174,8 @@ namespace Map.Rendering
 
             // Fog of war (off until a player country is chosen; FogOfWarSystem enables it)
             var fog = new VisualStyleConfiguration.FogOfWarSettings();
-            G("_FogOfWarEnabled", ShaderValue.Float(0f));
-            G("_FogOfWarZoomDisable", ShaderValue.Float(0f));
+            E("_FogOfWarEnabled", ShaderValue.Float(0f));
+            E("_FogOfWarZoomDisable", ShaderValue.Float(0f));
             G("_FogUnexploredColor", ShaderValue.Color(fog.unexploredColor));
             G("_FogExploredColor", ShaderValue.Color(fog.exploredTint));
             G("_FogExploredDesaturation", ShaderValue.Float(fog.exploredDesaturation));
@@ -195,8 +195,13 @@ namespace Map.Rendering
             M("_TessellationMaxDistance", ShaderParameterType.Float, required: false);
         }
 
+        // Style-settable global (visual styles / style data files may set it)
         private static void G(string name, ShaderValue defaultValue) =>
             MapShaderParameterRegistry.RegisterGlobal(name, defaultValue, Owner);
+
+        // Engine-managed global (simulation data / runtime state; styles may not set it)
+        private static void E(string name, ShaderValue defaultValue) =>
+            MapShaderParameterRegistry.RegisterGlobal(name, defaultValue, Owner, styleSettable: false);
 
         private static void M(string name, ShaderParameterType type, bool required) =>
             MapShaderParameterRegistry.RegisterMaterial(name, type, required, Owner);

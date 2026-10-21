@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phases 1-5 done
+**Status:** 🔄 Phases 1-6 done
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -112,10 +112,16 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 - Kept: culture/religion texture bindings (unread by ENGINE shaders, but available to GAME shaders)
 
 ### Phase 6 — Data-driven styles (modding)
-- [ ] Style file format (JSON5) resolved via `DataFileResolver`, mapping onto Phase 5 parameter definitions
-- [ ] Textures via runtime load (PNG; DDS later), point/linear filtering declared per texture in the file
-- [ ] ScriptableObject remains as editor-authored default, serializable to the same format
-- [ ] Hot reload hook (existing F5 path)
+- [x] `VisualStyles/VisualStyleDataFile.cs` — JSON5 file via `DataFileResolver` (override-first), `parameters` keyed by registry names; value forms: number, `[r,g,b(,a)]` (0-1 or 0-255), `"#rrggbb"`, `{ texture, filter, wrap, linear, mipmaps }`, `{ value, type, scope }` for unregistered GAME params
+- [x] `MapShaderParameter.StyleSettable` — engine-managed globals (simulation/generated textures, palettes, map mode state, border mode, fog toggle/zoom) refused from styles; only `_OverlayTexture` is a style texture
+- [x] Runtime PNG/JPG textures with per-entry filter/wrap/linear/mipmaps; cached per path, old texture destroyed on reload. DDS not supported yet
+- [x] `VisualStyleConfiguration.styleDataFile` (default `map/visual_style.json5`); applied last in `ApplyStyle`, so F5 reload re-reads it
+- [x] Export: `VisualStyleManager` context menu "Export Style To Data File" writes current values to the override folder (template)
+- [x] Example `Template-Data/map/visual_style.json5` (empty `parameters`, documented forms). Hegemon uses `Assets/Data`, so it's unaffected
+- [x] `VisualStyleConfiguration` split into partial `VisualStyleConfiguration.Sections.cs` (500-line guideline)
+- Structural settings (border rendering mode, pixel-perfect thickness, tessellation on/off) stay asset-only: they drive C# systems, not just shader values
+- [x] Hot reload: `VisualStyleManager` polls the override + base paths (built once per style apply; 1s interval) and re-applies the style on change. Toggles: `GameSettings.WatchStyleDataFile` (editor, default on), `WatchStyleDataFileInDevelopmentBuilds` (default off). F5 lives in GAME (`DebugInputHandler`), which isn't in every scene
+- Verified: export keeps colors as authored (exported values match the style asset)
 
 ### Phase 7 — Generated-data disk cache (optional)
 Only if startup logs show cost. Candidates: border distance field, terrain blend maps, normal map.

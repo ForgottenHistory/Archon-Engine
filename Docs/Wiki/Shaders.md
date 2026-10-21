@@ -283,6 +283,28 @@ float _CoastGlowStrength;
 
 Set values per style with **Custom Shader Parameters** on `VisualStyleConfiguration` (name, type, value). They're applied by a generic loop after the built-in style. Registered names use their registered scope; unregistered names use the scope set on the entry.
 
+## Style Data Files (Modding)
+
+A visual style can be overridden by a JSON5 file, so mods can change the map look in a shipped build. The path is set per style (`VisualStyleConfiguration.styleDataFile`, default `map/visual_style.json5`) and resolved through `DataFileResolver`, so a file in the override folder wins over the base data. It's applied last on every style apply. In the editor the file is watched: saving it re-applies the style within a second. Toggle with `GameSettings.WatchStyleDataFile`; `WatchStyleDataFileInDevelopmentBuilds` enables it in development builds (never in release builds).
+
+```json5
+{
+  parameters: {
+    _OceanColor: [25, 40, 112],                  // [r,g,b(,a)] 0-1 or 0-255, or "#rrggbb"
+    _CountryBorderStrength: 0.9,
+    _OverlayTexture: { texture: "gfx/map/parchment.png", filter: "bilinear", wrap: "repeat" },
+    _OverlayStrength: 0.3,
+    _CoastGlowStrength: { value: 0.5, type: "float", scope: "global" }  // unregistered GAME parameter
+  }
+}
+```
+
+- Keys are registry parameter names. Registered names get their type and scope from the registry.
+- Textures are loaded from PNG/JPG at runtime, relative to the data directory.
+- Engine-managed values (simulation textures, map mode, border mode, fog toggle) are refused with a warning.
+- Errors name the file and key. Bad entries are skipped, the rest still apply.
+- In play mode, the `VisualStyleManager` context menu **Export Style To Data File** writes every current value to the override folder as a starting template.
+
 ## Anti-Patterns
 
 - **Don't** use ENGINE Default shaders directly for your game — copy the shell

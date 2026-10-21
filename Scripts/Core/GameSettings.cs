@@ -97,6 +97,12 @@ namespace Core
         [Tooltip("Skip cache warming for faster iteration")]
         public bool SkipCacheWarming = false;
 
+        [Tooltip("Editor: re-apply the visual style when its style data file (JSON5) is saved. Polls the file timestamp once per second.")]
+        public bool WatchStyleDataFile = true;
+
+        [Tooltip("Also watch the style data file in development builds (off by default; never active in release builds).")]
+        public bool WatchStyleDataFileInDevelopmentBuilds = false;
+
         [Header("Logging")]
         [Tooltip("Global logging verbosity level for all systems")]
         public LogLevel LogLevel = LogLevel.Warnings;

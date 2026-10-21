@@ -81,9 +81,16 @@ namespace Map.Rendering
         /// <summary>Who registered it (e.g. "Archon", "Hegemon"), for error messages.</summary>
         public string Owner { get; }
 
+        /// <summary>
+        /// Can visual styles / style data files set it? False for engine-managed state
+        /// (simulation textures, map mode, border mode, fog toggle) that must stay in sync with C#.
+        /// </summary>
+        public bool StyleSettable { get; }
+
         public MapShaderParameter(string name, ShaderParameterType type, ShaderParameterScope scope,
-            ShaderValue defaultValue, bool required, string owner)
+            ShaderValue defaultValue, bool required, string owner, bool styleSettable = true)
         {
+            StyleSettable = styleSettable;
             Name = name;
             Id = Shader.PropertyToID(name);
             Type = type;

@@ -22,6 +22,13 @@ namespace Archon.Engine.Map
 
         private bool LogStyle => GameSettings.Instance?.ShouldLog(LogLevel.Info) ?? false;
 
+        // Style data file hot reload (GameSettings.WatchStyleDataFile*): re-apply the style when the file changes
+        private const float StyleFilePollInterval = 1f;
+        private long styleFileStamp;
+        private float nextStyleFilePoll;
+        private string styleFileOverridePath;
+        private string styleFileBasePath;
+
         // Cached component references
         private MapTextureManager textureManager;
         private BorderComputeDispatcher borderDispatcher;
@@ -107,6 +114,11 @@ namespace Archon.Engine.Map
             ApplyFogOfWarSettings(style.fogOfWar);
             ApplyTessellationSettings(style.tessellation);
             ApplyCustomShaderParameters(style);
+
+            // Data-driven overrides (moddable in builds), applied last so they win
+            VisualStyleDataFile.Apply(style.styleDataFile, runtimeMaterial);
+            VisualStyleDataFile.GetCandidatePaths(style.styleDataFile, out styleFileOverridePath, out styleFileBasePath);
+            styleFileStamp = VisualStyleDataFile.GetChangeStamp(styleFileOverridePath, styleFileBasePath);
 
             // Check the shader against the engine/shader contract (logs errors naming shader + property)
             int problems = MapShaderParameterRegistry.ValidateMaterial(runtimeMaterial);
@@ -250,6 +262,29 @@ namespace Archon.Engine.Map
             }
         }
 
+        void Update()
+        {
+            if (!ShouldWatchStyleDataFile()) return;
+            if (activeStyle == null || runtimeMaterial == null || styleFileBasePath == null) return;
+            if (Time.unscaledTime < nextStyleFilePoll) return;
+            nextStyleFilePoll = Time.unscaledTime + StyleFilePollInterval;
+
+            long stamp = VisualStyleDataFile.GetChangeStamp(styleFileOverridePath, styleFileBasePath);
+            if (stamp != styleFileStamp)
+            {
+                ArchonLogger.Log($"VisualStyleManager: '{activeStyle.styleDataFile}' changed, re-applying style '{activeStyle.styleName}'", "map_rendering");
+                ApplyStyle(activeStyle);
+            }
+        }
+
+        private static bool ShouldWatchStyleDataFile()
+        {
+            var settings = GameSettings.Instance;
+            if (settings == null) return false;
+            if (Application.isEditor) return settings.WatchStyleDataFile;
+            return UnityEngine.Debug.isDebugBuild && settings.WatchStyleDataFileInDevelopmentBuilds;
+        }
+
         /// <summary>
         /// Apply GAME custom shader parameters carried by the style (generic loop, no ENGINE code per parameter)
         /// </summary>
@@ -260,7 +295,7 @@ namespace Archon.Engine.Map
             foreach (var entry in style.customShaderParameters)
             {
                 if (entry == null) continue;
-                MapShaderParameterRegistry.Apply(entry.name, entry.ToValue(), entry.scope, runtimeMaterial);
+                MapShaderParameterRegistry.Apply(entry.name, entry.ToValue(), entry.scope, runtimeMaterial, $"Style '{style.styleName}'");
             }
         }
 
@@ -395,6 +430,17 @@ namespace Archon.Engine.Map
             }
 
             ArchonLogger.Log("VisualStyleManager.ReloadMaterialFromAsset: Complete - style reloaded from ScriptableObject", "map_rendering");
+        }
+
+        /// <summary>
+        /// Write the current style values to the style data file in the override folder
+        /// (template for modders). Run in play mode, after the style is applied.
+        /// </summary>
+        [ContextMenu("Export Style To Data File")]
+        public void ExportStyleToDataFile()
+        {
+            string relative = !string.IsNullOrEmpty(activeStyle?.styleDataFile) ? activeStyle.styleDataFile : "map/visual_style.json5";
+            VisualStyleDataFile.Export(relative, runtimeMaterial);
         }
 
         #if UNITY_EDITOR

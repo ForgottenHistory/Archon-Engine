@@ -1,0 +1,25 @@
+{
+  // Visual style overrides, applied on top of the VisualStyleConfiguration asset.
+  // Resolved override-first (DataFileResolver), so mods can change the map look in shipped builds.
+  // Reloaded on every style apply (F5 in play mode).
+  //
+  // Keys are map shader parameter names (MapShaderParameterRegistry). Value forms:
+  //   number                       float (or int if the parameter is registered as int)
+  //   [r, g, b] / [r, g, b, a]     color, 0-1 or 0-255
+  //   "#rrggbb"                    color
+  //   { texture: "gfx/map/x.png", filter: "point|bilinear|trilinear", wrap: "repeat|clamp|mirror", linear: false, mipmaps: true }
+  //   { value: ..., type: "float|int|color|vector", scope: "global|material" }   unregistered GAME parameter
+  //
+  // Engine-managed values (simulation textures, map mode, border mode, fog toggle) can't be set here.
+  // Tip: VisualStyleManager context menu "Export Style To Data File" writes all current values.
+  //
+  // Examples:
+  //   _OceanColor: [25, 40, 112],
+  //   _CountryBorderStrength: 0.9,
+  //   _FogExploredDesaturation: 0.5,
+  //   _OverlayTexture: { texture: "gfx/map/parchment.png", wrap: "repeat" },
+  //   _OverlayStrength: 0.3,
+
+  parameters: {
+  }
+}

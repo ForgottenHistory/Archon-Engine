@@ -124,7 +124,9 @@
   - FogOfWarStyle - customRendererId references IFogOfWarRenderer
   - TerrainStyle - customRendererId references ITerrainRenderer
   - MapModeColorizerStyle - customColorizerId references IMapModeColorizer
-- **Map.VisualStyles.VisualStyleManager** - Applies styles to renderer, binds textures, F5 reload support
+- **Map.VisualStyles.VisualStyleConfiguration (Sections)** - Partial: fog, tessellation, highlight, terrain blend, colorizer section types
+- **Map.VisualStyles.VisualStyleManager** - Applies styles (globals + material), custom params, style data file, contract validation; F5 reload; "Export Style To Data File" context menu
+- **Map.VisualStyles.VisualStyleDataFile** - JSON5 style overrides (`map/visual_style.json5`, override-first via DataFileResolver): shader params by name, runtime PNG textures, export template
 
 ---
 
