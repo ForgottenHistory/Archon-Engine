@@ -1,20 +1,19 @@
 # Shader Architecture
 
-Archon provides a modular shader system where the ENGINE handles rendering infrastructure and the GAME controls visual policy. Games **copy** the Default shaders as a starting point and customize from there.
+Archon provides a modular shader system where the ENGINE handles rendering infrastructure and the GAME controls visual policy. A game map shader is a **thin shell**: Properties, render state, and three includes. The render pass itself (vertex, tessellation, fragment composition) lives in the ENGINE, so engine fixes reach every game automatically.
 
 ## Architecture
 
 ```
-YOUR GAME SHADER (.shader)
-├── DefaultCommon.hlsl (Engine) — CBUFFER, texture declarations
-├── YourMapModes.hlsl (Game) — replaces DefaultMapModes.hlsl
+YOUR GAME SHADER (.shader) — Properties + Tags + 3 includes
+├── MapShaderSetup.hlsl (Engine) — URP libraries + DefaultCommon.hlsl (globals, material CBUFFER)
+├── YourMapModes.hlsl (Game) — defines RenderMapMode()
 │   ├── MapModeCommon.hlsl (Engine) — borders, fog, highlights, ID sampling
 │   ├── MapModePolitical.hlsl (Game) — your political mode visuals
 │   ├── MapModeTerrain.hlsl (Game) — your terrain mode visuals
 │   └── MapModeDevelopment.hlsl (Game) — your development mode visuals
-├── DefaultLighting.hlsl (Engine) — normal map lighting
-├── DefaultEffects.hlsl (Engine) — overlay texture
-└── DefaultDebugModes.hlsl (Engine) — debug visualizations
+└── MapPassFlat.hlsl / MapPassTerrain.hlsl (Engine, #include_with_pragmas)
+    └── MapFragment.hlsl (Engine) — debug → ocean → map mode → lighting → borders → highlights → fog → overlay
 ```
 
 **Key principle:** GAME includes ENGINE, never the other way around. Archon is a separate repository and cannot reference paths outside itself.
@@ -25,7 +24,11 @@ ENGINE shader includes live in `Assets/Archon-Engine/Shaders/Includes/`:
 
 | File | Purpose |
 |------|---------|
+| `MapShaderSetup.hlsl` | First include: URP libraries + `DefaultCommon.hlsl` |
 | `DefaultCommon.hlsl` | Engine globals (textures, buffers, style values), small per-material CBUFFER |
+| `MapPassFlat.hlsl` | Flat map pass: entry points + pragmas (include last, with `#include_with_pragmas`) |
+| `MapPassTerrain.hlsl` | Tessellated terrain pass: entry points + pragmas + `TERRAIN_DETAIL_MAPPING` keyword |
+| `MapFragment.hlsl` | Pixel composition shared by both passes (calls your `RenderMapMode`) |
 | `MapModeCommon.hlsl` | Province ID sampling, owner lookup, border rendering, fog of war, highlights |
 | `DefaultLighting.hlsl` | Normal map lighting from heightmap |
 | `DefaultEffects.hlsl` | Overlay texture blending (parchment, paper) |
@@ -35,7 +38,7 @@ ENGINE also provides **complete Default shaders** as working examples:
 - `DefaultFlatMapShader.shader` — Flat 2D map
 - `DefaultTerrainMapShader.shader` — Tessellated 3D terrain
 
-These serve as your **copy source**, not as shaders to use directly.
+These serve as your **copy source** (a ~70 line shell), not as shaders to use directly.
 
 ## What GAME Provides
 
@@ -43,15 +46,15 @@ GAME creates its own `.shader` files and map mode `.hlsl` files:
 
 | File | Purpose |
 |------|---------|
-| `YourGame.shader` | Main shader file — includes ENGINE + GAME hlsl |
+| `YourGame.shader` | Thin shell — Properties, render state, ENGINE setup + your dispatcher + ENGINE pass |
 | `MapModePolitical.hlsl` | How political mode looks (colors, blending, unowned provinces) |
 | `MapModeTerrain.hlsl` | How terrain mode looks (terrain colors, detail textures) |
 | `MapModeDevelopment.hlsl` | How development gradient looks |
 | `YourMapModes.hlsl` | Dispatcher — wires ENGINE utilities to GAME map mode renderers |
 
-## Setup: Copy-and-Customize
+## Setup
 
-### Step 1: Copy Default Shaders
+### Step 1: Copy the Default Shader Shells
 
 Copy from ENGINE to your GAME shader folder:
 
@@ -124,32 +127,23 @@ float4 RenderMapMode(int mapMode, uint provinceID, float2 uv, float3 positionWS)
 #endif
 ```
 
-### Step 4: Replace the Include
+### Step 4: Point the Includes at ENGINE and Your Dispatcher
 
-In your copied `.shader` file, replace the ENGINE map modes include with your own:
-
-```hlsl
-// Before (ENGINE default)
-#include "Includes/DefaultMapModes.hlsl"
-
-// After (YOUR visual policy)
-#include "MapModes/YourMapModes.hlsl"
-```
-
-Keep all other ENGINE includes unchanged:
+The copied shell uses paths relative to the ENGINE folder. In your copy, use absolute ENGINE paths and swap the dispatcher:
 
 ```hlsl
-// ENGINE mechanism (keep these)
-#include "Assets/Archon-Engine/Shaders/Includes/DefaultCommon.hlsl"
+HLSLPROGRAM
+#include "Assets/Archon-Engine/Shaders/Includes/MapShaderSetup.hlsl"
 
-// YOUR visual policy (replace this one)
+// YOUR visual policy (must define RenderMapMode)
 #include "MapModes/YourMapModes.hlsl"
 
-// ENGINE mechanism (keep these)
-#include "Assets/Archon-Engine/Shaders/Includes/DefaultLighting.hlsl"
-#include "Assets/Archon-Engine/Shaders/Includes/DefaultEffects.hlsl"
-#include "Assets/Archon-Engine/Shaders/Includes/DefaultDebugModes.hlsl"
+// ENGINE pass (MapPassFlat.hlsl or MapPassTerrain.hlsl)
+#include_with_pragmas "Assets/Archon-Engine/Shaders/Includes/MapPassTerrain.hlsl"
+ENDHLSL
 ```
+
+Use `#include_with_pragmas` for the pass, or its entry point pragmas are ignored. Render state (`Tags`, `ZWrite`, `Cull`, `FallBack`) stays in your `.shader` file.
 
 ### Step 5: Copy Map Mode hlsl Files
 
@@ -237,7 +231,8 @@ Full declarations in `DefaultCommon.hlsl`.
 
 ## Anti-Patterns
 
-- **Don't** use ENGINE Default shaders directly for your game — copy them
+- **Don't** use ENGINE Default shaders directly for your game — copy the shell
+- **Don't** copy the pass code into your shader. Include `MapPass*.hlsl` instead
 - **Don't** fork ENGINE hlsl files in place — copy to GAME and customize
 - **Don't** duplicate `DefaultCommon.hlsl` — always include from ENGINE path
 - **Don't** put game-specific colors or blending in ENGINE shader code
@@ -248,5 +243,5 @@ Full declarations in `DefaultCommon.hlsl`.
 - **Do** include ENGINE utilities from absolute path (`Assets/Archon-Engine/Shaders/...`)
 - **Do** keep your map mode hlsl files as GAME visual policy
 - **Do** use `_BorderRenderingMode` int for border dispatch (not heuristics)
-- **Do** update your copies when ENGINE adds new features you want
+- **Do** keep the render pass in ENGINE (`MapPass*.hlsl`). Pass improvements then reach your game without copying
 - **Do** keep your Properties block limited to per-material values (it must match the `UnityPerMaterial` CBUFFER)

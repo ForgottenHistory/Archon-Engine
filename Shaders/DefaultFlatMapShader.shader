@@ -48,92 +48,13 @@ Shader "Archon/DefaultFlat"
             Cull Off
 
             HLSLPROGRAM
-            #pragma vertex vert
-            #pragma fragment frag
+            #include "Includes/MapShaderSetup.hlsl"
 
-            // Map mode switching is now int-based (_MapMode), not keyword-based
-            // This enables unlimited GAME-defined map modes via texture array
-
-            // URP includes
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-            #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-
-            // ENGINE shader includes - MODULAR ARCHITECTURE
-            #include "Includes/DefaultCommon.hlsl"
+            // Map mode visual policy (games replace this with their own dispatcher)
             #include "Includes/DefaultMapModes.hlsl"
-            #include "Includes/DefaultLighting.hlsl"
-            #include "Includes/DefaultEffects.hlsl"
-            #include "Includes/DefaultDebugModes.hlsl"
 
-            // Vertex input structure
-            struct Attributes
-            {
-                float4 positionOS : POSITION;
-                float2 uv : TEXCOORD0;
-                UNITY_VERTEX_INPUT_INSTANCE_ID
-            };
-
-            // Fragment input structure
-            struct Varyings
-            {
-                float4 positionHCS : SV_POSITION;
-                float2 uv : TEXCOORD0;
-                float3 positionWS : TEXCOORD1;
-                UNITY_VERTEX_OUTPUT_STEREO
-            };
-
-            // Vertex shader
-            Varyings vert(Attributes input)
-            {
-                Varyings output;
-                UNITY_SETUP_INSTANCE_ID(input);
-                UNITY_INITIALIZE_VERTEX_OUTPUT_STEREO(output);
-
-                output.positionWS = TransformObjectToWorld(input.positionOS.xyz);
-                output.positionHCS = TransformWorldToHClip(output.positionWS);
-                output.uv = input.uv;
-
-                return output;
-            }
-
-            // Fragment shader - composition of modular includes
-            float4 frag(Varyings input) : SV_Target
-            {
-                // Check for debug modes first (100-103)
-                float4 debugOutput;
-                if (TryRenderDebugMode(_MapMode, input.uv, debugOutput))
-                {
-                    return debugOutput;
-                }
-
-                // Sample province ID
-                uint provinceID = SampleProvinceID(input.uv);
-
-                if (provinceID == 0)
-                {
-                    return _OceanColor;
-                }
-
-                // Render base color based on map mode
-                float4 baseColor = RenderMapMode(_MapMode, provinceID, input.uv, input.positionWS);
-
-                // Apply lighting (normal map based)
-                baseColor = ApplyNormalMapLighting(baseColor, input.uv);
-
-                // Apply borders (handled by BorderComputeDispatcher + distance field texture)
-                baseColor = ApplyBorders(baseColor, input.uv);
-
-                // Apply highlights (selection, etc.)
-                baseColor = ApplyHighlights(baseColor, input.uv);
-
-                // Apply fog of war
-                baseColor = ApplyFogOfWar(baseColor, input.uv);
-
-                // Apply overlay texture (parchment, paper effects)
-                baseColor = ApplyOverlayTexture(baseColor, input.uv);
-
-                return baseColor;
-            }
+            // ENGINE pass: entry points, pragmas, fragment composition
+            #include_with_pragmas "Includes/MapPassFlat.hlsl"
             ENDHLSL
         }
     }

@@ -518,7 +518,8 @@ This document lists all implemented features in the Archon Engine organized by c
 - **TerrainBlendMapGenerator.compute** - 4-channel terrain blend map generation with configurable sampling
 - **MapModeTerrain.hlsl** - Imperator Rome manual bilinear filtering + detail texture blending
 - **MapModeCommon.hlsl** - Shared utilities (ID decoding, sampling, borders, fog, highlights)
-- **DefaultCommon.hlsl** - Shared texture declarations and material parameters
+- **DefaultCommon.hlsl** - Engine shader globals (textures, style values) + small per-material CBUFFER
+- **MapShaderSetup.hlsl / MapPassFlat.hlsl / MapPassTerrain.hlsl / MapFragment.hlsl** - Engine-owned map render pass; game shaders are thin shells (setup + dispatcher + pass)
 
 ---
 

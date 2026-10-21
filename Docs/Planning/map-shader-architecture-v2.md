@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phases 1-2 done
+**Status:** 🔄 Phases 1-3 done
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -89,10 +89,12 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 **Watch:** materials keep stale serialized values for removed properties. Unity ignores them (not in Properties), but if a value looks stuck, reset the material (debug inspector).
 
 ### Phase 3 — Engine pass includes
-- [ ] Create `Includes/MapPassTerrain.hlsl` (tessellation + vertex + frag) and `Includes/MapPassFlat.hlsl`, pulling `#pragma`s via `#include_with_pragmas`
-- [ ] Contract: GAME defines `RenderMapMode(int mapMode, uint provinceID, float2 uv, float3 positionWS)` before including the pass
-- [ ] Rewrite Default shaders as thin shells (Properties + Tags + 3 includes) — they double as the template for games
-- [ ] Verify include path resolution from a shader outside `Archon-Engine/`
+- [x] `Includes/MapShaderSetup.hlsl` (URP + DefaultCommon), `Includes/MapFragment.hlsl` (shared composition, `ArchonMapFragment`), `Includes/MapPassFlat.hlsl`, `Includes/MapPassTerrain.hlsl` (entry points + pragmas incl. `target 4.6`, `TERRAIN_DETAIL_MAPPING`)
+- [x] Contract: dispatcher defines `RenderMapMode(int mapMode, uint provinceID, float2 uv, float3 positionWS)` before the pass include
+- [x] Default shaders rewritten as thin shells (~65-75 lines); Hegemon shaders too (GAME commit)
+- [x] Entry points/structs prefixed `ArchonMap*` to avoid clashing with GAME code
+- [x] Include resolution: quoted includes resolve relative to the including file, so ENGINE includes work from GAME shaders via the absolute `Assets/Archon-Engine/...` path
+- [x] Wiki `Shaders.md`, `visual-styles-architecture.md` Level 2, `CURRENT_FEATURES.md`
 
 ### Phase 4 — Per-stage override hooks
 In the pass include, each stage is defaulted unless GAME overrides:

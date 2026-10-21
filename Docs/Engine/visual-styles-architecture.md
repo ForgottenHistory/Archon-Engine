@@ -31,14 +31,13 @@ Customize individual rendering systems while using ENGINE's shader infrastructur
 - Con: Constrained to ENGINE's layer model
 
 ### Level 2: Shader Copy-and-Customize (Recommended for Visual Identity)
-Copy ENGINE's Default shaders to GAME, replace map mode includes with GAME-specific visual policy.
+GAME owns a thin shader shell; ENGINE owns the render pass. The shell supplies the map mode dispatcher, ENGINE supplies everything around it.
 
 **How It Works:**
-- Copy `DefaultFlatMapShader.shader` / `DefaultTerrainMapShader.shader` to GAME
-- Rename shader (e.g., `"Archon/DefaultFlat"` → `"YourGame/FlatMap"`)
-- Replace `DefaultMapModes.hlsl` include with GAME's own map modes dispatcher
-- Copy ENGINE's map mode hlsl files as starting point, customize freely
-- Keep all other ENGINE includes (`DefaultCommon.hlsl`, `DefaultLighting.hlsl`, etc.)
+- GAME shader = Properties (per-material values only) + render state + three includes: ENGINE setup, GAME map mode dispatcher, ENGINE pass
+- The ENGINE pass owns entry points, tessellation, and fragment composition; it calls the GAME dispatcher's `RenderMapMode`
+- Engine-owned values (textures, map mode state, style values) are shader globals, so the shell never declares them
+- ENGINE map mode files are a starting point; GAME copies and customizes them freely
 
 **What GAME Controls:**
 - Map mode rendering (political, terrain, development colors and blending)
@@ -46,20 +45,18 @@ Copy ENGINE's Default shaders to GAME, replace map mode includes with GAME-speci
 - Visual identity per map mode
 
 **What ENGINE Still Provides:**
-- All texture/buffer declarations (`DefaultCommon.hlsl`)
-- Border rendering, fog of war, highlights (`MapModeCommon.hlsl`)
-- Normal map lighting (`DefaultLighting.hlsl`)
-- Overlay effects (`DefaultEffects.hlsl`)
-- Debug modes (`DefaultDebugModes.hlsl`)
+- Render pass: vertex, tessellation, fragment composition and stage order
+- All texture/buffer declarations and engine globals
+- Border rendering, fog of war, highlights, lighting, overlay, debug modes
 
 **Critical Constraint:** GAME includes ENGINE, never reverse. ENGINE is a separate repository and cannot reference GAME paths.
 
 **Trade-offs:**
 - Pro: Full control over visual identity
 - Pro: Still leverages ENGINE infrastructure (borders, fog, lighting)
-- Pro: ENGINE updates to infrastructure automatically apply
-- Con: Must update map mode copies when ENGINE adds new features
-- Con: Properties block must stay in sync with `DefaultCommon.hlsl` CBUFFER
+- Pro: ENGINE updates to infrastructure and the render pass automatically apply
+- Con: Must update map mode copies when ENGINE changes the map mode API
+- Con: Stage order is fixed by ENGINE (per-stage overrides are planned)
 
 See [Shaders Wiki](../Wiki/Shaders.md) for step-by-step setup guide.
 
