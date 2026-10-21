@@ -18,6 +18,9 @@ namespace Map.Rendering
         [Header("Debug")]
         [SerializeField] private bool logTextureCreation = true;
 
+        // Shader global fallbacks are uploaded once (ResizeTextures re-runs Initialize)
+        private bool shaderGlobalDefaultsSet;
+
         // Specialized texture set managers
         private CoreTextureSet coreTextures;
         private VisualTextureSet visualTextures;
@@ -66,6 +69,12 @@ namespace Map.Rendering
         {
             if (isInitialized) return;
             isInitialized = true;
+
+            if (!shaderGlobalDefaultsSet)
+            {
+                MapShaderGlobals.SetDefaults();
+                shaderGlobalDefaultsSet = true;
+            }
 
             // Set dimensions from loaded map image
             mapWidth = width;
@@ -191,34 +200,20 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Bind all textures to material
+        /// Publish all map textures as shader globals (see MapShaderGlobals).
+        /// Call again whenever a texture object is replaced. Style values are set by VisualStyleManager.
         /// </summary>
-        public void BindTexturesToMaterial(Material material)
+        public void BindGlobalTextures()
         {
-            if (material == null) return;
-
-            coreTextures?.BindToMaterial(material);
-            visualTextures?.BindToMaterial(material);
-            dynamicTextures?.BindToMaterial(material);
-            paletteManager?.BindToMaterial(material);
-
-            // NOTE: Border parameters are set by VisualStyleManager, not here
-            // Removed hardcoded SetBorderStyle() call to respect visual style configuration
+            coreTextures?.BindGlobals();
+            visualTextures?.BindGlobals();
+            dynamicTextures?.BindGlobals();
+            paletteManager?.BindGlobals();
 
             if (logTextureCreation)
             {
-                ArchonLogger.Log("MapTextureManager: Bound all textures to material", "map_initialization");
+                ArchonLogger.Log("MapTextureManager: Bound all textures as shader globals", "map_initialization");
             }
-        }
-
-        /// <summary>
-        /// Set border visual style (delegate to dynamic textures)
-        /// </summary>
-        public void SetBorderStyle(Material material, Color countryBorderColor, float countryBorderStrength,
-                                    Color provinceBorderColor, float provinceBorderStrength)
-        {
-            dynamicTextures?.SetBorderStyle(material, countryBorderColor, countryBorderStrength,
-                                             provinceBorderColor, provinceBorderStrength);
         }
 
         /// <summary>

@@ -81,20 +81,18 @@ namespace Map.Rendering.Border
             if (material == null) return;
 
             // Set shader mode for distance field
-            material.SetInt("_BorderRenderingMode", GetShaderModeValue(RendererId));
+            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
 
             // Apply common style parameters (colors, strengths)
             ApplyCommonStyleParams(material, styleParams);
 
-            // Apply distance field specific parameters
-            material.SetFloat("_BorderEdgeWidth", styleParams.EdgeWidth);
-            material.SetFloat("_BorderGradientWidth", styleParams.GradientWidth);
-            material.SetFloat("_BorderSmoothness", styleParams.EdgeSmoothness);
+            // Distance field shape params come from VisualStyleManager -> MapShaderGlobals.ApplyBorderStyle.
+            // (Previously wrote _BorderEdgeWidth/_BorderGradientWidth/_BorderSmoothness, which no shader reads.)
 
             // Bind the distance field texture
             if (textureManager?.DistanceFieldBorderTexture != null)
             {
-                material.SetTexture("_DistanceFieldBorderTexture", textureManager.DistanceFieldBorderTexture);
+                Shader.SetGlobalTexture(MapShaderGlobals.DistanceFieldBorderTexture, textureManager.DistanceFieldBorderTexture);
             }
         }
 

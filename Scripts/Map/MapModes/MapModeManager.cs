@@ -56,11 +56,6 @@ namespace Map.MapModes
         private int rowsPerMode;
 
         // Shader property IDs (cached for performance)
-        private static readonly int MapModePropertyID = Shader.PropertyToID("_MapMode");
-        private static readonly int CustomMapModeIndexPropertyID = Shader.PropertyToID("_CustomMapModeIndex");
-        private static readonly int ProvincePaletteTexturePropertyID = Shader.PropertyToID("_ProvincePaletteTexture");
-        private static readonly int MapModeTextureCountPropertyID = Shader.PropertyToID("_MapModeTextureCount");
-        private static readonly int MaxProvinceIDPropertyID = Shader.PropertyToID("_MaxProvinceID");
 
         // State tracking
         private bool isInitialized = false;
@@ -184,7 +179,7 @@ namespace Map.MapModes
 
             dataTextures = new MapModeDataTextures();
             dataTextures.Initialize(textureManager);
-            dataTextures.BindToMaterial(mapMaterial);
+            dataTextures.BindGlobals();
 
             // Initialize custom map mode texture array
             InitializeMapModeTextureArray(textureManager);
@@ -225,10 +220,9 @@ namespace Map.MapModes
             customModeToArrayIndex = new Dictionary<int, int>();
             nextArrayIndex = 0;
 
-            // Bind to material
-            mapMaterial.SetTexture(ProvincePaletteTexturePropertyID, provincePaletteTexture);
-            mapMaterial.SetInt(MapModeTextureCountPropertyID, 0);
-            mapMaterial.SetInt(MaxProvinceIDPropertyID, maxProvinceID);
+            // Publish as shader globals
+            BindProvincePaletteGlobals();
+            Shader.SetGlobalInteger(MapShaderGlobals.MapModeTextureCount, 0);
 
             int memoryKB = (PALETTE_WIDTH * paletteHeight * 4) / 1024;
             ArchonLogger.Log($"MapModeManager: Initialized province palette ({PALETTE_WIDTH}x{paletteHeight}, {MAX_CUSTOM_MAP_MODES} modes, {memoryKB}KB)", "map_initialization");
@@ -313,7 +307,7 @@ namespace Map.MapModes
 
             // Set shader properties for mode switching
             int shaderModeId = currentHandler.ShaderModeID;
-            mapMaterial.SetInt(MapModePropertyID, shaderModeId);
+            MapShaderGlobals.SetMapMode(shaderModeId);
 
             // For custom modes (ShaderModeID >= 2), set the array index
             if (shaderModeId >= 2)
@@ -321,7 +315,7 @@ namespace Map.MapModes
                 int arrayIndex = GetCustomModeArrayIndex(shaderModeId);
                 if (arrayIndex >= 0)
                 {
-                    mapMaterial.SetInt(CustomMapModeIndexPropertyID, arrayIndex);
+                    Shader.SetGlobalInteger(MapShaderGlobals.CustomMapModeIndex, arrayIndex);
                 }
             }
 
@@ -331,9 +325,8 @@ namespace Map.MapModes
             {
                 currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
 
-                // CRITICAL: Rebind textures to material after update to force GPU upload
-                // Without this, Unity may use cached texture data from before the update
-                dataTextures.BindToMaterial(mapMaterial);
+                // Republish in case the handler replaced a texture object
+                dataTextures.BindGlobals();
             }
 
             if (logModeChanges)
@@ -449,8 +442,9 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Update material reference when material is swapped
-        /// Called by GAME layer (VisualStyleManager) when material changes
+        /// Update material reference when material is swapped (VisualStyleManager).
+        /// Textures are shader globals and survive the swap; handlers are re-activated
+        /// so per-material state (e.g. shader keywords) is applied to the new material.
         /// </summary>
         public void UpdateMaterial(Material newMaterial)
         {
@@ -468,42 +462,32 @@ namespace Map.MapModes
 
             mapMaterial = newMaterial;
 
-            // Rebind all textures to new material
-            dataTextures.BindToMaterial(mapMaterial);
-
-            // Re-apply current map mode to new material
-            if (currentHandler != null)
-            {
-                currentHandler.OnActivate(mapMaterial, dataTextures);
-
-                if (gameState?.ProvinceQueries != null && gameState?.CountryQueries != null && provinceMapping != null)
-                {
-                    currentHandler.UpdateTextures(dataTextures, gameState.ProvinceQueries, gameState.CountryQueries, provinceMapping, gameProvinceSystem);
-                    dataTextures.BindToMaterial(mapMaterial);
-                }
-            }
+            // Re-apply current map mode (per-material keywords live on the new material)
+            currentHandler?.OnActivate(mapMaterial, dataTextures);
 
             ArchonLogger.Log($"MapModeManager: Updated material reference and re-applied {currentMode} mode", "map_initialization");
         }
 
         /// <summary>
-        /// Rebind all map mode textures to the material
-        /// Call this after other systems rebind base textures to prevent losing map mode texture bindings
+        /// Republish all map mode textures as shader globals.
+        /// Call after another system binds the same global names (e.g. MapTextureManager), or after
+        /// texture objects are replaced.
         /// </summary>
         public void RebindTextures()
         {
-            if (!isInitialized || dataTextures == null || mapMaterial == null) return;
+            if (!isInitialized || dataTextures == null) return;
 
-            dataTextures.BindToMaterial(mapMaterial);
+            dataTextures.BindGlobals();
+            BindProvincePaletteGlobals();
 
-            // Also rebind the province palette
-            if (provincePaletteTexture != null)
-            {
-                mapMaterial.SetTexture(ProvincePaletteTexturePropertyID, provincePaletteTexture);
-                mapMaterial.SetInt(MaxProvinceIDPropertyID, maxProvinceID);
-            }
+            ArchonLogger.Log($"MapModeManager: Rebound map mode textures as shader globals", "map_initialization");
+        }
 
-            ArchonLogger.Log($"MapModeManager: Rebound map mode textures to material", "map_initialization");
+        private void BindProvincePaletteGlobals()
+        {
+            if (provincePaletteTexture == null) return;
+            Shader.SetGlobalTexture(MapShaderGlobals.ProvincePaletteTexture, provincePaletteTexture);
+            Shader.SetGlobalInteger(MapShaderGlobals.MaxProvinceID, maxProvinceID);
         }
 
         #region Custom Map Mode Texture Array API
@@ -539,7 +523,7 @@ namespace Map.MapModes
             int paletteIndex = nextArrayIndex++;
             customModeToArrayIndex[customModeId] = paletteIndex;
 
-            mapMaterial.SetInt(MapModeTextureCountPropertyID, nextArrayIndex);
+            Shader.SetGlobalInteger(MapShaderGlobals.MapModeTextureCount, nextArrayIndex);
 
             ArchonLogger.Log($"MapModeManager: Registered custom map mode {customModeId} at palette index {paletteIndex}", "map_initialization");
             return paletteIndex;

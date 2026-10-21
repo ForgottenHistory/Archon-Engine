@@ -320,9 +320,9 @@ namespace Map.MapModes
         }
 
         /// <summary>
-        /// Bind all textures to the material for rendering
+        /// Publish all map mode textures as shader globals
         /// </summary>
-        public void BindToMaterial(Material material)
+        public void BindGlobals()
         {
             if (!isInitialized)
             {
@@ -330,26 +330,33 @@ namespace Map.MapModes
                 return;
             }
 
+            // Null textures are skipped so MapShaderGlobals fallbacks stay in place
             // Core textures
-            material.SetTexture(ProvinceIDTexID, ProvinceIDTexture);
-            material.SetTexture(ProvinceColorTexID, ProvinceColorTexture);
+            SetGlobalIfNotNull(ProvinceIDTexID, ProvinceIDTexture);
+            SetGlobalIfNotNull(ProvinceColorTexID, ProvinceColorTexture);
 
             // Data textures
-            material.SetTexture(ProvinceOwnerTexID, ProvinceOwnerTexture);
-            material.SetTexture(ProvinceTerrainTexID, ProvinceTerrainTexture);
-            material.SetTexture(ProvinceDevelopmentTexID, ProvinceDevelopmentTexture);
-            material.SetTexture(ProvinceCultureTexID, ProvinceCultureTexture);
-            material.SetTexture(ProvinceReligionTexID, ProvinceReligionTexture);
+            SetGlobalIfNotNull(ProvinceOwnerTexID, ProvinceOwnerTexture);
+            SetGlobalIfNotNull(ProvinceTerrainTexID, ProvinceTerrainTexture);
+            SetGlobalIfNotNull(ProvinceDevelopmentTexID, ProvinceDevelopmentTexture);
+            SetGlobalIfNotNull(ProvinceCultureTexID, ProvinceCultureTexture);
+            SetGlobalIfNotNull(ProvinceReligionTexID, ProvinceReligionTexture);
 
             // Color palettes
-            material.SetTexture(CountryColorPaletteID, CountryColorPalette);
-            material.SetTexture(CultureColorPaletteID, CultureColorPalette);
-            material.SetTexture(ReligionColorPaletteID, ReligionColorPalette);
-            material.SetTexture(TerrainColorPaletteID, TerrainColorPalette);
+            SetGlobalIfNotNull(CountryColorPaletteID, CountryColorPalette);
+            SetGlobalIfNotNull(CultureColorPaletteID, CultureColorPalette);
+            SetGlobalIfNotNull(ReligionColorPaletteID, ReligionColorPalette);
+            SetGlobalIfNotNull(TerrainColorPaletteID, TerrainColorPalette);
 
             // Debug: Verify binding
-            var boundTexture = material.GetTexture(CountryColorPaletteID);
+            var boundTexture = Shader.GetGlobalTexture(CountryColorPaletteID);
             ArchonLogger.Log($"MapModeDataTextures: Bound _CountryColorPalette - Expected: {CountryColorPalette?.GetInstanceID()}, Got: {boundTexture?.GetInstanceID()}", "map_initialization");
+        }
+
+        private static void SetGlobalIfNotNull(int propertyId, Texture texture)
+        {
+            if (texture != null)
+                Shader.SetGlobalTexture(propertyId, texture);
         }
 
         /// <summary>

@@ -79,8 +79,8 @@ namespace Map.Loading.Images
                 // Dispose bitmap result to free memory
                 bitmapResult.Dispose();
 
-                // Rebind textures to materials
-                RebindTexturesToMaterials();
+                // Republish textures (texture objects may have been replaced)
+                RebindTextures();
             }
             catch (System.Exception e)
             {
@@ -104,44 +104,24 @@ namespace Map.Loading.Images
         protected abstract string GetLoaderName();
 
         /// <summary>
-        /// Rebind textures to runtime materials after texture updates
-        /// Ensures all material instances have the updated textures
+        /// Republish map textures as shader globals after texture updates
         /// </summary>
-        protected void RebindTexturesToMaterials()
+        protected void RebindTextures()
         {
             if (textureManager == null) return;
 
-            // Find map renderer to get runtime material instance
-            var mapRenderer = Object.FindFirstObjectByType<Rendering.MapRenderer>();
-            if (mapRenderer != null)
+            textureManager.BindGlobalTextures();
+
+            // Map mode textures (CountryColorPalette, etc.)
+            var mapModeManager = Object.FindFirstObjectByType<MapModes.MapModeManager>();
+            if (mapModeManager != null && mapModeManager.IsInitialized)
             {
-                var runtimeMaterial = mapRenderer.GetMaterial();
-                if (runtimeMaterial != null)
-                {
-                    textureManager.BindTexturesToMaterial(runtimeMaterial);
-                    if (logProgress)
-                    {
-                        ArchonLogger.Log($"{GetLoaderName()}: Rebound textures to runtime material {runtimeMaterial.GetInstanceID()}", "map_initialization");
-                    }
-                }
+                mapModeManager.RebindTextures();
             }
 
-            // Also bind to coordinator material for safety
-            var mapSystemCoordinator = Object.FindFirstObjectByType<Core.MapSystemCoordinator>();
-            if (mapSystemCoordinator != null && mapSystemCoordinator.MeshRenderer?.sharedMaterial != null)
+            if (logProgress)
             {
-                textureManager.BindTexturesToMaterial(mapSystemCoordinator.MeshRenderer.sharedMaterial);
-
-                // Rebind map mode textures (CountryColorPalette, etc.)
-                var mapModeManager = Object.FindFirstObjectByType<MapModes.MapModeManager>();
-                if (mapModeManager != null && mapModeManager.IsInitialized)
-                {
-                    mapModeManager.RebindTextures();
-                    if (logProgress)
-                    {
-                        ArchonLogger.Log($"{GetLoaderName()}: Rebound map mode textures after texture update", "map_initialization");
-                    }
-                }
+                ArchonLogger.Log($"{GetLoaderName()}: Rebound textures as shader globals", "map_initialization");
             }
         }
 

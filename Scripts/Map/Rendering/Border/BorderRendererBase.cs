@@ -75,14 +75,12 @@ namespace Map.Rendering.Border
         }
 
         /// <summary>
-        /// Utility: Apply common border style parameters to material.
+        /// Utility: Apply common border style parameters (shader globals, see MapShaderGlobals).
         /// </summary>
         protected void ApplyCommonStyleParams(Material material, BorderStyleParams styleParams)
         {
-            material.SetColor("_CountryBorderColor", styleParams.CountryBorderColor);
-            material.SetColor("_ProvinceBorderColor", styleParams.ProvinceBorderColor);
-            material.SetFloat("_CountryBorderStrength", styleParams.CountryBorderStrength);
-            material.SetFloat("_ProvinceBorderStrength", styleParams.ProvinceBorderStrength);
+            MapShaderGlobals.SetBorderColors(styleParams.CountryBorderColor, styleParams.CountryBorderStrength,
+                styleParams.ProvinceBorderColor, styleParams.ProvinceBorderStrength);
         }
     }
 }

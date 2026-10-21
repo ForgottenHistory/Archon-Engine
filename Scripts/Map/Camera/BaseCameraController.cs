@@ -1,4 +1,5 @@
 using UnityEngine;
+using Map.Rendering;
 
 namespace Map.CameraControllers
 {
@@ -65,7 +66,6 @@ namespace Map.CameraControllers
         public float labelSwitchZoomThreshold = 2.5f;
 
         // Protected state accessible to derived classes
-        protected Material mapMaterial;
         protected float currentFogOfWarDisable = 0f;
         protected float targetFogOfWarDisable = 0f;
 
@@ -105,16 +105,6 @@ namespace Map.CameraControllers
             targetZoom = currentZoom;
             targetPosition = mapCamera.transform.position;
             ApplyZoom(currentZoom);
-
-            // Find map material
-            if (mapPlane != null)
-            {
-                var renderer = mapPlane.GetComponent<Renderer>();
-                if (renderer != null)
-                {
-                    mapMaterial = renderer.material;
-                }
-            }
 
             UpdateFogOfWarZoomLevel();
 
@@ -351,7 +341,7 @@ namespace Map.CameraControllers
 
         void UpdateFogOfWarZoomLevel()
         {
-            if (mapMaterial == null || disableFogOfWarAboveZoom <= 0f) return;
+            if (disableFogOfWarAboveZoom <= 0f) return;
 
             bool shouldDisableFog = currentZoom >= disableFogOfWarAboveZoom;
             targetFogOfWarDisable = shouldDisableFog ? 1.0f : 0.0f;
@@ -369,7 +359,7 @@ namespace Map.CameraControllers
                 }
             }
 
-            mapMaterial.SetFloat("_FogOfWarZoomDisable", currentFogOfWarDisable);
+            MapShaderGlobals.SetFogOfWarZoomDisable(currentFogOfWarDisable);
         }
 
         float GetZoomSpeedMultiplier()

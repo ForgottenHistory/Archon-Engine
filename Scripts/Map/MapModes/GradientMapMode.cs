@@ -294,7 +294,7 @@ namespace Map.MapModes
         {
             // Now handled by MapModeManager.SetMapMode()
             // Kept for GAME layer backward compatibility
-            mapMaterial.SetInt("_MapMode", modeID);
+            MapShaderGlobals.SetMapMode(modeID);
         }
 
         /// <summary>

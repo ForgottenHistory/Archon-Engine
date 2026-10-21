@@ -27,7 +27,7 @@ namespace Map.Rendering.Border
             if (material == null) return;
 
             // Set shader mode to 0 (no borders)
-            material.SetInt("_BorderRenderingMode", 0);
+            MapShaderGlobals.SetBorderRenderingMode(0);
         }
 
         public override void Dispose()

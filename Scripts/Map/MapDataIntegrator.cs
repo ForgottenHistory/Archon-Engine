@@ -183,11 +183,8 @@ namespace Map.Integration
                 }
             }
 
-            // Bind textures to map renderer material
-            if (mapRenderer.GetMaterial() != null)
-            {
-                textureManager.BindTexturesToMaterial(mapRenderer.GetMaterial());
-            }
+            // Publish textures as shader globals
+            textureManager.BindGlobalTextures();
 
             // Clean up load result
             loadResult.Dispose();

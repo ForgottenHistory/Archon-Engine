@@ -123,11 +123,11 @@ namespace Map.MapModes
         public abstract UpdateFrequency GetUpdateFrequency();
 
         /// <summary>
-        /// Utility: Set common shader properties
+        /// Utility: Set the shader map mode (global; material parameter kept for API compatibility)
         /// </summary>
         protected void SetShaderMode(Material material, int modeId)
         {
-            material.SetInt("_MapMode", modeId);
+            MapShaderGlobals.SetMapMode(modeId);
         }
 
         /// <summary>

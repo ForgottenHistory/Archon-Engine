@@ -114,7 +114,7 @@ namespace Map.Rendering.Border
             if (material == null) return;
 
             // Set shader mode for pixel-perfect
-            material.SetInt("_BorderRenderingMode", GetShaderModeValue(RendererId));
+            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
 
             // Apply common style parameters
             ApplyCommonStyleParams(material, styleParams);
@@ -127,7 +127,7 @@ namespace Map.Rendering.Border
             // Bind the pixel-perfect border texture
             if (textureManager?.PixelPerfectBorderTexture != null)
             {
-                material.SetTexture("_PixelPerfectBorderTexture", textureManager.PixelPerfectBorderTexture);
+                Shader.SetGlobalTexture(MapShaderGlobals.PixelPerfectBorderTexture, textureManager.PixelPerfectBorderTexture);
             }
         }
 

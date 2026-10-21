@@ -16,7 +16,6 @@ namespace Map.Rendering
         private readonly int normalMapWidth;
         private readonly int normalMapHeight;
         private readonly bool logCreation;
-        private Material boundMaterial;
 
         // Visual enhancement textures
         private Texture2D provinceTerrainTexture;
@@ -222,6 +221,8 @@ namespace Map.Rendering
         public void SetProvinceTerrainLookup(RenderTexture lookupTexture)
         {
             provinceTerrainLookup = lookupTexture;
+            if (provinceTerrainLookup != null)
+                Shader.SetGlobalTexture(ProvinceTerrainLookupID, provinceTerrainLookup);
 
             if (logCreation)
             {
@@ -238,14 +239,11 @@ namespace Map.Rendering
             detailIndexTexture = indexTexture;
             detailMaskTexture = maskTexture;
 
-            // Bind immediately if material is already bound (blend maps are generated after initial bind)
-            if (boundMaterial != null)
-            {
-                if (detailIndexTexture != null)
-                    boundMaterial.SetTexture(DetailIndexTextureID, detailIndexTexture);
-                if (detailMaskTexture != null)
-                    boundMaterial.SetTexture(DetailMaskTextureID, detailMaskTexture);
-            }
+            // Publish immediately (blend maps are generated after the initial bind)
+            if (detailIndexTexture != null)
+                Shader.SetGlobalTexture(DetailIndexTextureID, detailIndexTexture);
+            if (detailMaskTexture != null)
+                Shader.SetGlobalTexture(DetailMaskTextureID, detailMaskTexture);
 
             if (logCreation)
             {
@@ -254,40 +252,24 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Bind visual textures to material
+        /// Publish visual textures as shader globals.
+        /// Null textures are skipped so MapShaderGlobals fallbacks stay in place.
         /// </summary>
-        public void BindToMaterial(Material material)
+        public void BindGlobals()
         {
-            if (material == null) return;
-            boundMaterial = material;
-
-            material.SetTexture(ProvinceTerrainTexID, provinceTerrainTexture);
-            material.SetTexture(TerrainTypeTexID, terrainTypeTexture);
-            material.SetTexture(TerrainDetailArrayID, terrainDetailArray);
-            material.SetTexture(DetailNoiseTexID, detailNoiseTexture);
-            material.SetTexture(HeightmapTexID, heightmapTexture);
-            material.SetTexture(NormalMapTexID, normalMapTexture);
-
-            // Bind province terrain lookup if available (hybrid terrain system)
-            if (provinceTerrainLookup != null)
-            {
-                material.SetTexture(ProvinceTerrainLookupID, provinceTerrainLookup);
-            }
-
-            // Bind terrain blend maps if available (Imperator Rome-style blending)
-            if (detailIndexTexture != null)
-            {
-                material.SetTexture(DetailIndexTextureID, detailIndexTexture);
-            }
-
-            if (detailMaskTexture != null)
-            {
-                material.SetTexture(DetailMaskTextureID, detailMaskTexture);
-            }
+            SetGlobalIfNotNull(ProvinceTerrainTexID, provinceTerrainTexture);
+            SetGlobalIfNotNull(TerrainTypeTexID, terrainTypeTexture);
+            SetGlobalIfNotNull(TerrainDetailArrayID, terrainDetailArray);
+            SetGlobalIfNotNull(DetailNoiseTexID, detailNoiseTexture);
+            SetGlobalIfNotNull(HeightmapTexID, heightmapTexture);
+            SetGlobalIfNotNull(NormalMapTexID, normalMapTexture);
+            SetGlobalIfNotNull(ProvinceTerrainLookupID, provinceTerrainLookup);
+            SetGlobalIfNotNull(DetailIndexTextureID, detailIndexTexture);
+            SetGlobalIfNotNull(DetailMaskTextureID, detailMaskTexture);
 
             if (logCreation)
             {
-                var retrievedTexture = material.GetTexture(ProvinceTerrainTexID);
+                var retrievedTexture = Shader.GetGlobalTexture(ProvinceTerrainTexID);
                 if (retrievedTexture == provinceTerrainTexture)
                 {
                     ArchonLogger.Log("VisualTextureSet: Successfully verified terrain texture binding", "map_initialization");
@@ -297,6 +279,12 @@ namespace Map.Rendering
                     ArchonLogger.LogError($"VisualTextureSet: Terrain texture binding FAILED", "map_initialization");
                 }
             }
+        }
+
+        private static void SetGlobalIfNotNull(int propertyId, Texture texture)
+        {
+            if (texture != null)
+                Shader.SetGlobalTexture(propertyId, texture);
         }
 
         /// <summary>

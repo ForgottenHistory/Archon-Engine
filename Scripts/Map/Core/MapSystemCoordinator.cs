@@ -175,16 +175,15 @@ namespace Map.Core
             ReportProgress(95f, "Analyzing terrain...");
             AnalyzeTerrain();
 
-            // Bind terrain buffer to material (must happen after AnalyzeTerrain creates the buffer)
-            if (meshRenderer != null && dataLoader != null)
+            // Publish terrain buffer as shader global (must happen after AnalyzeTerrain creates the buffer)
+            if (dataLoader != null)
             {
-                var material = meshRenderer.sharedMaterial;
                 var terrainBuffer = dataLoader.GetProvinceTerrainBuffer();
-                if (material != null && terrainBuffer != null)
+                if (terrainBuffer != null)
                 {
-                    material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+                    Shader.SetGlobalBuffer(MapShaderGlobals.ProvinceTerrainBuffer, terrainBuffer);
                     if (LogProgress)
-                        ArchonLogger.Log("MapSystemCoordinator: Province terrain buffer bound to material", "map_initialization");
+                        ArchonLogger.Log("MapSystemCoordinator: Province terrain buffer bound as shader global", "map_initialization");
                 }
             }
 
@@ -338,17 +337,13 @@ namespace Map.Core
 
         private void SetupRendering()
         {
-            // Setup material with textures
-            if (meshRenderer != null && textureManager != null)
+            // Publish map textures as shader globals
+            if (textureManager != null)
             {
-                var material = meshRenderer.sharedMaterial;
-                if (material != null)
-                {
-                    textureManager.BindTexturesToMaterial(material);
+                textureManager.BindGlobalTextures();
 
-                    if (LogProgress)
-                        ArchonLogger.Log("MapSystemCoordinator: Textures bound to material", "map_initialization");
-                }
+                if (LogProgress)
+                    ArchonLogger.Log("MapSystemCoordinator: Textures bound as shader globals", "map_initialization");
             }
 
             // Initialize texture update bridge for runtime updates
@@ -497,12 +492,11 @@ namespace Map.Core
             // Re-analyze terrain and rebuild blend maps
             dataLoader.AnalyzeProvinceTerrainAfterMapInit(gameState);
 
-            // Rebind the new terrain buffer to material (AnalyzeProvince creates a new ComputeBuffer)
-            var material = meshRenderer?.sharedMaterial;
+            // Rebind the new terrain buffer (AnalyzeProvince creates a new ComputeBuffer)
             var terrainBuffer = dataLoader.GetProvinceTerrainBuffer();
-            if (material != null && terrainBuffer != null)
+            if (terrainBuffer != null)
             {
-                material.SetBuffer("_ProvinceTerrainBuffer", terrainBuffer);
+                Shader.SetGlobalBuffer(MapShaderGlobals.ProvinceTerrainBuffer, terrainBuffer);
             }
 
             // Refresh owner texture (full repopulate from province data)

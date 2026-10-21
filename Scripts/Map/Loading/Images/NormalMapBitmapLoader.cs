@@ -152,27 +152,8 @@ namespace Map.Loading.Images
             normalMapTexture.Apply(false);
             GL.Flush();
 
-            // Rebind textures to materials
-            RebindTextures();
-        }
-
-        private void RebindTextures()
-        {
-            var mapRenderer = Object.FindFirstObjectByType<Rendering.MapRenderer>();
-            if (mapRenderer != null)
-            {
-                var material = mapRenderer.GetMaterial();
-                if (material != null)
-                {
-                    textureManager.BindTexturesToMaterial(material);
-                }
-            }
-
-            var mapSystemCoordinator = Object.FindFirstObjectByType<Core.MapSystemCoordinator>();
-            if (mapSystemCoordinator != null && mapSystemCoordinator.MeshRenderer?.sharedMaterial != null)
-            {
-                textureManager.BindTexturesToMaterial(mapSystemCoordinator.MeshRenderer.sharedMaterial);
-            }
+            // Republish textures as shader globals
+            textureManager.BindGlobalTextures();
         }
     }
 

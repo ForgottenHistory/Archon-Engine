@@ -11,8 +11,8 @@
 // Apply overlay texture (parchment, paper effects)
 float4 ApplyOverlayTexture(float4 baseColor, float2 uv)
 {
-    float2 overlayUV = TRANSFORM_TEX(uv, _OverlayTexture);
-    float4 overlayColor = SAMPLE_TEXTURE2D(_OverlayTexture, sampler_OverlayTexture, overlayUV);
+    // Global texture: no material _ST tiling, sample at map UV
+    float4 overlayColor = SAMPLE_TEXTURE2D(_OverlayTexture, sampler_OverlayTexture, uv);
 
     // Multiplicative blend with strength control
     float3 overlayBlend = lerp(float3(1, 1, 1), overlayColor.rgb, _OverlayStrength);

@@ -104,14 +104,11 @@ namespace Map.Rendering.FogOfWar
         {
             if (material == null) return;
 
-            material.SetFloat("_FogOfWarEnabled", fogEnabled ? 1f : 0f);
-            material.SetColor("_FogUnexploredColor", styleParams.UnexploredColor);
-            material.SetColor("_FogExploredColor", styleParams.ExploredTint);
-            material.SetFloat("_FogExploredDesaturation", styleParams.ExploredDesaturation);
-            material.SetColor("_FogNoiseColor", styleParams.NoiseColor);
-            material.SetFloat("_FogNoiseScale", styleParams.NoiseScale);
-            material.SetFloat("_FogNoiseStrength", styleParams.NoiseStrength);
-            material.SetFloat("_FogNoiseSpeed", styleParams.NoiseSpeed);
+            // Engine fog values are shader globals (see MapShaderGlobals)
+            MapShaderGlobals.SetFogOfWarEnabled(fogEnabled);
+            MapShaderGlobals.SetFogOfWarColors(styleParams.UnexploredColor, styleParams.ExploredTint,
+                styleParams.ExploredDesaturation, styleParams.NoiseColor,
+                styleParams.NoiseScale, styleParams.NoiseStrength, styleParams.NoiseSpeed);
         }
 
         public virtual void OnRenderFrame() { }

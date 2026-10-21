@@ -182,20 +182,18 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Bind core textures to material
+        /// Publish core textures as shader globals
         /// </summary>
-        public void BindToMaterial(Material material)
+        public void BindGlobals()
         {
-            if (material == null) return;
-
-            material.SetTexture(ProvinceIDTexID, provinceIDTexture);
-            material.SetTexture(ProvinceOwnerTexID, provinceOwnerTexture);
-            material.SetTexture(ProvinceColorTexID, provinceColorTexture);
-            material.SetTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
+            Shader.SetGlobalTexture(ProvinceIDTexID, provinceIDTexture);
+            Shader.SetGlobalTexture(ProvinceOwnerTexID, provinceOwnerTexture);
+            Shader.SetGlobalTexture(ProvinceColorTexID, provinceColorTexture);
+            Shader.SetGlobalTexture(ProvinceDevelopmentTexID, provinceDevelopmentTexture);
 
             if (logCreation)
             {
-                ArchonLogger.Log("CoreTextureSet: Bound core textures to material", "map_initialization");
+                ArchonLogger.Log("CoreTextureSet: Bound core textures as shader globals", "map_initialization");
             }
         }
 

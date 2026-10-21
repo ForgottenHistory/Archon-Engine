@@ -86,21 +86,21 @@ namespace Archon.Engine.Map
             mapMeshRenderer.material = style.mapMaterial;
             runtimeMaterial = mapMeshRenderer.material; // Get runtime instance
 
-            // Re-bind ENGINE textures to the new material (they were bound to old material)
+            // Textures are shader globals and survive the swap. Republish anyway: some textures
+            // are created late in startup and this is the last guaranteed bind point.
             if (textureManager != null)
-            {
-                textureManager.BindTexturesToMaterial(runtimeMaterial);
-            }
+                textureManager.BindGlobalTextures();
 
-            // CRITICAL: Rebind map mode data textures (CountryColorPalette, etc.) after material swap
+            // Re-activate the current map mode so per-material state (shader keywords) lands on the
+            // new material, and republish map mode textures (they share names with core textures).
             var mapModeManager = FindFirstObjectByType<MapModeManager>();
-            if (mapModeManager != null)
+            if (mapModeManager != null && mapModeManager.IsInitialized)
             {
                 mapModeManager.UpdateMaterial(runtimeMaterial);
-                ArchonLogger.Log("VisualStyleManager: Rebound map mode textures after material swap", "map_rendering");
+                mapModeManager.RebindTextures();
             }
 
-            // Apply parameter tweaks to the material
+            // Style values -> shader globals; tessellation -> material
             ApplyBorderStyle(style.borders);
             ApplyMapModeColors(style.mapModes);
             ApplyAdvancedEffects(style.advancedEffects);
@@ -120,55 +120,14 @@ namespace Archon.Engine.Map
         /// </summary>
         private void ApplyBorderStyle(VisualStyleConfiguration.BorderStyle borders)
         {
-            if (runtimeMaterial == null)
-            {
-                ArchonLogger.LogWarning("VisualStyleManager: Cannot apply border style - no runtime material", "map_rendering");
-                return;
-            }
-
-            // Set border rendering mode on the material
-            // Shader values: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
-            int renderingModeValue = GetShaderModeValue(borders.renderingMode);
-            runtimeMaterial.SetInt("_BorderRenderingMode", renderingModeValue);
-
-            // Set border colors and strengths on the material
-            runtimeMaterial.SetFloat("_CountryBorderStrength", borders.countryBorderStrength);
-            runtimeMaterial.SetColor("_CountryBorderColor", borders.countryBorderColor);
-            runtimeMaterial.SetFloat("_ProvinceBorderStrength", borders.provinceBorderStrength);
-            runtimeMaterial.SetColor("_ProvinceBorderColor", borders.provinceBorderColor);
-
-            // Set distance field parameters (used by ShaderDistanceField mode)
-            runtimeMaterial.SetFloat("_EdgeWidth", borders.edgeWidth);
-            runtimeMaterial.SetFloat("_GradientWidth", borders.gradientWidth);
-            runtimeMaterial.SetFloat("_EdgeSmoothness", borders.edgeSmoothness);
-            runtimeMaterial.SetFloat("_EdgeColorMul", borders.edgeColorMultiplier);
-            runtimeMaterial.SetFloat("_GradientColorMul", borders.gradientColorMultiplier);
-            runtimeMaterial.SetFloat("_EdgeAlpha", borders.edgeAlpha);
-            runtimeMaterial.SetFloat("_GradientAlphaInside", borders.gradientAlphaInside);
-            runtimeMaterial.SetFloat("_GradientAlphaOutside", borders.gradientAlphaOutside);
+            MapShaderGlobals.ApplyBorderStyle(borders);
 
             if (LogStyle)
             {
-                ArchonLogger.Log($"VisualStyleManager: Border style applied - Rendering: {borders.renderingMode} (shader mode={renderingModeValue}), Country: {borders.countryBorderStrength:P0}, Province: {borders.provinceBorderStrength:P0}", "map_rendering");
+                ArchonLogger.Log($"VisualStyleManager: Border style applied - Rendering: {borders.renderingMode} (shader mode={MapShaderGlobals.GetBorderShaderMode(borders.renderingMode)}), Country: {borders.countryBorderStrength:P0}, Province: {borders.provinceBorderStrength:P0}", "map_rendering");
             }
 
             // Note: Border compute shader settings applied in ApplyBorderConfiguration()
-        }
-
-        /// <summary>
-        /// Convert BorderRenderingMode enum to shader integer value
-        /// Shader values: 0=None, 1=DistanceField, 2=PixelPerfect, 3=MeshGeometry
-        /// </summary>
-        private int GetShaderModeValue(BorderRenderingMode mode)
-        {
-            switch (mode)
-            {
-                case BorderRenderingMode.None: return 0;
-                case BorderRenderingMode.ShaderDistanceField: return 1;
-                case BorderRenderingMode.ShaderPixelPerfect: return 2;
-                case BorderRenderingMode.MeshGeometry: return 3;
-                default: return 0;
-            }
         }
 
         /// <summary>
@@ -254,33 +213,12 @@ namespace Archon.Engine.Map
         /// </summary>
         private void ApplyMapModeColors(VisualStyleConfiguration.MapModeColors colors)
         {
-            if (runtimeMaterial == null)
-            {
-                ArchonLogger.LogWarning("VisualStyleManager: Cannot apply map mode colors - no runtime material", "map_rendering");
-                return;
-            }
-
-            // Set ocean and unowned colors
-            runtimeMaterial.SetColor("_OceanColor", colors.oceanColor);
-            runtimeMaterial.SetColor("_UnownedLandColor", colors.unownedLandColor);
-
-            // Set terrain adjustments
-            runtimeMaterial.SetFloat("_TerrainBrightness", colors.terrainBrightness);
-            runtimeMaterial.SetFloat("_TerrainSaturation", colors.terrainSaturation);
-
-            // Set terrain detail mapping
-            runtimeMaterial.SetFloat("_DetailTiling", colors.detailTiling);
-            runtimeMaterial.SetFloat("_DetailStrength", colors.detailStrength);
+            MapShaderGlobals.ApplyMapModeColors(colors);
 
             if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Detail mapping - Tiling: {colors.detailTiling}, Strength: {colors.detailStrength}", "map_rendering");
             }
-
-            // Set normal map lighting parameters
-            runtimeMaterial.SetFloat("_NormalMapStrength", colors.normalMapStrength);
-            runtimeMaterial.SetFloat("_NormalMapAmbient", colors.normalMapAmbient);
-            runtimeMaterial.SetFloat("_NormalMapHighlight", colors.normalMapHighlight);
         }
 
         /// <summary>
@@ -288,21 +226,7 @@ namespace Archon.Engine.Map
         /// </summary>
         private void ApplyAdvancedEffects(VisualStyleConfiguration.AdvancedEffects effects)
         {
-            if (runtimeMaterial == null)
-            {
-                ArchonLogger.LogWarning("VisualStyleManager: Cannot apply advanced effects - no runtime material", "map_rendering");
-                return;
-            }
-
-            // Apply overlay texture (parchment, paper, canvas, etc.)
-            if (effects.overlayTexture != null)
-            {
-                runtimeMaterial.SetTexture("_OverlayTexture", effects.overlayTexture);
-            }
-            runtimeMaterial.SetFloat("_OverlayStrength", effects.overlayStrength);
-
-            // Apply color saturation
-            runtimeMaterial.SetFloat("_CountryColorSaturation", effects.countryColorSaturation);
+            MapShaderGlobals.ApplyAdvancedEffects(effects);
         }
 
         /// <summary>
@@ -310,25 +234,7 @@ namespace Archon.Engine.Map
         /// </summary>
         private void ApplyFogOfWarSettings(VisualStyleConfiguration.FogOfWarSettings fogOfWar)
         {
-            if (runtimeMaterial == null)
-            {
-                ArchonLogger.LogWarning("VisualStyleManager: Cannot apply fog of war settings - no runtime material", "map_rendering");
-                return;
-            }
-
-            // Set fog of war enabled/disabled
-            runtimeMaterial.SetFloat("_FogOfWarEnabled", fogOfWar.enabled ? 1f : 0f);
-
-            // Set fog of war colors
-            runtimeMaterial.SetColor("_FogUnexploredColor", fogOfWar.unexploredColor);
-            runtimeMaterial.SetColor("_FogExploredColor", fogOfWar.exploredTint);
-            runtimeMaterial.SetFloat("_FogExploredDesaturation", fogOfWar.exploredDesaturation);
-
-            // Set fog of war noise
-            runtimeMaterial.SetColor("_FogNoiseColor", fogOfWar.noiseColor);
-            runtimeMaterial.SetFloat("_FogNoiseScale", fogOfWar.noiseScale);
-            runtimeMaterial.SetFloat("_FogNoiseStrength", fogOfWar.noiseStrength);
-            runtimeMaterial.SetFloat("_FogNoiseSpeed", fogOfWar.noiseSpeed);
+            MapShaderGlobals.ApplyFogOfWarStyle(fogOfWar);
 
             if (LogStyle)
             {
@@ -451,14 +357,6 @@ namespace Archon.Engine.Map
             ApplyStyle(style);
 
             ArchonLogger.Log($"VisualStyleManager.ReloadMaterialFromAsset: Style applied from ScriptableObject", "map_rendering");
-
-            // Notify MapModeManager to refresh
-            var mapModeManager = FindFirstObjectByType<MapModeManager>();
-            if (mapModeManager != null && mapModeManager.IsInitialized)
-            {
-                ArchonLogger.Log("VisualStyleManager.ReloadMaterialFromAsset: Calling MapModeManager.UpdateMaterial", "map_rendering");
-                mapModeManager.UpdateMaterial(runtimeMaterial);
-            }
 
             // Apply border rendering mode
             if (borderDispatcher != null)

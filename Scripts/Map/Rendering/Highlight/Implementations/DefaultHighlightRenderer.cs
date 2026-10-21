@@ -171,7 +171,7 @@ namespace Map.Rendering.Highlight
             // Bind highlight texture
             if (textureManager?.HighlightTexture != null)
             {
-                material.SetTexture("_HighlightTexture", textureManager.HighlightTexture);
+                Shader.SetGlobalTexture(MapShaderGlobals.HighlightTexture, textureManager.HighlightTexture);
             }
         }
 

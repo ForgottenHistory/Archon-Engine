@@ -27,15 +27,6 @@ namespace Map.Rendering.Terrain
         // Thread group size for compute shaders
         protected const int THREAD_GROUP_SIZE = 8;
 
-        // Cached shader property IDs
-        protected static readonly int TerrainBrightnessID = Shader.PropertyToID("_TerrainBrightness");
-        protected static readonly int TerrainSaturationID = Shader.PropertyToID("_TerrainSaturation");
-        protected static readonly int DetailTilingID = Shader.PropertyToID("_DetailTiling");
-        protected static readonly int DetailStrengthID = Shader.PropertyToID("_DetailStrength");
-        protected static readonly int NormalMapStrengthID = Shader.PropertyToID("_NormalMapStrength");
-        protected static readonly int NormalMapAmbientID = Shader.PropertyToID("_NormalMapAmbient");
-        protected static readonly int NormalMapHighlightID = Shader.PropertyToID("_NormalMapHighlight");
-
         public virtual void Initialize(MapTextureManager textureManager, TerrainRendererContext context)
         {
             this.textureManager = textureManager;
@@ -60,13 +51,11 @@ namespace Map.Rendering.Terrain
         {
             if (material == null) return;
 
-            material.SetFloat(TerrainBrightnessID, styleParams.Brightness);
-            material.SetFloat(TerrainSaturationID, styleParams.Saturation);
-            material.SetFloat(DetailTilingID, styleParams.DetailTiling);
-            material.SetFloat(DetailStrengthID, styleParams.DetailStrength);
-            material.SetFloat(NormalMapStrengthID, styleParams.NormalMapStrength);
-            material.SetFloat(NormalMapAmbientID, styleParams.NormalMapAmbient);
-            material.SetFloat(NormalMapHighlightID, styleParams.NormalMapHighlight);
+            // Engine terrain/lighting values are shader globals (see MapShaderGlobals)
+            MapShaderGlobals.SetTerrainParams(styleParams.Brightness, styleParams.Saturation,
+                styleParams.DetailTiling, styleParams.DetailStrength);
+            MapShaderGlobals.SetNormalMapLighting(styleParams.NormalMapStrength,
+                styleParams.NormalMapAmbient, styleParams.NormalMapHighlight);
         }
 
         public virtual void OnRenderFrame() { }

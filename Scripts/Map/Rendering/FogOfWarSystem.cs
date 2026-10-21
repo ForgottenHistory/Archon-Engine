@@ -31,7 +31,6 @@ namespace Map.Rendering
         private ProvinceQueries provinceQueries;
         private int provinceCount;
         private ushort playerCountryID = 0;
-        private Material mapMaterial;
 
         // Visibility tracking (CPU-side cache for exploration state)
         private float[] provinceVisibility; // 0.0 = unexplored, 0.5 = explored, 1.0 = visible
@@ -76,14 +75,8 @@ namespace Map.Rendering
                 provinceVisibility[i] = 0.5f; // Explored (not visible until owned/adjacent)
             }
 
-            // Find material to control fog of war enabled state
-            var meshRenderer = FindFirstObjectByType<MeshRenderer>();
-            if (meshRenderer != null)
-            {
-                mapMaterial = meshRenderer.material;
-                // Disable fog of war initially (until player selects country)
-                mapMaterial.SetFloat("_FogOfWarEnabled", 0f);
-            }
+            // Disable fog of war initially (until player selects country)
+            MapShaderGlobals.SetFogOfWarEnabled(false);
 
             isInitialized = true;
 
@@ -150,9 +143,9 @@ namespace Map.Rendering
             playerCountryID = countryID;
 
             // Enable fog of war now that player has selected a country
-            if (mapMaterial != null && !fogEnabled)
+            if (!fogEnabled)
             {
-                mapMaterial.SetFloat("_FogOfWarEnabled", 1f);
+                MapShaderGlobals.SetFogOfWarEnabled(true);
                 fogEnabled = true;
                 if (logVisibilityUpdates)
                 {

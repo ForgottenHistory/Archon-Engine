@@ -206,17 +206,9 @@ namespace Map.Rendering
 
             smoothBordersInitialized = true;
 
-            // Bind border textures to material
-            var mapPlane = GameObject.Find("MapPlane");
-            if (mapPlane != null)
-            {
-                var meshRenderer = mapPlane.GetComponent<MeshRenderer>();
-                if (meshRenderer != null && textureManager?.DynamicTextures != null)
-                {
-                    textureManager.DynamicTextures.BindToMaterial(meshRenderer.sharedMaterial);
-                    meshRenderer.sharedMaterial.SetInt("_BorderRenderingMode", GetShaderModeValue(mode));
-                }
-            }
+            // Publish border textures and mode as shader globals
+            textureManager?.DynamicTextures?.BindGlobals();
+            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(mode));
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
             ArchonLogger.Log($"BorderComputeDispatcher: Initialized {mode} renderer in {elapsed:F0}ms", "map_initialization");
@@ -333,17 +325,8 @@ namespace Map.Rendering
             if (!smoothBordersInitialized)
                 return;
 
-            // Update shader mode on material
-            var mapPlane = GameObject.Find("MapPlane");
-            if (mapPlane != null)
-            {
-                var meshRenderer = mapPlane.GetComponent<MeshRenderer>();
-                if (meshRenderer != null)
-                {
-                    int shaderMode = GetShaderModeValue(mode);
-                    meshRenderer.sharedMaterial.SetInt("_BorderRenderingMode", shaderMode);
-                }
-            }
+            // Update shader border mode
+            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(mode));
 
             // Get renderer and generate borders
             string rendererId = MapRenderingModeToId(mode);

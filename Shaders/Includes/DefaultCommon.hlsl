@@ -5,102 +5,102 @@
 #ifndef DEFAULT_COMMON_INCLUDED
 #define DEFAULT_COMMON_INCLUDED
 
-// SRP Batcher compatibility - Material properties
+// ============================================================================
+// Per-material properties (UnityPerMaterial)
+// Only values that describe THIS material. Each must also be in the shader's
+// Properties block. Engine-owned values are globals (below), never here.
+// GAME shaders can append their own fields by defining
+// ARCHON_GAME_MATERIAL_PROPERTIES before including this file.
+// ============================================================================
 CBUFFER_START(UnityPerMaterial)
-    float4 _ProvinceIDTexture_ST;
-    float4 _ProvinceOwnerTexture_ST;
-    float4 _ProvinceColorTexture_ST;
-    float4 _ProvinceDevelopmentTexture_ST;
-    float4 _ProvinceTerrainTexture_ST;
-    float4 _HeightmapTexture_ST;
-    float4 _NormalMapTexture_ST;
-    float4 _ProvinceColorPalette_ST;
-    float4 _CountryColorPalette_ST;
-    float4 _DistanceFieldBorderTexture_ST;
-    float4 _PixelPerfectBorderTexture_ST;
-    float4 _HighlightTexture_ST;
-    float4 _MainTex_ST;
+    float4 _MainTex_ST; // SRP Batcher placeholder
 
-    int _MapMode;
-    int _CustomMapModeIndex;  // Index into _ProvincePaletteTexture rows for GAME-defined map modes
-    int _MapModeTextureCount; // Number of registered map mode palettes
-    int _MaxProvinceID;       // Maximum province ID for palette bounds checking
-
-    // Tessellation parameters
+    // Tessellation (material-owned: describes this shader's geometry;
+    // read back from the material by selection and border mesh code)
     float _HeightScale;
     float _TessellationFactor;
     float _TessellationMaxDistance;
     float _TessellationMinDistance;
 
-    // Border parameters (configurable from VisualStyleConfiguration)
-    // Mode values: 0=None, 1=ShaderDistanceField, 2=ShaderPixelPerfect, 3=MeshGeometry
-    int _BorderRenderingMode;
-    float _CountryBorderStrength;
-    float4 _CountryBorderColor;
-    float _ProvinceBorderStrength;
-    float4 _ProvinceBorderColor;
-
-    // Map mode colors (configurable from VisualStyleConfiguration)
-    float4 _OceanColor;
-    float4 _UnownedLandColor;
-
-    // Development gradient colors (configurable from VisualStyleConfiguration)
+    // Development gradient (GAME policy, moves to GAME shaders in a later step)
     float4 _DevVeryLow;
     float4 _DevLow;
     float4 _DevMedium;
     float4 _DevHigh;
     float4 _DevVeryHigh;
-
-    // Development tier thresholds
     float _DevTier1;
     float _DevTier2;
     float _DevTier3;
     float _DevTier4;
 
-    // Terrain adjustments
-    float _TerrainBrightness;
-    float _TerrainSaturation;
-
-    // Terrain detail mapping
-    float _DetailTiling;
-    float _DetailStrength;
+    // Material tuning (not set from C#)
     float _TriPlanarTightenFactor;
-
-    // Normal mapping lighting controls
-    float _NormalMapStrength;
-    float _NormalMapAmbient;
-    float _NormalMapHighlight;
-
     float _HighlightStrength;
 
-    // Advanced Effects parameters
-    float4 _OverlayTexture_ST;
-    float _OverlayStrength;
-    float _CountryColorSaturation;
-
-    // Fog of War parameters
-    float _FogOfWarEnabled;
-    float _FogOfWarZoomDisable;
-    float4 _FogUnexploredColor;
-    float4 _FogExploredColor;
-    float _FogExploredDesaturation;
-    float _FogNoiseScale;
-    float _FogNoiseStrength;
-    float _FogNoiseSpeed;
-    float4 _FogNoiseColor;
-
-    // AAA Distance Field Border Parameters
-    float _EdgeWidth;
-    float _GradientWidth;
-    float _EdgeSmoothness;
-    float _EdgeColorMul;
-    float _GradientColorMul;
-    float _EdgeAlpha;
-    float _GradientAlphaInside;
-    float _GradientAlphaOutside;
+#ifdef ARCHON_GAME_MATERIAL_PROPERTIES
+    ARCHON_GAME_MATERIAL_PROPERTIES
+#endif
 CBUFFER_END
 
-// Texture declarations - Core simulation textures
+// ============================================================================
+// Engine globals (Shader.SetGlobal*, see MapShaderGlobals.cs)
+// Must NOT appear in a Properties block: a material property shadows the global.
+// ============================================================================
+
+// Map mode state
+int _MapMode;
+int _CustomMapModeIndex;  // Row block in _ProvincePaletteTexture for GAME-defined map modes
+int _MapModeTextureCount; // Number of registered map mode palettes
+int _MaxProvinceID;       // Maximum province ID for palette bounds checking
+
+// Borders. Mode: 0=None, 1=ShaderDistanceField, 2=ShaderPixelPerfect, 3=MeshGeometry
+int _BorderRenderingMode;
+float _CountryBorderStrength;
+float4 _CountryBorderColor;
+float _ProvinceBorderStrength;
+float4 _ProvinceBorderColor;
+
+// Distance field border shape
+float _EdgeWidth;
+float _GradientWidth;
+float _EdgeSmoothness;
+float _EdgeColorMul;
+float _GradientColorMul;
+float _EdgeAlpha;
+float _GradientAlphaInside;
+float _GradientAlphaOutside;
+
+// Map colors
+float4 _OceanColor;
+float4 _UnownedLandColor;
+
+// Terrain
+float _TerrainBrightness;
+float _TerrainSaturation;
+float _DetailTiling;
+float _DetailStrength;
+
+// Normal map lighting
+float _NormalMapStrength;
+float _NormalMapAmbient;
+float _NormalMapHighlight;
+
+// Effects
+float _OverlayStrength;
+float _CountryColorSaturation;
+
+// Fog of war
+float _FogOfWarEnabled;
+float _FogOfWarZoomDisable;
+float4 _FogUnexploredColor;
+float4 _FogExploredColor;
+float _FogExploredDesaturation;
+float _FogNoiseScale;
+float _FogNoiseStrength;
+float _FogNoiseSpeed;
+float4 _FogNoiseColor;
+
+// Texture declarations (all engine globals) - Core simulation textures
 TEXTURE2D(_ProvinceIDTexture); SAMPLER(sampler_ProvinceIDTexture);
 TEXTURE2D(_ProvinceOwnerTexture); SAMPLER(sampler_ProvinceOwnerTexture);
 TEXTURE2D(_ProvinceColorTexture); SAMPLER(sampler_ProvinceColorTexture);

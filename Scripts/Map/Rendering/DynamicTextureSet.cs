@@ -183,88 +183,21 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Bind all dynamic textures to material
+        /// Publish all dynamic textures as shader globals.
         /// Both border textures are always bound - shader selects which to use based on _BorderRenderingMode
+        /// Border colors/strengths and distance field params: see MapShaderGlobals.
         /// </summary>
-        public void BindToMaterial(Material material)
+        public void BindGlobals()
         {
-            if (material == null) return;
-
-            // Bind both border textures - shader picks which to use based on mode
-            material.SetTexture(DistanceFieldBorderTexID, distanceFieldBorderTexture);
-            material.SetTexture(PixelPerfectBorderTexID, pixelPerfectBorderTexture);
-
-            // Bind other textures
-            material.SetTexture(HighlightTexID, highlightTexture);
-            material.SetTexture(FogOfWarTexID, fogOfWarTexture);
+            Shader.SetGlobalTexture(DistanceFieldBorderTexID, distanceFieldBorderTexture);
+            Shader.SetGlobalTexture(PixelPerfectBorderTexID, pixelPerfectBorderTexture);
+            Shader.SetGlobalTexture(HighlightTexID, highlightTexture);
+            Shader.SetGlobalTexture(FogOfWarTexID, fogOfWarTexture);
 
             if (logCreation)
             {
-                ArchonLogger.Log("DynamicTextureSet: Bound all dynamic textures to material", "map_initialization");
+                ArchonLogger.Log("DynamicTextureSet: Bound all dynamic textures as shader globals", "map_initialization");
             }
-        }
-
-        /// <summary>
-        /// Bind distance field border texture to material (Mode 1: ShaderDistanceField)
-        /// </summary>
-        public void BindDistanceFieldTextures(Material material)
-        {
-            if (material == null) return;
-            material.SetTexture(DistanceFieldBorderTexID, distanceFieldBorderTexture);
-
-            if (logCreation)
-            {
-                ArchonLogger.Log("DynamicTextureSet: Bound DistanceFieldBorderTexture", "map_rendering");
-            }
-        }
-
-        /// <summary>
-        /// Bind pixel perfect border texture to material (Mode 2: ShaderPixelPerfect)
-        /// </summary>
-        public void BindPixelPerfectTextures(Material material)
-        {
-            if (material == null) return;
-            material.SetTexture(PixelPerfectBorderTexID, pixelPerfectBorderTexture);
-
-            if (logCreation)
-            {
-                ArchonLogger.Log("DynamicTextureSet: Bound PixelPerfectBorderTexture", "map_rendering");
-            }
-        }
-
-        /// <summary>
-        /// Set border visual style on material (colors and strengths)
-        /// </summary>
-        public void SetBorderStyle(Material material, Color countryBorderColor, float countryBorderStrength,
-                                    Color provinceBorderColor, float provinceBorderStrength)
-        {
-            if (material == null) return;
-
-            material.SetFloat("_CountryBorderStrength", Mathf.Clamp01(countryBorderStrength));
-            material.SetColor("_CountryBorderColor", countryBorderColor);
-            material.SetFloat("_ProvinceBorderStrength", Mathf.Clamp01(provinceBorderStrength));
-            material.SetColor("_ProvinceBorderColor", provinceBorderColor);
-        }
-
-        /// <summary>
-        /// Set AAA distance field border parameters on material
-        /// Controls edge sharpness, gradient falloff, and color darkening
-        /// </summary>
-        public void SetDistanceFieldBorderParams(Material material,
-            float edgeWidth, float gradientWidth, float edgeSmoothness,
-            float edgeColorMul, float gradientColorMul,
-            float edgeAlpha, float gradientAlphaInside, float gradientAlphaOutside)
-        {
-            if (material == null) return;
-
-            material.SetFloat("_EdgeWidth", edgeWidth);
-            material.SetFloat("_GradientWidth", gradientWidth);
-            material.SetFloat("_EdgeSmoothness", edgeSmoothness);
-            material.SetFloat("_EdgeColorMul", edgeColorMul);
-            material.SetFloat("_GradientColorMul", gradientColorMul);
-            material.SetFloat("_EdgeAlpha", edgeAlpha);
-            material.SetFloat("_GradientAlphaInside", gradientAlphaInside);
-            material.SetFloat("_GradientAlphaOutside", gradientAlphaOutside);
         }
 
         /// <summary>

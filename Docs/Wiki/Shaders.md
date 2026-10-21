@@ -25,7 +25,7 @@ ENGINE shader includes live in `Assets/Archon-Engine/Shaders/Includes/`:
 
 | File | Purpose |
 |------|---------|
-| `DefaultCommon.hlsl` | All texture/buffer declarations, CBUFFER, SRP Batcher compatibility |
+| `DefaultCommon.hlsl` | Engine globals (textures, buffers, style values), small per-material CBUFFER |
 | `MapModeCommon.hlsl` | Province ID sampling, owner lookup, border rendering, fog of war, highlights |
 | `DefaultLighting.hlsl` | Normal map lighting from heightmap |
 | `DefaultEffects.hlsl` | Overlay texture blending (parchment, paper) |
@@ -209,9 +209,16 @@ float4 RenderProvinceColors(uint provinceID, float2 uv)  // Debug mode 12
 
 Custom map modes (mode 2+) use the province palette system via `GradientMapMode` C# class. No shader code needed — the `RenderCustomMapMode()` function in your dispatcher handles it.
 
-## ENGINE Texture Contract
+## ENGINE Globals Contract
 
-All textures are bound by ENGINE C# code. Your shader just declares and samples them. Key textures available:
+ENGINE publishes its textures and style values as **shader globals** (`MapShaderGlobals.cs`). Your shader just includes `DefaultCommon.hlsl` and samples them. Consequences:
+
+- **Never** declare an engine global in your Properties block. A material property shadows the global, so the value would be stuck at the material default.
+- Engine textures have no `_ST` tiling. Don't use `TRANSFORM_TEX` on them.
+- Swapping materials needs no rebinding. Globals survive the swap.
+- Per-material values (tessellation, your own tweakables) go in the Properties block **and** the `UnityPerMaterial` CBUFFER. To add GAME fields, `#define ARCHON_GAME_MATERIAL_PROPERTIES` (field declarations) before including `DefaultCommon.hlsl`.
+
+Key textures available:
 
 | Texture | Format | Purpose |
 |---------|--------|---------|
@@ -242,4 +249,4 @@ Full declarations in `DefaultCommon.hlsl`.
 - **Do** keep your map mode hlsl files as GAME visual policy
 - **Do** use `_BorderRenderingMode` int for border dispatch (not heuristics)
 - **Do** update your copies when ENGINE adds new features you want
-- **Do** keep Properties blocks in sync with `DefaultCommon.hlsl` CBUFFER
+- **Do** keep your Properties block limited to per-material values (it must match the `UnityPerMaterial` CBUFFER)

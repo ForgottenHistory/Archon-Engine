@@ -104,17 +104,15 @@ namespace Map.Rendering
         }
 
         /// <summary>
-        /// Bind palette to material
+        /// Publish palette as shader global
         /// </summary>
-        public void BindToMaterial(Material material)
+        public void BindGlobals()
         {
-            if (material == null) return;
-
-            material.SetTexture(ProvinceColorPaletteID, provinceColorPalette);
+            Shader.SetGlobalTexture(ProvinceColorPaletteID, provinceColorPalette);
 
             if (logCreation)
             {
-                ArchonLogger.Log("PaletteTextureManager: Bound palette texture to material", "map_initialization");
+                ArchonLogger.Log("PaletteTextureManager: Bound palette texture as shader global", "map_initialization");
             }
         }
 

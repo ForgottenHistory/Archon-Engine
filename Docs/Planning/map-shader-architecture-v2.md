@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phase 1 done (pending compile check)
+**Status:** 🔄 Phases 1-2 done
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -65,19 +65,28 @@ Keep what works (name-based engine↔shader contract, GAME owns visual policy) a
 - [ ] GAME: delete `Assets/Materials/Map.mat` (+ .meta) — now points at a deleted shader; left for user
 
 ### Phase 2 — Engine values as globals
-Move engine-produced state out of `UnityPerMaterial` into globals set via `Shader.SetGlobalTexture/Buffer/Float/Int/Vector`.
+Move engine-produced state out of `UnityPerMaterial` into globals set via `Shader.SetGlobal*`.
 
-**Globals (engine owns):** simulation/generated textures and buffers (province ID, owner, palettes, province palette, border textures, highlight, fog, heightmap, normal map, terrain arrays/blend maps, `_ProvinceTerrainBuffer`), map-mode state (`_MapMode`, `_CustomMapModeIndex`, `_MaxProvinceID`), engine style params (borders, fog, lighting, tessellation).
+**Globals (engine owns):** all simulation/generated textures and buffers, palettes, province palette, map-mode state, and every style value C# sets (borders, distance field shape, ocean/unowned colors, terrain look, normal-map lighting, overlay, saturation, fog).
 
-**Stays per-material:** GAME-specific tweakables only (its own Properties + its own CBUFFER).
+**Stays per-material:** tessellation (`_HeightScale` etc. — describes the shader's geometry; `ProvinceSelector`, `BorderMeshRenderer`, `MeshGeometryBorderRenderer` read it back via `HasProperty`/`GetFloat` to know whether the current shader displaces; as a global it would look set in flat mode too), values never set from C# (`_Dev*` gradient + tiers, `_TriPlanarTightenFactor`, `_HighlightStrength`), GAME tweakables.
 
-- [ ] New engine include declaring globals (outside `UnityPerMaterial`); `DefaultCommon.hlsl` CBUFFER shrinks to near-empty
-- [ ] Convert binding sites (`CoreTextureSet`, `DynamicTextureSet`, palette manager, border/fog/highlight renderers, `MapModeManager`, ~20 files) from `material.SetX` to globals, using cached `Shader.PropertyToID`
-- [ ] Remove rebind-after-material-swap logic in `VisualStyleManager`
-- [ ] Strip engine properties from Default shaders' Properties blocks
+- [x] `Scripts/Map/Rendering/MapShaderGlobals.cs` — property IDs, `SetDefaults()` (fallback textures + VisualStyleConfiguration defaults; called once from `MapTextureManager.Initialize`), style→global setters
+- [x] `DefaultCommon.hlsl` — CBUFFER reduced to per-material values + `ARCHON_GAME_MATERIAL_PROPERTIES` hook; everything else declared as globals
+- [x] Texture sets / palette / map mode textures: `BindToMaterial(material)` → `BindGlobals()`; `MapTextureManager.BindTexturesToMaterial(material)` → `BindGlobalTextures()`; callers updated (coordinator, image loaders, data integrator, data reload)
+- [x] `MapModeManager`, `SetShaderMode` (base + `GradientMapMode`), `VisualStyleManager`, renderer `ApplyToMaterial` impls, `FogOfWarSystem`, `BaseCameraController`, `BorderComputeDispatcher`, terrain buffer → globals
+- [x] Removed rebind-after-material-swap; `MapModeManager.UpdateMaterial` now only re-activates the mode (per-material keywords)
+- [x] Removed unused per-material border setters (`DynamicTextureSet.SetBorderStyle/SetDistanceFieldBorderParams/Bind*Textures`, `MapTextureManager.SetBorderStyle`)
+- [x] Removed stray `renderer.material` instances in `BaseCameraController` and `FogOfWarSystem` (`FindFirstObjectByType<MeshRenderer>()` could pick any renderer; instance went stale after style swap)
+- [x] Removed `TRANSFORM_TEX` on global textures (heightmap, overlay — globals have no `_ST`)
+- [x] Properties blocks stripped in Default shaders + Hegemon shaders (GAME commit)
+- [x] Wiki `Shaders.md`, `Map/FILE_REGISTRY.md`
 
-**Trade-off:** globals are shared by all materials — fine for a single map; a second simultaneous map (minimap with different data) would need per-material overrides or a `MaterialPropertyBlock`. Document this.
+**Found for Phase 5:** renderer `ApplyToMaterial` methods (border/fog/terrain/highlight) are never called; `DistanceFieldBorderRenderer` wrote `_BorderEdgeWidth/_BorderGradientWidth/_BorderSmoothness` and `HighlightRendererBase` writes `_HighlightSelectionColor/_HoverColor/_Opacity` — no shader reads them. `MapModeDataTextures` binds culture/religion textures no shader reads.
+
+**Trade-off:** globals are shared by all materials — fine for a single map; a second simultaneous map (minimap with different data) would need per-material overrides or a `MaterialPropertyBlock`.
 **Benefit:** border mesh, billboards, units can read fog/height/province ID with no extra binding.
+**Watch:** materials keep stale serialized values for removed properties. Unity ignores them (not in Properties), but if a value looks stuck, reset the material (debug inspector).
 
 ### Phase 3 — Engine pass includes
 - [ ] Create `Includes/MapPassTerrain.hlsl` (tessellation + vertex + frag) and `Includes/MapPassFlat.hlsl`, pulling `#pragma`s via `#include_with_pragmas`

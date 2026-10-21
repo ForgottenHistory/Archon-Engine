@@ -218,7 +218,7 @@ namespace Map.Rendering.Border
             if (material == null) return;
 
             // Set shader mode for mesh geometry
-            material.SetInt("_BorderRenderingMode", GetShaderModeValue(RendererId));
+            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
 
             // Apply common style parameters
             ApplyCommonStyleParams(material, styleParams);
