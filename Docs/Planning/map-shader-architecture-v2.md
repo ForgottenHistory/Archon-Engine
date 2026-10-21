@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phases 1-3 done
+**Status:** 🔄 Phases 1-4 done
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -97,10 +97,10 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 - [x] Wiki `Shaders.md`, `visual-styles-architecture.md` Level 2, `CURRENT_FEATURES.md`
 
 ### Phase 4 — Per-stage override hooks
-In the pass include, each stage is defaulted unless GAME overrides:
-`ARCHON_OVERRIDE_LIGHTING`, `_BORDERS`, `_HIGHLIGHTS`, `_FOG`, `_OVERLAY`, `_OCEAN`, plus optional `ARCHON_POST_COMPOSITE(color, ctx)` hook for extra GAME effects.
-- [ ] Define a small context struct passed to stages (uv, positionWS, provinceID) so signatures stay stable as inputs grow
-- [ ] Document hook list as the shader contract
+- [x] `Includes/MapContext.hlsl` — `ArchonMapContext` (uv, positionWS, provinceID, mapMode), included by `MapShaderSetup.hlsl` so GAME code sees it
+- [x] `MapFragment.hlsl` — stages as functions with `#ifndef ARCHON_OVERRIDE_*` defaults: `OCEAN`, `LIGHTING`, `BORDERS`, `HIGHLIGHTS`, `FOG`, `OVERLAY`; optional `ARCHON_POST_COMPOSITE`
+- [x] Hook contract documented in `MapFragment.hlsl` header + Wiki `Shaders.md` (Stage Overrides, wrap-the-default example); visual styles doc updated
+- Not done: per-stage overrides of debug modes / map mode dispatch (dispatch is already GAME-owned via `RenderMapMode`)
 
 ### Phase 5 — Contract registry + validation
 - [ ] Single C# definition of shader parameters (name, type, default, scope global/material) — replaces hand-written setters in `VisualStyleManager`

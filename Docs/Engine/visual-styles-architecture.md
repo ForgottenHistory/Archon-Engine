@@ -56,7 +56,8 @@ GAME owns a thin shader shell; ENGINE owns the render pass. The shell supplies t
 - Pro: Still leverages ENGINE infrastructure (borders, fog, lighting)
 - Pro: ENGINE updates to infrastructure and the render pass automatically apply
 - Con: Must update map mode copies when ENGINE changes the map mode API
-- Con: Stage order is fixed by ENGINE (per-stage overrides are planned)
+- Pro: Single stages (lighting, borders, highlights, fog, overlay, ocean) can be replaced via compile-time override hooks, without copying the pass
+- Con: Stage order is fixed by ENGINE; a different order means writing your own pass (Level 3)
 
 See [Shaders Wiki](../Wiki/Shaders.md) for step-by-step setup guide.
 
@@ -120,7 +121,7 @@ Render layers combine in a defined order:
 4. Fog of war
 5. Overlay effects
 
-Order and blending are fixed in the ENGINE shader. Individual layers are tuned through style parameters (strengths, colors, enable flags), not configurable blend modes. Replacing a single layer's logic without copying the shader is planned via per-stage override hooks.
+Order and blending are fixed in the ENGINE shader. Individual layers are tuned through style parameters (strengths, colors, enable flags), not configurable blend modes. A single layer's logic can be replaced without copying the shader through compile-time per-stage override hooks; unused hooks cost nothing.
 
 ---
 

@@ -203,6 +203,38 @@ float4 RenderProvinceColors(uint provinceID, float2 uv)  // Debug mode 12
 
 Custom map modes (mode 2+) use the province palette system via `GradientMapMode` C# class. No shader code needed — the `RenderCustomMapMode()` function in your dispatcher handles it.
 
+## Stage Overrides
+
+The ENGINE pass composes each pixel in a fixed order: debug modes → ocean → `RenderMapMode` → lighting → borders → highlights → fog → overlay → post composite. To replace one stage, `#define` its macro and write the function **before** the pass include (your dispatcher is the natural place). Everything else stays ENGINE default. Resolution is compile-time, so unused hooks cost nothing.
+
+| Macro | Function you provide |
+|-------|----------------------|
+| `ARCHON_OVERRIDE_OCEAN` | `float4 ArchonOcean(ArchonMapContext ctx)` |
+| `ARCHON_OVERRIDE_LIGHTING` | `float4 ArchonLighting(float4 color, ArchonMapContext ctx)` |
+| `ARCHON_OVERRIDE_BORDERS` | `float4 ArchonBorders(float4 color, ArchonMapContext ctx)` |
+| `ARCHON_OVERRIDE_HIGHLIGHTS` | `float4 ArchonHighlights(float4 color, ArchonMapContext ctx)` |
+| `ARCHON_OVERRIDE_FOG` | `float4 ArchonFog(float4 color, ArchonMapContext ctx)` |
+| `ARCHON_OVERRIDE_OVERLAY` | `float4 ArchonOverlay(float4 color, ArchonMapContext ctx)` |
+| `ARCHON_POST_COMPOSITE` | `float4 ArchonPostComposite(float4 color, ArchonMapContext ctx)` (extra stage, no default) |
+
+`ArchonMapContext` holds `uv`, `positionWS`, `provinceID`, `mapMode`. Fields may be added later. Signatures won't change.
+
+Example: warmer fog that wraps the ENGINE default.
+
+```hlsl
+// In YourMapModes.hlsl
+#include "Assets/Archon-Engine/Shaders/Includes/MapModeCommon.hlsl" // defines ApplyFogOfWar
+
+#define ARCHON_OVERRIDE_FOG
+float4 ArchonFog(float4 color, ArchonMapContext ctx)
+{
+    float4 fogged = ApplyFogOfWar(color, ctx.uv);
+    return lerp(fogged, fogged * float4(1.1, 0.95, 0.8, 1), 0.5);
+}
+```
+
+To wrap lighting or overlay, include `DefaultLighting.hlsl` / `DefaultEffects.hlsl` the same way (all include-guarded). Need a whole different pipeline? Write your own pass instead of using `MapPass*.hlsl` (Level 3).
+
 ## ENGINE Globals Contract
 
 ENGINE publishes its textures and style values as **shader globals** (`MapShaderGlobals.cs`). Your shader just includes `DefaultCommon.hlsl` and samples them. Consequences:

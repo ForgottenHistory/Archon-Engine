@@ -15,5 +15,6 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 
 #include "DefaultCommon.hlsl"
+#include "MapContext.hlsl"
 
 #endif // MAP_SHADER_SETUP_INCLUDED
