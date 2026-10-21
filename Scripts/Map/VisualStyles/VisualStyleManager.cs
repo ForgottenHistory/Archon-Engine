@@ -106,6 +106,14 @@ namespace Archon.Engine.Map
             ApplyAdvancedEffects(style.advancedEffects);
             ApplyFogOfWarSettings(style.fogOfWar);
             ApplyTessellationSettings(style.tessellation);
+            ApplyCustomShaderParameters(style);
+
+            // Check the shader against the engine/shader contract (logs errors naming shader + property)
+            int problems = MapShaderParameterRegistry.ValidateMaterial(runtimeMaterial);
+            if (problems > 0)
+            {
+                ArchonLogger.LogError($"VisualStyleManager: Shader '{runtimeMaterial.shader.name}' has {problems} contract problem(s), see errors above", "map_rendering");
+            }
 
             if (LogStyle)
             {
@@ -239,6 +247,20 @@ namespace Archon.Engine.Map
             if (LogStyle)
             {
                 ArchonLogger.Log($"VisualStyleManager: Fog of war {(fogOfWar.enabled ? "enabled" : "disabled")}", "map_rendering");
+            }
+        }
+
+        /// <summary>
+        /// Apply GAME custom shader parameters carried by the style (generic loop, no ENGINE code per parameter)
+        /// </summary>
+        private void ApplyCustomShaderParameters(VisualStyleConfiguration style)
+        {
+            if (style.customShaderParameters == null) return;
+
+            foreach (var entry in style.customShaderParameters)
+            {
+                if (entry == null) continue;
+                MapShaderParameterRegistry.Apply(entry.name, entry.ToValue(), entry.scope, runtimeMaterial);
             }
         }
 

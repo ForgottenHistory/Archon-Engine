@@ -57,12 +57,6 @@ namespace Map.Rendering.Highlight
         void ClearHighlight();
 
         /// <summary>
-        /// Apply visual parameters to the material (colors, effects, etc.)
-        /// Called when visual style parameters change.
-        /// </summary>
-        void ApplyToMaterial(Material material, HighlightStyleParams styleParams);
-
-        /// <summary>
         /// Called per-frame for renderers that need continuous updates (animations).
         /// Only called if RequiresPerFrameUpdate is true.
         /// </summary>
@@ -95,27 +89,5 @@ namespace Map.Rendering.Highlight
     {
         public ComputeShader HighlightCompute;
         public ProvinceMapping ProvinceMapping;
-    }
-
-    /// <summary>
-    /// Style parameters for highlight rendering.
-    /// Passed to ApplyToMaterial for visual customization.
-    /// </summary>
-    public struct HighlightStyleParams
-    {
-        /// <summary>Default color for province selection</summary>
-        public Color SelectionColor;
-
-        /// <summary>Default color for province hover</summary>
-        public Color HoverColor;
-
-        /// <summary>Default highlight mode</summary>
-        public HighlightMode DefaultMode;
-
-        /// <summary>Border thickness for BorderOnly mode (1-5 pixels)</summary>
-        public float BorderThickness;
-
-        /// <summary>Highlight opacity multiplier</summary>
-        public float OpacityMultiplier;
     }
 }

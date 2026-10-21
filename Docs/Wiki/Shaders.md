@@ -261,6 +261,28 @@ Key textures available:
 
 Full declarations in `DefaultCommon.hlsl`.
 
+## Contract Validation and Custom Parameters
+
+Every map shader value is registered in `MapShaderParameterRegistry` with its type, scope (Global or Material), default, and whether it's required. When a visual style is applied, the material's shader is checked and an error names the shader and property for:
+
+- An engine **global** declared in the Properties block (the material value would shadow it)
+- A **required material** property that's missing (e.g. `_HighlightStrength`, `_TriPlanarTightenFactor`)
+
+**Adding GAME parameters** (e.g. a value read by your `ArchonPostComposite` hook):
+
+```csharp
+// GAME init, before the visual style is applied
+MapShaderParameterRegistry.RegisterGlobal("_CoastGlowStrength", ShaderValue.Float(0.5f), "YourGame");
+MapShaderParameterRegistry.ApplyGlobalDefaults(); // or set it later
+```
+
+```hlsl
+// Your shader code (declare as a global, NOT in Properties)
+float _CoastGlowStrength;
+```
+
+Set values per style with **Custom Shader Parameters** on `VisualStyleConfiguration` (name, type, value). They're applied by a generic loop after the built-in style. Registered names use their registered scope; unregistered names use the scope set on the entry.
+
 ## Anti-Patterns
 
 - **Don't** use ENGINE Default shaders directly for your game — copy the shell

@@ -242,6 +242,10 @@ namespace Archon.Engine.Map
         [Tooltip("Map mode colorization settings (gradient/discrete bands/custom)")]
         public MapModeColorizerStyle mapModeColorizer = new MapModeColorizerStyle();
 
+        [Header("Custom Shader Parameters (GAME)")]
+        [Tooltip("Extra shader values applied after the built-in style. Use for GAME shader parameters (e.g. values read by ARCHON_OVERRIDE_* / ARCHON_POST_COMPOSITE hooks).")]
+        public System.Collections.Generic.List<ShaderParameterOverride> customShaderParameters = new System.Collections.Generic.List<ShaderParameterOverride>();
+
         /// <summary>
         /// Fog of War visual configuration
         /// </summary>

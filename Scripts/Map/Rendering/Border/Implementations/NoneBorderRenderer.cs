@@ -22,14 +22,6 @@ namespace Map.Rendering.Border
             // No borders to generate
         }
 
-        public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Set shader mode to 0 (no borders)
-            MapShaderGlobals.SetBorderRenderingMode(0);
-        }
-
         public override void Dispose()
         {
             // Nothing to dispose

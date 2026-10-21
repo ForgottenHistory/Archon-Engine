@@ -62,11 +62,6 @@ namespace Map.Rendering.FogOfWar
         bool IsEnabled { get; }
 
         /// <summary>
-        /// Apply style parameters to material (shader uniforms)
-        /// </summary>
-        void ApplyToMaterial(Material material, FogOfWarStyleParams styleParams);
-
-        /// <summary>
         /// Called each frame if RequiresPerFrameUpdate is true
         /// </summary>
         void OnRenderFrame();
@@ -113,50 +108,5 @@ namespace Map.Rendering.FogOfWar
 
         /// <summary>Maximum number of provinces</summary>
         public int MaxProvinces;
-    }
-
-    /// <summary>
-    /// Style parameters for fog of war rendering (from VisualStyleConfiguration)
-    /// </summary>
-    public struct FogOfWarStyleParams
-    {
-        /// <summary>Color for unexplored provinces</summary>
-        public Color UnexploredColor;
-
-        /// <summary>Color tint for explored but not visible provinces</summary>
-        public Color ExploredTint;
-
-        /// <summary>Desaturation amount for explored areas (0-1)</summary>
-        public float ExploredDesaturation;
-
-        /// <summary>Color of animated fog noise</summary>
-        public Color NoiseColor;
-
-        /// <summary>Scale of fog noise pattern</summary>
-        public float NoiseScale;
-
-        /// <summary>Strength of noise effect (0-1)</summary>
-        public float NoiseStrength;
-
-        /// <summary>Animation speed of drifting fog</summary>
-        public float NoiseSpeed;
-
-        /// <summary>
-        /// Create style params from VisualStyleConfiguration
-        /// </summary>
-        public static FogOfWarStyleParams FromConfig(Archon.Engine.Map.VisualStyleConfiguration config)
-        {
-            var fog = config.fogOfWar;
-            return new FogOfWarStyleParams
-            {
-                UnexploredColor = fog.unexploredColor,
-                ExploredTint = fog.exploredTint,
-                ExploredDesaturation = fog.exploredDesaturation,
-                NoiseColor = fog.noiseColor,
-                NoiseScale = fog.noiseScale,
-                NoiseStrength = fog.noiseStrength,
-                NoiseSpeed = fog.noiseSpeed
-            };
-        }
     }
 }

@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phases 1-4 done
+**Status:** 🔄 Phases 1-5 done
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -103,10 +103,13 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 - Not done: per-stage overrides of debug modes / map mode dispatch (dispatch is already GAME-owned via `RenderMapMode`)
 
 ### Phase 5 — Contract registry + validation
-- [ ] Single C# definition of shader parameters (name, type, default, scope global/material) — replaces hand-written setters in `VisualStyleManager`
-- [ ] Generic apply loop
-- [ ] Startup validation: for material-scoped params, `material.HasProperty` check; log error naming shader + missing property (`map_rendering`)
-- [ ] GAME can register additional parameters without ENGINE changes
+- [x] `Scripts/Map/Rendering/ShaderParameters/` — `MapShaderParameter` + `ShaderValue` (typed value), `MapShaderParameterRegistry` (register, global defaults, generic `Apply`, `ValidateMaterial`), `ShaderParameterOverride` (serializable style entry)
+- [x] `MapShaderGlobals.RegisterEngineParameters()` registers all ENGINE params; `SetDefaults()` = register + `ApplyGlobalDefaults()` loop (replaces hand-written default calls). Style defaults still come from `VisualStyleConfiguration` defaults
+- [x] Validation on every `VisualStyleManager.ApplyStyle`: error per engine global declared in Properties (shadowing) and per missing required material property (`_HighlightStrength`, `_TriPlanarTightenFactor`)
+- [x] GAME extensibility: `RegisterGlobal/RegisterMaterial` from GAME code; `VisualStyleConfiguration.customShaderParameters` applied by a generic loop
+- [x] Removed dead per-material API: `ApplyToMaterial` from `IBorderRenderer`/`IFogOfWarRenderer`/`IHighlightRenderer`/`ITerrainRenderer` + all implementations, `ApplyCommonStyleParams`, and the now-unused `Border/FogOfWar/Highlight/TerrainStyleParams` structs (never called; wrote names no shader reads)
+- Kept: typed `MapShaderGlobals.Apply*` setters for the built-in style sections (typed config → typed globals). A fully name-driven style is Phase 6 (data files)
+- Kept: culture/religion texture bindings (unread by ENGINE shaders, but available to GAME shaders)
 
 ### Phase 6 — Data-driven styles (modding)
 - [ ] Style file format (JSON5) resolved via `DataFileResolver`, mapping onto Phase 5 parameter definitions

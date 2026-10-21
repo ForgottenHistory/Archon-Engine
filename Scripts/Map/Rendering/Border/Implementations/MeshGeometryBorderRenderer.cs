@@ -213,20 +213,6 @@ namespace Map.Rendering.Border
             meshRenderer?.RenderBorders();
         }
 
-        public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Set shader mode for mesh geometry
-            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
-
-            // Apply common style parameters
-            ApplyCommonStyleParams(material, styleParams);
-
-            // Mesh geometry doesn't use texture-based borders in the main shader
-            // but we still set colors for consistency
-        }
-
         /// <summary>
         /// Update border styles when ownership changes.
         /// </summary>

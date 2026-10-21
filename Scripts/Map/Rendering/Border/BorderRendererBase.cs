@@ -39,8 +39,6 @@ namespace Map.Rendering.Border
 
         public abstract void GenerateBorders(BorderGenerationParams parameters);
 
-        public abstract void ApplyToMaterial(Material material, BorderStyleParams styleParams);
-
         public virtual void OnRenderFrame()
         {
             // Default: no-op. Override in renderers that need per-frame updates.
@@ -74,13 +72,5 @@ namespace Map.Rendering.Border
             };
         }
 
-        /// <summary>
-        /// Utility: Apply common border style parameters (shader globals, see MapShaderGlobals).
-        /// </summary>
-        protected void ApplyCommonStyleParams(Material material, BorderStyleParams styleParams)
-        {
-            MapShaderGlobals.SetBorderColors(styleParams.CountryBorderColor, styleParams.CountryBorderStrength,
-                styleParams.ProvinceBorderColor, styleParams.ProvinceBorderStrength);
-        }
     }
 }

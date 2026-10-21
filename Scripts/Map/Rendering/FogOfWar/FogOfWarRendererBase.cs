@@ -100,17 +100,6 @@ namespace Map.Rendering.FogOfWar
             fogEnabled = enabled;
         }
 
-        public virtual void ApplyToMaterial(Material material, FogOfWarStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Engine fog values are shader globals (see MapShaderGlobals)
-            MapShaderGlobals.SetFogOfWarEnabled(fogEnabled);
-            MapShaderGlobals.SetFogOfWarColors(styleParams.UnexploredColor, styleParams.ExploredTint,
-                styleParams.ExploredDesaturation, styleParams.NoiseColor,
-                styleParams.NoiseScale, styleParams.NoiseStrength, styleParams.NoiseSpeed);
-        }
-
         public virtual void OnRenderFrame() { }
 
         public float GetProvinceVisibility(ushort provinceID)

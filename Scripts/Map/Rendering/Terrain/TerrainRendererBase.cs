@@ -47,17 +47,6 @@ namespace Map.Rendering.Terrain
             int width,
             int height);
 
-        public virtual void ApplyToMaterial(Material material, TerrainStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Engine terrain/lighting values are shader globals (see MapShaderGlobals)
-            MapShaderGlobals.SetTerrainParams(styleParams.Brightness, styleParams.Saturation,
-                styleParams.DetailTiling, styleParams.DetailStrength);
-            MapShaderGlobals.SetNormalMapLighting(styleParams.NormalMapStrength,
-                styleParams.NormalMapAmbient, styleParams.NormalMapHighlight);
-        }
-
         public virtual void OnRenderFrame() { }
 
         public int GetSampleRadius() => sampleRadius;

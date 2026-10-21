@@ -13,7 +13,10 @@
 
 ## Rendering/
 - **Map.Rendering.MapTextureManager** - Facade coordinator for all map textures (delegates to texture sets); `BindGlobalTextures()` publishes them as shader globals
-- **Map.Rendering.MapShaderGlobals** - Engine map shader globals: property IDs, startup fallbacks (`SetDefaults`), style→global setters. Map shaders must not declare these in Properties
+- **Map.Rendering.MapShaderGlobals** - Engine map shader globals: property IDs, `RegisterEngineParameters` (contract + defaults), `SetDefaults`, style→global setters. Map shaders must not declare these in Properties
+- **Map.Rendering.MapShaderParameterRegistry** - Map shader contract: registered parameters (name, type, Global/Material scope, default, required), global defaults, generic apply, `ValidateMaterial` (shadowed globals, missing required properties)
+- **Map.Rendering.MapShaderParameter / ShaderValue** - Parameter definition + typed value (float/int/color/vector/texture)
+- **Map.Rendering.ShaderParameterOverride** - Serializable custom shader value on VisualStyleConfiguration (`customShaderParameters`)
 - **Map.Rendering.MapRendererRegistry** - Central registry for all pluggable renderer implementations (Pattern 20)
 - **Map.Rendering.CoreTextureSet** - Core textures: Province ID (RenderTexture), Owner (RenderTexture), Color (Texture2D), Development (RenderTexture UAV-enabled for GPU writes)
 - **Map.Rendering.VisualTextureSet** - Visual textures: Terrain, Heightmap, Normal Map, Texture2DArray (27 terrain detail textures)

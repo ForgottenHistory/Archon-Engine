@@ -158,23 +158,6 @@ namespace Map.Rendering.Highlight
             currentHighlightColor = Color.clear;
         }
 
-        public override void ApplyToMaterial(Material material, HighlightStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Apply common style parameters
-            ApplyCommonStyleParams(material, styleParams);
-
-            // Update internal settings
-            borderThickness = Mathf.Clamp(styleParams.BorderThickness, 1f, 5f);
-
-            // Bind highlight texture
-            if (textureManager?.HighlightTexture != null)
-            {
-                Shader.SetGlobalTexture(MapShaderGlobals.HighlightTexture, textureManager.HighlightTexture);
-            }
-        }
-
         /// <summary>
         /// Set border thickness for BorderOnly mode.
         /// </summary>

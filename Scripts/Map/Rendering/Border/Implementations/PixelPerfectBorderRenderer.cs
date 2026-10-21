@@ -109,28 +109,6 @@ namespace Map.Rendering.Border
             ArchonLogger.Log($"PixelPerfectBorderRenderer: Generated borders (thickness: country={countryBorderThickness}, province={provinceBorderThickness})", "map_rendering");
         }
 
-        public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Set shader mode for pixel-perfect
-            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
-
-            // Apply common style parameters
-            ApplyCommonStyleParams(material, styleParams);
-
-            // Update internal parameters from style params
-            countryBorderThickness = styleParams.PixelPerfectCountryThickness;
-            provinceBorderThickness = styleParams.PixelPerfectProvinceThickness;
-            antiAliasing = styleParams.PixelPerfectAntiAliasing;
-
-            // Bind the pixel-perfect border texture
-            if (textureManager?.PixelPerfectBorderTexture != null)
-            {
-                Shader.SetGlobalTexture(MapShaderGlobals.PixelPerfectBorderTexture, textureManager.PixelPerfectBorderTexture);
-            }
-        }
-
         public override void Dispose()
         {
             borderDetectionCompute = null;

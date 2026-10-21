@@ -76,26 +76,6 @@ namespace Map.Rendering.Border
             }
         }
 
-        public override void ApplyToMaterial(Material material, BorderStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            // Set shader mode for distance field
-            MapShaderGlobals.SetBorderRenderingMode(GetShaderModeValue(RendererId));
-
-            // Apply common style parameters (colors, strengths)
-            ApplyCommonStyleParams(material, styleParams);
-
-            // Distance field shape params come from VisualStyleManager -> MapShaderGlobals.ApplyBorderStyle.
-            // (Previously wrote _BorderEdgeWidth/_BorderGradientWidth/_BorderSmoothness, which no shader reads.)
-
-            // Bind the distance field texture
-            if (textureManager?.DistanceFieldBorderTexture != null)
-            {
-                Shader.SetGlobalTexture(MapShaderGlobals.DistanceFieldBorderTexture, textureManager.DistanceFieldBorderTexture);
-            }
-        }
-
         public override void Dispose()
         {
             // BorderDistanceFieldGenerator is a MonoBehaviour owned by the GameObject,

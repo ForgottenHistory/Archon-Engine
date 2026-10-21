@@ -47,8 +47,6 @@ namespace Map.Rendering.Highlight
 
         public abstract void ClearHighlight();
 
-        public abstract void ApplyToMaterial(Material material, HighlightStyleParams styleParams);
-
         public virtual void OnRenderFrame()
         {
             // Default: no-op. Override in renderers that need per-frame updates.
@@ -69,16 +67,5 @@ namespace Map.Rendering.Highlight
             );
         }
 
-        /// <summary>
-        /// Utility: Apply common highlight style parameters to material.
-        /// </summary>
-        protected void ApplyCommonStyleParams(Material material, HighlightStyleParams styleParams)
-        {
-            if (material == null) return;
-
-            material.SetColor("_HighlightSelectionColor", styleParams.SelectionColor);
-            material.SetColor("_HighlightHoverColor", styleParams.HoverColor);
-            material.SetFloat("_HighlightOpacity", styleParams.OpacityMultiplier);
-        }
     }
 }
