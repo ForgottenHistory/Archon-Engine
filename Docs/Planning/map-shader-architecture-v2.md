@@ -124,7 +124,13 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 - Verified: export keeps colors as authored (exported values match the style asset)
 
 ### Phase 7 — Generated-data disk cache (deferred)
-Deferred: startup logs show it isn't worth it yet (terrain blend maps ~46 ms, terrain type generation ~68 ms; terrain image already has a pixel cache, 12 ms hit). Revisit at larger map sizes.
+Deferred. At current size (5632x2048, 11.5M px) generation is cheap: terrain blend maps ~46 ms, terrain type ~68 ms, neighbor detection ~105 ms; image decodes (provinces/terrain/heightmap `.pixels`) and adjacency are already cached (4-28 ms).
+
+**Target scale is EU5 (16384x8192, ~134M px, ~11.6x).** Estimates and findings for when that work starts:
+- CPU hotspot: `MapTexturePopulator` province ID lookup + pixel index, 542 ms now → ~6 s. Uncached, CPU-bound: first cache candidate.
+- GPU generation (~0.5-1 s each at scale) is usually cheaper to regenerate than to cache: one full-res RGBA texture is ~512 MB to read back, store, and re-upload.
+- Real limit is VRAM: ~a dozen full-res map textures (ID, owner, color, dev, terrain, terrain type, detail index/mask, two border textures, highlight, fog) → several GB.
+- So EU5 scale needs an opt-in "large map" system (streaming / tiled or virtual textures, lower-res derived textures), not a cache on the current pipeline. Most games won't need it; the default path stays as is.
 - [ ] Key = hash of inputs (source files + generator version); store full input fingerprint alongside to guard collisions (HOI4 `.scache` idea)
 - [ ] Cache under `persistentDataPath`, never inside `Assets/`
 
