@@ -1,6 +1,6 @@
 # Map Shader Architecture v2
 **Date:** 2026-10-21
-**Status:** 🔄 Phases 1-6 done
+**Status:** ✅ Phases 1-6 done, Phase 7 deferred
 **Scope:** ENGINE only (Hegemon migrates after)
 **Source:** `Docs/Log/learnings/hoi4-shader-system-notes.md`
 **Supersedes (when done):** `Docs/Log/decisions/shader-copy-and-customize-architecture.md`
@@ -123,18 +123,21 @@ Move engine-produced state out of `UnityPerMaterial` into globals set via `Shade
 - [x] Hot reload: `VisualStyleManager` polls the override + base paths (built once per style apply; 1s interval) and re-applies the style on change. Toggles: `GameSettings.WatchStyleDataFile` (editor, default on), `WatchStyleDataFileInDevelopmentBuilds` (default off). F5 lives in GAME (`DebugInputHandler`), which isn't in every scene
 - Verified: export keeps colors as authored (exported values match the style asset)
 
-### Phase 7 — Generated-data disk cache (optional)
-Only if startup logs show cost. Candidates: border distance field, terrain blend maps, normal map.
+### Phase 7 — Generated-data disk cache (deferred)
+Deferred: startup logs show it isn't worth it yet (terrain blend maps ~46 ms, terrain type generation ~68 ms; terrain image already has a pixel cache, 12 ms hit). Revisit at larger map sizes.
 - [ ] Key = hash of inputs (source files + generator version); store full input fingerprint alongside to guard collisions (HOI4 `.scache` idea)
 - [ ] Cache under `persistentDataPath`, never inside `Assets/`
 
 ---
 
 ## Docs To Update When Done
-- New decision doc replacing `shader-copy-and-customize-architecture.md` (mark old one superseded)
-- `Docs/Engine/visual-styles-architecture.md` — replace Level 1/2/3 with: hooks → thin shell → full override
-- `Docs/Wiki/Shaders.md` — new setup guide
-- `Map/FILE_REGISTRY.md`
+- [x] Decision doc `Docs/Log/decisions/map-shader-architecture-v2.md`; old copy-and-customize decision marked superseded
+- [x] `Docs/Engine/visual-styles-architecture.md` — Level 2 rewritten (thin shell + hooks); Level 1 (pluggable C# renderers) and Level 3 (own pass) still accurate
+- [x] `Docs/Wiki/Shaders.md` — setup guide, globals contract, stage overrides, validation, style data files
+- [x] `Map/FILE_REGISTRY.md`
 
 ## Then: Hegemon Migration
-Rewrite `HegemonFlatMap` / `HegemonTerrainMap` as thin shells, keep `MapModes/*.hlsl`, move Hegemon tweakables to its own CBUFFER, clean `Game/FILE_REGISTRY.md` (stale EU3Classic / VisualStyles entries).
+- [x] `HegemonFlatMap` / `HegemonTerrainMap` are thin shells (done with Phase 3); `MapModes/*.hlsl` kept
+- [ ] Move `_Dev*` gradient + tiers out of ENGINE `DefaultCommon.hlsl` into Hegemon (`ARCHON_GAME_MATERIAL_PROPERTIES` + Hegemon Properties; register as Hegemon material params)
+- [ ] `HegemonFlatMapMaterial.mat` uses `Archon/DefaultFlat`, not `Hegemon/FlatMap` — decide which is intended
+- [ ] Clean `Game/FILE_REGISTRY.md` (stale EU3Classic / VisualStyles / shader GUI entries; unused `EU3MapShaderGUI`, `DefaultMapShaderGUI`)

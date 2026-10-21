@@ -1,6 +1,6 @@
 # Decision: Shader Copy-and-Customize Architecture
 **Date:** 2026-04-05
-**Status:** ✅ Implemented
+**Status:** ⛔ Superseded by `map-shader-architecture-v2.md` (2026-10-21)
 **Impact:** Breaking change (shader workflow)
 **Pattern:** Level 2 Visual Style Customization
 
