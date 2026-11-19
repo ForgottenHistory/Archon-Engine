@@ -50,7 +50,7 @@ Archon-Engine is designed to be generic infrastructure, providing everything you
 ### Option 1: Git Submodule (Recommended)
 ```bash
 cd YourUnityProject/Assets
-git submodule add https://github.com/YourUsername/Archon-Engine.git Archon-Engine
+git submodule add https://github.com/ForgottenHistory/Archon-Engine.git Archon-Engine
 ```
 
 ### Option 2: Manual Download
