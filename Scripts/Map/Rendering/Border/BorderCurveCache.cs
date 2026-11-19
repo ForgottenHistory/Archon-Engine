@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Map.Rendering.Border;
 
 namespace Map.Rendering
 {
     /// <summary>
-    /// Style information for rendering a border segment
-    /// Static geometry (curves), dynamic appearance (colors, thickness)
+    /// Style information for rendering a border arc.
+    /// Static geometry (arcs), dynamic appearance (type, visibility).
     /// </summary>
     public struct BorderStyle
     {
@@ -17,7 +18,7 @@ namespace Map.Rendering
         public static BorderStyle ProvinceBorder => new BorderStyle
         {
             type = BorderType.Province,
-            color = Color.black, // Black for visibility
+            color = Color.black,
             thickness = 1.0f,
             visible = true
         };
@@ -25,7 +26,7 @@ namespace Map.Rendering
         public static BorderStyle CountryBorder(Color countryColor) => new BorderStyle
         {
             type = BorderType.Country,
-            color = Color.black, // Black for visibility
+            color = Color.black,
             thickness = 2.0f,
             visible = true
         };
@@ -42,181 +43,96 @@ namespace Map.Rendering
     public enum BorderType
     {
         None,       // No border (hidden)
-        Province,   // Same owner (thin gray line)
-        Country     // Different owner (thick colored line)
+        Province,   // Same owner
+        Country     // Different owner
     }
 
     /// <summary>
-    /// Caches pre-computed smooth border polylines and their runtime styles
-    /// Separates static geometry (expensive to compute) from dynamic appearance (cheap to update)
-    ///
-    /// Pattern: Static Geometry + Dynamic Appearance
-    /// - Smooth polylines (RDP + Chaikin) computed once at map load
-    /// - Styles updated at runtime when ownership changes
+    /// Caches the border graph (static geometry) and a style per arc (dynamic appearance).
+    /// Ownership changes only touch styles; geometry is built once at load.
+    /// A province pair can have several arcs (e.g. a border interrupted by a third province).
     /// </summary>
     public class BorderCurveCache
     {
-        // Static geometry: pre-computed smooth polylines (Chaikin smoothed)
-        private readonly Dictionary<(ushort, ushort), List<Vector2>> borderPolylines;
+        private readonly List<BorderArc> arcs = new List<BorderArc>();
+        private readonly List<BorderStyle> styles = new List<BorderStyle>();
+        private readonly Dictionary<ushort, List<int>> provinceToArcs = new Dictionary<ushort, List<int>>();
 
-        // Dynamic appearance: runtime style for each border
-        private readonly Dictionary<(ushort, ushort), BorderStyle> borderStyles;
+        public int BorderCount => arcs.Count;
+        public IReadOnlyList<BorderArc> Arcs => arcs;
 
-        // Reverse lookup: province ID -> list of border keys it participates in
-        private readonly Dictionary<ushort, List<(ushort, ushort)>> provinceToBorders;
-
-        public int BorderCount => borderPolylines.Count;
-
-        public BorderCurveCache()
+        public void Initialize(List<BorderArc> borderArcs)
         {
-            borderPolylines = new Dictionary<(ushort, ushort), List<Vector2>>();
-            borderStyles = new Dictionary<(ushort, ushort), BorderStyle>();
-            provinceToBorders = new Dictionary<ushort, List<(ushort, ushort)>>();
-        }
-
-        /// <summary>
-        /// Initialize cache with pre-computed smooth polylines (Chaikin smoothed)
-        /// </summary>
-        public void Initialize(Dictionary<(ushort, ushort), List<Vector2>> polylines)
-        {
-            borderPolylines.Clear();
-            borderStyles.Clear();
-            provinceToBorders.Clear();
-
-            // Store polylines and build reverse lookup
-            foreach (var kvp in polylines)
+            Clear();
+            for (int i = 0; i < borderArcs.Count; i++)
             {
-                var (provinceA, provinceB) = kvp.Key;
-                List<Vector2> points = kvp.Value;
-
-                // Store polyline points
-                borderPolylines[kvp.Key] = points;
-
-                // Default style: province border (will be updated based on ownership)
-                borderStyles[kvp.Key] = BorderStyle.ProvinceBorder;
-
-                // Build reverse lookup
-                if (!provinceToBorders.ContainsKey(provinceA))
-                    provinceToBorders[provinceA] = new List<(ushort, ushort)>();
-                if (!provinceToBorders.ContainsKey(provinceB))
-                    provinceToBorders[provinceB] = new List<(ushort, ushort)>();
-
-                provinceToBorders[provinceA].Add(kvp.Key);
-                provinceToBorders[provinceB].Add(kvp.Key);
+                var arc = borderArcs[i];
+                arcs.Add(arc);
+                styles.Add(BorderStyle.ProvinceBorder);
+                AddIndex(arc.ProvinceA, i);
+                AddIndex(arc.ProvinceB, i);
             }
+            ArchonLogger.Log($"BorderCurveCache: Initialized with {arcs.Count} border arcs", "map_initialization");
+        }
 
-            ArchonLogger.Log($"BorderCurveCache: Initialized with {borderPolylines.Count} border polylines", "map_initialization");
+        private void AddIndex(ushort province, int arcIndex)
+        {
+            if (!provinceToArcs.TryGetValue(province, out var list))
+                provinceToArcs[province] = list = new List<int>();
+            list.Add(arcIndex);
         }
 
         /// <summary>
-        /// Update border styles for a province when its ownership changes
-        /// Only updates style flags - geometry remains unchanged
+        /// Reclassify every arc from current ownership. O(arcs), cheap enough to run on any change.
+        /// Arcs touching province 0 (unmapped pixels) are hidden.
         /// </summary>
-        public void UpdateProvinceBorderStyles(ushort provinceID, ushort newOwner, System.Func<ushort, ushort> getOwner, System.Func<ushort, Color> getCountryColor)
+        public void UpdateAllStyles(System.Func<ushort, ushort> getOwner)
         {
-            if (!provinceToBorders.TryGetValue(provinceID, out var borderKeys))
+            for (int i = 0; i < arcs.Count; i++)
+                styles[i] = Classify(arcs[i], getOwner);
+        }
+
+        /// <summary>Reclassify the arcs of one province (after its owner changed).</summary>
+        public void UpdateProvinceStyles(ushort provinceID, System.Func<ushort, ushort> getOwner)
+        {
+            if (!provinceToArcs.TryGetValue(provinceID, out var list))
                 return;
-
-            int updatedCount = 0;
-
-            foreach (var borderKey in borderKeys)
-            {
-                var (provinceA, provinceB) = borderKey;
-
-                // Get owner of the OTHER province in this border
-                ushort otherProvince = (provinceA == provinceID) ? provinceB : provinceA;
-                ushort otherOwner = getOwner(otherProvince);
-
-                // Determine border style based on ownership
-                BorderStyle newStyle;
-
-                if (newOwner == 0 || otherOwner == 0)
-                {
-                    // One province unowned -> hide border or show as province border
-                    newStyle = BorderStyle.ProvinceBorder;
-                }
-                else if (newOwner == otherOwner)
-                {
-                    // Same owner -> province border (thin gray)
-                    newStyle = BorderStyle.ProvinceBorder;
-                }
-                else
-                {
-                    // Different owner -> country border (thick colored)
-                    Color countryColor = getCountryColor(newOwner);
-                    newStyle = BorderStyle.CountryBorder(countryColor);
-                }
-
-                borderStyles[borderKey] = newStyle;
-                updatedCount++;
-            }
-
-            ArchonLogger.Log($"BorderCurveCache: Updated {updatedCount} border styles for province {provinceID}", "map_rendering");
+            foreach (int i in list)
+                styles[i] = Classify(arcs[i], getOwner);
         }
 
-        /// <summary>
-        /// Get all borders for rendering
-        /// Returns enumerable of (polyline, style) pairs
-        /// </summary>
-        public IEnumerable<(List<Vector2> polyline, BorderStyle style)> GetAllBordersForRendering()
+        private static BorderStyle Classify(BorderArc arc, System.Func<ushort, ushort> getOwner)
         {
-            foreach (var kvp in borderPolylines)
-            {
-                if (borderStyles.TryGetValue(kvp.Key, out BorderStyle style))
-                {
-                    if (style.visible)
-                    {
-                        yield return (kvp.Value, style);
-                    }
-                }
-            }
+            if (arc.ProvinceA == 0 || arc.ProvinceB == 0)
+                return BorderStyle.Hidden;
+            ushort ownerA = getOwner(arc.ProvinceA);
+            ushort ownerB = getOwner(arc.ProvinceB);
+            // Unowned side (sea, wasteland): thin border, so coastlines don't read as country borders
+            if (ownerA != ownerB && ownerA != 0 && ownerB != 0)
+                return BorderStyle.CountryBorder(Color.black);
+            return BorderStyle.ProvinceBorder;
         }
 
-        /// <summary>
-        /// Get smooth polyline for a specific border
-        /// </summary>
-        public List<Vector2> GetPolyline(ushort provinceA, ushort provinceB)
+        /// <summary>All visible arcs with their style.</summary>
+        public IEnumerable<(BorderArc arc, BorderStyle style)> GetAllBordersForRendering()
         {
-            // Normalize key (smaller ID first)
-            var key = provinceA < provinceB ? (provinceA, provinceB) : (provinceB, provinceA);
-
-            borderPolylines.TryGetValue(key, out List<Vector2> points);
-            return points;
+            for (int i = 0; i < arcs.Count; i++)
+                if (styles[i].visible)
+                    yield return (arcs[i], styles[i]);
         }
 
-        /// <summary>
-        /// Get style for a specific border
-        /// </summary>
-        public BorderStyle GetStyle(ushort provinceA, ushort provinceB)
+        /// <summary>All arcs with their style (for statistics/debugging).</summary>
+        public IEnumerable<(BorderArc arc, BorderStyle style)> GetAllBorderStyles()
         {
-            // Normalize key (smaller ID first)
-            var key = provinceA < provinceB ? (provinceA, provinceB) : (provinceB, provinceA);
-
-            if (borderStyles.TryGetValue(key, out BorderStyle style))
-                return style;
-
-            return BorderStyle.Hidden;
+            for (int i = 0; i < arcs.Count; i++)
+                yield return (arcs[i], styles[i]);
         }
 
-        /// <summary>
-        /// Get all border styles (for debugging/statistics)
-        /// </summary>
-        public IEnumerable<((ushort, ushort) key, BorderStyle style)> GetAllBorderStyles()
-        {
-            foreach (var kvp in borderStyles)
-            {
-                yield return (kvp.Key, kvp.Value);
-            }
-        }
-
-        /// <summary>
-        /// Clear all cached data
-        /// </summary>
         public void Clear()
         {
-            borderPolylines.Clear();
-            borderStyles.Clear();
-            provinceToBorders.Clear();
+            arcs.Clear();
+            styles.Clear();
+            provinceToArcs.Clear();
         }
     }
 }

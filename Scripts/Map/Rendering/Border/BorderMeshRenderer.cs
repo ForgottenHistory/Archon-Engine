@@ -14,6 +14,9 @@ namespace Map.Rendering
         private List<Mesh> provinceBorderMeshes = new List<Mesh>();
         private List<Mesh> countryBorderMeshes = new List<Mesh>();
         private Material borderMaterial;
+        // Country borders draw one render queue step later so they always sit on top of province borders
+        // (same-queue transparent draws are sorted by distance, so their order is otherwise arbitrary)
+        private Material countryMaterial;
         private Transform mapPlaneTransform;
 
         private readonly int mapRenderLayer = 0; // Default layer
@@ -24,6 +27,7 @@ namespace Map.Rendering
         {
             // Create unlit vertex color material
             borderMaterial = CreateBorderMaterial();
+            SyncCountryMaterial();
             mapPlaneTransform = mapPlane;
         }
 
@@ -98,7 +102,7 @@ namespace Map.Rendering
                 Graphics.DrawMesh(
                     mesh,
                     transform,
-                    borderMaterial,
+                    countryMaterial ?? borderMaterial,
                     mapRenderLayer,
                     null,
                     0,
@@ -164,6 +168,7 @@ namespace Map.Rendering
                 borderMaterial.SetVector("_MapWorldBounds", new Vector4(worldMin.x, worldMin.z, worldSize.x, worldSize.z));
                 ArchonLogger.Log($"BorderMeshRenderer: Set map world bounds min=({worldMin.x},{worldMin.z}), size=({worldSize.x},{worldSize.z})", "map_rendering");
             }
+            SyncCountryMaterial();
         }
 
         /// <summary>
@@ -179,6 +184,7 @@ namespace Map.Rendering
                 borderMaterial.SetFloat("_HeightOffset", heightOffset);
                 ArchonLogger.Log($"BorderMeshRenderer: Set heightmap (scale={heightScale}, offset={heightOffset})", "map_rendering");
             }
+            SyncCountryMaterial();
         }
 
         /// <summary>
@@ -196,6 +202,7 @@ namespace Map.Rendering
                 borderMaterial.SetFloat("_TessellationMinDistance", terrainMaterial.GetFloat("_TessellationMinDistance"));
 
             ArchonLogger.Log($"BorderMeshRenderer: Copied tessellation params from terrain material", "map_rendering");
+            SyncCountryMaterial();
         }
 
         /// <summary>
@@ -208,6 +215,18 @@ namespace Map.Rendering
                 borderMaterial.SetTexture("_BorderTex", texture);
                 ArchonLogger.Log($"BorderMeshRenderer: Set custom border texture ({texture.width}x{texture.height})", "map_rendering");
             }
+            SyncCountryMaterial();
+        }
+
+        private void SyncCountryMaterial()
+        {
+            if (borderMaterial == null)
+                return;
+            if (countryMaterial == null)
+                countryMaterial = new Material(borderMaterial) { name = "BorderMeshMaterial (Country)" };
+            else
+                countryMaterial.CopyPropertiesFromMaterial(borderMaterial);
+            countryMaterial.renderQueue = borderMaterial.renderQueue + 1;
         }
 
         /// <summary>
@@ -256,6 +275,8 @@ namespace Map.Rendering
         {
             if (borderMaterial != null)
                 Object.Destroy(borderMaterial);
+            if (countryMaterial != null)
+                Object.Destroy(countryMaterial);
         }
     }
 }

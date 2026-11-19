@@ -4,12 +4,10 @@ using UnityEngine;
 namespace Map.Rendering.Border
 {
     /// <summary>
-    /// ENGINE: Mesh-based border renderer implementation.
-    /// Generates actual geometry for borders using GPU-accelerated curve extraction.
-    /// Falls back to CPU extraction if GPU compute is unavailable.
-    ///
-    /// Best for 3D map effects where borders need depth/thickness.
-    /// Requires per-frame rendering via OnRenderFrame().
+    /// ENGINE: Mesh-based border renderer.
+    /// Builds the border graph (BorderGraph) from the province ID texture once, then renders
+    /// each arc as a triangle strip. Ownership changes only restyle arcs and rebuild meshes;
+    /// the graph itself is static.
     /// </summary>
     public class MeshGeometryBorderRenderer : BorderRendererBase
     {
@@ -17,163 +15,100 @@ namespace Map.Rendering.Border
         public override string DisplayName => "Mesh Geometry (3D)";
         public override bool RequiresPerFrameUpdate => true;
 
-        private BorderCurveExtractor curveExtractor;
         private BorderCurveCache curveCache;
         private BorderMeshGenerator meshGenerator;
         private BorderMeshRenderer meshRenderer;
         private BorderStyleUpdater styleUpdater;
 
-        private ProvinceMapping provinceMapping;
-        private float borderWidth = 0.05f;
+        // Full province border width in map pixels (country borders use BorderStyle.thickness x this)
+        private float borderWidth;
+        private BorderSmoothingSettings smoothing = BorderSmoothingSettings.Default;
 
-        public MeshGeometryBorderRenderer(float width = 0.0075f)
+        public MeshGeometryBorderRenderer(float widthPixels = 0.6f)
         {
-            this.borderWidth = width;
+            borderWidth = widthPixels;
         }
 
         protected override void OnInitialize()
         {
-            provinceMapping = context.ProvinceMapping;
-
-            if (context.AdjacencySystem == null || context.ProvinceSystem == null ||
-                context.CountrySystem == null || provinceMapping == null)
+            if (context.ProvinceSystem == null || textureManager.ProvinceIDTexture == null)
             {
-                ArchonLogger.LogWarning("MeshGeometryBorderRenderer: Missing required systems for curve extraction", "map_rendering");
+                ArchonLogger.LogWarning("MeshGeometryBorderRenderer: Missing ProvinceSystem or ProvinceIDTexture", "map_rendering");
                 return;
             }
 
-            // Initialize curve extractor (needed for both GPU and CPU paths, and for force-regenerate)
-            curveExtractor = new BorderCurveExtractor(
-                textureManager,
-                context.AdjacencySystem,
-                context.ProvinceSystem,
-                provinceMapping
-            );
-
-            // Extract border curves: GPU path with disk cache, CPU fallback
-            ArchonLogger.Log("MeshGeometryBorderRenderer: Extracting border curves...", "map_rendering");
-            var borderCurves = ExtractBorderCurvesWithGPU();
-
-            // Initialize curve cache
             curveCache = new BorderCurveCache();
-            curveCache.Initialize(borderCurves);
+            BuildGraph();
 
-            // Initialize style updater
             styleUpdater = new BorderStyleUpdater(curveCache, context.ProvinceSystem, context.CountrySystem);
             styleUpdater.UpdateAllBorderStyles();
 
-            // Read _HeightScale from the map material to match terrain displacement exactly
-            float heightScale = 10f;
-            if (context.MapPlaneTransform != null)
-            {
-                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
-                {
-                    heightScale = mr.sharedMaterial.GetFloat("_HeightScale");
-                }
-            }
-
-            // Initialize mesh generator with heightmap for CPU-side terrain height baking
-            meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
-                context.MapPlaneTransform, textureManager.HeightmapTexture, heightScale);
+            float heightScale = GetTerrainHeightScale();
+            meshGenerator = CreateMeshGenerator(heightScale);
             meshRenderer = new BorderMeshRenderer(context.MapPlaneTransform);
 
-            // Pass world bounds and heightmap to shader for GPU-side terrain matching
             if (context.MapPlaneTransform != null)
             {
                 var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
                 if (mr != null)
-                {
                     meshRenderer.SetMapWorldBounds(mr.bounds.min, mr.bounds.size);
-                }
             }
             if (textureManager.HeightmapTexture != null)
-            {
                 meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0.05f);
-            }
 
-            // Copy tessellation params from terrain material so borders curve with terrain
+            ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {curveCache.BorderCount} border arcs", "map_rendering");
+        }
+
+        /// <summary>Read back province IDs and trace the border graph.</summary>
+        private void BuildGraph()
+        {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            int width = textureManager.MapWidth, height = textureManager.MapHeight;
+            ushort[] ids = ReadProvinceIDs(width, height);
+            long readbackMs = sw.ElapsedMilliseconds;
+
+            List<BorderArc> arcs = BorderGraph.Build(ids, width, height, smoothing);
+            curveCache.Initialize(arcs);
+
+            int points = 0;
+            foreach (var arc in arcs) points += arc.Points.Length;
+            ArchonLogger.Log($"MeshGeometryBorderRenderer: Border graph {arcs.Count} arcs, {points} points " +
+                             $"(readback {readbackMs}ms, trace+smooth {sw.ElapsedMilliseconds - readbackMs}ms)", "map_initialization");
+        }
+
+        private ushort[] ReadProvinceIDs(int width, int height)
+        {
+            var previous = RenderTexture.active;
+            RenderTexture.active = textureManager.ProvinceIDTexture;
+            var temp = new Texture2D(width, height, TextureFormat.ARGB32, false);
+            temp.ReadPixels(new Rect(0, 0, width, height), 0, 0);
+            temp.Apply();
+            RenderTexture.active = previous;
+
+            Color32[] pixels = temp.GetPixels32();
+            Object.Destroy(temp);
+
+            var ids = new ushort[pixels.Length];
+            for (int i = 0; i < pixels.Length; i++)
+                ids[i] = Province.ProvinceIDEncoder.UnpackProvinceID(pixels[i]);
+            return ids;
+        }
+
+        private float GetTerrainHeightScale()
+        {
             if (context.MapPlaneTransform != null)
             {
                 var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                if (mr != null && mr.sharedMaterial != null)
-                {
-                    meshRenderer.SetTessellationParams(mr.sharedMaterial);
-                }
+                if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
+                    return mr.sharedMaterial.GetFloat("_HeightScale");
             }
-
-            ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {borderCurves?.Count ?? 0} border curves", "map_rendering");
+            return 10f;
         }
 
-        /// <summary>
-        /// Extract border curves using GPU-accelerated pipeline with disk caching.
-        /// Falls back to CPU extraction if GPU is unavailable.
-        /// </summary>
-        private Dictionary<(ushort, ushort), List<Vector2>> ExtractBorderCurvesWithGPU()
+        private BorderMeshGenerator CreateMeshGenerator(float heightScale)
         {
-            // Build cache path from map dimensions (unique per map)
-            string cachePath = GetBorderCachePath();
-
-            // 1. Try disk cache first (fastest: ~50ms)
-            if (cachePath != null)
-            {
-                var cacheResult = GPUBorderExtractor.TryLoadCache(cachePath);
-                if (cacheResult.IsSuccess)
-                {
-                    ArchonLogger.Log("MeshGeometryBorderRenderer: Using cached border data (disk cache hit)", "map_rendering");
-                    return curveExtractor.ExtractAllBordersFromGPUResult(
-                        cacheResult.BorderPixelsByPair, cacheResult.JunctionPixels);
-                }
-            }
-
-            // 2. Try GPU extraction (fast: ~300ms for 11.5M pixels)
-            if (GPUBorderExtractor.IsAvailable && textureManager.ProvinceIDTexture != null)
-            {
-                ArchonLogger.Log("MeshGeometryBorderRenderer: Using GPU-accelerated border extraction", "map_rendering");
-                var gpuResult = GPUBorderExtractor.ExtractBorderPixelsGPU(textureManager.ProvinceIDTexture);
-
-                if (gpuResult.IsSuccess)
-                {
-                    // Save to disk cache for next time
-                    if (cachePath != null)
-                    {
-                        GPUBorderExtractor.SaveCache(cachePath, gpuResult.BorderPixelsByPair, gpuResult.JunctionPixels);
-                    }
-
-                    return curveExtractor.ExtractAllBordersFromGPUResult(
-                        gpuResult.BorderPixelsByPair, gpuResult.JunctionPixels);
-                }
-
-                ArchonLogger.LogWarning($"MeshGeometryBorderRenderer: GPU extraction failed ({gpuResult.ErrorMessage}), falling back to CPU", "map_rendering");
-            }
-
-            // 3. CPU fallback (slow: ~7s for 11.5M pixels)
-            ArchonLogger.Log("MeshGeometryBorderRenderer: Using CPU border extraction (fallback)", "map_rendering");
-            return curveExtractor.ExtractAllBorders();
-        }
-
-        /// <summary>
-        /// Get disk cache path for border data.
-        /// Stored alongside provinces.png in Template-Data/map/ as provinces.png.borders
-        /// </summary>
-        private string GetBorderCachePath()
-        {
-            try
-            {
-                // Follow same pattern as provinces.png.adjacency
-                string mapDir = System.IO.Path.Combine(Application.dataPath, "Archon-Engine", "Template-Data", "map");
-                string provincesPath = System.IO.Path.Combine(mapDir, "provinces.png");
-                if (System.IO.File.Exists(provincesPath))
-                    return provincesPath;
-
-                ArchonLogger.LogWarning("MeshGeometryBorderRenderer: provinces.png not found for cache path", "map_rendering");
-                return null;
-            }
-            catch (System.Exception e)
-            {
-                ArchonLogger.LogWarning($"MeshGeometryBorderRenderer: Could not resolve cache path: {e.Message}", "map_rendering");
-                return null;
-            }
+            return new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
+                context.MapPlaneTransform, textureManager.HeightmapTexture, heightScale);
         }
 
         public override void GenerateBorders(BorderGenerationParams parameters)
@@ -185,66 +120,44 @@ namespace Map.Rendering.Border
             }
 
             if (parameters.Mode == BorderMode.None)
-            {
                 return;
-            }
 
-            if (parameters.ForceRegenerate && curveExtractor != null)
-            {
-                // Full regeneration: re-extract curves
-                var borderCurves = curveExtractor.ExtractAllBorders();
-                curveCache.Initialize(borderCurves);
-                styleUpdater?.UpdateAllBorderStyles();
-            }
+            if (parameters.ForceRegenerate)
+                BuildGraph();
 
-            // Generate meshes from curves
+            // Ownership may have changed: restyle every arc (O(arcs)), then rebuild meshes
+            styleUpdater?.UpdateAllBorderStyles();
             meshGenerator.GenerateBorderMeshes(curveCache);
             meshRenderer.SetMeshes(
                 meshGenerator.GetProvinceBorderMeshes(),
                 meshGenerator.GetCountryBorderMeshes()
             );
-
-            ArchonLogger.Log("MeshGeometryBorderRenderer: Generated border meshes", "map_rendering");
         }
 
         public override void OnRenderFrame()
         {
-            // Mesh geometry mode requires per-frame rendering
             meshRenderer?.RenderBorders();
         }
 
-        /// <summary>
-        /// Update border styles when ownership changes.
-        /// </summary>
+        /// <summary>Update border styles when ownership changes (call GenerateBorders to rebuild meshes).</summary>
         public void UpdateBorderStyles()
         {
             styleUpdater?.UpdateAllBorderStyles();
         }
 
-        /// <summary>
-        /// Set the border width for mesh generation.
-        /// </summary>
-        public void SetBorderWidth(float width)
+        /// <summary>Set the province border width in map pixels.</summary>
+        public void SetBorderWidth(float widthPixels)
         {
-            borderWidth = Mathf.Max(0.1f, width);
+            borderWidth = Mathf.Max(0.05f, widthPixels);
             if (meshGenerator != null)
-            {
-                float hs = 10f;
-                if (context.MapPlaneTransform != null)
-                {
-                    var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                    if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
-                        hs = mr.sharedMaterial.GetFloat("_HeightScale");
-                }
-                meshGenerator = new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
-                    context.MapPlaneTransform, textureManager.HeightmapTexture, hs);
-            }
+                meshGenerator = CreateMeshGenerator(GetTerrainHeightScale());
         }
 
         public override void Dispose()
         {
+            meshGenerator?.Dispose();
+            meshRenderer?.Dispose();
             curveCache?.Clear();
-            curveExtractor = null;
             curveCache = null;
             meshGenerator = null;
             meshRenderer = null;

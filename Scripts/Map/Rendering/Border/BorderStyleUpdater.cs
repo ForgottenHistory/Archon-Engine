@@ -1,88 +1,48 @@
-using UnityEngine;
 using Core.Systems;
 using ProvinceSystemType = Core.Systems.ProvinceSystem;
 
 namespace Map.Rendering.Border
 {
     /// <summary>
-    /// Updates border styles based on province ownership changes
-    /// Extracted from BorderComputeDispatcher for single responsibility
-    ///
-    /// Responsibilities:
-    /// - Classify borders as country or province borders
-    /// - Update border colors based on owner changes
-    /// - Coordinate with BorderCurveCache for style updates
+    /// Updates border arc styles from province ownership.
+    /// Geometry never changes here; only the per-arc style in BorderCurveCache.
     /// </summary>
     public class BorderStyleUpdater
     {
         private readonly BorderCurveCache curveCache;
         private readonly ProvinceSystemType provinceSystem;
-        private readonly CountrySystem countrySystem;
 
         public BorderStyleUpdater(BorderCurveCache cache, ProvinceSystemType provinces, CountrySystem countries)
         {
             curveCache = cache;
             provinceSystem = provinces;
-            countrySystem = countries;
         }
 
-        /// <summary>
-        /// Update all border styles based on current province ownership
-        /// Classifies borders as country or province borders and assigns colors
-        /// </summary>
+        private ushort GetOwner(ushort provinceID) => provinceSystem.GetProvinceState(provinceID).ownerID;
+
+        /// <summary>Reclassify all arcs from current ownership.</summary>
         public void UpdateAllBorderStyles()
         {
-            if (curveCache == null || provinceSystem == null || countrySystem == null)
+            if (curveCache == null || provinceSystem == null)
                 return;
 
-            // Get all unique provinces from province system
-            var provinceCount = provinceSystem.ProvinceCount;
-            int countryBorders = 0;
-            int provinceBorders = 0;
+            curveCache.UpdateAllStyles(GetOwner);
 
-            // Update border styles for each province
-            for (ushort provinceID = 1; provinceID < provinceCount; provinceID++)
-            {
-                var state = provinceSystem.GetProvinceState(provinceID);
-                ushort ownerID = state.ownerID;
-
-                curveCache.UpdateProvinceBorderStyles(
-                    provinceID,
-                    ownerID,
-                    (id) => provinceSystem.GetProvinceState(id).ownerID,  // getOwner delegate
-                    (id) => (Color)countrySystem.GetCountryColor(id)      // getCountryColor delegate (Color32 -> Color)
-                );
-            }
-
-            // Count border types for logging
+            int country = 0, province = 0;
             foreach (var (_, style) in curveCache.GetAllBorderStyles())
             {
-                if (style.type == BorderType.Country)
-                    countryBorders++;
-                else if (style.type == BorderType.Province)
-                    provinceBorders++;
+                if (style.type == BorderType.Country) country++;
+                else if (style.type == BorderType.Province) province++;
             }
-
-            ArchonLogger.Log($"BorderStyleUpdater: Classified borders - Country: {countryBorders}, Province: {provinceBorders}", "map_initialization");
+            ArchonLogger.Log($"BorderStyleUpdater: Classified arcs - Country: {country}, Province: {province}", "map_initialization");
         }
 
-        /// <summary>
-        /// Update border style for a single province (when ownership changes)
-        /// </summary>
+        /// <summary>Reclassify the arcs of a single province (when its ownership changes).</summary>
         public void UpdateProvinceBorderStyle(ushort provinceID)
         {
-            if (curveCache == null || provinceSystem == null || countrySystem == null)
+            if (curveCache == null || provinceSystem == null)
                 return;
-
-            var state = provinceSystem.GetProvinceState(provinceID);
-            ushort ownerID = state.ownerID;
-
-            curveCache.UpdateProvinceBorderStyles(
-                provinceID,
-                ownerID,
-                (id) => provinceSystem.GetProvinceState(id).ownerID,
-                (id) => (Color)countrySystem.GetCountryColor(id)
-            );
+            curveCache.UpdateProvinceStyles(provinceID, GetOwner);
         }
     }
 }
