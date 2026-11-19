@@ -50,9 +50,10 @@ namespace Map.Rendering
 
         /// <summary>
         /// Border arc classifier used by mesh borders (class names map to visual style border classes).
-        /// GAME can replace it before map initialization, e.g. to add state or region borders.
+        /// Static so GAME can set it at any time, even before the registry exists (e.g. in Awake).
+        /// Mesh borders reclassify on every border regeneration, so later changes apply then.
         /// </summary>
-        public IBorderClassifier BorderClassifier { get; set; } = new DefaultBorderClassifier();
+        public static IBorderClassifier BorderClassifier { get; set; } = new DefaultBorderClassifier();
 
         void Awake()
         {

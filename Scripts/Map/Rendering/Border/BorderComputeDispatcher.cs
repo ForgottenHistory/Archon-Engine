@@ -290,7 +290,7 @@ namespace Map.Rendering
             }
 
             activeBorderRenderer = renderer;
-            renderer.GenerateBorders(new BorderGenerationParams { Mode = borderMode, ProvinceQueries = provinceQueries });
+            Generate(renderer, new BorderGenerationParams { Mode = borderMode, ProvinceQueries = provinceQueries });
 
             ArchonLogger.Log($"BorderComputeDispatcher: Set active renderer to '{rendererId}'", "map_rendering");
         }
@@ -337,7 +337,7 @@ namespace Map.Rendering
             }
 
             activeBorderRenderer = renderer;
-            renderer.GenerateBorders(new BorderGenerationParams { Mode = borderMode });
+            Generate(renderer, new BorderGenerationParams { Mode = borderMode });
 
             ArchonLogger.Log($"BorderComputeDispatcher: Switched to {mode} ({rendererId})", "map_rendering");
         }
@@ -429,6 +429,33 @@ namespace Map.Rendering
         }
 
         /// <summary>
+        /// Generate borders with a renderer. Mesh borders don't use the distance field themselves,
+        /// but map mode shaders can (e.g. country color fading in from the border), so it is kept
+        /// up to date alongside them. Distance-field borders generate it on their own.
+        /// </summary>
+        private void Generate(IBorderRenderer renderer, BorderGenerationParams parameters)
+        {
+            renderer.GenerateBorders(parameters);
+            if (renderer is MeshGeometryBorderRenderer && parameters.Mode != BorderMode.None)
+                EnsureDistanceFieldGenerator()?.GenerateDistanceField();
+        }
+
+        private BorderDistanceFieldGenerator EnsureDistanceFieldGenerator()
+        {
+            if (textureManager == null || textureManager.DistanceFieldBorderTexture == null)
+                return null;
+            if (distanceFieldGenerator == null)
+            {
+                distanceFieldGenerator = GetComponent<BorderDistanceFieldGenerator>();
+                if (distanceFieldGenerator == null)
+                    distanceFieldGenerator = gameObject.AddComponent<BorderDistanceFieldGenerator>();
+            }
+            distanceFieldGenerator.Initialize(); // idempotent
+            distanceFieldGenerator.SetTextureManager(textureManager);
+            return distanceFieldGenerator;
+        }
+
+        /// <summary>
         /// Regenerate borders using the active renderer.
         /// </summary>
         public void DetectBorders()
@@ -436,7 +463,7 @@ namespace Map.Rendering
             var renderer = GetActiveBorderRenderer();
             if (renderer != null)
             {
-                renderer.GenerateBorders(new BorderGenerationParams { Mode = borderMode });
+                Generate(renderer, new BorderGenerationParams { Mode = borderMode });
             }
         }
 

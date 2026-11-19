@@ -90,9 +90,7 @@ namespace Map.Rendering.Border
 
         private void Classify()
         {
-            var classifier = MapRendererRegistry.Instance != null && MapRendererRegistry.Instance.BorderClassifier != null
-                ? MapRendererRegistry.Instance.BorderClassifier
-                : new DefaultBorderClassifier();
+            var classifier = MapRendererRegistry.BorderClassifier ?? new DefaultBorderClassifier();
             var provinces = context.ProvinceSystem;
             curveCache.ClassifyAll(arc => classifier.Classify(arc, provinces));
 
