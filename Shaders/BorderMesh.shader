@@ -41,6 +41,7 @@ Shader "Archon/BorderMesh"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Includes/DayNight.hlsl"
 
             TEXTURE2D(_BorderTex);
             SAMPLER(sampler_BorderTex);
@@ -80,6 +81,7 @@ Shader "Archon/BorderMesh"
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 float fade : TEXCOORD1;
+                float2 mapUV : TEXCOORD2;
             };
 
             float TerrainHeight(float3 posWS)
@@ -119,6 +121,7 @@ Shader "Archon/BorderMesh"
 
                 output.positionCS = TransformWorldToHClip(posWS);
                 output.uv = input.uv.xy;
+                output.mapUV = ArchonWorldToMapUV(posWS, _MapWorldBounds);
                 output.fade = (_BorderFade.y > _BorderFade.x)
                     ? smoothstep(_BorderFade.x, _BorderFade.y, screenPxPerMapPx)
                     : 1.0;
@@ -149,6 +152,7 @@ Shader "Archon/BorderMesh"
                     alpha = saturate(edge / max(fwidth(v), 1e-5));
                 }
 
+                color.rgb = ArchonApplyNight(color.rgb, input.mapUV, 1.0);
                 return half4(color.rgb, color.a * strength * alpha * input.fade);
             }
             ENDHLSL

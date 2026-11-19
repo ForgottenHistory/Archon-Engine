@@ -9,6 +9,7 @@ using Map.Rendering;
 using Map.Rendering.Border;
 using Map.Rendering.Labels;
 using Map.Rendering.Atmosphere;
+using Map.Rendering.DayNight;
 using Newtonsoft.Json.Linq;
 
 namespace Archon.Engine.Map
@@ -107,6 +108,7 @@ namespace Archon.Engine.Map
             ApplyBorders(root["borders"] as JObject, root["rivers"] as JObject, source);
             MapLabelStyles.Set(ParseLabels(root["labels"] as JObject, source));
             MapAtmosphereStyles.Set(ParseAtmosphere(root["atmosphere"] as JObject, source));
+            MapDayNightStyles.Set(ParseDayNight(root["dayNight"] as JObject, source));
 
             if (!(root["parameters"] is JObject parameters)) return 0;
 
@@ -305,6 +307,33 @@ namespace Archon.Engine.Map
             if (IsNumber(e["cloudScale"])) s.CloudScale = (float)e["cloudScale"];
             if (IsNumber(e["cloudHeight"])) s.CloudHeight = (float)e["cloudHeight"];
             if (IsNumber(e["shadowStrength"])) s.ShadowStrength = (float)e["shadowStrength"];
+            return s;
+        }
+
+        // ===== Day/night =====
+
+        private static MapDayNightStyle ParseDayNight(JObject e, string source)
+        {
+            var s = new MapDayNightStyle();
+            if (e == null) return s;
+
+            if (e["enabled"] != null) s.Enabled = (bool)e["enabled"];
+            if (e["seasons"] != null) s.Seasons = (bool)e["seasons"];
+            if (e["toggleKey"] != null)
+            {
+                string key = (string)e["toggleKey"];
+                if (string.IsNullOrEmpty(key) || key == "none") s.ToggleKey = KeyCode.None;
+                else if (System.Enum.TryParse(key, true, out KeyCode code)) s.ToggleKey = code;
+                else ArchonLogger.LogError($"{source}: dayNight.toggleKey: unknown key '{key}'", Subsystem);
+            }
+            s.Tint = ColorField(e, "tint", s.Tint, source);
+            s.LatitudeRange = Vector2Field(e, "latitudeRange", s.LatitudeRange, source);
+            if (IsNumber(e["opacity"])) s.Opacity = (float)e["opacity"];
+            if (IsNumber(e["darkness"])) s.Darkness = (float)e["darkness"];
+            if (IsNumber(e["desaturation"])) s.Desaturation = (float)e["desaturation"];
+            if (IsNumber(e["feather"])) s.Feather = (float)e["feather"];
+            if (IsNumber(e["greenwichX"])) s.GreenwichX = (float)e["greenwichX"];
+            if (IsNumber(e["fadeSeconds"])) s.FadeSeconds = (float)e["fadeSeconds"];
             return s;
         }
 

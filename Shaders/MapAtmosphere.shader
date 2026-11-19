@@ -43,6 +43,7 @@ Shader "Archon/MapAtmosphere"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Includes/DayNight.hlsl"
 
             TEXTURE2D(_NoiseTex);
             SAMPLER(sampler_NoiseTex);
@@ -125,6 +126,7 @@ Shader "Archon/MapAtmosphere"
                 // Map pixel position (x right, y down)
                 float2 mapPx = float2(posWS.x - _MapWorldBounds.x, _MapWorldBounds.y + _MapWorldBounds.w - posWS.z) / _WorldPerMapPx;
                 float cloudFade = ZoomFactor(screenPxPerMapPx, _CloudZoom.xy);
+                float2 mapUV01 = ArchonWorldToMapUV(posWS, _MapWorldBounds);
 
                 float3 rgb = 0;
                 float alpha = 0;
@@ -132,7 +134,7 @@ Shader "Archon/MapAtmosphere"
                 {
                     // Haze
                     float haze = _HazeParams.x * ZoomFactor(screenPxPerMapPx, _HazeParams.yz);
-                    rgb = _HazeColor.rgb * haze;
+                    rgb = ArchonApplyNight(_HazeColor.rgb, mapUV01, 1.0) * haze;
                     alpha = haze;
 
                     // Cloud shadow: the cloud above a ground point sits back along the shadow offset
@@ -149,6 +151,7 @@ Shader "Archon/MapAtmosphere"
                     float2 d = CloudDensity(CloudField(mapPx));
                     float a = d.x * _CloudParams.z * cloudFade;
                     float3 color = lerp(_CloudShade.rgb, _CloudColor.rgb, pow(d.y, 0.7));
+                    color = ArchonApplyNight(color, mapUV01, 1.0);
                     rgb = color * a;
                     alpha = a;
                 }

@@ -6,7 +6,7 @@
 //     - GAME map mode dispatcher (or ENGINE DefaultMapModes.hlsl)
 //
 // Stage order: debug modes -> ocean (early out) -> map mode -> lighting -> borders
-//              -> highlights -> fog -> overlay -> post composite
+//              -> highlights -> fog -> overlay -> post composite -> night
 //
 // ============================================================================
 // Stage overrides (compile-time, zero cost)
@@ -22,7 +22,10 @@
 //   ARCHON_OVERRIDE_FOG         float4 ArchonFog(float4 color, ArchonMapContext ctx)
 //   ARCHON_OVERRIDE_OVERLAY     float4 ArchonOverlay(float4 color, ArchonMapContext ctx)
 //   ARCHON_POST_COMPOSITE       float4 ArchonPostComposite(float4 color, ArchonMapContext ctx)
-//                               (optional extra stage, runs last; no default)
+//                               (optional extra stage; no default)
+//   ARCHON_OVERRIDE_NIGHT       float4 ArchonNight(float4 color, ArchonMapContext ctx)
+//                               (day/night, runs last, also on the ocean; default: ArchonApplyNight
+//                               from DayNight.hlsl, a no-op while MapDayNight is off)
 //
 // To wrap a default instead of replacing it, include the ENGINE file that defines it
 // (MapModeCommon.hlsl, DefaultLighting.hlsl, DefaultEffects.hlsl) in your code and call
@@ -36,6 +39,7 @@
 #include "DefaultLighting.hlsl"
 #include "DefaultEffects.hlsl"
 #include "DefaultDebugModes.hlsl"
+#include "DayNight.hlsl"
 
 // ===== ENGINE default stages =====
 
@@ -57,6 +61,10 @@ float4 ArchonHighlights(float4 color, ArchonMapContext ctx) { return ApplyHighli
 
 #ifndef ARCHON_OVERRIDE_FOG
 float4 ArchonFog(float4 color, ArchonMapContext ctx) { return ApplyFogOfWar(color, ctx.uv); }
+#endif
+
+#ifndef ARCHON_OVERRIDE_NIGHT
+float4 ArchonNight(float4 color, ArchonMapContext ctx) { color.rgb = ArchonApplyNight(color.rgb, ctx.uv, 1.0); return color; }
 #endif
 
 #ifndef ARCHON_OVERRIDE_OVERLAY
@@ -82,7 +90,7 @@ float4 ArchonMapFragment(float2 uv, float3 positionWS)
 
     if (ctx.provinceID == 0)
     {
-        return ArchonOcean(ctx);
+        return ArchonNight(ArchonOcean(ctx), ctx);
     }
 
     // Base color (GAME visual policy)
@@ -97,6 +105,8 @@ float4 ArchonMapFragment(float2 uv, float3 positionWS)
 #ifdef ARCHON_POST_COMPOSITE
     color = ArchonPostComposite(color, ctx);
 #endif
+
+    color = ArchonNight(color, ctx);
 
     return color;
 }

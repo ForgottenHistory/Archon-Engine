@@ -63,6 +63,8 @@
 ### Rendering/Atmosphere/
 - **Map.Rendering.Atmosphere.MapAtmosphereRenderer** - Haze (zoomed out) + procedural drifting clouds with ground shadows; two map quads (Archon/MapAtmosphere), runtime tileable noise
 - **Map.Rendering.Atmosphere.MapAtmosphereStyle / MapAtmosphereStyles** - Atmosphere settings ("atmosphere" section of the visual style data file)
+- **Map.Rendering.DayNight.MapDayNight** - Day/night from Archon time (hour + date season tilt); publishes _ArchonSun/_ArchonDayNight globals for Shaders/Includes/DayNight.hlsl; runtime toggle (Enabled / toggle key, fades)
+- **Map.Rendering.DayNight.MapDayNightStyle / MapDayNightStyles** - Day/night settings ("dayNight" section of the visual style data file)
 
 ### Rendering/Labels/
 - **Map.Rendering.Labels.LabelPlacer** - Country label placement (pure C#, worker-thread safe): territory pieces, distance field, skeleton arc + centre lines, fit text size

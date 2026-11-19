@@ -746,6 +746,12 @@ namespace Engine
                 atmosphereRenderer = mapGenerator.AddComponent<Map.Rendering.Atmosphere.MapAtmosphereRenderer>();
             atmosphereRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null);
 
+            // Day/night from game time (toggle: MapDayNight.Enabled or the style's toggle key)
+            var dayNight = mapGenerator.GetComponent<Map.Rendering.DayNight.MapDayNight>();
+            if (dayNight == null)
+                dayNight = mapGenerator.AddComponent<Map.Rendering.DayNight.MapDayNight>();
+            dayNight.Initialize(textureManager, GameState);
+
             // Finalize the renderer registry now that all subsystems have registered
             // their default renderers (fog/highlight/colorizer/terrain).
             MapRendererRegistry.Instance?.Initialize();

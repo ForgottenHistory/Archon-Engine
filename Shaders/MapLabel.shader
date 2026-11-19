@@ -40,6 +40,7 @@ Shader "Archon/MapLabel"
             #pragma fragment frag
 
             #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
+            #include "Includes/DayNight.hlsl"
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
@@ -71,6 +72,7 @@ Shader "Archon/MapLabel"
                 float4 positionCS : SV_POSITION;
                 float2 uv : TEXCOORD0;
                 float fade : TEXCOORD1;
+                float night : TEXCOORD2;
             };
 
             float TerrainHeight(float3 posWS)
@@ -112,6 +114,8 @@ Shader "Archon/MapLabel"
                     ? 1.0 - smoothstep(_LabelFade.x, _LabelFade.y, screenPxPerMapPx)
                     : 1.0;
                 output.fade = sizeFade * zoomFade;
+                // Names dim a little at night (HOI4: 35%)
+                output.night = ArchonNightFactor(ArchonWorldToMapUV(center, _MapWorldBounds));
                 return output;
             }
 
@@ -131,6 +135,7 @@ Shader "Archon/MapLabel"
                 float alpha = face * _FaceColor.a + shadow * (1.0 - face * _FaceColor.a);
                 float3 rgb = (_FaceColor.rgb * face * _FaceColor.a + _ShadowColor.rgb * shadow * (1.0 - face * _FaceColor.a))
                              / max(alpha, 1e-4);
+                rgb *= 1.0 - 0.35 * input.night;
                 return half4(rgb, alpha * input.fade);
             }
             ENDHLSL
