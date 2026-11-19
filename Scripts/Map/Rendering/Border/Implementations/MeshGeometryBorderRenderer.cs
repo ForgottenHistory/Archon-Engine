@@ -50,7 +50,7 @@ namespace Map.Rendering.Border
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             int width = textureManager.MapWidth, height = textureManager.MapHeight;
-            ushort[] ids = ReadProvinceIDs(width, height);
+            ushort[] ids = ProvinceIdReadback.Read(textureManager);
             long readbackMs = sw.ElapsedMilliseconds;
 
             List<BorderArc> arcs = BorderGraph.Build(ids, width, height, smoothing);
@@ -60,24 +60,6 @@ namespace Map.Rendering.Border
             foreach (var arc in arcs) points += arc.Points.Length;
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Border graph {arcs.Count} arcs, {points} points " +
                              $"(readback {readbackMs}ms, trace+smooth {sw.ElapsedMilliseconds - readbackMs}ms)", "map_initialization");
-        }
-
-        private ushort[] ReadProvinceIDs(int width, int height)
-        {
-            var previous = RenderTexture.active;
-            RenderTexture.active = textureManager.ProvinceIDTexture;
-            var temp = new Texture2D(width, height, TextureFormat.ARGB32, false);
-            temp.ReadPixels(new Rect(0, 0, width, height), 0, 0);
-            temp.Apply();
-            RenderTexture.active = previous;
-
-            Color32[] pixels = temp.GetPixels32();
-            Object.Destroy(temp);
-
-            var ids = new ushort[pixels.Length];
-            for (int i = 0; i < pixels.Length; i++)
-                ids[i] = Province.ProvinceIDEncoder.UnpackProvinceID(pixels[i]);
-            return ids;
         }
 
         private float GetTerrainHeightScale()

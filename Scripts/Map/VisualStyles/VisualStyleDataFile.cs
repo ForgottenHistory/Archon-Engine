@@ -7,6 +7,7 @@ using Core.Loaders;
 using Core.Modding;
 using Map.Rendering;
 using Map.Rendering.Border;
+using Map.Rendering.Labels;
 using Newtonsoft.Json.Linq;
 
 namespace Archon.Engine.Map
@@ -40,6 +41,16 @@ namespace Archon.Engine.Map
     /// plus widthPerLevel = extra map pixels per river width level above 0.
     ///
     ///     rivers: { texture: "gfx/map/rivers/river.png", width: 0.5, widthPerLevel: 0.25, tile: 0.15 }
+    ///
+    /// Optional labels section (MapLabelRenderer, country names). All fields optional:
+    ///
+    ///     labels: { font: "gfx/fonts/Oswald.ttf", color: [0.91, 0.9, 0.95], shadowColor: [0, 0, 0, 0.75],
+    ///               shadowOffset: [0.04, 0.05], shadowSoftness: 0.6, sharpness: 1, uppercase: true,
+    ///               minScreenHeight: 11, maxScale: 2.5, roomOverflow: 1.1, fade: [1.5, 2.5], spaceBelow: 0.9, maxGap: 0.8,
+    ///               maxHeight: 88, fill: 0.75, clear: 0.55, levelPreference: 0.35, arcBonus: 1.1 }
+    ///
+    /// Label sizes: font size in map px (maxHeight), minScreenHeight in screen px, shadowOffset and
+    /// maxGap as fractions of the font size; fade = [visible below, hidden above] screen px per map px.
     ///
     /// width = strip width in map pixels, minScreenWidth = floor in screen pixels, tile = texture
     /// repeats per map pixel along the border, fade = [hidden, visible] in screen px per map px,
@@ -85,6 +96,7 @@ namespace Archon.Engine.Map
 
             string source = $"Style file '{relativePath}'";
             ApplyBorders(root["borders"] as JObject, root["rivers"] as JObject, source);
+            MapLabelStyles.Set(ParseLabels(root["labels"] as JObject, source));
 
             if (!(root["parameters"] is JObject parameters)) return 0;
 
@@ -206,6 +218,57 @@ namespace Archon.Engine.Map
                 }
             }
 
+            return style;
+        }
+
+        // ===== Labels =====
+
+        private static MapLabelStyle ParseLabels(JObject e, string source)
+        {
+            var style = new MapLabelStyle();
+            if (e == null) return style;
+            var placement = style.Placement;
+
+            if (e["visible"] != null) style.Visible = (bool)e["visible"];
+            if (e["uppercase"] != null) style.Uppercase = (bool)e["uppercase"];
+            if (e["font"] != null) style.Font = (string)e["font"];
+
+            if (e["color"] != null)
+            {
+                if (TryParseColor(e["color"], out var c)) style.Color = c;
+                else ArchonLogger.LogError($"{source}: labels.color: invalid color", Subsystem);
+            }
+            if (e["shadowColor"] != null)
+            {
+                if (TryParseColor(e["shadowColor"], out var c)) style.ShadowColor = c;
+                else ArchonLogger.LogError($"{source}: labels.shadowColor: invalid color", Subsystem);
+            }
+            if (e["shadowOffset"] != null)
+            {
+                if (TryParseFloats(e["shadowOffset"], 2, 2, out var v)) style.ShadowOffset = new Vector2(v[0], v[1]);
+                else ArchonLogger.LogError($"{source}: labels.shadowOffset: expected [x, y]", Subsystem);
+            }
+            if (e["fade"] != null)
+            {
+                if (TryParseFloats(e["fade"], 2, 2, out var v)) style.Fade = new Vector2(v[0], v[1]);
+                else ArchonLogger.LogError($"{source}: labels.fade: expected [visible below, hidden above]", Subsystem);
+            }
+
+            if (IsNumber(e["shadowSoftness"])) style.ShadowSoftness = (float)e["shadowSoftness"];
+            if (IsNumber(e["sharpness"])) style.Sharpness = (float)e["sharpness"];
+            if (IsNumber(e["minScreenHeight"])) style.MinScreenHeight = (float)e["minScreenHeight"];
+            if (IsNumber(e["maxScale"])) style.MaxScale = (float)e["maxScale"];
+            if (IsNumber(e["roomOverflow"])) style.RoomOverflow = (float)e["roomOverflow"];
+            if (IsNumber(e["spaceBelow"])) style.SpaceBelow = (float)e["spaceBelow"];
+            if (IsNumber(e["maxGap"])) style.MaxGap = (float)e["maxGap"];
+
+            if (IsNumber(e["maxHeight"])) placement.MaxHeight = (float)e["maxHeight"];
+            if (IsNumber(e["fill"])) placement.Fill = (float)e["fill"];
+            if (IsNumber(e["clear"])) placement.Clear = (float)e["clear"];
+            if (IsNumber(e["levelPreference"])) placement.LevelPreference = (float)e["levelPreference"];
+            if (IsNumber(e["arcBonus"])) placement.ArcBonus = (float)e["arcBonus"];
+            if (IsNumber(e["minArea"])) placement.MinArea = (int)e["minArea"];
+            if (IsNumber(e["detached"])) placement.Detached = (float)e["detached"];
             return style;
         }
 

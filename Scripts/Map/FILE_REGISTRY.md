@@ -35,6 +35,7 @@
 - **Map.Rendering.TreeInstanceGenerator** - Generate tree instance positions and types
 - **Map.Rendering.TreeInstanceRenderer** - Render trees using GPU instancing
 - **Map.Rendering.UnitPathRenderer** - Render unit movement path lines; subscribes to UnitMovementStartedEvent/CompletedEvent/CancelledEvent
+- **Map.Rendering.ProvinceIdReadback** - CPU copy of the province ID texture (ushort per pixel, row 0 = top) for mesh borders and labels
 
 ### Rendering/Border/ (Pluggable via IBorderRenderer)
 - **Map.Rendering.Border.IBorderRenderer** - Interface for pluggable border generation (Pattern 20)
@@ -45,20 +46,25 @@
 - **Map.Rendering.Border.Implementations.MeshGeometryBorderRenderer** - Triangle strip mesh implementation
 - **Map.Rendering.BorderComputeDispatcher** - [OPTIMIZED] Orchestrates border rendering via IBorderRenderer from registry
 - **Map.Rendering.BorderEnums** - Shared enums: BorderMode, BorderRenderingMode (single source of truth)
-- **Map.Rendering.BorderCurveExtractor** - [BURST] Extract border curves with 3x Burst jobs: median filter (8x faster), pixel mapping rebuild (14x faster), border pixel detection (2x faster). Only runs for MeshGeometry mode.
-- **Map.Rendering.BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance pattern)
+- **Map.Rendering.Border.BorderGraph** - Planar border graph on the pixel-corner lattice: junction-to-junction arcs (one province pair each) + closed loops, smoothed (RDP, Chaikin)
+- **Map.Rendering.Border.BorderClasses** - Border class styles (BorderClassStyle/BorderClassStyles, data-driven), IBorderClassifier + DefaultBorderClassifier (province/country/sea/coast)
+- **Map.Rendering.BorderCurveCache** - Border arcs + class per arc (classified via MapRendererRegistry.BorderClassifier)
 - **Map.Rendering.BorderDistanceFieldGenerator** - [GPU] Generate signed distance field using Jump Flooding Algorithm (JFA) - dual channel R=country, G=province (~14ms for 5.6M pixels)
 - **Map.Rendering.Border.BorderShaderManager** - Manage compute shader loading and kernel initialization
 - **Map.Rendering.Border.BorderParameterBinder** - Centralize border rendering parameters (thickness, colors, alphas)
-- **Map.Rendering.Border.BorderStyleUpdater** - Update border styles based on ownership (country vs province classification)
 - **Map.Rendering.Border.BorderDebugUtility** - Debug utilities and benchmarking tools
-- **Map.Rendering.Border.MedianFilterProcessor** - [BURST] 3x3 median filter with parallel job (7.3x speedup: 3.9s → 0.5s)
-- **Map.Rendering.Border.JunctionDetector** - Detect junction pixels where 3+ provinces meet
-- **Map.Rendering.Border.BorderChainMerger** - Merge border chains with U-turn detection
-- **Map.Rendering.Border.BorderGeometryUtils** - Geometric utilities (intersection, angles, distances)
-- **Map.Rendering.Border.BorderPolylineSimplifier** - RDP simplification, Chaikin smoothing, tessellation
 - **Map.Rendering.BorderMeshGenerator** - Generate triangle strip meshes from border curves (MeshGeometry mode only)
-- **Map.Rendering.BorderMeshRenderer** - Render border meshes (MeshGeometry mode only)
+- **Map.Rendering.BorderMeshRenderer** - Render border meshes, one material per class ordered by class order (Archon/BorderMesh)
+
+### Rendering/Rivers/
+- **Map.Rendering.Rivers.RiverGraph** - Trace one-pixel river lines (width level per pixel) into arcs with per-point levels
+- **Map.Rendering.Rivers.MapRiverRenderer** - Optional map/rivers.png rivers drawn as border-style strips (line class "river")
+
+### Rendering/Labels/
+- **Map.Rendering.Labels.LabelPlacer** - Country label placement (pure C#, worker-thread safe): territory pieces, distance field, skeleton arc + centre lines, fit text size
+- **Map.Rendering.Labels.MapLabelRenderer** - Places labels in the background (re-places only countries whose territory changed), builds SDF letter-quad mesh (Archon/MapLabel, TextMeshPro runtime font asset)
+- **Map.Rendering.Labels.MapLabelStyle / MapLabelStyles** - Label look and placement settings ("labels" section of the visual style data file)
+- **Map.Rendering.Labels.IMapLabelSource / DefaultMapLabelSource** - Label text (localized tag) and capital province; GAME override via MapRendererRegistry.LabelSource
 - **Map.Rendering.BorderTextureDebug** - Debug visualization for border textures
 
 ### Rendering/Highlight/ (Pluggable via IHighlightRenderer)

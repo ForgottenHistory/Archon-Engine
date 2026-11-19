@@ -734,6 +734,12 @@ namespace Engine
                 riverRenderer = mapGenerator.AddComponent<Map.Rendering.Rivers.MapRiverRenderer>();
             riverRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null);
 
+            // Country name labels
+            var labelRenderer = mapGenerator.GetComponent<Map.Rendering.Labels.MapLabelRenderer>();
+            if (labelRenderer == null)
+                labelRenderer = mapGenerator.AddComponent<Map.Rendering.Labels.MapLabelRenderer>();
+            labelRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null, GameState);
+
             // Finalize the renderer registry now that all subsystems have registered
             // their default renderers (fog/highlight/colorizer/terrain).
             MapRendererRegistry.Instance?.Initialize();

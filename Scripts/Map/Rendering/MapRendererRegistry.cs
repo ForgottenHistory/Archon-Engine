@@ -55,6 +55,12 @@ namespace Map.Rendering
         /// </summary>
         public static IBorderClassifier BorderClassifier { get; set; } = new DefaultBorderClassifier();
 
+        /// <summary>
+        /// Map label text and capitals (MapLabelRenderer). Static like BorderClassifier so GAME can set
+        /// it before the map exists. Labels re-query it whenever they are re-placed.
+        /// </summary>
+        public static Labels.IMapLabelSource LabelSource { get; set; } = new Labels.DefaultMapLabelSource();
+
         void Awake()
         {
             if (Instance != null && Instance != this)
