@@ -5,9 +5,10 @@ namespace Map.Rendering.Border
 {
     /// <summary>
     /// ENGINE: Mesh-based border renderer.
-    /// Builds the border graph (BorderGraph) from the province ID texture once, then renders
-    /// each arc as a triangle strip. Ownership changes only restyle arcs and rebuild meshes;
-    /// the graph itself is static.
+    /// Builds the border graph (BorderGraph) from the province ID texture once. Each arc gets a
+    /// class from the IBorderClassifier (MapRendererRegistry.BorderClassifier); each class is one
+    /// mesh, styled by BorderClassStyles (visual style data file, hot reloaded).
+    /// Ownership changes only reclassify arcs and rebuild meshes; the graph is static.
     /// </summary>
     public class MeshGeometryBorderRenderer : BorderRendererBase
     {
@@ -18,16 +19,8 @@ namespace Map.Rendering.Border
         private BorderCurveCache curveCache;
         private BorderMeshGenerator meshGenerator;
         private BorderMeshRenderer meshRenderer;
-        private BorderStyleUpdater styleUpdater;
-
-        // Full province border width in map pixels (country borders use BorderStyle.thickness x this)
-        private float borderWidth;
         private BorderSmoothingSettings smoothing = BorderSmoothingSettings.Default;
-
-        public MeshGeometryBorderRenderer(float widthPixels = 0.6f)
-        {
-            borderWidth = widthPixels;
-        }
+        private int appliedStyleVersion = -1;
 
         protected override void OnInitialize()
         {
@@ -40,21 +33,14 @@ namespace Map.Rendering.Border
             curveCache = new BorderCurveCache();
             BuildGraph();
 
-            styleUpdater = new BorderStyleUpdater(curveCache, context.ProvinceSystem, context.CountrySystem);
-            styleUpdater.UpdateAllBorderStyles();
+            meshGenerator = new BorderMeshGenerator(textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
+            meshRenderer = new BorderMeshRenderer();
 
-            float heightScale = GetTerrainHeightScale();
-            meshGenerator = CreateMeshGenerator(heightScale);
-            meshRenderer = new BorderMeshRenderer(context.MapPlaneTransform);
-
-            if (context.MapPlaneTransform != null)
-            {
-                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                if (mr != null)
-                    meshRenderer.SetMapWorldBounds(mr.bounds.min, mr.bounds.size);
-            }
+            var mr = context.MapPlaneTransform != null ? context.MapPlaneTransform.GetComponent<MeshRenderer>() : null;
+            if (mr != null)
+                meshRenderer.SetMapWorldBounds(mr.bounds.min, mr.bounds.size);
             if (textureManager.HeightmapTexture != null)
-                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, heightScale, 0.05f);
+                meshRenderer.SetHeightmapParams(textureManager.HeightmapTexture, GetTerrainHeightScale());
 
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {curveCache.BorderCount} border arcs", "map_rendering");
         }
@@ -96,19 +82,24 @@ namespace Map.Rendering.Border
 
         private float GetTerrainHeightScale()
         {
-            if (context.MapPlaneTransform != null)
-            {
-                var mr = context.MapPlaneTransform.GetComponent<MeshRenderer>();
-                if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
-                    return mr.sharedMaterial.GetFloat("_HeightScale");
-            }
+            var mr = context.MapPlaneTransform != null ? context.MapPlaneTransform.GetComponent<MeshRenderer>() : null;
+            if (mr != null && mr.sharedMaterial != null && mr.sharedMaterial.HasProperty("_HeightScale"))
+                return mr.sharedMaterial.GetFloat("_HeightScale");
             return 10f;
         }
 
-        private BorderMeshGenerator CreateMeshGenerator(float heightScale)
+        private void Classify()
         {
-            return new BorderMeshGenerator(borderWidth, textureManager.MapWidth, textureManager.MapHeight,
-                context.MapPlaneTransform, textureManager.HeightmapTexture, heightScale);
+            var classifier = MapRendererRegistry.Instance != null && MapRendererRegistry.Instance.BorderClassifier != null
+                ? MapRendererRegistry.Instance.BorderClassifier
+                : new DefaultBorderClassifier();
+            var provinces = context.ProvinceSystem;
+            curveCache.ClassifyAll(arc => classifier.Classify(arc, provinces));
+
+            var counts = curveCache.CountPerClass();
+            var parts = new List<string>();
+            for (int i = 0; i < counts.Length; i++) parts.Add($"{curveCache.ClassNames[i]} {counts[i]}");
+            ArchonLogger.Log($"MeshGeometryBorderRenderer: Classified arcs - {string.Join(", ", parts)}", "map_rendering");
         }
 
         public override void GenerateBorders(BorderGenerationParams parameters)
@@ -125,32 +116,25 @@ namespace Map.Rendering.Border
             if (parameters.ForceRegenerate)
                 BuildGraph();
 
-            // Ownership may have changed: restyle every arc (O(arcs)), then rebuild meshes
-            styleUpdater?.UpdateAllBorderStyles();
+            // Ownership may have changed: reclassify every arc (O(arcs)), then rebuild meshes
+            Classify();
             meshGenerator.GenerateBorderMeshes(curveCache);
-            meshRenderer.SetMeshes(
-                meshGenerator.GetProvinceBorderMeshes(),
-                meshGenerator.GetCountryBorderMeshes()
-            );
+            ApplyStyles();
+        }
+
+        private void ApplyStyles()
+        {
+            meshRenderer.SetMeshes(meshGenerator.Meshes, meshGenerator.MeshClassIds, curveCache.ClassNames);
+            appliedStyleVersion = BorderClassStyles.Version;
         }
 
         public override void OnRenderFrame()
         {
-            meshRenderer?.RenderBorders();
-        }
-
-        /// <summary>Update border styles when ownership changes (call GenerateBorders to rebuild meshes).</summary>
-        public void UpdateBorderStyles()
-        {
-            styleUpdater?.UpdateAllBorderStyles();
-        }
-
-        /// <summary>Set the province border width in map pixels.</summary>
-        public void SetBorderWidth(float widthPixels)
-        {
-            borderWidth = Mathf.Max(0.05f, widthPixels);
-            if (meshGenerator != null)
-                meshGenerator = CreateMeshGenerator(GetTerrainHeightScale());
+            if (meshRenderer == null) return;
+            // Visual style data file reloaded: restyle without touching geometry
+            if (appliedStyleVersion != BorderClassStyles.Version && meshGenerator.Meshes.Count > 0)
+                ApplyStyles();
+            meshRenderer.RenderBorders();
         }
 
         public override void Dispose()
@@ -161,7 +145,6 @@ namespace Map.Rendering.Border
             curveCache = null;
             meshGenerator = null;
             meshRenderer = null;
-            styleUpdater = null;
         }
     }
 }

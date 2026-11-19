@@ -1,138 +1,78 @@
 using System.Collections.Generic;
-using UnityEngine;
 using Map.Rendering.Border;
 
 namespace Map.Rendering
 {
     /// <summary>
-    /// Style information for rendering a border arc.
-    /// Static geometry (arcs), dynamic appearance (type, visibility).
-    /// </summary>
-    public struct BorderStyle
-    {
-        public BorderType type;
-        public Color color;
-        public float thickness;
-        public bool visible;
-
-        public static BorderStyle ProvinceBorder => new BorderStyle
-        {
-            type = BorderType.Province,
-            color = Color.black,
-            thickness = 1.0f,
-            visible = true
-        };
-
-        public static BorderStyle CountryBorder(Color countryColor) => new BorderStyle
-        {
-            type = BorderType.Country,
-            color = Color.black,
-            thickness = 2.0f,
-            visible = true
-        };
-
-        public static BorderStyle Hidden => new BorderStyle
-        {
-            type = BorderType.None,
-            color = Color.clear,
-            thickness = 0f,
-            visible = false
-        };
-    }
-
-    public enum BorderType
-    {
-        None,       // No border (hidden)
-        Province,   // Same owner
-        Country     // Different owner
-    }
-
-    /// <summary>
-    /// Caches the border graph (static geometry) and a style per arc (dynamic appearance).
-    /// Ownership changes only touch styles; geometry is built once at load.
+    /// Caches the border graph (static geometry) and a class per arc (dynamic appearance).
+    /// Ownership changes only reclassify arcs; geometry is built once at load.
     /// A province pair can have several arcs (e.g. a border interrupted by a third province).
     /// </summary>
     public class BorderCurveCache
     {
+        public const int Hidden = -1;
+
         private readonly List<BorderArc> arcs = new List<BorderArc>();
-        private readonly List<BorderStyle> styles = new List<BorderStyle>();
-        private readonly Dictionary<ushort, List<int>> provinceToArcs = new Dictionary<ushort, List<int>>();
+        private readonly List<int> arcClass = new List<int>();
+        private readonly List<string> classNames = new List<string>();
+        private readonly Dictionary<string, int> classIndex = new Dictionary<string, int>();
 
         public int BorderCount => arcs.Count;
         public IReadOnlyList<BorderArc> Arcs => arcs;
 
+        /// <summary>Class names in use; index = class id stored per arc.</summary>
+        public IReadOnlyList<string> ClassNames => classNames;
+
         public void Initialize(List<BorderArc> borderArcs)
         {
-            Clear();
-            for (int i = 0; i < borderArcs.Count; i++)
-            {
-                var arc = borderArcs[i];
-                arcs.Add(arc);
-                styles.Add(BorderStyle.ProvinceBorder);
-                AddIndex(arc.ProvinceA, i);
-                AddIndex(arc.ProvinceB, i);
-            }
+            arcs.Clear();
+            arcClass.Clear();
+            arcs.AddRange(borderArcs);
+            for (int i = 0; i < arcs.Count; i++)
+                arcClass.Add(Hidden);
             ArchonLogger.Log($"BorderCurveCache: Initialized with {arcs.Count} border arcs", "map_initialization");
         }
 
-        private void AddIndex(ushort province, int arcIndex)
-        {
-            if (!provinceToArcs.TryGetValue(province, out var list))
-                provinceToArcs[province] = list = new List<int>();
-            list.Add(arcIndex);
-        }
-
-        /// <summary>
-        /// Reclassify every arc from current ownership. O(arcs), cheap enough to run on any change.
-        /// Arcs touching province 0 (unmapped pixels) are hidden.
-        /// </summary>
-        public void UpdateAllStyles(System.Func<ushort, ushort> getOwner)
+        /// <summary>Reclassify every arc. O(arcs), cheap enough to run on any ownership change.</summary>
+        public void ClassifyAll(System.Func<BorderArc, string> classify)
         {
             for (int i = 0; i < arcs.Count; i++)
-                styles[i] = Classify(arcs[i], getOwner);
+                arcClass[i] = IndexOf(classify(arcs[i]));
         }
 
-        /// <summary>Reclassify the arcs of one province (after its owner changed).</summary>
-        public void UpdateProvinceStyles(ushort provinceID, System.Func<ushort, ushort> getOwner)
+        private int IndexOf(string name)
         {
-            if (!provinceToArcs.TryGetValue(provinceID, out var list))
-                return;
-            foreach (int i in list)
-                styles[i] = Classify(arcs[i], getOwner);
+            if (name == null) return Hidden;
+            if (!classIndex.TryGetValue(name, out int index))
+            {
+                index = classNames.Count;
+                classNames.Add(name);
+                classIndex[name] = index;
+            }
+            return index;
         }
 
-        private static BorderStyle Classify(BorderArc arc, System.Func<ushort, ushort> getOwner)
-        {
-            if (arc.ProvinceA == 0 || arc.ProvinceB == 0)
-                return BorderStyle.Hidden;
-            ushort ownerA = getOwner(arc.ProvinceA);
-            ushort ownerB = getOwner(arc.ProvinceB);
-            // Unowned side (sea, wasteland): thin border, so coastlines don't read as country borders
-            if (ownerA != ownerB && ownerA != 0 && ownerB != 0)
-                return BorderStyle.CountryBorder(Color.black);
-            return BorderStyle.ProvinceBorder;
-        }
-
-        /// <summary>All visible arcs with their style.</summary>
-        public IEnumerable<(BorderArc arc, BorderStyle style)> GetAllBordersForRendering()
+        /// <summary>All visible arcs with their class id.</summary>
+        public IEnumerable<(BorderArc arc, int classId)> GetVisibleArcs()
         {
             for (int i = 0; i < arcs.Count; i++)
-                if (styles[i].visible)
-                    yield return (arcs[i], styles[i]);
+                if (arcClass[i] != Hidden)
+                    yield return (arcs[i], arcClass[i]);
         }
 
-        /// <summary>All arcs with their style (for statistics/debugging).</summary>
-        public IEnumerable<(BorderArc arc, BorderStyle style)> GetAllBorderStyles()
+        /// <summary>Arc count per class id (for logging).</summary>
+        public int[] CountPerClass()
         {
-            for (int i = 0; i < arcs.Count; i++)
-                yield return (arcs[i], styles[i]);
+            var counts = new int[classNames.Count];
+            foreach (int c in arcClass)
+                if (c != Hidden) counts[c]++;
+            return counts;
         }
 
         public void Clear()
         {
             arcs.Clear();
-            styles.Clear();
-            provinceToArcs.Clear();
+            arcClass.Clear();
         }
     }
 }

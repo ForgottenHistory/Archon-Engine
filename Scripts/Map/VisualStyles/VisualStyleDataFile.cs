@@ -6,6 +6,7 @@ using UnityEngine;
 using Core.Loaders;
 using Core.Modding;
 using Map.Rendering;
+using Map.Rendering.Border;
 using Newtonsoft.Json.Linq;
 
 namespace Archon.Engine.Map
@@ -25,6 +26,19 @@ namespace Archon.Engine.Map
     ///       _CoastGlow: { value: 0.5, type: "float", scope: "global" }  // unregistered GAME parameter
     ///     }
     ///   }
+    ///
+    /// Optional borders section: one entry per border class (names from the border classifier,
+    /// engine defaults: province, country, sea, coast). Used by the MeshGeometry border renderer.
+    ///
+    ///     borders: {
+    ///       country: { texture: "gfx/map/borders/country.png", width: 1.5, minScreenWidth: 4,
+    ///                  tile: 0.4, color: [1,1,1,1], fade: [0.5, 1], order: 10 },
+    ///       coast:   { visible: false },
+    ///     }
+    ///
+    /// width = strip width in map pixels, minScreenWidth = floor in screen pixels, tile = texture
+    /// repeats per map pixel along the border, fade = [hidden, visible] in screen px per map px,
+    /// color omitted = engine border color globals. Texture U runs along the border, V across.
     ///
     /// Engine-managed parameters (simulation textures, map mode, border mode, fog toggle) are refused.
     /// Re-read on every style apply, so F5 reload picks up edits.
@@ -64,9 +78,11 @@ namespace Archon.Engine.Map
                 return 0;
             }
 
+            string source = $"Style file '{relativePath}'";
+            ApplyBorders(root["borders"] as JObject, source);
+
             if (!(root["parameters"] is JObject parameters)) return 0;
 
-            string source = $"Style file '{relativePath}'";
             int applied = 0;
 
             foreach (var property in parameters.Properties())
@@ -111,6 +127,77 @@ namespace Archon.Engine.Map
             if (basePath != null && File.Exists(basePath))
                 return File.GetLastWriteTimeUtc(basePath).Ticks * 2;
             return 0;
+        }
+
+        // ===== Border classes =====
+
+        private static void ApplyBorders(JObject borders, string source)
+        {
+            var classes = new List<BorderClassStyle>();
+            if (borders != null)
+            {
+                foreach (var property in borders.Properties())
+                {
+                    if (!(property.Value is JObject entry))
+                    {
+                        ArchonLogger.LogError($"{source}: borders.{property.Name}: expected an object. Skipped.", Subsystem);
+                        continue;
+                    }
+                    classes.Add(ParseBorderClass(property.Name, entry, source));
+                }
+            }
+            BorderClassStyles.Set(classes);
+        }
+
+        private static BorderClassStyle ParseBorderClass(string name, JObject e, string source)
+        {
+            var style = BorderClassStyles.Resolve(name); // engine defaults for anything not given
+            style = new BorderClassStyle
+            {
+                Name = name,
+                Width = style.Width,
+                MinScreenWidth = style.MinScreenWidth,
+                Order = style.Order
+            };
+
+            if (e["visible"] != null) style.Visible = (bool)e["visible"];
+            if (IsNumber(e["width"])) style.Width = (float)e["width"];
+            if (IsNumber(e["minScreenWidth"])) style.MinScreenWidth = (float)e["minScreenWidth"];
+            if (IsNumber(e["tile"])) style.Tile = (float)e["tile"];
+            if (IsNumber(e["order"])) style.Order = (int)e["order"];
+
+            if (e["color"] != null)
+            {
+                if (TryParseColor(e["color"], out var color)) style.Color = color;
+                else ArchonLogger.LogError($"{source}: borders.{name}.color: invalid color", Subsystem);
+            }
+
+            if (e["fade"] != null)
+            {
+                if (TryParseFloats(e["fade"], 2, 2, out var fade)) style.Fade = new Vector2(fade[0], fade[1]);
+                else ArchonLogger.LogError($"{source}: borders.{name}.fade: expected [hidden, visible]", Subsystem);
+            }
+
+            if (e["texture"] != null)
+            {
+                // Border textures: trilinear, repeat along (U), clamp across (V), slightly sharper mips
+                var options = new JObject { ["texture"] = e["texture"], ["filter"] = "trilinear", ["wrap"] = "repeat" };
+                var texture = LoadTexture(options, out string error);
+                if (texture != null)
+                {
+                    texture.wrapModeU = TextureWrapMode.Repeat;
+                    texture.wrapModeV = TextureWrapMode.Clamp;
+                    texture.mipMapBias = -0.5f;
+                    texture.anisoLevel = 4;
+                    style.Texture = texture;
+                }
+                else
+                {
+                    ArchonLogger.LogError($"{source}: borders.{name}.texture: {error}", Subsystem);
+                }
+            }
+
+            return style;
         }
 
         // ===== Parsing =====
@@ -209,7 +296,7 @@ namespace Archon.Engine.Map
             return false;
         }
 
-        private static bool IsNumber(JToken t) => t.Type == JTokenType.Float || t.Type == JTokenType.Integer;
+        private static bool IsNumber(JToken t) => t != null && (t.Type == JTokenType.Float || t.Type == JTokenType.Integer);
 
         private static bool TryParseFloats(JToken token, int min, int max, out float[] values)
         {

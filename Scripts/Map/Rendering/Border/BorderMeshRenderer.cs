@@ -1,282 +1,131 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
+using Map.Rendering.Border;
 
 namespace Map.Rendering
 {
     /// <summary>
-    /// Renders border meshes using Unity's Graphics.DrawMesh API
-    /// Handles province and country borders as separate mesh objects
-    /// Uses unlit vertex color material for simple flat-shaded borders
+    /// Draws the per-class border meshes with Graphics.DrawMesh.
+    /// One material per class; draw order between classes comes from the render queue
+    /// (same-queue transparent draws are distance sorted, so order would otherwise be arbitrary).
     /// </summary>
     public class BorderMeshRenderer
     {
-        private List<Mesh> provinceBorderMeshes = new List<Mesh>();
-        private List<Mesh> countryBorderMeshes = new List<Mesh>();
-        private Material borderMaterial;
-        // Country borders draw one render queue step later so they always sit on top of province borders
-        // (same-queue transparent draws are sorted by distance, so their order is otherwise arbitrary)
-        private Material countryMaterial;
-        private Transform mapPlaneTransform;
+        private const int BaseQueue = 2900; // Transparent-100: after opaque terrain
 
-        private readonly int mapRenderLayer = 0; // Default layer
+        private static readonly int BorderTexId = Shader.PropertyToID("_BorderTex");
+        private static readonly int UseTextureId = Shader.PropertyToID("_BorderUseTexture");
+        private static readonly int ColorId = Shader.PropertyToID("_BorderColor");
+        private static readonly int ColorSourceId = Shader.PropertyToID("_BorderColorSource");
+        private static readonly int WidthId = Shader.PropertyToID("_BorderWidth");
+        private static readonly int MinScreenWidthId = Shader.PropertyToID("_BorderMinScreenWidth");
+        private static readonly int TileId = Shader.PropertyToID("_BorderTile");
+        private static readonly int FadeId = Shader.PropertyToID("_BorderFade");
+        private static readonly int MapWorldBoundsId = Shader.PropertyToID("_MapWorldBounds");
+        private static readonly int HeightmapId = Shader.PropertyToID("_HeightmapTexture");
+        private static readonly int HeightScaleId = Shader.PropertyToID("_HeightScale");
 
-        private bool hasLoggedFirstRender = false;
+        private readonly Shader shader;
+        private readonly Dictionary<string, Material> materials = new Dictionary<string, Material>();
+        private readonly List<(Mesh mesh, Material material)> drawList = new List<(Mesh, Material)>();
 
-        public BorderMeshRenderer(Transform mapPlane = null)
+        private Vector4 mapWorldBounds;
+        private Texture heightmap;
+        private float heightScale;
+
+        public BorderMeshRenderer()
         {
-            // Create unlit vertex color material
-            borderMaterial = CreateBorderMaterial();
-            SyncCountryMaterial();
-            mapPlaneTransform = mapPlane;
-        }
-
-        /// <summary>
-        /// Set the meshes to render (may be multiple meshes due to 65k vertex limit)
-        /// </summary>
-        public void SetMeshes(List<Mesh> provinceMeshes, List<Mesh> countryMeshes)
-        {
-            provinceBorderMeshes = provinceMeshes ?? new List<Mesh>();
-            countryBorderMeshes = countryMeshes ?? new List<Mesh>();
-
-            int provinceVerts = provinceBorderMeshes.Sum(m => m.vertexCount);
-            int countryVerts = countryBorderMeshes.Sum(m => m.vertexCount);
-
-            ArchonLogger.Log($"BorderMeshRenderer: Set meshes - Province: {provinceBorderMeshes.Count} meshes ({provinceVerts} verts), Country: {countryBorderMeshes.Count} meshes ({countryVerts} verts)", "map_initialization");
-        }
-
-        /// <summary>
-        /// Render borders for current frame
-        /// Called every frame by MapRenderingCoordinator
-        /// </summary>
-        public void RenderBorders()
-        {
-            if (borderMaterial == null)
-            {
-                if (!hasLoggedFirstRender)
-                {
-                    ArchonLogger.LogWarning("BorderMeshRenderer: Material is null, cannot render borders", "map_rendering");
-                    hasLoggedFirstRender = true;
-                }
-                return;
-            }
-
-            if (!hasLoggedFirstRender)
-            {
-                ArchonLogger.Log($"BorderMeshRenderer: First render - Province: {provinceBorderMeshes.Count} meshes, Country: {countryBorderMeshes.Count} meshes", "map_rendering");
-                ArchonLogger.Log($"BorderMeshRenderer: Material: {borderMaterial.name}, Shader: {borderMaterial.shader.name}", "map_rendering");
-                if (mapPlaneTransform != null)
-                {
-                    ArchonLogger.Log($"BorderMeshRenderer: MapPlane pos={mapPlaneTransform.position}, scale={mapPlaneTransform.localScale}, rot={mapPlaneTransform.rotation.eulerAngles}", "map_rendering");
-                }
-                if (provinceBorderMeshes.Count > 0)
-                {
-                    var bounds = provinceBorderMeshes[0].bounds;
-                    ArchonLogger.Log($"BorderMeshRenderer: First mesh bounds - min={bounds.min}, max={bounds.max}, size={bounds.size}", "map_rendering");
-                }
-                hasLoggedFirstRender = true;
-            }
-
-            // Vertices are already in world space — use identity transform
-            Matrix4x4 transform = Matrix4x4.identity;
-
-            // Draw all province border meshes
-            foreach (var mesh in provinceBorderMeshes)
-            {
-                Graphics.DrawMesh(
-                    mesh,
-                    transform,
-                    borderMaterial,
-                    mapRenderLayer,
-                    null, // All cameras
-                    0,    // Submesh index
-                    null, // Material property block
-                    UnityEngine.Rendering.ShadowCastingMode.Off,
-                    false // No receiving shadows
-                );
-            }
-
-            // Draw all country border meshes
-            foreach (var mesh in countryBorderMeshes)
-            {
-                Graphics.DrawMesh(
-                    mesh,
-                    transform,
-                    countryMaterial ?? borderMaterial,
-                    mapRenderLayer,
-                    null,
-                    0,
-                    null,
-                    UnityEngine.Rendering.ShadowCastingMode.Off,
-                    false
-                );
-            }
-        }
-
-        /// <summary>
-        /// Create material for borders with texture
-        /// </summary>
-        private Material CreateBorderMaterial()
-        {
-            // Use custom URP-compatible vertex color shader
-            Shader shader = Shader.Find("Archon/BorderMesh");
+            shader = Shader.Find("Archon/BorderMesh");
             if (shader == null)
-            {
-                ArchonLogger.LogError("BorderMeshRenderer: Could not find Archon/BorderMesh shader! Make sure BorderMesh.shader exists.", "map_rendering");
-                return null;
-            }
-
-            Material mat = new Material(shader)
-            {
-                name = "BorderMeshMaterial"
-            };
-
-            mat.SetFloat("_HeightOffset", 1.0f);
-
-            // Load border texture from Resources or Template-Data
-            Texture2D borderTexture = Resources.Load<Texture2D>("Textures/border_texture");
-            if (borderTexture == null)
-            {
-                // Try loading from Archon-Engine Template-Data path
-                borderTexture = Resources.Load<Texture2D>("border_texture");
-            }
-
-            if (borderTexture != null)
-            {
-                mat.SetTexture("_BorderTex", borderTexture);
-                ArchonLogger.Log($"BorderMeshRenderer: Loaded border texture ({borderTexture.width}x{borderTexture.height})", "map_initialization");
-            }
-            else
-            {
-                // Create a fallback texture: white horizontal line in center
-                borderTexture = CreateFallbackBorderTexture();
-                mat.SetTexture("_BorderTex", borderTexture);
-                ArchonLogger.LogWarning("BorderMeshRenderer: Using fallback border texture. Place border_texture.png in Resources folder for custom texture.", "map_initialization");
-            }
-
-            ArchonLogger.Log("BorderMeshRenderer: Created material with Archon/BorderMesh shader", "map_initialization");
-            return mat;
+                ArchonLogger.LogError("BorderMeshRenderer: Archon/BorderMesh shader not found", "map_rendering");
         }
 
-        /// <summary>
-        /// Set the world-space map bounds so the shader can derive heightmap UVs.
-        /// </summary>
         public void SetMapWorldBounds(Vector3 worldMin, Vector3 worldSize)
         {
-            if (borderMaterial != null)
+            mapWorldBounds = new Vector4(worldMin.x, worldMin.z, worldSize.x, worldSize.z);
+            foreach (var m in materials.Values) m.SetVector(MapWorldBoundsId, mapWorldBounds);
+        }
+
+        public void SetHeightmapParams(Texture heightmapTexture, float scale)
+        {
+            heightmap = heightmapTexture;
+            heightScale = scale;
+            foreach (var m in materials.Values) ApplyHeight(m);
+        }
+
+        private void ApplyHeight(Material m)
+        {
+            if (heightmap != null) m.SetTexture(HeightmapId, heightmap);
+            m.SetFloat(HeightScaleId, heightScale);
+        }
+
+        /// <summary>
+        /// Rebuild the draw list for new meshes and/or new class styles.
+        /// </summary>
+        public void SetMeshes(IReadOnlyList<Mesh> meshes, IReadOnlyList<int> meshClassIds, IReadOnlyList<string> classNames)
+        {
+            drawList.Clear();
+            if (shader == null) return;
+
+            var ordered = new List<(Mesh mesh, BorderClassStyle style)>();
+            for (int i = 0; i < meshes.Count; i++)
             {
-                borderMaterial.SetVector("_MapWorldBounds", new Vector4(worldMin.x, worldMin.z, worldSize.x, worldSize.z));
-                ArchonLogger.Log($"BorderMeshRenderer: Set map world bounds min=({worldMin.x},{worldMin.z}), size=({worldSize.x},{worldSize.z})", "map_rendering");
+                var style = BorderClassStyles.Resolve(classNames[meshClassIds[i]]);
+                if (style.Visible)
+                    ordered.Add((meshes[i], style));
             }
-            SyncCountryMaterial();
-        }
+            ordered.Sort((a, b) => a.style.Order.CompareTo(b.style.Order));
 
-        /// <summary>
-        /// Set heightmap for terrain-following displacement.
-        /// Must match the same heightmap and scale used by the terrain shader.
-        /// </summary>
-        public void SetHeightmapParams(Texture heightmap, float heightScale, float heightOffset = 0.15f)
-        {
-            if (borderMaterial != null && heightmap != null)
+            for (int i = 0; i < ordered.Count; i++)
             {
-                borderMaterial.SetTexture("_HeightmapTexture", heightmap);
-                borderMaterial.SetFloat("_HeightScale", heightScale);
-                borderMaterial.SetFloat("_HeightOffset", heightOffset);
-                ArchonLogger.Log($"BorderMeshRenderer: Set heightmap (scale={heightScale}, offset={heightOffset})", "map_rendering");
+                var (mesh, style) = ordered[i];
+                var material = GetMaterial(style.Name);
+                ApplyStyle(material, style);
+                material.renderQueue = BaseQueue + i;
+                drawList.Add((mesh, material));
             }
-            SyncCountryMaterial();
         }
 
-        /// <summary>
-        /// Copy tessellation parameters from the terrain material so borders match terrain curvature.
-        /// </summary>
-        public void SetTessellationParams(Material terrainMaterial)
+        private Material GetMaterial(string className)
         {
-            if (borderMaterial == null || terrainMaterial == null) return;
-
-            if (terrainMaterial.HasProperty("_TessellationFactor"))
-                borderMaterial.SetFloat("_TessellationFactor", terrainMaterial.GetFloat("_TessellationFactor"));
-            if (terrainMaterial.HasProperty("_TessellationMaxDistance"))
-                borderMaterial.SetFloat("_TessellationMaxDistance", terrainMaterial.GetFloat("_TessellationMaxDistance"));
-            if (terrainMaterial.HasProperty("_TessellationMinDistance"))
-                borderMaterial.SetFloat("_TessellationMinDistance", terrainMaterial.GetFloat("_TessellationMinDistance"));
-
-            ArchonLogger.Log($"BorderMeshRenderer: Copied tessellation params from terrain material", "map_rendering");
-            SyncCountryMaterial();
-        }
-
-        /// <summary>
-        /// Set a custom border texture on the material
-        /// </summary>
-        public void SetBorderTexture(Texture2D texture)
-        {
-            if (borderMaterial != null && texture != null)
+            if (!materials.TryGetValue(className, out var m))
             {
-                borderMaterial.SetTexture("_BorderTex", texture);
-                ArchonLogger.Log($"BorderMeshRenderer: Set custom border texture ({texture.width}x{texture.height})", "map_rendering");
+                m = new Material(shader) { name = $"BorderMesh ({className})" };
+                m.SetVector(MapWorldBoundsId, mapWorldBounds);
+                ApplyHeight(m);
+                materials[className] = m;
             }
-            SyncCountryMaterial();
+            return m;
         }
 
-        private void SyncCountryMaterial()
+        private static void ApplyStyle(Material m, BorderClassStyle s)
         {
-            if (borderMaterial == null)
-                return;
-            if (countryMaterial == null)
-                countryMaterial = new Material(borderMaterial) { name = "BorderMeshMaterial (Country)" };
-            else
-                countryMaterial.CopyPropertiesFromMaterial(borderMaterial);
-            countryMaterial.renderQueue = borderMaterial.renderQueue + 1;
+            m.SetTexture(BorderTexId, s.Texture != null ? s.Texture : Texture2D.whiteTexture);
+            m.SetFloat(UseTextureId, s.Texture != null ? 1f : 0f);
+            // Color source: 0 = explicit color, 1 = country globals, 2 = province globals
+            m.SetFloat(ColorSourceId, s.Color.HasValue ? 0f : (s.Name == BorderClassNames.Country ? 1f : 2f));
+            m.SetColor(ColorId, s.Color ?? Color.white);
+            m.SetFloat(WidthId, s.Width);
+            m.SetFloat(MinScreenWidthId, s.MinScreenWidth);
+            m.SetFloat(TileId, s.Tile);
+            m.SetVector(FadeId, new Vector4(s.Fade.x, s.Fade.y, 0f, 0f));
         }
 
-        /// <summary>
-        /// Create a simple fallback border texture: white line in center, black edges
-        /// </summary>
-        private Texture2D CreateFallbackBorderTexture()
+        public void RenderBorders()
         {
-            int width = 64;
-            int height = 64;
-            Texture2D tex = new Texture2D(width, height, TextureFormat.RGBA32, false);
-
-            Color black = new Color(0, 0, 0, 0); // Transparent black
-            Color white = Color.white;
-
-            // Create horizontal line in center with soft edges
-            for (int y = 0; y < height; y++)
+            foreach (var (mesh, material) in drawList)
             {
-                for (int x = 0; x < width; x++)
-                {
-                    // V coordinate (0 to 1) - determines if we're in the line
-                    float v = y / (float)(height - 1);
-
-                    // Line is in center (V = 0.3 to 0.7) with soft falloff
-                    float centerDist = Mathf.Abs(v - 0.5f);
-                    float lineWidth = 0.2f; // Half-width of line
-                    float softness = 0.1f;
-
-                    float alpha = 1f - Mathf.Clamp01((centerDist - lineWidth) / softness);
-
-                    tex.SetPixel(x, y, new Color(1, 1, 1, alpha));
-                }
+                Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 0, null, 0, null,
+                    UnityEngine.Rendering.ShadowCastingMode.Off, false);
             }
-
-            tex.Apply();
-            tex.wrapModeU = TextureWrapMode.Repeat; // Tile along border length
-            tex.wrapModeV = TextureWrapMode.Clamp;  // Clamp across border width
-            tex.filterMode = FilterMode.Bilinear;
-
-            return tex;
         }
 
-        /// <summary>
-        /// Clean up resources
-        /// </summary>
         public void Dispose()
         {
-            if (borderMaterial != null)
-                Object.Destroy(borderMaterial);
-            if (countryMaterial != null)
-                Object.Destroy(countryMaterial);
+            foreach (var m in materials.Values)
+                if (m != null) Object.Destroy(m);
+            materials.Clear();
+            drawList.Clear();
         }
     }
 }

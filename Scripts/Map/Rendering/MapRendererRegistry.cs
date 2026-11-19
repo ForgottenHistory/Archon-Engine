@@ -48,6 +48,12 @@ namespace Map.Rendering
 
         public bool IsInitialized { get; private set; }
 
+        /// <summary>
+        /// Border arc classifier used by mesh borders (class names map to visual style border classes).
+        /// GAME can replace it before map initialization, e.g. to add state or region borders.
+        /// </summary>
+        public IBorderClassifier BorderClassifier { get; set; } = new DefaultBorderClassifier();
+
         void Awake()
         {
             if (Instance != null && Instance != this)
