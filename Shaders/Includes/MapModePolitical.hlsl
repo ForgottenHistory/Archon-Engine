@@ -108,7 +108,8 @@ float4 RenderPolitical(uint provinceID, float2 uv)
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Manual bilinear sampling using texture-space offsets
-    float2 texSize = float2(5632.0, 2048.0); // TODO: Make this a shader parameter
+    float2 texSize;
+    _ProvinceOwnerTexture.GetDimensions(texSize.x, texSize.y); // map-sized texture
     float2 texelSize = 1.0 / texSize;
 
     float2 pixelPos = correctedUV * texSize;

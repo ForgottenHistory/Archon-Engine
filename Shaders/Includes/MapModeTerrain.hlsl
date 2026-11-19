@@ -168,7 +168,8 @@ float4 RenderTerrainInternal(uint provinceID, float2 uv, float3 positionWS)
     float2 correctedUV = float2(uv.x, 1.0 - uv.y);
 
     // Get texture dimensions for manual bilinear sampling
-    float2 texSize = float2(5632, 2048); // TODO: Pass as shader param
+    float2 texSize;
+    _DetailIndexTexture.GetDimensions(texSize.x, texSize.y); // map-sized texture
     float2 texelSize = 1.0 / texSize;
 
     // Calculate pixel position and fractional offset (Imperator Rome style, lines 45-55)

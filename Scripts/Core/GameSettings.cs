@@ -142,11 +142,12 @@ namespace Core
                 return result; // Can't check anything else without base directory
             }
 
-            // Check province bitmap (critical)
-            var provinceBitmapPath = System.IO.Path.Combine(DataDirectory, "map", "provinces.bmp");
-            if (!System.IO.File.Exists(provinceBitmapPath))
+            // Province image (critical) - PNG preferred, BMP fallback (matches ArchonEngine loading)
+            var provincePngPath = System.IO.Path.Combine(DataDirectory, "map", "provinces.png");
+            var provinceBmpPath = System.IO.Path.Combine(DataDirectory, "map", "provinces.bmp");
+            if (!System.IO.File.Exists(provincePngPath) && !System.IO.File.Exists(provinceBmpPath))
             {
-                result.AddError($"Province bitmap not found: {provinceBitmapPath}");
+                result.AddError($"Province image not found: {provincePngPath} (or .bmp)");
             }
 
             // Check countries directory (critical)
@@ -157,7 +158,7 @@ namespace Core
             }
             else
             {
-                var countryFiles = System.IO.Directory.GetFiles(countriesDirectory, "*.txt");
+                var countryFiles = System.IO.Directory.GetFiles(countriesDirectory, "*.json5");
                 if (countryFiles.Length == 0)
                 {
                     result.AddWarning($"No country files found in: {countriesDirectory}");
