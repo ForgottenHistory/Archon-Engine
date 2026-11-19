@@ -60,6 +60,10 @@
 - **Map.Rendering.Rivers.RiverGraph** - Trace one-pixel river lines (width level per pixel) into arcs with per-point levels
 - **Map.Rendering.Rivers.MapRiverRenderer** - Optional map/rivers.png rivers drawn as border-style strips (line class "river")
 
+### Rendering/Atmosphere/
+- **Map.Rendering.Atmosphere.MapAtmosphereRenderer** - Haze (zoomed out) + procedural drifting clouds with ground shadows; two map quads (Archon/MapAtmosphere), runtime tileable noise
+- **Map.Rendering.Atmosphere.MapAtmosphereStyle / MapAtmosphereStyles** - Atmosphere settings ("atmosphere" section of the visual style data file)
+
 ### Rendering/Labels/
 - **Map.Rendering.Labels.LabelPlacer** - Country label placement (pure C#, worker-thread safe): territory pieces, distance field, skeleton arc + centre lines, fit text size
 - **Map.Rendering.Labels.MapLabelRenderer** - Places labels in the background (re-places only countries whose territory changed), builds SDF letter-quad mesh (Archon/MapLabel, TextMeshPro runtime font asset)

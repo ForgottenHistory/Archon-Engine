@@ -8,6 +8,7 @@ using Core.Modding;
 using Map.Rendering;
 using Map.Rendering.Border;
 using Map.Rendering.Labels;
+using Map.Rendering.Atmosphere;
 using Newtonsoft.Json.Linq;
 
 namespace Archon.Engine.Map
@@ -48,6 +49,14 @@ namespace Archon.Engine.Map
     ///               shadowOffset: [0.04, 0.05], shadowSoftness: 0.6, sharpness: 1, uppercase: true,
     ///               minScreenHeight: 11, maxScale: 2.5, roomOverflow: 1.1, fade: [1.5, 2.5], spaceBelow: 0.9, maxGap: 0.8,
     ///               maxHeight: 88, fill: 0.75, clear: 0.55, levelPreference: 0.35, arcBonus: 1.1 }
+    ///
+    /// Optional atmosphere section (MapAtmosphereRenderer). All fields optional; zoom ranges are
+    /// [full at or below, gone at or above] in screen px per map px, distances in map px:
+    ///
+    ///     atmosphere: { hazeColor: [0.36, 0.42, 0.52], hazeMax: 0.3, hazeZoom: [0.3, 1.5],
+    ///                   cloudColor: [0.95, 0.95, 0.97], cloudShade: [0.6, 0.64, 0.72], cloudCoverage: 0.42,
+    ///                   cloudSoftness: 0.22, cloudOpacity: 0.85, cloudScale: 1400, cloudWind: [5, 1.5],
+    ///                   cloudZoom: [0.35, 0.9], cloudHeight: 60, shadowStrength: 0.35, shadowOffset: [-40, 30] }
     ///
     /// Label sizes: font size in map px (maxHeight), minScreenHeight in screen px, shadowOffset and
     /// maxGap as fractions of the font size; fade = [visible below, hidden above] screen px per map px.
@@ -97,6 +106,7 @@ namespace Archon.Engine.Map
             string source = $"Style file '{relativePath}'";
             ApplyBorders(root["borders"] as JObject, root["rivers"] as JObject, source);
             MapLabelStyles.Set(ParseLabels(root["labels"] as JObject, source));
+            MapAtmosphereStyles.Set(ParseAtmosphere(root["atmosphere"] as JObject, source));
 
             if (!(root["parameters"] is JObject parameters)) return 0;
 
@@ -270,6 +280,48 @@ namespace Archon.Engine.Map
             if (IsNumber(e["minArea"])) placement.MinArea = (int)e["minArea"];
             if (IsNumber(e["detached"])) placement.Detached = (float)e["detached"];
             return style;
+        }
+
+        // ===== Atmosphere =====
+
+        private static MapAtmosphereStyle ParseAtmosphere(JObject e, string source)
+        {
+            var s = new MapAtmosphereStyle();
+            if (e == null) return s;
+
+            if (e["visible"] != null) s.Visible = (bool)e["visible"];
+            s.HazeColor = ColorField(e, "hazeColor", s.HazeColor, source);
+            s.CloudColor = ColorField(e, "cloudColor", s.CloudColor, source);
+            s.CloudShade = ColorField(e, "cloudShade", s.CloudShade, source);
+            s.HazeZoom = Vector2Field(e, "hazeZoom", s.HazeZoom, source);
+            s.CloudZoom = Vector2Field(e, "cloudZoom", s.CloudZoom, source);
+            s.CloudWind = Vector2Field(e, "cloudWind", s.CloudWind, source);
+            s.ShadowOffset = Vector2Field(e, "shadowOffset", s.ShadowOffset, source);
+
+            if (IsNumber(e["hazeMax"])) s.HazeMax = (float)e["hazeMax"];
+            if (IsNumber(e["cloudCoverage"])) s.CloudCoverage = (float)e["cloudCoverage"];
+            if (IsNumber(e["cloudSoftness"])) s.CloudSoftness = (float)e["cloudSoftness"];
+            if (IsNumber(e["cloudOpacity"])) s.CloudOpacity = (float)e["cloudOpacity"];
+            if (IsNumber(e["cloudScale"])) s.CloudScale = (float)e["cloudScale"];
+            if (IsNumber(e["cloudHeight"])) s.CloudHeight = (float)e["cloudHeight"];
+            if (IsNumber(e["shadowStrength"])) s.ShadowStrength = (float)e["shadowStrength"];
+            return s;
+        }
+
+        private static Color ColorField(JObject e, string key, Color fallback, string source)
+        {
+            if (e[key] == null) return fallback;
+            if (TryParseColor(e[key], out var c)) return c;
+            ArchonLogger.LogError($"{source}: {key}: invalid color", Subsystem);
+            return fallback;
+        }
+
+        private static Vector2 Vector2Field(JObject e, string key, Vector2 fallback, string source)
+        {
+            if (e[key] == null) return fallback;
+            if (TryParseFloats(e[key], 2, 2, out var v)) return new Vector2(v[0], v[1]);
+            ArchonLogger.LogError($"{source}: {key}: expected [x, y]", Subsystem);
+            return fallback;
         }
 
         // ===== Parsing =====

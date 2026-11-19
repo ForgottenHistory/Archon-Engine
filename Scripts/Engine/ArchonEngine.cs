@@ -740,6 +740,12 @@ namespace Engine
                 labelRenderer = mapGenerator.AddComponent<Map.Rendering.Labels.MapLabelRenderer>();
             labelRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null, GameState);
 
+            // Atmosphere: haze and clouds
+            var atmosphereRenderer = mapGenerator.GetComponent<Map.Rendering.Atmosphere.MapAtmosphereRenderer>();
+            if (atmosphereRenderer == null)
+                atmosphereRenderer = mapGenerator.AddComponent<Map.Rendering.Atmosphere.MapAtmosphereRenderer>();
+            atmosphereRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null);
+
             // Finalize the renderer registry now that all subsystems have registered
             // their default renderers (fog/highlight/colorizer/terrain).
             MapRendererRegistry.Instance?.Initialize();
