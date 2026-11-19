@@ -11,7 +11,8 @@ namespace Map.Rendering
     /// Each arc becomes a strip with two vertices per polyline point. Both vertices sit on the
     /// center line; the normal holds the world-space offset of one map pixel towards that side, so
     /// the vertex shader can expand the strip to any width (map pixels, with a screen-pixel floor).
-    /// UV: x = distance along the arc in map pixels, y = 0 (left) .. 1 (right).
+    /// UV: x = distance along the arc in map pixels, y = 0 (left) .. 1 (right), z = width level
+    /// (BorderArc.Levels, 0 for borders; the shader adds WidthPerLevel per level).
     ///
     /// Junction caps: where 2+ arcs of the same class meet, a fan connects their strip ends
     /// (center v = 0.5, outer v = 0/1), so the texture profile continues radially and fills the
@@ -34,11 +35,11 @@ namespace Map.Rendering
         {
             public readonly List<Vector3> verts = new List<Vector3>();
             public readonly List<Vector3> normals = new List<Vector3>();
-            public readonly List<Vector2> uvs = new List<Vector2>();
+            public readonly List<Vector3> uvs = new List<Vector3>();
             public readonly List<int> tris = new List<int>();
             // Junction endpoints: corner -> (center, offset dir left, offset dir right)
-            public readonly Dictionary<Vector2Int, List<(Vector3 center, Vector3 left, Vector3 right)>> ends =
-                new Dictionary<Vector2Int, List<(Vector3, Vector3, Vector3)>>();
+            public readonly Dictionary<Vector2Int, List<(Vector3 center, Vector3 left, Vector3 right, float level)>> ends =
+                new Dictionary<Vector2Int, List<(Vector3, Vector3, Vector3, float)>>();
         }
 
         public BorderMeshGenerator(float mapWidthPx, float mapHeightPx, Transform mapPlaneTransform)
@@ -68,13 +69,19 @@ namespace Map.Rendering
 
         public void GenerateBorderMeshes(BorderCurveCache cache)
         {
+            GenerateMeshes(cache.GetVisibleArcs(), cache.ClassNames);
+        }
+
+        /// <summary>Build one mesh per class id from (arc, class id) pairs.</summary>
+        public void GenerateMeshes(IEnumerable<(BorderArc arc, int classId)> classifiedArcs, IReadOnlyList<string> classNames)
+        {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             DestroyMeshes();
 
             var builders = new Dictionary<int, Builder>();
             int arcCount = 0;
 
-            foreach (var (arc, classId) in cache.GetVisibleArcs())
+            foreach (var (arc, classId) in classifiedArcs)
             {
                 if (arc.Points.Length < 2) continue;
                 if (!builders.TryGetValue(classId, out var b))
@@ -94,7 +101,7 @@ namespace Map.Rendering
                     caps++;
                 }
 
-                var mesh = new Mesh { name = $"Borders {cache.ClassNames[kvp.Key]}", indexFormat = IndexFormat.UInt32 };
+                var mesh = new Mesh { name = $"Lines {classNames[kvp.Key]}", indexFormat = IndexFormat.UInt32 };
                 mesh.SetVertices(b.verts);
                 mesh.SetNormals(b.normals);
                 mesh.SetUVs(0, b.uvs);
@@ -113,7 +120,7 @@ namespace Map.Rendering
 
         private void AddStrip(BorderArc arc, Builder b)
         {
-            var pts = Subdivide(arc.Points);
+            var pts = Subdivide(arc.Points, arc.Levels, out var levels);
             int n = pts.Count;
             int baseIndex = b.verts.Count;
             float along = 0f;
@@ -125,8 +132,9 @@ namespace Map.Rendering
                 Vector3 center = PixelToWorld(pts[i]);
                 Vector3 offset = PixelDirToWorld(Perpendicular(pts, i, arc.Closed));
 
-                b.verts.Add(center); b.normals.Add(-offset); b.uvs.Add(new Vector2(along, 0f));
-                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector2(along, 1f));
+                float level = levels != null ? levels[i] : 0f;
+                b.verts.Add(center); b.normals.Add(-offset); b.uvs.Add(new Vector3(along, 0f, level));
+                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector3(along, 1f, level));
             }
 
             for (int i = 0; i < n - 1; i++)
@@ -138,33 +146,35 @@ namespace Map.Rendering
 
             if (!arc.Closed)
             {
-                RecordEnd(b, arc.Points[0], b.verts[baseIndex], b.normals[baseIndex], b.normals[baseIndex + 1]);
+                RecordEnd(b, arc.Points[0], b.verts[baseIndex], b.normals[baseIndex], b.normals[baseIndex + 1], b.uvs[baseIndex].z);
                 int last = baseIndex + (n - 1) * 2;
-                RecordEnd(b, arc.Points[arc.Points.Length - 1], b.verts[last], b.normals[last], b.normals[last + 1]);
+                RecordEnd(b, arc.Points[arc.Points.Length - 1], b.verts[last], b.normals[last], b.normals[last + 1], b.uvs[last].z);
             }
         }
 
-        private static void RecordEnd(Builder b, Vector2 corner, Vector3 center, Vector3 left, Vector3 right)
+        private static void RecordEnd(Builder b, Vector2 point, Vector3 center, Vector3 left, Vector3 right, float level)
         {
-            // Arc endpoints are exact pixel corners shared by every arc meeting there
-            var key = new Vector2Int(Mathf.RoundToInt(corner.x), Mathf.RoundToInt(corner.y));
+            // Arc endpoints are shared exactly by every arc meeting there: pixel corners (borders,
+            // integer coordinates) or pixel centres (rivers, +0.5). Floor(+0.25) maps both to the pixel.
+            var key = new Vector2Int(Mathf.FloorToInt(point.x + 0.25f), Mathf.FloorToInt(point.y + 0.25f));
             if (!b.ends.TryGetValue(key, out var list))
-                b.ends[key] = list = new List<(Vector3, Vector3, Vector3)>();
-            list.Add((center, left, right));
+                b.ends[key] = list = new List<(Vector3, Vector3, Vector3, float)>();
+            list.Add((center, left, right, level));
         }
 
-        private static void AddJunctionCap(List<(Vector3 center, Vector3 left, Vector3 right)> ends, Builder b)
+        private static void AddJunctionCap(List<(Vector3 center, Vector3 left, Vector3 right, float level)> ends, Builder b)
         {
             Vector3 center = ends[0].center;
+            float level = 0f;
             var outer = new List<Vector3>(ends.Count * 2);
-            foreach (var e in ends) { outer.Add(e.left); outer.Add(e.right); }
+            foreach (var e in ends) { outer.Add(e.left); outer.Add(e.right); level = Mathf.Max(level, e.level); }
             outer.Sort((p, q) => Mathf.Atan2(p.z, p.x).CompareTo(Mathf.Atan2(q.z, q.x)));
 
             int c = b.verts.Count;
-            b.verts.Add(center); b.normals.Add(Vector3.zero); b.uvs.Add(new Vector2(0f, 0.5f));
+            b.verts.Add(center); b.normals.Add(Vector3.zero); b.uvs.Add(new Vector3(0f, 0.5f, level));
             foreach (var dir in outer)
             {
-                b.verts.Add(center); b.normals.Add(dir); b.uvs.Add(new Vector2(0f, 0f));
+                b.verts.Add(center); b.normals.Add(dir); b.uvs.Add(new Vector3(0f, 0f, level));
             }
             for (int i = 0; i < outer.Count; i++)
             {
@@ -174,9 +184,10 @@ namespace Map.Rendering
             }
         }
 
-        private static List<Vector2> Subdivide(Vector2[] polyline)
+        private static List<Vector2> Subdivide(Vector2[] polyline, float[] levelsIn, out List<float> levelsOut)
         {
             var result = new List<Vector2>(polyline.Length * 2) { polyline[0] };
+            levelsOut = levelsIn != null ? new List<float>(polyline.Length * 2) { levelsIn[0] } : null;
             for (int i = 1; i < polyline.Length; i++)
             {
                 Vector2 from = polyline[i - 1], to = polyline[i];
@@ -185,9 +196,14 @@ namespace Map.Rendering
                 {
                     int steps = Mathf.CeilToInt(dist / MAX_SEGMENT_PIXELS);
                     for (int s = 1; s < steps; s++)
-                        result.Add(Vector2.Lerp(from, to, s / (float)steps));
+                    {
+                        float t = s / (float)steps;
+                        result.Add(Vector2.Lerp(from, to, t));
+                        levelsOut?.Add(Mathf.Lerp(levelsIn[i - 1], levelsIn[i], t));
+                    }
                 }
                 result.Add(to);
+                levelsOut?.Add(levelsIn != null ? levelsIn[i] : 0f);
             }
             return result;
         }

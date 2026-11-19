@@ -10,6 +10,7 @@ Shader "Archon/BorderMesh"
         _BorderColor ("Color", Color) = (1, 1, 1, 1)
         _BorderColorSource ("Color Source (0 color, 1 country globals, 2 province globals)", Float) = 2
         _BorderWidth ("Width (map px)", Float) = 0.6
+        _BorderWidthPerLevel ("Extra Width per Level (map px)", Float) = 0
         _BorderMinScreenWidth ("Min Width (screen px)", Float) = 1
         _BorderTile ("Texture Repeats per Map Pixel", Float) = 0.4
         _BorderFade ("Fade (screen px per map px: hidden at x, visible at y)", Vector) = (0, 0, 0, 0)
@@ -54,6 +55,7 @@ Shader "Archon/BorderMesh"
                 float _BorderUseTexture;
                 float _BorderColorSource;
                 float _BorderWidth;
+                float _BorderWidthPerLevel;
                 float _BorderMinScreenWidth;
                 float _BorderTile;
                 float _HeightScale;
@@ -70,7 +72,7 @@ Shader "Archon/BorderMesh"
             {
                 float4 positionOS : POSITION;
                 float3 normalOS : NORMAL;     // world offset of one map pixel towards this side
-                float2 uv : TEXCOORD0;        // x = distance along border (map px), y = 0..1 across
+                float3 uv : TEXCOORD0;        // x = distance along (map px), y = 0..1 across, z = width level
             };
 
             struct Varyings
@@ -97,21 +99,26 @@ Shader "Archon/BorderMesh"
 
                 // World size of one screen pixel at this depth (perspective and orthographic)
                 float4 centerCS = TransformWorldToHClip(center);
-                float worldPerScreenPx = 2.0 * centerCS.w / (abs(UNITY_MATRIX_P[1][1]) * _ScreenParams.y);
+                // Clamp w: vertices behind or level with the camera have w <= 0, which would make
+                // the screen-pixel floor blow the strip up to enormous (screen-covering) triangles
+                float worldPerScreenPx = 2.0 * max(centerCS.w, 1e-3) / (abs(UNITY_MATRIX_P[1][1]) * _ScreenParams.y);
 
                 // World length of one map pixel along the offset direction
                 float worldPerMapPx = max(length(input.normalOS.xz), 1e-6);
                 float screenPxPerMapPx = worldPerMapPx / worldPerScreenPx;
 
-                // Half width in map pixels: class width, but at least the screen-pixel floor
-                float halfWidth = 0.5 * max(_BorderWidth, _BorderMinScreenWidth / screenPxPerMapPx);
+                // Width in map pixels: class width plus per-level width (rivers taper). The screen-pixel
+                // floor scales with it, so relative widths survive zooming out.
+                float width = _BorderWidth + _BorderWidthPerLevel * input.uv.z;
+                float floorScale = clamp(_BorderMinScreenWidth / max(_BorderWidth * screenPxPerMapPx, 1e-5), 1.0, 64.0);
+                float halfWidth = 0.5 * width * floorScale;
 
                 float3 posWS = center;
                 posWS.xz += input.normalOS.xz * halfWidth;
                 posWS.y = TerrainHeight(posWS);
 
                 output.positionCS = TransformWorldToHClip(posWS);
-                output.uv = input.uv;
+                output.uv = input.uv.xy;
                 output.fade = (_BorderFade.y > _BorderFade.x)
                     ? smoothstep(_BorderFade.x, _BorderFade.y, screenPxPerMapPx)
                     : 1.0;

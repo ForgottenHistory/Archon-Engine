@@ -11,13 +11,14 @@ namespace Map.Rendering
     /// </summary>
     public class BorderMeshRenderer
     {
-        private const int BaseQueue = 2900; // Transparent-100: after opaque terrain
+        private readonly int baseQueue; // render queue of the first class (Transparent-100 = after opaque terrain)
 
         private static readonly int BorderTexId = Shader.PropertyToID("_BorderTex");
         private static readonly int UseTextureId = Shader.PropertyToID("_BorderUseTexture");
         private static readonly int ColorId = Shader.PropertyToID("_BorderColor");
         private static readonly int ColorSourceId = Shader.PropertyToID("_BorderColorSource");
         private static readonly int WidthId = Shader.PropertyToID("_BorderWidth");
+        private static readonly int WidthPerLevelId = Shader.PropertyToID("_BorderWidthPerLevel");
         private static readonly int MinScreenWidthId = Shader.PropertyToID("_BorderMinScreenWidth");
         private static readonly int TileId = Shader.PropertyToID("_BorderTile");
         private static readonly int FadeId = Shader.PropertyToID("_BorderFade");
@@ -33,8 +34,9 @@ namespace Map.Rendering
         private Texture heightmap;
         private float heightScale;
 
-        public BorderMeshRenderer()
+        public BorderMeshRenderer(int baseQueue = 2900)
         {
+            this.baseQueue = baseQueue;
             shader = Shader.Find("Archon/BorderMesh");
             if (shader == null)
                 ArchonLogger.LogError("BorderMeshRenderer: Archon/BorderMesh shader not found", "map_rendering");
@@ -81,7 +83,7 @@ namespace Map.Rendering
                 var (mesh, style) = ordered[i];
                 var material = GetMaterial(style.Name);
                 ApplyStyle(material, style);
-                material.renderQueue = BaseQueue + i;
+                material.renderQueue = baseQueue + i;
                 drawList.Add((mesh, material));
             }
         }
@@ -106,6 +108,7 @@ namespace Map.Rendering
             m.SetFloat(ColorSourceId, s.Color.HasValue ? 0f : (s.Name == BorderClassNames.Country ? 1f : 2f));
             m.SetColor(ColorId, s.Color ?? Color.white);
             m.SetFloat(WidthId, s.Width);
+            m.SetFloat(WidthPerLevelId, s.WidthPerLevel);
             m.SetFloat(MinScreenWidthId, s.MinScreenWidth);
             m.SetFloat(TileId, s.Tile);
             m.SetVector(FadeId, new Vector4(s.Fade.x, s.Fade.y, 0f, 0f));

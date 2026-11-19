@@ -20,6 +20,7 @@ namespace Map.Rendering.Border
         public Texture2D Texture;          // null = solid line
         public Color? Color;               // null = engine border color globals (country / province)
         public float Width = 0.6f;         // full strip width in map pixels
+        public float WidthPerLevel;        // extra width per point width level (rivers)
         public float MinScreenWidth = 1f;  // full strip width floor in screen pixels
         public float Tile = 0.4f;          // texture repeats per map pixel along the border
         public Vector2 Fade;               // screen px per map px: invisible at x, fully visible at y (0,0 = no fade)
@@ -54,6 +55,15 @@ namespace Map.Rendering.Border
         {
             if (styles.TryGetValue(name, out var s))
                 return s;
+            if (name == "river")
+                return new BorderClassStyle
+                {
+                    Name = name,
+                    Color = new Color(0.25f, 0.4f, 0.6f, 1f),
+                    Width = 0.5f,
+                    WidthPerLevel = 0.2f,
+                    MinScreenWidth = 1f
+                };
             bool country = name == BorderClassNames.Country;
             return new BorderClassStyle
             {

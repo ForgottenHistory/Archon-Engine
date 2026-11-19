@@ -36,6 +36,11 @@ namespace Archon.Engine.Map
     ///       coast:   { visible: false },
     ///     }
     ///
+    /// Optional rivers section (map/rivers.png, MapRiverRenderer): same fields as a border class,
+    /// plus widthPerLevel = extra map pixels per river width level above 0.
+    ///
+    ///     rivers: { texture: "gfx/map/rivers/river.png", width: 0.5, widthPerLevel: 0.25, tile: 0.15 }
+    ///
     /// width = strip width in map pixels, minScreenWidth = floor in screen pixels, tile = texture
     /// repeats per map pixel along the border, fade = [hidden, visible] in screen px per map px,
     /// color omitted = engine border color globals. Texture U runs along the border, V across.
@@ -79,7 +84,7 @@ namespace Archon.Engine.Map
             }
 
             string source = $"Style file '{relativePath}'";
-            ApplyBorders(root["borders"] as JObject, source);
+            ApplyBorders(root["borders"] as JObject, root["rivers"] as JObject, source);
 
             if (!(root["parameters"] is JObject parameters)) return 0;
 
@@ -131,9 +136,12 @@ namespace Archon.Engine.Map
 
         // ===== Border classes =====
 
-        private static void ApplyBorders(JObject borders, string source)
+        private static void ApplyBorders(JObject borders, JObject rivers, string source)
         {
             var classes = new List<BorderClassStyle>();
+            // Rivers use the same strip styling, as the line class "river"
+            if (rivers != null)
+                classes.Add(ParseBorderClass("river", rivers, source));
             if (borders != null)
             {
                 foreach (var property in borders.Properties())
@@ -162,6 +170,7 @@ namespace Archon.Engine.Map
 
             if (e["visible"] != null) style.Visible = (bool)e["visible"];
             if (IsNumber(e["width"])) style.Width = (float)e["width"];
+            if (IsNumber(e["widthPerLevel"])) style.WidthPerLevel = (float)e["widthPerLevel"];
             if (IsNumber(e["minScreenWidth"])) style.MinScreenWidth = (float)e["minScreenWidth"];
             if (IsNumber(e["tile"])) style.Tile = (float)e["tile"];
             if (IsNumber(e["order"])) style.Order = (int)e["order"];

@@ -14,6 +14,7 @@ namespace Map.Rendering.Border
         public ushort ProvinceB;   // larger ID
         public bool Closed;        // closed loop: last point equals first
         public Vector2[] Points;   // smoothed polyline
+        public float[] Levels;     // optional width level per point (rivers); null = 0 everywhere
     }
 
     /// <summary>

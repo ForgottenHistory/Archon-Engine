@@ -728,6 +728,12 @@ namespace Engine
                 VisualStyleManager.ApplyBorderConfiguration(visualStyle);
             }
 
+            // Rivers (optional map/rivers.png)
+            var riverRenderer = mapGenerator.GetComponent<Map.Rendering.Rivers.MapRiverRenderer>();
+            if (riverRenderer == null)
+                riverRenderer = mapGenerator.AddComponent<Map.Rendering.Rivers.MapRiverRenderer>();
+            riverRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null);
+
             // Finalize the renderer registry now that all subsystems have registered
             // their default renderers (fog/highlight/colorizer/terrain).
             MapRendererRegistry.Instance?.Initialize();
