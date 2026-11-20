@@ -34,6 +34,69 @@ namespace Map.Interaction
         public event Action<ushort> OnProvinceHovered;
         public event Action OnSelectionCleared;
 
+        // Click interceptors: (mouse button, screen position) -> true if the click was consumed.
+        // Asked in registration order before any province click handling, so game-layer map
+        // objects (unit counters, markers) can take clicks that would otherwise select a province.
+        private readonly System.Collections.Generic.List<Func<int, Vector2, bool>> clickInterceptors =
+            new System.Collections.Generic.List<Func<int, Vector2, bool>>();
+
+        /// <summary>
+        /// Register a click interceptor: called with (mouse button 0/1, screen position) before
+        /// province click handling; return true to consume the click (no province events fire).
+        /// </summary>
+        public void AddClickInterceptor(Func<int, Vector2, bool> interceptor)
+        {
+            if (interceptor != null && !clickInterceptors.Contains(interceptor))
+                clickInterceptors.Add(interceptor);
+        }
+
+        public void RemoveClickInterceptor(Func<int, Vector2, bool> interceptor) => clickInterceptors.Remove(interceptor);
+
+        // Pointer blockers: screen position -> true when a game-layer map object is under the
+        // pointer, so no province counts as hovered there (no hover highlight under unit counters).
+        private readonly System.Collections.Generic.List<Func<Vector2, bool>> pointerBlockers =
+            new System.Collections.Generic.List<Func<Vector2, bool>>();
+
+        /// <summary>
+        /// Register a pointer blocker: while it returns true for the pointer position, no province
+        /// is hovered (OnProvinceHovered(0) fires when the pointer moves onto it).
+        /// </summary>
+        public void AddPointerBlocker(Func<Vector2, bool> blocker)
+        {
+            if (blocker != null && !pointerBlockers.Contains(blocker))
+                pointerBlockers.Add(blocker);
+        }
+
+        public void RemovePointerBlocker(Func<Vector2, bool> blocker) => pointerBlockers.Remove(blocker);
+
+        private bool IsPointerBlocked()
+        {
+            Vector2 position = Input.mousePosition;
+            foreach (var blocker in pointerBlockers)
+                if (blocker(position))
+                    return true;
+            return false;
+        }
+
+        /// <summary>
+        /// Clear the province selection as if the player clicked outside the provinces
+        /// (fires OnSelectionCleared), e.g. when the game selects something else on the map.
+        /// </summary>
+        public void ClearSelection()
+        {
+            lastSelectedProvince = 0;
+            OnSelectionCleared?.Invoke();
+        }
+
+        private bool InterceptClick(int button)
+        {
+            Vector2 position = Input.mousePosition;
+            foreach (var interceptor in clickInterceptors)
+                if (interceptor(button, position))
+                    return true;
+            return false;
+        }
+
         // Dependencies
         private MapTextureManager textureManager;
         private Transform mapQuadTransform;
@@ -89,20 +152,22 @@ namespace Map.Interaction
                 return;
             }
 
-            // Handle hover detection
-            ushort hoveredProvince = GetProvinceAtMousePosition(mainCamera);
+            // Handle hover detection (nothing is hovered while the pointer is over a blocking map object)
+            ushort hoveredProvince = IsPointerBlocked() ? (ushort)0 : GetProvinceAtMousePosition(mainCamera);
             if (hoveredProvince != currentHoveredProvince)
             {
+                ushort previous = currentHoveredProvince;
                 currentHoveredProvince = hoveredProvince;
 
-                if (hoveredProvince != 0)
+                if (hoveredProvince != 0 || previous != 0)
                 {
+                    // 0 = the pointer left the provinces (off the map or onto a blocking object)
                     OnProvinceHovered?.Invoke(hoveredProvince);
                 }
             }
 
             // Handle left-click detection
-            if (Input.GetMouseButtonDown(0) && !IsPointerOverUI())
+            if (Input.GetMouseButtonDown(0) && !IsPointerOverUI() && !InterceptClick(0))
             {
                 ushort clickedProvince = RaycastForProvince(mainCamera.ScreenPointToRay(Input.mousePosition));
 
@@ -123,7 +188,7 @@ namespace Map.Interaction
             }
 
             // Handle right-click detection (for unit movement)
-            if (Input.GetMouseButtonDown(1) && !IsPointerOverUI())
+            if (Input.GetMouseButtonDown(1) && !IsPointerOverUI() && !InterceptClick(1))
             {
                 ushort clickedProvince = RaycastForProvince(mainCamera.ScreenPointToRay(Input.mousePosition));
 
