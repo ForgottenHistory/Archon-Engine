@@ -18,6 +18,41 @@ namespace Map.Interaction
         [Header("Configuration")]
         [SerializeField] private bool logSelectionDebug = false;
         [SerializeField] private bool enableSelection = true;
+        [Tooltip("Fire left clicks on mouse release, and not at all when the mouse was dragged further than " +
+                 "dragThresholdPixels, so a left-drag (box selection) doesn't also click a province")]
+        [SerializeField] private bool leftClickOnRelease = false;
+        [SerializeField] private float dragThresholdPixels = 6f;
+
+        // Left button press tracking for leftClickOnRelease
+        private bool leftPressed;
+        private Vector2 leftPressPosition;
+        private bool leftDragged;
+
+        /// <summary>
+        /// Fire left clicks on release instead of press, and drop them when the press turned into a
+        /// drag (see IsLeftDragging). For games with left-drag box selection.
+        /// </summary>
+        public bool LeftClickOnRelease
+        {
+            get => leftClickOnRelease;
+            set => leftClickOnRelease = value;
+        }
+
+        /// <summary>Screen pixels the mouse must move while pressed before a press counts as a drag.</summary>
+        public float DragThresholdPixels
+        {
+            get => dragThresholdPixels;
+            set => dragThresholdPixels = Mathf.Max(0f, value);
+        }
+
+        /// <summary>
+        /// With LeftClickOnRelease: true while the left button is held and has moved past the drag
+        /// threshold since it was pressed over the map (not over UI).
+        /// </summary>
+        public bool IsLeftDragging => leftClickOnRelease && leftPressed && leftDragged;
+
+        /// <summary>Screen position where the current left press started (valid while pressed).</summary>
+        public Vector2 LeftPressPosition => leftPressPosition;
 
         /// <summary>
         /// Enable or disable province selection.
@@ -86,6 +121,32 @@ namespace Map.Interaction
         {
             lastSelectedProvince = 0;
             OnSelectionCleared?.Invoke();
+        }
+
+        private bool TakeLeftClick()
+        {
+            if (!leftClickOnRelease)
+                return Input.GetMouseButtonDown(0) && !IsPointerOverUI();
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                leftPressed = !IsPointerOverUI();
+                leftDragged = false;
+                leftPressPosition = Input.mousePosition;
+            }
+            if (leftPressed && !leftDragged &&
+                ((Vector2)Input.mousePosition - leftPressPosition).sqrMagnitude > dragThresholdPixels * dragThresholdPixels)
+            {
+                leftDragged = true;
+            }
+            if (leftPressed && Input.GetMouseButtonUp(0))
+            {
+                leftPressed = false;
+                return !leftDragged;
+            }
+            if (leftPressed && !Input.GetMouseButton(0))
+                leftPressed = false; // release missed (focus loss)
+            return false;
         }
 
         private bool InterceptClick(int button)
@@ -166,8 +227,8 @@ namespace Map.Interaction
                 }
             }
 
-            // Handle left-click detection
-            if (Input.GetMouseButtonDown(0) && !IsPointerOverUI() && !InterceptClick(0))
+            // Handle left-click detection: on press, or on release when not dragged (leftClickOnRelease)
+            if (TakeLeftClick() && !InterceptClick(0))
             {
                 ushort clickedProvince = RaycastForProvince(mainCamera.ScreenPointToRay(Input.mousePosition));
 

@@ -44,3 +44,16 @@ input through these, rather than a second raycast path or disabling the selector
 - A game's picking function must mirror how its objects are drawn (screen size, anchor, height),
   since the selector only asks "is something under this screen position".
 - `OnProvinceHovered` subscribers must handle 0 (pointer left the provinces).
+
+---
+
+## Addendum: Left Click on Release (box selection)
+
+A left-drag box selection started with a press, and the selector fired the province click on that
+press. `ProvinceSelector` now has an optional mode (off by default, so existing behaviour is
+unchanged):
+
+- `LeftClickOnRelease`: left clicks (interceptors, `OnProvinceClicked`, `OnSelectionCleared`) fire
+  on release, and not at all when the press moved more than `DragThresholdPixels` (default 6).
+- `IsLeftDragging` / `LeftPressPosition`: let the game draw and resolve a selection box.
+- A press over UI never starts a click or a drag.
