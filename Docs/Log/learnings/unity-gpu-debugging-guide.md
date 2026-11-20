@@ -560,6 +560,23 @@ void InitializeLowEnd()
 - Thermal throttling after 10-15 minutes
 - Test with sustained load, not quick benchmarks
 
+### Editor Stutter on Direct3D12: Switch to Direct3D11
+
+**Symptom:** regular frame hitches in Play mode even with no input and game time paused, in any
+scene. The CPU profiler (deep profile included) shows the time in
+`PlayerLoop > TimeUpdate.WaitForLastPresentationAndUpdateTime > GfxDevice3D12.WaitForLastPresentation.WaitForGPU`
+(~30 ms spikes), so it looks like GPU load but no engine system is dispatching anything.
+
+**Cause:** the Direct3D12 backend itself (Unity 6 picks it automatically on Windows), not engine work.
+
+**Fix:** Project Settings > Player > Other Settings > Graphics APIs for Windows: untick automatic,
+put Direct3D11 first (Direct3D12 can stay as fallback). Play mode then runs smoothly, including
+at high game speeds.
+
+**Check first** when someone reports stutter: which `GfxDevice*` the profiler names. Note that
+under D3D11 compute shaders can only read back (load from) a RWTexture whose format is a single
+32-bit channel (R32_FLOAT/UINT/SINT); keep compute kernels within that.
+
 ---
 
 ## Graphics.Blit - Why It's Problematic
