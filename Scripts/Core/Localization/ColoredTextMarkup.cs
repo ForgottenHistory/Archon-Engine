@@ -245,7 +245,7 @@ namespace Core.Localization
                     // Regular character - copy to both outputs
                     plainOutput[plainPos++] = currentByte;
                     richOutput[richPos++] = currentByte;
-                    currentSegment.Text.Append((char)currentByte);
+                    currentSegment.Text.AppendRawByte(currentByte);
                     inputPos++;
                 }
             }
@@ -537,7 +537,7 @@ namespace Core.Localization
             var result = new FixedString512Bytes();
             for (int i = 0; i < Math.Min(length, 511); i++)
             {
-                result.Append((char)buffer[i]);
+                result.AppendRawByte(buffer[i]);
             }
             return result;
         }

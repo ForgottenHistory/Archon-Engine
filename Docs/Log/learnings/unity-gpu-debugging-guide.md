@@ -886,7 +886,7 @@ Style-file textures take `linear: true` for the same reason (see the visual styl
 
 Also: an outline is drawn as one closed loop (arcs chained end to end), not separate arcs joined by junction caps.
 
-**How we found it:** screenshots were not enough. `Tools/prototypes/highlight/` (hoi4-remade repo) ports the strip pipeline to Python: `outline_strip.py` draws the triangles and the `v = 0.5` contour (`MODE=old/new`), and `glow_raster.py` rasterizes the glow with blend vs Max vs true distance. The spokes appeared in the first rasterized panel.
+**How we found it:** screenshots were not enough. a Python port of the strip pipeline did it: `outline_strip.py` draws the triangles and the `v = 0.5` contour (`MODE=old/new`), and `glow_raster.py` rasterizes the glow with blend vs Max vs true distance. The spokes appeared in the first rasterized panel.
 
 ---
 

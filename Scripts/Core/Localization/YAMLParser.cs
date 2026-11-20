@@ -177,7 +177,7 @@ namespace Core.Localization
 
             for (int i = 0; i < copyLength; i++)
             {
-                result.Append((char)data[offset + i]);
+                result.AppendRawByte(data[offset + i]);
             }
 
             return result;
@@ -225,15 +225,15 @@ namespace Core.Localization
                             break;
                         default:
                             // Unknown escape, keep both characters
-                            result.Append((char)b);
-                            result.Append((char)nextByte);
+                            result.AppendRawByte(b);
+                            result.AppendRawByte(nextByte);
                             break;
                     }
                     pos += 2;
                 }
                 else
                 {
-                    result.Append((char)b);
+                    result.AppendRawByte(b);
                     pos++;
                 }
             }

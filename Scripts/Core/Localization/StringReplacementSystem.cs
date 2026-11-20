@@ -466,7 +466,7 @@ namespace Core.Localization
             var key = new FixedString64Bytes();
             for (int i = startPos; i < endPos && i < startPos + 63; i++)
             {
-                key.Append((char)input[i]);
+                key.AppendRawByte(input[i]);
             }
             return key;
         }
@@ -501,7 +501,7 @@ namespace Core.Localization
             var text = new FixedString512Bytes();
             for (int i = startPos; i < endPos && text.Length < 511; i++)
             {
-                text.Append((char)input[i]);
+                text.AppendRawByte(input[i]);
             }
             return text;
         }
@@ -521,7 +521,7 @@ namespace Core.Localization
             var result = new FixedString512Bytes();
             for (int i = 0; i < Math.Min(length, 511); i++)
             {
-                result.Append((char)buffer[i]);
+                result.AppendRawByte(buffer[i]);
             }
             return result;
         }
