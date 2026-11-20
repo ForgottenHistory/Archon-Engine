@@ -60,13 +60,24 @@ namespace Map.Rendering.Border
             ushort[] ids = ProvinceIdReadback.Read(textureManager);
             long readbackMs = sw.ElapsedMilliseconds;
 
-            List<BorderArc> arcs = BorderGraph.Build(ids, width, height, smoothing);
+            // The graph only depends on the province pixels: reuse the disk cache when they match
+            ulong idHash = BorderGraphCache.HashIds(ids);
+            string cachePath = BorderGraphCache.GetCachePath();
+            long hashMs = sw.ElapsedMilliseconds - readbackMs;
+            List<BorderArc> arcs = BorderGraphCache.TryLoad(cachePath, idHash, width, height, smoothing);
+            bool cached = arcs != null;
+            if (!cached)
+            {
+                arcs = BorderGraph.Build(ids, width, height, smoothing);
+                BorderGraphCache.Save(cachePath, idHash, width, height, smoothing, arcs);
+            }
             curveCache.Initialize(arcs);
 
             int points = 0;
             foreach (var arc in arcs) points += arc.Points.Length;
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Border graph {arcs.Count} arcs, {points} points " +
-                             $"(readback {readbackMs}ms, trace+smooth {sw.ElapsedMilliseconds - readbackMs}ms)", "map_initialization");
+                             $"(readback {readbackMs}ms, hash {hashMs}ms, {(cached ? "cache load" : "trace+smooth+save")} " +
+                             $"{sw.ElapsedMilliseconds - readbackMs - hashMs}ms)", "map_initialization");
         }
 
         private void SetupMeshRenderer(BorderMeshRenderer renderer)

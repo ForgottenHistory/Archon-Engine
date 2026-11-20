@@ -556,12 +556,13 @@ namespace Map.Rendering
         /// <summary>
         /// Set border mode
         /// </summary>
-        public void SetBorderMode(BorderMode mode)
+        /// <param name="regenerate">False when the caller regenerates right after (avoids a wasted full rebuild)</param>
+        public void SetBorderMode(BorderMode mode, bool regenerate = true)
         {
             borderMode = mode;
             parameterBinder.BorderMode = mode;
 
-            if (autoUpdateBorders)
+            if (autoUpdateBorders && regenerate)
             {
                 DetectBorders();
             }
@@ -573,7 +574,7 @@ namespace Map.Rendering
         /// <param name="countryThickness">Country border thickness in pixels (0 = 1px thin)</param>
         /// <param name="provinceThickness">Province border thickness in pixels (0 = 1px thin)</param>
         /// <param name="antiAliasing">Anti-aliasing gradient width (0 = sharp, 1-2 = smooth)</param>
-        public void SetPixelPerfectParameters(int countryThickness, int provinceThickness, float antiAliasing)
+        public void SetPixelPerfectParameters(int countryThickness, int provinceThickness, float antiAliasing, bool regenerate = true)
         {
             pixelPerfectCountryThickness = Mathf.Clamp(countryThickness, 0, 5);
             pixelPerfectProvinceThickness = Mathf.Clamp(provinceThickness, 0, 5);
@@ -586,7 +587,7 @@ namespace Map.Rendering
             }
 
             // Regenerate borders if in pixel-perfect mode
-            if (renderingMode == BorderRenderingMode.ShaderPixelPerfect && autoUpdateBorders)
+            if (renderingMode == BorderRenderingMode.ShaderPixelPerfect && autoUpdateBorders && regenerate)
             {
                 DetectBorders();
             }

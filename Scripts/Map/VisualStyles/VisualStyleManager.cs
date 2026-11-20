@@ -192,14 +192,19 @@ namespace Archon.Engine.Map
                 mapSystemCoordinator.GetMapPlaneTransform()
             );
 
+            // Borders are generated once below (after the owner texture is populated) when enabled
+            // on startup; don't let the setters each trigger their own full rebuild first
+            bool regenerateNow = !style.borders.enableBordersOnStartup;
+
             // Set border mode (which borders to show)
-            borderDispatcher.SetBorderMode(ConvertBorderMode(style.borders.borderMode));
+            borderDispatcher.SetBorderMode(ConvertBorderMode(style.borders.borderMode), regenerateNow);
 
             // Set pixel-perfect parameters
             borderDispatcher.SetPixelPerfectParameters(
                 style.borders.pixelPerfectCountryThickness,
                 style.borders.pixelPerfectProvinceThickness,
-                style.borders.pixelPerfectAntiAliasing
+                style.borders.pixelPerfectAntiAliasing,
+                regenerateNow
             );
 
             if (style.borders.enableBordersOnStartup)

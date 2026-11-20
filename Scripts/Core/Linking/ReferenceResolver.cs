@@ -48,8 +48,6 @@ namespace Core.Linking
             rawData.OwnerID = (ushort)provinceData.OwnerId;
             rawData.ControllerID = (ushort)provinceData.ControllerId;
             rawData.Terrain = provinceData.Terrain;
-
-            ArchonLogger.Log($"Resolved references for {context}: Owner={provinceData.OwnerId}", "core_data_linking");
         }
 
         /// <summary>
@@ -82,7 +80,6 @@ namespace Core.Linking
                 }
             }
 
-            ArchonLogger.Log($"Resolved references for {context}: Government={countryData.GovernmentId}", "core_data_linking");
         }
 
         /// <summary>
