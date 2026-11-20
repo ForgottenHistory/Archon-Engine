@@ -89,7 +89,8 @@ namespace StarterKit
                 engine.ProvinceMapping,
                 meshRenderer.transform,
                 engine.TextureManager.MapWidth,
-                engine.TextureManager.MapHeight
+                engine.TextureManager.MapHeight,
+                engine.TextureManager // centers from the province ID texture
             );
 
             if (!centerLookup.IsInitialized)
@@ -115,6 +116,17 @@ namespace StarterKit
             subscriptions.Add(gameState.EventBus.Subscribe<UnitCreatedEvent>(OnUnitCreated));
             subscriptions.Add(gameState.EventBus.Subscribe<UnitDestroyedEvent>(OnUnitDestroyed));
             subscriptions.Add(gameState.EventBus.Subscribe<UnitMovedEvent>(OnUnitMoved));
+
+            // Units created before this initialized (scenario start, loaded save) sent their
+            // UnitCreatedEvent before we subscribed: seed from the unit system
+            if (gameState.Units != null)
+            {
+                foreach (ushort unitId in gameState.Units.GetAllUnits())
+                {
+                    var unit = gameState.Units.GetUnit(unitId);
+                    trackedUnits[unitId] = new UnitTrackData { provinceID = unit.provinceID, countryID = unit.countryID };
+                }
+            }
 
             isInitialized = true;
             isDirty = true;
@@ -156,6 +168,22 @@ namespace StarterKit
 
             // Create instance so we don't modify the asset
             badgeMaterial = new Material(baseMaterial);
+
+            // A material whose shader reference broke (e.g. the shader file moved and got a new
+            // GUID) silently renders nothing with Unity's error shader: fall back by name
+            if (badgeMaterial.shader == null || !badgeMaterial.shader.isSupported || badgeMaterial.shader.name == "Hidden/InternalErrorShader")
+            {
+                var shader = Shader.Find("Engine/InstancedAtlasBadge");
+                if (shader != null)
+                {
+                    ArchonLogger.LogWarning("UnitVisualization: badge material shader missing, using Engine/InstancedAtlasBadge by name", "starter_kit");
+                    badgeMaterial.shader = shader;
+                }
+                else
+                {
+                    ArchonLogger.LogError("UnitVisualization: badge shader Engine/InstancedAtlasBadge not found", "starter_kit");
+                }
+            }
             badgeMaterial.enableInstancing = true;
             badgeMaterial.renderQueue = 3000; // Render on top of map
 

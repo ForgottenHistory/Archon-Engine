@@ -6,17 +6,27 @@ namespace Map.Utils
 {
     /// <summary>
     /// Utility for converting province IDs to world positions.
-    /// Calculates center from province pixel data and converts to world space.
-    /// Caches results for performance.
+    ///
+    /// Centers come from a one-time CPU readback of the province ID texture (one pass over the
+    /// map computes every province's center of mass and pixel count). A center that falls outside
+    /// its province (concave/C-shaped provinces) moves to the province's nearest pixel.
+    /// ProvinceMapping no longer holds per-province pixel lists (map loading stopped filling them
+    /// for speed), so the pixel-list path is only a fallback when no texture manager is given.
     /// </summary>
     public class ProvinceCenterLookup
     {
         private ProvinceMapping provinceMapping;
+        private MapTextureManager textureManager;
         private Transform mapMeshTransform;
         private Bounds meshBounds;
 
         // Cache for performance (province centers don't change at runtime)
         private Dictionary<ushort, Vector3> cachedCenters = new Dictionary<ushort, Vector3>();
+
+        // Per province id, from the readback: center in map pixels (row 0 = top), pixel count
+        private Vector2[] pixelCenters;
+        private int[] pixelCounts;
+        private bool centersBuilt;
 
         // Map texture dimensions
         private int textureWidth;
@@ -27,14 +37,19 @@ namespace Map.Utils
         public bool IsInitialized => isInitialized;
 
         /// <summary>
-        /// Initialize the lookup system with map references
+        /// Initialize the lookup system with map references. Pass the texture manager so centers
+        /// can be computed from the province ID texture.
         /// </summary>
-        public void Initialize(ProvinceMapping mapping, Transform meshTransform, int texWidth, int texHeight)
+        public void Initialize(ProvinceMapping mapping, Transform meshTransform, int texWidth, int texHeight,
+            MapTextureManager textures = null)
         {
             provinceMapping = mapping;
+            textureManager = textures;
             mapMeshTransform = meshTransform;
             textureWidth = texWidth;
             textureHeight = texHeight;
+            centersBuilt = false;
+            cachedCenters.Clear();
 
             // Get actual mesh bounds
             var meshFilter = meshTransform.GetComponent<MeshFilter>();
@@ -49,7 +64,7 @@ namespace Map.Utils
                 ArchonLogger.LogWarning("ProvinceCenterLookup: Using default quad bounds (1x1)", "map_interaction");
             }
 
-            isInitialized = provinceMapping != null && mapMeshTransform != null;
+            isInitialized = (provinceMapping != null || textureManager != null) && mapMeshTransform != null;
 
             if (isInitialized)
             {
@@ -82,33 +97,14 @@ namespace Map.Utils
                 return true;
             }
 
-            // Get province pixels
-            var pixels = provinceMapping.GetProvincePixels(provinceID);
-            if (pixels == null || pixels.Count == 0)
+            if (!TryGetPixelCenter(provinceID, out Vector2 centerPixels))
             {
                 return false;
             }
 
-            // Calculate center of mass in texture space
-            Vector2 centerPixels = Vector2.zero;
-            foreach (var pixel in pixels)
-            {
-                centerPixels.x += pixel.x;
-                centerPixels.y += pixel.y;
-            }
-            centerPixels.x /= pixels.Count;
-            centerPixels.y /= pixels.Count;
-
-            // Convert from pixel coordinates to UV (0-1)
+            // Convert from pixel coordinates (row 0 = top) to UV (0-1, v up)
             float uvX = centerPixels.x / textureWidth;
-            float uvY = centerPixels.y / textureHeight;
-
-            // NOTE: Coordinate flipping depends on map mesh rotation
-            // Standard setup: 180° Y rotation requires X flip
-            // If both axes are reversed, the mesh may have different rotation
-            // Current: no flip (works for non-rotated mesh)
-            // uvX = 1.0f - uvX;  // Uncomment if map has 180° Y rotation
-            uvY = 1.0f - uvY;     // Flip Y for texture-to-world mapping
+            float uvY = 1.0f - centerPixels.y / textureHeight;
 
             // Convert UV to local position using mesh bounds
             float localX = meshBounds.min.x + uvX * meshBounds.size.x;
@@ -130,11 +126,125 @@ namespace Map.Utils
         }
 
         /// <summary>
+        /// Province center in map pixels (row 0 = top, pixel centers at +0.5).
+        /// </summary>
+        public bool TryGetPixelCenter(ushort provinceID, out Vector2 center)
+        {
+            center = Vector2.zero;
+            if (!isInitialized)
+                return false;
+
+            EnsureCentersBuilt();
+            if (pixelCenters != null)
+            {
+                if (provinceID >= pixelCounts.Length || pixelCounts[provinceID] == 0)
+                    return false;
+                center = pixelCenters[provinceID];
+                return true;
+            }
+
+            // Fallback: legacy pixel lists (only filled by older loading paths)
+            var pixels = provinceMapping?.GetProvincePixels(provinceID);
+            if (pixels == null || pixels.Count == 0)
+                return false;
+            foreach (var pixel in pixels)
+            {
+                center.x += pixel.x + 0.5f;
+                center.y += pixel.y + 0.5f;
+            }
+            center /= pixels.Count;
+            return true;
+        }
+
+        private void EnsureCentersBuilt()
+        {
+            if (centersBuilt)
+                return;
+            centersBuilt = true;
+            if (textureManager == null)
+                return;
+
+            float start = Time.realtimeSinceStartup;
+            ushort[] ids = ProvinceIdReadback.Read(textureManager);
+            if (ids == null || ids.Length < textureWidth * textureHeight)
+            {
+                ArchonLogger.LogWarning("ProvinceCenterLookup: province ID readback failed, no centers", "map_interaction");
+                return;
+            }
+
+            int maxId = 0;
+            for (int i = 0; i < ids.Length; i++)
+                if (ids[i] > maxId) maxId = ids[i];
+
+            var sumX = new long[maxId + 1];
+            var sumY = new long[maxId + 1];
+            var counts = new int[maxId + 1];
+            for (int y = 0, i = 0; y < textureHeight; y++)
+            {
+                for (int x = 0; x < textureWidth; x++, i++)
+                {
+                    int id = ids[i];
+                    sumX[id] += x;
+                    sumY[id] += y;
+                    counts[id]++;
+                }
+            }
+
+            var centers = new Vector2[maxId + 1];
+            var nearestDist = new float[maxId + 1];
+            bool anyOutside = false;
+            for (int id = 1; id <= maxId; id++)
+            {
+                if (counts[id] == 0) continue;
+                var c = new Vector2((float)sumX[id] / counts[id] + 0.5f, (float)sumY[id] / counts[id] + 0.5f);
+                centers[id] = c;
+                int px = Mathf.Clamp((int)c.x, 0, textureWidth - 1);
+                int py = Mathf.Clamp((int)c.y, 0, textureHeight - 1);
+                if (ids[py * textureWidth + px] != id)
+                {
+                    nearestDist[id] = float.MaxValue; // center of mass is outside the province
+                    anyOutside = true;
+                }
+            }
+
+            // Second pass only for provinces whose center of mass is outside them
+            if (anyOutside)
+            {
+                var nearest = new Vector2[maxId + 1];
+                for (int y = 0, i = 0; y < textureHeight; y++)
+                {
+                    for (int x = 0; x < textureWidth; x++, i++)
+                    {
+                        int id = ids[i];
+                        if (nearestDist[id] == 0f) continue;
+                        float dx = x + 0.5f - centers[id].x, dy = y + 0.5f - centers[id].y;
+                        float d = dx * dx + dy * dy;
+                        if (d < nearestDist[id])
+                        {
+                            nearestDist[id] = d;
+                            nearest[id] = new Vector2(x + 0.5f, y + 0.5f);
+                        }
+                    }
+                }
+                for (int id = 1; id <= maxId; id++)
+                    if (nearestDist[id] > 0f && nearestDist[id] < float.MaxValue)
+                        centers[id] = nearest[id];
+            }
+
+            pixelCenters = centers;
+            pixelCounts = counts;
+            ArchonLogger.Log($"ProvinceCenterLookup: computed centers for provinces up to {maxId} in {(Time.realtimeSinceStartup - start) * 1000f:F0} ms", "map_interaction");
+        }
+
+        /// <summary>
         /// Clear the cache (useful if map is reloaded)
         /// </summary>
         public void ClearCache()
         {
             cachedCenters.Clear();
+            centersBuilt = false;
+            pixelCenters = null;
+            pixelCounts = null;
         }
 
         /// <summary>
@@ -150,10 +260,14 @@ namespace Map.Utils
         /// </summary>
         public int GetProvincePixelCount(ushort provinceID)
         {
-            if (!isInitialized || provinceMapping == null)
+            if (!isInitialized)
                 return 0;
 
-            var pixels = provinceMapping.GetProvincePixels(provinceID);
+            EnsureCentersBuilt();
+            if (pixelCounts != null)
+                return provinceID < pixelCounts.Length ? pixelCounts[provinceID] : 0;
+
+            var pixels = provinceMapping?.GetProvincePixels(provinceID);
             return pixels?.Count ?? 0;
         }
     }

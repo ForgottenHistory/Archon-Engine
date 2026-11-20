@@ -136,7 +136,7 @@ namespace Core.Units
                 });
             }
 
-            UnityEngine.Debug.Log($"[UnitSystem] Created unit {unitID} (Type={unitTypeID}, Count={troopCount}) in province {provinceID} for country {countryID}");
+            ArchonLogger.Log($"UnitSystem: Created unit {unitID} (Type={unitTypeID}, Count={troopCount}) in province {provinceID} for country {countryID}", "core_simulation");
             return unitID;
         }
 
@@ -202,7 +202,7 @@ namespace Core.Units
                 });
             }
 
-            UnityEngine.Debug.Log($"[UnitSystem] Disbanded unit {unitID} (Reason={reason})");
+            ArchonLogger.Log($"UnitSystem: Disbanded unit {unitID} (Reason={reason})", "core_simulation");
         }
 
         // === Queries ===
@@ -253,6 +253,21 @@ namespace Core.Units
 
         /// <summary>Get total unit count in the game</summary>
         public int GetUnitCount() => unitCount;
+
+        /// <summary>
+        /// Get the IDs of all existing units (O(highest allocated ID)). For presentation code that
+        /// starts after units were created, e.g. to seed its state before following unit events.
+        /// </summary>
+        public List<ushort> GetAllUnits()
+        {
+            var result = new List<ushort>(unitCount);
+            for (int id = 1; id < nextID && id < capacity; id++)
+            {
+                if (units[id].unitCount > 0)
+                    result.Add((ushort)id);
+            }
+            return result;
+        }
 
         // === Movement Queue Access ===
 
