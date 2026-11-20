@@ -164,6 +164,15 @@ namespace Map.Interaction
         /// <param name="provinceID">Province to highlight (0 = clear)</param>
         /// <param name="color">Highlight color (use alpha for transparency)</param>
         /// <param name="mode">Fill entire province or borders only</param>
+        /// <summary>
+        /// Outline a set of provinces (e.g. a selected province's state) in addition to the normal
+        /// highlight. Needs a border renderer with outline support; no-op otherwise.
+        /// </summary>
+        public void HighlightProvinceSet(System.Func<ushort, bool> inSet, Color color) =>
+            GetOutline()?.SetSecondaryOutline(inSet, color);
+
+        public void ClearProvinceSet() => GetOutline()?.ClearSecondaryOutline();
+
         public void HighlightProvince(ushort provinceID, Color color, HighlightMode mode)
         {
             if (highlightCompute == null)

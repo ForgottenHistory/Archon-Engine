@@ -29,6 +29,12 @@ namespace Map.Rendering.Border
         private Color highlightColor;
         private bool highlightActive;
         private int highlightStyleVersion = -1;
+        // Secondary outline (e.g. the state around a selected province), drawn just under the primary
+        private BorderMeshGenerator secondaryGenerator;
+        private BorderMeshRenderer secondaryRenderer;
+        private Color secondaryColor;
+        private bool secondaryActive;
+        private int secondaryStyleVersion = -1;
         private static readonly string[] HighlightClassNames = { BorderClassNames.Highlight };
 
         protected override void OnInitialize()
@@ -46,7 +52,10 @@ namespace Map.Rendering.Border
             meshRenderer = new BorderMeshRenderer();
             highlightGenerator = new BorderMeshGenerator(textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
             highlightRenderer = new BorderMeshRenderer(2990);
+            secondaryGenerator = new BorderMeshGenerator(textureManager.MapWidth, textureManager.MapHeight, context.MapPlaneTransform);
+            secondaryRenderer = new BorderMeshRenderer(2970);
             SetupMeshRenderer(meshRenderer);
+            SetupMeshRenderer(secondaryRenderer);
             SetupMeshRenderer(highlightRenderer);
 
             ArchonLogger.Log($"MeshGeometryBorderRenderer: Initialized with {curveCache.BorderCount} border arcs", "map_rendering");
@@ -149,6 +158,13 @@ namespace Map.Rendering.Border
                     ApplyHighlightStyle();
                 highlightRenderer.RenderBorders();
             }
+
+            if (secondaryActive)
+            {
+                if (secondaryStyleVersion != BorderClassStyles.Version)
+                    ApplySecondaryStyle();
+                secondaryRenderer.RenderBorders();
+            }
         }
 
         #region Highlight outline (IBorderHighlightOutline)
@@ -166,6 +182,22 @@ namespace Map.Rendering.Border
             BuildHighlight(p => p != 0 && provinces.GetProvinceState(p).ownerID == countryID, color);
         }
 
+        public void SetSecondaryOutline(System.Func<ushort, bool> inSet, Color color)
+        {
+            if (inSet == null) { ClearSecondaryOutline(); return; }
+            if (!isInitialized || curveCache == null || secondaryGenerator == null) return;
+            secondaryGenerator.GenerateMeshes(OutlineChains(inSet), HighlightClassNames, log: false);
+            secondaryColor = color;
+            secondaryActive = secondaryGenerator.Meshes.Count > 0;
+            ApplySecondaryStyle();
+        }
+
+        public void ClearSecondaryOutline()
+        {
+            secondaryActive = false;
+            secondaryRenderer?.SetPasses(null, null);
+        }
+
         public void ClearHighlightOutline()
         {
             highlightActive = false;
@@ -176,7 +208,14 @@ namespace Map.Rendering.Border
         private void BuildHighlight(System.Func<ushort, bool> inSet, Color color)
         {
             if (!isInitialized || curveCache == null || highlightGenerator == null) return;
+            highlightGenerator.GenerateMeshes(OutlineChains(inSet), HighlightClassNames, log: false);
+            highlightColor = color;
+            highlightActive = highlightGenerator.Meshes.Count > 0;
+            ApplyHighlightStyle();
+        }
 
+        private List<(BorderArc, int)> OutlineChains(System.Func<ushort, bool> inSet)
+        {
             var outlineArcs = new List<BorderArc>();
             foreach (var arc in curveCache.Arcs)
                 if (inSet(arc.ProvinceA) != inSet(arc.ProvinceB))
@@ -195,10 +234,7 @@ namespace Map.Rendering.Border
             if (open > 0)
                 ArchonLogger.LogWarning($"Highlight outline: {outlineArcs.Count} arcs -> {arcs.Count} chains, {open} open", "map_rendering");
 
-            highlightGenerator.GenerateMeshes(arcs, HighlightClassNames, log: false);
-            highlightColor = color;
-            highlightActive = highlightGenerator.Meshes.Count > 0;
-            ApplyHighlightStyle();
+            return arcs;
         }
 
         /// <summary>Arc endpoints are shared pixel corners; same key as BorderMeshGenerator junctions.</summary>
@@ -277,12 +313,23 @@ namespace Map.Rendering.Border
             // Glow under the outline; both tinted by the caller's highlight color
             highlightRenderer.SetPasses(highlightGenerator.Meshes[0], new[]
             {
-                TintedHighlightPass(BorderClassNames.HighlightGlow),
-                TintedHighlightPass(BorderClassNames.Highlight)
+                TintedHighlightPass(BorderClassNames.HighlightGlow, highlightColor),
+                TintedHighlightPass(BorderClassNames.Highlight, highlightColor)
             });
         }
 
-        private BorderClassStyle TintedHighlightPass(string className)
+        private void ApplySecondaryStyle()
+        {
+            secondaryStyleVersion = BorderClassStyles.Version;
+            if (!secondaryActive) { secondaryRenderer.SetPasses(null, null); return; }
+            secondaryRenderer.SetPasses(secondaryGenerator.Meshes[0], new[]
+            {
+                TintedHighlightPass(BorderClassNames.HighlightGlow, secondaryColor),
+                TintedHighlightPass(BorderClassNames.Highlight, secondaryColor)
+            });
+        }
+
+        private BorderClassStyle TintedHighlightPass(string className, Color highlightColor)
         {
             var data = BorderClassStyles.Resolve(className); // data file or engine default
             Color tint = data.Color ?? Color.white;
@@ -310,6 +357,11 @@ namespace Map.Rendering.Border
             meshRenderer?.Dispose();
             highlightGenerator?.Dispose();
             highlightRenderer?.Dispose();
+            secondaryGenerator?.Dispose();
+            secondaryRenderer?.Dispose();
+            secondaryGenerator = null;
+            secondaryRenderer = null;
+            secondaryActive = false;
             highlightGenerator = null;
             highlightRenderer = null;
             highlightActive = false;

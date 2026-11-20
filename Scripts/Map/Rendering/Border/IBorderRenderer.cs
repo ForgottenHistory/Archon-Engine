@@ -94,5 +94,13 @@ namespace Map.Rendering.Border
         void SetHighlightOutlineCountry(ushort countryID, Color color);
 
         void ClearHighlightOutline();
+
+        /// <summary>
+        /// Second, independent outline around any set of provinces (e.g. the state of the selected
+        /// province). Drawn just under the primary outline; color tints it like the primary.
+        /// </summary>
+        void SetSecondaryOutline(System.Func<ushort, bool> inSet, Color color);
+
+        void ClearSecondaryOutline();
     }
 }
