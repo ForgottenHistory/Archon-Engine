@@ -44,14 +44,17 @@ namespace Map.Rendering.Rivers
             byte[] levels = LoadLevels(path, width, height);
             if (levels == null)
                 return false;
+            long tDecode = sw.ElapsedMilliseconds;
 
             List<BorderArc> arcs = RiverGraph.Build(levels, width, height, BorderSmoothingSettings.Default);
             ArcCount = arcs.Count;
+            long tTrace = sw.ElapsedMilliseconds;
 
             meshGenerator = new BorderMeshGenerator(width, height, mapPlane);
             var classified = new List<(BorderArc, int)>(arcs.Count);
             foreach (var arc in arcs) classified.Add((arc, 0));
             meshGenerator.GenerateMeshes(classified, classNames);
+            long tMesh = sw.ElapsedMilliseconds;
 
             meshRenderer = new BorderMeshRenderer(RiverQueue);
             var mr = mapPlane != null ? mapPlane.GetComponent<MeshRenderer>() : null;
@@ -65,7 +68,8 @@ namespace Map.Rendering.Rivers
             }
             ApplyStyle();
 
-            ArchonLogger.Log($"MapRiverRenderer: {arcs.Count} river arcs from {path} ({sw.ElapsedMilliseconds}ms)", "map_initialization");
+            ArchonLogger.Log($"MapRiverRenderer: {arcs.Count} river arcs from {path} ({sw.ElapsedMilliseconds}ms: " +
+                $"decode {tDecode}, trace {tTrace - tDecode} [{RiverGraph.LastTimings}], mesh {tMesh - tTrace}, setup {sw.ElapsedMilliseconds - tMesh})", "map_initialization");
             return true;
         }
 

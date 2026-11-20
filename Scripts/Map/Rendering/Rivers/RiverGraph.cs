@@ -15,9 +15,21 @@ namespace Map.Rendering.Rivers
     /// </summary>
     public static class RiverGraph
     {
+        private sealed class MixedLongComparer : IEqualityComparer<long>
+        {
+            public static readonly MixedLongComparer Instance = new MixedLongComparer();
+            public bool Equals(long a, long b) => a == b;
+            public int GetHashCode(long x) => (int)(((ulong)x * 0x9E3779B97F4A7C15UL) >> 32);
+        }
+
         /// <param name="levels">width level per pixel (index y * width + x, y down), 0 = no river</param>
+        /// <summary>Timing breakdown of the last Build call (for the load log).</summary>
+        public static string LastTimings { get; private set; } = "";
+
         public static List<BorderArc> Build(byte[] levels, int width, int height, BorderSmoothingSettings smoothing)
         {
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            long smoothTicks = 0;
             int W = width, H = height;
             bool IsRiver(int x, int y) => x >= 0 && y >= 0 && x < W && y < H && levels[y * W + x] != 0;
 
@@ -43,7 +55,11 @@ namespace Map.Rendering.Rivers
                 }
             }
 
-            var visited = new HashSet<long>();
+            long tScan = sw.ElapsedMilliseconds;
+            // Edge keys pack two neighbouring pixel indices; long's own hash (hi ^ lo) collapses them
+            // to a few values (neighbours differ by 1 or ~W), turning lookups quadratic (6 s on 88k
+            // river pixels). Mix the bits instead.
+            var visited = new HashSet<long>(MixedLongComparer.Instance);
             long Edge(int a, int b) => a < b ? ((long)a << 32) | (uint)b : ((long)b << 32) | (uint)a;
 
             var arcs = new List<BorderArc>();
@@ -75,7 +91,9 @@ namespace Map.Rendering.Rivers
                 var pts = new List<Vector3>(path.Count);
                 foreach (int p in path)
                     pts.Add(new Vector3(p % W + 0.5f, p / W + 0.5f, levels[p]));
+                long s0 = sw.ElapsedTicks;
                 var smoothed = Smooth(pts, smoothing);
+                smoothTicks += sw.ElapsedTicks - s0;
                 var arc = new BorderArc
                 {
                     Closed = closed,
@@ -103,6 +121,8 @@ namespace Map.Rendering.Rivers
                     if (!visited.Contains(Edge(kvp.Key, n)))
                         Emit(Walk(kvp.Key, n, true), true);
             }
+            long smoothMs = smoothTicks * 1000 / System.Diagnostics.Stopwatch.Frequency;
+            LastTimings = $"scan {tScan}, walk {sw.ElapsedMilliseconds - tScan - smoothMs}, smooth {smoothMs}";
             return arcs;
         }
 
