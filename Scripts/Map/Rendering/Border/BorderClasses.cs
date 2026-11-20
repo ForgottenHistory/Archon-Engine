@@ -18,6 +18,10 @@ namespace Map.Rendering.Border
         public string Name;
         public bool Visible = true;
         public Texture2D Texture;          // null = solid line
+        public bool TextureAlphaOnly;      // texture gives only the line shape (alpha); color comes from Color
+        public float Softness;             // solid strips: 0 = crisp anti-aliased edge, 1 = soft glow falloff
+        public bool Lighten;               // Max blend: overlaps take the brighter value (no doubling where
+                                           // wide strips fold at corners); can only brighten what is below
         public Color? Color;               // null = engine border color globals (country / province)
         public float Width = 0.6f;         // full strip width in map pixels
         public float WidthPerLevel;        // extra width per point width level (rivers)
@@ -64,6 +68,27 @@ namespace Map.Rendering.Border
                     WidthPerLevel = 0.2f,
                     MinScreenWidth = 1f
                 };
+            // Highlight outline passes: color tints the highlight color, alpha = opacity
+            if (name == BorderClassNames.Highlight)
+                return new BorderClassStyle
+                {
+                    Name = name,
+                    Color = UnityEngine.Color.white,
+                    Width = 1.5f,
+                    MinScreenWidth = 2f,
+                    Order = 101
+                };
+            if (name == BorderClassNames.HighlightGlow)
+                return new BorderClassStyle
+                {
+                    Name = name,
+                    Color = new Color(1f, 1f, 1f, 0.5f),
+                    Width = 6f,
+                    MinScreenWidth = 12f,
+                    Softness = 1f,
+                    Lighten = true,
+                    Order = 100
+                };
             bool country = name == BorderClassNames.Country;
             return new BorderClassStyle
             {
@@ -82,6 +107,10 @@ namespace Map.Rendering.Border
         public const string Country = "country";
         public const string Sea = "sea";
         public const string Coast = "coast";
+        /// <summary>Selection/hover outline (IBorderHighlightOutline), not produced by classifiers.</summary>
+        public const string Highlight = "highlight";
+        /// <summary>Soft glow drawn under the highlight outline.</summary>
+        public const string HighlightGlow = "highlight_glow";
     }
 
     /// <summary>

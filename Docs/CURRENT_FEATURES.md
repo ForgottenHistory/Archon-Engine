@@ -244,7 +244,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Normal Map Support** - RGB24 normal map for terrain lighting
 - **Point Filtering** - Pixel-perfect province ID lookup without interpolation
 - **Single Draw Call Optimization** - Entire map rendered in one draw call
-- **ProvinceHighlighter** - Province highlighting for selection feedback
+- **ProvinceHighlighter** - Province highlighting for selection feedback (pixel fill; with mesh borders instead a smooth outline from the selection's own border arcs with a soft glow, styled by the `highlight` / `highlight_glow` border classes)
 
 ---
 
@@ -333,6 +333,7 @@ This document lists all implemented features in the Archon Engine organized by c
 ### Pluggable Renderer Interfaces
 
 - **IBorderRenderer** - Border generation (DistanceField, PixelPerfect, MeshGeometry implementations)
+- **IBorderHighlightOutline** - Optional border renderer capability: outline the highlighted province/country with smoothed border geometry (MeshGeometry implements it)
 - **IHighlightRenderer** - Province selection/hover highlighting (Default GPU compute)
 - **IFogOfWarRenderer** - Fog of war visualization (Default GPU compute)
 - **ITerrainRenderer** - Terrain blend map generation (Default 4-channel)

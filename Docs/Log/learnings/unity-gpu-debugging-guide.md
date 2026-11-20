@@ -875,6 +875,19 @@ Style-file textures take `linear: true` for the same reason (see the visual styl
 
 **Debugging tip:** a marker placed at the CPU pick point always sits under the cursor, because every point on the mouse ray projects there. It can't tell you whether the pick depth is right; check instead whether it touches the rendered surface.
 
+### Wide Line Strips: Folds and Spokes
+
+**Problem:** a line drawn as a strip (vertices offset sideways from a center polyline, as in `BorderMeshGenerator`) folds back over itself on the inside of any corner tighter than its half width. Thin lines get away with it; wide or soft ones (the highlight glow) show it as thin bright **spokes** radiating from corners (2026-11). Which corners spike depends on how tight each one is, so it looks random.
+
+**Three separate causes, all fixed in BorderMesh:**
+1. **Profile drift:** with only left/right edge vertices, the across-strip coordinate `v = 0.5` (the drawn line, the glow peak) runs diagonally through folded quads. Fix: a center vertex per point (L/C/R), so `v = 0.5` *is* the center line.
+2. **Double blending:** overlapping folded triangles are alpha blended twice; the straight triangle edges of the doubled region are the spokes. Fix: `blend: "lighten"` (One/One, BlendOp Max, premultiplied output) so overlaps take the brighter value. Lighten can only brighten what is below.
+3. **Normal jitter:** smoothed arcs keep a sub-pixel, grid-aligned stub at their ends; normals from adjacent points swung up to 90 degrees within a fraction of a pixel. Fix: compute normals from neighbours at least 1.5 map px away.
+
+Also: an outline is drawn as one closed loop (arcs chained end to end), not separate arcs joined by junction caps.
+
+**How we found it:** screenshots were not enough. `Tools/prototypes/highlight/` (hoi4-remade repo) ports the strip pipeline to Python: `outline_strip.py` draws the triangles and the `v = 0.5` contour (`MODE=old/new`), and `glow_raster.py` rasterizes the glow with blend vs Max vs true distance. The spokes appeared in the first rasterized panel.
+
 ---
 
 ## Summary: GPU Debugging Workflow

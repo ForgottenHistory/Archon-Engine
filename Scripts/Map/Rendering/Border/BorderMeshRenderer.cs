@@ -15,6 +15,12 @@ namespace Map.Rendering
 
         private static readonly int BorderTexId = Shader.PropertyToID("_BorderTex");
         private static readonly int UseTextureId = Shader.PropertyToID("_BorderUseTexture");
+        private static readonly int TexAlphaOnlyId = Shader.PropertyToID("_BorderTexAlphaOnly");
+        private static readonly int SoftnessId = Shader.PropertyToID("_BorderSoftness");
+        private static readonly int SrcBlendId = Shader.PropertyToID("_BorderSrcBlend");
+        private static readonly int DstBlendId = Shader.PropertyToID("_BorderDstBlend");
+        private static readonly int BlendOpId = Shader.PropertyToID("_BorderBlendOp");
+        private static readonly int PremultiplyId = Shader.PropertyToID("_BorderPremultiply");
         private static readonly int ColorId = Shader.PropertyToID("_BorderColor");
         private static readonly int ColorSourceId = Shader.PropertyToID("_BorderColorSource");
         private static readonly int WidthId = Shader.PropertyToID("_BorderWidth");
@@ -88,6 +94,26 @@ namespace Map.Rendering
             }
         }
 
+        /// <summary>
+        /// Draw one mesh in several passes with explicit styles (no class lookup), in list order,
+        /// e.g. highlight glow then outline. Null mesh or styles clears the draw list.
+        /// </summary>
+        public void SetPasses(Mesh mesh, IReadOnlyList<BorderClassStyle> passes)
+        {
+            drawList.Clear();
+            if (shader == null || mesh == null || passes == null) return;
+
+            for (int i = 0; i < passes.Count; i++)
+            {
+                var style = passes[i];
+                if (style == null || !style.Visible) continue;
+                var material = GetMaterial(style.Name);
+                ApplyStyle(material, style);
+                material.renderQueue = baseQueue + i;
+                drawList.Add((mesh, material));
+            }
+        }
+
         private Material GetMaterial(string className)
         {
             if (!materials.TryGetValue(className, out var m))
@@ -104,6 +130,12 @@ namespace Map.Rendering
         {
             m.SetTexture(BorderTexId, s.Texture != null ? s.Texture : Texture2D.whiteTexture);
             m.SetFloat(UseTextureId, s.Texture != null ? 1f : 0f);
+            m.SetFloat(TexAlphaOnlyId, s.TextureAlphaOnly ? 1f : 0f);
+            m.SetFloat(SoftnessId, s.Softness);
+            m.SetFloat(SrcBlendId, (float)(s.Lighten ? UnityEngine.Rendering.BlendMode.One : UnityEngine.Rendering.BlendMode.SrcAlpha));
+            m.SetFloat(DstBlendId, (float)(s.Lighten ? UnityEngine.Rendering.BlendMode.One : UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha));
+            m.SetFloat(BlendOpId, (float)(s.Lighten ? UnityEngine.Rendering.BlendOp.Max : UnityEngine.Rendering.BlendOp.Add));
+            m.SetFloat(PremultiplyId, s.Lighten ? 1f : 0f);
             // Color source: 0 = explicit color, 1 = country globals, 2 = province globals
             m.SetFloat(ColorSourceId, s.Color.HasValue ? 0f : (s.Name == BorderClassNames.Country ? 1f : 2f));
             m.SetColor(ColorId, s.Color ?? Color.white);

@@ -78,4 +78,21 @@ namespace Map.Rendering.Border
         /// <summary>Province queries for owner data (needed for country vs province border detection)</summary>
         public ProvinceQueries ProvinceQueries;
     }
+
+    /// <summary>
+    /// ENGINE: Optional capability of a border renderer: outline the highlighted province or
+    /// country with its own (smoothed) border geometry, so the selection edge matches the borders
+    /// instead of the pixel staircase of the highlight texture. ProvinceHighlighter calls this on
+    /// the active border renderer when it implements it. Styled by the "highlight" border class.
+    /// </summary>
+    public interface IBorderHighlightOutline
+    {
+        /// <summary>Outline one province. Color: rgb tints the outline, alpha is ignored.</summary>
+        void SetHighlightOutlineProvince(ushort provinceID, Color color);
+
+        /// <summary>Outline the outer border of every province owned by the country.</summary>
+        void SetHighlightOutlineCountry(ushort countryID, Color color);
+
+        void ClearHighlightOutline();
+    }
 }

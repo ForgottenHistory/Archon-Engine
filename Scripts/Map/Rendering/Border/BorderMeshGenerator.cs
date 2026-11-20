@@ -8,19 +8,27 @@ namespace Map.Rendering
     /// <summary>
     /// Builds one mesh per border class from the classified border arcs.
     ///
-    /// Each arc becomes a strip with two vertices per polyline point. Both vertices sit on the
-    /// center line; the normal holds the world-space offset of one map pixel towards that side, so
-    /// the vertex shader can expand the strip to any width (map pixels, with a screen-pixel floor).
-    /// UV: x = distance along the arc in map pixels, y = 0 (left) .. 1 (right), z = width level
-    /// (BorderArc.Levels, 0 for borders; the shader adds WidthPerLevel per level).
+    /// Each arc becomes a strip with three vertices per polyline point: left edge, center, right
+    /// edge. All sit on the center line; the normal holds the world-space offset of one map pixel
+    /// towards the right, and the vertex shader moves each vertex by (2v - 1) of the half width, so
+    /// it can expand the strip to any width (map pixels, with a screen-pixel floor).
+    /// UV: x = distance along the arc in map pixels, y = 0 (left) / 0.5 (center) / 1 (right),
+    /// z = width level (BorderArc.Levels, 0 for borders; the shader adds WidthPerLevel per level).
+    ///
+    /// Why a center vertex: on the inside of a corner tighter than the half width, the strip edge
+    /// folds back over itself. With only edge vertices, v = 0.5 (the visible line of a texture
+    /// profile, the peak of a soft glow) then ran diagonally through the folded quads, out of the
+    /// corner. With the center vertex, v = 0.5 is the center line exactly; folds only affect one
+    /// half. Prototype: Tools/prototypes/highlight/outline_strip.py (MODE=old/new).
     ///
     /// Junction caps: where 2+ arcs of the same class meet, a fan connects their strip ends
-    /// (center v = 0.5, outer v = 0/1), so the texture profile continues radially and fills the
+    /// (center v = 0.5, outer v = 0), so the texture profile continues radially and fills the
     /// wedge between flat strip ends.
     /// </summary>
     public class BorderMeshGenerator
     {
         private const float MAX_SEGMENT_PIXELS = 3f; // subdivision so strips follow the heightmap
+        private const float NORMAL_LOOKAHEAD_PIXELS = 1.5f; // strip normals ignore sub-pixel jogs (see Perpendicular)
 
         private readonly float mapWidthPixels;
         private readonly float mapHeightPixels;
@@ -73,7 +81,8 @@ namespace Map.Rendering
         }
 
         /// <summary>Build one mesh per class id from (arc, class id) pairs.</summary>
-        public void GenerateMeshes(IEnumerable<(BorderArc arc, int classId)> classifiedArcs, IReadOnlyList<string> classNames)
+        public void GenerateMeshes(IEnumerable<(BorderArc arc, int classId)> classifiedArcs, IReadOnlyList<string> classNames,
+                                   bool log = true)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             DestroyMeshes();
@@ -114,7 +123,8 @@ namespace Map.Rendering
                 verts += b.verts.Count;
             }
 
-            ArchonLogger.Log($"BorderMeshGenerator: {arcCount} arcs, {caps} junction caps, {verts} vertices " +
+            if (log)
+                ArchonLogger.Log($"BorderMeshGenerator: {arcCount} arcs, {caps} junction caps, {verts} vertices " +
                              $"in {meshes.Count} class meshes ({sw.ElapsedMilliseconds}ms)", "map_initialization");
         }
 
@@ -133,22 +143,29 @@ namespace Map.Rendering
                 Vector3 offset = PixelDirToWorld(Perpendicular(pts, i, arc.Closed));
 
                 float level = levels != null ? levels[i] : 0f;
-                b.verts.Add(center); b.normals.Add(-offset); b.uvs.Add(new Vector3(along, 0f, level));
-                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector3(along, 1f, level));
+                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector3(along, 0f, level));   // left
+                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector3(along, 0.5f, level)); // center
+                b.verts.Add(center); b.normals.Add(offset); b.uvs.Add(new Vector3(along, 1f, level));   // right
             }
 
             for (int i = 0; i < n - 1; i++)
             {
-                int idx = baseIndex + i * 2;
-                b.tris.Add(idx); b.tris.Add(idx + 1); b.tris.Add(idx + 2);
-                b.tris.Add(idx + 1); b.tris.Add(idx + 3); b.tris.Add(idx + 2);
+                int l0 = baseIndex + i * 3, c0 = l0 + 1, r0 = l0 + 2;
+                int l1 = l0 + 3, c1 = l1 + 1, r1 = l1 + 2;
+                // Left half
+                b.tris.Add(l0); b.tris.Add(c0); b.tris.Add(l1);
+                b.tris.Add(c0); b.tris.Add(c1); b.tris.Add(l1);
+                // Right half
+                b.tris.Add(c0); b.tris.Add(r0); b.tris.Add(c1);
+                b.tris.Add(r0); b.tris.Add(r1); b.tris.Add(c1);
             }
 
             if (!arc.Closed)
             {
-                RecordEnd(b, arc.Points[0], b.verts[baseIndex], b.normals[baseIndex], b.normals[baseIndex + 1], b.uvs[baseIndex].z);
-                int last = baseIndex + (n - 1) * 2;
-                RecordEnd(b, arc.Points[arc.Points.Length - 1], b.verts[last], b.normals[last], b.normals[last + 1], b.uvs[last].z);
+                // Cap directions are the actual world offsets of the strip's left and right edges
+                RecordEnd(b, arc.Points[0], b.verts[baseIndex], -b.normals[baseIndex], b.normals[baseIndex], b.uvs[baseIndex].z);
+                int last = baseIndex + (n - 1) * 3;
+                RecordEnd(b, arc.Points[arc.Points.Length - 1], b.verts[last], -b.normals[last], b.normals[last], b.uvs[last].z);
             }
         }
 
@@ -171,10 +188,12 @@ namespace Map.Rendering
             outer.Sort((p, q) => Mathf.Atan2(p.z, p.x).CompareTo(Mathf.Atan2(q.z, q.x)));
 
             int c = b.verts.Count;
-            b.verts.Add(center); b.normals.Add(Vector3.zero); b.uvs.Add(new Vector3(0f, 0.5f, level));
+            // Center: v = 0.5 does not move; a real normal keeps the shader's width floor and fade right
+            b.verts.Add(center); b.normals.Add(outer[0]); b.uvs.Add(new Vector3(0f, 0.5f, level));
             foreach (var dir in outer)
             {
-                b.verts.Add(center); b.normals.Add(dir); b.uvs.Add(new Vector3(0f, 0f, level));
+                // Outer: v = 0 moves by -1 x normal, so store -dir to land on dir
+                b.verts.Add(center); b.normals.Add(-dir); b.uvs.Add(new Vector3(0f, 0f, level));
             }
             for (int i = 0; i < outer.Count; i++)
             {
@@ -209,20 +228,52 @@ namespace Map.Rendering
         }
 
         /// <summary>Unit perpendicular in pixel space; joins average the neighbouring segment directions.</summary>
+        /// <remarks>
+        /// Neighbours are the nearest points at least NORMAL_LOOKAHEAD_PIXELS away, not the adjacent
+        /// ones. Arc ends keep their first pixel step (a sub-pixel stub along the pixel grid after
+        /// smoothing); with adjacent neighbours that stub turned the normal by up to 90 degrees within a
+        /// fraction of a pixel, and the quad between two such vertices became a wedge as long as the
+        /// half width (spokes at joints, visible on wide strips like the highlight glow). A full
+        /// reversal (back == -forward) uses the forward direction.
+        /// </remarks>
         private static Vector2 Perpendicular(List<Vector2> p, int i, bool closed)
         {
-            int last = p.Count - 1;
-            Vector2 dir;
-            if (closed && last >= 2 && (i == 0 || i == last))
-                dir = (p[last] - p[last - 1]).normalized + (p[1] - p[0]).normalized;
-            else if (i > 0 && i < last)
-                dir = (p[i] - p[i - 1]).normalized + (p[i + 1] - p[i]).normalized;
-            else if (i == 0)
-                dir = p[1] - p[0];
-            else
-                dir = p[i] - p[i - 1];
+            Vector2 back = DistinctDirection(p, i, -1, closed);
+            Vector2 fwd = DistinctDirection(p, i, +1, closed);
+            Vector2 dir = back + fwd;
+            if (dir.sqrMagnitude < 1e-6f)
+                dir = fwd.sqrMagnitude > 0f ? fwd : back;
             dir = dir.sqrMagnitude > 1e-12f ? dir.normalized : Vector2.right;
             return new Vector2(-dir.y, dir.x);
+        }
+
+        /// <summary>
+        /// Unit direction along the line between p[i] and the nearest point distinct from it,
+        /// stepping backwards (-1) or forwards (+1); zero if there is none (open arc end).
+        /// Closed arcs wrap (their last point repeats the first).
+        /// </summary>
+        private static Vector2 DistinctDirection(List<Vector2> p, int i, int step, bool closed)
+        {
+            const float minDist = NORMAL_LOOKAHEAD_PIXELS;
+            int count = closed ? p.Count - 1 : p.Count; // closed: unique points only
+            if (count < 2) return Vector2.zero;
+            if (closed && i == p.Count - 1) i = 0;
+
+            // Short arcs may have nothing that far: fall back to the farthest distinct point
+            Vector2 fallback = Vector2.zero;
+            float fallbackLen = 1e-4f;
+            for (int k = 1; k < count; k++)
+            {
+                int j = i + step * k;
+                if (closed) j = ((j % count) + count) % count;
+                else if (j < 0 || j >= count) break;
+
+                Vector2 d = step > 0 ? p[j] - p[i] : p[i] - p[j];
+                float len = d.magnitude;
+                if (len >= minDist) return d / len;
+                if (len > fallbackLen) { fallback = d / len; fallbackLen = len; }
+            }
+            return fallback;
         }
 
         /// <summary>Pixel (x right, y down) to world on the map plane; height is applied in the shader.</summary>

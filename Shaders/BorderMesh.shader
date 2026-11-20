@@ -7,6 +7,15 @@ Shader "Archon/BorderMesh"
     {
         _BorderTex ("Border Texture (U along, V across)", 2D) = "white" {}
         _BorderUseTexture ("Use Texture", Float) = 0
+        _BorderTexAlphaOnly ("Texture Alpha Only (shape from texture, color from Color)", Float) = 0
+        _BorderSoftness ("Softness (solid strips: 0 crisp edge, 1 soft glow falloff)", Float) = 0
+        // Blend: normal = SrcAlpha/OneMinusSrcAlpha/Add, premultiply 0.
+        // Lighten = One/One/Max, premultiply 1: overlaps take the brighter value instead of adding
+        // up (wide soft strips fold at tight corners; alpha blending showed the folds as spokes).
+        [Enum(UnityEngine.Rendering.BlendMode)] _BorderSrcBlend ("Src Blend", Float) = 5
+        [Enum(UnityEngine.Rendering.BlendMode)] _BorderDstBlend ("Dst Blend", Float) = 10
+        [Enum(UnityEngine.Rendering.BlendOp)] _BorderBlendOp ("Blend Op", Float) = 0
+        _BorderPremultiply ("Premultiply Output", Float) = 0
         _BorderColor ("Color", Color) = (1, 1, 1, 1)
         _BorderColorSource ("Color Source (0 color, 1 country globals, 2 province globals)", Float) = 2
         _BorderWidth ("Width (map px)", Float) = 0.6
@@ -31,7 +40,8 @@ Shader "Archon/BorderMesh"
         {
             Name "BorderMesh"
 
-            Blend SrcAlpha OneMinusSrcAlpha
+            Blend [_BorderSrcBlend] [_BorderDstBlend]
+            BlendOp [_BorderBlendOp]
             ZWrite Off
             ZTest Always
             Cull Off
@@ -54,6 +64,9 @@ Shader "Archon/BorderMesh"
                 float4 _BorderColor;
                 float4 _BorderFade;
                 float _BorderUseTexture;
+                float _BorderTexAlphaOnly;
+                float _BorderSoftness;
+                float _BorderPremultiply;
                 float _BorderColorSource;
                 float _BorderWidth;
                 float _BorderWidthPerLevel;
@@ -116,7 +129,10 @@ Shader "Archon/BorderMesh"
                 float halfWidth = 0.5 * width * floorScale;
 
                 float3 posWS = center;
-                posWS.xz += input.normalOS.xz * halfWidth;
+                // Side from V: left edge -1, center line 0, right edge +1. The normal is always the
+                // one-pixel offset towards the right; center vertices keep it (for the width floor
+                // and fade above) but do not move.
+                posWS.xz += input.normalOS.xz * halfWidth * (input.uv.y * 2.0 - 1.0);
                 posWS.y = TerrainHeight(posWS);
 
                 output.positionCS = TransformWorldToHClip(posWS);
@@ -142,18 +158,26 @@ Shader "Archon/BorderMesh"
                 {
                     // Paradox layout: texture U runs along the border, V across it
                     float4 tex = SAMPLE_TEXTURE2D(_BorderTex, sampler_BorderTex, float2(input.uv.x * _BorderTile, v));
-                    color.rgb *= tex.rgb;
+                    if (_BorderTexAlphaOnly < 0.5)
+                        color.rgb *= tex.rgb;
                     alpha = tex.a;
                 }
                 else
                 {
                     // Solid strip with analytic anti-aliased edges (junction cap centers have v = 0.5)
                     float edge = 0.5 - abs(v - 0.5);
-                    alpha = saturate(edge / max(fwidth(v), 1e-5));
+                    float crisp = saturate(edge / max(fwidth(v), 1e-5));
+                    // Soft: quadratic falloff from the center line to the strip edge (glow)
+                    float soft = saturate(edge * 2.0);
+                    alpha = lerp(crisp, soft * soft, saturate(_BorderSoftness));
                 }
 
                 color.rgb = ArchonApplyNight(color.rgb, input.mapUV, 1.0);
-                return half4(color.rgb, color.a * strength * alpha * input.fade);
+                float outAlpha = color.a * strength * alpha * input.fade;
+                // Lighten (Max blend ignores blend factors): fold the alpha into the color
+                if (_BorderPremultiply > 0.5)
+                    return half4(color.rgb * outAlpha, outAlpha);
+                return half4(color.rgb, outAlpha);
             }
             ENDHLSL
         }

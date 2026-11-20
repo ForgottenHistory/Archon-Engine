@@ -1,6 +1,7 @@
 using UnityEngine;
 using Map.Rendering;
 using Map.Rendering.Highlight;
+using Map.Rendering.Border;
 using Utils;
 using Core.Modding;
 
@@ -19,6 +20,8 @@ namespace Map.Interaction
         [Header("Highlight Settings")]
         [SerializeField] private HighlightMode highlightMode = HighlightMode.Fill;
         [SerializeField] private float borderThickness = 2.0f;
+        [Tooltip("With mesh borders the selection is a smooth outline; also draw the pixel fill under it")]
+        [SerializeField] private bool fillWithMeshOutline = false;
 
         [Header("Debug")]
         [SerializeField] private bool logOperations = false;
@@ -41,6 +44,16 @@ namespace Map.Interaction
 
         // Pluggable renderer support
         private bool rendererRegistered = false;
+
+        // Smooth outline from the active border renderer (mesh borders), if it supports it
+        private BorderComputeDispatcher borderDispatcher;
+
+        private IBorderHighlightOutline GetOutline()
+        {
+            if (borderDispatcher == null)
+                borderDispatcher = FindFirstObjectByType<BorderComputeDispatcher>();
+            return borderDispatcher != null ? borderDispatcher.GetActiveBorderRenderer() as IBorderHighlightOutline : null;
+        }
 
         public enum HighlightMode
         {
@@ -184,6 +197,15 @@ namespace Map.Interaction
             currentHighlightColor = color;
             highlightMode = mode;
 
+            // Mesh borders: smooth outline replaces the pixel fill
+            var outline = GetOutline();
+            if (outline != null && !fillWithMeshOutline)
+            {
+                DispatchClear();
+                outline.SetHighlightOutlineProvince(provinceID, color);
+                return;
+            }
+
             // Select kernel based on mode
             int kernelToUse = (mode == HighlightMode.Fill) ? highlightProvinceKernel : highlightProvinceBordersKernel;
 
@@ -206,6 +228,8 @@ namespace Map.Interaction
 
             // Dispatch compute shader
             highlightCompute.Dispatch(kernelToUse, threadGroupsX, threadGroupsY, 1);
+
+            outline?.SetHighlightOutlineProvince(provinceID, color);
         }
 
         /// <summary>
@@ -250,6 +274,15 @@ namespace Map.Interaction
                 return;
             }
 
+            // Mesh borders: smooth outline replaces the pixel fill
+            var outline = GetOutline();
+            if (outline != null && !fillWithMeshOutline)
+            {
+                DispatchClear();
+                outline.SetHighlightOutlineCountry(countryID, color);
+                return;
+            }
+
             // Set textures
             highlightCompute.SetTexture(highlightCountryKernel, "ProvinceOwnerTexture", textureManager.ProvinceOwnerTexture);
             highlightCompute.SetTexture(highlightCountryKernel, "HighlightTexture", textureManager.HighlightTexture);
@@ -269,10 +302,24 @@ namespace Map.Interaction
             // Dispatch compute shader
             highlightCompute.Dispatch(highlightCountryKernel, threadGroupsX, threadGroupsY, 1);
 
+            outline?.SetHighlightOutlineCountry(countryID, color);
+
             if (logOperations)
             {
                 ArchonLogger.Log($"ProvinceHighlighter: Highlighted country {countryID} with color {color}", "map_interaction");
             }
+        }
+
+        /// <summary>Clear the highlight texture (pixel fill) only.</summary>
+        private void DispatchClear()
+        {
+            highlightCompute.SetTexture(clearHighlightKernel, "HighlightTexture", textureManager.HighlightTexture);
+            highlightCompute.SetInt("MapWidth", textureManager.MapWidth);
+            highlightCompute.SetInt("MapHeight", textureManager.MapHeight);
+
+            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
+            highlightCompute.Dispatch(clearHighlightKernel, threadGroupsX, threadGroupsY, 1);
         }
 
         /// <summary>
@@ -283,19 +330,8 @@ namespace Map.Interaction
             if (highlightCompute == null || textureManager == null)
                 return;
 
-            // Set textures
-            highlightCompute.SetTexture(clearHighlightKernel, "HighlightTexture", textureManager.HighlightTexture);
-
-            // Set dimensions
-            highlightCompute.SetInt("MapWidth", textureManager.MapWidth);
-            highlightCompute.SetInt("MapHeight", textureManager.MapHeight);
-
-            // Calculate thread groups
-            int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-            int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
-
-            // Dispatch clear kernel
-            highlightCompute.Dispatch(clearHighlightKernel, threadGroupsX, threadGroupsY, 1);
+            DispatchClear();
+            GetOutline()?.ClearHighlightOutline();
 
             // Reset state
             currentHighlightedProvince = 0;

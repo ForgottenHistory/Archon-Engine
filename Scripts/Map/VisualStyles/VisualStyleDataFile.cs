@@ -73,8 +73,11 @@ namespace Archon.Engine.Map
     {
         private const string Subsystem = "map_rendering";
 
-        // Loaded textures by resolved path; replaced (and the old one destroyed) on reload
+        // Loaded textures by resolved path + import options; replaced (and the old one destroyed)
+        // on reload. Within one Apply the same key is shared: two entries naming the same file must
+        // not destroy each other's texture (that left the first user drawing a destroyed texture).
         private static readonly Dictionary<string, Texture2D> loadedTextures = new Dictionary<string, Texture2D>();
+        private static readonly HashSet<string> texturesThisApply = new HashSet<string>();
 
         /// <summary>
         /// Apply the style data file at relativePath (relative to the data directory).
@@ -83,6 +86,7 @@ namespace Archon.Engine.Map
         public static int Apply(string relativePath, Material material)
         {
             if (string.IsNullOrEmpty(relativePath)) return 0;
+            texturesThisApply.Clear();
 
             if (!DataFileResolver.IsInitialized)
             {
@@ -189,7 +193,9 @@ namespace Archon.Engine.Map
                 Name = name,
                 Width = style.Width,
                 MinScreenWidth = style.MinScreenWidth,
-                Order = style.Order
+                Order = style.Order,
+                Softness = style.Softness,
+                Lighten = style.Lighten
             };
 
             if (e["visible"] != null) style.Visible = (bool)e["visible"];
@@ -197,6 +203,14 @@ namespace Archon.Engine.Map
             if (IsNumber(e["widthPerLevel"])) style.WidthPerLevel = (float)e["widthPerLevel"];
             if (IsNumber(e["minScreenWidth"])) style.MinScreenWidth = (float)e["minScreenWidth"];
             if (IsNumber(e["tile"])) style.Tile = (float)e["tile"];
+            if (IsNumber(e["softness"])) style.Softness = (float)e["softness"];
+            if (e["blend"] != null)
+            {
+                string blend = e["blend"].ToString().ToLowerInvariant();
+                if (blend == "lighten" || blend == "normal") style.Lighten = blend == "lighten";
+                else ArchonLogger.LogError($"{source}: borders.{name}.blend: expected \"normal\" or \"lighten\"", Subsystem);
+            }
+            if (e["alphaOnly"] != null) style.TextureAlphaOnly = (bool)e["alphaOnly"];
             if (IsNumber(e["order"])) style.Order = (int)e["order"];
 
             if (e["color"] != null)
@@ -499,6 +513,10 @@ namespace Archon.Engine.Map
 
             bool linear = options != null && (bool?)options["linear"] == true;
             bool mipmaps = options == null || (bool?)options["mipmaps"] != false;
+            string key = $"{path}|{linear}|{mipmaps}|{options?["filter"]}|{options?["wrap"]}";
+
+            if (texturesThisApply.Contains(key) && loadedTextures.TryGetValue(key, out var shared) && shared != null)
+                return shared;
 
             var texture = new Texture2D(2, 2, TextureFormat.RGBA32, mipmaps, linear);
             if (!texture.LoadImage(File.ReadAllBytes(path)))
@@ -512,9 +530,10 @@ namespace Archon.Engine.Map
             texture.filterMode = ParseFilter(options?["filter"]?.ToString());
             texture.wrapMode = ParseWrap(options?["wrap"]?.ToString());
 
-            if (loadedTextures.TryGetValue(path, out var previous) && previous != null)
+            if (loadedTextures.TryGetValue(key, out var previous) && previous != null)
                 Object.Destroy(previous);
-            loadedTextures[path] = texture;
+            loadedTextures[key] = texture;
+            texturesThisApply.Add(key);
 
             return texture;
         }
