@@ -852,6 +852,29 @@ var texture = new RenderTexture(descriptor);
 
 **Related Decision:** See [decisions/explicit-graphics-format.md](../decisions/explicit-graphics-format.md)
 
+### sRGB Data Texture Trap
+
+**Problem:** `new Texture2D(w, h, format, mipChain)` defaults to `linear: false`, which makes the texture **sRGB**. The GPU then colour-decodes every sample (sRGB → linear), while CPU reads (`GetPixel`, `GetPixelBilinear`, the raw bytes) return the stored value. Any texture that holds *data* (heights, IDs, indices, masks, normals) reads differently on the GPU than on the CPU.
+
+**Symptom (2026-11, HOI4 map):** province picking landed about one province south of the cursor, but only with the perspective camera tilted. Looking straight down it was fine. The heightmap was R8 sRGB: a typical land height of 0.35 read as ~0.10 on the GPU. The rendered terrain sat ~1.25 units lower than the CPU picker's heightfield, and a tilted ray hitting the higher CPU surface resolves closer to the camera. Borders, rivers and labels all sample the same texture on the GPU, so the visuals looked self-consistent and hid the bug.
+
+**The Fix:** pass `linear: true` for data textures.
+```csharp
+// WRONG - sRGB by default, GPU decodes the heights
+heightmapTexture = new Texture2D(w, h, TextureFormat.R8, false);
+
+// RIGHT - raw values on both CPU and GPU
+heightmapTexture = new Texture2D(w, h, TextureFormat.R8, false, true);
+```
+Style-file textures take `linear: true` for the same reason (see the visual style JSON5 `parameters`).
+
+**How to Detect:**
+- Compare a CPU read against what the shader shows at a known pixel. A mismatch that follows the sRGB curve (≈ x^2.2, mid-grey 0.5 → ~0.21) is this bug.
+- A frame capture shows the format as `*_SRGB`, or RenderDoc shows the decoded values.
+- Anything that intersects the CPU copy with GPU-displaced geometry (picking, unit placement, label anchoring) drifts with camera angle.
+
+**Debugging tip:** a marker placed at the CPU pick point always sits under the cursor, because every point on the mouse ray projects there. It can't tell you whether the pick depth is right; check instead whether it touches the rendered surface.
+
 ---
 
 ## Summary: GPU Debugging Workflow

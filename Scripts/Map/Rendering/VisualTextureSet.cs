@@ -109,7 +109,9 @@ namespace Map.Rendering
         /// </summary>
         private void CreateHeightmapTexture()
         {
-            heightmapTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.R8, false);
+            // linear: height is data, not color. An sRGB texture makes the GPU decode it
+            // (0.35 -> ~0.10), so the rendered terrain disagreed with CPU reads (picking).
+            heightmapTexture = new Texture2D(mapWidth, mapHeight, TextureFormat.R8, false, true);
             heightmapTexture.name = "Heightmap_Texture";
             heightmapTexture.filterMode = FilterMode.Bilinear;
             heightmapTexture.wrapMode = TextureWrapMode.Clamp;

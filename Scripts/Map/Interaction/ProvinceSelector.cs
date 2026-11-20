@@ -147,30 +147,82 @@ namespace Map.Interaction
 
             Vector3 worldPoint = hit.point;
 
-            // Compensate for tessellation displacement
-            if (heightmapTexture != null && heightScale > 0.001f)
+            // Read live: the visual style can change _HeightScale after Initialize (and on hot reload)
+            if (mapRenderer != null && mapRenderer.sharedMaterial != null && mapRenderer.sharedMaterial.HasProperty("_HeightScale"))
+                heightScale = mapRenderer.sharedMaterial.GetFloat("_HeightScale");
+
+            // Compensate for tessellation displacement: the collider is flat, the rendered
+            // surface is displaced by the heightmap. Intersect the ray with the heightfield.
+            if (heightmapTexture != null && heightScale > 0.001f &&
+                TryIntersectHeightfield(ray, out Vector3 displacedPoint))
             {
-                // Get UV at flat hit point
-                Vector3 localPoint = mapQuadTransform.InverseTransformPoint(hit.point);
-                float u = (localPoint.x - meshMin.x) / (meshMax.x - meshMin.x);
-                float v = (localPoint.z - meshMin.z) / (meshMax.z - meshMin.z);
-
-                // Sample heightmap with same flips as province ID lookup
-                Color heightSample = heightmapTexture.GetPixelBilinear(1.0f - u, 1.0f - v);
-                float displacedY = mapQuadTransform.position.y + (heightSample.r - 0.5f) * heightScale;
-
-                // Re-intersect ray with plane at displaced Y
-                if (Mathf.Abs(ray.direction.y) > 0.0001f)
-                {
-                    float t = (displacedY - ray.origin.y) / ray.direction.y;
-                    if (t > 0)
-                    {
-                        worldPoint = ray.origin + ray.direction * t;
-                    }
-                }
+                worldPoint = displacedPoint;
             }
 
             return WorldPointToProvinceID(worldPoint);
+        }
+
+        private const int HeightfieldMarchSteps = 64;
+        private const int HeightfieldRefineSteps = 10;
+
+        /// <summary>
+        /// Surface height in mesh-local space at local (x, z). Must match the displacement in
+        /// MapPassTerrain.hlsl: heightUV = (uv.x, 1 - uv.y), y += (h - 0.5) * _HeightScale.
+        /// </summary>
+        private float LocalSurfaceHeight(float localX, float localZ)
+        {
+            float u = (localX - meshMin.x) / (meshMax.x - meshMin.x);
+            float v = (localZ - meshMin.z) / (meshMax.z - meshMin.z);
+            float h = heightmapTexture.GetPixelBilinear(u, 1.0f - v).r;
+            return (h - 0.5f) * heightScale;
+        }
+
+        /// <summary>
+        /// Ray-march the heightfield in mesh-local space (same space the shader displaces in,
+        /// so transform scale is handled), then bisect to the surface crossing.
+        /// </summary>
+        private bool TryIntersectHeightfield(Ray worldRay, out Vector3 worldPoint)
+        {
+            worldPoint = default;
+
+            Vector3 origin = mapQuadTransform.InverseTransformPoint(worldRay.origin);
+            // Vector (not Direction) form so the transform's scale applies, matching the point
+            Vector3 dir = mapQuadTransform.InverseTransformVector(worldRay.direction);
+            if (dir.y > -1e-6f)
+                return false; // ray not pointing down onto the map
+
+            // Displacement range is [-0.5, 0.5] * heightScale; march between those planes
+            float top = 0.5f * heightScale;
+            float bottom = -0.5f * heightScale;
+            float tStart = Mathf.Max(0f, (top - origin.y) / dir.y);
+            float tEnd = (bottom - origin.y) / dir.y;
+            if (tEnd <= tStart)
+                return false;
+
+            float step = (tEnd - tStart) / HeightfieldMarchSteps;
+            float tPrev = tStart;
+            for (int i = 1; i <= HeightfieldMarchSteps; i++)
+            {
+                float t = tStart + step * i;
+                Vector3 p = origin + dir * t;
+                if (p.y <= LocalSurfaceHeight(p.x, p.z))
+                {
+                    // Crossed the surface between tPrev and t: bisect
+                    float lo = tPrev, hi = t;
+                    for (int j = 0; j < HeightfieldRefineSteps; j++)
+                    {
+                        float mid = 0.5f * (lo + hi);
+                        Vector3 m = origin + dir * mid;
+                        if (m.y <= LocalSurfaceHeight(m.x, m.z)) hi = mid;
+                        else lo = mid;
+                    }
+                    worldPoint = mapQuadTransform.TransformPoint(origin + dir * hi);
+                    return true;
+                }
+                tPrev = t;
+            }
+
+            return false;
         }
 
         /// <summary>
