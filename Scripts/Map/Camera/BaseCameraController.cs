@@ -183,8 +183,14 @@ namespace Map.CameraControllers
             }
         }
 
+        /// <summary>
+        /// Set by UI that wants the mouse wheel (scroll lists): while true the map does not zoom.
+        /// </summary>
+        public static bool ScrollCaptured;
+
         void HandleZoom()
         {
+            if (ScrollCaptured) return;
             float scrollDelta = Input.GetAxis("Mouse ScrollWheel");
 
             if (scrollDelta != 0 && mapCamera != null)
