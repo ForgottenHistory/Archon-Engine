@@ -144,9 +144,18 @@ namespace Core.Systems
 
             totalSearches++;
 
-            // Try cache first (only for simple paths without forbidden/avoid)
-            if (options.UseCache && pathCache != null &&
-                options.ForbiddenProvinces == null && options.AvoidProvinces == null)
+            // No calculator in the options: use the default one (SetDefaultCostCalculator)
+            if (options.CostCalculator == null && defaultCostCalculator != UniformCostCalculator.Instance)
+                options.CostCalculator = defaultCostCalculator;
+
+            // The cache is keyed on (start, goal) only, so it is only valid for uniform costs: a cost
+            // calculator may depend on the unit (owner, type) and on state that changes (ownership, wars)
+            bool cacheable = options.UseCache && pathCache != null &&
+                             options.ForbiddenProvinces == null && options.AvoidProvinces == null &&
+                             (options.CostCalculator == null || options.CostCalculator == UniformCostCalculator.Instance);
+
+            // Try cache first
+            if (cacheable)
             {
                 if (pathCache.TryGet(start, goal, out var cachedPath, out var cachedCost))
                 {
@@ -175,8 +184,7 @@ namespace Core.Systems
             }
 
             // Cache successful results
-            if (result.Success && options.UseCache && pathCache != null &&
-                options.ForbiddenProvinces == null && options.AvoidProvinces == null)
+            if (result.Success && cacheable)
             {
                 pathCache.Add(start, goal, result.Path, result.TotalCost);
             }
@@ -327,11 +335,8 @@ namespace Core.Systems
             var costCalculator = options.GetEffectiveCostCalculator();
             var context = options.Context;
 
-            // Check if start is traversable
-            if (!costCalculator.CanTraverse(start, context))
-            {
-                return PathResult.Error(PathStatus.InvalidStart);
-            }
+            // The start is not checked with CanTraverse: the unit is already there and may always leave
+            // (e.g. it stands in a country whose access it just lost)
 
             // Initialize start
             gScore[start] = FixedPoint64.Zero;
