@@ -61,6 +61,19 @@ namespace Map.Rendering
         /// </summary>
         public static Labels.IMapLabelSource LabelSource { get; set; } = new Labels.DefaultMapLabelSource();
 
+        /// <summary>
+        /// Back to the defaults at the start of every play session, before any BeforeSceneLoad registration.
+        /// Without a domain reload (Enter Play Mode Options) the statics would otherwise keep what the
+        /// previous session registered, e.g. a game's classifier in a scene that doesn't use that game.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        static void ResetStatics()
+        {
+            BorderClassifier = new DefaultBorderClassifier();
+            LabelSource = new Labels.DefaultMapLabelSource();
+            Instance = null;
+        }
+
         void Awake()
         {
             if (Instance != null && Instance != this)

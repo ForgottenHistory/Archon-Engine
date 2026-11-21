@@ -187,11 +187,21 @@ This document lists all implemented features in the Archon Engine organized by c
 - **CommandRegistry** - Reflection-based command auto-discovery
 - **CommandMetadataAttribute** - Declarative command metadata (name, aliases, description, usage)
 - **ICommandFactory** - Interface for argument parsing and command creation
+- **CommandProcessor.CommandExecuted** - Synchronous `Action<ICommand>` raised after every successful execution (local, host or remote), inside the tick that ran it; for recorders and debug tools (unlike the queued, type-only CommandExecutedEvent)
 - **CommandProcessor** - Deterministic command validation and execution
 - **Auto-Registration** - Commands auto-discover via reflection, zero manual registration
 - **Self-Documenting** - Metadata generates help text automatically
 
 ---
+
+## Session Recording
+
+- **SessionRecorder** - Opt-in recording of a play session to tab-separated tables (tick and date on every row), started and fed by the game; built-in commands, log and notes tables; old recordings pruned
+- **IRecordingSource** - Game-defined tables, called on every `SessionRecorder.Record()` at the end of the game's tick
+- **SessionRecorder.Note** - Decisions and why from anywhere (no-op when not recording)
+- **ProvinceControlSource** - Built-in source: owner and controller changes
+- **Tools~/recording** - Python helpers to load and filter recordings (`rec.py`, `rows.py`)
+- See `Docs/Engine/session-recording.md`
 
 ## Save/Load System
 

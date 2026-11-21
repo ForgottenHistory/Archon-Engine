@@ -21,6 +21,23 @@ namespace Core.Commands
 
         private INetworkBridge networkBridge;
         private ushort nextCommandTypeId = 1;
+
+        /// <summary>
+        /// Raised synchronously right after a command executed successfully on this machine, whichever
+        /// path it came by (local, host, or received from the network), with the command itself. Unlike
+        /// CommandExecutedEvent (queued on the EventBus, type only) it fires inside the tick that ran the
+        /// command, so recorders and debug tools see the exact game time and the command's data.
+        /// Listeners must not change game state.
+        /// </summary>
+        public event Action<ICommand> CommandExecuted;
+
+        private void RaiseExecuted(ICommand command)
+        {
+            var handler = CommandExecuted;
+            if (handler == null) return;
+            try { handler(command); }
+            catch (Exception e) { ArchonLogger.LogError($"CommandProcessor: CommandExecuted listener failed - {e.Message}", "core_commands"); }
+        }
         private bool disposed;
 
         // Network state
@@ -272,6 +289,7 @@ namespace Core.Commands
             try
             {
                 command.Execute(gameState);
+                RaiseExecuted(command);
 
                 gameState.EventBus.Emit(new CommandExecutedEvent
                 {
@@ -313,6 +331,7 @@ namespace Core.Commands
             try
             {
                 command.Execute(gameState);
+                RaiseExecuted(command);
                 resultMessage = GetCommandSuccessMessage(command);
 
                 // Emit event
@@ -381,6 +400,7 @@ namespace Core.Commands
                     if (command.Validate(gameState))
                     {
                         command.Execute(gameState);
+                        RaiseExecuted(command);
 
                         // Broadcast to all clients (including sender)
                         networkBridge.BroadcastCommand(commandData, tick);
@@ -397,6 +417,7 @@ namespace Core.Commands
                 {
                     // Client received from host - execute directly (already validated)
                     command.Execute(gameState);
+                    RaiseExecuted(command);
                     if (GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false)
                         ArchonLogger.Log($"CommandProcessor: Executed command from host", "core_commands");
                 }

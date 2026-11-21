@@ -12,6 +12,8 @@
       href: event-driven-architecture.md
     - name: Time System
       href: time-system-architecture.md
+    - name: Session Recording
+      href: session-recording.md
     - name: Save/Load Architecture
       href: save-load-architecture.md
 - name: Data Architecture

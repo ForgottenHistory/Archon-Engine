@@ -225,6 +225,9 @@
 - **Core.EngineInitializer** - ENGINE orchestrator for phase-based initialization
 - **Core.GameStateSnapshot** - Double-buffer pattern for zero-blocking UI reads
 
+## Recording/
+- **Core.Recording.SessionRecorder** - Opt-in session recording to TSV tables (commands, log, notes built in); RecordingOptions, RecordingTable, IRecordingSource, ProvinceControlSource
+
 ---
 
 ## Collections/
