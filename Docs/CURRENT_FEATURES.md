@@ -101,6 +101,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **UnitColdData** - Cold unit data: Name, Experience, CombatHistory, Equipment
 - **Unit Commands** - CreateUnit, MoveUnit, DisbandUnit with validation
 - **Unit Movement Queue** - Fixed-size circular buffer for pathfinding waypoints
+- **Movement hooks** - `ArrivalBlocker` lets a game stop a unit entering a province; `TicksPerDay` (1 = daily, 24 = hourly) sets how finely units step
 - **Unit Events** - UnitCreated, UnitMoved, UnitDisbanded, CombatResolved
 - **Sparse Collections** - Province-to-units mapping with NativeParallelMultiHashMap
 - **Hot/Cold Separation** - Frequently-accessed data separate from detailed information
