@@ -23,7 +23,7 @@ namespace StarterKit
     public class ProvinceInfoUI : StarterKitPanel
     {
         [Header("Highlight")]
-        [SerializeField] private Color hoverHighlightColor = new Color(1f, 1f, 1f, 0.3f);
+        [SerializeField] private Color hoverHighlightColor = new Color(1f, 1f, 1f, 0.3f); // alpha 0 disables the hover highlight
         [SerializeField] private Color selectionHighlightColor = new Color(1f, 0.84f, 0f, 0.5f);
 
         // UI Elements
@@ -253,6 +253,9 @@ namespace StarterKit
 
         private void HandleProvinceHovered(ushort provinceID)
         {
+            if (hoverHighlightColor.a <= 0f)
+                return;
+
             if (provinceHighlighter == null)
                 return;
 
