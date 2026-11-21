@@ -79,6 +79,13 @@ namespace Map.Rendering.Border
         public ProvinceQueries ProvinceQueries;
     }
 
+    /// <summary>ENGINE: Optional capability of a border renderer: exposes its traced border arcs.</summary>
+    public interface IBorderArcSource
+    {
+        /// <summary>Every traced province border (polylines in map pixels), for games that draw their own lines along borders.</summary>
+        System.Collections.Generic.IReadOnlyList<BorderArc> Arcs { get; }
+    }
+
     /// <summary>
     /// ENGINE: Optional capability of a border renderer: outline the highlighted province or
     /// country with its own (smoothed) border geometry, so the selection edge matches the borders

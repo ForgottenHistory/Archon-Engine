@@ -10,7 +10,7 @@ namespace Map.Rendering.Border
     /// mesh, styled by BorderClassStyles (visual style data file, hot reloaded).
     /// Ownership changes only reclassify arcs and rebuild meshes; the graph is static.
     /// </summary>
-    public class MeshGeometryBorderRenderer : BorderRendererBase, IBorderHighlightOutline
+    public class MeshGeometryBorderRenderer : BorderRendererBase, IBorderHighlightOutline, IBorderArcSource
     {
         public override string RendererId => "MeshGeometry";
         public override string DisplayName => "Mesh Geometry (3D)";
@@ -36,6 +36,8 @@ namespace Map.Rendering.Border
         private bool secondaryActive;
         private int secondaryStyleVersion = -1;
         private static readonly string[] HighlightClassNames = { BorderClassNames.Highlight };
+
+        public System.Collections.Generic.IReadOnlyList<BorderArc> Arcs => curveCache != null ? curveCache.Arcs : null;
 
         protected override void OnInitialize()
         {
