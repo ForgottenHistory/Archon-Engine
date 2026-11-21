@@ -104,14 +104,9 @@ namespace Core.Systems
             // Set up calendar (default to StandardCalendar if not provided)
             calendar = customCalendar ?? new StandardCalendar();
 
-            // Set start date (validated against calendar). The game's GameSettings start date wins when it
-            // has one, so the clock and the province history filter use the same date; otherwise the
-            // fields on this component.
-            var settings = GameSettings.Instance;
-            bool fromSettings = settings != null && settings.StartYear > 0;
-            var startDate = fromSettings
-                ? calendar.ClampToValidDate(settings.StartYear, settings.StartMonth, settings.StartDay, 0)
-                : calendar.ClampToValidDate(startYear, startMonth, startDay, 0);
+            // Set start date (validated against calendar): the fields on this component; a game's
+            // GameSettings start date replaces it (ApplyStartDate, here or from EngineInitializer)
+            var startDate = calendar.ClampToValidDate(startYear, startMonth, startDay, 0);
             year = startDate.Year;
             month = startDate.Month;
             day = startDate.Day;
@@ -123,6 +118,7 @@ namespace Core.Systems
             isPaused = (gameSpeed == 0);
 
             isInitialized = true;
+            ApplyStartDate(GameSettings.Instance); // when the settings are registered already
 
             ArchonLogger.Log($"TimeManager initialized - Starting date: {GetCurrentGameTime()}, Speed: {gameSpeed}", "core_time");
 
@@ -324,6 +320,17 @@ namespace Core.Systems
             eventBus?.Emit(new TimeStateChangedEvent { IsPaused = isPaused, GameSpeed = gameSpeed });
 
             ArchonLogger.Log($"Game speed changed to {gameSpeed}x", "core_time");
+        }
+
+        /// <summary>
+        /// Start the clock at the scenario start date of these settings (00:00), so the clock and the
+        /// province history filter agree. No-op when the settings have no start date (StartYear 0), or
+        /// once time has run (a loaded save keeps its own date).
+        /// </summary>
+        public void ApplyStartDate(GameSettings settings)
+        {
+            if (settings == null || settings.StartYear <= 0 || calendar == null || currentTick != 0) return;
+            SetGameTime(settings.StartYear, settings.StartMonth, settings.StartDay, 0);
         }
 
         /// <summary>

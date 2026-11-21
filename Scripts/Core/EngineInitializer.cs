@@ -131,6 +131,10 @@ namespace Core
 
             // Sync old variables with new context
             gameState = initContext.GameState;
+
+            // The clock may have started before the settings were registered (GameState initializes on
+            // Awake), so set the scenario start date now
+            gameState?.Time?.ApplyStartDate(gameSettings);
             gameRegistries = initContext.Registries;
             referenceResolver = initContext.ReferenceResolver;
             crossReferenceBuilder = initContext.CrossReferenceBuilder;
