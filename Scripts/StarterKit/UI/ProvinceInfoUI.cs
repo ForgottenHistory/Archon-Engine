@@ -24,6 +24,9 @@ namespace StarterKit
     {
         [Header("Highlight")]
         [SerializeField] private Color hoverHighlightColor = new Color(1f, 1f, 1f, 0.3f); // alpha 0 disables the hover highlight
+
+        /// <summary>Right-click clears the selection by default. A game where right-click is an order (or opens something) turns this off.</summary>
+        public bool ClearSelectionOnRightClick { get; set; } = true;
         [SerializeField] private Color selectionHighlightColor = new Color(1f, 0.84f, 0f, 0.5f);
 
         // UI Elements
@@ -276,6 +279,7 @@ namespace StarterKit
 
         private void HandleRightClick(ushort provinceID)
         {
+            if (!ClearSelectionOnRightClick) return;
             currentProvinceID = 0;
             provinceHighlighter?.ClearHighlight();
             Hide();
