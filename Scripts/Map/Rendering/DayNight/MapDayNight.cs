@@ -5,6 +5,7 @@ namespace Map.Rendering.DayNight
 {
     /// <summary>
     /// ENGINE: Day/night settings, from the "dayNight" section of the visual style data file.
+    /// Opt-in: a style without that section has no day/night and no toggle key (Off).
     /// </summary>
     public sealed class MapDayNightStyle
     {
@@ -31,17 +32,20 @@ namespace Map.Rendering.DayNight
         public bool Seasons = true;
         /// <summary>Seconds to fade the night in or out when toggled.</summary>
         public float FadeSeconds = 0.4f;
+
+        /// <summary>No day/night: for styles without a "dayNight" section, and before any style loads.</summary>
+        public static MapDayNightStyle Off => new MapDayNightStyle { Enabled = false, ToggleKey = KeyCode.None };
     }
 
     public static class MapDayNightStyles
     {
-        private static MapDayNightStyle current = new MapDayNightStyle();
+        private static MapDayNightStyle current = MapDayNightStyle.Off;
         public static MapDayNightStyle Current => current;
         public static int Version { get; private set; }
 
         public static void Set(MapDayNightStyle style)
         {
-            current = style ?? new MapDayNightStyle();
+            current = style ?? MapDayNightStyle.Off;
             Version++;
         }
     }

@@ -332,6 +332,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Development Gradients** - Configurable 5-tier color progressions
 - **Engine-Game Separation** - Engine provides infrastructure, game defines visuals
 - **Two-Level Customization** - Fine-grained (pluggable interfaces) or complete override (custom material)
+- **Day/Night (opt-in)** - MapDayNight drives sun, night tint and city-light globals from game time; on only when the visual style data file has a `dayNight` section (starting state, toggle key, look)
 
 ---
 

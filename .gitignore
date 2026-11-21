@@ -118,3 +118,6 @@ Template-Data/map/provinces.bmp.borders
 Template-Data/map/provinces.bmp.borders.meta
 Template-Data/map/provinces.png.borders
 Template-Data/map/provinces.png.borders.meta
+
+# Python caches (Tools~)
+__pycache__/

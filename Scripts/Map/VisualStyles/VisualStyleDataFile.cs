@@ -329,7 +329,7 @@ namespace Archon.Engine.Map
         private static MapDayNightStyle ParseDayNight(JObject e, string source)
         {
             var s = new MapDayNightStyle();
-            if (e == null) return s;
+            if (e == null) return MapDayNightStyle.Off; // opt-in: no "dayNight" section, no day/night (and no toggle key)
 
             if (e["enabled"] != null) s.Enabled = (bool)e["enabled"];
             if (e["seasons"] != null) s.Seasons = (bool)e["seasons"];
