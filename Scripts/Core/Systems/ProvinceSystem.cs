@@ -300,6 +300,7 @@ namespace Core.Systems
         public ushort GetProvinceOwner(ushort provinceId) => dataManager.GetProvinceOwner(provinceId);
         public ushort GetProvinceController(ushort provinceId) => dataManager.GetProvinceController(provinceId);
         public void SetProvinceOwner(ushort provinceId, ushort newOwner) => dataManager.SetProvinceOwner(provinceId, newOwner);
+        public void SetProvinceController(ushort provinceId, ushort newController) => dataManager.SetProvinceController(provinceId, newController);
         // REMOVED: GetProvinceDevelopment/SetProvinceDevelopment (game-specific - use HegemonProvinceSystem)
         public ushort GetProvinceTerrain(ushort provinceId) => dataManager.GetProvinceTerrain(provinceId);
         public void SetProvinceTerrain(ushort provinceId, ushort terrain) => dataManager.SetProvinceTerrain(provinceId, terrain);

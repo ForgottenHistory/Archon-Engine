@@ -20,6 +20,15 @@ namespace Core.Systems
         public float TimeStamp { get; set; }
     }
 
+    /// <summary>Military control of a province changed (occupation); ownership is unchanged.</summary>
+    public struct ProvinceControllerChangedEvent : IGameEvent
+    {
+        public ushort ProvinceId;
+        public ushort OldController;
+        public ushort NewController;
+        public float TimeStamp { get; set; }
+    }
+
     public struct ProvinceDevelopmentChangedEvent : IGameEvent
     {
         public ushort ProvinceId;

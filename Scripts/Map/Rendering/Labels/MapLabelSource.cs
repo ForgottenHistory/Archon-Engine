@@ -1,3 +1,4 @@
+using Core;
 using Core.Localization;
 using Core.Systems;
 
@@ -15,6 +16,9 @@ namespace Map.Rendering.Labels
 
         /// <summary>Capital province of a country (0 = unknown: the largest piece gets the main label).</summary>
         ushort GetCapitalProvince(ushort countryId, CountrySystem countries);
+
+        /// <summary>Which country's label a province counts towards (default: its owner; a game may use the controller).</summary>
+        ushort GetLabelHolder(ushort province, ushort owner, GameState gameState);
     }
 
     /// <summary>
@@ -37,5 +41,7 @@ namespace Map.Rendering.Labels
         }
 
         public virtual ushort GetCapitalProvince(ushort countryId, CountrySystem countries) => 0;
+
+        public virtual ushort GetLabelHolder(ushort province, ushort owner, GameState gameState) => owner;
     }
 }

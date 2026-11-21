@@ -61,6 +61,7 @@ namespace Map.Rendering.Labels
         private Material material;
         private Mesh mesh;
         private IDisposable ownershipSubscription;
+        private IDisposable controllerSubscription;
         private int appliedStyleVersion = -1;
 
         public int LabelCount { get; private set; }
@@ -92,7 +93,7 @@ namespace Map.Rendering.Labels
             foreach (ushort id in ids) if (id > maxId) maxId = id;
             owners = new ushort[maxId + 1];
             for (int i = 1; i <= maxId; i++)
-                owners[i] = SafeOwner((ushort)i);
+                owners[i] = Holder((ushort)i);
 
             material = new Material(shader) { renderQueue = RenderQueue, name = "MapLabels" };
             var mr = mapPlane != null ? mapPlane.GetComponent<MeshRenderer>() : null;
@@ -117,9 +118,32 @@ namespace Map.Rendering.Labels
             mesh = new Mesh { name = "MapLabels", indexFormat = IndexFormat.UInt32 };
             ownershipSubscription = gameState.EventBus?.Subscribe<ProvinceOwnershipChangedEvent>(OnOwnershipChanged);
 
+            controllerSubscription = gameState.EventBus?.Subscribe<ProvinceControllerChangedEvent>(OnControllerChanged);
+
             ApplyStyle();
             ArchonLogger.Log($"MapLabelRenderer: initialized ({sw.ElapsedMilliseconds}ms readback + setup)", "map_initialization");
             return true;
+        }
+
+        private ushort Holder(ushort province)
+        {
+            ushort owner = SafeOwner(province);
+            var source = MapRendererRegistry.LabelSource;
+            if (source == null) return owner;
+            try { return source.GetLabelHolder(province, owner, gameState); }
+            catch { return owner; }
+        }
+
+        private void OnControllerChanged(ProvinceControllerChangedEvent e)
+        {
+            if (owners == null || e.ProvinceId >= owners.Length) return;
+            ushort old = owners[e.ProvinceId];
+            ushort now = Holder(e.ProvinceId);
+            if (old == now) return;
+            owners[e.ProvinceId] = now;
+            if (old != 0) dirtyCountries.Add(old);
+            if (now != 0) dirtyCountries.Add(now);
+            lastChangeTime = Time.unscaledTime;
         }
 
         private ushort SafeOwner(ushort province)
@@ -131,7 +155,11 @@ namespace Map.Rendering.Labels
         private void OnOwnershipChanged(ProvinceOwnershipChangedEvent e)
         {
             if (owners == null || e.ProvinceId >= owners.Length) return;
-            owners[e.ProvinceId] = e.NewOwner;
+            ushort old = owners[e.ProvinceId];
+            ushort now = Holder(e.ProvinceId);
+            owners[e.ProvinceId] = now;
+            if (old != 0) dirtyCountries.Add(old);
+            if (now != 0) dirtyCountries.Add(now);
             if (e.OldOwner != 0) dirtyCountries.Add(e.OldOwner);
             if (e.NewOwner != 0) dirtyCountries.Add(e.NewOwner);
             lastChangeTime = Time.unscaledTime;
@@ -445,6 +473,8 @@ namespace Map.Rendering.Labels
         {
             ownershipSubscription?.Dispose();
             ownershipSubscription = null;
+            controllerSubscription?.Dispose();
+            controllerSubscription = null;
             job = null;
             labels.Clear();
             dirtyCountries.Clear();

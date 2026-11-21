@@ -210,6 +210,35 @@ namespace Core.Systems.Province
             });
         }
 
+        /// <summary>
+        /// Set who controls a province militarily (occupation) and emit an event. Ownership is untouched.
+        /// </summary>
+        public void SetProvinceController(ushort provinceId, ushort newController)
+        {
+            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
+            {
+                ArchonLogger.LogWarning($"Cannot set controller for invalid province {provinceId}", "core_simulation");
+                return;
+            }
+
+            var states = snapshot.GetProvinceWriteBuffer();
+            var state = states[arrayIndex];
+            ushort oldController = state.controllerID;
+            if (oldController == newController)
+                return;
+
+            state.controllerID = newController;
+            states[arrayIndex] = state;
+            MarkDirty(arrayIndex);
+
+            eventBus?.Emit(new ProvinceControllerChangedEvent
+            {
+                ProvinceId = provinceId,
+                OldController = oldController,
+                NewController = newController
+            });
+        }
+
         // REMOVED: GetProvinceDevelopment() and SetProvinceDevelopment()
         // Development is game-specific and moved to Game layer (HegemonProvinceSystem)
         // Old code: dataManager.GetProvinceDevelopment(provinceId)
