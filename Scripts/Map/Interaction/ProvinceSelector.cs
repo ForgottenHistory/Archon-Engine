@@ -267,11 +267,38 @@ namespace Map.Interaction
         /// </summary>
         private ushort RaycastForProvince(Ray ray)
         {
+            return TryRaycastMapPoint(ray, out Vector3 worldPoint) ? WorldPointToProvinceID(worldPoint) : (ushort)0;
+        }
+
+        /// <summary>
+        /// The point of the rendered map surface under a screen position: the flat collider hit, corrected for
+        /// the heightmap displacement (the same point province picking uses). Use this, not a ray against a flat
+        /// plane, for anything that follows the cursor on the map: on raised terrain a flat-plane hit lands
+        /// short of the cursor, more so the closer the camera. mapUV is 0..1 with v from the bottom (the
+        /// texture convention of MapTextureManager.GetProvinceID).
+        /// </summary>
+        public bool TryGetMapPointAtScreenPosition(Vector2 screenPosition, Camera camera, out Vector3 worldPoint, out Vector2 mapUV)
+        {
+            mapUV = default;
+            worldPoint = default;
+            if (camera == null || mapQuadTransform == null) return false;
+            if (!TryRaycastMapPoint(camera.ScreenPointToRay(new Vector3(screenPosition.x, screenPosition.y, 0f)), out worldPoint))
+                return false;
+            Vector3 localPoint = mapQuadTransform.InverseTransformPoint(worldPoint);
+            mapUV = new Vector2(
+                Mathf.Clamp01((localPoint.x - meshMin.x) / (meshMax.x - meshMin.x)),
+                Mathf.Clamp01((localPoint.z - meshMin.z) / (meshMax.z - meshMin.z)));
+            return true;
+        }
+
+        private bool TryRaycastMapPoint(Ray ray, out Vector3 worldPoint)
+        {
+            worldPoint = default;
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit) || hit.transform != mapQuadTransform)
-                return 0;
+                return false;
 
-            Vector3 worldPoint = hit.point;
+            worldPoint = hit.point;
 
             // Read live: the visual style can change _HeightScale after Initialize (and on hot reload)
             if (mapRenderer != null && mapRenderer.sharedMaterial != null && mapRenderer.sharedMaterial.HasProperty("_HeightScale"))
@@ -285,7 +312,7 @@ namespace Map.Interaction
                 worldPoint = displacedPoint;
             }
 
-            return WorldPointToProvinceID(worldPoint);
+            return true;
         }
 
         private const int HeightfieldMarchSteps = 64;

@@ -425,7 +425,7 @@ This document lists all implemented features in the Archon Engine organized by c
 
 ## Interaction Systems
 
-- **ProvinceSelector** - Texture-based selection with <1ms performance, world-space hit point with displacement compensation
+- **ProvinceSelector** - Texture-based selection with <1ms performance, world-space hit point with displacement compensation; `TryGetMapPointAtScreenPosition` gives that corrected point (world and map UV) for drawing that follows the cursor
 - **GPUProvinceNeighborDetector** - GPU compute-based province adjacency detection with cached results
 - **MapInitializer** - Automated setup of map subsystems
 - **MapSystemCoordinator** - Coordinate map subsystems
