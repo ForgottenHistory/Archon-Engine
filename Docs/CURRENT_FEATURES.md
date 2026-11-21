@@ -230,6 +230,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **ICalendar Interface** - Pluggable calendar system for custom calendars
 - **StandardCalendar** - Default 365-day implementation with era support
 - **CalendarConstants** - Single source of truth for time constants
+- **Scenario Start Date** - GameSettings start date sets both the clock (00:00) and the province history filter; TimeManager's own fields are the fallback
 - **GameTime Struct** - Full comparison operators (<, >, <=, >=), IComparable<GameTime>
 - **GameTime Arithmetic** - AddHours, AddDays, AddMonths, AddYears
 - **GameTime Factory** - FromTotalHours, Create(year, month, day, hour)

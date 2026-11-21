@@ -104,8 +104,14 @@ namespace Core.Systems
             // Set up calendar (default to StandardCalendar if not provided)
             calendar = customCalendar ?? new StandardCalendar();
 
-            // Set start date (validated against calendar)
-            var startDate = calendar.ClampToValidDate(startYear, startMonth, startDay, 0);
+            // Set start date (validated against calendar). The game's GameSettings start date wins when it
+            // has one, so the clock and the province history filter use the same date; otherwise the
+            // fields on this component.
+            var settings = GameSettings.Instance;
+            bool fromSettings = settings != null && settings.StartYear > 0;
+            var startDate = fromSettings
+                ? calendar.ClampToValidDate(settings.StartYear, settings.StartMonth, settings.StartDay, 0)
+                : calendar.ClampToValidDate(startYear, startMonth, startDay, 0);
             year = startDate.Year;
             month = startDate.Month;
             day = startDate.Day;

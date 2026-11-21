@@ -60,7 +60,7 @@ namespace Core
         }
 
         [Header("Scenario Start Date")]
-        [Tooltip("Start year for historical date filtering in province files (0 = no filtering, use all data as-is)")]
+        [Tooltip("Scenario start date: the game clock starts here (00:00) and dated province history is applied up to it. 0 = no filtering, and the clock uses TimeManager's own start date")]
         [SerializeField] private int startYear = 0;
         [SerializeField] private int startMonth = 1;
         [SerializeField] private int startDay = 1;
