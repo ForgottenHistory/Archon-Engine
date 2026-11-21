@@ -88,10 +88,11 @@ namespace Core.Units
             availableIDs = new HashSet<ushort>();
             nextID = 1;  // Start at 1 (0 reserved for "no unit")
 
-            // Subscribe to daily tick for movement processing
+            // Subscribe to ticks for movement processing
             if (eventBus != null)
             {
                 eventBus.Subscribe<DailyTickEvent>(OnDailyTick);
+                eventBus.Subscribe<HourlyTickEvent>(OnHourlyTick);
             }
 
             UnityEngine.Debug.Log($"[UnitSystem] Initialized with capacity {capacity}");
@@ -565,9 +566,15 @@ namespace Core.Units
 
         // === Daily Tick Processing ===
 
+        // Movement steps once a day, or hourly when the game sets MovementQueue.TicksPerDay to 24
         private void OnDailyTick(DailyTickEvent evt)
         {
-            movementQueue?.ProcessDailyTick();
+            if (movementQueue != null && movementQueue.TicksPerDay <= 1) movementQueue.ProcessTick();
+        }
+
+        private void OnHourlyTick(HourlyTickEvent evt)
+        {
+            if (movementQueue != null && movementQueue.TicksPerDay > 1) movementQueue.ProcessTick();
         }
 
         // === Disposal ===
@@ -578,6 +585,7 @@ namespace Core.Units
             if (eventBus != null)
             {
                 eventBus.Unsubscribe<DailyTickEvent>(OnDailyTick);
+                eventBus.Unsubscribe<HourlyTickEvent>(OnHourlyTick);
             }
 
             if (units.IsCreated)

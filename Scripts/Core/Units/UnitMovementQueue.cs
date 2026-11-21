@@ -10,8 +10,8 @@ namespace Core.Units
     ///
     /// DESIGN:
     /// - Dictionary tracks moving units: unitID → MovementState
-    /// - Each day, decrement daysRemaining for all moving units
-    /// - When daysRemaining reaches 0, move unit to destination
+    /// - Each movement tick (a day by default, see TicksPerDay), decrement ticksRemaining for all moving units
+    /// - When ticksRemaining reaches 0, move unit to destination
     /// - Units can cancel movement mid-transit (return to origin)
     ///
     /// PERFORMANCE:
@@ -23,21 +23,30 @@ namespace Core.Units
     public class UnitMovementQueue
     {
         /// <summary>
+        /// Movement ticks per game day. 1 (default): units step once a day. 24: once an hour, for games
+        /// that want finer movement. Set once at startup, before any unit moves.
+        /// </summary>
+        public int TicksPerDay { get; set; } = 1;
+
+        /// <summary>Whole days left of a movement (rounded up), for display</summary>
+        public int DaysRemaining(MovementState state) => (state.ticksRemaining + TicksPerDay - 1) / TicksPerDay;
+
+        /// <summary>
         /// State for a unit currently in transit
         /// </summary>
         public struct MovementState
         {
             public ushort originProvinceID;      // Where unit started
             public ushort destinationProvinceID; // Where unit is going
-            public int daysRemaining;            // Days until arrival
-            public int totalDays;                // Original movement time (for progress %)
+            public int ticksRemaining;           // Ticks until arrival
+            public int totalTicks;               // Original movement time in ticks (for progress %)
 
-            public MovementState(ushort origin, ushort destination, int days)
+            public MovementState(ushort origin, ushort destination, int ticks)
             {
                 this.originProvinceID = origin;
                 this.destinationProvinceID = destination;
-                this.daysRemaining = days;
-                this.totalDays = days;
+                this.ticksRemaining = ticks;
+                this.totalTicks = ticks;
             }
 
             /// <summary>
@@ -46,8 +55,8 @@ namespace Core.Units
             /// </summary>
             public float GetProgress()
             {
-                if (totalDays == 0) return 1f;
-                return 1f - ((float)daysRemaining / totalDays);
+                if (totalTicks <= 0) return 1f;
+                return 1f - ((float)ticksRemaining / totalTicks);
             }
         }
 
@@ -58,9 +67,21 @@ namespace Core.Units
         private UnitSystem unitSystem;
         private EventBus eventBus;
 
-        // Pre-allocated buffers for ProcessDailyTick() (zero allocations)
+        // Pre-allocated buffers for ProcessTick() (zero allocations)
         private List<ushort> arrivedUnitsBuffer;
         private List<KeyValuePair<ushort, MovementState>> updatedStatesBuffer;
+
+        /// <summary>
+        /// Optional game policy: return true to stop a unit from entering its destination (e.g. an enemy
+        /// holds it). A blocked unit stays at its origin with the movement kept, and is asked again on
+        /// every movement tick until the way is clear. Arguments: unit, destination province.
+        /// </summary>
+        public System.Func<ushort, ushort, bool> ArrivalBlocker { get; set; }
+
+        /// <summary>True when the unit has reached its destination but is held at the origin by ArrivalBlocker.</summary>
+        public bool IsBlocked(ushort unitID) => blockedUnits.Contains(unitID);
+
+        private readonly System.Collections.Generic.HashSet<ushort> blockedUnits = new System.Collections.Generic.HashSet<ushort>();
 
         // === Initialization ===
 
@@ -89,7 +110,12 @@ namespace Core.Units
         /// <param name="movementDays">Days to reach next waypoint</param>
         /// <param name="fullPath">Optional: Full path including all waypoints (for multi-hop movement)</param>
         public void StartMovement(ushort unitID, ushort destinationProvinceID, int movementDays, System.Collections.Generic.List<ushort> fullPath = null)
+            => StartMovementTicks(unitID, destinationProvinceID, movementDays * TicksPerDay, fullPath);
+
+        /// <summary>Like StartMovement, with the time to the next waypoint in movement ticks</summary>
+        public void StartMovementTicks(ushort unitID, ushort destinationProvinceID, int movementTicks, System.Collections.Generic.List<ushort> fullPath = null)
         {
+            int movementDays = (movementTicks + TicksPerDay - 1) / TicksPerDay;
             if (!unitSystem.HasUnit(unitID))
             {
                 ArchonLogger.LogWarning($"[UnitMovementQueue] Cannot start movement for non-existent unit {unitID}", "core_simulation");
@@ -124,10 +150,10 @@ namespace Core.Units
             // So there's no need to clear here!
 
             // Add to moving units
-            var movementState = new MovementState(unit.provinceID, destinationProvinceID, movementDays);
+            var movementState = new MovementState(unit.provinceID, destinationProvinceID, movementTicks);
             movingUnits[unitID] = movementState;
 
-            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementDays} days)", "core_simulation");
+            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementTicks} ticks)", "core_simulation");
 
             // Emit event (for UI updates)
             if (eventBus != null)
@@ -153,6 +179,7 @@ namespace Core.Units
             }
 
             movingUnits.Remove(unitID);
+            blockedUnits.Remove(unitID);
 
             // Clear any remaining path
             if (unitPaths.ContainsKey(unitID))
@@ -175,11 +202,11 @@ namespace Core.Units
         }
 
         /// <summary>
-        /// Process daily tick - advance all movements
-        /// Called by TimeManager on daily tick
+        /// Process a movement tick - advance all movements
+        /// Called by UnitSystem once per TicksPerDay step (daily or hourly)
         /// ZERO ALLOCATIONS: Uses pre-allocated buffers
         /// </summary>
-        public void ProcessDailyTick()
+        public void ProcessTick()
         {
             if (movingUnits.Count == 0)
                 return;
@@ -194,10 +221,10 @@ namespace Core.Units
                 ushort unitID = kvp.Key;
                 MovementState state = kvp.Value;
 
-                state.daysRemaining--;
+                state.ticksRemaining--;
 
                 // Check if unit arrived
-                if (state.daysRemaining <= 0)
+                if (state.ticksRemaining <= 0)
                 {
                     arrivedUnitsBuffer.Add(unitID);
                 }
@@ -233,6 +260,15 @@ namespace Core.Units
             }
 
             // Remove from queue
+            if (ArrivalBlocker != null && ArrivalBlocker(unitID, movementState.destinationProvinceID))
+            {
+                blockedUnits.Add(unitID);
+                movementState.ticksRemaining = 0;
+                movingUnits[unitID] = movementState;
+                return;
+            }
+            blockedUnits.Remove(unitID);
+
             movingUnits.Remove(unitID);
 
             // Teleport unit to destination
@@ -258,8 +294,8 @@ namespace Core.Units
                 ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)", "core_simulation");
 
                 // Start movement to next waypoint (use default movement days - should be passed from original command)
-                // Note: We use 2 days as default, but this could be improved by storing movement speed with the path
-                StartMovement(unitID, nextWaypoint, 2);
+                // Each leg takes as long as the one just finished
+                StartMovementTicks(unitID, nextWaypoint, movementState.totalTicks);
 
                 // If no more waypoints after this, remove path
                 if (pathQueue.Count == 0)
@@ -352,8 +388,8 @@ namespace Core.Units
                 writer.Write(kvp.Key); // unitID
                 writer.Write(kvp.Value.originProvinceID);
                 writer.Write(kvp.Value.destinationProvinceID);
-                writer.Write(kvp.Value.daysRemaining);
-                writer.Write(kvp.Value.totalDays);
+                writer.Write(kvp.Value.ticksRemaining);
+                writer.Write(kvp.Value.totalTicks);
             }
 
             // Save paths for multi-hop movement
@@ -383,11 +419,11 @@ namespace Core.Units
                 ushort unitID = reader.ReadUInt16();
                 ushort origin = reader.ReadUInt16();
                 ushort destination = reader.ReadUInt16();
-                int daysRemaining = reader.ReadInt32();
-                int totalDays = reader.ReadInt32();
+                int ticksRemaining = reader.ReadInt32();
+                int totalTicks = reader.ReadInt32();
 
-                var state = new MovementState(origin, destination, totalDays);
-                state.daysRemaining = daysRemaining; // Restore progress
+                var state = new MovementState(origin, destination, totalTicks);
+                state.ticksRemaining = ticksRemaining; // Restore progress
 
                 movingUnits[unitID] = state;
             }

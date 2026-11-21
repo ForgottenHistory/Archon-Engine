@@ -46,7 +46,10 @@ namespace Core.Systems
         // Speed control (deterministic fixed-point)
         private int gameSpeed = 0; // Actual multiplier (0=paused, 1=1x, 2=2x, etc.)
         private FixedPoint64 accumulator = FixedPoint64.Zero;
-        private readonly FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24);
+        private FixedPoint64 hoursPerSecond = FixedPoint64.FromInt(24);
+
+        /// <summary>Game hours that pass per real second at speed 1 (default 24 = a day per second). Games tune the pace here.</summary>
+        public void SetBaseHoursPerSecond(float hours) => hoursPerSecond = FixedPoint64.FromFloat(Mathf.Max(0.1f, hours));
 
         // Tick counter for command synchronization (CRITICAL for multiplayer)
         private ulong currentTick = 0;
