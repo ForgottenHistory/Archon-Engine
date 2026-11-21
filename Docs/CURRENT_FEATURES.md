@@ -56,6 +56,7 @@ This document lists all implemented features in the Archon Engine organized by c
 
 - **Province Management** - Efficient management of 10,000+ provinces
 - **Province Ownership Tracking** - Fast owner lookup with bidirectional mapping (province→owner, owner→provinces)
+- **Province Controller** - Separate controller per province (`SetProvinceController`, `ProvinceControllerChangedEvent`); map labels follow a game-chosen holder (`IMapLabelSource.GetLabelHolder`)
 - **Province Development** - Economic development levels per province
 - **Province Terrain System** - Terrain type tracking and modifiers
 - **Province History Database** - Bounded history storage with ring buffers
