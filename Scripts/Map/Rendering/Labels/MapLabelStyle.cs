@@ -30,8 +30,10 @@ namespace Map.Rendering.Labels
         /// would need more fade out.</summary>
         public float MaxScale = 2.5f;
         public float RoomOverflow = 1.1f;
-        /// <summary>Zoom fade [visible below, hidden above] in screen px per map px (labels fade when zoomed in).</summary>
+        /// <summary>Zoom fade [visible below, hidden above] in screen px per map px (labels fade when zoomed in);
+        /// with FadeIn the other way round: [hidden below, visible above] (region labels appear when zoomed in).</summary>
         public Vector2 Fade = new Vector2(1.5f, 2.5f);
+        public bool FadeIn;
 
         /// <summary>Letter spacing: only when the text is shorter than SpaceBelow * the span...</summary>
         public float SpaceBelow = 0.9f;
@@ -41,18 +43,35 @@ namespace Map.Rendering.Labels
         public LabelPlacementSettings Placement = new LabelPlacementSettings();
     }
 
-    /// <summary>Current label style. Version changes on every Set so renderers can rebuild.</summary>
+    /// <summary>Current label styles: country labels and region labels ("regionLabels" section). Version changes
+    /// on every Set so renderers can rebuild.</summary>
     public static class MapLabelStyles
     {
         private static MapLabelStyle current = new MapLabelStyle();
+        private static MapLabelStyle region = DefaultRegion();
 
         public static MapLabelStyle Current => current;
+        public static MapLabelStyle Region => region;
         public static int Version { get; private set; }
 
         public static void Set(MapLabelStyle style)
         {
             current = style ?? new MapLabelStyle();
             Version++;
+        }
+
+        public static void SetRegion(MapLabelStyle style)
+        {
+            region = style ?? DefaultRegion();
+            Version++;
+        }
+
+        /// <summary>Region defaults: appear when zoomed in, smaller than country names.</summary>
+        public static MapLabelStyle DefaultRegion()
+        {
+            var s = new MapLabelStyle { Fade = new Vector2(3f, 5f), FadeIn = true, MaxScale = 1.5f };
+            s.Placement.MaxHeight = 24f;
+            return s;
         }
     }
 }

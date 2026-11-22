@@ -22,6 +22,30 @@ namespace Map.Rendering.Labels
     }
 
     /// <summary>
+    /// Region labels: names of groups of provinces the GAME defines (states, areas), drawn by a second
+    /// MapLabelRenderer in region mode with the "regionLabels" style, while MapRegionLabels.Shown is on.
+    /// Set on MapRendererRegistry.RegionLabelSource (null = no region labels). Regions don't change during
+    /// a game: they are read once, when the map initializes. Called on the main thread.
+    /// </summary>
+    public interface IMapRegionLabelSource
+    {
+        /// <summary>The region a province belongs to (0 = none: no label covers it).</summary>
+        ushort GetRegion(ushort province);
+
+        /// <summary>Label text for a region (null/empty = no label).</summary>
+        string GetRegionText(ushort region);
+    }
+
+    /// <summary>Whether region labels are drawn (GAME switches them on, e.g. while a map tool needs them).</summary>
+    public static class MapRegionLabels
+    {
+        public static bool Shown { get; set; }
+
+        [UnityEngine.RuntimeInitializeOnLoadMethod(UnityEngine.RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void Reset() => Shown = false;
+    }
+
+    /// <summary>
     /// ENGINE default: localized name keyed by the country tag (falls back to the display name,
     /// then the tag); no capital.
     /// </summary>

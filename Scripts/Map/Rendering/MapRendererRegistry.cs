@@ -62,6 +62,12 @@ namespace Map.Rendering
         public static Labels.IMapLabelSource LabelSource { get; set; } = new Labels.DefaultMapLabelSource();
 
         /// <summary>
+        /// Region label names and membership (states, areas: a second MapLabelRenderer in region mode). Null = no
+        /// region labels. Set before the map exists, like LabelSource.
+        /// </summary>
+        public static Labels.IMapRegionLabelSource RegionLabelSource { get; set; }
+
+        /// <summary>
         /// Back to the defaults at the start of every play session, before any BeforeSceneLoad registration.
         /// Without a domain reload (Enter Play Mode Options) the statics would otherwise keep what the
         /// previous session registered, e.g. a game's classifier in a scene that doesn't use that game.
@@ -71,6 +77,7 @@ namespace Map.Rendering
         {
             BorderClassifier = new DefaultBorderClassifier();
             LabelSource = new Labels.DefaultMapLabelSource();
+            RegionLabelSource = null;
             Instance = null;
         }
 

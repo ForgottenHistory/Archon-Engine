@@ -57,6 +57,8 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Province Management** - Efficient management of 10,000+ provinces
 - **Province Ownership Tracking** - Fast owner lookup with bidirectional mapping (province→owner, owner→provinces)
 - **Province Controller** - Separate controller per province (`SetProvinceController`, `ProvinceControllerChangedEvent`); map labels follow a game-chosen holder (`IMapLabelSource.GetLabelHolder`)
+- **Runtime Border Class Hiding** - `BorderClassStyles.SetHidden(class, hide)` hides a border class while a game tool needs it, apart from the style file (survives hot reloads)
+- **Region Labels** - Names of game-defined province groups (states, areas) from `IMapRegionLabelSource`, a second `MapLabelRenderer` in region mode, `regionLabels` style section, fade in when zoomed in, drawn while `MapRegionLabels.Shown`
 - **Province Development** - Economic development levels per province
 - **Province Terrain System** - Terrain type tracking and modifiers
 - **Province History Database** - Bounded history storage with ring buffers

@@ -52,6 +52,22 @@ namespace Map.Rendering.Border
 
         public static bool TryGet(string name, out BorderClassStyle style) => styles.TryGetValue(name, out style);
 
+        // Classes the GAME hides at runtime (e.g. a map tool that works on bigger regions hides province borders).
+        // Kept apart from the styles, so a style hot reload doesn't bring them back.
+        private static readonly HashSet<string> hidden = new HashSet<string>();
+
+        /// <summary>Hide or show a border class at runtime, whatever its style says.</summary>
+        public static void SetHidden(string name, bool hide)
+        {
+            if (string.IsNullOrEmpty(name)) return;
+            if (hide ? hidden.Add(name) : hidden.Remove(name)) Version++;
+        }
+
+        public static bool IsHidden(string name) => name != null && hidden.Contains(name);
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetHidden() => hidden.Clear();
+
         /// <summary>
         /// Style for a class: data file entry, else engine defaults (country thicker, others like province).
         /// </summary>

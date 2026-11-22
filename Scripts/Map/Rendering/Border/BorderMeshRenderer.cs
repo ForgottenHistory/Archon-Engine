@@ -79,7 +79,7 @@ namespace Map.Rendering
             for (int i = 0; i < meshes.Count; i++)
             {
                 var style = BorderClassStyles.Resolve(classNames[meshClassIds[i]]);
-                if (style.Visible)
+                if (style.Visible && !BorderClassStyles.IsHidden(style.Name))
                     ordered.Add((meshes[i], style));
             }
             ordered.Sort((a, b) => a.style.Order != b.style.Order ? a.style.Order.CompareTo(b.style.Order)

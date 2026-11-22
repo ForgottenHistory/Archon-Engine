@@ -22,6 +22,11 @@ namespace Map.Rendering.Labels
     /// quads from a runtime TextMeshPro font asset (font file from the "labels" style section), in
     /// one mesh drawn by Archon/MapLabel: draped on the heightmap, scaled up to a minimum screen size
     /// and faded out when zoomed in.
+    ///
+    /// Region mode (Regions, set before Initialize): the same for the GAME's regions
+    /// (MapRendererRegistry.RegionLabelSource: states, areas) with the "regionLabels" style. Region labels are
+    /// placed in the background at startup (ready before a tool first shows them), drawn only while
+    /// MapRegionLabels.Shown is on, and fade in when zoomed in.
     /// </summary>
     public class MapLabelRenderer : MonoBehaviour
     {
@@ -69,6 +74,11 @@ namespace Map.Rendering.Labels
         private int appliedStyleVersion = -1;
 
         public int LabelCount { get; private set; }
+
+        /// <summary>Region mode: label the GAME's regions instead of countries. Set before Initialize.</summary>
+        public bool Regions { get; set; }
+
+        private MapLabelStyle Style => Regions ? MapLabelStyles.Region : MapLabelStyles.Current;
 
         /// <summary>Read the province map and start placing labels. Returns false if the map isn't ready.</summary>
         public bool Initialize(MapTextureManager textures, Transform mapPlane, GameState state)
@@ -119,10 +129,12 @@ namespace Map.Rendering.Labels
             if (textureManager.HeightmapTexture != null)
                 material.SetTexture(HeightmapId, textureManager.HeightmapTexture);
 
-            mesh = new Mesh { name = "MapLabels", indexFormat = IndexFormat.UInt32 };
-            ownershipSubscription = gameState.EventBus?.Subscribe<ProvinceOwnershipChangedEvent>(OnOwnershipChanged);
-
-            controllerSubscription = gameState.EventBus?.Subscribe<ProvinceControllerChangedEvent>(OnControllerChanged);
+            mesh = new Mesh { name = Regions ? "MapRegionLabels" : "MapLabels", indexFormat = IndexFormat.UInt32 };
+            if (!Regions) // regions don't change hands
+            {
+                ownershipSubscription = gameState.EventBus?.Subscribe<ProvinceOwnershipChangedEvent>(OnOwnershipChanged);
+                controllerSubscription = gameState.EventBus?.Subscribe<ProvinceControllerChangedEvent>(OnControllerChanged);
+            }
 
             ApplyStyle();
             ArchonLogger.Log($"MapLabelRenderer: initialized ({sw.ElapsedMilliseconds}ms readback + setup)", "map_initialization");
@@ -131,6 +143,13 @@ namespace Map.Rendering.Labels
 
         private ushort Holder(ushort province)
         {
+            if (Regions)
+            {
+                var regions = MapRendererRegistry.RegionLabelSource;
+                if (regions == null) return 0;
+                try { return regions.GetRegion(province); }
+                catch { return 0; }
+            }
             ushort owner = SafeOwner(province);
             var source = MapRendererRegistry.LabelSource;
             if (source == null) return owner;
@@ -180,7 +199,7 @@ namespace Map.Rendering.Labels
         private void ApplyStyle()
         {
             appliedStyleVersion = MapLabelStyles.Version;
-            var style = MapLabelStyles.Current;
+            var style = Style;
             if (material == null) return;
 
             string fontPath = ResolveFontPath(style.Font);
@@ -198,7 +217,7 @@ namespace Map.Rendering.Labels
             material.SetVector(ShadowParamsId, new Vector4(-style.ShadowOffset.x * em, style.ShadowOffset.y * em,
                 Mathf.Clamp01(style.ShadowSoftness), Mathf.Max(style.Sharpness, 0.05f)));
             material.SetVector(ScreenParamsId, new Vector4(Mathf.Max(style.MinScreenHeight, 0f), Mathf.Max(style.MaxScale, 1f), 0, 0));
-            material.SetVector(FadeId, new Vector4(style.Fade.x, style.Fade.y, 0, 0));
+            material.SetVector(FadeId, new Vector4(style.Fade.x, style.Fade.y, style.FadeIn ? 1 : 0, 0));
 
             placeAll = true; // text, font or placement settings may have changed
         }
@@ -267,7 +286,7 @@ namespace Map.Rendering.Labels
 
         private void StartJob()
         {
-            var style = MapLabelStyles.Current;
+            var style = Style;
             var countries = new HashSet<ushort>();
             if (placeAll)
             {
@@ -283,12 +302,13 @@ namespace Map.Rendering.Labels
             firstChangeTime = -1f;
 
             var source = MapRendererRegistry.LabelSource ?? new DefaultMapLabelSource();
+            var regions = MapRendererRegistry.RegionLabelSource;
             var requests = new List<LabelRequest>(countries.Count);
-            if (style.Visible)
+            if (style.Visible && (!Regions || regions != null))
             {
                 foreach (ushort c in countries)
                 {
-                    string text = source.GetLabelText(c, gameState.Countries);
+                    string text = Regions ? regions.GetRegionText(c) : source.GetLabelText(c, gameState.Countries);
                     if (string.IsNullOrWhiteSpace(text)) continue;
                     if (style.Uppercase) text = text.ToUpperInvariant();
                     font.TryAddCharacters(text);
@@ -296,7 +316,7 @@ namespace Map.Rendering.Labels
                     {
                         Country = c,
                         Text = text,
-                        CapitalProvince = source.GetCapitalProvince(c, gameState.Countries),
+                        CapitalProvince = Regions ? (ushort)0 : source.GetCapitalProvince(c, gameState.Countries),
                         WidthRatio = MeasureWidthRatio(text)
                     });
                 }
@@ -348,7 +368,7 @@ namespace Map.Rendering.Labels
 
         private void RebuildMesh()
         {
-            var style = MapLabelStyles.Current;
+            var style = Style;
             var vertices = new List<Vector3>();
             var uvs = new List<Vector2>();
             var anchors = new List<Vector4>();
@@ -477,7 +497,8 @@ namespace Map.Rendering.Labels
 
         private void LateUpdate()
         {
-            if (mesh == null || material == null || LabelCount == 0 || !MapLabelStyles.Current.Visible) return;
+            if (mesh == null || material == null || LabelCount == 0 || !Style.Visible) return;
+            if (Regions && !MapRegionLabels.Shown) return;
             Graphics.DrawMesh(mesh, Matrix4x4.identity, material, 0, null, 0, null, ShadowCastingMode.Off, false);
         }
 

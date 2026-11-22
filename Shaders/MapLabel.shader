@@ -110,9 +110,11 @@ Shader "Archon/MapLabel"
 
                 // Too small even when scaled up: fade out. Zoomed in past the fade range: fade out.
                 float sizeFade = 1.0 - smoothstep(cap, cap * 1.3, need);
+                // _LabelFade.z = 1: fade in when zoomed in instead (region labels)
                 float zoomFade = (_LabelFade.y > _LabelFade.x)
                     ? 1.0 - smoothstep(_LabelFade.x, _LabelFade.y, screenPxPerMapPx)
                     : 1.0;
+                if (_LabelFade.z > 0.5) zoomFade = 1.0 - zoomFade;
                 output.fade = sizeFade * zoomFade;
                 // Names dim a little at night (HOI4: 35%)
                 output.night = ArchonNightFactor(ArchonWorldToMapUV(center, _MapWorldBounds));

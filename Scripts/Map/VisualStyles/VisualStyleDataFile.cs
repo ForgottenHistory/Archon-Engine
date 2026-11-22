@@ -51,6 +51,10 @@ namespace Archon.Engine.Map
     ///               minScreenHeight: 11, maxScale: 2.5, roomOverflow: 1.1, fade: [1.5, 2.5], spaceBelow: 0.9, maxGap: 0.8,
     ///               maxHeight: 88, fill: 0.75, clear: 0.55, levelPreference: 0.35, arcBonus: 1.1 }
     ///
+    /// Optional regionLabels section (region labels: MapRendererRegistry.RegionLabelSource, drawn while
+    /// MapRegionLabels.Shown). Same fields as labels, plus fadeIn; defaults: fade [3, 5] with fadeIn (appear
+    /// when zoomed in), maxScale 1.5, maxHeight 24.
+    ///
     /// Optional atmosphere section (MapAtmosphereRenderer). All fields optional; zoom ranges are
     /// [full at or below, gone at or above] in screen px per map px, distances in map px:
     ///
@@ -111,6 +115,8 @@ namespace Archon.Engine.Map
             string source = $"Style file '{relativePath}'";
             ApplyBorders(root["borders"] as JObject, root["rivers"] as JObject, source);
             MapLabelStyles.Set(ParseLabels(root["labels"] as JObject, source));
+            MapLabelStyles.SetRegion(root["regionLabels"] is JObject regionLabels
+                ? ParseLabels(regionLabels, source, MapLabelStyles.DefaultRegion()) : null);
             MapAtmosphereStyles.Set(ParseAtmosphere(root["atmosphere"] as JObject, source));
             MapDayNightStyles.Set(ParseDayNight(root["dayNight"] as JObject, source));
 
@@ -249,9 +255,9 @@ namespace Archon.Engine.Map
 
         // ===== Labels =====
 
-        private static MapLabelStyle ParseLabels(JObject e, string source)
+        private static MapLabelStyle ParseLabels(JObject e, string source, MapLabelStyle defaults = null)
         {
-            var style = new MapLabelStyle();
+            var style = defaults ?? new MapLabelStyle();
             if (e == null) return style;
             var placement = style.Placement;
 
@@ -280,6 +286,7 @@ namespace Archon.Engine.Map
                 else ArchonLogger.LogError($"{source}: labels.fade: expected [visible below, hidden above]", Subsystem);
             }
 
+            if (e["fadeIn"] != null) style.FadeIn = (bool)e["fadeIn"];
             if (IsNumber(e["shadowSoftness"])) style.ShadowSoftness = (float)e["shadowSoftness"];
             if (IsNumber(e["sharpness"])) style.Sharpness = (float)e["sharpness"];
             if (IsNumber(e["minScreenHeight"])) style.MinScreenHeight = (float)e["minScreenHeight"];

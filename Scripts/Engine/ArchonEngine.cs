@@ -740,6 +740,23 @@ namespace Engine
                 labelRenderer = mapGenerator.AddComponent<Map.Rendering.Labels.MapLabelRenderer>();
             labelRenderer.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null, GameState);
 
+            // Region labels (states, areas) when the GAME supplies regions: a second renderer in region mode
+            if (Map.Rendering.MapRendererRegistry.RegionLabelSource != null)
+            {
+                var found = mapGenerator.transform.Find("RegionLabels");
+                GameObject regionHost;
+                if (found != null) regionHost = found.gameObject;
+                else
+                {
+                    regionHost = new GameObject("RegionLabels");
+                    regionHost.transform.SetParent(mapGenerator.transform, false);
+                }
+                var regionLabels = regionHost.GetComponent<Map.Rendering.Labels.MapLabelRenderer>();
+                if (regionLabels == null) regionLabels = regionHost.AddComponent<Map.Rendering.Labels.MapLabelRenderer>();
+                regionLabels.Regions = true;
+                regionLabels.Initialize(textureManager, mapMeshRenderer != null ? mapMeshRenderer.transform : null, GameState);
+            }
+
             // Atmosphere: haze and clouds
             var atmosphereRenderer = mapGenerator.GetComponent<Map.Rendering.Atmosphere.MapAtmosphereRenderer>();
             if (atmosphereRenderer == null)
