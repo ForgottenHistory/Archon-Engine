@@ -41,7 +41,7 @@ Comprehensive audit of the CORE namespace (162 C# files) to find systems similar
 - `GoalConstraint` system with built-in constraints (MinProvinces, MinResource, AtWar, etc.)
 - `GetActiveGoal(countryId)`, `GetCountriesByTier(tier)`, `GetCountryCountByTier(tier)`
 - `SetAIEnabled(countryId, bool)` (alias for existing SetAIActive)
-- Execution timeout with statistics tracking
+- Slow-goal threshold with statistics tracking (diagnostics only; goals are never cut short)
 - `AIStatistics` and `AIDebugInfo` for debugging
 
 **Also Fixed:**

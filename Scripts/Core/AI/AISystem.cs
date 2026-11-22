@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core;
 using Core.Data;
 using Core.Systems;
@@ -41,14 +42,17 @@ namespace Core.AI
         private AIDistanceCalculator distanceCalculator;
         private AISchedulingConfig config;
         private bool isInitialized;
-        private ushort playerCountryID;
+        // Human-controlled countries (sorted): tiers are by distance from the nearest of them
+        private readonly List<ushort> humanCountries = new List<ushort>();
 
         public AISystem(GameState gameState)
         {
             this.gameState = gameState;
             this.isInitialized = false;
-            this.playerCountryID = ushort.MaxValue;
         }
+
+        /// <summary>Human-controlled countries the tiers are measured from (sorted).</summary>
+        public IReadOnlyList<ushort> HumanCountries => humanCountries;
 
         /// <summary>
         /// Initialize AI system (called from HegemonInitializer).
@@ -99,11 +103,14 @@ namespace Core.AI
         /// This is a separate step because:
         /// 1. Goals must be registered first (GAME layer responsibility)
         /// 2. Province/country count may not be ready at Initialize()
-        /// 3. Player country must be known for distance calculation
+        /// 3. Human countries must be known for distance calculation
+        ///
+        /// humanCountryIDs: every human-controlled country (one in single player, each player's in multiplayer);
+        /// a country's tier is by its distance from the nearest of them. Empty: every country is "very far".
         ///
         /// Performance: Calculates distances for ALL countries (one-time cost).
         /// </summary>
-        public void InitializeCountryAI(int countryCount, int provinceCount, ushort playerCountryID, ushort currentHourOfYear = 0)
+        public void InitializeCountryAI(int countryCount, int provinceCount, IReadOnlyList<ushort> humanCountryIDs, ushort currentHourOfYear = 0)
         {
             if (aiStates.IsCreated)
             {
@@ -111,7 +118,7 @@ namespace Core.AI
                 return;
             }
 
-            this.playerCountryID = playerCountryID;
+            SetHumanList(humanCountryIDs);
 
             // Allocate AIState array for all countries (Allocator.Persistent = no gameplay allocations)
             aiStates = new NativeArray<AIState>(countryCount, Allocator.Persistent);
@@ -154,12 +161,31 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Recalculate distances from player and reassign tiers.
+        /// The human-controlled countries changed (a player joined, left or switched country): tiers are
+        /// recalculated from the new set. Whether a country's own AI is enabled stays the GAME's call (SetAIEnabled).
+        /// </summary>
+        public void SetHumanCountries(IReadOnlyList<ushort> humanCountryIDs)
+        {
+            SetHumanList(humanCountryIDs);
+            if (aiStates.IsCreated) RecalculateDistances();
+        }
+
+        private void SetHumanList(IReadOnlyList<ushort> ids)
+        {
+            humanCountries.Clear();
+            if (ids != null)
+                foreach (ushort id in ids)
+                    if (id != 0 && !humanCountries.Contains(id)) humanCountries.Add(id);
+            humanCountries.Sort();
+        }
+
+        /// <summary>
+        /// Recalculate distances from the human countries and reassign tiers.
         /// Call monthly or when major border changes occur.
         /// </summary>
         public void RecalculateDistances()
         {
-            if (!isInitialized || !aiStates.IsCreated || playerCountryID == ushort.MaxValue)
+            if (!isInitialized || !aiStates.IsCreated)
             {
                 ArchonLogger.LogWarning("Cannot recalculate distances before full initialization", "core_ai");
                 return;
@@ -175,7 +201,7 @@ namespace Core.AI
             }
 
             // Calculate distances via BFS
-            distanceCalculator.CalculateDistances(playerCountryID, provinceSystem, adjacencySystem);
+            distanceCalculator.CalculateDistances(humanCountries, provinceSystem, adjacencySystem);
 
             // Assign tiers based on distances
             distanceCalculator.AssignTiers(aiStates, config);
@@ -329,11 +355,12 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Set execution timeout for goal processing (milliseconds).
+        /// Threshold (milliseconds) above which a goal's processing is logged and counted as slow
+        /// (AIStatistics.TotalSlowGoals). Diagnostics only: goals always run to completion.
         /// </summary>
-        public void SetExecutionTimeout(long timeoutMs)
+        public void SetSlowGoalThreshold(long thresholdMs)
         {
-            scheduler?.SetExecutionTimeout(timeoutMs);
+            scheduler?.SetSlowGoalThreshold(thresholdMs);
         }
 
         /// <summary>

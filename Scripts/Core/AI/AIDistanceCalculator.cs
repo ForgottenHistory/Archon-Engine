@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Systems;
 using Unity.Burst;
 using Unity.Collections;
@@ -6,10 +7,11 @@ using Unity.Jobs;
 namespace Core.AI
 {
     /// <summary>
-    /// ENGINE LAYER - Calculates distance from player for AI priority tiers.
+    /// ENGINE LAYER - Calculates distance from the human players for AI priority tiers.
     ///
-    /// Algorithm: BFS from player's provinces through adjacency graph.
-    /// Distance = minimum province hops from any player province to any country province.
+    /// Algorithm: one multi-source BFS from every human country's provinces through the adjacency graph.
+    /// Distance = minimum province hops from any human-owned province to any of the country's provinces,
+    /// so in multiplayer an AI next to any player (not only the host's) is "near".
     ///
     /// Performance:
     /// - O(P) where P = total provinces (single BFS traversal)
@@ -18,7 +20,7 @@ namespace Core.AI
     /// - Pre-allocated buffers for zero gameplay allocations
     ///
     /// Usage:
-    /// 1. Call CalculateDistances() with player country ID
+    /// 1. Call CalculateDistances() with the human countries
     /// 2. Call AssignTiers() to update AIState array based on distances
     /// </summary>
     public class AIDistanceCalculator
@@ -29,7 +31,8 @@ namespace Core.AI
         private NativeArray<byte> provinceDistances;
         private NativeArray<byte> countryDistances;
         private NativeList<ushort> bfsQueue;
-        private NativeList<ushort> playerProvincesBuffer;
+        private NativeList<ushort> playerProvincesBuffer;     // every human country's provinces (BFS sources)
+        private NativeList<ushort> humanCountriesBuffer;
 
         private int provinceCount;
         private int countryCount;
@@ -58,6 +61,7 @@ namespace Core.AI
             countryDistances = new NativeArray<byte>(countryCount, Allocator.Persistent);
             bfsQueue = new NativeList<ushort>(provinceCount, Allocator.Persistent);
             playerProvincesBuffer = new NativeList<ushort>(100, Allocator.Persistent);
+            humanCountriesBuffer = new NativeList<ushort>(8, Allocator.Persistent);
 
             isInitialized = true;
 
@@ -65,10 +69,10 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Calculate distances from player country using Burst-compiled BFS.
-        /// Updates internal distance arrays.
+        /// Calculate every country's distance from the nearest human country (Burst-compiled BFS).
+        /// Updates internal distance arrays. No human countries: every distance stays at the maximum.
         /// </summary>
-        public void CalculateDistances(ushort playerCountryID, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
+        public void CalculateDistances(IReadOnlyList<ushort> humanCountries, ProvinceSystem provinceSystem, AdjacencySystem adjacencySystem)
         {
             if (!isInitialized)
             {
@@ -76,9 +80,18 @@ namespace Core.AI
                 return;
             }
 
-            // Get player's provinces as BFS starting points
+            // Every human country's provinces are BFS starting points
             playerProvincesBuffer.Clear();
-            provinceSystem.GetCountryProvinces(playerCountryID, playerProvincesBuffer);
+            humanCountriesBuffer.Clear();
+            var owned = new NativeList<ushort>(256, Allocator.Temp);
+            for (int i = 0; i < humanCountries.Count; i++)
+            {
+                humanCountriesBuffer.Add(humanCountries[i]);
+                owned.Clear();
+                provinceSystem.GetCountryProvinces(humanCountries[i], owned);
+                playerProvincesBuffer.AddRange(owned.AsArray());
+            }
+            owned.Dispose();
 
             // Get native data for Burst job
             var provinceData = provinceSystem.GetNativeData();
@@ -87,7 +100,7 @@ namespace Core.AI
             // Schedule and complete the Burst job
             var job = new BurstBFSDistanceJob
             {
-                playerCountryID = playerCountryID,
+                humanCountries = humanCountriesBuffer.AsArray(),
                 playerProvinces = playerProvincesBuffer.AsArray(),
                 provinceData = provinceData,
                 adjacencyData = adjacencyData,
@@ -168,19 +181,22 @@ namespace Core.AI
             if (playerProvincesBuffer.IsCreated)
                 playerProvincesBuffer.Dispose();
 
+            if (humanCountriesBuffer.IsCreated)
+                humanCountriesBuffer.Dispose();
+
             isInitialized = false;
         }
     }
 
     /// <summary>
     /// Burst-compiled BFS job for distance calculation.
-    /// Traverses the province adjacency graph from player provinces.
+    /// Traverses the province adjacency graph from every human country's provinces at once.
     /// </summary>
     [BurstCompile]
     public struct BurstBFSDistanceJob : IJob
     {
-        public ushort playerCountryID;
-        [ReadOnly] public NativeArray<ushort> playerProvinces;
+        [ReadOnly] public NativeArray<ushort> humanCountries;
+        [ReadOnly] public NativeArray<ushort> playerProvinces;   // every human country's provinces
         [ReadOnly] public NativeProvinceData provinceData;
         [ReadOnly] public NativeAdjacencyData adjacencyData;
 
@@ -202,13 +218,14 @@ namespace Core.AI
                 countryDistances[i] = maxDistance;
             }
 
-            // Player country has distance 0
-            if (playerCountryID < countryDistances.Length)
+            // Human countries have distance 0
+            for (int i = 0; i < humanCountries.Length; i++)
             {
-                countryDistances[playerCountryID] = 0;
+                if (humanCountries[i] < countryDistances.Length)
+                    countryDistances[humanCountries[i]] = 0;
             }
 
-            // Initialize BFS queue with player provinces
+            // Initialize BFS queue with every human province
             bfsQueue.Clear();
             for (int i = 0; i < playerProvinces.Length; i++)
             {

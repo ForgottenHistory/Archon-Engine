@@ -147,9 +147,10 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Performance** - 60+ FPS at 10x speed with tier scheduling and event-driven caching
 - **IGoalSelector** - Interface for custom goal selection strategies (weighted random, cooldowns, priority overrides)
 - **GoalConstraint System** - Declarative preconditions: MinProvinces, MinResource, AtWar, AtWarWith, DelegateConstraint
-- **AIStatistics** - Runtime statistics: TotalProcessed, TotalSkipped, TotalTimeouts, AverageProcessingTimeMs
+- **AIStatistics** - Runtime statistics: TotalProcessed, TotalSkipped, TotalSlowGoals, AverageProcessingTimeMs
 - **AIDebugInfo** - Per-country debug info: Tier, ActiveGoal, FailedConstraints
-- **Execution Timeout** - Configurable timeout for runaway goal execution
+- **Slow-Goal Threshold** - Goals over a configurable time (default 50 ms) are logged and counted; they always run to completion, so wall time never changes a decision
+- **Multiplayer Tiers** - Tiers by distance from the nearest human country (every player, not only the host); `SetHumanCountries` when players change
 - **Query Methods** - GetActiveGoal, GetCountriesByTier, GetCountryCountByTier, GetActiveAICount
 
 ---

@@ -13,7 +13,9 @@ namespace Core.AI
     /// - Tier-based: Countries assigned tiers based on distance from player
     /// - Interval-based: Each tier has configurable processing interval (hours)
     /// - Goal Evaluation: Evaluate goals, apply constraints, use IGoalSelector
-    /// - Timeout: Execution timeout prevents runaway goals
+    /// - Slow goals: a goal whose evaluation and execution take longer than a threshold is logged and counted
+    ///   (AIStatistics.TotalSlowGoals). It always runs to completion: wall-clock time never changes what the AI
+    ///   decides, so the same game state gives the same decisions.
     ///
     /// Performance Target:
     /// - &lt;5ms per hourly tick for typical load
@@ -39,9 +41,9 @@ namespace Core.AI
         // Pre-allocated buffer for goal evaluations (avoid allocations)
         private List<GoalEvaluation> evaluationBuffer;
 
-        // Timeout configuration
-        private long executionTimeoutTicks;
-        private const long DEFAULT_TIMEOUT_MS = 50; // 50ms default
+        // Slow-goal threshold (diagnostics only; never cuts a goal short)
+        private long slowGoalThresholdTicks;
+        private const long DEFAULT_SLOW_GOAL_MS = 50;
 
         public AIScheduler(AIGoalRegistry goalRegistry, AISchedulingConfig config)
         {
@@ -50,7 +52,7 @@ namespace Core.AI
             this.goalSelector = HighestScoreSelector.Instance;
             this.statistics = new AIStatistics(AISchedulingConfig.MAX_TIERS);
             this.evaluationBuffer = new List<GoalEvaluation>(16);
-            this.executionTimeoutTicks = DEFAULT_TIMEOUT_MS * Stopwatch.Frequency / 1000;
+            this.slowGoalThresholdTicks = DEFAULT_SLOW_GOAL_MS * Stopwatch.Frequency / 1000;
         }
 
         /// <summary>
@@ -70,11 +72,12 @@ namespace Core.AI
         }
 
         /// <summary>
-        /// Set execution timeout in milliseconds.
+        /// Threshold (milliseconds) above which a goal's processing is logged and counted as slow.
+        /// Diagnostics only: goals always run to completion.
         /// </summary>
-        public void SetExecutionTimeout(long timeoutMs)
+        public void SetSlowGoalThreshold(long thresholdMs)
         {
-            this.executionTimeoutTicks = timeoutMs * Stopwatch.Frequency / 1000;
+            this.slowGoalThresholdTicks = thresholdMs * Stopwatch.Frequency / 1000;
         }
 
         /// <summary>
@@ -144,7 +147,7 @@ namespace Core.AI
         /// 1. Check constraints for each goal
         /// 2. Evaluate passing goals
         /// 3. Use IGoalSelector to pick goal
-        /// 4. Execute with timeout protection
+        /// 4. Execute (to completion), then log it if it was slow
         /// 5. Update AIState.activeGoalID
         /// </summary>
         private void ProcessSingleAI(ref AIState state, GameState gameState)
@@ -178,18 +181,20 @@ namespace Core.AI
             // Use goal selector to pick goal
             AIGoal selectedGoal = goalSelector.SelectGoal(countryID, evaluationBuffer, gameState, state);
 
-            // Execute selected goal (with timeout protection)
-            bool timedOut = false;
+            // Execute selected goal (always to completion)
+            bool slow = false;
             if (selectedGoal != null)
             {
                 selectedGoal.Execute(countryID, gameState);
                 state.activeGoalID = selectedGoal.GoalID;
 
-                // Check for timeout (execution took too long)
-                if (stopwatch.ElapsedTicks > executionTimeoutTicks)
+                // Diagnostics: a slow goal is reported, never interrupted (decisions must not depend on wall time)
+                if (stopwatch.ElapsedTicks > slowGoalThresholdTicks)
                 {
-                    timedOut = true;
-                    ArchonLogger.LogWarning($"AI goal '{selectedGoal.GoalName}' timed out for country {countryID}", "core_ai");
+                    slow = true;
+                    double ms = stopwatch.ElapsedTicks * 1000.0 / Stopwatch.Frequency;
+                    ArchonLogger.LogWarning($"AI goal '{selectedGoal.GoalName}' for country {countryID} took {ms:F1}ms " +
+                                            $"(slow-goal threshold {slowGoalThresholdTicks * 1000 / Stopwatch.Frequency}ms)", "core_ai");
                 }
             }
             else
@@ -199,7 +204,7 @@ namespace Core.AI
             }
 
             // Record statistics
-            statistics.RecordProcessing(state.tier, state.activeGoalID, stopwatch.ElapsedTicks, timedOut);
+            statistics.RecordProcessing(state.tier, state.activeGoalID, stopwatch.ElapsedTicks, slow);
         }
 
         /// <summary>

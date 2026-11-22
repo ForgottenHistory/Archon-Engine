@@ -122,7 +122,7 @@ AddConstraint(new DelegateConstraint(
 
 ## Tier-Based Scheduling
 
-AI countries are assigned tiers based on distance from the player. Near countries are processed more frequently.
+AI countries are assigned tiers based on distance from the nearest human-controlled country (every player in multiplayer). Near countries are processed more frequently.
 
 | Tier | Distance | Interval | Use Case |
 |------|----------|----------|----------|
@@ -188,7 +188,8 @@ public class MyGameInitializer
         // 4. Initialize country AI (after goals registered)
         int countryCount = gameState.GetComponent<CountrySystem>().CountryCount;
         int provinceCount = gameState.Provinces.ProvinceCount;
-        aiSystem.InitializeCountryAI(countryCount, provinceCount, playerCountryID);
+        // Tiers are by distance from the nearest human country (pass every player's in multiplayer)
+        aiSystem.InitializeCountryAI(countryCount, provinceCount, new[] { playerCountryID });
 
         // 5. Disable AI for player
         aiSystem.SetAIEnabled(playerCountryID, false);
@@ -261,7 +262,7 @@ foreach (var constraint in failed)
 ```csharp
 var stats = aiSystem.GetStatistics();
 Debug.Log($"Total Processed: {stats.TotalProcessed}");
-Debug.Log($"Timeouts: {stats.TimeoutCount}");
+Debug.Log($"Slow goals: {stats.TotalSlowGoals}"); // over the slow-goal threshold (SetSlowGoalThreshold, default 50 ms)
 Debug.Log($"Avg Processing Time: {stats.AverageProcessingTimeMs}ms");
 ```
 
@@ -287,6 +288,13 @@ public void ProcessHourlyAI(...)
     }
 }
 ```
+
+Tiers are measured from every human country, not only the host's: pass all of them to
+`InitializeCountryAI`, and call `aiSystem.SetHumanCountries(...)` when a player joins, leaves or switches
+country. (Enabling or disabling a country's own AI stays separate: `SetAIEnabled`.)
+
+Goals always run to completion. The slow-goal threshold only logs and counts slow goals
+(`AIStatistics.TotalSlowGoals`); wall-clock time never changes a decision.
 
 AI commands are broadcast to all clients via the normal command sync system. See [Multiplayer](Multiplayer.md) for details.
 

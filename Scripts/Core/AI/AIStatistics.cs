@@ -11,7 +11,7 @@ namespace Core.AI
         // Processing stats
         private int totalProcessed;
         private int totalSkipped;
-        private int totalTimeouts;
+        private int totalSlowGoals;   // over the scheduler's slow-goal threshold (still ran to completion)
         private long totalProcessingTimeTicks;
 
         // Per-goal stats
@@ -29,13 +29,13 @@ namespace Core.AI
         /// <summary>
         /// Record an AI processing event.
         /// </summary>
-        public void RecordProcessing(byte tier, ushort goalID, long elapsedTicks, bool timedOut)
+        public void RecordProcessing(byte tier, ushort goalID, long elapsedTicks, bool slow)
         {
             totalProcessed++;
             totalProcessingTimeTicks += elapsedTicks;
 
-            if (timedOut)
-                totalTimeouts++;
+            if (slow)
+                totalSlowGoals++;
 
             if (tier < processedByTier.Length)
                 processedByTier[tier]++;
@@ -67,7 +67,7 @@ namespace Core.AI
         {
             totalProcessed = 0;
             totalSkipped = 0;
-            totalTimeouts = 0;
+            totalSlowGoals = 0;
             totalProcessingTimeTicks = 0;
             goalStats.Clear();
             for (int i = 0; i < processedByTier.Length; i++)
@@ -78,7 +78,7 @@ namespace Core.AI
 
         public int TotalProcessed => totalProcessed;
         public int TotalSkipped => totalSkipped;
-        public int TotalTimeouts => totalTimeouts;
+        public int TotalSlowGoals => totalSlowGoals;
         public double AverageProcessingTimeMs => totalProcessed > 0
             ? (totalProcessingTimeTicks / (double)System.Diagnostics.Stopwatch.Frequency * 1000.0) / totalProcessed
             : 0;
@@ -93,7 +93,7 @@ namespace Core.AI
         {
             var sb = new StringBuilder();
             sb.AppendLine($"AI Statistics:");
-            sb.AppendLine($"  Processed: {totalProcessed}, Skipped: {totalSkipped}, Timeouts: {totalTimeouts}");
+            sb.AppendLine($"  Processed: {totalProcessed}, Skipped: {totalSkipped}, Slow goals: {totalSlowGoals}");
             sb.AppendLine($"  Avg Time: {AverageProcessingTimeMs:F3}ms");
             sb.Append("  By Tier: ");
             for (int i = 0; i < processedByTier.Length; i++)
