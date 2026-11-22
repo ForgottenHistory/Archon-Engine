@@ -82,14 +82,24 @@ namespace Map.Rendering
                 if (style.Visible)
                     ordered.Add((meshes[i], style));
             }
-            ordered.Sort((a, b) => a.style.Order.CompareTo(b.style.Order));
+            ordered.Sort((a, b) => a.style.Order != b.style.Order ? a.style.Order.CompareTo(b.style.Order)
+                                                                    : string.CompareOrdinal(a.style.Name, b.style.Name));
 
+            // One queue step per style (a class can have many meshes, e.g. spatial chunks), so the queues
+            // stay below other renderers' (highlight outlines) however many meshes there are
+            int rank = -1;
+            string lastStyle = null;
             for (int i = 0; i < ordered.Count; i++)
             {
                 var (mesh, style) = ordered[i];
                 var material = GetMaterial(style.Name);
-                ApplyStyle(material, style);
-                material.renderQueue = baseQueue + i;
+                if (style.Name != lastStyle)
+                {
+                    rank++;
+                    lastStyle = style.Name;
+                    ApplyStyle(material, style);
+                    material.renderQueue = baseQueue + rank;
+                }
                 drawList.Add((mesh, material));
             }
         }

@@ -476,6 +476,15 @@ namespace Map.Rendering
         {
             if (!hasIndexedBorderSupport || renderingMode != BorderRenderingMode.ShaderPixelPerfect)
             {
+                // Renderers that can update only the changed provinces' borders (MeshGeometry) do;
+                // the rest rebuild everything
+                if (GetActiveBorderRenderer() is IIncrementalBorderRenderer incremental && borderMode != BorderMode.None)
+                {
+                    incremental.UpdateProvinces(changedProvinces);
+                    if (incremental is MeshGeometryBorderRenderer)
+                        EnsureDistanceFieldGenerator()?.GenerateDistanceField();
+                    return;
+                }
                 DetectBorders();
                 return;
             }

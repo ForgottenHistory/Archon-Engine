@@ -50,6 +50,15 @@ namespace Map.Rendering.Border
     }
 
     /// <summary>
+    /// ENGINE: optional for a border renderer that can update only what an ownership change touches.
+    /// BorderComputeDispatcher calls it with the changed provinces instead of a full GenerateBorders.
+    /// </summary>
+    public interface IIncrementalBorderRenderer
+    {
+        void UpdateProvinces(ushort[] changedProvinces);
+    }
+
+    /// <summary>
     /// Context provided to border renderers during initialization.
     /// Contains references to systems needed for border generation.
     /// </summary>

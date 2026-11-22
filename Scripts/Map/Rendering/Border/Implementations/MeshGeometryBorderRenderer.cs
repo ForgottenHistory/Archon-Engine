@@ -8,9 +8,11 @@ namespace Map.Rendering.Border
     /// Builds the border graph (BorderGraph) from the province ID texture once. Each arc gets a
     /// class from the IBorderClassifier (MapRendererRegistry.BorderClassifier); each class is one
     /// mesh, styled by BorderClassStyles (visual style data file, hot reloaded).
-    /// Ownership changes only reclassify arcs and rebuild meshes; the graph is static.
+    /// Ownership changes only reclassify arcs and rebuild meshes; the graph is static. The meshes are
+    /// spatial chunks per class (BorderMeshGenerator.BuildChunked): an ownership change reclassifies only the
+    /// changed provinces' arcs and rebuilds only the chunks they touch (UpdateProvinces).
     /// </summary>
-    public class MeshGeometryBorderRenderer : BorderRendererBase, IBorderHighlightOutline, IBorderArcSource
+    public class MeshGeometryBorderRenderer : BorderRendererBase, IBorderHighlightOutline, IBorderArcSource, IIncrementalBorderRenderer
     {
         public override string RendererId => "MeshGeometry";
         public override string DisplayName => "Mesh Geometry (3D)";
@@ -134,10 +136,27 @@ namespace Map.Rendering.Border
             if (parameters.ForceRegenerate)
                 BuildGraph();
 
-            // Ownership may have changed: reclassify every arc (O(arcs)), then rebuild meshes
+            // Full rebuild (load, style reload): reclassify every arc (O(arcs)), then every chunk mesh
             Classify();
-            meshGenerator.GenerateBorderMeshes(curveCache);
+            meshGenerator.BuildChunked(curveCache);
             ApplyStyles();
+        }
+
+        /// <summary>Ownership changed: reclassify the changed provinces' arcs and rebuild only the chunks
+        /// whose arcs changed class.</summary>
+        public void UpdateProvinces(ushort[] changedProvinces)
+        {
+            if (!isInitialized || meshGenerator == null || meshRenderer == null || changedProvinces == null) return;
+            var sw = System.Diagnostics.Stopwatch.StartNew();
+            var classifier = MapRendererRegistry.BorderClassifier ?? new DefaultBorderClassifier();
+            var provinces = context.ProvinceSystem;
+            var changed = curveCache.Reclassify(changedProvinces, arc => classifier.Classify(arc, provinces));
+            if (changed.Count == 0) return;
+            meshGenerator.UpdateChunks(curveCache, changed);
+            ApplyStyles();
+            if (sw.ElapsedMilliseconds > 20)
+                ArchonLogger.Log($"MeshGeometryBorderRenderer: {changedProvinces.Length} provinces, {changed.Count} arcs reclassified, " +
+                                 $"chunks rebuilt in {sw.ElapsedMilliseconds}ms", "map_rendering");
         }
 
         private void ApplyStyles()
