@@ -151,7 +151,10 @@ namespace Core.Systems.Province
         /// </summary>
         /// <summary>Goes up on every owner change (and bulk load): caches of owner-derived data compare it.</summary>
         public int OwnershipVersion { get; private set; }
-        public void BumpOwnershipVersion() => OwnershipVersion++;
+        /// <summary>Goes up on every controller change (and bulk load): caches of control-derived data compare it.</summary>
+        public int ControlVersion { get; private set; }
+        /// <summary>Bulk writes (initial load, save load) change owners and controllers at once: bumps both.</summary>
+        public void BumpOwnershipVersion() { OwnershipVersion++; ControlVersion++; }
 
         public ushort GetProvinceOwner(ushort provinceId)
         {
@@ -235,6 +238,7 @@ namespace Core.Systems.Province
 
             state.controllerID = newController;
             states[arrayIndex] = state;
+            ControlVersion++;
             MarkDirty(arrayIndex);
 
             eventBus?.Emit(new ProvinceControllerChangedEvent
@@ -305,7 +309,10 @@ namespace Core.Systems.Province
 
             var states = snapshot.GetProvinceWriteBuffer();
             ushort oldOwner = states[arrayIndex].ownerID;
+            ushort oldController = states[arrayIndex].controllerID;
             states[arrayIndex] = state;
+            if (oldOwner != state.ownerID) OwnershipVersion++;
+            if (oldController != state.controllerID) ControlVersion++;
 
             // Update reverse index if owner changed (skip unowned — owner 0 would be a 49k+ bucket)
             if (oldOwner != state.ownerID)

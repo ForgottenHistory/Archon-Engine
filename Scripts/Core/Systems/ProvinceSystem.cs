@@ -304,6 +304,12 @@ namespace Core.Systems
         /// it with the value it cached at, instead of re-reading every owner. Not saved: only compare within a run.
         /// </summary>
         public int OwnershipVersion => dataManager.OwnershipVersion;
+        /// <summary>
+        /// Goes up whenever any province's controller changes (SetProvinceController, SetProvinceState, loads).
+        /// The controller counterpart of OwnershipVersion: compare it to know whether a cached read of who
+        /// controls what is still current. Not saved: only compare within a run.
+        /// </summary>
+        public int ControlVersion => dataManager.ControlVersion;
         public ushort GetProvinceController(ushort provinceId) => dataManager.GetProvinceController(provinceId);
         public void SetProvinceOwner(ushort provinceId, ushort newOwner) => dataManager.SetProvinceOwner(provinceId, newOwner);
         public void SetProvinceController(ushort provinceId, ushort newController) => dataManager.SetProvinceController(provinceId, newController);

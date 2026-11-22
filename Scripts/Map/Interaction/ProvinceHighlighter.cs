@@ -168,8 +168,8 @@ namespace Map.Interaction
         /// Outline a set of provinces (e.g. a selected province's state) in addition to the normal
         /// highlight. Needs a border renderer with outline support; no-op otherwise.
         /// </summary>
-        public void HighlightProvinceSet(System.Func<ushort, bool> inSet, Color color) =>
-            GetOutline()?.SetSecondaryOutline(inSet, color);
+        public void HighlightProvinceSet(System.Collections.Generic.IReadOnlyCollection<ushort> provinces, Color color) =>
+            GetOutline()?.SetSecondaryOutline(provinces, color);
 
         public void ClearProvinceSet() => GetOutline()?.ClearSecondaryOutline();
 

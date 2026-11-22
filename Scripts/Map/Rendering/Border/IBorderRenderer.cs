@@ -114,8 +114,9 @@ namespace Map.Rendering.Border
         /// <summary>
         /// Second, independent outline around any set of provinces (e.g. the state of the selected
         /// province). Drawn just under the primary outline; color tints it like the primary.
+        /// Only the arcs of these provinces are looked at, so the cost follows the set, not the map.
         /// </summary>
-        void SetSecondaryOutline(System.Func<ushort, bool> inSet, Color color);
+        void SetSecondaryOutline(System.Collections.Generic.IReadOnlyCollection<ushort> provinces, Color color);
 
         void ClearSecondaryOutline();
     }

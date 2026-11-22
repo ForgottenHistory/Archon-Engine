@@ -193,21 +193,27 @@ namespace Map.Rendering.Border
         public void SetHighlightOutlineProvince(ushort provinceID, Color color)
         {
             if (provinceID == 0) { ClearHighlightOutline(); return; }
-            BuildHighlight(p => p == provinceID, color);
+            BuildHighlight(new[] { provinceID }, p => p == provinceID, color);
         }
 
         public void SetHighlightOutlineCountry(ushort countryID, Color color)
         {
             var provinces = context.ProvinceSystem;
             if (countryID == 0 || provinces == null) { ClearHighlightOutline(); return; }
-            BuildHighlight(p => p != 0 && provinces.GetProvinceState(p).ownerID == countryID, color);
+            var owned = new Unity.Collections.NativeList<ushort>(256, Unity.Collections.Allocator.Temp);
+            provinces.GetCountryProvinces(countryID, owned);
+            var members = new HashSet<ushort>();
+            for (int i = 0; i < owned.Length; i++) members.Add(owned[i]);
+            owned.Dispose();
+            BuildHighlight(members, members.Contains, color);
         }
 
-        public void SetSecondaryOutline(System.Func<ushort, bool> inSet, Color color)
+        public void SetSecondaryOutline(IReadOnlyCollection<ushort> provinces, Color color)
         {
-            if (inSet == null) { ClearSecondaryOutline(); return; }
+            if (provinces == null || provinces.Count == 0) { ClearSecondaryOutline(); return; }
             if (!isInitialized || curveCache == null || secondaryGenerator == null) return;
-            secondaryGenerator.GenerateMeshes(OutlineChains(inSet), HighlightClassNames, log: false);
+            var members = provinces as HashSet<ushort> ?? new HashSet<ushort>(provinces);
+            secondaryGenerator.GenerateMeshes(OutlineChains(members, members.Contains), HighlightClassNames, log: false);
             secondaryColor = color;
             secondaryActive = secondaryGenerator.Meshes.Count > 0;
             ApplySecondaryStyle();
@@ -226,21 +232,34 @@ namespace Map.Rendering.Border
         }
 
         /// <summary>Outline = every arc with the highlighted set on exactly one side.</summary>
-        private void BuildHighlight(System.Func<ushort, bool> inSet, Color color)
+        private void BuildHighlight(IEnumerable<ushort> members, System.Func<ushort, bool> inSet, Color color)
         {
             if (!isInitialized || curveCache == null || highlightGenerator == null) return;
-            highlightGenerator.GenerateMeshes(OutlineChains(inSet), HighlightClassNames, log: false);
+            highlightGenerator.GenerateMeshes(OutlineChains(members, inSet), HighlightClassNames, log: false);
             highlightColor = color;
             highlightActive = highlightGenerator.Meshes.Count > 0;
             ApplyHighlightStyle();
         }
 
-        private List<(BorderArc, int)> OutlineChains(System.Func<ushort, bool> inSet)
+        /// <summary>members: every province in the set (only their arcs can be on its outline); inSet: membership test.</summary>
+        private List<(BorderArc, int)> OutlineChains(IEnumerable<ushort> members, System.Func<ushort, bool> inSet)
         {
+            // Candidate arcs: those of the members, in map order so the chains come out the same every time
+            var candidates = new List<int>();
+            var seen = new HashSet<int>();
+            foreach (ushort p in members)
+                foreach (int a in curveCache.ArcsOf(p))
+                    if (seen.Add(a)) candidates.Add(a);
+            candidates.Sort();
+
+            var allArcs = curveCache.Arcs;
             var outlineArcs = new List<BorderArc>();
-            foreach (var arc in curveCache.Arcs)
+            foreach (int a in candidates)
+            {
+                var arc = allArcs[a];
                 if (inSet(arc.ProvinceA) != inSet(arc.ProvinceB))
                     outlineArcs.Add(arc);
+            }
 
             // Chain into closed loops: no arc ends means no junction caps, which bled spokes
             // out of every corner; corners are joined like any other bend in the strip

@@ -47,6 +47,10 @@ namespace Map.Rendering
                 arcClass[i] = IndexOf(classify(arcs[i]));
         }
 
+        /// <summary>Indices into Arcs of every arc on this province's border (empty when none).</summary>
+        public IReadOnlyList<int> ArcsOf(ushort province) =>
+            arcsOfProvince.TryGetValue(province, out var list) ? list : (IReadOnlyList<int>)System.Array.Empty<int>();
+
         private void AddArcOf(ushort province, int arc)
         {
             if (!arcsOfProvince.TryGetValue(province, out var list))
