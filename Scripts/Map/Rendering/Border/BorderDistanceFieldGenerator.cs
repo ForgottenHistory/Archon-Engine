@@ -115,29 +115,26 @@ namespace Map.Rendering
                 return;
             }
 
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Starting dual-channel distance field generation", "map_rendering");
             float startTime = Time.realtimeSinceStartup;
 
             // Create ping-pong buffers if needed
             EnsureBuffersCreated();
 
             // PASS 1: Country borders (R channel)
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Pass 1 - Country borders", "map_rendering");
             RunInitPass(borderType: 0); // 0 = country borders
             RunJumpFloodingPasses();
             RunFinalizePass(outputChannel: 0); // Write to R channel
 
             // PASS 2: Province borders (G channel)
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Pass 2 - Province borders", "map_rendering");
             RunInitPass(borderType: 1); // 1 = province borders
             RunJumpFloodingPasses();
             RunFinalizePass(outputChannel: 1); // Write to G channel
 
-            // Cleanup temporary buffers
-            ReleaseBuffers();
+            // The ping-pong buffers stay allocated: borders regenerate on every ownership change, and two
+            // full-map RG32F render textures per regeneration is a large GPU allocation (OnDestroy frees them)
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Dual-channel distance field generation complete in {elapsed:F2}ms", "map_rendering");
+            if (logPerformance) ArchonLogger.Log($"BorderDistanceFieldGenerator: Dual-channel distance field generation complete in {elapsed:F2}ms", "map_rendering");
         }
 
         /// <summary>
@@ -169,30 +166,27 @@ namespace Map.Rendering
                 return;
             }
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting 1/4 resolution distance field generation (target: {outputTexture.width}x{outputTexture.height})", "map_rendering");
             float startTime = Time.realtimeSinceStartup;
 
             // Create ping-pong buffers at FULL resolution (JFA needs full resolution for accurate distance propagation)
             EnsureBuffersCreated();
 
             // PASS 1: Country borders (R channel)
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Pass 1 - Country borders (1/4 res output)", "map_rendering");
             RunInitPass(borderType: 0); // 0 = country borders
             RunJumpFloodingPasses();
             RunFinalizePassQuarterRes(outputTexture, outputChannel: 0); // Write to R channel at 1/4 resolution
 
             // PASS 2: Province borders (G channel)
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Pass 2 - Province borders (1/4 res output)", "map_rendering");
             RunInitPass(borderType: 1); // 1 = province borders
             RunJumpFloodingPasses();
             RunFinalizePassQuarterRes(outputTexture, outputChannel: 1); // Write to G channel at 1/4 resolution
 
-            // Cleanup temporary buffers
-            ReleaseBuffers();
+            // The ping-pong buffers stay allocated: borders regenerate on every ownership change, and two
+            // full-map RG32F render textures per regeneration is a large GPU allocation (OnDestroy frees them)
 
             float elapsed = (Time.realtimeSinceStartup - startTime) * 1000f;
             float memorySizeMB = (outputTexture.width * outputTexture.height * 2) / (1024f * 1024f);
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: 1/4 resolution distance field complete in {elapsed:F2}ms ({memorySizeMB:F2}MB texture)", "map_rendering");
+            if (logPerformance) ArchonLogger.Log($"BorderDistanceFieldGenerator: 1/4 resolution distance field complete in {elapsed:F2}ms ({memorySizeMB:F2}MB texture)", "map_rendering");
         }
 
         private void EnsureBuffersCreated()
@@ -200,11 +194,10 @@ namespace Map.Rendering
             int width = textureManager.MapWidth;
             int height = textureManager.MapHeight;
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Creating buffers for {width}x{height} map", "map_rendering");
 
             // RG32F format to store 2D positions (x, y) of closest border pixel
             // CRITICAL: Use explicit GraphicsFormat to avoid TYPELESS issues
-            if (distanceFieldA == null || distanceFieldA.width != width)
+            if (distanceFieldA == null || distanceFieldA.width != width || distanceFieldA.height != height)
             {
                 distanceFieldA?.Release();
 
@@ -223,10 +216,9 @@ namespace Map.Rendering
                 distanceFieldA.filterMode = FilterMode.Point; // No filtering for position data
                 distanceFieldA.wrapMode = TextureWrapMode.Clamp;
                 distanceFieldA.Create();
-                ArchonLogger.Log("BorderDistanceFieldGenerator: Created DistanceFieldA", "map_rendering");
             }
 
-            if (distanceFieldB == null || distanceFieldB.width != width)
+            if (distanceFieldB == null || distanceFieldB.width != width || distanceFieldB.height != height)
             {
                 distanceFieldB?.Release();
 
@@ -245,14 +237,12 @@ namespace Map.Rendering
                 distanceFieldB.filterMode = FilterMode.Point;
                 distanceFieldB.wrapMode = TextureWrapMode.Clamp;
                 distanceFieldB.Create();
-                ArchonLogger.Log("BorderDistanceFieldGenerator: Created DistanceFieldB", "map_rendering");
             }
         }
 
         private void RunInitPass(int borderType)
         {
             string borderTypeName = borderType == 0 ? "country" : "province";
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting init pass for {borderTypeName} borders", "map_rendering");
 
             // Set input textures
             distanceFieldCompute.SetTexture(initKernel, "ProvinceIDTexture", textureManager.ProvinceIDTexture);
@@ -270,9 +260,7 @@ namespace Map.Rendering
             int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
             int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Dispatching init pass ({threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
             distanceFieldCompute.Dispatch(initKernel, threadGroupsX, threadGroupsY, 1);
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Init pass complete for {borderTypeName} borders", "map_rendering");
         }
 
         private void RunJumpFloodingPasses()
@@ -285,7 +273,6 @@ namespace Map.Rendering
             // Start with largest step size and halve each iteration
             int stepSize = Mathf.NextPowerOfTwo(maxDimension) / 2;
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting {numPasses} JFA passes (maxDim={maxDimension}, startStep={stepSize})", "map_rendering");
 
             bool useBufferA = true; // Ping-pong flag
 
@@ -309,7 +296,6 @@ namespace Map.Rendering
                 int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
                 int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
 
-                ArchonLogger.Log($"BorderDistanceFieldGenerator: JFA pass {pass+1}/{numPasses} (stepSize={stepSize})", "map_rendering");
                 distanceFieldCompute.Dispatch(jumpFloodKernel, threadGroupsX, threadGroupsY, 1);
 
                 // Halve step size for next pass
@@ -319,13 +305,11 @@ namespace Map.Rendering
                 useBufferA = !useBufferA;
             }
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: All JFA passes complete (useBufferA={useBufferA})", "map_rendering");
 
             // After all passes, result is in the "output" buffer from last iteration
             // Copy it back to DistanceFieldA for finalize pass
             if (!useBufferA)
             {
-                ArchonLogger.Log("BorderDistanceFieldGenerator: Blitting result from B to A", "map_rendering");
                 Graphics.Blit(distanceFieldB, distanceFieldA);
             }
         }
@@ -333,7 +317,6 @@ namespace Map.Rendering
         private void RunFinalizePass(int outputChannel)
         {
             string channelName = outputChannel == 0 ? "R (country)" : "G (province)";
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting finalize pass (output to {channelName} channel)", "map_rendering");
 
             // Set input buffer
             distanceFieldCompute.SetTexture(finalizeKernel, "DistanceFieldA", distanceFieldA);
@@ -352,9 +335,7 @@ namespace Map.Rendering
             int threadGroupsX = (textureManager.MapWidth + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
             int threadGroupsY = (textureManager.MapHeight + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Dispatching finalize pass ({threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
             distanceFieldCompute.Dispatch(finalizeKernel, threadGroupsX, threadGroupsY, 1);
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Finalize pass complete for {channelName} channel)", "map_rendering");
         }
 
         /// <summary>
@@ -365,7 +346,6 @@ namespace Map.Rendering
         private void RunFinalizePassQuarterRes(RenderTexture outputTexture, int outputChannel)
         {
             string channelName = outputChannel == 0 ? "R (country)" : "G (province)";
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Starting 1/4 res finalize pass (output to {channelName} channel)", "map_rendering");
 
             // Check if compute shader has the QuarterRes kernel
             if (!distanceFieldCompute.HasKernel("FinalizeDistanceFieldQuarterRes"))
@@ -401,14 +381,14 @@ namespace Map.Rendering
             int threadGroupsX = (outputTexture.width + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
             int threadGroupsY = (outputTexture.height + THREAD_GROUP_SIZE - 1) / THREAD_GROUP_SIZE;
 
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: Dispatching 1/4 res finalize pass ({threadGroupsX}x{threadGroupsY} thread groups)", "map_rendering");
             distanceFieldCompute.Dispatch(quarterResKernel, threadGroupsX, threadGroupsY, 1);
-            ArchonLogger.Log($"BorderDistanceFieldGenerator: 1/4 res finalize pass complete for {channelName} channel)", "map_rendering");
         }
 
         private void ReleaseBuffers()
         {
-            ArchonLogger.Log("BorderDistanceFieldGenerator: Releasing temporary buffers", "map_rendering");
+            // Graphics.Blit leaves its target active; releasing the active render texture warns
+            if (RenderTexture.active == distanceFieldA || RenderTexture.active == distanceFieldB)
+                RenderTexture.active = null;
             distanceFieldA?.Release();
             distanceFieldB?.Release();
             distanceFieldA = null;

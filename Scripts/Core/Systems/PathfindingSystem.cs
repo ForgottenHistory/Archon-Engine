@@ -322,114 +322,188 @@ namespace Core.Systems
 
         /// <summary>
         /// Managed pathfinding with cost calculator and options.
+        ///
+        /// Runs on flat managed arrays indexed by province id (the adjacency graph in compact form,
+        /// g-scores, parents, a binary heap) rather than the Native collections the Burst job uses:
+        /// outside Burst every NativeHashMap/NativeList access pays safety checks and a hash, and a
+        /// search visits thousands of provinces. Per-search clearing is a stamp bump, not a wipe.
         /// </summary>
         private PathResult FindPathManaged(ushort start, ushort goal, PathOptions options)
         {
-            // Clear collections
-            openHeap.Clear();
-            closedSet.Clear();
-            cameFrom.Clear();
-            gScore.Clear();
+            EnsureManagedBuffers();
             managedPathResult.Clear();
+
+            int size = mSeen.Length;
+            if (start >= size || goal >= size)
+                return PathResult.NotFound(0);
+
+            if (++mStamp == int.MaxValue)
+            {
+                System.Array.Clear(mSeen, 0, mSeen.Length);
+                System.Array.Clear(mClosed, 0, mClosed.Length);
+                mStamp = 1;
+            }
+            int stamp = mStamp;
+            mHeapCount = 0;
+            int explored = 0;
 
             var costCalculator = options.GetEffectiveCostCalculator();
             var context = options.Context;
+            var forbidden = options.ForbiddenProvinces;
+            var avoid = options.AvoidProvinces;
+            if (forbidden != null && forbidden.Count == 0) forbidden = null;
+            if (avoid != null && avoid.Count == 0) avoid = null;
+            int maxLength = options.MaxPathLength;
+            var offsets = mOffsets;
+            var neighbors = mNeighbors;
 
             // The start is not checked with CanTraverse: the unit is already there and may always leave
             // (e.g. it stands in a country whose access it just lost)
 
-            // Initialize start
-            gScore[start] = FixedPoint64.Zero;
-            var startH = costCalculator.GetHeuristic(start, goal);
-            openHeap.Push(new PathfindingNode { provinceID = start, fScore = startH });
+            mSeen[start] = stamp;
+            mG[start] = 0;
+            mParent[start] = 0; // province 0 is never valid: marks the start for ReconstructPathManaged
+            HeapPush(costCalculator.GetHeuristic(start, goal).RawValue, start);
 
             int maxIterations = MAX_PATH_LENGTH * 100; // Safety limit
             int iterations = 0;
 
-            while (!openHeap.IsEmpty && iterations++ < maxIterations)
+            while (mHeapCount > 0 && iterations++ < maxIterations)
             {
-                var current = openHeap.Pop();
+                ushort current = HeapPop();
 
-                if (current.provinceID == goal)
+                if (current == goal)
                 {
-                    var totalCost = gScore.TryGetValue(goal, out var cost) ? cost : FixedPoint64.Zero;
-                    ReconstructPath(goal, managedPathResult);
-                    return PathResult.Found(new List<ushort>(managedPathResult), totalCost, closedSet.Count);
+                    ReconstructPathManaged(goal, managedPathResult);
+                    return PathResult.Found(new List<ushort>(managedPathResult), FixedPoint64.FromRaw(mG[goal]), explored);
                 }
 
-                if (closedSet.Contains(current.provinceID))
-                    continue;
+                if (mClosed[current] == stamp)
+                    continue; // stale heap entry
+                mClosed[current] = stamp;
+                explored++;
 
-                closedSet.Add(current.provinceID);
-
-                if (!gScore.TryGetValue(current.provinceID, out FixedPoint64 currentG))
-                    continue;
+                long currentG = mG[current];
 
                 // Check max path length
-                if (options.MaxPathLength > 0 && currentG.ToInt() >= options.MaxPathLength)
+                if (maxLength > 0 && FixedPoint64.FromRaw(currentG).ToInt() >= maxLength)
                     continue;
 
-                // Get neighbors
-                neighborBuffer.Clear();
-                adjacencySystem.GetNeighbors(current.provinceID, neighborBuffer);
-
-                for (int i = 0; i < neighborBuffer.Length; i++)
+                for (int i = offsets[current], end = offsets[current + 1]; i < end; i++)
                 {
-                    ushort neighbor = neighborBuffer[i];
+                    ushort neighbor = neighbors[i];
 
-                    if (closedSet.Contains(neighbor))
+                    if (mClosed[neighbor] == stamp)
                         continue;
 
-                    // Check forbidden
-                    if (options.ForbiddenProvinces != null && options.ForbiddenProvinces.Contains(neighbor))
+                    if (forbidden != null && forbidden.Contains(neighbor))
                         continue;
 
-                    // Check legacy validator
                     if (legacyValidator != null && !legacyValidator(neighbor, context.UnitOwnerCountryId, context.UnitTypeId))
                         continue;
 
-                    // Check cost calculator traversability
                     if (!costCalculator.CanTraverse(neighbor, context))
                         continue;
 
-                    // Calculate cost
-                    FixedPoint64 moveCost = costCalculator.GetMovementCost(current.provinceID, neighbor, context);
-
-                    // Apply avoid penalty
-                    if (options.AvoidProvinces != null && options.AvoidProvinces.Contains(neighbor))
-                    {
+                    FixedPoint64 moveCost = costCalculator.GetMovementCost(current, neighbor, context);
+                    if (avoid != null && avoid.Contains(neighbor))
                         moveCost = moveCost * options.AvoidPenalty;
-                    }
 
-                    FixedPoint64 tentativeG = currentG + moveCost;
+                    long tentativeG = currentG + moveCost.RawValue;
 
-                    if (!gScore.TryGetValue(neighbor, out FixedPoint64 existingG) || tentativeG < existingG)
+                    if (mSeen[neighbor] != stamp || tentativeG < mG[neighbor])
                     {
-                        cameFrom[neighbor] = current.provinceID;
-                        gScore[neighbor] = tentativeG;
-
-                        var h = costCalculator.GetHeuristic(neighbor, goal);
-                        var f = tentativeG + h;
-                        openHeap.Push(new PathfindingNode { provinceID = neighbor, fScore = f });
+                        mSeen[neighbor] = stamp;
+                        mG[neighbor] = tentativeG;
+                        mParent[neighbor] = current;
+                        HeapPush(tentativeG + costCalculator.GetHeuristic(neighbor, goal).RawValue, neighbor);
                     }
                 }
             }
 
-            return PathResult.NotFound(closedSet.Count);
+            return PathResult.NotFound(explored);
         }
 
-        private void ReconstructPath(ushort goal, List<ushort> result)
-        {
-            result.Clear();
-            ushort current = goal;
+        // Managed search state, indexed by province id (see FindPathManaged)
+        private int[] mOffsets;     // compact graph from AdjacencySystem.GetCompactGraph
+        private ushort[] mNeighbors;
+        private int mGraphVersion = -1;
+        private long[] mG;          // g-score (FixedPoint64 raw), valid where mSeen == mStamp
+        private ushort[] mParent;   // valid where mSeen == mStamp; 0 at the start
+        private int[] mSeen;
+        private int[] mClosed;
+        private int mStamp;
+        // Binary min-heap on (f, province id); ties go to the lower id so results don't depend on push order
+        private long[] mHeapF = new long[INITIAL_CAPACITY];
+        private ushort[] mHeapId = new ushort[INITIAL_CAPACITY];
+        private int mHeapCount;
 
+        private void EnsureManagedBuffers()
+        {
+            if (mOffsets != null && mGraphVersion == adjacencySystem.Version) return;
+            adjacencySystem.GetCompactGraph(out mOffsets, out mNeighbors);
+            mGraphVersion = adjacencySystem.Version;
+            int size = mOffsets.Length - 1;
+            mG = new long[size];
+            mParent = new ushort[size];
+            mSeen = new int[size];
+            mClosed = new int[size];
+            mStamp = 0;
+        }
+
+        private void HeapPush(long f, ushort id)
+        {
+            if (mHeapCount == mHeapF.Length)
+            {
+                System.Array.Resize(ref mHeapF, mHeapCount * 2);
+                System.Array.Resize(ref mHeapId, mHeapCount * 2);
+            }
+            int i = mHeapCount++;
+            while (i > 0)
+            {
+                int parent = (i - 1) >> 1;
+                long pf = mHeapF[parent];
+                if (pf < f || (pf == f && mHeapId[parent] <= id)) break;
+                mHeapF[i] = pf;
+                mHeapId[i] = mHeapId[parent];
+                i = parent;
+            }
+            mHeapF[i] = f;
+            mHeapId[i] = id;
+        }
+
+        private ushort HeapPop()
+        {
+            ushort top = mHeapId[0];
+            int n = --mHeapCount;
+            if (n == 0) return top;
+            long f = mHeapF[n];
+            ushort id = mHeapId[n];
+            int i = 0;
             while (true)
             {
-                result.Insert(0, current);
-                if (!cameFrom.TryGetValue(current, out ushort parent))
-                    break;
-                current = parent;
+                int child = 2 * i + 1;
+                if (child >= n) break;
+                int right = child + 1;
+                if (right < n && (mHeapF[right] < mHeapF[child] || (mHeapF[right] == mHeapF[child] && mHeapId[right] < mHeapId[child])))
+                    child = right;
+                long cf = mHeapF[child];
+                if (f < cf || (f == cf && id <= mHeapId[child])) break;
+                mHeapF[i] = cf;
+                mHeapId[i] = mHeapId[child];
+                i = child;
             }
+            mHeapF[i] = f;
+            mHeapId[i] = id;
+            return top;
+        }
+
+        private void ReconstructPathManaged(ushort goal, List<ushort> result)
+        {
+            result.Clear();
+            for (ushort current = goal; current != 0; current = mParent[current])
+                result.Add(current);
+            result.Reverse();
         }
 
         #endregion

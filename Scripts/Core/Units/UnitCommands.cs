@@ -85,7 +85,7 @@ namespace Core.Units
 
             if (createdUnitID == 0)
             {
-                UnityEngine.Debug.LogError($"[CreateUnitCommand] Failed to create unit in province {provinceID}");
+                ArchonLogger.LogError($"[CreateUnitCommand] Failed to create unit in province {provinceID}", "core_simulation");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Core.Units
 
             if (recreatedID != unitID)
             {
-                UnityEngine.Debug.LogWarning($"[DisbandUnitCommand] Undo created unit with different ID: {recreatedID} (expected {unitID})");
+                ArchonLogger.LogWarning($"[DisbandUnitCommand] Undo created unit with different ID: {recreatedID} (expected {unitID})", "core_simulation");
             }
 
             wasExecuted = false;
@@ -345,7 +345,7 @@ namespace Core.Units
             // Check if unit is already moving
             if (unitSystem.MovementQueue.IsUnitMoving(unitID))
             {
-                ArchonLogger.LogWarning($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement", "core_simulation");
+                ArchonLogger.LogDebug($"[MoveUnitCommand] Unit {unitID} is already moving - will cancel previous movement", "core_simulation");
                 // Allow command to proceed - it will cancel the old movement
             }
 
@@ -389,7 +389,7 @@ namespace Core.Units
             int totalHops = path.Count - 1;
             int totalDays = totalHops * movementDays;
 
-            ArchonLogger.Log($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total", "core_simulation");
+            ArchonLogger.LogDebug($"[MoveUnitCommand] Unit {unitID} pathfinding {unit.provinceID} → {targetProvinceID}: {path.Count} provinces, {totalDays} days total", "core_simulation");
 
             // Start time-based movement with full path (EU4-style with pathfinding)
             if (path.Count == 2)

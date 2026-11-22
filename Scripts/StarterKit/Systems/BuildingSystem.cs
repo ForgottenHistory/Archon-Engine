@@ -295,7 +295,7 @@ namespace StarterKit
 
             if (logProgress)
             {
-                ArchonLogger.Log($"BuildingSystem: Constructed {buildingType.Name} in province {provinceId}", "starter_kit");
+                ArchonLogger.LogDebug($"BuildingSystem: Constructed {buildingType.Name} in province {provinceId}", "starter_kit");
             }
 
             // Emit event via EventBus (Pattern 3)
@@ -381,7 +381,7 @@ namespace StarterKit
 
             if (logProgress)
             {
-                ArchonLogger.Log($"BuildingSystem: Country {countryId} constructed {buildingType.Name} in province {provinceId}", "starter_kit");
+                ArchonLogger.LogDebug($"BuildingSystem: Country {countryId} constructed {buildingType.Name} in province {provinceId}", "starter_kit");
             }
 
             // Emit event via EventBus (Pattern 3)
@@ -495,7 +495,7 @@ namespace StarterKit
                         modifierSystem.AddCountryModifier(ownerId, source);
                         if (logProgress)
                         {
-                            ArchonLogger.Log($"BuildingSystem: Applied country modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to country {ownerId}", "starter_kit");
+                            ArchonLogger.LogDebug($"BuildingSystem: Applied country modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to country {ownerId}", "starter_kit");
                         }
                     }
                 }
@@ -505,7 +505,7 @@ namespace StarterKit
                     modifierSystem.AddProvinceModifier(provinceId, source);
                     if (logProgress)
                     {
-                        ArchonLogger.Log($"BuildingSystem: Applied province modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to province {provinceId}", "starter_kit");
+                        ArchonLogger.LogDebug($"BuildingSystem: Applied province modifier {modifier.Type} = {modifier.Value.ToFloat():F2} from {buildingType.Name} to province {provinceId}", "starter_kit");
                     }
                 }
             }

@@ -57,7 +57,7 @@ namespace Core.Modifiers
             }
 
             // No empty slots found - capacity exceeded
-            UnityEngine.Debug.LogWarning($"ActiveModifierList capacity exceeded ({capacity}). Consider increasing capacity.");
+            ArchonLogger.LogWarning($"ActiveModifierList capacity exceeded ({capacity}). Consider increasing capacity.", "core_simulation");
             return false;
         }
 

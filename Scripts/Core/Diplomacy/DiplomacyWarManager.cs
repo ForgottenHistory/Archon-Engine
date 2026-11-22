@@ -138,7 +138,7 @@ namespace Core.Diplomacy
             AddToWarIndex(attackerID, defenderID, warsByCountry);
             AddToWarIndex(defenderID, attackerID, warsByCountry);
 
-            ArchonLogger.Log($"War declared: {attackerID} vs {defenderID}", "core_diplomacy");
+            ArchonLogger.LogDebug($"War declared: {attackerID} vs {defenderID}", "core_diplomacy");
 
             // Emit event
             var evt = new DiplomacyWarDeclaredEvent(attackerID, defenderID, currentTick);
@@ -178,7 +178,7 @@ namespace Core.Diplomacy
             RemoveFromWarIndex(country1, country2, warsByCountry);
             RemoveFromWarIndex(country2, country1, warsByCountry);
 
-            ArchonLogger.Log($"Peace made: {country1} and {country2}", "core_diplomacy");
+            ArchonLogger.LogDebug($"Peace made: {country1} and {country2}", "core_diplomacy");
 
             // Emit event
             var evt = new DiplomacyPeaceMadeEvent(country1, country2, currentTick);

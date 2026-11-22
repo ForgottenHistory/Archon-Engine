@@ -411,6 +411,8 @@ This document lists all implemented features in the Archon Engine organized by c
 ## Utility Systems
 
 - **ArchonLogger** - Categorized logging system with subsystems
+  - **Level filter** - `ArchonLogger.Level` (from `GameSettings.LogLevel`) drops messages above it, console and file
+  - **LogDebug** - Per-event and per-step messages (unit created, province changed, render passes). Editor console messages cost about 1-2 ms each, so runtime spam belongs here, not in `Log`
 - **DeterministicRandom** - Seeded xorshift128+ RNG for deterministic gameplay
   - **NextGaussian** - Normal distribution via Central Limit Theorem (sum of 12 uniforms)
   - **NextWeightedElement/Index** - Weighted random selection with int[] or FixedPoint32[] weights

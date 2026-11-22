@@ -95,7 +95,7 @@ namespace Core.Units
                 eventBus.Subscribe<HourlyTickEvent>(OnHourlyTick);
             }
 
-            UnityEngine.Debug.Log($"[UnitSystem] Initialized with capacity {capacity}");
+            ArchonLogger.Log($"[UnitSystem] Initialized with capacity {capacity}", "core_simulation");
         }
 
         // === Unit Creation ===
@@ -111,7 +111,7 @@ namespace Core.Units
 
             if (unitID == 0)
             {
-                UnityEngine.Debug.LogError("[UnitSystem] Failed to allocate unit ID - capacity exhausted!");
+                ArchonLogger.LogError("[UnitSystem] Failed to allocate unit ID - capacity exhausted!", "core_simulation");
                 return 0;
             }
 
@@ -137,7 +137,7 @@ namespace Core.Units
                 });
             }
 
-            ArchonLogger.Log($"UnitSystem: Created unit {unitID} (Type={unitTypeID}, Count={troopCount}) in province {provinceID} for country {countryID}", "core_simulation");
+            ArchonLogger.LogDebug($"UnitSystem: Created unit {unitID} (Type={unitTypeID}, Count={troopCount}) in province {provinceID} for country {countryID}", "core_simulation");
             return unitID;
         }
 
@@ -170,7 +170,7 @@ namespace Core.Units
         {
             if (unitID == 0 || unitID >= capacity)
             {
-                UnityEngine.Debug.LogWarning($"[UnitSystem] Invalid unit ID {unitID}");
+                ArchonLogger.LogWarning($"[UnitSystem] Invalid unit ID {unitID}", "core_simulation");
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace Core.Units
                 });
             }
 
-            ArchonLogger.Log($"UnitSystem: Disbanded unit {unitID} (Reason={reason})", "core_simulation");
+            ArchonLogger.LogDebug($"UnitSystem: Disbanded unit {unitID} (Reason={reason})", "core_simulation");
         }
 
         // === Queries ===
@@ -399,7 +399,7 @@ namespace Core.Units
             // Allocate new ID
             if (nextID >= capacity)
             {
-                UnityEngine.Debug.LogError($"[UnitSystem] Capacity exhausted! Max units: {capacity}");
+                ArchonLogger.LogError($"[UnitSystem] Capacity exhausted! Max units: {capacity}", "core_simulation");
                 return 0;
             }
 
@@ -449,7 +449,7 @@ namespace Core.Units
             // Write movement queue
             movementQueue.SaveState(writer);
 
-            UnityEngine.Debug.Log($"[UnitSystem] Saved {unitCount} units");
+            ArchonLogger.Log($"[UnitSystem] Saved {unitCount} units", "core_simulation");
         }
 
         public void LoadState(System.IO.BinaryReader reader)
@@ -506,7 +506,7 @@ namespace Core.Units
             // Restore internal state
             RestoreUnitCount(savedUnitCount);
 
-            UnityEngine.Debug.Log($"[UnitSystem] Loaded {unitCount} units");
+            ArchonLogger.Log($"[UnitSystem] Loaded {unitCount} units", "core_simulation");
         }
 
         private void SaveUnitColdData(System.IO.BinaryWriter writer, UnitColdData coldData)

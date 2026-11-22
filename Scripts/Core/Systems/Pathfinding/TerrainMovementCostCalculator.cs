@@ -62,7 +62,7 @@ namespace Core.Systems
                 }
             }
 
-            ArchonLogger.Log($"TerrainMovementCostCalculator: Cached {terrainRegistry.Count} terrain costs", "core_simulation");
+            ArchonLogger.LogDebug($"TerrainMovementCostCalculator: Cached {terrainRegistry.Count} terrain costs", "core_simulation");
         }
 
         /// <summary>

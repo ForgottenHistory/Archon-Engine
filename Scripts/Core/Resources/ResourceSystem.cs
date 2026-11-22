@@ -450,7 +450,7 @@ namespace Core.Resources
             // Emit batch completed event
             eventBus?.Emit(new ResourceBatchCompletedEvent { ChangeCount = changes });
 
-            ArchonLogger.Log($"ResourceSystem: Batch completed with {changes} changes", "core_simulation");
+            ArchonLogger.LogDebug($"ResourceSystem: Batch completed with {changes} changes", "core_simulation");
         }
 
         /// <summary>

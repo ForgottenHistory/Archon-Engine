@@ -122,12 +122,6 @@ namespace Core.Systems.Country
             countryGraphicalCultures[countryId] = hotData.graphicalCultureId;
             countryFlags[countryId] = hotData.flags;
 
-            // Debug: Log color for first few countries
-            if (countryId < 5)
-            {
-                UnityEngine.Debug.Log($"CountrySystem.RegisterCountry: Country {countryId} ({tag}) - Packed: 0x{hotData.colorRGBA:X8}, Color property: R={color.r} G={color.g} B={color.b} A={color.a}");
-            }
-
             // Update lookup tables
             tagHashToId[tagHash] = countryId;
             idToTagHash[countryId] = tagHash;
@@ -167,13 +161,6 @@ namespace Core.Systems.Country
                 return Color.gray;
 
             var color = countryColors[countryId];
-
-            // Debug: Log color for first few countries
-            if (countryId < 5)
-            {
-                var hotData = countryHotData[countryId];
-                UnityEngine.Debug.Log($"CountrySystem.GetCountryColor: Country {countryId} ({GetCountryTag(countryId)}) - Packed: 0x{hotData.colorRGBA:X8}, Unpacked: R={color.r} G={color.g} B={color.b} A={color.a}");
-            }
 
             return color;
         }

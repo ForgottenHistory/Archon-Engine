@@ -69,7 +69,7 @@ namespace StarterKit
             {
                 string oldOwnerName = GetCountryName(evt.OldOwner);
                 string newOwnerName = GetCountryName(evt.NewOwner);
-                ArchonLogger.Log($"ProvinceHistorySystem: Province {evt.ProvinceId} changed from {oldOwnerName} to {newOwnerName}", "starter_kit");
+                ArchonLogger.LogDebug($"ProvinceHistorySystem: Province {evt.ProvinceId} changed from {oldOwnerName} to {newOwnerName}", "starter_kit");
             }
         }
 

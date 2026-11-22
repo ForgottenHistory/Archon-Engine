@@ -168,6 +168,24 @@ NativeList<ItemWithKey>  ← Single flat array, all items from all parents
 
 ---
 
+## Native Containers in Managed Hot Loops
+
+Native containers are only fast inside Burst. Called from plain C# (Mono, in the editor with safety
+checks on), every `NativeList` indexer, `NativeHashMap.TryGetValue` and `NativeHashSet.Contains` pays
+an `AtomicSafetyHandle` check plus a hash, several times slower than an array read. A search that
+visits thousands of provinces adds that up fast.
+
+Example: `PathfindingSystem.FindPathManaged` (A* with a game cost calculator, which can't run in Burst)
+used the Burst job's NativeMinHeap/NativeHashMap/NativeHashSet, and copied each province's neighbours
+out of a `Dictionary<ushort, HashSet<ushort>>` into a NativeList. In a deep-profiled capture, 32 searches
+made 1.7M NativeList reads and 2.9M safety checks, and took about 2.3 s. The fix (2026-11-22) was flat
+managed arrays indexed by province id: `AdjacencySystem.GetCompactGraph` (CSR offsets and neighbours),
+g-score, parent and closed arrays cleared by a stamp bump, and an array binary heap.
+
+**Rule:** for managed code use managed arrays. Keep Native containers for data that goes to jobs.
+
+---
+
 *Lesson from: DiplomacySystem Burst optimization (2025-10-25)*
 *Pattern discovered through 4 failed attempts, 1 success*
 *Key insight: Data structure > algorithm for Burst effectiveness*

@@ -3,18 +3,6 @@ using UnityEngine;
 namespace Core
 {
     /// <summary>
-    /// Logging verbosity level for all engine and game systems.
-    /// </summary>
-    public enum LogLevel
-    {
-        None = 0,      // No logging
-        Errors = 1,    // Only errors
-        Warnings = 2,  // Errors and warnings
-        Info = 3,      // Normal operational info
-        Debug = 4      // Verbose debug output
-    }
-
-    /// <summary>
     /// ScriptableObject configuration for game initialization and data loading.
     /// Access via GameSettings.Instance after initialization.
     /// </summary>
@@ -34,6 +22,7 @@ namespace Core
         public void RegisterAsActive()
         {
             Instance = this;
+            ArchonLogger.Level = LogLevel;
             ArchonLogger.Log("GameSettings: Registered as active instance", "core_simulation");
         }
 
@@ -122,6 +111,12 @@ namespace Core
         /// Check if logging is enabled at the specified level.
         /// </summary>
         public bool ShouldLog(LogLevel level) => LogLevel >= level;
+
+        // Inspector changes to the active settings apply to ArchonLogger right away (also in play mode)
+        void OnValidate()
+        {
+            if (Instance == this) ArchonLogger.Level = LogLevel;
+        }
 
         /// <summary>
         /// Validate that all required paths exist and are accessible
@@ -242,14 +237,5 @@ namespace Core
             ArchonLogger.Log($"  Data Validation: {EnableDataValidation}", "core_simulation");
         }
 
-        #if UNITY_EDITOR
-        /// <summary>
-        /// Validate paths in the editor
-        /// </summary>
-        void OnValidate()
-        {
-            // To be implemented
-        }
-        #endif
     }
 }

@@ -256,7 +256,7 @@ namespace StarterKit
 
             if (success && logProgress)
             {
-                ArchonLogger.Log($"AISystem: Country {countryId} built farm in province {targetProvince}", "starter_kit");
+                ArchonLogger.LogDebug($"AISystem: Country {countryId} built farm in province {targetProvince}", "starter_kit");
             }
 
             return success;

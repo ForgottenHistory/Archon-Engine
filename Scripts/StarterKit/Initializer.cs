@@ -63,6 +63,16 @@ namespace StarterKit
         [SerializeField] private bool initializeOnStart = true;
         [SerializeField] private bool logProgress = false;
 
+        [Header("Demo Systems")]
+        [Tooltip("Gold, income and the resource bar. A game with its own economy turns this off.")]
+        [SerializeField] private bool enableEconomy = true;
+        [Tooltip("Farms and other buildings with their modifiers. Needs the economy.")]
+        [SerializeField] private bool enableBuildings = true;
+        [Tooltip("The demo AI that builds farms for non-player countries. Needs buildings and the economy.")]
+        [SerializeField] private bool enableAI = true;
+        [Tooltip("Ownership history per province (cold data demo, shown in the province panel).")]
+        [SerializeField] private bool enableProvinceHistory = true;
+
         #endregion
 
         #region Private Fields & Public Properties
@@ -228,12 +238,15 @@ namespace StarterKit
             yield return null;
 
             // Create economy system
-            if (logProgress)
-                ArchonLogger.Log("Creating economy system...", "starter_kit");
+            if (enableEconomy)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Creating economy system...", "starter_kit");
 
-            economySystem = new EconomySystem(gameState, playerState, modifierSystem, logProgress);
+                economySystem = new EconomySystem(gameState, playerState, modifierSystem, logProgress);
 
-            yield return null;
+                yield return null;
+            }
 
             // Create unit system
             if (logProgress)
@@ -246,31 +259,40 @@ namespace StarterKit
             yield return null;
 
             // Create building system
-            if (logProgress)
-                ArchonLogger.Log("Creating building system...", "starter_kit");
+            if (enableBuildings && economySystem != null)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Creating building system...", "starter_kit");
 
-            buildingSystem = new BuildingSystem(gameState, playerState, economySystem, modifierSystem, logProgress);
-            var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.DataDirectory, "common", "buildings");
-            buildingSystem.LoadBuildingTypes(buildingsPath);
+                buildingSystem = new BuildingSystem(gameState, playerState, economySystem, modifierSystem, logProgress);
+                var buildingsPath = System.IO.Path.Combine(GameSettings.Instance.DataDirectory, "common", "buildings");
+                buildingSystem.LoadBuildingTypes(buildingsPath);
 
-            yield return null;
+                yield return null;
+            }
 
             // Create AI system
-            if (logProgress)
-                ArchonLogger.Log("Creating AI system...", "starter_kit");
+            if (enableAI && buildingSystem != null && economySystem != null)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Creating AI system...", "starter_kit");
 
-            aiSystem = new AISystem(gameState, playerState, buildingSystem, economySystem, logProgress);
+                aiSystem = new AISystem(gameState, playerState, buildingSystem, economySystem, logProgress);
 
-            yield return null;
+                yield return null;
+            }
 
             // Create province history system (Pattern 4: Hot/Cold Data Separation demo)
             // This tracks ownership changes as COLD DATA - only accessed when viewing province details
-            if (logProgress)
-                ArchonLogger.Log("Creating province history system (cold data storage)...", "starter_kit");
+            if (enableProvinceHistory)
+            {
+                if (logProgress)
+                    ArchonLogger.Log("Creating province history system (cold data storage)...", "starter_kit");
 
-            provinceHistorySystem = new ProvinceHistorySystem(gameState, logProgress);
+                provinceHistorySystem = new ProvinceHistorySystem(gameState, logProgress);
 
-            yield return null;
+                yield return null;
+            }
 
             // Register custom map modes (GAME layer extends ENGINE map modes)
             yield return RegisterMapModes(gameState);

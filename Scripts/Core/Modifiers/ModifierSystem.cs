@@ -107,7 +107,7 @@ namespace Core.Modifiers
             globalGeneration = 1;
             for (int i = 0; i < maxCountries; i++) countryGeneration[i] = 1;
 
-            Debug.Log($"[ModifierSystem] Initialized with {maxCountries} countries, {maxProvinces} provinces");
+            ArchonLogger.Log($"[ModifierSystem] Initialized with {maxCountries} countries, {maxProvinces} provinces", "core_simulation");
         }
 
         /// <summary>
@@ -160,7 +160,7 @@ namespace Core.Modifiers
         {
             if (countryId >= maxCountries)
             {
-                Debug.LogWarning($"[ModifierSystem] Country ID {countryId} exceeds max {maxCountries}");
+                ArchonLogger.LogWarning($"[ModifierSystem] Country ID {countryId} exceeds max {maxCountries}", "core_simulation");
                 return false;
             }
 
@@ -670,7 +670,7 @@ namespace Core.Modifiers
                 SaveScopedContainer(writer, provinceScopes[i]);
             }
 
-            Debug.Log($"[ModifierSystem] Saved state (countries: {maxCountries}, provinces: {maxProvinces})");
+            ArchonLogger.Log($"[ModifierSystem] Saved state (countries: {maxCountries}, provinces: {maxProvinces})", "core_simulation");
         }
 
         /// <summary>
@@ -686,12 +686,12 @@ namespace Core.Modifiers
 
             if (savedMaxCountries != maxCountries)
             {
-                Debug.LogWarning($"[ModifierSystem] Country capacity mismatch (saved: {savedMaxCountries}, current: {maxCountries})");
+                ArchonLogger.LogWarning($"[ModifierSystem] Country capacity mismatch (saved: {savedMaxCountries}, current: {maxCountries})", "core_simulation");
             }
 
             if (savedMaxProvinces != maxProvinces)
             {
-                Debug.LogWarning($"[ModifierSystem] Province capacity mismatch (saved: {savedMaxProvinces}, current: {maxProvinces})");
+                ArchonLogger.LogWarning($"[ModifierSystem] Province capacity mismatch (saved: {savedMaxProvinces}, current: {maxProvinces})", "core_simulation");
             }
 
             // Load global scope
@@ -717,7 +717,7 @@ namespace Core.Modifiers
                 provinceDirtyFlags[i] = true; // Force rebuild after load
             }
 
-            Debug.Log($"[ModifierSystem] Loaded state (countries: {savedMaxCountries}, provinces: {savedMaxProvinces})");
+            ArchonLogger.Log($"[ModifierSystem] Loaded state (countries: {savedMaxCountries}, provinces: {savedMaxProvinces})", "core_simulation");
         }
 
         /// <summary>
@@ -751,7 +751,7 @@ namespace Core.Modifiers
 
             if (savedCount != activeCount)
             {
-                Debug.LogWarning($"[ModifierSystem] Saved count mismatch (expected: {activeCount}, actual: {savedCount})");
+                ArchonLogger.LogWarning($"[ModifierSystem] Saved count mismatch (expected: {activeCount}, actual: {savedCount})", "core_simulation");
             }
         }
 
@@ -826,7 +826,7 @@ namespace Core.Modifiers
             if (provinceLastCountryGeneration.IsCreated)
                 provinceLastCountryGeneration.Dispose();
 
-            Debug.Log("[ModifierSystem] Disposed");
+            ArchonLogger.Log("[ModifierSystem] Disposed", "core_simulation");
         }
 
         #endregion

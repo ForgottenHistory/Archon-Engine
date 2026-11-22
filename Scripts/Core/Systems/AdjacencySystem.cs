@@ -92,6 +92,13 @@ namespace Core.Systems
         // Statistics
         private int totalAdjacencyPairs = 0;
 
+        // Compact (CSR) copy for managed graph searches, built on first use after SetAdjacencies
+        private int[] compactOffsets;
+        private ushort[] compactNeighbors;
+
+        /// <summary>Bumped by every SetAdjacencies, so callers caching the graph know to rebuild.</summary>
+        public int Version { get; private set; }
+
         public AdjacencySystem()
         {
             adjacencies = new Dictionary<ushort, HashSet<ushort>>();
@@ -124,6 +131,9 @@ namespace Core.Systems
 
             adjacencies.Clear();
             totalAdjacencyPairs = 0;
+            compactOffsets = null;
+            compactNeighbors = null;
+            Version++;
 
             // First pass: count total adjacencies for native allocation
             int totalEntries = 0;
@@ -221,6 +231,41 @@ namespace Core.Systems
             {
                 resultBuffer.Add(neighbor);
             }
+        }
+
+        /// <summary>
+        /// The graph as flat arrays (compressed sparse rows): the neighbors of province p are
+        /// neighbors[offsets[p] .. offsets[p + 1]), in the same order GetNeighbors returns them.
+        /// offsets has (highest province id + 2) entries. Built once per SetAdjacencies and shared:
+        /// callers must not modify the arrays. For managed searches (A*, flood fills) that visit
+        /// thousands of provinces, where a dictionary lookup and a copy per province dominate.
+        /// </summary>
+        public void GetCompactGraph(out int[] offsets, out ushort[] neighbors)
+        {
+            if (compactOffsets == null)
+            {
+                int maxId = 0, total = 0;
+                foreach (var kvp in adjacencies)
+                {
+                    if (kvp.Key > maxId) maxId = kvp.Key;
+                    total += kvp.Value.Count;
+                    foreach (ushort n in kvp.Value)
+                        if (n > maxId) maxId = n;
+                }
+                var off = new int[maxId + 2];
+                var nb = new ushort[total];
+                foreach (var kvp in adjacencies) off[kvp.Key + 1] = kvp.Value.Count;
+                for (int i = 1; i < off.Length; i++) off[i] += off[i - 1];
+                foreach (var kvp in adjacencies)
+                {
+                    int w = off[kvp.Key];
+                    foreach (ushort n in kvp.Value) nb[w++] = n;
+                }
+                compactOffsets = off;
+                compactNeighbors = nb;
+            }
+            offsets = compactOffsets;
+            neighbors = compactNeighbors;
         }
 
         /// <summary>
