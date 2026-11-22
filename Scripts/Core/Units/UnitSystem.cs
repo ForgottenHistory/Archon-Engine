@@ -53,7 +53,9 @@ namespace Core.Units
 
         // === ID Management ===
 
-        private HashSet<ushort> availableIDs;  // Recycled IDs from disbanded units
+        // IDs of disbanded units, handed out again only once fresh IDs run out (lowest first: deterministic), so a
+        // reference a system still holds to a destroyed unit doesn't silently point at a new one
+        private SortedSet<ushort> availableIDs;
         private ushort nextID;
 
         // === Events ===
@@ -85,7 +87,7 @@ namespace Core.Units
             unitColdData = new Dictionary<ushort, UnitColdData>();
 
             // Initialize ID management
-            availableIDs = new HashSet<ushort>();
+            availableIDs = new SortedSet<ushort>();
             nextID = 1;  // Start at 1 (0 reserved for "no unit")
 
             // Subscribe to ticks for movement processing
@@ -164,7 +166,7 @@ namespace Core.Units
         // === Unit Destruction ===
 
         /// <summary>
-        /// Disband a unit and recycle its ID.
+        /// Disband a unit; its ID is recycled once fresh IDs run out.
         /// </summary>
         public void DisbandUnit(ushort unitID, DestructionReason reason = DestructionReason.Disbanded)
         {
@@ -175,6 +177,9 @@ namespace Core.Units
             }
 
             UnitState unit = units[unitID];
+
+            // A destroyed unit's march goes with it (it would otherwise stay queued under its ID)
+            movementQueue?.CancelMovement(unitID);
 
             // Remove from sparse mappings
             provinceUnits.Remove(unit.provinceID, unitID);
@@ -386,24 +391,20 @@ namespace Core.Units
 
         private ushort AllocateUnitID()
         {
-            // Reuse recycled ID if available
+            // Fresh IDs first: a destroyed unit's ID isn't reused while others remain
+            if (nextID < capacity)
+                return nextID++;
+
+            // Then recycled IDs, lowest first
             if (availableIDs.Count > 0)
             {
-                var enumerator = availableIDs.GetEnumerator();
-                enumerator.MoveNext();
-                ushort recycledID = enumerator.Current;
+                ushort recycledID = availableIDs.Min;
                 availableIDs.Remove(recycledID);
                 return recycledID;
             }
 
-            // Allocate new ID
-            if (nextID >= capacity)
-            {
-                ArchonLogger.LogError($"[UnitSystem] Capacity exhausted! Max units: {capacity}", "core_simulation");
-                return 0;
-            }
-
-            return nextID++;
+            ArchonLogger.LogError($"[UnitSystem] Capacity exhausted! Max units: {capacity}", "core_simulation");
+            return 0;
         }
 
         private void RestoreUnitCount(int count)
