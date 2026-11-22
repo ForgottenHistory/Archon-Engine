@@ -30,6 +30,9 @@ namespace Map.Rendering.Labels
         private const int AtlasPadding = 9;
         private const int AtlasSize = 2048;
         private const float ChangeSettleSeconds = 0.3f;
+        // Changes that keep coming (a world at war: control changes every game hour, at high speed every frame)
+        // never settle; place anyway once the oldest pending change has waited this long
+        private const float ChangeMaxWaitSeconds = 1.0f;
 
         private static readonly int MainTexId = Shader.PropertyToID("_MainTex");
         private static readonly int FaceColorId = Shader.PropertyToID("_FaceColor");
@@ -53,6 +56,7 @@ namespace Map.Rendering.Labels
         private readonly HashSet<ushort> dirtyCountries = new HashSet<ushort>();
         private bool placeAll;
         private float lastChangeTime;
+        private float firstChangeTime = -1f; // oldest change not yet placed, -1 = none
         private Task<List<PlacedLabel>> job;
         private HashSet<ushort> jobCountries;
 
@@ -143,7 +147,13 @@ namespace Map.Rendering.Labels
             owners[e.ProvinceId] = now;
             if (old != 0) dirtyCountries.Add(old);
             if (now != 0) dirtyCountries.Add(now);
+            MarkChanged();
+        }
+
+        private void MarkChanged()
+        {
             lastChangeTime = Time.unscaledTime;
+            if (firstChangeTime < 0f) firstChangeTime = lastChangeTime;
         }
 
         private ushort SafeOwner(ushort province)
@@ -162,7 +172,7 @@ namespace Map.Rendering.Labels
             if (now != 0) dirtyCountries.Add(now);
             if (e.OldOwner != 0) dirtyCountries.Add(e.OldOwner);
             if (e.NewOwner != 0) dirtyCountries.Add(e.NewOwner);
-            lastChangeTime = Time.unscaledTime;
+            MarkChanged();
         }
 
         // ------------------------------------------------------------------ style
@@ -250,7 +260,8 @@ namespace Map.Rendering.Labels
                 FinishJob();
 
             if (job == null && font != null &&
-                (placeAll || (dirtyCountries.Count > 0 && Time.unscaledTime - lastChangeTime >= ChangeSettleSeconds)))
+                (placeAll || (dirtyCountries.Count > 0 && (Time.unscaledTime - lastChangeTime >= ChangeSettleSeconds
+                                                            || Time.unscaledTime - firstChangeTime >= ChangeMaxWaitSeconds))))
                 StartJob();
         }
 
@@ -269,6 +280,7 @@ namespace Map.Rendering.Labels
             }
             placeAll = false;
             dirtyCountries.Clear();
+            firstChangeTime = -1f;
 
             var source = MapRendererRegistry.LabelSource ?? new DefaultMapLabelSource();
             var requests = new List<LabelRequest>(countries.Count);
