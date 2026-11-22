@@ -159,16 +159,25 @@ namespace Core.Diplomacy
             return DiplomacyWarManager.GetWarCount(activeWars);
         }
 
+        /// <summary>
+        /// Goes up on every war, peace, alliance, pact, guarantee or military-access change (and on load). A system
+        /// that caches something derived from relations (who may enter whose land) compares it with the value it
+        /// cached at. Not saved: only compare within a run.
+        /// </summary>
+        public int RelationsVersion { get; private set; }
+
         // ========== WAR STATE CHANGES (Delegate to DiplomacyWarManager) ==========
 
         public void DeclareWar(ushort attackerID, ushort defenderID, int currentTick)
         {
             DiplomacyWarManager.DeclareWar(attackerID, defenderID, currentTick, relations, activeWars, warsByCountry, gameState);
+            RelationsVersion++;
         }
 
         public void MakePeace(ushort country1, ushort country2, int currentTick)
         {
             DiplomacyWarManager.MakePeace(country1, country2, currentTick, relations, activeWars, warsByCountry, gameState);
+            RelationsVersion++;
         }
 
         // ========== TREATY QUERIES (Delegate to DiplomacyTreatyManager) ==========
@@ -218,41 +227,49 @@ namespace Core.Diplomacy
         public void FormAlliance(ushort country1, ushort country2, int currentTick)
         {
             DiplomacyTreatyManager.FormAlliance(country1, country2, relations);
+            RelationsVersion++;
         }
 
         public void BreakAlliance(ushort country1, ushort country2, int currentTick)
         {
             DiplomacyTreatyManager.BreakAlliance(country1, country2, relations);
+            RelationsVersion++;
         }
 
         public void FormNonAggressionPact(ushort country1, ushort country2, int currentTick)
         {
             DiplomacyTreatyManager.FormNonAggressionPact(country1, country2, relations);
+            RelationsVersion++;
         }
 
         public void BreakNonAggressionPact(ushort country1, ushort country2, int currentTick)
         {
             DiplomacyTreatyManager.BreakNonAggressionPact(country1, country2, relations);
+            RelationsVersion++;
         }
 
         public void GuaranteeIndependence(ushort guarantor, ushort guaranteed, int currentTick)
         {
             DiplomacyTreatyManager.GuaranteeIndependence(guarantor, guaranteed, relations);
+            RelationsVersion++;
         }
 
         public void RevokeGuarantee(ushort guarantor, ushort guaranteed, int currentTick)
         {
             DiplomacyTreatyManager.RevokeGuarantee(guarantor, guaranteed, relations);
+            RelationsVersion++;
         }
 
         public void GrantMilitaryAccess(ushort granter, ushort recipient, int currentTick)
         {
             DiplomacyTreatyManager.GrantMilitaryAccess(granter, recipient, relations);
+            RelationsVersion++;
         }
 
         public void RevokeMilitaryAccess(ushort granter, ushort recipient, int currentTick)
         {
             DiplomacyTreatyManager.RevokeMilitaryAccess(granter, recipient, relations);
+            RelationsVersion++;
         }
 
         // ========== SAVE/LOAD (Delegate to DiplomacySaveLoadHandler) ==========
@@ -265,6 +282,7 @@ namespace Core.Diplomacy
         protected override void OnLoad(SaveGameData saveData)
         {
             DiplomacySaveLoadHandler.OnLoad(saveData, relations, activeWars, warsByCountry, allModifiers, modifierCache);
+            RelationsVersion++;
         }
 
         // ========== STATISTICS ==========

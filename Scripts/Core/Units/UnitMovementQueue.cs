@@ -142,7 +142,7 @@ namespace Core.Units
                 }
                 unitPaths[unitID] = pathQueue;
 
-                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} multi-hop path: {fullPath.Count} provinces total, {pathQueue.Count} waypoints remaining", "core_simulation");
+                if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} multi-hop path: {fullPath.Count} provinces total, {pathQueue.Count} waypoints remaining", "core_simulation");
             }
             // Note: We don't clear the path here if fullPath is null, because:
             // - If this is a continuation of multi-hop journey (from CompleteMovement), we want to keep the path
@@ -153,7 +153,7 @@ namespace Core.Units
             var movementState = new MovementState(unit.provinceID, destinationProvinceID, movementTicks);
             movingUnits[unitID] = movementState;
 
-            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementTicks} ticks)", "core_simulation");
+            if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} started moving {unit.provinceID} → {destinationProvinceID} ({movementTicks} ticks)", "core_simulation");
 
             // Emit event (for UI updates)
             if (eventBus != null)
@@ -187,7 +187,7 @@ namespace Core.Units
                 unitPaths.Remove(unitID);
             }
 
-            ArchonLogger.Log($"[UnitMovementQueue] Cancelled movement for unit {unitID}", "core_simulation");
+            if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Cancelled movement for unit {unitID}", "core_simulation");
 
             // Emit event
             if (eventBus != null)
@@ -274,7 +274,7 @@ namespace Core.Units
             // Teleport unit to destination
             unitSystem.MoveUnit(unitID, movementState.destinationProvinceID);
 
-            ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} arrived at province {movementState.destinationProvinceID}", "core_simulation");
+            if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} arrived at province {movementState.destinationProvinceID}", "core_simulation");
 
             // Emit event (for UI updates) - Note: UnitMovedEvent already emitted by UnitSystem.MoveUnit()
             if (eventBus != null)
@@ -291,7 +291,7 @@ namespace Core.Units
             if (unitPaths.TryGetValue(unitID, out var pathQueue) && pathQueue.Count > 0)
             {
                 ushort nextWaypoint = pathQueue.Dequeue();
-                ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)", "core_simulation");
+                if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)", "core_simulation");
 
                 // Start movement to next waypoint (use default movement days - should be passed from original command)
                 // Each leg takes as long as the one just finished
@@ -301,7 +301,7 @@ namespace Core.Units
                 if (pathQueue.Count == 0)
                 {
                     unitPaths.Remove(unitID);
-                    ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} completed multi-hop journey", "core_simulation");
+                    if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} completed multi-hop journey", "core_simulation");
                 }
             }
         }
@@ -323,8 +323,27 @@ namespace Core.Units
         /// <summary>Get count of units currently moving</summary>
         public int GetMovingUnitCount() => movingUnits.Count;
 
+        // Per-unit movement lines: every order, hop and arrival, so only at Debug level (a war moves hundreds of
+        // units an hour, and each console line costs a Debug.Log)
+        static bool LogMoves => GameSettings.Instance?.ShouldLog(LogLevel.Debug) ?? false;
+
         /// <summary>Get all moving unit IDs</summary>
         public IEnumerable<ushort> GetMovingUnits() => movingUnits.Keys;
+
+        /// <summary>
+        /// Final province of a unit's current march (the last waypoint, else the current hop's destination);
+        /// 0 when it isn't moving. No allocation, unlike GetFullPath: for per-tick queries over many units.
+        /// </summary>
+        public ushort GetFinalDestination(ushort unitID)
+        {
+            if (!movingUnits.TryGetValue(unitID, out var movementState))
+                return 0;
+            ushort last = movementState.destinationProvinceID;
+            if (unitPaths.TryGetValue(unitID, out var pathQueue))
+                foreach (ushort waypoint in pathQueue)
+                    last = waypoint;
+            return last;
+        }
 
         /// <summary>
         /// Get full movement path for visualization (current position + all waypoints)

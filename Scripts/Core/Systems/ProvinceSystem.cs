@@ -298,6 +298,12 @@ namespace Core.Systems
         // ===== DATA ACCESS OPERATIONS (delegated to ProvinceDataManager) =====
 
         public ushort GetProvinceOwner(ushort provinceId) => dataManager.GetProvinceOwner(provinceId);
+        /// <summary>
+        /// Goes up whenever any province's owner changes (SetProvinceOwner, initial load, save load). A system
+        /// that caches something derived from owners (who may enter where, borders between countries) compares
+        /// it with the value it cached at, instead of re-reading every owner. Not saved: only compare within a run.
+        /// </summary>
+        public int OwnershipVersion => dataManager.OwnershipVersion;
         public ushort GetProvinceController(ushort provinceId) => dataManager.GetProvinceController(provinceId);
         public void SetProvinceOwner(ushort provinceId, ushort newOwner) => dataManager.SetProvinceOwner(provinceId, newOwner);
         public void SetProvinceController(ushort provinceId, ushort newController) => dataManager.SetProvinceController(provinceId, newController);
@@ -348,6 +354,7 @@ namespace Core.Systems
                 return;
             }
             stateLoader.LoadProvinceInitialStates(dataDirectory);
+            dataManager.BumpOwnershipVersion();
         }
 
         public ProvinceInitialStateLoadResult LoadProvinceInitialStatesForLinking(string dataDirectory)
@@ -580,6 +587,7 @@ namespace Core.Systems
             // LoadState writes province data directly to the NativeArray buffer,
             // bypassing SetProvinceState which normally updates the reverse index.
             dataManager.RebuildOwnerIndex();
+            dataManager.BumpOwnershipVersion();
 
             ArchonLogger.Log($"ProvinceSystem: Loaded {savedProvinceCount} provinces (capacity: {savedCapacity})", "core_simulation");
         }

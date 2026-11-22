@@ -149,6 +149,10 @@ namespace Core.Systems.Province
         /// <summary>
         /// Get province owner - most common query (must be ultra-fast)
         /// </summary>
+        /// <summary>Goes up on every owner change (and bulk load): caches of owner-derived data compare it.</summary>
+        public int OwnershipVersion { get; private set; }
+        public void BumpOwnershipVersion() => OwnershipVersion++;
+
         public ushort GetProvinceOwner(ushort provinceId)
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
@@ -174,6 +178,7 @@ namespace Core.Systems.Province
         /// <summary>
         /// Set province owner and emit events
         /// </summary>
+        /// <remarks>Raises OwnershipVersion when the owner actually changes.</remarks>
         public void SetProvinceOwner(ushort provinceId, ushort newOwner)
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
@@ -191,6 +196,7 @@ namespace Core.Systems.Province
             // Update state and write back (structs are value types)
             state.ownerID = newOwner;
             states[arrayIndex] = state;
+            OwnershipVersion++;
 
             // Update reverse index (skip unowned — owner 0 would be a 49k+ bucket)
             if (oldOwner != UNOWNED_COUNTRY)

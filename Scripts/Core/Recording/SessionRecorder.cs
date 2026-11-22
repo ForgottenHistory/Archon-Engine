@@ -344,11 +344,16 @@ namespace Core.Recording
     /// Built-in source: every province whose controller or owner changed since the last Record
     /// (control.tsv: province, from, to = controller, falling back to the owner when there is none;
     /// owner = the owner now). Optionally limited to some provinces (e.g. land only).
+    /// Compares every included province each Record, reading the province state array directly by index
+    /// (looked up once in Begin): per-province GetProvinceOwner/GetProvinceController calls were two hash
+    /// lookups each, about 20,000 an hour on a 10,000-province map. Not event-driven on purpose: the
+    /// EventBus delivers once per frame, which at high speed is several ticks late, and rows are per tick.
     /// </summary>
     public sealed class ProvinceControlSource : IRecordingSource
     {
         readonly Func<ushort, bool> include;
         ushort[] provinces;
+        int[] stateIndex;               // each included province's index in the province state array
         ushort[] controller, owner;
         RecordingTable table;
 
@@ -370,27 +375,31 @@ namespace Core.Recording
             provinces = list.ToArray();
             controller = new ushort[max + 1];
             owner = new ushort[max + 1];
-            var p = r.GameState.Provinces;
+            var data = r.GameState.Provinces.GetNativeData();
+            var kept = new List<ushort>(list.Count);
+            var index = new List<int>(list.Count);
             foreach (ushort id in provinces)
             {
-                owner[id] = p.GetProvinceOwner(id);
-                controller[id] = Controller(p, id, owner[id]);
+                if (!data.idToIndex.TryGetValue(id, out int i)) continue;
+                kept.Add(id);
+                index.Add(i);
+                var s = data.provinceStates[i];
+                owner[id] = s.ownerID;
+                controller[id] = s.controllerID != 0 ? s.controllerID : s.ownerID;
             }
-        }
-
-        static ushort Controller(Systems.ProvinceSystem p, ushort id, ushort ownerId)
-        {
-            ushort c = p.GetProvinceController(id);
-            return c != 0 ? c : ownerId;
+            provinces = kept.ToArray();
+            stateIndex = index.ToArray();
         }
 
         public void Record(SessionRecorder r)
         {
-            var p = r.GameState.Provinces;
-            foreach (ushort id in provinces)
+            var states = r.GameState.Provinces.GetNativeData().provinceStates; // the current tick's states
+            for (int k = 0; k < provinces.Length; k++)
             {
-                ushort o = p.GetProvinceOwner(id);
-                ushort c = Controller(p, id, o);
+                ushort id = provinces[k];
+                var s = states[stateIndex[k]];
+                ushort o = s.ownerID;
+                ushort c = s.controllerID != 0 ? s.controllerID : o;
                 if (c == controller[id] && o == owner[id]) continue;
                 table.Row($"{id}\t{r.Tag(controller[id])}\t{r.Tag(c)}\t{r.Tag(o)}");
                 controller[id] = c;
