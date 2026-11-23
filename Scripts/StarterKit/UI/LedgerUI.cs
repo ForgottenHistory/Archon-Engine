@@ -69,7 +69,7 @@ namespace StarterKit
             if (!IsInitialized) return;
 
             // Toggle with hotkey
-            if (Input.GetKeyDown(toggleKey))
+            if (global::Utils.KeyboardFocus.KeyDown(toggleKey))
             {
                 Toggle();
             }

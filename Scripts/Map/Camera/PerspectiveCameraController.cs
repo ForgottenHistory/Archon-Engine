@@ -113,7 +113,7 @@ namespace Map.CameraControllers
 
             #if UNITY_EDITOR
             // Debug: Log current pitch angle
-            if (Input.GetKeyDown(KeyCode.P))
+            if (global::Utils.KeyboardFocus.KeyDown(KeyCode.P))
             {
                 ArchonLogger.Log($"Pitch Angle: {currentPitchAngle:F1}, Camera X Rot: {cameraXRotation:F1}, Zoom: {currentZoom:F2}, Distance: {currentDistance:F1}", "map_rendering");
             }

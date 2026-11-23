@@ -157,7 +157,7 @@ namespace StarterKit
         private void Update()
         {
             // Keyboard shortcut: M to toggle map mode
-            if (Input.GetKeyDown(KeyCode.M) && isVisible)
+            if (global::Utils.KeyboardFocus.KeyDown(KeyCode.M) && isVisible)
             {
                 OnMapModeClicked();
             }

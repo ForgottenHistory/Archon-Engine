@@ -435,6 +435,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **MapInitializer** - Automated setup of map subsystems
 - **MapSystemCoordinator** - Coordinate map subsystems
 - **FastAdjacencyScanner** - Fast province adjacency scanning
+- **KeyboardFocus** (`Utils`) - Hotkey gate: `KeyDown` / `Key` say no while a UI Toolkit text field has focus, so typing doesn't fire shortcuts; the engine's camera, save and day/night keys use it
 
 ---
 

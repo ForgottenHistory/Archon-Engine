@@ -281,20 +281,20 @@ namespace Map.CameraControllers
 
             Vector3 moveDirection = Vector3.zero;
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (global::Utils.KeyboardFocus.Key(KeyCode.LeftArrow))
             {
                 moveDirection.x = -1;
             }
-            else if (Input.GetKey(KeyCode.RightArrow))
+            else if (global::Utils.KeyboardFocus.Key(KeyCode.RightArrow))
             {
                 moveDirection.x = 1;
             }
 
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (global::Utils.KeyboardFocus.Key(KeyCode.DownArrow))
             {
                 moveDirection.z = -1;
             }
-            else if (Input.GetKey(KeyCode.UpArrow))
+            else if (global::Utils.KeyboardFocus.Key(KeyCode.UpArrow))
             {
                 moveDirection.z = 1;
             }

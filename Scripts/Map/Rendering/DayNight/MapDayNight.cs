@@ -116,7 +116,7 @@ namespace Map.Rendering.DayNight
                 ApplyStyle();
 
             var style = MapDayNightStyles.Current;
-            if (style.ToggleKey != KeyCode.None && Input.GetKeyDown(style.ToggleKey))
+            if (style.ToggleKey != KeyCode.None && global::Utils.KeyboardFocus.KeyDown(style.ToggleKey))
             {
                 enabledState = !enabledState;
                 ArchonLogger.Log($"MapDayNight: {(enabledState ? "on" : "off")}", "map_rendering");

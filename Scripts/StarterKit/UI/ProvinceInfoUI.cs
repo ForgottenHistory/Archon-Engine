@@ -112,7 +112,7 @@ namespace StarterKit
                 return;
 
             // Escape to close
-            if (Input.GetKeyDown(KeyCode.Escape) && currentProvinceID != 0)
+            if (global::Utils.KeyboardFocus.KeyDown(KeyCode.Escape) && currentProvinceID != 0)
             {
                 currentProvinceID = 0;
                 provinceHighlighter?.ClearHighlight();

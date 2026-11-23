@@ -88,7 +88,7 @@ namespace Core.SaveLoad
             if (!enableHotkeys) return;
 
             // Quick save
-            if (Input.GetKeyDown(quickSaveKey))
+            if (global::Utils.KeyboardFocus.KeyDown(quickSaveKey))
             {
                 if (logSaveLoadOperations)
                     ArchonLogger.Log($"SaveManager: {quickSaveKey} pressed - Quicksaving...", "core_saveload");
@@ -96,7 +96,7 @@ namespace Core.SaveLoad
             }
 
             // Quick load
-            if (Input.GetKeyDown(quickLoadKey))
+            if (global::Utils.KeyboardFocus.KeyDown(quickLoadKey))
             {
                 if (logSaveLoadOperations)
                     ArchonLogger.Log($"SaveManager: {quickLoadKey} pressed - Quickloading...", "core_saveload");
