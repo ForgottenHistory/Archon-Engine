@@ -26,6 +26,9 @@ namespace Map.Rendering
         private MapTexturePopulator texturePopulator;
         private ProvinceMapping provinceMapping;
         private OwnerTextureDispatcher ownerTextureDispatcher;
+        // Profiler markers (a normal capture shows them): which part of an ownership batch costs the frame
+        static readonly Unity.Profiling.ProfilerMarker OwnerMarker = new Unity.Profiling.ProfilerMarker("Map.texture_update.owner");
+        static readonly Unity.Profiling.ProfilerMarker BordersMarker = new Unity.Profiling.ProfilerMarker("Map.texture_update.borders");
         private BorderComputeDispatcher borderDispatcher;
 
         // Batching for performance
@@ -123,13 +126,15 @@ namespace Map.Rendering
             // Update owner texture incrementally (only changed provinces)
             if (ownerTextureDispatcher != null && gameState?.ProvinceQueries != null)
             {
-                ownerTextureDispatcher.UpdateOwnerTexture(gameState.ProvinceQueries, changedProvinces, cmd);
+                using (OwnerMarker.Auto())
+                    ownerTextureDispatcher.UpdateOwnerTexture(gameState.ProvinceQueries, changedProvinces, cmd);
             }
 
             // Update borders incrementally (only pixels of changed provinces + neighbors)
             if (borderDispatcher != null)
             {
-                borderDispatcher.DetectBordersIndexed(changedProvinces, cmd);
+                using (BordersMarker.Auto())
+                    borderDispatcher.DetectBordersIndexed(changedProvinces, cmd);
             }
 
             // Submit to GPU async compute queue — main thread does NOT wait for completion
