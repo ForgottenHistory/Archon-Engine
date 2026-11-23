@@ -81,6 +81,14 @@ namespace Core.Units
         /// <summary>True when the unit has reached its destination but is held at the origin by ArrivalBlocker.</summary>
         public bool IsBlocked(ushort unitID) => blockedUnits.Contains(unitID);
 
+        /// <summary>
+        /// Optional: the movement ticks of one leg, (unit, from, to) -> ticks, for games whose units move at their
+        /// own speed over terrain of its own cost. Asked for every leg, the first one of an order and each next
+        /// waypoint of a path; a result of 0 or less keeps the ticks the caller gave (or, for later legs, the
+        /// previous leg's). Must be deterministic: it runs in the simulation.
+        /// </summary>
+        public System.Func<ushort, ushort, ushort, int> LegTicks { get; set; }
+
         private readonly System.Collections.Generic.HashSet<ushort> blockedUnits = new System.Collections.Generic.HashSet<ushort>();
 
         // === Initialization ===
@@ -123,6 +131,15 @@ namespace Core.Units
             }
 
             var unit = unitSystem.GetUnit(unitID);
+            if (LegTicks != null)
+            {
+                int leg = LegTicks(unitID, unit.provinceID, destinationProvinceID);
+                if (leg > 0)
+                {
+                    movementTicks = leg;
+                    movementDays = (movementTicks + TicksPerDay - 1) / TicksPerDay;
+                }
+            }
 
             // Cancel existing movement if any
             if (movingUnits.ContainsKey(unitID))
@@ -293,8 +310,8 @@ namespace Core.Units
                 ushort nextWaypoint = pathQueue.Dequeue();
                 if (LogMoves) ArchonLogger.Log($"[UnitMovementQueue] Unit {unitID} continuing journey to {nextWaypoint} ({pathQueue.Count} waypoints remaining)", "core_simulation");
 
-                // Start movement to next waypoint (use default movement days - should be passed from original command)
-                // Each leg takes as long as the one just finished
+                // Start movement to next waypoint: LegTicks decides its time, else it takes as long as the one
+                // just finished
                 StartMovementTicks(unitID, nextWaypoint, movementState.totalTicks);
 
                 // If no more waypoints after this, remove path

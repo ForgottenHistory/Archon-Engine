@@ -744,6 +744,7 @@ namespace StarterKit
 
             // Populate GameState.Adjacencies
             gameState.Adjacencies.SetAdjacencies(scanner.IdAdjacencies);
+            gameState.Adjacencies.ApplyOverrides(Core.Loaders.AdjacencyOverrideLoader.Load(GameSettings.Instance.DataDirectory));
 
             if (logProgress)
                 ArchonLogger.Log(gameState.Adjacencies.GetStatistics(), "starter_kit");

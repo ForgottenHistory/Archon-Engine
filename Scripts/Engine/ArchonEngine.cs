@@ -665,6 +665,9 @@ namespace Engine
                 gpuResult.Dispose();
             }
 
+            // Links the province image can't show (straits, mountain walls), from map/adjacencies.csv
+            GameState.Adjacencies.ApplyOverrides(Core.Loaders.AdjacencyOverrideLoader.Load(gameSettings.DataDirectory));
+
             if (LogProgress)
                 ArchonLogger.Log(GameState.Adjacencies.GetStatistics(), "map_initialization");
 

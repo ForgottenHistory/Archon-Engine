@@ -104,7 +104,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **UnitColdData** - Cold unit data: Name, Experience, CombatHistory, Equipment
 - **Unit Commands** - CreateUnit, MoveUnit, DisbandUnit with validation
 - **Unit Movement Queue** - Fixed-size circular buffer for pathfinding waypoints
-- **Movement hooks** - `ArrivalBlocker` lets a game stop a unit entering a province; `TicksPerDay` (1 = daily, 24 = hourly) sets how finely units step
+- **Movement hooks** - `ArrivalBlocker` lets a game stop a unit entering a province; `TicksPerDay` (1 = daily, 24 = hourly) sets how finely units step; `LegTicks` (unit, from, to) gives each leg its own duration (unit speed, terrain), asked for every leg of a path
 - **Unit Events** - UnitCreated, UnitMoved, UnitDisbanded, CombatResolved
 - **Sparse Collections** - Province-to-units mapping with NativeParallelMultiHashMap
 - **Hot/Cold Separation** - Frequently-accessed data separate from detailed information
@@ -469,6 +469,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **IsBridgeProvince** - Detect strategic choke points (articulation points)
 - **FindBridgeProvinces** - Find all bridge provinces in a region
 - **AdjacencyStats** - Queryable statistics struct (ProvinceCount, AvgNeighbors, etc.)
+- **Adjacency overrides** - Optional `map/adjacencies.csv` (From;To;Type;Through;Comment, read by AdjacencyOverrideLoader) applied after the scan and before pathfinding: type `impassable` cuts a shared border, any other type links two provinces that don't touch (a strait crossing through a sea province). `Links` / `TryGetLink` give the added links and their type for game rules and drawing
 
 ---
 

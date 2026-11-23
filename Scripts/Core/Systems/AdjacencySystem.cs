@@ -81,6 +81,16 @@ namespace Core.Systems
     /// - GetNeighbors: O(1) dictionary lookup
     /// - Memory: ~6 neighbors × 13,350 provinces × 2 bytes = ~160 KB
     /// </summary>
+    /// <summary>One adjacency override (AdjacencySystem.ApplyOverrides): a link between From and To of a
+    /// game-defined Type (e.g. "sea" for a strait crossing), passing through the Through province (0 for none),
+    /// or, when Remove, a shared border that is cut.</summary>
+    public struct AdjacencyOverride
+    {
+        public ushort From, To, Through;
+        public string Type;
+        public bool Remove;
+    }
+
     public class AdjacencySystem : System.IDisposable
     {
         // Storage: provinceID → set of adjacent province IDs (managed, for convenience)
@@ -166,6 +176,53 @@ namespace Core.Systems
             totalAdjacencyPairs /= 2;
 
             ArchonLogger.Log($"AdjacencySystem: Initialized with {adjacencies.Count} provinces, {totalAdjacencyPairs} adjacency pairs (native MultiHashMap ready)", "core_simulation");
+        }
+
+        // Links added by ApplyOverrides (both directions): their type and the province they pass through
+        private readonly Dictionary<(ushort, ushort), AdjacencyOverride> links = new Dictionary<(ushort, ushort), AdjacencyOverride>();
+        private readonly List<AdjacencyOverride> linkList = new List<AdjacencyOverride>();
+
+        /// <summary>Links the overrides added (each once), e.g. for drawing them on the map.</summary>
+        public IReadOnlyList<AdjacencyOverride> Links => linkList;
+
+        /// <summary>The added link between two provinces (either order), if the overrides added one; a shared
+        /// border has none.</summary>
+        public bool TryGetLink(ushort a, ushort b, out AdjacencyOverride link) =>
+            links.TryGetValue(a < b ? (a, b) : (b, a), out link);
+
+        /// <summary>
+        /// Apply links the province image can't show: Remove ones cut the shared border between two provinces
+        /// (a mountain wall), the others join two provinces that don't touch (a strait crossing, through
+        /// another province). Rebuilds the graph (Version bumps), so call it before the pathfinding is built.
+        /// See AdjacencyOverrideLoader for the data file.
+        /// </summary>
+        public void ApplyOverrides(IReadOnlyList<AdjacencyOverride> overrides)
+        {
+            if (overrides == null || overrides.Count == 0) return;
+            var graph = new Dictionary<int, HashSet<int>>(adjacencies.Count);
+            foreach (var kv in adjacencies) graph[kv.Key] = new HashSet<int>(System.Linq.Enumerable.Select(kv.Value, v => (int)v));
+            HashSet<int> Of(int p) => graph.TryGetValue(p, out var s) ? s : graph[p] = new HashSet<int>();
+            links.Clear();
+            linkList.Clear();
+            int added = 0, removed = 0;
+            foreach (var o in overrides)
+            {
+                if (o.From == 0 || o.To == 0 || o.From == o.To) continue;
+                var key = o.From < o.To ? (o.From, o.To) : (o.To, o.From);
+                if (o.Remove)
+                {
+                    if (Of(o.From).Remove(o.To) | Of(o.To).Remove(o.From)) removed++;
+                    if (links.Remove(key)) linkList.RemoveAll(l => (l.From == key.Item1 && l.To == key.Item2) || (l.From == key.Item2 && l.To == key.Item1));
+                }
+                else
+                {
+                    Of(o.From).Add(o.To);
+                    Of(o.To).Add(o.From);
+                    if (!links.ContainsKey(key)) { links[key] = o; linkList.Add(o); added++; }
+                }
+            }
+            SetAdjacencies(graph);
+            ArchonLogger.Log($"AdjacencySystem: overrides added {added} links, removed {removed}", "core_simulation");
         }
 
         /// <summary>
