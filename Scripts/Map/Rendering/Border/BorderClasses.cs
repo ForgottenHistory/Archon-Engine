@@ -29,6 +29,8 @@ namespace Map.Rendering.Border
         public float Tile = 0.4f;          // texture repeats per map pixel along the border
         public Vector2 Fade;               // screen px per map px: invisible at x, fully visible at y (0,0 = no fade)
         public int Order;                  // draw order between classes (higher draws on top)
+        public string ShaderName;          // null = Archon/BorderMesh; a custom line shader built on
+                                           // Shaders/Includes/BorderMeshCore.hlsl (e.g. a GAME river surface)
     }
 
     /// <summary>

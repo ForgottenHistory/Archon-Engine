@@ -44,6 +44,9 @@ namespace Archon.Engine.Map
     ///
     ///     rivers: { texture: "gfx/map/rivers/river.png", width: 0.5, widthPerLevel: 0.25, tile: 0.15 }
     ///
+    /// Any line class (border, river, map line layer) can name its own shader: shader: "Game/RiverSurface".
+    /// It must be built on Shaders/Includes/BorderMeshCore.hlsl (see there); the default is Archon/BorderMesh.
+    ///
     /// Optional labels section (MapLabelRenderer, country names). All fields optional:
     ///
     ///     labels: { font: "gfx/fonts/Oswald.ttf", color: [0.91, 0.9, 0.95], shadowColor: [0, 0, 0, 0.75],
@@ -218,6 +221,7 @@ namespace Archon.Engine.Map
             }
             if (e["alphaOnly"] != null) style.TextureAlphaOnly = (bool)e["alphaOnly"];
             if (IsNumber(e["order"])) style.Order = (int)e["order"];
+            if (e["shader"] != null) style.ShaderName = e["shader"].ToString();
 
             if (e["color"] != null)
             {

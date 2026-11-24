@@ -33,6 +33,7 @@ namespace Map.Rendering
         private static readonly int HeightScaleId = Shader.PropertyToID("_HeightScale");
 
         private readonly Shader shader;
+        private readonly Dictionary<string, Shader> customShaders = new Dictionary<string, Shader>();
         private readonly Dictionary<string, Material> materials = new Dictionary<string, Material>();
         private readonly List<(Mesh mesh, Material material)> drawList = new List<(Mesh, Material)>();
 
@@ -92,7 +93,7 @@ namespace Map.Rendering
             for (int i = 0; i < ordered.Count; i++)
             {
                 var (mesh, style) = ordered[i];
-                var material = GetMaterial(style.Name);
+                var material = GetMaterial(style);
                 if (style.Name != lastStyle)
                 {
                     rank++;
@@ -117,23 +118,42 @@ namespace Map.Rendering
             {
                 var style = passes[i];
                 if (style == null || !style.Visible) continue;
-                var material = GetMaterial(style.Name);
+                var material = GetMaterial(style);
                 ApplyStyle(material, style);
                 material.renderQueue = baseQueue + i;
                 drawList.Add((mesh, material));
             }
         }
 
-        private Material GetMaterial(string className)
+        private Material GetMaterial(BorderClassStyle style)
         {
-            if (!materials.TryGetValue(className, out var m))
+            var classShader = ShaderFor(style);
+            if (!materials.TryGetValue(style.Name, out var m))
             {
-                m = new Material(shader) { name = $"BorderMesh ({className})" };
+                m = new Material(classShader) { name = $"BorderMesh ({style.Name})" };
                 m.SetVector(MapWorldBoundsId, mapWorldBounds);
                 ApplyHeight(m);
-                materials[className] = m;
+                materials[style.Name] = m;
+            }
+            else if (m.shader != classShader)
+            {
+                m.shader = classShader; // the style's shader changed (hot reload)
             }
             return m;
+        }
+
+        /// <summary>The class's custom line shader (BorderClassStyle.ShaderName), or Archon/BorderMesh.</summary>
+        private Shader ShaderFor(BorderClassStyle style)
+        {
+            if (string.IsNullOrEmpty(style.ShaderName)) return shader;
+            if (!customShaders.TryGetValue(style.ShaderName, out var custom))
+            {
+                custom = Shader.Find(style.ShaderName);
+                if (custom == null)
+                    ArchonLogger.LogError($"BorderMeshRenderer: line shader '{style.ShaderName}' (class {style.Name}) not found, using Archon/BorderMesh", "map_rendering");
+                customShaders[style.ShaderName] = custom;
+            }
+            return custom != null ? custom : shader;
         }
 
         private static void ApplyStyle(Material m, BorderClassStyle s)
