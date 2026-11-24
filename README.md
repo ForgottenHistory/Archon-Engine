@@ -12,6 +12,8 @@ MAP namespace I'm not satisfied with yet. All the rendering stuff is giving me a
 
 Personally wouldn't use this state for production, though you can certainly build something cool right now. 
 
+Currently remaking Hearts of Iron 4 using this project. Repo found [here](https://github.com/ForgottenHistory/hoi4-remade)
+
 **Quick Links:**
 - [Getting Started](Docs/Wiki/Getting-Started.md) - Setup and first steps
 - [Your First Game](Docs/Wiki/Your-First-Game.md) - Build a working game
