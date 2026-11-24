@@ -30,6 +30,22 @@ namespace Map.Rendering.Atmosphere
         private static readonly int CloudMotionId = Shader.PropertyToID("_CloudMotion");
         private static readonly int CloudZoomId = Shader.PropertyToID("_CloudZoom");
         private static readonly int ShadowParamsId = Shader.PropertyToID("_CloudShadow");
+        private static readonly int CloudMaskParamsId = Shader.PropertyToID("_CloudMask");
+        private static readonly int CloudMaskZoomId = Shader.PropertyToID("_CloudMaskZoom");
+        private static readonly int CloudMaskShapeId = Shader.PropertyToID("_CloudMaskShape");
+        private static readonly int CloudMaskTexId = Shader.PropertyToID("_ArchonCloudMask");
+        private static readonly int CloudMaskOnId = Shader.PropertyToID("_ArchonCloudMaskOn");
+
+        /// <summary>
+        /// GAME hook: a map-space texture (row 0 = south, bilinear, any resolution) saying where extra clouds gather:
+        /// rgb = cloud colour, a = coverage (0 none .. 1 overcast), e.g. from weather. Null removes it.
+        /// Styled by the atmosphere section's maskOpacity, maskScale, maskShadow, maskZoom, maskSoftness and maskWarp.
+        /// </summary>
+        public static void SetCloudMask(Texture mask)
+        {
+            Shader.SetGlobalTexture(CloudMaskTexId, mask != null ? mask : Texture2D.blackTexture);
+            Shader.SetGlobalFloat(CloudMaskOnId, mask != null ? 1f : 0f);
+        }
 
         private Material groundMaterial, cloudMaterial;
         private Mesh groundMesh, cloudMesh;
@@ -104,6 +120,9 @@ namespace Map.Rendering.Atmosphere
                 m.SetVector(CloudMotionId, new Vector4(s.CloudWind.x, s.CloudWind.y, 0, 0));
                 m.SetVector(CloudZoomId, new Vector4(s.CloudZoom.x, s.CloudZoom.y, 0, 0));
                 m.SetVector(ShadowParamsId, new Vector4(Mathf.Clamp01(s.ShadowStrength), s.ShadowOffset.x, s.ShadowOffset.y, 0));
+                m.SetVector(CloudMaskParamsId, new Vector4(Mathf.Clamp01(s.MaskOpacity), Mathf.Max(s.MaskScale, 1f), Mathf.Clamp01(s.MaskShadow), 0));
+                m.SetVector(CloudMaskZoomId, new Vector4(s.MaskZoom.x, s.MaskZoom.y, 0, 0));
+                m.SetVector(CloudMaskShapeId, new Vector4(Mathf.Max(s.MaskSoftness, 1e-3f), Mathf.Max(s.MaskWarp, 0f), 0, 0));
             }
         }
 

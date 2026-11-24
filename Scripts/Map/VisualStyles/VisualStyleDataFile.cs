@@ -64,7 +64,10 @@ namespace Archon.Engine.Map
     ///     atmosphere: { hazeColor: [0.36, 0.42, 0.52], hazeMax: 0.3, hazeZoom: [0.3, 1.5],
     ///                   cloudColor: [0.95, 0.95, 0.97], cloudShade: [0.6, 0.64, 0.72], cloudCoverage: 0.42,
     ///                   cloudSoftness: 0.22, cloudOpacity: 0.85, cloudScale: 1400, cloudWind: [5, 1.5],
-    ///                   cloudZoom: [0.35, 0.9], cloudHeight: 60, shadowStrength: 0.35, shadowOffset: [-40, 30] }
+    ///                   cloudZoom: [0.35, 0.9], cloudHeight: 60, shadowStrength: 0.35, shadowOffset: [-40, 30],
+    ///                   maskOpacity: 0.85, maskScale: 300, maskShadow: 0.5, maskZoom: [2, 3.5], maskSoftness: 0.45,
+    ///                   maskWarp: 60 }
+    /// The mask fields style the clouds a GAME paints with MapAtmosphereRenderer.SetCloudMask.
     ///
     /// Label sizes: font size in map px (maxHeight), minScreenHeight in screen px, shadowOffset and
     /// maxGap as fractions of the font size; fade = [visible below, hidden above] screen px per map px.
@@ -332,6 +335,12 @@ namespace Archon.Engine.Map
             if (IsNumber(e["cloudScale"])) s.CloudScale = (float)e["cloudScale"];
             if (IsNumber(e["cloudHeight"])) s.CloudHeight = (float)e["cloudHeight"];
             if (IsNumber(e["shadowStrength"])) s.ShadowStrength = (float)e["shadowStrength"];
+            if (IsNumber(e["maskOpacity"])) s.MaskOpacity = (float)e["maskOpacity"];
+            if (IsNumber(e["maskScale"])) s.MaskScale = (float)e["maskScale"];
+            if (IsNumber(e["maskShadow"])) s.MaskShadow = (float)e["maskShadow"];
+            if (IsNumber(e["maskSoftness"])) s.MaskSoftness = (float)e["maskSoftness"];
+            if (IsNumber(e["maskWarp"])) s.MaskWarp = (float)e["maskWarp"];
+            s.MaskZoom = Vector2Field(e, "maskZoom", s.MaskZoom, source);
             return s;
         }
 

@@ -5,6 +5,13 @@ Shader "Archon/MapAtmosphere"
     //   _Layer 1 (clouds): drifting procedural clouds, lifted above the map
     // Zoom is measured as screen px per map px (same as border/label fades); effects are full at
     // or below .x of their zoom range and gone at or above .y. Output is premultiplied alpha.
+    //
+    // Cloud mask (optional, MapAtmosphereRenderer.SetCloudMask): a map-space texture the GAME paints with where extra
+    // clouds gather and their colour (rgb = cloud colour, a = coverage), e.g. weather. Masked clouds use their own,
+    // smaller noise (_CloudMask.y map px) and softness (_CloudMaskShape.x), sample the mask through a noise warp
+    // (_CloudMaskShape.y map px) so their outline is billowy rather than the mask's shapes, are lighter in their thin
+    // parts (wisps), have their own zoom range (_CloudMaskZoom, full at or below .x, gone at or above .y, like the
+    // others) and cast a shadow that is darker under dark clouds.
     Properties
     {
         _NoiseTex ("Noise (tileable, 4 channels)", 2D) = "gray" {}
@@ -18,6 +25,9 @@ Shader "Archon/MapAtmosphere"
         _CloudMotion ("Cloud Wind (map px / s)", Vector) = (5, 1.5, 0, 0)
         _CloudZoom ("Cloud Zoom (full, none)", Vector) = (0.35, 0.9, 0, 0)
         _CloudShadow ("Shadow (strength, offset x, offset y map px)", Vector) = (0.35, -40, 30, 0)
+        _CloudMask ("Masked clouds (opacity, scale map px, shadow strength)", Vector) = (0.85, 300, 0.5, 0)
+        _CloudMaskZoom ("Masked cloud zoom (full, none)", Vector) = (2, 3.5, 0, 0)
+        _CloudMaskShape ("Masked cloud shape (softness, warp map px)", Vector) = (0.45, 60, 0, 0)
     }
 
     SubShader
@@ -47,6 +57,9 @@ Shader "Archon/MapAtmosphere"
 
             TEXTURE2D(_NoiseTex);
             SAMPLER(sampler_NoiseTex);
+            TEXTURE2D(_ArchonCloudMask);        // global, from MapAtmosphereRenderer.SetCloudMask
+            SAMPLER(sampler_ArchonCloudMask);
+            float _ArchonCloudMaskOn;
 
             CBUFFER_START(UnityPerMaterial)
                 float4 _NoiseTex_ST;
@@ -60,6 +73,9 @@ Shader "Archon/MapAtmosphere"
                 float4 _CloudMotion;
                 float4 _CloudZoom;
                 float4 _CloudShadow;
+                float4 _CloudMask;
+                float4 _CloudMaskZoom;
+                float4 _CloudMaskShape;
                 float4 _MapWorldBounds;
             CBUFFER_END
 
@@ -87,11 +103,11 @@ Shader "Archon/MapAtmosphere"
                 return SAMPLE_TEXTURE2D(_NoiseTex, sampler_NoiseTex, uv);
             }
 
-            // Cloud noise value (0..1) at a map pixel position
-            float CloudField(float2 mapPx)
+            // Cloud noise value (0..1) at a map pixel position, noise tile `scale` map px
+            float CloudFieldScaled(float2 mapPx, float scale)
             {
                 float t = _Time.y;
-                float2 uv = (mapPx - _CloudMotion.xy * t) / _CloudParams.w;
+                float2 uv = (mapPx - _CloudMotion.xy * t) / scale;
                 // Slow domain warp for billowy, evolving shapes
                 float2 warp = (Noise(uv * 0.7 + t * 0.002).ga - 0.5) * 0.35;
                 float n = 0.55 * Noise(uv + warp).r
@@ -100,14 +116,40 @@ Shader "Archon/MapAtmosphere"
                 return n;
             }
 
-            // Coverage (0..1) and thickness (0..1) from the noise value
-            float2 CloudDensity(float n)
+            float CloudField(float2 mapPx) { return CloudFieldScaled(mapPx, _CloudParams.w); }
+
+            // Coverage (0..1) and thickness (0..1) from the noise value, at a coverage and edge softness
+            float2 CloudDensityAt(float n, float coverage, float softness)
             {
-                float threshold = 1.0 - _CloudParams.x;
-                float soft = _CloudParams.y * 0.5;
+                float threshold = 1.0 - coverage;
+                float soft = softness * 0.5;
                 float density = smoothstep(threshold - soft, threshold + soft, n);
-                float thickness = saturate((n - threshold) / max(_CloudParams.y, 1e-3));
+                float thickness = saturate((n - threshold) / max(softness, 1e-3));
                 return float2(density, thickness);
+            }
+
+            float2 CloudDensity(float n) { return CloudDensityAt(n, _CloudParams.x, _CloudParams.y); }
+
+            // The cloud mask at a map pixel (y down): rgb = colour, a = coverage (0 when no mask is set)
+            float4 CloudMaskAt(float2 mapPx)
+            {
+                if (_ArchonCloudMaskOn < 0.5) return 0;
+                float2 mapSize = _MapWorldBounds.zw / _WorldPerMapPx;
+                float2 uv = float2(mapPx.x / mapSize.x, 1.0 - mapPx.y / mapSize.y);
+                return SAMPLE_TEXTURE2D_LOD(_ArchonCloudMask, sampler_ArchonCloudMask, uv, 0);
+            }
+
+            // Masked clouds at a map pixel: x = density (before opacity), y = thickness; the mask in m.
+            // The mask is read through a drifting noise warp, so the cloud outline billows instead of following it.
+            float2 MaskedCloud(float2 mapPx, out float4 m)
+            {
+                float scale = max(_CloudMask.y, 1.0);
+                float2 drift = mapPx - _CloudMotion.xy * _Time.y;
+                float2 warp = (Noise(drift / (scale * 1.7)).ag - 0.5) * 2.0 * _CloudMaskShape.y;
+                m = CloudMaskAt(mapPx + warp);
+                if (m.a <= 0.005) return 0;
+                float2 d = CloudDensityAt(CloudFieldScaled(mapPx, scale), m.a, max(_CloudMaskShape.x, 1e-3));
+                return float2(d.x * saturate(m.a * 4.0), d.y);
             }
 
             // Effects are full at or below zoom.x, gone at or above zoom.y
@@ -126,6 +168,7 @@ Shader "Archon/MapAtmosphere"
                 // Map pixel position (x right, y down)
                 float2 mapPx = float2(posWS.x - _MapWorldBounds.x, _MapWorldBounds.y + _MapWorldBounds.w - posWS.z) / _WorldPerMapPx;
                 float cloudFade = ZoomFactor(screenPxPerMapPx, _CloudZoom.xy);
+                float maskFade = ZoomFactor(screenPxPerMapPx, _CloudMaskZoom.xy);
                 float2 mapUV01 = ArchonWorldToMapUV(posWS, _MapWorldBounds);
 
                 float3 rgb = 0;
@@ -144,13 +187,41 @@ Shader "Archon/MapAtmosphere"
                         rgb *= 1.0 - shade;
                         alpha = shade + alpha * (1.0 - shade);
                     }
+
+                    // Masked cloud shadow, darker under dark clouds
+                    if (maskFade > 0.001 && _CloudMask.z > 0)
+                    {
+                        float4 m;
+                        float2 dm = MaskedCloud(mapPx - _CloudShadow.yz, m);
+                        float darkness = 1.2 - dot(m.rgb, float3(0.333, 0.333, 0.334));
+                        float shade = saturate(dm.x * _CloudMask.z * darkness * maskFade);
+                        rgb *= 1.0 - shade;
+                        alpha = shade + alpha * (1.0 - shade);
+                    }
                 }
                 else
                 {
-                    if (cloudFade <= 0.001) discard;
-                    float2 d = CloudDensity(CloudField(mapPx));
-                    float a = d.x * _CloudParams.z * cloudFade;
-                    float3 color = lerp(_CloudShade.rgb, _CloudColor.rgb, pow(d.y, 0.7));
+                    float a = 0;
+                    float3 color = 0;
+                    if (cloudFade > 0.001)
+                    {
+                        float2 d = CloudDensity(CloudField(mapPx));
+                        a = d.x * _CloudParams.z * cloudFade;
+                        color = lerp(_CloudShade.rgb, _CloudColor.rgb, pow(d.y, 0.7));
+                    }
+                    if (maskFade > 0.001)
+                    {
+                        float4 m;
+                        float2 dm = MaskedCloud(mapPx, m);
+                        float am = dm.x * _CloudMask.x * maskFade;
+                        // thin parts are wisps toward the cloud shade (light over dark storm clouds, grey under white ones)
+                        float3 cm = lerp(lerp(m.rgb, _CloudShade.rgb, 0.55), m.rgb, pow(dm.y, 0.6));
+                        // masked clouds over the regular ones ("over" in premultiplied terms)
+                        float total = am + a * (1.0 - am);
+                        color = (cm * am + color * a * (1.0 - am)) / max(total, 1e-4);
+                        a = total;
+                    }
+                    if (a <= 0.001) discard;
                     color = ArchonApplyNight(color, mapUV01, 1.0);
                     rgb = color * a;
                     alpha = a;

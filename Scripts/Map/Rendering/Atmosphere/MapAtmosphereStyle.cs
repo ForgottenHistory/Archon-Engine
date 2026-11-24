@@ -38,6 +38,19 @@ namespace Map.Rendering.Atmosphere
         public float ShadowStrength = 0.35f;
         /// <summary>Shadow offset from its cloud, map px (x right, y down).</summary>
         public Vector2 ShadowOffset = new Vector2(-40f, 30f);
+
+        // Masked clouds: where the GAME cloud mask (MapAtmosphereRenderer.SetCloudMask) gathers extra cloud
+        public float MaskOpacity = 0.85f;
+        /// <summary>Noise tile size for masked clouds, map px (smaller than the cloud banks).</summary>
+        public float MaskScale = 300f;
+        /// <summary>Ground shadow under masked clouds (more under dark ones).</summary>
+        public float MaskShadow = 0.5f;
+        /// <summary>Screen px per map px: full at or below x, gone at or above y (they reach closer in than the banks).</summary>
+        public Vector2 MaskZoom = new Vector2(2f, 3.5f);
+        /// <summary>Edge softness of masked clouds, in noise units (softer than the cloud banks: wispy).</summary>
+        public float MaskSoftness = 0.45f;
+        /// <summary>How far the mask is warped by noise, map px (billowy outlines instead of the mask's shapes).</summary>
+        public float MaskWarp = 60f;
     }
 
     /// <summary>Current atmosphere style. Version changes on every Set so the renderer can re-apply.</summary>

@@ -261,6 +261,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Normal Map Support** - RGB24 normal map for terrain lighting
 - **Point Filtering** - Pixel-perfect province ID lookup without interpolation
 - **Single Draw Call Optimization** - Entire map rendered in one draw call
+- **Map Atmosphere** - Haze that builds up when zoomed out and procedural drifting clouds with ground shadows (`MapAtmosphereRenderer`, visual style `atmosphere` section). Optional cloud mask (`MapAtmosphereRenderer.SetCloudMask`): a map-space texture the game paints with where extra clouds gather and their colour (rgb colour, a coverage), e.g. weather; masked clouds use their own noise size and softness, read the mask through a noise warp (billowy outlines), have lighter wisps, their own zoom range (closer in than the banks) and shadow the ground more under dark clouds (`maskOpacity`, `maskScale`, `maskShadow`, `maskZoom`, `maskSoftness`, `maskWarp`)
 - **ProvinceHighlighter** - Province highlighting for selection feedback (pixel fill; with mesh borders instead a smooth outline from the selection's own border arcs with a soft glow, styled by the `highlight` / `highlight_glow` border classes)
 
 ---
