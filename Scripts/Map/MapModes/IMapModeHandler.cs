@@ -84,6 +84,7 @@ namespace Map.MapModes
         StrategicView = 10, // Simplified military view
         PlayerMapMode = 11, // Custom player-defined
         ProvinceColors = 12, // Provinces.bmp → Original province colors (debug/simple)
+        Supply = 13,        // Supply available to armies → Heatmap
 
         // Debug modes (100+)
         BorderDebug = 100,  // Shows border texture in grayscale

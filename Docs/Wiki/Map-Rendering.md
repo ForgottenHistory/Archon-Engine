@@ -106,6 +106,7 @@ public enum MapMode
     StrategicView = 10, // Simplified military
     PlayerMapMode = 11, // Custom defined
     ProvinceColors = 12, // Provinces.bmp original colors
+    Supply = 13,        // Supply available to armies → Heatmap
 
     // Debug modes (100+)
     BorderDebug = 100,
