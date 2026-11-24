@@ -60,6 +60,9 @@
 - **Map.Rendering.Rivers.RiverGraph** - Trace one-pixel river lines (width level per pixel) into arcs with per-point levels
 - **Map.Rendering.Rivers.MapRiverRenderer** - Optional map/rivers.png rivers drawn as border-style strips (line class "river")
 
+### Rendering/Lines/
+- **Map.Rendering.Lines.MapLineLayer** - Game-supplied polylines (MapLine: points in map px, line class) drawn as border-style strips on their own render queue
+
 ### Rendering/Atmosphere/
 - **Map.Rendering.Atmosphere.MapAtmosphereRenderer** - Haze (zoomed out) + procedural drifting clouds with ground shadows; two map quads (Archon/MapAtmosphere), runtime tileable noise
 - **Map.Rendering.Atmosphere.MapAtmosphereStyle / MapAtmosphereStyles** - Atmosphere settings ("atmosphere" section of the visual style data file)

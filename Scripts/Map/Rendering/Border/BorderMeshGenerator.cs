@@ -99,9 +99,10 @@ namespace Map.Rendering
             GenerateMeshes(cache.GetVisibleArcs(), cache.ClassNames);
         }
 
-        /// <summary>Build one mesh per class id from (arc, class id) pairs.</summary>
+        /// <summary>Build one mesh per class id from (arc, class id) pairs. junctionCaps false: no fans where arcs
+        /// meet (lines whose texture isn't a radial profile, such as railway track, overlap at their ends instead).</summary>
         public void GenerateMeshes(IEnumerable<(BorderArc arc, int classId)> classifiedArcs, IReadOnlyList<string> classNames,
-                                   bool log = true)
+                                   bool log = true, bool junctionCaps = true)
         {
             var sw = System.Diagnostics.Stopwatch.StartNew();
             DestroyMeshes();
@@ -114,7 +115,7 @@ namespace Map.Rendering
                 if (arc.Points.Length < 2) continue;
                 if (!builders.TryGetValue(classId, out var b))
                     builders[classId] = b = new Builder();
-                AddStrip(arc, b);
+                AddStrip(arc, b, recordEnds: junctionCaps);
                 arcCount++;
             }
 

@@ -278,6 +278,8 @@ This document lists all implemented features in the Archon Engine organized by c
 - **BorderCurveCache** - Cache smooth polyline segments with runtime styles (static geometry + dynamic appearance)
 - **BorderMeshGenerator** - Generate triangle strip geometry from polylines
 - **BorderMeshRenderer** - Render mesh borders with dynamic color updates
+- **MapLineLayer** - Draw game-supplied lines (railways, roads, trade routes) with the mesh border pipeline: `SetLines` with polylines in map pixels and a line class per line, styled from the visual style file's `borders` section (texture, width, tile, color, fade, order); draped on the terrain, restyled on hot reload, optional junction caps; several layers stack by render queue
+- **BorderMeshGenerator junction caps** - `GenerateMeshes(..., junctionCaps: false)` leaves out the fans where arcs meet (for textured lines that should overlap instead)
 - **BorderDistanceFieldGenerator** - Generate JFA distance field for fragment-shader borders
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus
 - **TerrainBlendMapGenerator** - Imperator Rome-style 4-channel blend map generation (DetailIndexTexture + DetailMaskTexture)
