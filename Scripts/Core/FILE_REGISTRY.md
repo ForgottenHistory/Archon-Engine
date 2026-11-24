@@ -239,6 +239,7 @@
 ## Graph/
 - **Core.Graph.GraphDistanceCalculator** - General-purpose BFS distance calculator for province graph; Burst-compiled via BFSDistanceJob; tracks both province and country distances
 - **Core.Graph.BFSDistanceJob** - Burst IJob for parallel BFS traversal using NativeAdjacencyData and NativeProvinceData
+- **Core.Graph.ProvinceLinkNetwork** - Leveled links between provinces apart from adjacency (railways, roads); WidestPaths (best bottleneck level from a source); WidestPathResult (level, arriving link, hops per province)
 
 ---
 

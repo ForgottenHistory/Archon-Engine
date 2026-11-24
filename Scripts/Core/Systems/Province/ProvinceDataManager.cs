@@ -36,6 +36,13 @@ namespace Core.Systems.Province
 
         private bool hasShownUnsupportedWarning = false;
 
+        // Tick at which each province's effective controller (controller, else owner) last changed, by array index.
+        // 0: not since the game started. Changes at tick 0 are the starting setup and aren't stamped.
+        private ulong[] controlChangeTick;
+
+        /// <summary>The simulation clock, for stamping control changes (set by GameState once time exists).</summary>
+        public System.Func<ulong> TickSource { get; set; }
+
         public int ProvinceCount => provinceCount;
         public int DirtyCount => dirtyIndices.IsCreated ? dirtyIndices.Count : 0;
 
@@ -49,6 +56,8 @@ namespace Core.Systems.Province
             this.activeProvinceIds = activeProvinceIds;
             this.eventBus = eventBus;
             this.provinceCount = 0;
+
+            controlChangeTick = new ulong[snapshot.Capacity];
 
             // Initialize dirty tracking set
             dirtyIndices = new NativeHashSet<int>(INITIAL_DIRTY_CAPACITY, Allocator.Persistent);
@@ -107,6 +116,7 @@ namespace Core.Systems.Province
         public void Clear()
         {
             provinceCount = 0;
+            System.Array.Clear(controlChangeTick, 0, controlChangeTick.Length);
             idToIndex.Clear();
             activeProvinceIds.Clear();
             if (provincesByOwner.IsCreated)
@@ -156,6 +166,28 @@ namespace Core.Systems.Province
         /// <summary>Bulk writes (initial load, save load) change owners and controllers at once: bumps both.</summary>
         public void BumpOwnershipVersion() { OwnershipVersion++; ControlVersion++; }
 
+        /// <summary>
+        /// The tick the province's effective controller (its controller, else its owner) last changed, false when it
+        /// hasn't since the game started (or the save it was loaded from started). For rules that depend on how long
+        /// a province has been held: conversion, integration, unrest after conquest.
+        /// </summary>
+        public bool TryGetControlChangeTick(ushort provinceId, out ulong tick)
+        {
+            tick = 0;
+            if (!idToIndex.TryGetValue(provinceId, out int arrayIndex) || arrayIndex >= controlChangeTick.Length) return false;
+            tick = controlChangeTick[arrayIndex];
+            return tick != 0;
+        }
+
+        /// <summary>Every province's control change tick by array index (0: none), for save/load.</summary>
+        public ulong[] ControlChangeTicks => controlChangeTick;
+
+        private void StampControlChange(int arrayIndex)
+        {
+            ulong tick = TickSource != null ? TickSource() : 0;
+            if (tick != 0 && arrayIndex < controlChangeTick.Length) controlChangeTick[arrayIndex] = tick;
+        }
+
         public ushort GetProvinceOwner(ushort provinceId)
         {
             if (!idToIndex.TryGetValue(provinceId, out int arrayIndex))
@@ -200,6 +232,7 @@ namespace Core.Systems.Province
             state.ownerID = newOwner;
             states[arrayIndex] = state;
             OwnershipVersion++;
+            if (state.controllerID == 0) StampControlChange(arrayIndex); // the owner is the effective controller
 
             // Update reverse index (skip unowned — owner 0 would be a 49k+ bucket)
             if (oldOwner != UNOWNED_COUNTRY)
@@ -239,6 +272,9 @@ namespace Core.Systems.Province
             state.controllerID = newController;
             states[arrayIndex] = state;
             ControlVersion++;
+            ushort before = oldController != 0 ? oldController : state.ownerID;
+            ushort after = newController != 0 ? newController : state.ownerID;
+            if (before != after) StampControlChange(arrayIndex);
             MarkDirty(arrayIndex);
 
             eventBus?.Emit(new ProvinceControllerChangedEvent
@@ -313,6 +349,8 @@ namespace Core.Systems.Province
             states[arrayIndex] = state;
             if (oldOwner != state.ownerID) OwnershipVersion++;
             if (oldController != state.controllerID) ControlVersion++;
+            if ((oldController != 0 ? oldController : oldOwner) != (state.controllerID != 0 ? state.controllerID : state.ownerID))
+                StampControlChange(arrayIndex);
 
             // Update reverse index if owner changed (skip unowned — owner 0 would be a 49k+ bucket)
             if (oldOwner != state.ownerID)

@@ -311,6 +311,15 @@ namespace Core.Systems
         /// </summary>
         public int ControlVersion => dataManager.ControlVersion;
         public ushort GetProvinceController(ushort provinceId) => dataManager.GetProvinceController(provinceId);
+
+        /// <summary>
+        /// The tick the province's effective controller (its controller, else its owner) last changed; false when it
+        /// hasn't since the game started. Changes before the first tick are the starting setup. Saved with the game.
+        /// </summary>
+        public bool TryGetControlChangeTick(ushort provinceId, out ulong tick) => dataManager.TryGetControlChangeTick(provinceId, out tick);
+
+        /// <summary>The clock control changes are stamped with (GameState wires TimeManager.CurrentTick).</summary>
+        public void SetTickSource(System.Func<ulong> tickSource) => dataManager.TickSource = tickSource;
         public void SetProvinceOwner(ushort provinceId, ushort newOwner) => dataManager.SetProvinceOwner(provinceId, newOwner);
         public void SetProvinceController(ushort provinceId, ushort newController) => dataManager.SetProvinceController(provinceId, newController);
         // REMOVED: GetProvinceDevelopment/SetProvinceDevelopment (game-specific - use HegemonProvinceSystem)
@@ -528,6 +537,11 @@ namespace Core.Systems
                 writer.Write(activeProvinceIds[i]);
             }
 
+            // Control change ticks, by array index (0: none since the start)
+            var ticks = dataManager.ControlChangeTicks;
+            writer.Write(ticks.Length);
+            for (int i = 0; i < ticks.Length; i++) writer.Write(ticks[i]);
+
             ArchonLogger.Log($"ProvinceSystem: Saved {ProvinceCount} provinces ({snapshot.Capacity} capacity)", "core_simulation");
         }
 
@@ -580,6 +594,15 @@ namespace Core.Systems
             {
                 ushort provinceId = reader.ReadUInt16();
                 activeProvinceIds.Add(provinceId);
+            }
+
+            // Control change ticks, by array index
+            int tickCount = reader.ReadInt32();
+            var ticks = dataManager.ControlChangeTicks;
+            for (int i = 0; i < tickCount; i++)
+            {
+                ulong t = reader.ReadUInt64();
+                if (i < ticks.Length) ticks[i] = t;
             }
 
             // CRITICAL: Restore provinceCount (dataManager.Clear() set it to 0)

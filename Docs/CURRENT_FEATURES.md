@@ -57,6 +57,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Province Management** - Efficient management of 10,000+ provinces
 - **Province Ownership Tracking** - Fast owner lookup with bidirectional mapping (province→owner, owner→provinces)
 - **Province Controller** - Separate controller per province (`SetProvinceController`, `ProvinceControllerChangedEvent`); map labels follow a game-chosen holder (`IMapLabelSource.GetLabelHolder`)
+- **Control Change Tick** - `ProvinceSystem.TryGetControlChangeTick`: the tick a province's effective controller (controller, else owner) last changed, false when it hasn't since the start; changes before the first tick are the starting setup. Saved with the game. For "how long has it been held" rules (conversion, integration, unrest)
 - **Runtime Border Class Hiding** - `BorderClassStyles.SetHidden(class, hide)` hides a border class while a game tool needs it, apart from the style file (survives hot reloads)
 - **Region Labels** - Names of game-defined province groups (states, areas) from `IMapRegionLabelSource`, a second `MapLabelRenderer` in region mode, `regionLabels` style section, fade in when zoomed in, drawn while `MapRegionLabels.Shown`
 - **Province Development** - Economic development levels per province
@@ -468,6 +469,8 @@ This document lists all implemented features in the Archon Engine organized by c
 - **GetSharedBorderProvinces** - Find provinces where two countries touch
 - **IsBridgeProvince** - Detect strategic choke points (articulation points)
 - **FindBridgeProvinces** - Find all bridge provinces in a region
+- **ProvinceLinkNetwork** (`Core.Graph`) - A separate network of links between provinces, each with a level (railways, roads, canals: the game decides what they mean). Stable link indices, removal by level 0, per-province link lists, `Version` for caches
+- **WidestPaths** - From one province, the best bottleneck level to every province reachable over links the caller allows (bucket queue by level, O(links + provinces), deterministic); `WidestPathResult` gives level, arriving link and hops per province, reusable without clearing
 - **AdjacencyStats** - Queryable statistics struct (ProvinceCount, AvgNeighbors, etc.)
 - **Adjacency overrides** - Optional `map/adjacencies.csv` (From;To;Type;Through;Comment, read by AdjacencyOverrideLoader) applied after the scan and before pathfinding: type `impassable` cuts a shared border, any other type links two provinces that don't touch (a strait crossing through a sea province). `Links` / `TryGetLink` give the added links and their type for game rules and drawing
 

@@ -209,6 +209,7 @@ namespace Core
             Provinces.Initialize(EventBus);
             Countries.Initialize(EventBus);
             Time.Initialize(EventBus, Provinces); // Pass ProvinceSystem for buffer swapping
+            Provinces.SetTickSource(() => Time.CurrentTick); // control changes remember their tick
             Diplomacy.Initialize(); // Initialize DiplomacySystem NativeCollections
 
             // 12. Wire ModifierSystem to ProvinceSystem reverse index for efficient dirty tracking
