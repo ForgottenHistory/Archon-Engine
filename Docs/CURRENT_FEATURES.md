@@ -163,9 +163,9 @@ This document lists all implemented features in the Archon Engine organized by c
 - **ModifierValue** - Single modifier with base/additive/multiplicative bonuses
 - **ModifierSet** - Fixed-size array of 512 modifier types (4KB, zero allocations)
 - **ModifierSource** - Tracks modifier origin for tooltips and removal
-- **ActiveModifierList** - Maintains active modifiers with expiration support
+- **ActiveModifierList** - Maintains active modifiers with expiration support; grows (doubles) when full instead of dropping
 - **ScopedModifierContainer** - Province/Country/Global scope hierarchy
-- **ModifierSystem** - Central manager with scope inheritance (Province ← Country ← Global)
+- **ModifierSystem** - Central manager with scope inheritance (Province ← Country ← Global); country queries read the cached set in place (no struct copy)
 - **Formula** - (base + additive) × (1 + multiplicative)
 - **Performance** - <0.1ms lookup, <20MB for 10k provinces, zero allocations
 

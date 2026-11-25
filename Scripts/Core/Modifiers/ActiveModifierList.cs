@@ -17,12 +17,13 @@ namespace Core.Modifiers
     /// </summary>
     public struct ActiveModifierList : IDisposable
     {
-        public const int DEFAULT_CAPACITY = 64; // Should be enough for most provinces/countries
+        public const int DEFAULT_CAPACITY = 64; // the starting size; the list doubles when full
 
         private NativeArray<ModifierSource> modifiers;
         private NativeArray<bool> isActive;  // Track which slots are in use
         private int activeCount;             // Quick check if any modifiers exist
         private int capacity;
+        private Allocator allocator;         // for growing
 
         /// <summary>
         /// Create a new active modifier list with specified capacity
@@ -34,13 +35,15 @@ namespace Core.Modifiers
                 modifiers = new NativeArray<ModifierSource>(capacity, allocator),
                 isActive = new NativeArray<bool>(capacity, allocator),
                 activeCount = 0,
-                capacity = capacity
+                capacity = capacity,
+                allocator = allocator
             };
         }
 
         /// <summary>
-        /// Add a new modifier to the list
-        /// Returns false if capacity exceeded
+        /// Add a new modifier to the list. When it is full it doubles (a country's researched technologies and
+        /// ideas can run to hundreds of modifiers). The list is a struct: callers holding a copy must write it back,
+        /// as the ModifierSystem does, since growing replaces its arrays.
         /// </summary>
         public bool Add(ModifierSource source)
         {
@@ -56,9 +59,30 @@ namespace Core.Modifiers
                 }
             }
 
-            // No empty slots found - capacity exceeded
-            ArchonLogger.LogWarning($"ActiveModifierList capacity exceeded ({capacity}). Consider increasing capacity.", "core_simulation");
-            return false;
+            // Full: double, keeping every slot where it is
+            int slot = capacity;
+            Grow(capacity > 0 ? capacity * 2 : DEFAULT_CAPACITY);
+            modifiers[slot] = source;
+            isActive[slot] = true;
+            activeCount++;
+            return true;
+        }
+
+        void Grow(int newCapacity)
+        {
+            var alloc = allocator == Allocator.Invalid ? Allocator.Persistent : allocator;
+            var newModifiers = new NativeArray<ModifierSource>(newCapacity, alloc);
+            var newActive = new NativeArray<bool>(newCapacity, alloc);
+            if (modifiers.IsCreated)
+            {
+                NativeArray<ModifierSource>.Copy(modifiers, newModifiers, capacity);
+                NativeArray<bool>.Copy(isActive, newActive, capacity);
+                modifiers.Dispose();
+                isActive.Dispose();
+            }
+            modifiers = newModifiers;
+            isActive = newActive;
+            capacity = newCapacity;
         }
 
         /// <summary>

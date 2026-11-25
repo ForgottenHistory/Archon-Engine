@@ -301,20 +301,30 @@ namespace Core.Modifiers
         /// Returns the country scope for passing to GetProvinceModifierWithCountryScope.
         /// Avoids rebuilding the country scope per-province (saves ~8KB struct copy per province).
         /// </summary>
-        public void EnsureCountryScopeClean(ushort countryId)
+        public unsafe void EnsureCountryScopeClean(ushort countryId)
         {
             if (countryId >= maxCountries)
                 return;
+            CleanCountryScope(countryId);
+        }
 
-            // Check separate dirty flag to avoid 8KB struct copy on clean countries
-            if (!countryDirtyFlags[countryId])
-                return;
+        /// <summary>
+        /// The country's scope, rebuilt in place (by pointer, no 8KB struct copy) when its flag says it is dirty.
+        /// </summary>
+        unsafe ScopedModifierContainer* CleanCountryScope(ushort countryId)
+        {
+            var countryPtr = (ScopedModifierContainer*)countryScopes.GetUnsafePtr() + countryId;
+            if (!countryDirtyFlags[countryId] && !countryPtr->IsDirty)
+                return countryPtr;
 
-            var country = countryScopes[countryId];
-            country.MarkDirty(); // Ensure struct's isDirty matches flag array
-            country.RebuildIfDirty(globalScope);
-            countryScopes[countryId] = country;
+            globalScope.RebuildIfDirty(); // the parent must be clean before a pointer rebuild
+            countryPtr->MarkDirty();      // Ensure struct's isDirty matches flag array
+            fixed (ScopedModifierContainer* globalPtr = &globalScope)
+            {
+                countryPtr->RebuildIfDirtyFromParentPtr(globalPtr);
+            }
             countryDirtyFlags[countryId] = false;
+            return countryPtr;
         }
 
         /// <summary>
@@ -365,15 +375,13 @@ namespace Core.Modifiers
         /// Get country modifier value with global inheritance
         /// Country Final = Country Local + Global
         /// </summary>
-        public FixedPoint64 GetCountryModifier(ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
+        public unsafe FixedPoint64 GetCountryModifier(ushort countryId, ushort modifierTypeId, FixedPoint64 baseValue)
         {
             if (countryId >= maxCountries)
                 return baseValue;
 
-            var countryScope = countryScopes[countryId];
-            var result = countryScope.ApplyModifier(modifierTypeId, baseValue, globalScope);
-            countryScopes[countryId] = countryScope; // Write back to persist clean state
-            return result;
+            // in place: no 8KB struct copy out and back per query
+            return CleanCountryScope(countryId)->ApplyModifierFromCache(modifierTypeId, baseValue);
         }
 
         /// <summary>
