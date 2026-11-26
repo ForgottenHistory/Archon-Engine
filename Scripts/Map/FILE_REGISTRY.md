@@ -64,7 +64,7 @@
 - **Map.Rendering.Lines.MapLineLayer** - Game-supplied polylines (MapLine: points in map px, line class) drawn as border-style strips on their own render queue
 
 ### Rendering/Atmosphere/
-- **Map.Rendering.Atmosphere.MapAtmosphereRenderer** - Haze (zoomed out) + procedural drifting clouds with ground shadows; two map quads (Archon/MapAtmosphere), runtime tileable noise
+- **Map.Rendering.Atmosphere.MapAtmosphereRenderer** - Haze (zoomed out) + procedural drifting clouds with ground shadows; two map quads (Archon/MapAtmosphere), runtime tileable noise. Clouds are lit volumes: a noise height field over a flat base, parallax-marched and sun-lit with self shadow. GAME hooks: `SetCloudMask` (where extra clouds gather), `SetCloudLights` (lights inside the clouds, e.g. lightning)
 - **Map.Rendering.Atmosphere.MapAtmosphereStyle / MapAtmosphereStyles** - Atmosphere settings ("atmosphere" section of the visual style data file)
 - **Map.Rendering.DayNight.MapDayNight** - Day/night from Archon time (hour + date season tilt); publishes _ArchonSun/_ArchonDayNight globals for Shaders/Includes/DayNight.hlsl; runtime toggle (Enabled / toggle key, fades)
 - **Map.Rendering.DayNight.MapDayNightStyle / MapDayNightStyles** - Day/night settings ("dayNight" section of the visual style data file)

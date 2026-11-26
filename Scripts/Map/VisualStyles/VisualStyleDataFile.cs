@@ -65,9 +65,16 @@ namespace Archon.Engine.Map
     ///                   cloudColor: [0.95, 0.95, 0.97], cloudShade: [0.6, 0.64, 0.72], cloudCoverage: 0.42,
     ///                   cloudSoftness: 0.22, cloudOpacity: 0.85, cloudScale: 1400, cloudWind: [5, 1.5],
     ///                   cloudZoom: [0.35, 0.9], cloudHeight: 60, shadowStrength: 0.35, shadowOffset: [-40, 30],
-    ///                   maskOpacity: 0.85, maskScale: 300, maskShadow: 0.5, maskZoom: [2, 3.5], maskSoftness: 0.45,
-    ///                   maskWarp: 60 }
-    /// The mask fields style the clouds a GAME paints with MapAtmosphereRenderer.SetCloudMask.
+    ///                   maskOpacity: 0.85, maskScale: 300, maskShadow: 0.5, maskZoom: [2, 3.5], maskSoftness: 0.3,
+    ///                   maskWarp: 60, cloudThickness: 75, maskThickness: 14, cloudSteps: 10, cloudRelief: 0.6,
+    ///                   cloudBillows: 0.5, cloudVeil: 0.6, cloudChurn: 2, maskWind: [0, 0] }
+    /// The mask fields style the clouds a GAME paints with MapAtmosphereRenderer.SetCloudMask. cloudThickness to
+    /// cloudVeil shape the clouds' volume (thickness in map px, parallax steps, how strongly the billows are lit, how
+    /// lumpy, the thin veil); cloudChurn is how fast a swirling flow stirs them (map px per second, 0 = rigid) and
+    /// maskWind the masked clouds' own drift (none: weather is stirred in place). Also: cloudVariance (0.6: colour
+    /// variance inside a cloud) and maskZoomIn ([none at or below, full at or above]: where masked clouds come in
+    /// from the far view; left out, they start where the cloud banks are fully gone, cloudZoom's second value) and
+    /// maskVisible (false: no masked clouds, whatever the game paints).
     ///
     /// Label sizes: font size in map px (maxHeight), minScreenHeight in screen px, shadowOffset and
     /// maxGap as fractions of the font size; fade = [visible below, hidden above] screen px per map px.
@@ -320,6 +327,7 @@ namespace Archon.Engine.Map
             if (e == null) return s;
 
             if (e["visible"] != null) s.Visible = (bool)e["visible"];
+            if (e["maskVisible"] != null) s.MaskVisible = (bool)e["maskVisible"];
             s.HazeColor = ColorField(e, "hazeColor", s.HazeColor, source);
             s.CloudColor = ColorField(e, "cloudColor", s.CloudColor, source);
             s.CloudShade = ColorField(e, "cloudShade", s.CloudShade, source);
@@ -340,6 +348,16 @@ namespace Archon.Engine.Map
             if (IsNumber(e["maskShadow"])) s.MaskShadow = (float)e["maskShadow"];
             if (IsNumber(e["maskSoftness"])) s.MaskSoftness = (float)e["maskSoftness"];
             if (IsNumber(e["maskWarp"])) s.MaskWarp = (float)e["maskWarp"];
+            if (IsNumber(e["cloudThickness"])) s.CloudThickness = (float)e["cloudThickness"];
+            if (IsNumber(e["maskThickness"])) s.MaskThickness = (float)e["maskThickness"];
+            if (IsNumber(e["cloudSteps"])) s.CloudSteps = (int)(float)e["cloudSteps"];
+            if (IsNumber(e["cloudRelief"])) s.CloudRelief = (float)e["cloudRelief"];
+            if (IsNumber(e["cloudBillows"])) s.CloudBillows = (float)e["cloudBillows"];
+            if (IsNumber(e["cloudVeil"])) s.CloudVeil = (float)e["cloudVeil"];
+            if (IsNumber(e["cloudChurn"])) s.CloudChurn = (float)e["cloudChurn"];
+            if (IsNumber(e["cloudVariance"])) s.CloudVariance = (float)e["cloudVariance"];
+            s.MaskZoomIn = Vector2Field(e, "maskZoomIn", s.MaskZoomIn, source);
+            s.MaskWind = Vector2Field(e, "maskWind", s.MaskWind, source);
             s.MaskZoom = Vector2Field(e, "maskZoom", s.MaskZoom, source);
             return s;
         }

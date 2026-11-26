@@ -8,9 +8,11 @@ namespace Map.Rendering.Atmosphere
     /// above the map with soft shadows on the ground (style: MapAtmosphereStyles, "atmosphere" section).
     ///
     /// Two map-sized quads drawn with Archon/MapAtmosphere over the map and borders, below labels:
-    /// a ground layer (haze, cloud shadows) and a cloud layer CloudHeight map px above it, which
-    /// gives parallax with a perspective camera. Cloud shapes come from a tileable noise texture
-    /// generated at startup.
+    /// a ground layer (haze, cloud shadows) and a cloud layer CloudHeight map px above it. The clouds
+    /// have volume: the shader treats the noise as a height field over a flat cloud base, marches the
+    /// view ray through it (parallax: towers stand up and shift as the camera moves) and lights the
+    /// top from the sun, with self shadow. The sun is where the ground shadows come from (ShadowOffset
+    /// and CloudHeight). Cloud shapes come from a tileable noise texture generated at startup.
     /// </summary>
     public class MapAtmosphereRenderer : MonoBehaviour
     {
@@ -35,6 +37,19 @@ namespace Map.Rendering.Atmosphere
         private static readonly int CloudMaskShapeId = Shader.PropertyToID("_CloudMaskShape");
         private static readonly int CloudMaskTexId = Shader.PropertyToID("_ArchonCloudMask");
         private static readonly int CloudMaskOnId = Shader.PropertyToID("_ArchonCloudMaskOn");
+        private static readonly int CloudVolumeId = Shader.PropertyToID("_CloudVolume");
+        private static readonly int CloudShapeId = Shader.PropertyToID("_CloudShape");
+        private static readonly int CloudSunId = Shader.PropertyToID("_CloudSun");
+        private static readonly int CloudLightsId = Shader.PropertyToID("_ArchonCloudLights");
+        private static readonly int CloudLightColorId = Shader.PropertyToID("_ArchonCloudLightColor");
+        private static readonly int CloudLightCountId = Shader.PropertyToID("_ArchonCloudLightCount");
+
+        /// <summary>Masked clouds come in between the zoom where the banks are gone and this many times it.</summary>
+        private const float MaskZoomInSpan = 1.6f;
+
+        /// <summary>The most lights SetCloudLights takes.</summary>
+        public const int MaxCloudLights = 8;
+        private static readonly Vector4[] cloudLights = new Vector4[MaxCloudLights];
 
         /// <summary>
         /// GAME hook: a map-space texture (row 0 = south, bilinear, any resolution) saying where extra clouds gather:
@@ -45,6 +60,21 @@ namespace Map.Rendering.Atmosphere
         {
             Shader.SetGlobalTexture(CloudMaskTexId, mask != null ? mask : Texture2D.blackTexture);
             Shader.SetGlobalFloat(CloudMaskOnId, mask != null ? 1f : 0f);
+        }
+
+        /// <summary>
+        /// GAME hook: lights inside the clouds, e.g. lightning. Each is (map px x, map px y from the north edge,
+        /// radius map px, intensity); the first `count` (at most MaxCloudLights) are used, in one colour. A light
+        /// glows through the cloud around it, brightest where the cloud is thin. Call each frame while any is lit;
+        /// count 0 turns them off.
+        /// </summary>
+        public static void SetCloudLights(Vector4[] lights, int count, Color color)
+        {
+            count = lights == null ? 0 : Mathf.Clamp(count, 0, Mathf.Min(lights.Length, MaxCloudLights));
+            for (int i = 0; i < MaxCloudLights; i++) cloudLights[i] = i < count ? lights[i] : Vector4.zero;
+            Shader.SetGlobalVectorArray(CloudLightsId, cloudLights);
+            Shader.SetGlobalColor(CloudLightColorId, color);
+            Shader.SetGlobalFloat(CloudLightCountId, count);
         }
 
         private Material groundMaterial, cloudMaterial;
@@ -121,8 +151,18 @@ namespace Map.Rendering.Atmosphere
                 m.SetVector(CloudZoomId, new Vector4(s.CloudZoom.x, s.CloudZoom.y, 0, 0));
                 m.SetVector(ShadowParamsId, new Vector4(Mathf.Clamp01(s.ShadowStrength), s.ShadowOffset.x, s.ShadowOffset.y, 0));
                 m.SetVector(CloudMaskParamsId, new Vector4(Mathf.Clamp01(s.MaskOpacity), Mathf.Max(s.MaskScale, 1f), Mathf.Clamp01(s.MaskShadow), 0));
-                m.SetVector(CloudMaskZoomId, new Vector4(s.MaskZoom.x, s.MaskZoom.y, 0, 0));
-                m.SetVector(CloudMaskShapeId, new Vector4(Mathf.Max(s.MaskSoftness, 1e-3f), Mathf.Max(s.MaskWarp, 0f), 0, 0));
+                // by default only once the banks are fully gone (CloudZoom.y), full a little closer in
+                var zoomIn = s.MaskZoomIn.x < 0f ? new Vector2(s.CloudZoom.y, s.CloudZoom.y * MaskZoomInSpan) : s.MaskZoomIn;
+                // hidden: a range that every zoom is past, so the shader never reaches the masked clouds
+                var zoomOut = s.MaskVisible ? s.MaskZoom : new Vector2(-2f, -1f);
+                m.SetVector(CloudMaskZoomId, new Vector4(zoomOut.x, zoomOut.y, zoomIn.x, zoomIn.y));
+                m.SetVector(CloudMaskShapeId, new Vector4(Mathf.Max(s.MaskSoftness, 1e-3f), Mathf.Max(s.MaskWarp, 0f), s.MaskWind.x, s.MaskWind.y));
+                m.SetVector(CloudVolumeId, new Vector4(Mathf.Clamp(s.CloudSteps, 0, 24), Mathf.Max(s.CloudRelief, 0f),
+                    Mathf.Max(s.CloudThickness, 0f), Mathf.Max(s.MaskThickness, 0f)));
+                m.SetVector(CloudShapeId, new Vector4(Mathf.Clamp01(s.CloudBillows), Mathf.Max(s.CloudVeil, 0f), Mathf.Max(s.CloudChurn, 0f), Mathf.Clamp01(s.CloudVariance)));
+                // toward the sun (map east, south, up): a cloud's shadow falls ShadowOffset away from under it
+                var sun = new Vector3(-s.ShadowOffset.x, -s.ShadowOffset.y, Mathf.Max(s.CloudHeight, 1f)).normalized;
+                m.SetVector(CloudSunId, new Vector4(sun.x, sun.y, sun.z, 0));
             }
         }
 
@@ -142,8 +182,10 @@ namespace Map.Rendering.Atmosphere
         // ------------------------------------------------------------------ noise
 
         /// <summary>
-        /// Tileable fractal value noise, one independent field per channel (R: large shapes,
-        /// G: billows / warp, B: fine detail, A: second large field).
+        /// Tileable noise, one field per channel. R: Perlin-Worley (Perlin's large shapes with Worley's round
+        /// bumps pushed into them): the cloud shapes, equalised so that a coverage is a share of the sky.
+        /// B: Worley billows (round bumps with smaller ones on them):
+        /// the lumps on a cloud's top and edge. G, A: Perlin: the warps.
         /// </summary>
         private static Texture2D GenerateNoise(int size)
         {
@@ -154,17 +196,22 @@ namespace Map.Rendering.Atmosphere
                 filterMode = FilterMode.Trilinear,
                 anisoLevel = 2
             };
-            var pixels = new Color32[size * size];
-            for (int y = 0; y < size; y++)
-            for (int x = 0; x < size; x++)
+            float[] perlin = Stretch(Fbm(size, 4, 5, 11, 0.5f, false));
+            float[] worley = Stretch(Fbm(size, 4, 3, 23, 0.4f, true));
+            var shapes = new float[size * size];
+            for (int i = 0; i < shapes.Length; i++)
             {
-                float u = x / (float)size, v = y / (float)size;
-                pixels[y * size + x] = new Color32(
-                    ToByte(Fbm(u, v, 4, 5, 11)),
-                    ToByte(Fbm(u, v, 6, 4, 23)),
-                    ToByte(Fbm(u, v, 16, 3, 37)),
-                    ToByte(Fbm(u, v, 3, 5, 51)));
+                float cut = (1f - worley[i]) * 0.6f;
+                shapes[i] = (perlin[i] - cut) / (1f - cut + 1e-6f);
             }
+            shapes = Equalise(shapes);
+            float[] warpA = Stretch(Fbm(size, 3, 4, 37, 0.5f, false));
+            float[] billows = Stretch(Fbm(size, 8, 3, 51, 0.55f, true));
+            float[] warpB = Stretch(Fbm(size, 3, 4, 67, 0.5f, false));
+
+            var pixels = new Color32[size * size];
+            for (int i = 0; i < pixels.Length; i++)
+                pixels[i] = new Color32(ToByte(shapes[i]), ToByte(warpA[i]), ToByte(billows[i]), ToByte(warpB[i]));
             tex.SetPixels32(pixels);
             tex.Apply(true, true);
             return tex;
@@ -172,31 +219,86 @@ namespace Map.Rendering.Atmosphere
 
         private static byte ToByte(float v) => (byte)Mathf.Clamp(Mathf.RoundToInt(v * 255f), 0, 255);
 
-        /// <summary>Fractal sum of periodic value noise, normalized to 0..1 and contrast-stretched.</summary>
-        private static float Fbm(float u, float v, int baseFreq, int octaves, int seed)
+        /// <summary>Fractal sum of periodic Perlin or Worley noise, baseFreq cells across, each octave twice as fine.</summary>
+        private static float[] Fbm(int size, int baseFreq, int octaves, int seed, float gain, bool cells)
         {
-            float sum = 0, amp = 1, norm = 0;
+            var sum = new float[size * size];
+            float amp = 1f, norm = 0f;
             int freq = baseFreq;
             for (int o = 0; o < octaves; o++)
             {
-                sum += amp * ValueNoise(u * freq, v * freq, freq, seed + o * 101);
+                int s = seed + o * 101;
+                for (int y = 0; y < size; y++)
+                for (int x = 0; x < size; x++)
+                {
+                    float u = (x + 0.5f) / size * freq, v = (y + 0.5f) / size * freq;
+                    sum[y * size + x] += amp * (cells ? Worley(u, v, freq, s) : Perlin(u, v, freq, s));
+                }
                 norm += amp;
-                amp *= 0.5f;
+                amp *= gain;
                 freq *= 2;
             }
-            float n = sum / norm;
-            return Mathf.Clamp01((n - 0.5f) * 1.6f + 0.5f); // fractal sums bunch around 0.5
+            for (int i = 0; i < sum.Length; i++) sum[i] /= norm;
+            return sum;
         }
 
-        private static float ValueNoise(float x, float y, int period, int seed)
+        /// <summary>To 0..1 between the 1st and 99th percentile (fractal sums bunch around their middle).</summary>
+        private static float[] Stretch(float[] values)
+        {
+            var sorted = (float[])values.Clone();
+            System.Array.Sort(sorted);
+            float lo = sorted[sorted.Length / 100], hi = sorted[sorted.Length - 1 - sorted.Length / 100];
+            float range = Mathf.Max(hi - lo, 1e-6f);
+            var result = new float[values.Length];
+            for (int i = 0; i < values.Length; i++) result[i] = Mathf.Clamp01((values[i] - lo) / range);
+            return result;
+        }
+
+        /// <summary>Rank transform: the values become uniform in 0..1, so a threshold of 1 - c leaves exactly c of the area.</summary>
+        private static float[] Equalise(float[] values)
+        {
+            var order = new int[values.Length];
+            for (int i = 0; i < order.Length; i++) order[i] = i;
+            var keys = (float[])values.Clone();
+            System.Array.Sort(keys, order);
+            var result = new float[values.Length];
+            for (int rank = 0; rank < order.Length; rank++) result[order[rank]] = rank / (float)(order.Length - 1);
+            return result;
+        }
+
+        /// <summary>Periodic gradient noise, about -0.7..0.7.</summary>
+        private static float Perlin(float x, float y, int period, int seed)
         {
             int x0 = Mathf.FloorToInt(x), y0 = Mathf.FloorToInt(y);
             float fx = x - x0, fy = y - y0;
             float sx = fx * fx * fx * (fx * (fx * 6 - 15) + 10);
             float sy = fy * fy * fy * (fy * (fy * 6 - 15) + 10);
-            float a = Hash(x0, y0, period, seed), b = Hash(x0 + 1, y0, period, seed);
-            float c = Hash(x0, y0 + 1, period, seed), d = Hash(x0 + 1, y0 + 1, period, seed);
-            return Mathf.Lerp(Mathf.Lerp(a, b, sx), Mathf.Lerp(c, d, sx), sy);
+            float a = Mathf.Lerp(Gradient(x0, y0, fx, fy, period, seed), Gradient(x0 + 1, y0, fx - 1, fy, period, seed), sx);
+            float b = Mathf.Lerp(Gradient(x0, y0 + 1, fx, fy - 1, period, seed), Gradient(x0 + 1, y0 + 1, fx - 1, fy - 1, period, seed), sx);
+            return Mathf.Lerp(a, b, sy);
+        }
+
+        private static float Gradient(int ix, int iy, float dx, float dy, int period, int seed)
+        {
+            float angle = Hash(ix, iy, period, seed) * 2f * Mathf.PI;
+            return Mathf.Cos(angle) * dx + Mathf.Sin(angle) * dy;
+        }
+
+        /// <summary>Periodic inverted cell noise: 1 at a cell's point, falling off with the squared distance (a
+        /// round top, not a cone), 0 one cell away.</summary>
+        private static float Worley(float x, float y, int period, int seed)
+        {
+            int cx = Mathf.FloorToInt(x), cy = Mathf.FloorToInt(y);
+            float best = 9f;
+            for (int j = -1; j <= 1; j++)
+            for (int i = -1; i <= 1; i++)
+            {
+                int ix = cx + i, iy = cy + j;
+                float dx = ix + Hash(ix, iy, period, seed) - x;
+                float dy = iy + Hash(ix, iy, period, seed + 7919) - y;
+                best = Mathf.Min(best, dx * dx + dy * dy);
+            }
+            return 1f - Mathf.Clamp01(best);
         }
 
         private static float Hash(int x, int y, int period, int seed)
