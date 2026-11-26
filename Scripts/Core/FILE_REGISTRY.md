@@ -251,6 +251,7 @@
 - **Core.Common.FrameCacheValue<TValue>** - Single-value frame cache (no key)
 - **Core.Common.TimedCache<TKey,TValue>** - Time-based cache with configurable lifetime; use for expensive calculations that change infrequently
 - **Core.Common.TimedCacheValue<TValue>** - Single-value timed cache (no key)
+- **Core.Common.JitWarmup** - Compiles assemblies' methods on a background thread during loading, so the first run of a simulation step doesn't pay Mono's first-call compile in one frame (no-op under IL2CPP); GAME picks the assemblies
 
 > **Result Pattern Convention:** All result types use `Success(...)` and `Failure(...)` factory methods.
 > Domain-specific result types (e.g., ScenarioLoadResult, ProvinceInitialStateLoadResult) follow this naming.
