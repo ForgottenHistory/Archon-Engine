@@ -122,7 +122,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Managed Fallback** - MovementValidator support via managed code path when validation needed
 - **GetNeighbors** - O(1) neighbor lookup with sparse storage
 - **FindPath** - A* algorithm with ~0.1ms typical performance on 13k provinces
-- **IMovementCostCalculator** - Interface for custom movement cost calculation with PathContext
+- **IMovementCostCalculator** - Interface for custom movement cost calculation with PathContext; a cost of `FixedPoint64.MaxValue` forbids that one step (rules about the step, not the province: boarding a ship only at a port)
 - **PathOptions** - Configurable pathfinding: forbidden provinces, avoid provinces, max path length
 - **PathResult** - Structured result with PathStatus enum (Success, NoPath, StartInvalid, etc.)
 - **PathCache** - LRU cache with automatic invalidation on ownership changes
@@ -280,7 +280,7 @@ This document lists all implemented features in the Archon Engine organized by c
 - **BorderMeshGenerator** - Generate triangle strip geometry from polylines
 - **BorderMeshRenderer** - Render mesh borders with dynamic color updates
 - **Custom line shaders** - A line class (border, river, map line layer) can name its own shader in the visual style (`shader: "..."`); it reuses the line pass through `Shaders/Includes/BorderMeshCore.hlsl` (`ArchonBorderMeshVert`, `ArchonBorderMeshColor`, `ArchonBorderMeshOutput`) and adds its own fragment work, e.g. a river surface that reacts to game state
-- **MapLineLayer** - Draw game-supplied lines (railways, roads, trade routes) with the mesh border pipeline: `SetLines` with polylines in map pixels and a line class per line, styled from the visual style file's `borders` section (texture, width, tile, color, fade, order); draped on the terrain, restyled on hot reload, optional junction caps; several layers stack by render queue
+- **MapLineLayer** - Draw game-supplied lines (railways, roads, trade routes) with the mesh border pipeline: `SetLines` with polylines in map pixels and a line class per line, styled from the visual style file's `borders` section (texture, width, tile, scroll, color, fade, order; `scroll` moves the texture along the line, for flow arrows and routes); draped on the terrain, restyled on hot reload, optional junction caps; several layers stack by render queue
 - **BorderMeshGenerator junction caps** - `GenerateMeshes(..., junctionCaps: false)` leaves out the fans where arcs meet (for textured lines that should overlap instead)
 - **BorderDistanceFieldGenerator** - Generate JFA distance field for fragment-shader borders
 - **TextureUpdateBridge** - Bridge simulation state changes to GPU textures via EventBus

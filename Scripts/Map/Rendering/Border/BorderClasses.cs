@@ -27,6 +27,8 @@ namespace Map.Rendering.Border
         public float WidthPerLevel;        // extra width per point width level (rivers)
         public float MinScreenWidth = 1f;  // full strip width floor in screen pixels
         public float Tile = 0.4f;          // texture repeats per map pixel along the border
+        public float Scroll;               // texture repeats per second moving along the line, first point to
+                                           // last (0 = still): flow arrows, marching dashes
         public Vector2 Fade;               // screen px per map px: invisible at x, fully visible at y (0,0 = no fade)
         public int Order;                  // draw order between classes (higher draws on top)
         public string ShaderName;          // null = Archon/BorderMesh; a custom line shader built on

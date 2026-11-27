@@ -27,6 +27,7 @@ namespace Map.Rendering
         private static readonly int WidthPerLevelId = Shader.PropertyToID("_BorderWidthPerLevel");
         private static readonly int MinScreenWidthId = Shader.PropertyToID("_BorderMinScreenWidth");
         private static readonly int TileId = Shader.PropertyToID("_BorderTile");
+        private static readonly int ScrollId = Shader.PropertyToID("_BorderScroll");
         private static readonly int FadeId = Shader.PropertyToID("_BorderFade");
         private static readonly int MapWorldBoundsId = Shader.PropertyToID("_MapWorldBounds");
         private static readonly int HeightmapId = Shader.PropertyToID("_HeightmapTexture");
@@ -173,6 +174,7 @@ namespace Map.Rendering
             m.SetFloat(WidthPerLevelId, s.WidthPerLevel);
             m.SetFloat(MinScreenWidthId, s.MinScreenWidth);
             m.SetFloat(TileId, s.Tile);
+            m.SetFloat(ScrollId, s.Scroll);
             m.SetVector(FadeId, new Vector4(s.Fade.x, s.Fade.y, 0f, 0f));
         }
 

@@ -30,6 +30,7 @@ CBUFFER_START(UnityPerMaterial)
     float _BorderWidthPerLevel;
     float _BorderMinScreenWidth;
     float _BorderTile;
+    float _BorderScroll;
     float _HeightScale;
     float4 _MapWorldBounds;
 CBUFFER_END
@@ -116,7 +117,7 @@ void ArchonBorderMeshColor(Varyings input, out float4 color, out float alpha)
     if (_BorderUseTexture > 0.5)
     {
         // Paradox layout: texture U runs along the border, V across it
-        float4 tex = SAMPLE_TEXTURE2D(_BorderTex, sampler_BorderTex, float2(input.uv.x * _BorderTile, v));
+        float4 tex = SAMPLE_TEXTURE2D(_BorderTex, sampler_BorderTex, float2(input.uv.x * _BorderTile - _Time.y * _BorderScroll, v));
         if (_BorderTexAlphaOnly < 0.5)
             color.rgb *= tex.rgb;
         alpha = tex.a;

@@ -80,7 +80,8 @@ namespace Archon.Engine.Map
     /// maxGap as fractions of the font size; fade = [visible below, hidden above] screen px per map px.
     ///
     /// width = strip width in map pixels, minScreenWidth = floor in screen pixels, tile = texture
-    /// repeats per map pixel along the border, fade = [hidden, visible] in screen px per map px,
+    /// repeats per map pixel along the border, scroll = texture repeats per second moving along the line
+    /// (first point to last; 0 or omitted = still), fade = [hidden, visible] in screen px per map px,
     /// color omitted = engine border color globals. Texture U runs along the border, V across.
     ///
     /// Engine-managed parameters (simulation textures, map mode, border mode, fog toggle) are refused.
@@ -222,6 +223,7 @@ namespace Archon.Engine.Map
             if (IsNumber(e["widthPerLevel"])) style.WidthPerLevel = (float)e["widthPerLevel"];
             if (IsNumber(e["minScreenWidth"])) style.MinScreenWidth = (float)e["minScreenWidth"];
             if (IsNumber(e["tile"])) style.Tile = (float)e["tile"];
+            if (IsNumber(e["scroll"])) style.Scroll = (float)e["scroll"];
             if (IsNumber(e["softness"])) style.Softness = (float)e["softness"];
             if (e["blend"] != null)
             {

@@ -406,6 +406,8 @@ namespace Core.Systems
                         continue;
 
                     FixedPoint64 moveCost = costCalculator.GetMovementCost(current, neighbor, context);
+                    if (moveCost == FixedPoint64.MaxValue)
+                        continue; // this step is impassable (IMovementCostCalculator's contract), though the province isn't
                     if (avoid != null && avoid.Contains(neighbor))
                         moveCost = moveCost * options.AvoidPenalty;
 

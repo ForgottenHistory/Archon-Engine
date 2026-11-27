@@ -22,6 +22,7 @@ Shader "Archon/BorderMesh"
         _BorderWidthPerLevel ("Extra Width per Level (map px)", Float) = 0
         _BorderMinScreenWidth ("Min Width (screen px)", Float) = 1
         _BorderTile ("Texture Repeats per Map Pixel", Float) = 0.4
+        _BorderScroll ("Texture Repeats per Second along the Line", Float) = 0
         _BorderFade ("Fade (screen px per map px: hidden at x, visible at y)", Vector) = (0, 0, 0, 0)
         _HeightmapTexture ("Heightmap", 2D) = "gray" {}
         _HeightScale ("Height Scale", Float) = 10.0
