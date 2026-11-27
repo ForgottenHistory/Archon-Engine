@@ -1,70 +1,33 @@
 # Scripting Assembly File Registry
-**Namespace:** `Scripting.*`
-**Assembly:** `Scripting` (optional, requires `MOONSHARP_ENABLED` define)
-**Dependencies:** Core, Utils, MoonSharp
+**Namespace:** `Scripting`
+**Assembly:** `Scripting`
+**Dependencies:** Utils, `Lua.dll` (Lua-CSharp, in `Plugins/`)
 
 ---
 
 ## Overview
-Deterministic Lua scripting via MoonSharp. Scripts declare intent, C# executes.
+Lua 5.2 scripting. The ENGINE runs scripts and passes values; the GAME provides every function and object
+scripts can use. See `Docs/Engine/scripting.md`.
 
-**To Enable:**
-1. Install MoonSharp: `https://github.com/k0dep/MoonSharp.git#2.0.0`
-2. Add `MOONSHARP_ENABLED` to Player Settings → Scripting Define Symbols
+No type of the Lua library is public here: game code does not reference `Lua.dll`.
 
 ---
 
 ## Root/
-- **Scripting.ScriptEngine** - Central MoonSharp coordinator; manages execution, binding registration, sandboxing
-- **Scripting.ScriptContext** - Per-execution environment with scope (province/country), GameState access, ICommandSubmitter
-- **Scripting.ScriptSandbox** - Security configuration; whitelists safe modules, blocks io/os/debug/load
-- **Scripting.ScriptResult** - Execution result struct with success/error and DynValue
-- **Scripting.ICommandSubmitter** - Interface for submitting commands from scripts (implemented in GAME layer)
+- **Scripting.ScriptEngine** - One sandboxed Lua world: global functions and values, object types, running files, calling kept Lua functions synchronously; errors as false + `LastError`; instruction limit; missing methods/globals reported (`MissingMember`, `Missing`, optional log) and stubbed
+- **Scripting.ScriptFunction** - Delegate of a C# function scripts call (`ref ScriptCall`)
+- **Scripting.ScriptException** - Thrown by `ScriptCall.Fail`; becomes the script's error
+- **Scripting.ScriptCall** - One call from a script: arguments by index with fallbacks, `Self<T>`, `Return`, `ReturnList`, `Fail`
+- **Scripting.ScriptType** - A kind of object with methods (`SetMethod`, `HasMethod`)
+- **Scripting.ScriptObject** - Base class of GAME objects scripts hold; one C# object is one Lua identity
+- **Scripting.ScriptValue** - nil / boolean / number / string / function / table / object
+- **Scripting.ScriptTable** - A Lua table read from C#: named fields, list part, `FieldNames` in ordinal order
+- **Scripting.ScriptFunctionRef** - A Lua function kept to call later
+
+## Plugins/
+- **Lua.dll**, **Microsoft.Bcl.TimeProvider.dll**, **Microsoft.Bcl.AsyncInterfaces.dll** - The interpreter and what it references; versions and sources in `Plugins/README.md`
 
 ---
 
-## Types/
-- **Scripting.Types.LuaFixed** - [MoonSharpUserData] FixedPoint64 wrapper for deterministic Lua math
-- **Scripting.Types.LuaProvinceId** - [MoonSharpUserData] ProvinceId wrapper for type-safe province IDs
-- **Scripting.Types.LuaCountryId** - [MoonSharpUserData] CountryId wrapper for type-safe country IDs
-
----
-
-## Bindings/
-- **Scripting.Bindings.IScriptBinding** - Interface for registering Lua functions with script engine
-- **Scripting.Bindings.CoreBindings** - ENGINE bindings: province_owner, province_controller, country_province_count, this_province, this_country, current_tick
-
----
-
-## Triggers/
-- **Scripting.Triggers.IScriptTrigger** - Interface for trigger definitions (ShouldFire, GetExecutionContext)
-- **Scripting.Triggers.ScriptTriggerRegistry** - Central registry for triggers and handlers; fires triggers, manages priorities
-- **Scripting.Triggers.ScriptHandler** - Registered handler struct: Script, Condition, Priority, Source
-
----
-
-## Lua API (CoreBindings)
-
-| Function | Returns | Description |
-|----------|---------|-------------|
-| `province_owner(province)` | CountryId | Get province owner |
-| `province_controller(province)` | CountryId | Get province controller |
-| `province_is_valid(province)` | bool | Check if province exists |
-| `country_is_valid(country)` | bool | Check if country exists |
-| `country_province_count(country)` | int | Count provinces owned |
-| `this_province` | ProvinceId | Current scope province |
-| `this_country` | CountryId | Current scope country |
-| `current_tick` | number | Current game tick |
-
-## Lua Types
-
-| Type | Factory | Methods |
-|------|---------|---------|
-| `Fixed` | `FromInt(n)`, `FromFraction(num, denom)` | All operators, `Abs`, `Min`, `Max`, `Sqrt`, `Lerp`, etc. |
-| `ProvinceId` | `Create(n)`, `None` | `IsValid()`, `IsNone()` |
-| `CountryId` | `Create(n)`, `None` | `IsValid()`, `IsNone()` |
-
----
-
-*Updated: 2026-01-16*
-*Created: Scripting assembly with MoonSharp Lua integration*
+*Updated: 2026-11-27*
+*Changed: rebuilt on Lua-CSharp (was MoonSharp behind a define); the assembly is always compiled*

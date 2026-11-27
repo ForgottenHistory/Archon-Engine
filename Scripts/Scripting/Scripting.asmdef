@@ -2,19 +2,17 @@
     "name": "Scripting",
     "rootNamespace": "Scripting",
     "references": [
-        "Core",
-        "Utils",
-        "MoonSharp"
+        "Utils"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [
-        "MOONSHARP_ENABLED"
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "Lua.dll"
     ],
+    "autoReferenced": true,
+    "defineConstraints": [],
     "versionDefines": [],
     "noEngineReferences": false
 }

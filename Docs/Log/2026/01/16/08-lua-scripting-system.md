@@ -4,6 +4,10 @@
 **Status**: ✅ Complete
 **Priority**: Medium
 
+> **Superseded 2026-11-27.** This layer (MoonSharp, `ScriptContext`, `ScriptSandbox`, `LuaFixed`, the trigger registry)
+> was removed and rebuilt on Lua-CSharp with a different API. See `Docs/Log/decisions/lua-scripting-on-lua-csharp.md`
+> and `Docs/Engine/scripting.md`. What follows is history.
+
 ---
 
 ## Session Goal

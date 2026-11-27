@@ -13,6 +13,7 @@
 | | [Units](Units.md) | |
 | | [Multiplayer](Multiplayer.md) | |
 | | [Map Modes](Map-Modes.md) | |
+| | [Scripting](Scripting.md) | |
 
 ## What is Archon?
 
@@ -24,6 +25,7 @@ Archon is split into two parts:
    - Event-driven architecture with zero allocations
    - Multiplayer with lockstep synchronization
    - Save/load, pathfinding, modifiers, time management
+   - Lua scripting for content (events, decisions, AI weights)
 
 2. **GAME** (your code) - Game-specific rules and content
    - Economy formulas, building effects, unit stats

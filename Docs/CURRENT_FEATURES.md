@@ -611,6 +611,17 @@ This document lists all implemented features in the Archon Engine organized by c
 - **Mod Manifest** - mod.json files with metadata (name, version, dependencies)
 - **Load Order** - Mods loaded after base game data
 
+## Scripting System
+
+- **ScriptEngine** - Sandboxed Lua 5.2 (Lua-CSharp interpreter, pure C#): no files, no os, no code loading, no `math.random`; `print` goes to the log. See `Docs/Engine/scripting.md`
+- **Game Vocabulary** - The GAME provides every function (`SetFunction`) and object type with methods (`DefineType`, `ScriptObject`); scripts call `c:add_gold(5)`. The engine defines no game functions
+- **Kept Functions** - Scripts register tables holding values and Lua functions; the GAME reads them (`ScriptTable`) and calls the functions later (`ScriptFunctionRef`, `Call`, `CallBool`, `CallNumber`)
+- **Synchronous Calls** - A call returns when the script has finished, so scripts run inside commands and ticks
+- **Errors Stay Inside** - Syntax and runtime errors return false with the script's file and line (`LastError`, `Error`); the engine keeps working
+- **Instruction Limit** - A call past `InstructionLimit` (default 50 million) is stopped: no endless loops
+- **Missing Members** - A method the game lacks is reported once and returns false (`MissingMember`, `Missing`); optional for globals (`stubMissingGlobals`). `MissingCalls` tells a false answer from one that leaned on a missing name; `LogMissing` keeps large sets out of the log
+- **Hidden Interpreter** - No Lua library type in the public API; game code never references `Lua.dll`
+
 ---
 
-*Updated: 2026-02-04*
+*Updated: 2026-11-27*

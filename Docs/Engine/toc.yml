@@ -44,6 +44,8 @@
   items:
     - name: Modifier System
       href: modifier-system.md
+    - name: Scripting
+      href: scripting.md
 - name: Performance
   items:
     - name: Performance Architecture Guide

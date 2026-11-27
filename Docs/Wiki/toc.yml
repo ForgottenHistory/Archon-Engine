@@ -30,6 +30,8 @@
       href: Save-Load.md
     - name: Modifiers
       href: Modifiers.md
+    - name: Scripting
+      href: Scripting.md
     - name: Queries
       href: Queries.md
     - name: Pathfinding

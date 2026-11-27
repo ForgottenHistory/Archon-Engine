@@ -6,6 +6,7 @@
         "UnityEditor.TestRunner",
         "Core",
         "ParadoxParser",
+        "Scripting",
         "Utils",
         "Unity.Collections",
         "Unity.Mathematics",

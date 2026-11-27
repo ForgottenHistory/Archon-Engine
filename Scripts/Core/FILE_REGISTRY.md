@@ -292,4 +292,4 @@
 *Updated: 2026-01-24*
 *Added: GameCommandProcessor for GAME layer network sync; INetworkBridge interface; ModLoader for mod support*
 
-**Note:** Lua scripting is in separate `Scripting` assembly (optional, requires MOONSHARP_ENABLED). See `Scripts/Scripting/FILE_REGISTRY.md`.
+**Note:** Lua scripting is in the separate `Scripting` assembly. See `Scripts/Scripting/FILE_REGISTRY.md`.

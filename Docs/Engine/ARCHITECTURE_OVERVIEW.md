@@ -56,6 +56,7 @@ The engine provides mechanisms (HOW things work). Games define policy (WHAT happ
 | Resource system infrastructure | Gold, manpower formulas |
 | Map rendering pipeline | Visual styles, colors |
 | AI scheduling framework | Goal evaluation logic |
+| Lua script engine (sandbox, objects, calls) | Every function scripts can call, and the scripts |
 
 This separation enables building different games (space strategy, fantasy, historical) on the same engine foundation.
 
@@ -124,6 +125,7 @@ The engine has working implementations of:
 - Unit management with movement and pathfinding
 - Resource and modifier systems
 - AI with tier-based scheduling and goal evaluation
+- Lua scripting for content (`scripting.md`)
 - Time system with layered tick frequencies
 - Save/load with hybrid snapshot architecture
 - Texture-based map rendering with three border modes
